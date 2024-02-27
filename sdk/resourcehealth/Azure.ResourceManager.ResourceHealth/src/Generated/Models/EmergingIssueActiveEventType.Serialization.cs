@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<ResourceHealthEventStageValue> stage = default;
             Optional<bool> published = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IReadOnlyList<EmergingIssueImpact>> impacts = default;
+            IReadOnlyList<EmergingIssueImpact> impacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title.Value,
+                description.Value,
+                trackingId.Value,
+                Optional.ToNullable(startTime),
+                cloud.Value,
+                Optional.ToNullable(severity),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(published),
+                Optional.ToNullable(lastModifiedTime),
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)

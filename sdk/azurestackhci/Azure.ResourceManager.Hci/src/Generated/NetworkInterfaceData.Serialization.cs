@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.Hci
                 return null;
             }
             Optional<ArcVmExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<IPConfiguration>> ipConfigurations = default;
+            IList<IPConfiguration> ipConfigurations = default;
             Optional<string> macAddress = default;
             Optional<InterfaceDnsSettings> dnsSettings = default;
             Optional<ProvisioningStateEnum> provisioningState = default;
@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToList(ipConfigurations), macAddress.Value, dnsSettings.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                ipConfigurations ?? new ChangeTrackingList<IPConfiguration>(),
+                macAddress.Value,
+                dnsSettings.Value,
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

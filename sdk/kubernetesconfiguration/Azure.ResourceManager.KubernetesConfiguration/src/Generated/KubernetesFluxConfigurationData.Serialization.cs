@@ -279,9 +279,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             Optional<KubernetesGitRepository> gitRepository = default;
             Optional<KubernetesBucket> bucket = default;
             Optional<KubernetesAzureBlob> azureBlob = default;
-            Optional<IDictionary<string, Kustomization>> kustomizations = default;
-            Optional<IDictionary<string, string>> configurationProtectedSettings = default;
-            Optional<IReadOnlyList<KubernetesObjectStatus>> statuses = default;
+            IDictionary<string, Kustomization> kustomizations = default;
+            IDictionary<string, string> configurationProtectedSettings = default;
+            IReadOnlyList<KubernetesObjectStatus> statuses = default;
             Optional<string> repositoryPublicKey = default;
             Optional<string> sourceSyncedCommitId = default;
             Optional<DateTimeOffset?> sourceUpdatedAt = default;
@@ -510,7 +510,29 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesFluxConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(scope), @namespace.Value, Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, Optional.ToDictionary(kustomizations), Optional.ToDictionary(configurationProtectedSettings), Optional.ToList(statuses), repositoryPublicKey.Value, sourceSyncedCommitId.Value, Optional.ToNullable(sourceUpdatedAt), Optional.ToNullable(statusUpdatedAt), Optional.ToNullable(complianceState), Optional.ToNullable(provisioningState), errorMessage.Value, serializedAdditionalRawData);
+            return new KubernetesFluxConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(scope),
+                @namespace.Value,
+                Optional.ToNullable(sourceKind),
+                Optional.ToNullable(suspend),
+                gitRepository.Value,
+                bucket.Value,
+                azureBlob.Value,
+                kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                statuses ?? new ChangeTrackingList<KubernetesObjectStatus>(),
+                repositoryPublicKey.Value,
+                sourceSyncedCommitId.Value,
+                Optional.ToNullable(sourceUpdatedAt),
+                Optional.ToNullable(statusUpdatedAt),
+                Optional.ToNullable(complianceState),
+                Optional.ToNullable(provisioningState),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options)

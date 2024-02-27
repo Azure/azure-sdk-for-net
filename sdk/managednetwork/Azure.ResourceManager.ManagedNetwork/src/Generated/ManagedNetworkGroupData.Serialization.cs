@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.ManagedNetwork
             Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<ETag> etag = default;
-            Optional<IList<WritableSubResource>> managementGroups = default;
-            Optional<IList<WritableSubResource>> subscriptions = default;
-            Optional<IList<WritableSubResource>> virtualNetworks = default;
-            Optional<IList<WritableSubResource>> subnets = default;
+            IList<WritableSubResource> managementGroups = default;
+            IList<WritableSubResource> subscriptions = default;
+            IList<WritableSubResource> virtualNetworks = default;
+            IList<WritableSubResource> subnets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -301,7 +301,20 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToNullable(etag), Optional.ToList(managementGroups), Optional.ToList(subscriptions), Optional.ToList(virtualNetworks), Optional.ToList(subnets), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedNetworkGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                managementGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnets ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkGroupData>.Write(ModelReaderWriterOptions options)

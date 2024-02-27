@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<MonitorWorkspaceMetrics> metrics = default;
             Optional<MonitorProvisioningState> provisioningState = default;
             Optional<MonitorWorkspaceDefaultIngestionSettings> defaultIngestionSettings = default;
-            Optional<IReadOnlyList<MonitorWorkspacePrivateEndpointConnection>> privateEndpointConnections = default;
+            IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = default;
             Optional<MonitorWorkspacePublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -285,7 +285,21 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWorkspaceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), accountId.Value, metrics.Value, Optional.ToNullable(provisioningState), defaultIngestionSettings.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new MonitorWorkspaceResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                accountId.Value,
+                metrics.Value,
+                Optional.ToNullable(provisioningState),
+                defaultIngestionSettings.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<MonitorWorkspacePrivateEndpointConnection>(),
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWorkspaceResourceData>.Write(ModelReaderWriterOptions options)

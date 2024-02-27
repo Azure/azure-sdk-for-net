@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> endedOn = default;
             Optional<BackupSetInfo> fullBackupSetInfo = default;
             Optional<BackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<BackupSetInfo>> activeBackupSets = default;
+            IReadOnlyList<BackupSetInfo> activeBackupSets = default;
             Optional<string> containerName = default;
             Optional<string> errorPrefix = default;
             Optional<bool> isFullBackupRestored = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                sourceDatabaseName.Value,
+                Optional.ToNullable(migrationState),
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                fullBackupSetInfo.Value,
+                lastRestoredBackupSetInfo.Value,
+                activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
+                containerName.Value,
+                errorPrefix.Value,
+                Optional.ToNullable(isFullBackupRestored),
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

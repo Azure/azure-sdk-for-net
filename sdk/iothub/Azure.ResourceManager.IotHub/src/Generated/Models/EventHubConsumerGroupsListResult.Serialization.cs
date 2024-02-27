@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EventHubConsumerGroupInfoData>> value = default;
+            IReadOnlyList<EventHubConsumerGroupInfoData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubConsumerGroupsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EventHubConsumerGroupsListResult(value ?? new ChangeTrackingList<EventHubConsumerGroupInfoData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubConsumerGroupsListResult>.Write(ModelReaderWriterOptions options)

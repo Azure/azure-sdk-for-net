@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataLakeStore
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.DataLakeStore
             Optional<DataLakeStoreAccountEncryptionConfig> encryptionConfig = default;
             Optional<DataLakeStoreEncryptionState> encryptionState = default;
             Optional<DataLakeStoreEncryptionProvisioningState> encryptionProvisioningState = default;
-            Optional<IReadOnlyList<DataLakeStoreFirewallRuleData>> firewallRules = default;
-            Optional<IReadOnlyList<DataLakeStoreVirtualNetworkRuleData>> virtualNetworkRules = default;
+            IReadOnlyList<DataLakeStoreFirewallRuleData> firewallRules = default;
+            IReadOnlyList<DataLakeStoreVirtualNetworkRuleData> virtualNetworkRules = default;
             Optional<DataLakeStoreFirewallState> firewallState = default;
             Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<IReadOnlyList<DataLakeStoreTrustedIdProviderData>> trustedIdProviders = default;
+            IReadOnlyList<DataLakeStoreTrustedIdProviderData> trustedIdProviders = default;
             Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
             Optional<DataLakeStoreCommitmentTierType> newTier = default;
             Optional<DataLakeStoreCommitmentTierType> currentTier = default;
@@ -487,7 +487,33 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToNullable(encryptionProvisioningState), Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataLakeStoreAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                Optional.ToNullable(accountId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                endpoint.Value,
+                defaultGroup.Value,
+                encryptionConfig.Value,
+                Optional.ToNullable(encryptionState),
+                Optional.ToNullable(encryptionProvisioningState),
+                firewallRules ?? new ChangeTrackingList<DataLakeStoreFirewallRuleData>(),
+                virtualNetworkRules ?? new ChangeTrackingList<DataLakeStoreVirtualNetworkRuleData>(),
+                Optional.ToNullable(firewallState),
+                Optional.ToNullable(firewallAllowAzureIPs),
+                trustedIdProviders ?? new ChangeTrackingList<DataLakeStoreTrustedIdProviderData>(),
+                Optional.ToNullable(trustedIdProviderState),
+                Optional.ToNullable(newTier),
+                Optional.ToNullable(currentTier),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options)

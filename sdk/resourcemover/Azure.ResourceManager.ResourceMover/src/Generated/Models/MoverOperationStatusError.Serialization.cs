@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<MoverOperationStatusError>> details = default;
-            Optional<IReadOnlyList<MoverOperationErrorAdditionalInfo>> additionalInfo = default;
+            IReadOnlyList<MoverOperationStatusError> details = default;
+            IReadOnlyList<MoverOperationErrorAdditionalInfo> additionalInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationStatusError(code.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
+            return new MoverOperationStatusError(code.Value, message.Value, details ?? new ChangeTrackingList<MoverOperationStatusError>(), additionalInfo ?? new ChangeTrackingList<MoverOperationErrorAdditionalInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationStatusError>.Write(ModelReaderWriterOptions options)

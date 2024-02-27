@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> username = default;
             Optional<string> acrToken = default;
             Optional<Uri> acrServerUrl = default;
-            Optional<IReadOnlyList<string>> repositories = default;
+            IReadOnlyList<string> repositories = default;
             Optional<DateTimeOffset> expiry = default;
             CredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureContainerRegistryScopedTokenCredential(credentialType, serializedAdditionalRawData, username.Value, acrToken.Value, acrServerUrl.Value, Optional.ToList(repositories), Optional.ToNullable(expiry));
+            return new AzureContainerRegistryScopedTokenCredential(
+                credentialType,
+                serializedAdditionalRawData,
+                username.Value,
+                acrToken.Value,
+                acrServerUrl.Value,
+                repositories ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(expiry));
         }
 
         BinaryData IPersistableModel<AzureContainerRegistryScopedTokenCredential>.Write(ModelReaderWriterOptions options)

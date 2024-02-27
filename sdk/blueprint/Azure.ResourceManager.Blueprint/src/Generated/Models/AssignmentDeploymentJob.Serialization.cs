@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> jobId = default;
             Optional<string> jobState = default;
             Optional<AssignmentDeploymentJobResult> result = default;
-            Optional<IList<AssignmentDeploymentJobResult>> history = default;
+            IList<AssignmentDeploymentJobResult> history = default;
             Optional<Uri> requestUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentDeploymentJob(kind.Value, action.Value, jobId.Value, jobState.Value, result.Value, Optional.ToList(history), requestUri.Value, serializedAdditionalRawData);
+            return new AssignmentDeploymentJob(
+                kind.Value,
+                action.Value,
+                jobId.Value,
+                jobState.Value,
+                result.Value,
+                history ?? new ChangeTrackingList<AssignmentDeploymentJobResult>(),
+                requestUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentDeploymentJob>.Write(ModelReaderWriterOptions options)

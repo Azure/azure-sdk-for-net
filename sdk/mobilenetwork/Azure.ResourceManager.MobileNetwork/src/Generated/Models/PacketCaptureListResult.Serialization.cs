@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkPacketCaptureData>> value = default;
+            IReadOnlyList<MobileNetworkPacketCaptureData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PacketCaptureListResult(value ?? new ChangeTrackingList<MobileNetworkPacketCaptureData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureListResult>.Write(ModelReaderWriterOptions options)

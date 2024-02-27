@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<long> executionCount = default;
             Optional<float> cpuTimeMs = default;
             Optional<float> elapsedTimeMs = default;
-            Optional<IReadOnlyDictionary<string, WaitStatistics>> waitStats = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
             Optional<bool> hasErrors = default;
-            Optional<IReadOnlyList<string>> sqlErrors = default;
+            IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), Optional.ToDictionary(waitStats), Optional.ToNullable(hasErrors), Optional.ToList(sqlErrors), serializedAdditionalRawData);
+            return new ExecutionStatistics(
+                Optional.ToNullable(executionCount),
+                Optional.ToNullable(cpuTimeMs),
+                Optional.ToNullable(elapsedTimeMs),
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                Optional.ToNullable(hasErrors),
+                sqlErrors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)

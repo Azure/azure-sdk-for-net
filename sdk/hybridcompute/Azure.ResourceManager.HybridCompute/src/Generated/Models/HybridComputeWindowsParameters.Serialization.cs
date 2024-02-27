@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<IList<VmGuestPatchClassificationWindow>> classificationsToInclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> kbNumbersToExclude = default;
+            IList<VmGuestPatchClassificationWindow> classificationsToInclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> kbNumbersToExclude = default;
             Optional<bool> excludeKbsRequiringReboot = default;
             Optional<DateTimeOffset> maxPatchPublishDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeWindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+            return new HybridComputeWindowsParameters(
+                classificationsToInclude ?? new ChangeTrackingList<VmGuestPatchClassificationWindow>(),
+                kbNumbersToInclude ?? new ChangeTrackingList<string>(),
+                kbNumbersToExclude ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(excludeKbsRequiringReboot),
+                Optional.ToNullable(maxPatchPublishDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeWindowsParameters>.Write(ModelReaderWriterOptions options)

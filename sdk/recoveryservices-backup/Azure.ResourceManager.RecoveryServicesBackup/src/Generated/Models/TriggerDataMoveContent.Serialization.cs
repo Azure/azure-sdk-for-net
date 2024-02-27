@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AzureLocation sourceRegion = default;
             DataMoveLevel dataMoveLevel = default;
             string correlationId = default;
-            Optional<IList<ResourceIdentifier>> sourceContainerArmIds = default;
+            IList<ResourceIdentifier> sourceContainerArmIds = default;
             Optional<bool> pauseGC = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerDataMoveContent(sourceResourceId, sourceRegion, dataMoveLevel, correlationId, Optional.ToList(sourceContainerArmIds), Optional.ToNullable(pauseGC), serializedAdditionalRawData);
+            return new TriggerDataMoveContent(
+                sourceResourceId,
+                sourceRegion,
+                dataMoveLevel,
+                correlationId,
+                sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(pauseGC),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerDataMoveContent>.Write(ModelReaderWriterOptions options)

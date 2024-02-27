@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             Optional<CommunityActionType> defaultAction = default;
-            Optional<IList<RoutePolicyStatementProperties>> statements = default;
+            IList<RoutePolicyStatementProperties> statements = default;
             ResourceIdentifier networkFabricId = default;
             Optional<AddressFamilyType> addressFamilyType = default;
             Optional<NetworkFabricConfigurationState> configurationState = default;
@@ -292,7 +292,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricRoutePolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(defaultAction), Optional.ToList(statements), networkFabricId, Optional.ToNullable(addressFamilyType), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricRoutePolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                Optional.ToNullable(defaultAction),
+                statements ?? new ChangeTrackingList<RoutePolicyStatementProperties>(),
+                networkFabricId,
+                Optional.ToNullable(addressFamilyType),
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricRoutePolicyData>.Write(ModelReaderWriterOptions options)

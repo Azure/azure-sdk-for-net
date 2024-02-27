@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<int> streamingUnits = default;
-            Optional<IList<int>> validStreamingUnits = default;
+            IList<int> validStreamingUnits = default;
             Optional<string> query = default;
             Optional<ETag> etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobTransformationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
+            return new StreamingJobTransformationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(streamingUnits),
+                validStreamingUnits ?? new ChangeTrackingList<int>(),
+                query.Value,
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<StreamingJobTransformationData>.Write(ModelReaderWriterOptions options)

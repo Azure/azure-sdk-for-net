@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GroupContractProperties(displayName, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type), externalId.Value, serializedAdditionalRawData);
+            return new GroupContractProperties(
+                displayName,
+                description.Value,
+                Optional.ToNullable(builtIn),
+                Optional.ToNullable(type),
+                externalId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupContractProperties>.Write(ModelReaderWriterOptions options)

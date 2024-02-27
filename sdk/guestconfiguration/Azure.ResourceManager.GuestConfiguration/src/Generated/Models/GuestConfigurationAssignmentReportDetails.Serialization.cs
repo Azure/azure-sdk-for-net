@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<Guid> jobId = default;
             Optional<GuestConfigurationAssignmentReportType> operationType = default;
-            Optional<IReadOnlyList<AssignmentReportResourceInfo>> resources = default;
+            IReadOnlyList<AssignmentReportResourceInfo> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentReportDetails(Optional.ToNullable(complianceStatus), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(jobId), Optional.ToNullable(operationType), Optional.ToList(resources), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentReportDetails(
+                Optional.ToNullable(complianceStatus),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(jobId),
+                Optional.ToNullable(operationType),
+                resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentReportDetails>.Write(ModelReaderWriterOptions options)

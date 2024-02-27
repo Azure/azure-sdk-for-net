@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> containerName = default;
             Optional<Guid> sourceProcessServerId = default;
             Optional<Guid> targetProcessServerId = default;
-            Optional<IList<string>> vmsToMigrate = default;
+            IList<string> vmsToMigrate = default;
             Optional<string> updateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProcessServerProperties(containerName.Value, Optional.ToNullable(sourceProcessServerId), Optional.ToNullable(targetProcessServerId), Optional.ToList(vmsToMigrate), updateType.Value, serializedAdditionalRawData);
+            return new FailoverProcessServerProperties(
+                containerName.Value,
+                Optional.ToNullable(sourceProcessServerId),
+                Optional.ToNullable(targetProcessServerId),
+                vmsToMigrate ?? new ChangeTrackingList<string>(),
+                updateType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProcessServerProperties>.Write(ModelReaderWriterOptions options)

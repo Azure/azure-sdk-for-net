@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute
             Optional<SystemData> systemData = default;
             Optional<DiskEncryptionSetType> encryptionType = default;
             Optional<KeyForDiskEncryptionSet> activeKey = default;
-            Optional<IReadOnlyList<KeyForDiskEncryptionSet>> previousKeys = default;
+            IReadOnlyList<KeyForDiskEncryptionSet> previousKeys = default;
             Optional<string> provisioningState = default;
             Optional<bool> rotationToLatestKeyVersionEnabled = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
@@ -310,7 +310,23 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value, serializedAdditionalRawData);
+            return new DiskEncryptionSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(encryptionType),
+                activeKey.Value,
+                previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>(),
+                provisioningState.Value,
+                Optional.ToNullable(rotationToLatestKeyVersionEnabled),
+                Optional.ToNullable(lastKeyRotationTimestamp),
+                autoKeyRotationError.Value,
+                federatedClientId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options)

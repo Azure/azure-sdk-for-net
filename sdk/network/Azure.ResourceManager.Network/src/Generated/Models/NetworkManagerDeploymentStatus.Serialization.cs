@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<DateTimeOffset> commitTime = default;
             Optional<string> region = default;
             Optional<NetworkManagerDeploymentState> deploymentStatus = default;
-            Optional<IReadOnlyList<string>> configurationIds = default;
+            IReadOnlyList<string> configurationIds = default;
             Optional<NetworkConfigurationDeploymentType> deploymentType = default;
             Optional<string> errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatus(Optional.ToNullable(commitTime), region.Value, Optional.ToNullable(deploymentStatus), Optional.ToList(configurationIds), Optional.ToNullable(deploymentType), errorMessage.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatus(
+                Optional.ToNullable(commitTime),
+                region.Value,
+                Optional.ToNullable(deploymentStatus),
+                configurationIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(deploymentType),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatus>.Write(ModelReaderWriterOptions options)

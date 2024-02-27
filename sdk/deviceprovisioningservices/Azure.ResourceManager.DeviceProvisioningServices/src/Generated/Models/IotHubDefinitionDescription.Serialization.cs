@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubDefinitionDescription(Optional.ToNullable(applyAllocationPolicy), Optional.ToNullable(allocationWeight), name.Value, connectionString, location, serializedAdditionalRawData);
+            return new IotHubDefinitionDescription(
+                Optional.ToNullable(applyAllocationPolicy),
+                Optional.ToNullable(allocationWeight),
+                name.Value,
+                connectionString,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubDefinitionDescription>.Write(ModelReaderWriterOptions options)

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
             Optional<long> retentionTimeInDays = default;
             Optional<int> partitionCount = default;
-            Optional<IReadOnlyList<string>> partitionIds = default;
+            IReadOnlyList<string> partitionIds = default;
             Optional<string> path = default;
             Optional<string> endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), Optional.ToList(partitionIds), path.Value, endpoint.Value, serializedAdditionalRawData);
+            return new EventHubCompatibleEndpointProperties(
+                Optional.ToNullable(retentionTimeInDays),
+                Optional.ToNullable(partitionCount),
+                partitionIds ?? new ChangeTrackingList<string>(),
+                path.Value,
+                endpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubCompatibleEndpointProperties>.Write(ModelReaderWriterOptions options)

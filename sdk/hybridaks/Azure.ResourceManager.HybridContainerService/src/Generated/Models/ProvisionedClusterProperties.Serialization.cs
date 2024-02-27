@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<ProvisionedClusterNetworkProfile> networkProfile = default;
             Optional<StorageProfile> storageProfile = default;
             Optional<ClusterVmAccessProfile> clusterVmAccessProfile = default;
-            Optional<IList<HybridContainerServiceNamedAgentPoolProfile>> agentPoolProfiles = default;
+            IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles = default;
             Optional<ProvisionedClusterCloudProviderProfile> cloudProviderProfile = default;
             Optional<HybridContainerServiceResourceProvisioningState> provisioningState = default;
             Optional<ProvisionedClusterStatus> status = default;
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterProperties(linuxProfile.Value, controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, storageProfile.Value, clusterVmAccessProfile.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, licenseProfile.Value, autoScalerProfile.Value, serializedAdditionalRawData);
+            return new ProvisionedClusterProperties(
+                linuxProfile.Value,
+                controlPlane.Value,
+                kubernetesVersion.Value,
+                networkProfile.Value,
+                storageProfile.Value,
+                clusterVmAccessProfile.Value,
+                agentPoolProfiles ?? new ChangeTrackingList<HybridContainerServiceNamedAgentPoolProfile>(),
+                cloudProviderProfile.Value,
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                licenseProfile.Value,
+                autoScalerProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterProperties>.Write(ModelReaderWriterOptions options)

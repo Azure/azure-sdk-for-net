@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string query = default;
-            Optional<IList<StreamAnalyticsQueryInput>> inputs = default;
-            Optional<IList<StreamAnalyticsQueryFunction>> functions = default;
+            IList<StreamAnalyticsQueryInput> inputs = default;
+            IList<StreamAnalyticsQueryFunction> functions = default;
             StreamingJobType jobType = default;
             Optional<StreamingJobCompatibilityLevel> compatibilityLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsCompileQuery(query, Optional.ToList(inputs), Optional.ToList(functions), jobType, Optional.ToNullable(compatibilityLevel), serializedAdditionalRawData);
+            return new StreamAnalyticsCompileQuery(
+                query,
+                inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(),
+                functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(),
+                jobType,
+                Optional.ToNullable(compatibilityLevel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsCompileQuery>.Write(ModelReaderWriterOptions options)

@@ -124,7 +124,7 @@ namespace Azure.IoT.Hub.Service.Models
             }
             Optional<string> deviceId = default;
             Optional<string> moduleId = default;
-            Optional<IDictionary<string, object>> tags = default;
+            IDictionary<string, object> tags = default;
             Optional<TwinProperties> properties = default;
             Optional<string> etag = default;
             Optional<long> version = default;
@@ -283,7 +283,24 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinData(deviceId.Value, moduleId.Value, Optional.ToDictionary(tags), properties.Value, etag.Value, Optional.ToNullable(version), deviceEtag.Value, Optional.ToNullable(status), statusReason.Value, Optional.ToNullable(statusUpdateTime), Optional.ToNullable(connectionState), Optional.ToNullable(lastActivityTime), Optional.ToNullable(cloudToDeviceMessageCount), Optional.ToNullable(authenticationType), x509Thumbprint.Value, capabilities.Value, deviceScope.Value);
+            return new TwinData(
+                deviceId.Value,
+                moduleId.Value,
+                tags ?? new ChangeTrackingDictionary<string, object>(),
+                properties.Value,
+                etag.Value,
+                Optional.ToNullable(version),
+                deviceEtag.Value,
+                Optional.ToNullable(status),
+                statusReason.Value,
+                Optional.ToNullable(statusUpdateTime),
+                Optional.ToNullable(connectionState),
+                Optional.ToNullable(lastActivityTime),
+                Optional.ToNullable(cloudToDeviceMessageCount),
+                Optional.ToNullable(authenticationType),
+                x509Thumbprint.Value,
+                capabilities.Value,
+                deviceScope.Value);
         }
     }
 }

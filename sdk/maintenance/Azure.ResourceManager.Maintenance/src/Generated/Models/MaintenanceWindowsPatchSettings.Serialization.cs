@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IList<string>> kbNumbersToExclude = default;
-            Optional<IList<string>> kbNumbersToInclude = default;
-            Optional<IList<string>> classificationsToInclude = default;
+            IList<string> kbNumbersToExclude = default;
+            IList<string> kbNumbersToInclude = default;
+            IList<string> classificationsToInclude = default;
             Optional<bool> excludeKbsRequiringReboot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowsPatchSettings(Optional.ToList(kbNumbersToExclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(classificationsToInclude), Optional.ToNullable(excludeKbsRequiringReboot), serializedAdditionalRawData);
+            return new MaintenanceWindowsPatchSettings(kbNumbersToExclude ?? new ChangeTrackingList<string>(), kbNumbersToInclude ?? new ChangeTrackingList<string>(), classificationsToInclude ?? new ChangeTrackingList<string>(), Optional.ToNullable(excludeKbsRequiringReboot), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowsPatchSettings>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolColumnData(id, name, type, systemData.Value, Optional.ToNullable(columnType), Optional.ToNullable(isComputed), serializedAdditionalRawData);
+            return new SynapseSqlPoolColumnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(columnType),
+                Optional.ToNullable(isComputed),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolColumnData>.Write(ModelReaderWriterOptions options)

@@ -52,7 +52,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             Optional<string> description = default;
             Optional<string> topologyName = default;
-            Optional<IList<ParameterDefinition>> parameters = default;
+            IList<ParameterDefinition> parameters = default;
             Optional<LivePipelineState> state = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineProperties(description.Value, topologyName.Value, Optional.ToList(parameters), Optional.ToNullable(state));
+            return new LivePipelineProperties(description.Value, topologyName.Value, parameters ?? new ChangeTrackingList<ParameterDefinition>(), Optional.ToNullable(state));
         }
     }
 }

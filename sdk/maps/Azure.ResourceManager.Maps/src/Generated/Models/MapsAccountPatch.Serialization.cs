@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<MapsAccountKind> kind = default;
             Optional<MapsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<Guid> uniqueId = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> provisioningState = default;
-            Optional<IList<MapsLinkedResource>> linkedResources = default;
+            IList<MapsLinkedResource> linkedResources = default;
             Optional<CorsRules> cors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -242,7 +242,17 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(kind), sku.Value, identity, Optional.ToNullable(uniqueId), Optional.ToNullable(disableLocalAuth), provisioningState.Value, Optional.ToList(linkedResources), cors.Value, serializedAdditionalRawData);
+            return new MapsAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(kind),
+                sku.Value,
+                identity,
+                Optional.ToNullable(uniqueId),
+                Optional.ToNullable(disableLocalAuth),
+                provisioningState.Value,
+                linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
+                cors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountPatch>.Write(ModelReaderWriterOptions options)

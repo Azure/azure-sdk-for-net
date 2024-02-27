@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapHanaSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, packetSize.Value, partitionOption.Value, partitionSettings.Value);
+            return new SapHanaSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                query.Value,
+                packetSize.Value,
+                partitionOption.Value,
+                partitionSettings.Value);
         }
 
         internal partial class SapHanaSourceConverter : JsonConverter<SapHanaSource>

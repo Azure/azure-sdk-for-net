@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<GuestAgentProvisioningAction> provisioningAction = default;
             Optional<string> status = default;
             Optional<string> customResourceName = default;
-            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
+            IReadOnlyList<VMwareResourceStatus> statuses = default;
             Optional<VMwareResourceProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceGuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, privateLinkScopeResourceId.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VmInstanceGuestAgentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                uuid.Value,
+                credentials.Value,
+                privateLinkScopeResourceId.Value,
+                httpProxyConfig.Value,
+                Optional.ToNullable(provisioningAction),
+                status.Value,
+                customResourceName.Value,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestAgentData>.Write(ModelReaderWriterOptions options)

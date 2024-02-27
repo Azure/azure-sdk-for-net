@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartitionUsage>> value = default;
+            IReadOnlyList<PartitionUsage> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionUsagesResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PartitionUsagesResult(value ?? new ChangeTrackingList<PartitionUsage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartitionUsagesResult>.Write(ModelReaderWriterOptions options)

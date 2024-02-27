@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerTrustCertificateData(id, name, type, systemData.Value, publicBlob.Value, thumbprint.Value, certificateName.Value, serializedAdditionalRawData);
+            return new ServerTrustCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publicBlob.Value,
+                thumbprint.Value,
+                certificateName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerTrustCertificateData>.Write(ModelReaderWriterOptions options)

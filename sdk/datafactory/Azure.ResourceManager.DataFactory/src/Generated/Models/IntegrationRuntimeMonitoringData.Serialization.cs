@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<IntegrationRuntimeNodeMonitoringData>> nodes = default;
+            IReadOnlyList<IntegrationRuntimeNodeMonitoringData> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationRuntimeMonitoringData(name.Value, Optional.ToList(nodes), serializedAdditionalRawData);
+            return new IntegrationRuntimeMonitoringData(name.Value, nodes ?? new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeMonitoringData>.Write(ModelReaderWriterOptions options)

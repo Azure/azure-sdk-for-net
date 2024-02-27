@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             TimeSeriesExpression value = default;
             Optional<TimeSeriesInterpolation> interpolation = default;
-            Optional<IList<TimeSeriesAggregateCategory>> categories = default;
+            IList<TimeSeriesAggregateCategory> categories = default;
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
             Optional<TimeSeriesExpression> filter = default;
@@ -107,7 +107,13 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory);
+            return new CategoricalVariable(
+                kind,
+                filter.Value,
+                value,
+                interpolation.Value,
+                categories ?? new ChangeTrackingList<TimeSeriesAggregateCategory>(),
+                defaultCategory);
         }
     }
 }

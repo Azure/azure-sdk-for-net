@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> id = default;
             Optional<string> address = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<string>> previousHopIds = default;
-            Optional<IReadOnlyList<HopLink>> links = default;
-            Optional<IReadOnlyList<HopLink>> previousLinks = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<string> previousHopIds = default;
+            IReadOnlyList<HopLink> links = default;
+            IReadOnlyList<HopLink> previousLinks = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues), serializedAdditionalRawData);
+            return new ConnectivityHopInfo(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                previousHopIds ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<HopLink>(),
+                previousLinks ?? new ChangeTrackingList<HopLink>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)

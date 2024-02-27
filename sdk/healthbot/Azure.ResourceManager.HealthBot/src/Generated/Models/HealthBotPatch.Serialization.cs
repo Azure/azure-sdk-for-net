@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                 return null;
             }
             Optional<HealthBotProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<HealthBotSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<AzureLocation> location = default;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.HealthBot.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotPatch(properties.Value, Optional.ToDictionary(tags), sku.Value, identity, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new HealthBotPatch(
+                properties.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                identity,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotPatch>.Write(ModelReaderWriterOptions options)

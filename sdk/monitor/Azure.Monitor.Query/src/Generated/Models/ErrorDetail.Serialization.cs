@@ -23,7 +23,7 @@ namespace Azure.Monitor.Query.Models
             string message = default;
             Optional<string> target = default;
             Optional<string> value = default;
-            Optional<IReadOnlyList<string>> resources = default;
+            IReadOnlyList<string> resources = default;
             Optional<object> additionalProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,13 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, target.Value, value.Value, Optional.ToList(resources), additionalProperties.Value);
+            return new ErrorDetail(
+                code,
+                message,
+                target.Value,
+                value.Value,
+                resources ?? new ChangeTrackingList<string>(),
+                additionalProperties.Value);
         }
     }
 }

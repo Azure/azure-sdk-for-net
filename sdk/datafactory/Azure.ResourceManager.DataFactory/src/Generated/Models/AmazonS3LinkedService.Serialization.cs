@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> authenticationType = default;
             Optional<DataFactoryElement<string>> accessKeyId = default;
             Optional<DataFactorySecretBaseDefinition> secretAccessKey = default;
@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, authenticationType.Value, accessKeyId.Value, secretAccessKey, serviceUrl.Value, sessionToken, encryptedCredential.Value);
+            return new AmazonS3LinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                authenticationType.Value,
+                accessKeyId.Value,
+                secretAccessKey,
+                serviceUrl.Value,
+                sessionToken,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AmazonS3LinkedService>.Write(ModelReaderWriterOptions options)

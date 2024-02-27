@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> labSubnetName = default;
             Optional<ResourceIdentifier> labVirtualNetworkId = default;
             Optional<bool> disallowPublicIPAddress = default;
-            Optional<IList<DevTestLabArtifactInstallInfo>> artifacts = default;
+            IList<DevTestLabArtifactInstallInfo> artifacts = default;
             Optional<DevTestLabArtifactDeploymentStatus> artifactDeploymentStatus = default;
             Optional<DevTestLabGalleryImageReference> galleryImageReference = default;
             Optional<string> planId = default;
@@ -328,8 +328,8 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> storageType = default;
             Optional<DevTestLabVmCreationSource> vmCreationSource = default;
             Optional<ResourceIdentifier> environmentId = default;
-            Optional<IList<DevTestLabDataDiskProperties>> dataDiskParameters = default;
-            Optional<IList<DevTestLabScheduleCreationParameter>> scheduleParameters = default;
+            IList<DevTestLabDataDiskProperties> dataDiskParameters = default;
+            IList<DevTestLabScheduleCreationParameter> scheduleParameters = default;
             Optional<string> lastKnownPowerState = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
@@ -660,7 +660,49 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, createdByUserId.Value, createdByUser.Value, Optional.ToNullable(createdDate), computeId.Value, customImageId.Value, osType.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), fqdn.Value, labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), Optional.ToList(artifacts), artifactDeploymentStatus.Value, galleryImageReference.Value, planId.Value, computeVm.Value, networkInterface.Value, applicableSchedule.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, Optional.ToNullable(vmCreationSource), environmentId.Value, Optional.ToList(dataDiskParameters), Optional.ToList(scheduleParameters), lastKnownPowerState.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabVmData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                notes.Value,
+                ownerObjectId.Value,
+                ownerUserPrincipalName.Value,
+                createdByUserId.Value,
+                createdByUser.Value,
+                Optional.ToNullable(createdDate),
+                computeId.Value,
+                customImageId.Value,
+                osType.Value,
+                size.Value,
+                userName.Value,
+                password.Value,
+                sshKey.Value,
+                Optional.ToNullable(isAuthenticationWithSshKey),
+                fqdn.Value,
+                labSubnetName.Value,
+                labVirtualNetworkId.Value,
+                Optional.ToNullable(disallowPublicIPAddress),
+                artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(),
+                artifactDeploymentStatus.Value,
+                galleryImageReference.Value,
+                planId.Value,
+                computeVm.Value,
+                networkInterface.Value,
+                applicableSchedule.Value,
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(allowClaim),
+                storageType.Value,
+                Optional.ToNullable(vmCreationSource),
+                environmentId.Value,
+                dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(),
+                scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(),
+                lastKnownPowerState.Value,
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVmData>.Write(ModelReaderWriterOptions options)

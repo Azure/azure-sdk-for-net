@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> containerId = default;
             Optional<long> protectedItemCount = default;
             Optional<string> dpmAgentVersion = default;
-            Optional<IList<string>> dpmServers = default;
+            IList<string> dpmServers = default;
             Optional<bool> upgradeAvailable = default;
             Optional<string> protectionStatus = default;
             Optional<DpmContainerExtendedInfo> extendedInfo = default;
@@ -259,7 +259,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupServerContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), containerId.Value, Optional.ToNullable(protectedItemCount), dpmAgentVersion.Value, Optional.ToList(dpmServers), Optional.ToNullable(upgradeAvailable), protectionStatus.Value, extendedInfo.Value);
+            return new BackupServerContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                registrationStatus.Value,
+                healthStatus.Value,
+                containerType,
+                protectableObjectType.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(canReRegister),
+                containerId.Value,
+                Optional.ToNullable(protectedItemCount),
+                dpmAgentVersion.Value,
+                dpmServers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(upgradeAvailable),
+                protectionStatus.Value,
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<BackupServerContainer>.Write(ModelReaderWriterOptions options)

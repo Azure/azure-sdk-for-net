@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<WritableSubResource>> frontendEndpoints = default;
-            Optional<IList<FrontDoorProtocol>> acceptedProtocols = default;
-            Optional<IList<string>> patternsToMatch = default;
+            IList<WritableSubResource> frontendEndpoints = default;
+            IList<FrontDoorProtocol> acceptedProtocols = default;
+            IList<string> patternsToMatch = default;
             Optional<RoutingRuleEnabledState> enabledState = default;
             Optional<RouteConfiguration> routeConfiguration = default;
             Optional<WritableSubResource> rulesEngine = default;
@@ -281,7 +281,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
+            return new RoutingRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                frontendEndpoints ?? new ChangeTrackingList<WritableSubResource>(),
+                acceptedProtocols ?? new ChangeTrackingList<FrontDoorProtocol>(),
+                patternsToMatch ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enabledState),
+                routeConfiguration.Value,
+                rulesEngine,
+                webApplicationFirewallPolicyLink,
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<RoutingRuleData>.Write(ModelReaderWriterOptions options)

@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExperimentExecutionDetails(id, name, type, systemData.Value, status.Value, Optional.ToNullable(startedAt), Optional.ToNullable(stoppedAt), failureReason.Value, Optional.ToNullable(lastActionAt), runInformation.Value, serializedAdditionalRawData);
+            return new ExperimentExecutionDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                status.Value,
+                Optional.ToNullable(startedAt),
+                Optional.ToNullable(stoppedAt),
+                failureReason.Value,
+                Optional.ToNullable(lastActionAt),
+                runInformation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExperimentExecutionDetails>.Write(ModelReaderWriterOptions options)

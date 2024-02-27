@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentTier(kind.Value, skuName.Value, Optional.ToNullable(hostingModel), planType.Value, tier.Value, Optional.ToNullable(maxCount), quota.Value, cost.Value, serializedAdditionalRawData);
+            return new CommitmentTier(
+                kind.Value,
+                skuName.Value,
+                Optional.ToNullable(hostingModel),
+                planType.Value,
+                tier.Value,
+                Optional.ToNullable(maxCount),
+                quota.Value,
+                cost.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentTier>.Write(ModelReaderWriterOptions options)

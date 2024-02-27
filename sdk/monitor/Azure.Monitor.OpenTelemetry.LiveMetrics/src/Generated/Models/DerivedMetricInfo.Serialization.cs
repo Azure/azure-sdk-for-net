@@ -21,7 +21,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             }
             Optional<string> id = default;
             Optional<string> telemetryType = default;
-            Optional<IReadOnlyList<FilterConjunctionGroupInfo>> filterGroups = default;
+            IReadOnlyList<FilterConjunctionGroupInfo> filterGroups = default;
             Optional<string> projection = default;
             Optional<DerivedMetricInfoAggregation> aggregation = default;
             foreach (var property in element.EnumerateObject())
@@ -65,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DerivedMetricInfo(id.Value, telemetryType.Value, Optional.ToList(filterGroups), projection.Value, Optional.ToNullable(aggregation));
+            return new DerivedMetricInfo(id.Value, telemetryType.Value, filterGroups ?? new ChangeTrackingList<FilterConjunctionGroupInfo>(), projection.Value, Optional.ToNullable(aggregation));
         }
     }
 }

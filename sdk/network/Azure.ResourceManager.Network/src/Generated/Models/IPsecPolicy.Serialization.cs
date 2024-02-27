@@ -138,7 +138,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPsecPolicy(saLifeTimeSeconds, saDataSizeKilobytes, ipsecEncryption, ipsecIntegrity, ikeEncryption, ikeIntegrity, dhGroup, pfsGroup, serializedAdditionalRawData);
+            return new IPsecPolicy(
+                saLifeTimeSeconds,
+                saDataSizeKilobytes,
+                ipsecEncryption,
+                ipsecIntegrity,
+                ikeEncryption,
+                ikeIntegrity,
+                dhGroup,
+                pfsGroup,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPsecPolicy>.Write(ModelReaderWriterOptions options)

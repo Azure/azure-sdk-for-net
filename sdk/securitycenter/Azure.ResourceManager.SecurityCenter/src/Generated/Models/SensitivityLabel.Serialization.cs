@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabel(displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(order), Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new SensitivityLabel(
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(rank),
+                Optional.ToNullable(order),
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabel>.Write(ModelReaderWriterOptions options)

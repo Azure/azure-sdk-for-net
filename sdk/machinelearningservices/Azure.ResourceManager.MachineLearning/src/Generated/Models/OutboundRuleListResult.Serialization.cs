@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<MachineLearningOutboundRuleBasicData>> value = default;
+            IReadOnlyList<MachineLearningOutboundRuleBasicData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundRuleListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new OutboundRuleListResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningOutboundRuleBasicData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundRuleListResult>.Write(ModelReaderWriterOptions options)

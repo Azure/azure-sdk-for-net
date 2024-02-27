@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HardwareSecurityModulesPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<HardwareSecurityModulesPrivateEndpointConnectionData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<HardwareSecurityModulesPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

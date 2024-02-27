@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<ManagedServicePackageActivationMode> servicePackageActivationMode = default;
             Optional<string> serviceDnsName = default;
             Optional<string> placementConstraints = default;
-            Optional<IList<ManagedServiceCorrelation>> correlationScheme = default;
-            Optional<IList<ManagedServiceLoadMetric>> serviceLoadMetrics = default;
-            Optional<IList<ManagedServicePlacementPolicy>> servicePlacementPolicies = default;
+            IList<ManagedServiceCorrelation> correlationScheme = default;
+            IList<ManagedServiceLoadMetric> serviceLoadMetrics = default;
+            IList<ManagedServicePlacementPolicy> servicePlacementPolicies = default;
             Optional<ServiceFabricManagedServiceMoveCost> defaultMoveCost = default;
-            Optional<IList<ManagedServiceScalingPolicy>> scalingPolicies = default;
+            IList<ManagedServiceScalingPolicy> scalingPolicies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -299,7 +299,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatelessServiceProperties(placementConstraints.Value, Optional.ToList(correlationScheme), Optional.ToList(serviceLoadMetrics), Optional.ToList(servicePlacementPolicies), Optional.ToNullable(defaultMoveCost), Optional.ToList(scalingPolicies), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, instanceCount, Optional.ToNullable(minInstanceCount), Optional.ToNullable(minInstancePercentage));
+            return new StatelessServiceProperties(
+                placementConstraints.Value,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                Optional.ToNullable(defaultMoveCost),
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState.Value,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                Optional.ToNullable(servicePackageActivationMode),
+                serviceDnsName.Value,
+                instanceCount,
+                Optional.ToNullable(minInstanceCount),
+                Optional.ToNullable(minInstancePercentage));
         }
 
         BinaryData IPersistableModel<StatelessServiceProperties>.Write(ModelReaderWriterOptions options)

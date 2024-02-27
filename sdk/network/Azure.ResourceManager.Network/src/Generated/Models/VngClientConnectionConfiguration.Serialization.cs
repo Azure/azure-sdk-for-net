@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AddressSpace> vpnClientAddressPool = default;
-            Optional<IList<WritableSubResource>> virtualNetworkGatewayPolicyGroups = default;
+            IList<WritableSubResource> virtualNetworkGatewayPolicyGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VngClientConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), Optional.ToNullable(provisioningState));
+            return new VngClientConnectionConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                vpnClientAddressPool.Value,
+                virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VngClientConnectionConfiguration>.Write(ModelReaderWriterOptions options)

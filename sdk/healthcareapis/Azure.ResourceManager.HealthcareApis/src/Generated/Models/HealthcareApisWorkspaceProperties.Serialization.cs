@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<HealthcareApisPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<HealthcareApisPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisWorkspaceProperties(Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new HealthcareApisWorkspaceProperties(Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisWorkspaceProperties>.Write(ModelReaderWriterOptions options)

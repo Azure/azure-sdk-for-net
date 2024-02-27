@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned), serializedAdditionalRawData);
+            return new StreamAnalyticsClusterProperties(
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(clusterId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(capacityAllocated),
+                Optional.ToNullable(capacityAssigned),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterProperties>.Write(ModelReaderWriterOptions options)

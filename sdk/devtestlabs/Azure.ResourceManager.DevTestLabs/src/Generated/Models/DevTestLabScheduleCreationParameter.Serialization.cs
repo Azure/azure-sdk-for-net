@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<DevTestLabEnableStatus> status = default;
             Optional<string> taskType = default;
             Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
@@ -253,7 +253,19 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabScheduleCreationParameter(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(status), taskType.Value, weeklyRecurrence.Value, dailyRecurrence.Value, hourlyRecurrence.Value, timeZoneId.Value, notificationSettings.Value, targetResourceId.Value, serializedAdditionalRawData);
+            return new DevTestLabScheduleCreationParameter(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(status),
+                taskType.Value,
+                weeklyRecurrence.Value,
+                dailyRecurrence.Value,
+                hourlyRecurrence.Value,
+                timeZoneId.Value,
+                notificationSettings.Value,
+                targetResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabScheduleCreationParameter>.Write(ModelReaderWriterOptions options)

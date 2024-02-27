@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IList<NotificationPreference>> notificationPreferences = default;
+            IList<NotificationPreference> notificationPreferences = default;
             Optional<TransportPreferences> transportPreferences = default;
             Optional<EncryptionPreferences> encryptionPreferences = default;
             Optional<ManagementResourcePreferences> managementResourcePreferences = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrderItemPreferences(Optional.ToList(notificationPreferences), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, serializedAdditionalRawData);
+            return new OrderItemPreferences(notificationPreferences ?? new ChangeTrackingList<NotificationPreference>(), transportPreferences.Value, encryptionPreferences.Value, managementResourcePreferences.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrderItemPreferences>.Write(ModelReaderWriterOptions options)

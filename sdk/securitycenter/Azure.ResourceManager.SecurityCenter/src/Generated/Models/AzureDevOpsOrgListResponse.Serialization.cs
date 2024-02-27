@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DevOpsOrgData>> value = default;
+            IReadOnlyList<DevOpsOrgData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsOrgListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AzureDevOpsOrgListResponse(value ?? new ChangeTrackingList<DevOpsOrgData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsOrgListResponse>.Write(ModelReaderWriterOptions options)

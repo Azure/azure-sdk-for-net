@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(jobVersion), stepName.Value, Optional.ToNullable(stepId), Optional.ToNullable(jobExecutionId), Optional.ToNullable(lifecycle), Optional.ToNullable(provisioningState), Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(currentAttempts), Optional.ToNullable(currentAttemptStartTime), lastMessage.Value, target.Value, serializedAdditionalRawData);
+            return new SqlServerJobExecutionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(jobVersion),
+                stepName.Value,
+                Optional.ToNullable(stepId),
+                Optional.ToNullable(jobExecutionId),
+                Optional.ToNullable(lifecycle),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(currentAttempts),
+                Optional.ToNullable(currentAttemptStartTime),
+                lastMessage.Value,
+                target.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobExecutionData>.Write(ModelReaderWriterOptions options)

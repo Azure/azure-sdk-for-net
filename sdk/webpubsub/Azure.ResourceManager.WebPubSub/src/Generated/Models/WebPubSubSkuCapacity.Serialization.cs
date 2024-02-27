@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;
-            Optional<IReadOnlyList<int>> allowedValues = default;
+            IReadOnlyList<int> allowedValues = default;
             Optional<WebPubSubScaleType> scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new WebPubSubSkuCapacity(
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(@default),
+                allowedValues ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(scaleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubSkuCapacity>.Write(ModelReaderWriterOptions options)

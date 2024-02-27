@@ -108,7 +108,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageBlobCreatedEventData(api.Value, clientRequestId.Value, requestId.Value, eTag.Value, contentType.Value, Optional.ToNullable(contentLength), Optional.ToNullable(contentOffset), blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageBlobCreatedEventData(
+                api.Value,
+                clientRequestId.Value,
+                requestId.Value,
+                eTag.Value,
+                contentType.Value,
+                Optional.ToNullable(contentLength),
+                Optional.ToNullable(contentOffset),
+                blobType.Value,
+                url.Value,
+                sequencer.Value,
+                identity.Value,
+                storageDiagnostics.Value);
         }
 
         internal partial class StorageBlobCreatedEventDataConverter : JsonConverter<StorageBlobCreatedEventData>

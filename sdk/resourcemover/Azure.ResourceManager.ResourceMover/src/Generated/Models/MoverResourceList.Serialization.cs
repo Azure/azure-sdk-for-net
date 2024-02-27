@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverResourceData>> value = default;
+            IReadOnlyList<MoverResourceData> value = default;
             Optional<string> nextLink = default;
             Optional<MoverSummaryList> summaryCollection = default;
             Optional<long> totalCount = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
+            return new MoverResourceList(value ?? new ChangeTrackingList<MoverResourceData>(), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceList>.Write(ModelReaderWriterOptions options)

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> name = default;
             Optional<string> version = default;
             Optional<string> kbId = default;
-            Optional<IReadOnlyList<string>> classifications = default;
+            IReadOnlyList<string> classifications = default;
             Optional<PatchInstallationState> installationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(installationState), serializedAdditionalRawData);
+            return new PatchInstallationDetail(
+                patchId.Value,
+                name.Value,
+                version.Value,
+                kbId.Value,
+                classifications ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(installationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchInstallationDetail>.Write(ModelReaderWriterOptions options)

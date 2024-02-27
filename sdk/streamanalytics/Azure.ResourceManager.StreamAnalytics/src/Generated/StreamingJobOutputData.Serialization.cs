@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             Optional<StreamAnalyticsDataSerialization> serialization = default;
             Optional<StreamingJobDiagnostics> diagnostics = default;
             Optional<ETag> etag = default;
-            Optional<IReadOnlyList<LastOutputEventTimestamp>> lastOutputEventTimestamps = default;
+            IReadOnlyList<LastOutputEventTimestamp> lastOutputEventTimestamps = default;
             Optional<StreamingJobOutputWatermarkProperties> watermarkSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), Optional.ToList(lastOutputEventTimestamps), watermarkSettings.Value);
+            return new StreamingJobOutputData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                datasource.Value,
+                Optional.ToNullable(timeWindow),
+                Optional.ToNullable(sizeWindow),
+                serialization.Value,
+                diagnostics.Value,
+                Optional.ToNullable(etag),
+                lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(),
+                watermarkSettings.Value);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputData>.Write(ModelReaderWriterOptions options)

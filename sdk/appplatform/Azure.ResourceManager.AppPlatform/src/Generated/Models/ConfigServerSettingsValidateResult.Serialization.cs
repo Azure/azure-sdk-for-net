@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<bool> isValid = default;
-            Optional<IReadOnlyList<ConfigServerSettingsErrorRecord>> details = default;
+            IReadOnlyList<ConfigServerSettingsErrorRecord> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), Optional.ToList(details), serializedAdditionalRawData);
+            return new ConfigServerSettingsValidateResult(Optional.ToNullable(isValid), details ?? new ChangeTrackingList<ConfigServerSettingsErrorRecord>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerSettingsValidateResult>.Write(ModelReaderWriterOptions options)

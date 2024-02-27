@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
             Optional<int> cpuUtilization = default;
@@ -235,7 +235,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeMonitoringData(Optional.ToDictionary(additionalProperties), nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), serializedAdditionalRawData);
+            return new NodeMonitoringData(
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nodeName.Value,
+                Optional.ToNullable(availableMemoryInMB),
+                Optional.ToNullable(cpuUtilization),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(concurrentJobsRunning),
+                Optional.ToNullable(maxConcurrentJobs),
+                Optional.ToNullable(sentBytes),
+                Optional.ToNullable(receivedBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeMonitoringData>.Write(ModelReaderWriterOptions options)

@@ -194,8 +194,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DatasetReference>> inputs = default;
-            Optional<IList<DatasetReference>> outputs = default;
+            IList<DatasetReference> inputs = default;
+            IList<DatasetReference> outputs = default;
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
@@ -203,8 +203,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<ActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
             Optional<object> translator = default;
@@ -216,8 +216,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
             Optional<LogStorageSettings> logStorageSettings = default;
             Optional<LogSettings> logSettings = default;
-            Optional<IList<object>> preserveRules = default;
-            Optional<IList<object>> preserve = default;
+            IList<object> preserveRules = default;
+            IList<object> preserve = default;
             Optional<object> validateDataConsistency = default;
             Optional<SkipErrorFile> skipErrorFile = default;
             IDictionary<string, object> additionalProperties = default;
@@ -497,7 +497,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(inputs), Optional.ToList(outputs), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, Optional.ToList(preserveRules), Optional.ToList(preserve), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                inputs ?? new ChangeTrackingList<DatasetReference>(),
+                outputs ?? new ChangeTrackingList<DatasetReference>(),
+                source,
+                sink,
+                translator.Value,
+                enableStaging.Value,
+                stagingSettings.Value,
+                parallelCopies.Value,
+                dataIntegrationUnits.Value,
+                enableSkipIncompatibleRow.Value,
+                redirectIncompatibleRowSettings.Value,
+                logStorageSettings.Value,
+                logSettings.Value,
+                preserveRules ?? new ChangeTrackingList<object>(),
+                preserve ?? new ChangeTrackingList<object>(),
+                validateDataConsistency.Value,
+                skipErrorFile.Value);
         }
 
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>

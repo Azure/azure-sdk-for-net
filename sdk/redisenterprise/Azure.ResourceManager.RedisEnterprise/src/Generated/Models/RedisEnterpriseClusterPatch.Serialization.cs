@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             Optional<RedisEnterpriseSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<RedisEnterpriseTlsVersion> minimumTlsVersion = default;
             Optional<ClusterPropertiesEncryption> encryption = default;
             Optional<string> hostName = default;
             Optional<RedisEnterpriseProvisioningStatus> provisioningState = default;
             Optional<RedisEnterpriseClusterResourceState> resourceState = default;
             Optional<string> redisVersion = default;
-            Optional<IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseClusterPatch(sku.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(minimumTlsVersion), encryption.Value, hostName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), redisVersion.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new RedisEnterpriseClusterPatch(
+                sku.Value,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(minimumTlsVersion),
+                encryption.Value,
+                hostName.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceState),
+                redisVersion.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseClusterPatch>.Write(ModelReaderWriterOptions options)

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAuthToken(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, token.Value, Optional.ToNullable(expires), serializedAdditionalRawData);
+            return new ContainerAppAuthToken(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                token.Value,
+                Optional.ToNullable(expires),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAuthToken>.Write(ModelReaderWriterOptions options)

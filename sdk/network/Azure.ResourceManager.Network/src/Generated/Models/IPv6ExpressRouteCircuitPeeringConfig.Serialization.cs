@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IPv6ExpressRouteCircuitPeeringConfig(
+                primaryPeerAddressPrefix.Value,
+                secondaryPeerAddressPrefix.Value,
+                microsoftPeeringConfig.Value,
+                routeFilter,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)

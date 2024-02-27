@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<BatchAccountAutoStorageBaseConfiguration> autoStorage = default;
             Optional<BatchAccountEncryptionConfiguration> encryption = default;
-            Optional<IList<BatchAuthenticationMode>> allowedAuthenticationModes = default;
+            IList<BatchAuthenticationMode> allowedAuthenticationModes = default;
             Optional<BatchPublicNetworkAccess> publicNetworkAccess = default;
             Optional<BatchNetworkProfile> networkProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -224,7 +224,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPatch(Optional.ToDictionary(tags), identity, autoStorage.Value, encryption.Value, Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(publicNetworkAccess), networkProfile.Value, serializedAdditionalRawData);
+            return new BatchAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                autoStorage.Value,
+                encryption.Value,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                Optional.ToNullable(publicNetworkAccess),
+                networkProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPatch>.Write(ModelReaderWriterOptions options)

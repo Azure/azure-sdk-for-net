@@ -167,18 +167,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Optional<IReadOnlyList<ResourceProviderAuthorization>> providerAuthorizations = default;
+            IReadOnlyList<ResourceProviderAuthorization> providerAuthorizations = default;
             Optional<string> @namespace = default;
             Optional<string> providerVersion = default;
             Optional<ResourceProviderType> providerType = default;
-            Optional<IReadOnlyList<string>> requiredFeatures = default;
+            IReadOnlyList<string> requiredFeatures = default;
             Optional<FeaturesRule> featuresRule = default;
             Optional<RequestHeaderOptions> requestHeaderOptions = default;
-            Optional<IReadOnlyList<ProviderResourceType>> resourceTypes = default;
+            IReadOnlyList<ProviderResourceType> resourceTypes = default;
             Optional<ResourceProviderManagement> management = default;
-            Optional<IReadOnlyList<ResourceProviderCapabilities>> capabilities = default;
+            IReadOnlyList<ResourceProviderCapabilities> capabilities = default;
             Optional<BinaryData> metadata = default;
-            Optional<IReadOnlyList<ResourceProviderEndpoint>> globalNotificationEndpoints = default;
+            IReadOnlyList<ResourceProviderEndpoint> globalNotificationEndpoints = default;
             Optional<ReRegisterSubscriptionMetadata> reRegisterSubscriptionMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -333,7 +333,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManifest(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, Optional.ToList(resourceTypes), management.Value, Optional.ToList(capabilities), metadata.Value, Optional.ToList(globalNotificationEndpoints), reRegisterSubscriptionMetadata.Value, serializedAdditionalRawData);
+            return new ResourceProviderManifest(
+                providerAuthentication.Value,
+                providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
+                @namespace.Value,
+                providerVersion.Value,
+                Optional.ToNullable(providerType),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                requestHeaderOptions.Value,
+                resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
+                management.Value,
+                capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                metadata.Value,
+                globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
+                reRegisterSubscriptionMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManifest>.Write(ModelReaderWriterOptions options)

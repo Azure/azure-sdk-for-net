@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkPublicIPData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(numberOfPublicIPs), publicIPBlock.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new WorkloadNetworkPublicIPData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                Optional.ToNullable(numberOfPublicIPs),
+                publicIPBlock.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkPublicIPData>.Write(ModelReaderWriterOptions options)

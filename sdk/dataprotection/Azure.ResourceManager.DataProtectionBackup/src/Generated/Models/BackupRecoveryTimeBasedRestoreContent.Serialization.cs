@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupRecoveryTimeBasedRestoreContent(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId.Value, identityDetails.Value, serializedAdditionalRawData, recoveryPointTime);
+            return new BackupRecoveryTimeBasedRestoreContent(
+                objectType,
+                restoreTargetInfo,
+                sourceDataStoreType,
+                sourceResourceId.Value,
+                identityDetails.Value,
+                serializedAdditionalRawData,
+                recoveryPointTime);
         }
 
         BinaryData IPersistableModel<BackupRecoveryTimeBasedRestoreContent>.Write(ModelReaderWriterOptions options)

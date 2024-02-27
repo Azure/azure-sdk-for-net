@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> notebookPath = default;
-            Optional<IDictionary<string, BinaryData>> baseParameters = default;
-            Optional<IList<IDictionary<string, BinaryData>>> libraries = default;
+            IDictionary<string, BinaryData> baseParameters = default;
+            IList<IDictionary<string, BinaryData>> libraries = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -341,7 +341,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, notebookPath, Optional.ToDictionary(baseParameters), Optional.ToList(libraries));
+            return new DatabricksNotebookActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                notebookPath,
+                baseParameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>());
         }
 
         BinaryData IPersistableModel<DatabricksNotebookActivity>.Write(ModelReaderWriterOptions options)

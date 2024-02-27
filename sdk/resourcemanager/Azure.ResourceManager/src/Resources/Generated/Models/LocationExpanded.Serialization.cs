@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<string> displayName = default;
             Optional<string> regionalDisplayName = default;
             Optional<LocationMetadata> metadata = default;
-            Optional<IReadOnlyList<AvailabilityZoneMappings>> availabilityZoneMappings = default;
+            IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
+            return new LocationExpanded(
+                id.Value,
+                subscriptionId.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                displayName.Value,
+                regionalDisplayName.Value,
+                metadata.Value,
+                availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationExpanded>.Write(ModelReaderWriterOptions options)

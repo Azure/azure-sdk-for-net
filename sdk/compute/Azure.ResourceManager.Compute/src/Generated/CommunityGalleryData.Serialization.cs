@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             Optional<AzureLocation> location = default;
             Optional<ResourceType> type = default;
             Optional<string> disclaimer = default;
-            Optional<IReadOnlyDictionary<string, string>> artifactTags = default;
+            IReadOnlyDictionary<string, string> artifactTags = default;
             Optional<CommunityGalleryMetadata> communityMetadata = default;
             Optional<string> uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, disclaimer.Value, Optional.ToDictionary(artifactTags), communityMetadata.Value);
+            return new CommunityGalleryData(
+                name.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(type),
+                uniqueId.Value,
+                serializedAdditionalRawData,
+                disclaimer.Value,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>(),
+                communityMetadata.Value);
         }
 
         BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options)

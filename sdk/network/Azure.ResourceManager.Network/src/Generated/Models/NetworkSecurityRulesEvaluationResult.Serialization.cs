@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityRulesEvaluationResult(name.Value, Optional.ToNullable(protocolMatched), Optional.ToNullable(sourceMatched), Optional.ToNullable(sourcePortMatched), Optional.ToNullable(destinationMatched), Optional.ToNullable(destinationPortMatched), serializedAdditionalRawData);
+            return new NetworkSecurityRulesEvaluationResult(
+                name.Value,
+                Optional.ToNullable(protocolMatched),
+                Optional.ToNullable(sourceMatched),
+                Optional.ToNullable(sourcePortMatched),
+                Optional.ToNullable(destinationMatched),
+                Optional.ToNullable(destinationPortMatched),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityRulesEvaluationResult>.Write(ModelReaderWriterOptions options)

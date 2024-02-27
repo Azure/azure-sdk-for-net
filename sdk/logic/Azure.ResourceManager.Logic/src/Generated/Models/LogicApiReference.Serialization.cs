@@ -215,7 +215,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value);
+            return new LogicApiReference(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                displayName.Value,
+                description.Value,
+                iconUri.Value,
+                swagger.Value,
+                brandColor.Value,
+                Optional.ToNullable(category),
+                integrationServiceEnvironment.Value);
         }
 
         BinaryData IPersistableModel<LogicApiReference>.Write(ModelReaderWriterOptions options)

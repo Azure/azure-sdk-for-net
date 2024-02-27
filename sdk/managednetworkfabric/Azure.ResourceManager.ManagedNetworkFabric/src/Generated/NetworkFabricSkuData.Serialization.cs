@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkFabricSkuType> type0 = default;
             Optional<int> maxComputeRacks = default;
             Optional<int> maximumServerCount = default;
-            Optional<IReadOnlyList<string>> supportedVersions = default;
+            IReadOnlyList<string> supportedVersions = default;
             Optional<string> details = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), Optional.ToList(supportedVersions), details.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricSkuData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(type0),
+                Optional.ToNullable(maxComputeRacks),
+                Optional.ToNullable(maximumServerCount),
+                supportedVersions ?? new ChangeTrackingList<string>(),
+                details.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricSkuData>.Write(ModelReaderWriterOptions options)

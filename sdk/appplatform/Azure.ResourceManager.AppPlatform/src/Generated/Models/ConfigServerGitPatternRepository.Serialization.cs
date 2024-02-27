@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             string name = default;
-            Optional<IList<string>> pattern = default;
+            IList<string> pattern = default;
             Uri uri = default;
             Optional<string> label = default;
-            Optional<IList<string>> searchPaths = default;
+            IList<string> searchPaths = default;
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> hostKey = default;
@@ -221,7 +221,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigServerGitPatternRepository(name, Optional.ToList(pattern), uri, label.Value, Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking), serializedAdditionalRawData);
+            return new ConfigServerGitPatternRepository(
+                name,
+                pattern ?? new ChangeTrackingList<string>(),
+                uri,
+                label.Value,
+                searchPaths ?? new ChangeTrackingList<string>(),
+                username.Value,
+                password.Value,
+                hostKey.Value,
+                hostKeyAlgorithm.Value,
+                privateKey.Value,
+                Optional.ToNullable(strictHostKeyChecking),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigServerGitPatternRepository>.Write(ModelReaderWriterOptions options)

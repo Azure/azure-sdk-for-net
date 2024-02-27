@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Elastic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringTagRuleData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MonitoringTagRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringTagRuleData>.Write(ModelReaderWriterOptions options)

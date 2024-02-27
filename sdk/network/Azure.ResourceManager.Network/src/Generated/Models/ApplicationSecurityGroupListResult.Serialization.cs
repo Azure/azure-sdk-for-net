@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationSecurityGroupData>> value = default;
+            IReadOnlyList<ApplicationSecurityGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationSecurityGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationSecurityGroupListResult(value ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationSecurityGroupListResult>.Write(ModelReaderWriterOptions options)

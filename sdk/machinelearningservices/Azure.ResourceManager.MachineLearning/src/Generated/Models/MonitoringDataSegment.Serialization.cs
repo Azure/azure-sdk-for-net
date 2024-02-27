@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> feature = default;
-            Optional<IList<string>> values = default;
+            IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringDataSegment(feature.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new MonitoringDataSegment(feature.Value, values ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringDataSegment>.Write(ModelReaderWriterOptions options)

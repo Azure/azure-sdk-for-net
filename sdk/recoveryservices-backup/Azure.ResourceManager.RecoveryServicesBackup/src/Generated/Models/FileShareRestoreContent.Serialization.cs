@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<ResourceIdentifier> sourceResourceId = default;
             Optional<FileShareCopyOption> copyOptions = default;
             Optional<FileShareRestoreType> restoreRequestType = default;
-            Optional<IList<RestoreFileSpecs>> restoreFileSpecs = default;
+            IList<RestoreFileSpecs> restoreFileSpecs = default;
             Optional<TargetAfsRestoreInfo> targetDetails = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, Optional.ToNullable(copyOptions), Optional.ToNullable(restoreRequestType), Optional.ToList(restoreFileSpecs), targetDetails.Value);
+            return new FileShareRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                Optional.ToNullable(copyOptions),
+                Optional.ToNullable(restoreRequestType),
+                restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
+                targetDetails.Value);
         }
 
         BinaryData IPersistableModel<FileShareRestoreContent>.Write(ModelReaderWriterOptions options)

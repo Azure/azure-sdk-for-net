@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> workloadProfileName = default;
             Optional<ContainerAppJobConfiguration> configuration = default;
             Optional<ContainerAppJobTemplate> template = default;
-            Optional<IReadOnlyList<string>> outboundIPAddresses = default;
+            IReadOnlyList<string> outboundIPAddresses = default;
             Optional<string> eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -293,7 +293,22 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                environmentId.Value,
+                workloadProfileName.Value,
+                configuration.Value,
+                template.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<string>(),
+                eventStreamEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeGroupSpec(sku.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(enableHa), serializedAdditionalRawData, Optional.ToNullable(kind), Optional.ToNullable(nodeCount));
+            return new NodeGroupSpec(
+                sku.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(enableHa),
+                serializedAdditionalRawData,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(nodeCount));
         }
 
         BinaryData IPersistableModel<NodeGroupSpec>.Write(ModelReaderWriterOptions options)

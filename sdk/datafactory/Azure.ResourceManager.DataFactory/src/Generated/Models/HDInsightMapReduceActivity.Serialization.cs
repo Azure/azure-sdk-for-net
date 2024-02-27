@@ -212,16 +212,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<BinaryData>> arguments = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
+            IList<BinaryData> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             DataFactoryElement<string> className = default;
             DataFactoryElement<string> jarFilePath = default;
             Optional<DataFactoryLinkedServiceReference> jarLinkedService = default;
-            Optional<IList<BinaryData>> jarLibs = default;
-            Optional<IDictionary<string, BinaryData>> defines = default;
+            IList<BinaryData> jarLibs = default;
+            IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -425,7 +425,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService, Optional.ToList(jarLibs), Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                Optional.ToNullable(getDebugInfo),
+                className,
+                jarFilePath,
+                jarLinkedService,
+                jarLibs ?? new ChangeTrackingList<BinaryData>(),
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightMapReduceActivity>.Write(ModelReaderWriterOptions options)

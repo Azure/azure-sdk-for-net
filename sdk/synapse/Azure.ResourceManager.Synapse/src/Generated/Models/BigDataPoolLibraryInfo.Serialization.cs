@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value, serializedAdditionalRawData);
+            return new BigDataPoolLibraryInfo(
+                name.Value,
+                path.Value,
+                containerName.Value,
+                Optional.ToNullable(uploadedTimestamp),
+                type.Value,
+                provisioningStatus.Value,
+                creatorId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BigDataPoolLibraryInfo>.Write(ModelReaderWriterOptions options)

@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 return null;
             }
             string name = default;
-            Optional<IDictionary<string, string>> placementProperties = default;
-            Optional<IDictionary<string, string>> capacities = default;
+            IDictionary<string, string> placementProperties = default;
+            IDictionary<string, string> capacities = default;
             int clientConnectionEndpointPort = default;
             int httpGatewayEndpointPort = default;
             Optional<ClusterDurabilityLevel> durabilityLevel = default;
@@ -271,7 +271,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones), Optional.ToNullable(httpGatewayTokenAuthEndpointPort), serializedAdditionalRawData);
+            return new ClusterNodeTypeDescription(
+                name,
+                placementProperties ?? new ChangeTrackingDictionary<string, string>(),
+                capacities ?? new ChangeTrackingDictionary<string, string>(),
+                clientConnectionEndpointPort,
+                httpGatewayEndpointPort,
+                Optional.ToNullable(durabilityLevel),
+                applicationPorts.Value,
+                ephemeralPorts.Value,
+                isPrimary,
+                vmInstanceCount,
+                Optional.ToNullable(reverseProxyEndpointPort),
+                Optional.ToNullable(isStateless),
+                Optional.ToNullable(multipleAvailabilityZones),
+                Optional.ToNullable(httpGatewayTokenAuthEndpointPort),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterNodeTypeDescription>.Write(ModelReaderWriterOptions options)

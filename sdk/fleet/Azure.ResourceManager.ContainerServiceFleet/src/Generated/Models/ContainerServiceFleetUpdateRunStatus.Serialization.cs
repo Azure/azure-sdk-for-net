@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<IReadOnlyList<ContainerServiceFleetUpdateStageStatus>> stages = default;
+            IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages = default;
             Optional<NodeImageSelectionStatus> nodeImageSelection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetUpdateRunStatus(status.Value, Optional.ToList(stages), nodeImageSelection.Value, serializedAdditionalRawData);
+            return new ContainerServiceFleetUpdateRunStatus(status.Value, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetUpdateRunStatus>.Write(ModelReaderWriterOptions options)

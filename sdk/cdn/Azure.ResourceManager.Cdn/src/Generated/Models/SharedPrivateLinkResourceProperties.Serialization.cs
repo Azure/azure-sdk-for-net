@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPrivateLinkResourceProperties(privateLink, privateLinkLocation.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new SharedPrivateLinkResourceProperties(
+                privateLink,
+                privateLinkLocation.Value,
+                groupId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)

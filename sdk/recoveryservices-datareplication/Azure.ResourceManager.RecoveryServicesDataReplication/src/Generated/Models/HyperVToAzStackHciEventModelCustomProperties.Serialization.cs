@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciEventModelCustomProperties(instanceType, serializedAdditionalRawData, eventSourceFriendlyName.Value, protectedItemFriendlyName.Value, sourceApplianceName.Value, targetApplianceName.Value, serverType.Value);
+            return new HyperVToAzStackHciEventModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                eventSourceFriendlyName.Value,
+                protectedItemFriendlyName.Value,
+                sourceApplianceName.Value,
+                targetApplianceName.Value,
+                serverType.Value);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciEventModelCustomProperties>.Write(ModelReaderWriterOptions options)

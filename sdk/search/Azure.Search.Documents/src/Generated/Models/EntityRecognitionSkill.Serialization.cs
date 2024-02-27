@@ -102,7 +102,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<EntityCategory>> categories = default;
+            IList<EntityCategory> categories = default;
             Optional<EntityRecognitionSkillLanguage?> defaultLanguageCode = default;
             Optional<bool?> includeTypelessEntities = default;
             Optional<double?> minimumPrecision = default;
@@ -199,7 +199,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new EntityRecognitionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToList(categories), Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(includeTypelessEntities), Optional.ToNullable(minimumPrecision));
+            return new EntityRecognitionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                categories ?? new ChangeTrackingList<EntityCategory>(),
+                Optional.ToNullable(defaultLanguageCode),
+                Optional.ToNullable(includeTypelessEntities),
+                Optional.ToNullable(minimumPrecision));
         }
     }
 }

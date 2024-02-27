@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeSnapshotData(id, name, type, systemData.Value, location, snapshotId.Value, Optional.ToNullable(created), provisioningState.Value, serializedAdditionalRawData);
+            return new NetAppVolumeSnapshotData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                location,
+                snapshotId.Value,
+                Optional.ToNullable(created),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeSnapshotData>.Write(ModelReaderWriterOptions options)

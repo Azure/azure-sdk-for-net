@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> serviceName = default;
-            Optional<IList<BgpCommunity>> bgpCommunities = default;
+            IList<BgpCommunity> bgpCommunities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,7 +207,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpServiceCommunity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, serviceName.Value, Optional.ToList(bgpCommunities));
+            return new BgpServiceCommunity(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                serviceName.Value,
+                bgpCommunities ?? new ChangeTrackingList<BgpCommunity>());
         }
 
         BinaryData IPersistableModel<BgpServiceCommunity>.Write(ModelReaderWriterOptions options)

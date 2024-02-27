@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ComputeModeOption> computeMode = default;
             Optional<string> workerSize = default;
             Optional<int> workerCount = default;
-            Optional<IReadOnlyList<string>> instanceNames = default;
+            IReadOnlyList<string> instanceNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceWorkerPoolData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(workerSizeId), Optional.ToNullable(computeMode), workerSize.Value, Optional.ToNullable(workerCount), Optional.ToList(instanceNames), kind.Value, serializedAdditionalRawData);
+            return new AppServiceWorkerPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                Optional.ToNullable(workerSizeId),
+                Optional.ToNullable(computeMode),
+                workerSize.Value,
+                Optional.ToNullable(workerCount),
+                instanceNames ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceWorkerPoolData>.Write(ModelReaderWriterOptions options)

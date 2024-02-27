@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmsChannelProperties(phone, accountSID, authToken.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
+            return new SmsChannelProperties(
+                phone,
+                accountSID,
+                authToken.Value,
+                Optional.ToNullable(isValidated),
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmsChannelProperties>.Write(ModelReaderWriterOptions options)

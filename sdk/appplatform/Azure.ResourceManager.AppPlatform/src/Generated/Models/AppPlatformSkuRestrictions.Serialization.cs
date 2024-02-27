@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<AppPlatformSkuRestrictionsType> type = default;
-            Optional<IReadOnlyList<string>> values = default;
+            IReadOnlyList<string> values = default;
             Optional<AppPlatformSkuRestrictionInfo> restrictionInfo = default;
             Optional<AppPlatformSkuRestrictionsReasonCode> reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), Optional.ToList(values), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new AppPlatformSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), restrictionInfo.Value, Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSkuRestrictions>.Write(ModelReaderWriterOptions options)

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<DataFactoryElement<string>> copyBehavior = default;
-            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
+            IList<DataFactoryMetadataItemInfo> metadata = default;
             string type = default;
             Optional<DataFactoryElement<int>> writeBatchSize = default;
             Optional<DataFactoryElement<string>> writeBatchTimeout = default;
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, copyBehavior.Value, Optional.ToList(metadata));
+            return new AzureBlobFSSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                copyBehavior.Value,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>());
         }
 
         BinaryData IPersistableModel<AzureBlobFSSink>.Write(ModelReaderWriterOptions options)

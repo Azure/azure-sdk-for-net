@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerConnectionData(id, name, type, systemData.Value, networkManagerId.Value, Optional.ToNullable(connectionState), description.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new NetworkManagerConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                networkManagerId.Value,
+                Optional.ToNullable(connectionState),
+                description.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerConnectionData>.Write(ModelReaderWriterOptions options)

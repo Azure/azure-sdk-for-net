@@ -102,7 +102,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventHubCaptureFileCreatedEventData(fileUrl.Value, fileType.Value, partitionId.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(eventCount), Optional.ToNullable(firstSequenceNumber), Optional.ToNullable(lastSequenceNumber), Optional.ToNullable(firstEnqueueTime), Optional.ToNullable(lastEnqueueTime));
+            return new EventHubCaptureFileCreatedEventData(
+                fileUrl.Value,
+                fileType.Value,
+                partitionId.Value,
+                Optional.ToNullable(sizeInBytes),
+                Optional.ToNullable(eventCount),
+                Optional.ToNullable(firstSequenceNumber),
+                Optional.ToNullable(lastSequenceNumber),
+                Optional.ToNullable(firstEnqueueTime),
+                Optional.ToNullable(lastEnqueueTime));
         }
 
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>

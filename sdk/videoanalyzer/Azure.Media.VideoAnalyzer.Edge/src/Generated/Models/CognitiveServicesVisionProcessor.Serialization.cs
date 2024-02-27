@@ -108,7 +108,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            return new CognitiveServicesVisionProcessor(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image.Value,
+                samplingOptions.Value,
+                operation);
         }
     }
 }

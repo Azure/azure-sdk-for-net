@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -362,7 +362,28 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), Optional.ToNullable(showInFeed), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new VirtualApplicationGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId.Value,
+                description.Value,
+                friendlyName.Value,
+                hostPoolArmPath,
+                workspaceArmPath.Value,
+                applicationGroupType,
+                Optional.ToNullable(cloudPCResource),
+                Optional.ToNullable(showInFeed),
+                managedBy.Value,
+                kind.Value,
+                Optional.ToNullable(etag),
+                identity,
+                sku.Value,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationGroupData>.Write(ModelReaderWriterOptions options)

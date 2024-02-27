@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.PostgreSql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<PostgreSqlServerSecurityAlertPolicyState> state = default;
-            Optional<IList<string>> disabledAlerts = default;
-            Optional<IList<string>> emailAddresses = default;
+            IList<string> disabledAlerts = default;
+            IList<string> emailAddresses = default;
             Optional<bool> emailAccountAdmins = default;
             Optional<string> storageEndpoint = default;
             Optional<string> storageAccountAccessKey = default;
@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToList(disabledAlerts), Optional.ToList(emailAddresses), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), serializedAdditionalRawData);
+            return new PostgreSqlServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(emailAccountAdmins),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

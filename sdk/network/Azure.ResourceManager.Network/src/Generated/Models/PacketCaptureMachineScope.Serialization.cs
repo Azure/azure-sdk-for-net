@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> include = default;
-            Optional<IList<string>> exclude = default;
+            IList<string> include = default;
+            IList<string> exclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureMachineScope(Optional.ToList(include), Optional.ToList(exclude), serializedAdditionalRawData);
+            return new PacketCaptureMachineScope(include ?? new ChangeTrackingList<string>(), exclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureMachineScope>.Write(ModelReaderWriterOptions options)

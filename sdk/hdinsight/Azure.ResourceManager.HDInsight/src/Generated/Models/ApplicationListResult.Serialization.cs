@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightApplicationData>> value = default;
+            IReadOnlyList<HDInsightApplicationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationListResult(value ?? new ChangeTrackingList<HDInsightApplicationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationListResult>.Write(ModelReaderWriterOptions options)

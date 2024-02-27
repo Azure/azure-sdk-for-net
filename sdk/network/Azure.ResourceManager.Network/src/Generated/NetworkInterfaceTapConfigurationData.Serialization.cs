@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceTapConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), virtualNetworkTap.Value, Optional.ToNullable(provisioningState));
+            return new NetworkInterfaceTapConfigurationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                virtualNetworkTap.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NetworkInterfaceTapConfigurationData>.Write(ModelReaderWriterOptions options)

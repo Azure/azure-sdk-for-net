@@ -418,47 +418,47 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ApplicationGatewaySku> sku = default;
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayOperationalState> operationalState = default;
-            Optional<IList<ApplicationGatewayIPConfiguration>> gatewayIPConfigurations = default;
-            Optional<IList<ApplicationGatewayAuthenticationCertificate>> authenticationCertificates = default;
-            Optional<IList<ApplicationGatewayTrustedRootCertificate>> trustedRootCertificates = default;
-            Optional<IList<ApplicationGatewayTrustedClientCertificate>> trustedClientCertificates = default;
-            Optional<IList<ApplicationGatewaySslCertificate>> sslCertificates = default;
-            Optional<IList<ApplicationGatewayFrontendIPConfiguration>> frontendIPConfigurations = default;
-            Optional<IList<ApplicationGatewayFrontendPort>> frontendPorts = default;
-            Optional<IList<ApplicationGatewayProbe>> probes = default;
-            Optional<IList<ApplicationGatewayBackendAddressPool>> backendAddressPools = default;
-            Optional<IList<ApplicationGatewayBackendHttpSettings>> backendHttpSettingsCollection = default;
-            Optional<IList<ApplicationGatewayBackendSettings>> backendSettingsCollection = default;
-            Optional<IList<ApplicationGatewayHttpListener>> httpListeners = default;
-            Optional<IList<ApplicationGatewayListener>> listeners = default;
-            Optional<IList<ApplicationGatewaySslProfile>> sslProfiles = default;
-            Optional<IList<ApplicationGatewayUrlPathMap>> urlPathMaps = default;
-            Optional<IList<ApplicationGatewayRequestRoutingRule>> requestRoutingRules = default;
-            Optional<IList<ApplicationGatewayRoutingRule>> routingRules = default;
-            Optional<IList<ApplicationGatewayRewriteRuleSet>> rewriteRuleSets = default;
-            Optional<IList<ApplicationGatewayRedirectConfiguration>> redirectConfigurations = default;
+            IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default;
+            IList<ApplicationGatewayAuthenticationCertificate> authenticationCertificates = default;
+            IList<ApplicationGatewayTrustedRootCertificate> trustedRootCertificates = default;
+            IList<ApplicationGatewayTrustedClientCertificate> trustedClientCertificates = default;
+            IList<ApplicationGatewaySslCertificate> sslCertificates = default;
+            IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default;
+            IList<ApplicationGatewayFrontendPort> frontendPorts = default;
+            IList<ApplicationGatewayProbe> probes = default;
+            IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default;
+            IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default;
+            IList<ApplicationGatewayBackendSettings> backendSettingsCollection = default;
+            IList<ApplicationGatewayHttpListener> httpListeners = default;
+            IList<ApplicationGatewayListener> listeners = default;
+            IList<ApplicationGatewaySslProfile> sslProfiles = default;
+            IList<ApplicationGatewayUrlPathMap> urlPathMaps = default;
+            IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default;
+            IList<ApplicationGatewayRoutingRule> routingRules = default;
+            IList<ApplicationGatewayRewriteRuleSet> rewriteRuleSets = default;
+            IList<ApplicationGatewayRedirectConfiguration> redirectConfigurations = default;
             Optional<ApplicationGatewayWebApplicationFirewallConfiguration> webApplicationFirewallConfiguration = default;
             Optional<WritableSubResource> firewallPolicy = default;
             Optional<bool> enableHttp2 = default;
             Optional<bool> enableFips = default;
             Optional<ApplicationGatewayAutoscaleConfiguration> autoscaleConfiguration = default;
-            Optional<IList<ApplicationGatewayPrivateLinkConfiguration>> privateLinkConfigurations = default;
-            Optional<IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<ApplicationGatewayPrivateLinkConfiguration> privateLinkConfigurations = default;
+            IReadOnlyList<ApplicationGatewayPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<ApplicationGatewayCustomError>> customErrorConfigurations = default;
+            IList<ApplicationGatewayCustomError> customErrorConfigurations = default;
             Optional<bool> forceFirewallPolicyAssociation = default;
-            Optional<IList<ApplicationGatewayLoadDistributionPolicy>> loadDistributionPolicies = default;
+            IList<ApplicationGatewayLoadDistributionPolicy> loadDistributionPolicies = default;
             Optional<ApplicationGatewayGlobalConfiguration> globalConfiguration = default;
             Optional<ApplicationGatewaySslPolicyName> defaultPredefinedSslPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -1000,7 +1000,52 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
+            return new ApplicationGatewayData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                sku.Value,
+                sslPolicy.Value,
+                Optional.ToNullable(operationalState),
+                gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>(),
+                trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>(),
+                trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>(),
+                sslCertificates ?? new ChangeTrackingList<ApplicationGatewaySslCertificate>(),
+                frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>(),
+                frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>(),
+                probes ?? new ChangeTrackingList<ApplicationGatewayProbe>(),
+                backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>(),
+                backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>(),
+                httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>(),
+                listeners ?? new ChangeTrackingList<ApplicationGatewayListener>(),
+                sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>(),
+                urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>(),
+                requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>(),
+                routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>(),
+                rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>(),
+                redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>(),
+                webApplicationFirewallConfiguration.Value,
+                firewallPolicy,
+                Optional.ToNullable(enableHttp2),
+                Optional.ToNullable(enableFips),
+                autoscaleConfiguration.Value,
+                privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                Optional.ToNullable(forceFirewallPolicyAssociation),
+                loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
+                globalConfiguration.Value,
+                Optional.ToNullable(defaultPredefinedSslPolicy));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)

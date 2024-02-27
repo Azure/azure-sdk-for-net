@@ -197,18 +197,18 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            IList<SecurityAssessmentResourceCategory> categories = default;
             Optional<SecurityAssessmentSeverity> severity = default;
             Optional<SecurityAssessmentUserImpact> userImpact = default;
             Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
+            IList<SecurityThreat> threats = default;
             Optional<bool> preview = default;
             Optional<SecurityAssessmentType> assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
             Optional<SecurityAssessmentPublishDates> publishDates = default;
             Optional<string> plannedDeprecationDate = default;
-            Optional<IList<SecurityAssessmentTactic>> tactics = default;
-            Optional<IList<SecurityAssessmentTechnique>> techniques = default;
+            IList<SecurityAssessmentTactic> tactics = default;
+            IList<SecurityAssessmentTechnique> techniques = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -399,7 +399,28 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataData(id, name, type, systemData.Value, displayName.Value, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), Optional.ToNullable(severity), Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), Optional.ToNullable(assessmentType), partnerData.Value, publishDates.Value, plannedDeprecationDate.Value, Optional.ToList(tactics), Optional.ToList(techniques), serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                policyDefinitionId.Value,
+                description.Value,
+                remediationDescription.Value,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(userImpact),
+                Optional.ToNullable(implementationEffort),
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                Optional.ToNullable(preview),
+                Optional.ToNullable(assessmentType),
+                partnerData.Value,
+                publishDates.Value,
+                plannedDeprecationDate.Value,
+                tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>(),
+                techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options)

@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.DataShare
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), description.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(shareKind), terms.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
+            return new DataShareData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdAt),
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(shareKind),
+                terms.Value,
+                userEmail.Value,
+                userName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareData>.Write(ModelReaderWriterOptions options)

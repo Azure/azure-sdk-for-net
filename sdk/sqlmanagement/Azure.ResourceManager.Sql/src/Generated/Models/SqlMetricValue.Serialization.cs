@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData);
+            return new SqlMetricValue(
+                Optional.ToNullable(count),
+                Optional.ToNullable(average),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(total),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricValue>.Write(ModelReaderWriterOptions options)

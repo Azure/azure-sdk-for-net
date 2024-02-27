@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryTestingResult(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData, Optional.ToNullable(status), outputUri.Value);
+            return new StreamAnalyticsQueryTestingResult(
+                code.Value,
+                message.Value,
+                target.Value,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(status),
+                outputUri.Value);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryTestingResult>.Write(ModelReaderWriterOptions options)

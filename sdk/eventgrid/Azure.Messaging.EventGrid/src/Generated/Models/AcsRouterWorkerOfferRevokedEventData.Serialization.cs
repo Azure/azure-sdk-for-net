@@ -60,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerOfferRevokedEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value);
+            return new AcsRouterWorkerOfferRevokedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                workerId.Value,
+                queueId.Value,
+                offerId.Value);
         }
 
         internal partial class AcsRouterWorkerOfferRevokedEventDataConverter : JsonConverter<AcsRouterWorkerOfferRevokedEventData>

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService
             Optional<DateTimeOffset> createdTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedOn = default;
             Optional<StaticSiteBuildStatus> status = default;
-            Optional<IReadOnlyList<StaticSiteUserProvidedFunctionAppData>> userProvidedFunctionApps = default;
+            IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteBuildData(id, name, type, systemData.Value, buildId.Value, sourceBranch.Value, pullRequestTitle.Value, hostname.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedOn), Optional.ToNullable(status), Optional.ToList(userProvidedFunctionApps), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteBuildData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                buildId.Value,
+                sourceBranch.Value,
+                pullRequestTitle.Value,
+                hostname.Value,
+                Optional.ToNullable(createdTimeUtc),
+                Optional.ToNullable(lastUpdatedOn),
+                Optional.ToNullable(status),
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options)

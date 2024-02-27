@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> priority = default;
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, IList<string>>> headers = default;
+            IDictionary<string, IList<string>> headers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -252,7 +252,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, Optional.ToDictionary(headers), serializedAdditionalRawData);
+            return new AppServiceIPSecurityRestriction(
+                ipAddress.Value,
+                subnetMask.Value,
+                vnetSubnetResourceId.Value,
+                Optional.ToNullable(vnetTrafficTag),
+                Optional.ToNullable(subnetTrafficTag),
+                action.Value,
+                Optional.ToNullable(tag),
+                Optional.ToNullable(priority),
+                name.Value,
+                description.Value,
+                headers ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options)

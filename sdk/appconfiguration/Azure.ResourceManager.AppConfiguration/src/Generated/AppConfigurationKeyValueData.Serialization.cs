@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppConfiguration
             Optional<ETag> eTag = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<bool> locked = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,20 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyValueData(id, name, type, systemData.Value, key.Value, label.Value, value.Value, contentType.Value, Optional.ToNullable(eTag), Optional.ToNullable(lastModified), Optional.ToNullable(locked), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new AppConfigurationKeyValueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                key.Value,
+                label.Value,
+                value.Value,
+                contentType.Value,
+                Optional.ToNullable(eTag),
+                Optional.ToNullable(lastModified),
+                Optional.ToNullable(locked),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationKeyValueData>.Write(ModelReaderWriterOptions options)

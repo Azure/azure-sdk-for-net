@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
             DhcpTypeEnum dhcpType = "Unknown";
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> segments = default;
+            IReadOnlyList<string> segments = default;
             Optional<WorkloadNetworkDhcpProvisioningState> provisioningState = default;
             Optional<long> revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName.Value, Optional.ToList(segments), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new UnknownWorkloadNetworkDhcpEntity(
+                dhcpType,
+                displayName.Value,
+                segments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpEntity>.Write(ModelReaderWriterOptions options)

@@ -146,13 +146,13 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> name = default;
             Optional<string> description = default;
-            Optional<IList<AzureFirewallNetworkRuleProtocol>> protocols = default;
-            Optional<IList<string>> sourceAddresses = default;
-            Optional<IList<string>> destinationAddresses = default;
-            Optional<IList<string>> destinationPorts = default;
-            Optional<IList<string>> destinationFqdns = default;
-            Optional<IList<string>> sourceIPGroups = default;
-            Optional<IList<string>> destinationIPGroups = default;
+            IList<AzureFirewallNetworkRuleProtocol> protocols = default;
+            IList<string> sourceAddresses = default;
+            IList<string> destinationAddresses = default;
+            IList<string> destinationPorts = default;
+            IList<string> destinationFqdns = default;
+            IList<string> sourceIPGroups = default;
+            IList<string> destinationIPGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -271,7 +271,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNetworkRule(name.Value, description.Value, Optional.ToList(protocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(destinationFqdns), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), serializedAdditionalRawData);
+            return new AzureFirewallNetworkRule(
+                name.Value,
+                description.Value,
+                protocols ?? new ChangeTrackingList<AzureFirewallNetworkRuleProtocol>(),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                destinationFqdns ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureFirewallNetworkRule>.Write(ModelReaderWriterOptions options)

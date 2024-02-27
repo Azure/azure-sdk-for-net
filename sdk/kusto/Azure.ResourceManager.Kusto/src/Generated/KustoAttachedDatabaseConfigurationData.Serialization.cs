@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Kusto
             Optional<KustoProvisioningState> provisioningState = default;
             Optional<string> databaseName = default;
             Optional<ResourceIdentifier> clusterResourceId = default;
-            Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
+            IReadOnlyList<string> attachedDatabaseNames = default;
             Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
             Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             Optional<string> databaseNameOverride = default;
@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, Optional.ToList(attachedDatabaseNames), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value, serializedAdditionalRawData);
+            return new KustoAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                databaseName.Value,
+                clusterResourceId.Value,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultPrincipalsModificationKind),
+                tableLevelSharingProperties.Value,
+                databaseNameOverride.Value,
+                databaseNamePrefix.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

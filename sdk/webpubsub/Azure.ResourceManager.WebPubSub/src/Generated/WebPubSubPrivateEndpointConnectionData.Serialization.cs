@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.WebPubSub
             Optional<SystemData> systemData = default;
             Optional<WebPubSubProvisioningState> provisioningState = default;
             Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            IReadOnlyList<string> groupIds = default;
             Optional<WebPubSubPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new WebPubSubPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

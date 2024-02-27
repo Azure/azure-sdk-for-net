@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventTarget(mediaType.Value, Optional.ToNullable(size), digest.Value, Optional.ToNullable(length), repository.Value, url.Value, tag.Value, name.Value, version.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventTarget(
+                mediaType.Value,
+                Optional.ToNullable(size),
+                digest.Value,
+                Optional.ToNullable(length),
+                repository.Value,
+                url.Value,
+                tag.Value,
+                name.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventTarget>.Write(ModelReaderWriterOptions options)

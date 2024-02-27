@@ -240,29 +240,29 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, int>> preferredDisks = default;
-            Optional<IReadOnlyList<DataBoxDiskCopyProgress>> copyProgress = default;
-            Optional<IReadOnlyList<DataBoxDiskGranularCopyProgress>> granularCopyProgress = default;
-            Optional<IReadOnlyList<DataBoxDiskGranularCopyLogDetails>> granularCopyLogDetails = default;
-            Optional<IReadOnlyDictionary<string, int>> disksAndSizeDetails = default;
+            IDictionary<string, int> preferredDisks = default;
+            IReadOnlyList<DataBoxDiskCopyProgress> copyProgress = default;
+            IReadOnlyList<DataBoxDiskGranularCopyProgress> granularCopyProgress = default;
+            IReadOnlyList<DataBoxDiskGranularCopyLogDetails> granularCopyLogDetails = default;
+            IReadOnlyDictionary<string, int> disksAndSizeDetails = default;
             Optional<string> passkey = default;
-            Optional<IReadOnlyList<DataBoxJobStage>> jobStages = default;
+            IReadOnlyList<DataBoxJobStage> jobStages = default;
             DataBoxContactDetails contactDetails = default;
             Optional<DataBoxShippingAddress> shippingAddress = default;
             Optional<PackageShippingDetails> deliveryPackage = default;
             Optional<PackageShippingDetails> returnPackage = default;
-            Optional<IList<DataImportDetails>> dataImportDetails = default;
-            Optional<IList<DataExportDetails>> dataExportDetails = default;
+            IList<DataImportDetails> dataImportDetails = default;
+            IList<DataExportDetails> dataExportDetails = default;
             DataBoxOrderType jobDetailsType = default;
             Optional<DataBoxOrderPreferences> preferences = default;
             Optional<ReverseShippingDetails> reverseShippingDetails = default;
-            Optional<IReadOnlyList<CopyLogDetails>> copyLogDetails = default;
+            IReadOnlyList<CopyLogDetails> copyLogDetails = default;
             Optional<string> reverseShipmentLabelSasKey = default;
             Optional<string> chainOfCustodySasKey = default;
             Optional<DeviceErasureDetails> deviceErasureDetails = default;
             Optional<DataBoxKeyEncryptionKey> keyEncryptionKey = default;
             Optional<int> expectedDataSizeInTerabytes = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
             Optional<LastMitigationActionOnJob> lastMitigationActionOnJob = default;
             Optional<DataCenterAddressResult> dataCenterAddress = default;
             Optional<DataCenterCode> dataCenterCode = default;
@@ -540,7 +540,34 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, Optional.ToDictionary(preferredDisks), Optional.ToList(copyProgress), Optional.ToList(granularCopyProgress), Optional.ToList(granularCopyLogDetails), Optional.ToDictionary(disksAndSizeDetails), passkey.Value);
+            return new DataBoxDiskJobDetails(
+                jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
+                contactDetails,
+                shippingAddress.Value,
+                deliveryPackage.Value,
+                returnPackage.Value,
+                dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
+                dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
+                jobDetailsType,
+                preferences.Value,
+                reverseShippingDetails.Value,
+                copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(),
+                reverseShipmentLabelSasKey.Value,
+                chainOfCustodySasKey.Value,
+                deviceErasureDetails.Value,
+                keyEncryptionKey.Value,
+                Optional.ToNullable(expectedDataSizeInTerabytes),
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                lastMitigationActionOnJob.Value,
+                dataCenterAddress.Value,
+                Optional.ToNullable(dataCenterCode),
+                serializedAdditionalRawData,
+                preferredDisks ?? new ChangeTrackingDictionary<string, int>(),
+                copyProgress ?? new ChangeTrackingList<DataBoxDiskCopyProgress>(),
+                granularCopyProgress ?? new ChangeTrackingList<DataBoxDiskGranularCopyProgress>(),
+                granularCopyLogDetails ?? new ChangeTrackingList<DataBoxDiskGranularCopyLogDetails>(),
+                disksAndSizeDetails ?? new ChangeTrackingDictionary<string, int>(),
+                passkey.Value);
         }
 
         BinaryData IPersistableModel<DataBoxDiskJobDetails>.Write(ModelReaderWriterOptions options)

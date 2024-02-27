@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> databaseName = default;
-            Optional<IReadOnlyList<string>> graphNames = default;
+            IReadOnlyList<string> graphNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames), serializedAdditionalRawData);
+            return new RestorableGremlinResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                databaseName.Value,
+                graphNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableGremlinResourceData>.Write(ModelReaderWriterOptions options)

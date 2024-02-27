@@ -372,7 +372,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMB), Optional.ToNullable(psDataInMB), Optional.ToNullable(targetDataInMB), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, serializedAdditionalRawData);
+            return new InMageProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                protectionStage.Value,
+                healthErrorCode.Value,
+                Optional.ToNullable(rpoInSeconds),
+                resyncRequired.Value,
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resyncDurationInSeconds),
+                Optional.ToNullable(diskCapacityInBytes),
+                Optional.ToNullable(fileSystemCapacityInBytes),
+                Optional.ToNullable(sourceDataInMB),
+                Optional.ToNullable(psDataInMB),
+                Optional.ToNullable(targetDataInMB),
+                diskResized.Value,
+                Optional.ToNullable(lastRpoCalculatedTime),
+                Optional.ToNullable(resyncProcessedBytes),
+                Optional.ToNullable(resyncTotalTransferredBytes),
+                Optional.ToNullable(resyncLast15MinutesTransferredBytes),
+                Optional.ToNullable(resyncLastDataTransferTimeUTC),
+                Optional.ToNullable(resyncStartTime),
+                progressHealth.Value,
+                progressStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

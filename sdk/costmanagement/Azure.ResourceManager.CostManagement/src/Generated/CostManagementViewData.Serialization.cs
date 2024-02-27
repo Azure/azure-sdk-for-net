@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.CostManagement
             Optional<ViewChartType> chart = default;
             Optional<AccumulatedType> accumulated = default;
             Optional<ViewMetricType> metric = default;
-            Optional<IList<ViewKpiProperties>> kpis = default;
-            Optional<IList<ViewPivotProperties>> pivots = default;
+            IList<ViewKpiProperties> kpis = default;
+            IList<ViewPivotProperties> pivots = default;
             Optional<ViewReportType> type0 = default;
             Optional<ReportTimeframeType> timeframe = default;
             Optional<ReportConfigTimePeriod> timePeriod = default;
@@ -418,7 +418,29 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), Optional.ToList(kpis), Optional.ToList(pivots), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementViewData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                scope.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                dateRange.Value,
+                currency.Value,
+                Optional.ToNullable(chart),
+                Optional.ToNullable(accumulated),
+                Optional.ToNullable(metric),
+                kpis ?? new ChangeTrackingList<ViewKpiProperties>(),
+                pivots ?? new ChangeTrackingList<ViewPivotProperties>(),
+                Optional.ToNullable(type0),
+                Optional.ToNullable(timeframe),
+                timePeriod.Value,
+                dataSet.Value,
+                Optional.ToNullable(includeMonetaryCommitment),
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options)

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             Optional<string> taskFilePath = default;
             Optional<string> valuesFilePath = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
             Optional<string> contextPath = default;
             Optional<string> contextAccessToken = default;
@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryFileTaskStepUpdateContent(type, contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, taskFilePath.Value, valuesFilePath.Value, Optional.ToList(values));
+            return new ContainerRegistryFileTaskStepUpdateContent(
+                type,
+                contextPath.Value,
+                contextAccessToken.Value,
+                serializedAdditionalRawData,
+                taskFilePath.Value,
+                valuesFilePath.Value,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryFileTaskStepUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerGroupData>> value = default;
+            IReadOnlyList<ContainerGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerGroupListResult(value ?? new ChangeTrackingList<ContainerGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupListResult>.Write(ModelReaderWriterOptions options)

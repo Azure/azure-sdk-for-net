@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Automation
             }
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
             Optional<AutomationEncryptionProperties> encryption = default;
-            Optional<IList<AutomationPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<bool> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<Uri> automationHybridServiceUrl = default;
@@ -371,7 +371,27 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), identity, sku.Value, lastModifiedBy.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), automationHybridServiceUrl.Value, serializedAdditionalRawData);
+            return new AutomationAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                identity,
+                sku.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(disableLocalAuth),
+                automationHybridServiceUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options)

@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<ConfigServerGitPatternRepository>> repositories = default;
+            IList<ConfigServerGitPatternRepository> repositories = default;
             Uri uri = default;
             Optional<string> label = default;
-            Optional<IList<string>> searchPaths = default;
+            IList<string> searchPaths = default;
             Optional<string> username = default;
             Optional<string> password = default;
             Optional<string> hostKey = default;
@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigServerGitProperty(Optional.ToList(repositories), uri, label.Value, Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking), serializedAdditionalRawData);
+            return new AppPlatformConfigServerGitProperty(
+                repositories ?? new ChangeTrackingList<ConfigServerGitPatternRepository>(),
+                uri,
+                label.Value,
+                searchPaths ?? new ChangeTrackingList<string>(),
+                username.Value,
+                password.Value,
+                hostKey.Value,
+                hostKeyAlgorithm.Value,
+                privateKey.Value,
+                Optional.ToNullable(strictHostKeyChecking),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigServerGitProperty>.Write(ModelReaderWriterOptions options)

@@ -240,7 +240,19 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), Optional.ToNullable(hasDeployment), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeviceGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(osFeedType),
+                Optional.ToNullable(updatePolicy),
+                Optional.ToNullable(allowCrashDumpsCollection),
+                Optional.ToNullable(regionalDataBoundary),
+                Optional.ToNullable(hasDeployment),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeviceGroupData>.Write(ModelReaderWriterOptions options)

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
+            IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
             Optional<bool> resyncRequired = default;
             Optional<string> dnsServers = default;
             Optional<bool> isSwift = default;
@@ -253,7 +253,20 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkData(id, name, type, systemData.Value, vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                vnetResourceId.Value,
+                certThumbprint.Value,
+                certBlob.Value,
+                routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
+                Optional.ToNullable(resyncRequired),
+                dnsServers.Value,
+                Optional.ToNullable(isSwift),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options)

@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             string networkFabricSku = default;
             Optional<string> fabricVersion = default;
-            Optional<IReadOnlyList<string>> routerIds = default;
+            IReadOnlyList<string> routerIds = default;
             ResourceIdentifier networkFabricControllerId = default;
             Optional<int> rackCount = default;
             int serverCountPerRack = default;
@@ -209,9 +209,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             long fabricAsn = default;
             TerminalServerConfiguration terminalServerConfiguration = default;
             ManagementNetworkConfigurationProperties managementNetworkConfiguration = default;
-            Optional<IReadOnlyList<string>> racks = default;
-            Optional<IReadOnlyList<string>> l2IsolationDomains = default;
-            Optional<IReadOnlyList<string>> l3IsolationDomains = default;
+            IReadOnlyList<string> racks = default;
+            IReadOnlyList<string> l2IsolationDomains = default;
+            IReadOnlyList<string> l3IsolationDomains = default;
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<NetworkFabricProvisioningState> provisioningState = default;
             Optional<NetworkFabricAdministrativeState> administrativeState = default;
@@ -422,7 +422,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkFabricSku, fabricVersion.Value, Optional.ToList(routerIds), networkFabricControllerId, Optional.ToNullable(rackCount), serverCountPerRack, ipv4Prefix, ipv6Prefix.Value, fabricAsn, terminalServerConfiguration, managementNetworkConfiguration, Optional.ToList(racks), Optional.ToList(l2IsolationDomains), Optional.ToList(l3IsolationDomains), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                networkFabricSku,
+                fabricVersion.Value,
+                routerIds ?? new ChangeTrackingList<string>(),
+                networkFabricControllerId,
+                Optional.ToNullable(rackCount),
+                serverCountPerRack,
+                ipv4Prefix,
+                ipv6Prefix.Value,
+                fabricAsn,
+                terminalServerConfiguration,
+                managementNetworkConfiguration,
+                racks ?? new ChangeTrackingList<string>(),
+                l2IsolationDomains ?? new ChangeTrackingList<string>(),
+                l3IsolationDomains ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricData>.Write(ModelReaderWriterOptions options)

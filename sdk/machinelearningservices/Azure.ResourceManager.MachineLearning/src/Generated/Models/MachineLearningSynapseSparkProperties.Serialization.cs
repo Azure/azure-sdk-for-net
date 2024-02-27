@@ -196,7 +196,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSynapseSparkProperties(autoScaleProperties.Value, autoPauseProperties.Value, sparkVersion.Value, Optional.ToNullable(nodeCount), nodeSize.Value, nodeSizeFamily.Value, subscriptionId.Value, resourceGroup.Value, workspaceName.Value, poolName.Value, serializedAdditionalRawData);
+            return new MachineLearningSynapseSparkProperties(
+                autoScaleProperties.Value,
+                autoPauseProperties.Value,
+                sparkVersion.Value,
+                Optional.ToNullable(nodeCount),
+                nodeSize.Value,
+                nodeSizeFamily.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                workspaceName.Value,
+                poolName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSynapseSparkProperties>.Write(ModelReaderWriterOptions options)

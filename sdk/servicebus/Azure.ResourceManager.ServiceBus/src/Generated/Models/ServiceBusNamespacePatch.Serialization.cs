@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             Optional<ServiceBusSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             Optional<string> serviceBusEndpoint = default;
             Optional<string> metricId = default;
             Optional<ServiceBusEncryption> encryption = default;
-            Optional<IList<ServiceBusPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNamespacePatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
+            return new ServiceBusNamespacePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                provisioningState.Value,
+                status.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serviceBusEndpoint.Value,
+                metricId.Value,
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(),
+                Optional.ToNullable(disableLocalAuth),
+                alternateName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNamespacePatch>.Write(ModelReaderWriterOptions options)

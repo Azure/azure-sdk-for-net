@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
             Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
             Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             Optional<OperationalInsightsWorkspaceFeatures> features = default;
             Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -408,7 +408,28 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(customerId),
+                sku.Value,
+                Optional.ToNullable(retentionInDays),
+                workspaceCapping.Value,
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(modifiedDate),
+                Optional.ToNullable(publicNetworkAccessForIngestion),
+                Optional.ToNullable(publicNetworkAccessForQuery),
+                Optional.ToNullable(forceCmkForQuery),
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features.Value,
+                defaultDataCollectionRuleResourceId.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)

@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkypeChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new SkypeChannel(
+                channelName,
+                Optional.ToNullable(etag),
+                provisioningState.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<SkypeChannel>.Write(ModelReaderWriterOptions options)

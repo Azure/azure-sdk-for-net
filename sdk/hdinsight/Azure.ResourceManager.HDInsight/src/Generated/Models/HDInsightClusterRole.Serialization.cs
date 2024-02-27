@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<HardwareProfile> hardwareProfile = default;
             Optional<OSProfile> osProfile = default;
             Optional<HDInsightVirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IList<HDInsightClusterDataDiskGroup>> dataDisksGroups = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
+            IList<HDInsightClusterDataDiskGroup> dataDisksGroups = default;
+            IList<ScriptAction> scriptActions = default;
             Optional<bool> encryptDataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterRole(name.Value, Optional.ToNullable(minInstanceCount), Optional.ToNullable(targetInstanceCount), vmGroupName.Value, autoScale.Value, hardwareProfile.Value, osProfile.Value, virtualNetworkProfile.Value, Optional.ToList(dataDisksGroups), Optional.ToList(scriptActions), Optional.ToNullable(encryptDataDisks), serializedAdditionalRawData);
+            return new HDInsightClusterRole(
+                name.Value,
+                Optional.ToNullable(minInstanceCount),
+                Optional.ToNullable(targetInstanceCount),
+                vmGroupName.Value,
+                autoScale.Value,
+                hardwareProfile.Value,
+                osProfile.Value,
+                virtualNetworkProfile.Value,
+                dataDisksGroups ?? new ChangeTrackingList<HDInsightClusterDataDiskGroup>(),
+                scriptActions ?? new ChangeTrackingList<ScriptAction>(),
+                Optional.ToNullable(encryptDataDisks),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterRole>.Write(ModelReaderWriterOptions options)

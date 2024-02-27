@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             Optional<long> folderId = default;
-            Optional<IReadOnlyList<SynapseSsisVariable>> variables = default;
+            IReadOnlyList<SynapseSsisVariable> variables = default;
             SynapseSsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisEnvironment(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToList(variables));
+            return new SynapseSsisEnvironment(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                variables ?? new ChangeTrackingList<SynapseSsisVariable>());
         }
 
         BinaryData IPersistableModel<SynapseSsisEnvironment>.Write(ModelReaderWriterOptions options)

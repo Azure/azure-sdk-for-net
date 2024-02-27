@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<TimeSpan> timeout = default;
-            Optional<IReadOnlyList<ScriptParameter>> parameters = default;
+            IReadOnlyList<ScriptParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptCmdletData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(timeout), Optional.ToList(parameters), serializedAdditionalRawData);
+            return new ScriptCmdletData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(timeout),
+                parameters ?? new ChangeTrackingList<ScriptParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptCmdletData>.Write(ModelReaderWriterOptions options)

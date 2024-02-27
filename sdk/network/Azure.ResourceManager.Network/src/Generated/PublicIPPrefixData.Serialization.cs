@@ -189,17 +189,17 @@ namespace Azure.ResourceManager.Network
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<PublicIPPrefixSku> sku = default;
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NetworkIPVersion> publicIPAddressVersion = default;
-            Optional<IList<IPTag>> ipTags = default;
+            IList<IPTag> ipTags = default;
             Optional<int> prefixLength = default;
             Optional<string> ipPrefix = default;
-            Optional<IReadOnlyList<SubResource>> publicIPAddresses = default;
+            IReadOnlyList<SubResource> publicIPAddresses = default;
             Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
             Optional<WritableSubResource> customIPPrefix = default;
             Optional<Guid> resourceGuid = default;
@@ -410,7 +410,27 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAddressVersion), Optional.ToList(ipTags), Optional.ToNullable(prefixLength), ipPrefix.Value, Optional.ToList(publicIPAddresses), loadBalancerFrontendIPConfiguration, customIPPrefix, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), natGateway.Value);
+            return new PublicIPPrefixData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku.Value,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicIPAddressVersion),
+                ipTags ?? new ChangeTrackingList<IPTag>(),
+                Optional.ToNullable(prefixLength),
+                ipPrefix.Value,
+                publicIPAddresses ?? new ChangeTrackingList<SubResource>(),
+                loadBalancerFrontendIPConfiguration,
+                customIPPrefix,
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                natGateway.Value);
         }
 
         BinaryData IPersistableModel<PublicIPPrefixData>.Write(ModelReaderWriterOptions options)

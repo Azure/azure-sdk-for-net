@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new PeeringDirectConnection(
+                Optional.ToNullable(bandwidthInMbps),
+                Optional.ToNullable(provisionedBandwidthInMbps),
+                Optional.ToNullable(sessionAddressProvider),
+                Optional.ToNullable(useForPeeringService),
+                microsoftTrackingId.Value,
+                Optional.ToNullable(peeringDBFacilityId),
+                Optional.ToNullable(connectionState),
+                bgpSession.Value,
+                connectionIdentifier.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringDirectConnection>.Write(ModelReaderWriterOptions options)

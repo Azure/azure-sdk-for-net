@@ -391,13 +391,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> lastAgentUpgradeType = default;
             Optional<string> agentUpgradeJobId = default;
             Optional<string> agentUpgradeAttemptToVersion = default;
-            Optional<IReadOnlyList<InMageRcmProtectedDiskDetails>> protectedDisks = default;
+            IReadOnlyList<InMageRcmProtectedDiskDetails> protectedDisks = default;
             Optional<string> isLastUpgradeSuccessful = default;
             Optional<bool> isAgentRegistrationSuccessfulAfterFailover = default;
             Optional<InMageRcmMobilityAgentDetails> mobilityAgentDetails = default;
-            Optional<IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails>> lastAgentUpgradeErrorDetails = default;
-            Optional<IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails>> agentUpgradeBlockingErrorDetails = default;
-            Optional<IReadOnlyList<InMageRcmNicDetails>> vmNics = default;
+            IReadOnlyList<InMageRcmLastAgentUpgradeErrorDetails> lastAgentUpgradeErrorDetails = default;
+            IReadOnlyList<InMageRcmAgentUpgradeBlockingErrorDetails> agentUpgradeBlockingErrorDetails = default;
+            IReadOnlyList<InMageRcmNicDetails> vmNics = default;
             Optional<InMageRcmDiscoveredProtectedVmDetails> discoveredVmDetails = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -827,7 +827,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
+            return new InMageRcmReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                internalIdentifier.Value,
+                fabricDiscoveryMachineId.Value,
+                multiVmGroupName.Value,
+                discoveryType.Value,
+                Optional.ToNullable(processServerId),
+                Optional.ToNullable(processorCoreCount),
+                Optional.ToNullable(allocatedMemoryInMB),
+                processServerName.Value,
+                runAsAccountId.Value,
+                osType.Value,
+                firmwareType.Value,
+                primaryNicIPAddress.Value,
+                targetGeneration.Value,
+                licenseType.Value,
+                storageAccountId.Value,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetResourceGroupId.Value,
+                targetLocation.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                failoverRecoveryPointId.Value,
+                Optional.ToNullable(lastRecoveryPointReceived),
+                Optional.ToNullable(lastRpoInSeconds),
+                Optional.ToNullable(lastRpoCalculatedTime),
+                lastRecoveryPointId.Value,
+                Optional.ToNullable(initialReplicationProgressPercentage),
+                Optional.ToNullable(initialReplicationProcessedBytes),
+                Optional.ToNullable(initialReplicationTransferredBytes),
+                Optional.ToNullable(initialReplicationProgressHealth),
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resyncProcessedBytes),
+                Optional.ToNullable(resyncTransferredBytes),
+                Optional.ToNullable(resyncProgressHealth),
+                resyncRequired.Value,
+                Optional.ToNullable(resyncState),
+                Optional.ToNullable(agentUpgradeState),
+                lastAgentUpgradeType.Value,
+                agentUpgradeJobId.Value,
+                agentUpgradeAttemptToVersion.Value,
+                protectedDisks ?? new ChangeTrackingList<InMageRcmProtectedDiskDetails>(),
+                isLastUpgradeSuccessful.Value,
+                Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover),
+                mobilityAgentDetails.Value,
+                lastAgentUpgradeErrorDetails ?? new ChangeTrackingList<InMageRcmLastAgentUpgradeErrorDetails>(),
+                agentUpgradeBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmAgentUpgradeBlockingErrorDetails>(),
+                vmNics ?? new ChangeTrackingList<InMageRcmNicDetails>(),
+                discoveredVmDetails.Value);
         }
 
         BinaryData IPersistableModel<InMageRcmReplicationDetails>.Write(ModelReaderWriterOptions options)

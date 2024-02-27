@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 return null;
             }
             IList<string> scopes = default;
-            Optional<IList<AlertProcessingRuleCondition>> conditions = default;
+            IList<AlertProcessingRuleCondition> conditions = default;
             Optional<AlertProcessingRuleSchedule> schedule = default;
             IList<AlertProcessingRuleAction> actions = default;
             Optional<string> description = default;
@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleProperties(scopes, Optional.ToList(conditions), schedule.Value, actions, description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AlertProcessingRuleProperties(
+                scopes,
+                conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
+                schedule.Value,
+                actions,
+                description.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleProperties>.Write(ModelReaderWriterOptions options)

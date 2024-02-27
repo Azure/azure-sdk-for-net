@@ -72,7 +72,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryArtifactEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, connectedRegistry.Value);
+            return new ContainerRegistryArtifactEventData(
+                id.Value,
+                Optional.ToNullable(timestamp),
+                action.Value,
+                location.Value,
+                target.Value,
+                connectedRegistry.Value);
         }
 
         internal partial class ContainerRegistryArtifactEventDataConverter : JsonConverter<ContainerRegistryArtifactEventData>

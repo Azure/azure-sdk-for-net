@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
-            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             Optional<bool> ignoreConflictingHostNames = default;
             Optional<bool> ignoreDatabases = default;
             Optional<string> appServicePlan = default;
@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreRequestInfo(id, name, type, systemData.Value, storageAccountUrl.Value, blobName.Value, Optional.ToNullable(overwrite), siteName.Value, Optional.ToList(databases), Optional.ToNullable(ignoreConflictingHostNames), Optional.ToNullable(ignoreDatabases), appServicePlan.Value, Optional.ToNullable(operationType), Optional.ToNullable(adjustConnectionStrings), hostingEnvironment.Value, kind.Value, serializedAdditionalRawData);
+            return new RestoreRequestInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountUrl.Value,
+                blobName.Value,
+                Optional.ToNullable(overwrite),
+                siteName.Value,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                Optional.ToNullable(ignoreConflictingHostNames),
+                Optional.ToNullable(ignoreDatabases),
+                appServicePlan.Value,
+                Optional.ToNullable(operationType),
+                Optional.ToNullable(adjustConnectionStrings),
+                hostingEnvironment.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestoreRequestInfo>.Write(ModelReaderWriterOptions options)

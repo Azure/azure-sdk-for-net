@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> sqlDedicatedGatewayEndpoint = default;
-            Optional<IReadOnlyList<SqlDedicatedGatewayRegionalService>> locations = default;
+            IReadOnlyList<SqlDedicatedGatewayRegionalService> locations = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<CosmosDBServiceSize> instanceSize = default;
             Optional<int> instanceCount = default;
@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDedicatedGatewayServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, sqlDedicatedGatewayEndpoint.Value, Optional.ToList(locations));
+            return new SqlDedicatedGatewayServiceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties,
+                sqlDedicatedGatewayEndpoint.Value,
+                locations ?? new ChangeTrackingList<SqlDedicatedGatewayRegionalService>());
         }
 
         BinaryData IPersistableModel<SqlDedicatedGatewayServiceProperties>.Write(ModelReaderWriterOptions options)

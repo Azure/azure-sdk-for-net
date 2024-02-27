@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
             Optional<RestorePointType> type = default;
-            Optional<IList<RecoveryPointTierInformationV2>> recoveryPointTierDetails = default;
-            Optional<IDictionary<string, RecoveryPointMoveReadinessInfo>> recoveryPointMoveReadinessInfo = default;
+            IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
+            IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = "AzureWorkloadRecoveryPoint";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -189,7 +189,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadRecoveryPoint(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointTimeInUTC), Optional.ToNullable(type), Optional.ToList(recoveryPointTierDetails), Optional.ToDictionary(recoveryPointMoveReadinessInfo), recoveryPointProperties.Value);
+            return new WorkloadRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointTimeInUTC),
+                Optional.ToNullable(type),
+                recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
+                recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
+                recoveryPointProperties.Value);
         }
 
         BinaryData IPersistableModel<WorkloadRecoveryPoint>.Write(ModelReaderWriterOptions options)

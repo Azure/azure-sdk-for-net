@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateDnsZoneGroupData>> value = default;
+            IReadOnlyList<PrivateDnsZoneGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateDnsZoneGroupListResult(value ?? new ChangeTrackingList<PrivateDnsZoneGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneGroupListResult>.Write(ModelReaderWriterOptions options)

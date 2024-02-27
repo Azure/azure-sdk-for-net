@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Advisor.Models
             Optional<string> name = default;
             Optional<string> actionGroupResourceId = default;
             Optional<int> frequency = default;
-            Optional<IList<Category>> categories = default;
+            IList<Category> categories = default;
             Optional<string> language = default;
             Optional<DigestConfigState> state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigestConfig(name.Value, actionGroupResourceId.Value, Optional.ToNullable(frequency), Optional.ToList(categories), language.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new DigestConfig(
+                name.Value,
+                actionGroupResourceId.Value,
+                Optional.ToNullable(frequency),
+                categories ?? new ChangeTrackingList<Category>(),
+                language.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigestConfig>.Write(ModelReaderWriterOptions options)

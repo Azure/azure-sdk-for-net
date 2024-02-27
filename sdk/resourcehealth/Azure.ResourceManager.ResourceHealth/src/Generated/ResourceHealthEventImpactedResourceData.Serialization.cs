@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<string> status = default;
             Optional<string> maintenanceStartTime = default;
             Optional<string> maintenanceEndTime = default;
-            Optional<IReadOnlyList<ResourceHealthKeyValueItem>> info = default;
+            IReadOnlyList<ResourceHealthKeyValueItem> info = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,7 +260,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, Optional.ToList(info), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(targetResourceType),
+                targetResourceId.Value,
+                targetRegion.Value,
+                resourceName.Value,
+                resourceGroup.Value,
+                status.Value,
+                maintenanceStartTime.Value,
+                maintenanceEndTime.Value,
+                info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)

@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault
             }
             Optional<ETag> etag = default;
             Optional<ManagedHsmSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedHsmPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), sku.Value, serializedAdditionalRawData);
+            return new ManagedHsmPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedHsmPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

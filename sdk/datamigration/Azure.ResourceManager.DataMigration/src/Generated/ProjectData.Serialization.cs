@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataMigration
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataMigration
             Optional<DateTimeOffset> creationTime = default;
             Optional<ConnectionInfo> sourceConnectionInfo = default;
             Optional<ConnectionInfo> targetConnectionInfo = default;
-            Optional<IList<DatabaseInfo>> databasesInfo = default;
+            IList<DatabaseInfo> databasesInfo = default;
             Optional<ProjectProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -319,7 +319,23 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(sourcePlatform), azureAuthenticationInfo.Value, Optional.ToNullable(targetPlatform), Optional.ToNullable(creationTime), sourceConnectionInfo.Value, targetConnectionInfo.Value, Optional.ToList(databasesInfo), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ProjectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(sourcePlatform),
+                azureAuthenticationInfo.Value,
+                Optional.ToNullable(targetPlatform),
+                Optional.ToNullable(creationTime),
+                sourceConnectionInfo.Value,
+                targetConnectionInfo.Value,
+                databasesInfo ?? new ChangeTrackingList<DatabaseInfo>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectData>.Write(ModelReaderWriterOptions options)

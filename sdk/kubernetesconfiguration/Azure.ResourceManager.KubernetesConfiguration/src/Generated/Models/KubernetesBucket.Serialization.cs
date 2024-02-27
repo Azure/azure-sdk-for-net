@@ -207,7 +207,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesBucket(url.Value, bucketName.Value, Optional.ToNullable(insecure), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value, serializedAdditionalRawData);
+            return new KubernetesBucket(
+                url.Value,
+                bucketName.Value,
+                Optional.ToNullable(insecure),
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(syncIntervalInSeconds),
+                accessKey.Value,
+                localAuthRef.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesBucket>.Write(ModelReaderWriterOptions options)

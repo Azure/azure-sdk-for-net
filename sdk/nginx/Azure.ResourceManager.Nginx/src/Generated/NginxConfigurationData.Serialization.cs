@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.Nginx
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxConfigurationData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new NginxConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxConfigurationData>.Write(ModelReaderWriterOptions options)

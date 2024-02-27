@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualRouterPeeringData>> value = default;
+            IReadOnlyList<VirtualRouterPeeringData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterPeeringListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualRouterPeeringListResult(value ?? new ChangeTrackingList<VirtualRouterPeeringData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualRouterPeeringListResult>.Write(ModelReaderWriterOptions options)

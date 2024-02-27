@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
-            Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<DataFactoryPackageStore>> packageStores = default;
+            IList<CustomSetupBase> expressCustomSetupProperties = default;
+            IList<DataFactoryPackageStore> packageStores = default;
             Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeSsisProperties(catalogInfo.Value, Optional.ToNullable(licenseType), customSetupScriptProperties.Value, dataProxyProperties.Value, Optional.ToNullable(edition), Optional.ToList(expressCustomSetupProperties), Optional.ToList(packageStores), credential.Value, additionalProperties);
+            return new IntegrationRuntimeSsisProperties(
+                catalogInfo.Value,
+                Optional.ToNullable(licenseType),
+                customSetupScriptProperties.Value,
+                dataProxyProperties.Value,
+                Optional.ToNullable(edition),
+                expressCustomSetupProperties ?? new ChangeTrackingList<CustomSetupBase>(),
+                packageStores ?? new ChangeTrackingList<DataFactoryPackageStore>(),
+                credential.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeSsisProperties>.Write(ModelReaderWriterOptions options)

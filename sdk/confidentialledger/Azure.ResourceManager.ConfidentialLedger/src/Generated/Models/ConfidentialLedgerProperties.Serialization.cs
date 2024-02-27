@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerRunningState> runningState = default;
             Optional<ConfidentialLedgerType> ledgerType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
-            Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
+            IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default;
+            IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals), serializedAdditionalRawData);
+            return new ConfidentialLedgerProperties(
+                ledgerName.Value,
+                ledgerUri.Value,
+                identityServiceUri.Value,
+                ledgerInternalNamespace.Value,
+                Optional.ToNullable(runningState),
+                Optional.ToNullable(ledgerType),
+                Optional.ToNullable(provisioningState),
+                aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(),
+                certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)

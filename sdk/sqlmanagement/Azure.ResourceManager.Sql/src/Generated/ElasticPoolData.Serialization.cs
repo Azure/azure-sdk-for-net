@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql
             }
             Optional<SqlSku> sku = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -364,7 +364,27 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
+            return new ElasticPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                kind.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(minCapacity),
+                perDatabaseSettings.Value,
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(licenseType),
+                maintenanceConfigurationId.Value,
+                Optional.ToNullable(highAvailabilityReplicaCount),
+                Optional.ToNullable(preferredEnclaveType),
+                Optional.ToNullable(availabilityZone),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolData>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<IList<DirectLineSite>> sites = default;
+            IList<DirectLineSite> sites = default;
             Optional<string> extensionKey1 = default;
             Optional<string> extensionKey2 = default;
             Optional<string> directLineEmbedCode = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineChannelProperties(Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
+            return new DirectLineChannelProperties(sites ?? new ChangeTrackingList<DirectLineSite>(), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DirectLineChannelProperties>.Write(ModelReaderWriterOptions options)

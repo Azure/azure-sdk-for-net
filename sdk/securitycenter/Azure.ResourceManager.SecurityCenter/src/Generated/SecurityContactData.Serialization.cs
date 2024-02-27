@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactData(id, name, type, systemData.Value, emails.Value, phone.Value, alertNotifications.Value, notificationsByRole.Value, serializedAdditionalRawData);
+            return new SecurityContactData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                emails.Value,
+                phone.Value,
+                alertNotifications.Value,
+                notificationsByRole.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options)

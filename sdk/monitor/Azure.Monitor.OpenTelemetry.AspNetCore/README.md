@@ -24,6 +24,16 @@ The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with in
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
 
+* Resource Detectors
+  * **AppServiceResourceDetector**: Adds resource attributes for the applications running in Azure App Service.
+  * **AzureVMResourceDetector**: Adds resource attributes for the applications running in an Azure Virtual Machine.
+  * **AzureContainerAppsResourceDetector**: Adds resource attributes for the applications running in Azure Container Apps.
+
+   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.ResourceDetectors.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
+
+* [Live Metrics](https://learn.microsoft.com/azure/azure-monitor/app/live-stream)
+  * Integrated support for live metrics through the [Azure.Monitor.OpenTelemetry.LiveMetrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics) package, enabling real-time monitoring of application performance.
+
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 
 ### Install the package
@@ -235,6 +245,21 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(builder =>
     {
         options.SetDbStatementForStoredProcedure = false;
     });
+});
+```
+
+#### Disable Live Metrics
+
+By default, the Live Metrics feature is enabled in the Azure Monitor Distro. This feature allows for real-time monitoring of application performance, providing immediate insights into your application's operations. However, there may be scenarios where you prefer to disable this feature, such as to optimize resource usage or in environments where real-time monitoring is not a requirement.
+
+To disable Live Metrics, you can set the `EnableLiveMetrics` property to `false` in the `AzureMonitorOptions`. Here's an example of how to disable Live Metrics:
+
+```C#
+// Disable Live Metrics by setting EnableLiveMetrics to false in the UseAzureMonitor configuration.
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+{
+    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    o.EnableLiveMetrics = false;
 });
 ```
 

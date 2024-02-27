@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent), serializedAdditionalRawData);
+            return new CloudEndpointChangeEnumerationActivity(
+                Optional.ToNullable(lastUpdatedTimestamp),
+                Optional.ToNullable(operationState),
+                Optional.ToNullable(statusCode),
+                Optional.ToNullable(startedTimestamp),
+                Optional.ToNullable(processedFilesCount),
+                Optional.ToNullable(processedDirectoriesCount),
+                Optional.ToNullable(totalFilesCount),
+                Optional.ToNullable(totalDirectoriesCount),
+                Optional.ToNullable(totalSizeBytes),
+                Optional.ToNullable(progressPercent),
+                Optional.ToNullable(minutesRemaining),
+                Optional.ToNullable(totalCountsState),
+                Optional.ToNullable(deletesProgressPercent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointChangeEnumerationActivity>.Write(ModelReaderWriterOptions options)

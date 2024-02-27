@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricL2IsolationDomainData>> value = default;
+            IReadOnlyList<NetworkFabricL2IsolationDomainData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L2IsolationDomainsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new L2IsolationDomainsListResult(value ?? new ChangeTrackingList<NetworkFabricL2IsolationDomainData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L2IsolationDomainsListResult>.Write(ModelReaderWriterOptions options)

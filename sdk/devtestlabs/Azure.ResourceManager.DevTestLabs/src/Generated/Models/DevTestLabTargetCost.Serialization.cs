@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             Optional<DevTestLabTargetCostStatus> status = default;
             Optional<int> target = default;
-            Optional<IList<DevTestLabCostThreshold>> costThresholds = default;
+            IList<DevTestLabCostThreshold> costThresholds = default;
             Optional<DateTimeOffset> cycleStartDateTime = default;
             Optional<DateTimeOffset> cycleEndDateTime = default;
             Optional<DevTestLabReportingCycleType> cycleType = default;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), Optional.ToList(costThresholds), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType), serializedAdditionalRawData);
+            return new DevTestLabTargetCost(
+                Optional.ToNullable(status),
+                Optional.ToNullable(target),
+                costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
+                Optional.ToNullable(cycleStartDateTime),
+                Optional.ToNullable(cycleEndDateTime),
+                Optional.ToNullable(cycleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options)

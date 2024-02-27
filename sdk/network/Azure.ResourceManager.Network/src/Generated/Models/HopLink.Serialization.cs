@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
-            Optional<IReadOnlyDictionary<string, string>> context = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
+            IReadOnlyDictionary<string, string> context = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<long> roundTripTimeMin = default;
             Optional<long> roundTripTimeAvg = default;
@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HopLink(nextHopId.Value, linkType.Value, Optional.ToList(issues), Optional.ToDictionary(context), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax), serializedAdditionalRawData);
+            return new HopLink(
+                nextHopId.Value,
+                linkType.Value,
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                context ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId.Value,
+                Optional.ToNullable(roundTripTimeMin),
+                Optional.ToNullable(roundTripTimeAvg),
+                Optional.ToNullable(roundTripTimeMax),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HopLink>.Write(ModelReaderWriterOptions options)

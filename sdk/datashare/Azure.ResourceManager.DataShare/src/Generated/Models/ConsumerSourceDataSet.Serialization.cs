@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType), serializedAdditionalRawData);
+            return new ConsumerSourceDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataSetId),
+                Optional.ToNullable(dataSetLocation),
+                dataSetName.Value,
+                dataSetPath.Value,
+                Optional.ToNullable(dataSetType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumerSourceDataSet>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityDevOps
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsOrgData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AzureDevOpsOrgData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsOrgData>.Write(ModelReaderWriterOptions options)

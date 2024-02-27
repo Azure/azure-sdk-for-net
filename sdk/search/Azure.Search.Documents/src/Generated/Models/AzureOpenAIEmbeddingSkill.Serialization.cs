@@ -166,7 +166,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureOpenAIEmbeddingSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, resourceUri.Value, deploymentId.Value, apiKey.Value, authIdentity.Value);
+            return new AzureOpenAIEmbeddingSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                resourceUri.Value,
+                deploymentId.Value,
+                apiKey.Value,
+                authIdentity.Value);
         }
     }
 }

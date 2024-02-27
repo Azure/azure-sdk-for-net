@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> serviceProviderName = default;
             Optional<Uri> devPortalUrl = default;
             Optional<Uri> iconUrl = default;
-            Optional<IReadOnlyList<BotServiceProviderParameter>> parameters = default;
+            IReadOnlyList<BotServiceProviderParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderProperties(id.Value, displayName.Value, serviceProviderName.Value, devPortalUrl.Value, iconUrl.Value, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new BotServiceProviderProperties(
+                id.Value,
+                displayName.Value,
+                serviceProviderName.Value,
+                devPortalUrl.Value,
+                iconUrl.Value,
+                parameters ?? new ChangeTrackingList<BotServiceProviderParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderProperties>.Write(ModelReaderWriterOptions options)

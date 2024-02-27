@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri.Value, primaryUserAssignedIdentityId.Value, geoBackupKeyUri.Value, geoBackupUserAssignedIdentityId.Value, Optional.ToNullable(type), Optional.ToNullable(primaryEncryptionKeyStatus), Optional.ToNullable(geoBackupEncryptionKeyStatus), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerDataEncryption(
+                primaryKeyUri.Value,
+                primaryUserAssignedIdentityId.Value,
+                geoBackupKeyUri.Value,
+                geoBackupUserAssignedIdentityId.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(primaryEncryptionKeyStatus),
+                Optional.ToNullable(geoBackupEncryptionKeyStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)

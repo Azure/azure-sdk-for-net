@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsPrivateEndpointConnectionData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DigitalTwinsPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             Optional<string> tableName = default;
-            Optional<IList<ContainerAppDiagnosticDataColumn>> columns = default;
-            Optional<IList<BinaryData>> rows = default;
+            IList<ContainerAppDiagnosticDataColumn> columns = default;
+            IList<BinaryData> rows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticDataTableResult(tableName.Value, Optional.ToList(columns), Optional.ToList(rows), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticDataTableResult(tableName.Value, columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>(), rows ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticDataTableResult>.Write(ModelReaderWriterOptions options)

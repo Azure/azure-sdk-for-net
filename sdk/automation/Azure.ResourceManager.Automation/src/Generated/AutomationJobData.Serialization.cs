@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automation
             Optional<string> exception = default;
             Optional<DateTimeOffset?> lastModifiedTime = default;
             Optional<DateTimeOffset?> lastStatusModifiedTime = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> parameters = default;
             Optional<JobProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -376,7 +376,26 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobData(id, name, type, systemData.Value, runbook.Value, startedBy.Value, runOn.Value, Optional.ToNullable(jobId), Optional.ToNullable(creationTime), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), exception.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastStatusModifiedTime), Optional.ToDictionary(parameters), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AutomationJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                runbook.Value,
+                startedBy.Value,
+                runOn.Value,
+                Optional.ToNullable(jobId),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                exception.Value,
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastStatusModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobData>.Write(ModelReaderWriterOptions options)

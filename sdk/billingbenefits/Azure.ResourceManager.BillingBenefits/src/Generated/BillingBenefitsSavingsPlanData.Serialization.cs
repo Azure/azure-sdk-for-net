@@ -468,7 +468,36 @@ namespace Azure.ResourceManager.BillingBenefits
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), displayProvisioningState.Value, billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), userFriendlyAppliedScopeType.Value, appliedScopeProperties.Value, commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(expiryDateTime), Optional.ToNullable(purchaseDateTime), Optional.ToNullable(benefitStartTime), extendedStatusInfo.Value, Optional.ToNullable(renew), utilization.Value, renewSource.Value, renewDestination.Value, renewProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku,
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                displayProvisioningState.Value,
+                billingScopeId.Value,
+                billingProfileId.Value,
+                customerId.Value,
+                billingAccountId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(appliedScopeType),
+                userFriendlyAppliedScopeType.Value,
+                appliedScopeProperties.Value,
+                commitment.Value,
+                Optional.ToNullable(effectiveDateTime),
+                Optional.ToNullable(expiryDateTime),
+                Optional.ToNullable(purchaseDateTime),
+                Optional.ToNullable(benefitStartTime),
+                extendedStatusInfo.Value,
+                Optional.ToNullable(renew),
+                utilization.Value,
+                renewSource.Value,
+                renewDestination.Value,
+                renewProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanData>.Write(ModelReaderWriterOptions options)

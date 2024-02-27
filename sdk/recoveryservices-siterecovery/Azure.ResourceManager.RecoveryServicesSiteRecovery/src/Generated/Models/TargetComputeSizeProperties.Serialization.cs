@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<double> memoryInGB = default;
             Optional<int> maxDataDiskCount = default;
             Optional<int> maxNicsCount = default;
-            Optional<IReadOnlyList<SiteRecoveryComputeSizeErrorDetails>> errors = default;
+            IReadOnlyList<SiteRecoveryComputeSizeErrorDetails> errors = default;
             Optional<string> highIopsSupported = default;
-            Optional<IReadOnlyList<string>> hyperVGenerations = default;
+            IReadOnlyList<string> hyperVGenerations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations), serializedAdditionalRawData);
+            return new TargetComputeSizeProperties(
+                name.Value,
+                friendlyName.Value,
+                Optional.ToNullable(cpuCoresCount),
+                Optional.ToNullable(vCpusAvailable),
+                Optional.ToNullable(memoryInGB),
+                Optional.ToNullable(maxDataDiskCount),
+                Optional.ToNullable(maxNicsCount),
+                errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(),
+                highIopsSupported.Value,
+                hyperVGenerations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSizeProperties>.Write(ModelReaderWriterOptions options)

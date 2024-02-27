@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData);
+            return new UnknownServerPropertiesForCreate(
+                Optional.ToNullable(version),
+                Optional.ToNullable(sslEnforcement),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(infrastructureEncryption),
+                Optional.ToNullable(publicNetworkAccess),
+                storageProfile.Value,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)

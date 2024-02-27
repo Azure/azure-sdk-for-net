@@ -30,7 +30,7 @@ namespace Azure.Maps.Search.Models
             Optional<MapsAddress> address = default;
             Optional<LatLongPairAbbreviated> position = default;
             Optional<BoundingBox> viewport = default;
-            Optional<IReadOnlyList<FacilityEntryPoint>> entryPoints = default;
+            IReadOnlyList<FacilityEntryPoint> entryPoints = default;
             Optional<AddressRanges> addressRanges = default;
             Optional<MapsDataSource> dataSources = default;
             Optional<MapsSearchMatchType> matchType = default;
@@ -170,7 +170,22 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new SearchAddressResultItem(Optional.ToNullable(type), id.Value, Optional.ToNullable(score), Optional.ToNullable(dist), info.Value, Optional.ToNullable(entityType), poi.Value, address.Value, position.Value, viewport.Value, Optional.ToList(entryPoints), addressRanges.Value, dataSources.Value, Optional.ToNullable(matchType), Optional.ToNullable(detourTime));
+            return new SearchAddressResultItem(
+                Optional.ToNullable(type),
+                id.Value,
+                Optional.ToNullable(score),
+                Optional.ToNullable(dist),
+                info.Value,
+                Optional.ToNullable(entityType),
+                poi.Value,
+                address.Value,
+                position.Value,
+                viewport.Value,
+                entryPoints ?? new ChangeTrackingList<FacilityEntryPoint>(),
+                addressRanges.Value,
+                dataSources.Value,
+                Optional.ToNullable(matchType),
+                Optional.ToNullable(detourTime));
         }
     }
 }

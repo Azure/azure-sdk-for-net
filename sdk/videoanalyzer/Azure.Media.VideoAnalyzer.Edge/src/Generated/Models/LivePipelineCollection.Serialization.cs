@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<LivePipeline>> value = default;
+            IList<LivePipeline> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineCollection(Optional.ToList(value), continuationToken.Value);
+            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken.Value);
         }
     }
 }

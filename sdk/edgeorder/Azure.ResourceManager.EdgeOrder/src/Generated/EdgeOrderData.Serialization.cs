@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.EdgeOrder
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> orderItemIds = default;
+            IReadOnlyList<ResourceIdentifier> orderItemIds = default;
             Optional<EdgeOrderStageDetails> currentStage = default;
-            Optional<IReadOnlyList<EdgeOrderStageDetails>> orderStageHistory = default;
+            IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,15 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderData(id, name, type, systemData.Value, Optional.ToList(orderItemIds), currentStage.Value, Optional.ToList(orderStageHistory), serializedAdditionalRawData);
+            return new EdgeOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                currentStage.Value,
+                orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderData>.Write(ModelReaderWriterOptions options)

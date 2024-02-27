@@ -151,12 +151,12 @@ namespace Azure.AI.OpenAI
             Optional<int> maxTokens = default;
             Optional<float> temperature = default;
             Optional<float> topP = default;
-            Optional<IDictionary<int, int>> logitBias = default;
+            IDictionary<int, int> logitBias = default;
             Optional<string> user = default;
             Optional<int> n = default;
             Optional<int> logprobs = default;
             Optional<bool> echo = default;
-            Optional<IList<string>> stop = default;
+            IList<string> stop = default;
             Optional<float> presencePenalty = default;
             Optional<float> frequencyPenalty = default;
             Optional<int> bestOf = default;
@@ -301,7 +301,23 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompletionsOptions(prompt, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), Optional.ToDictionary(logitBias), user.Value, Optional.ToNullable(n), Optional.ToNullable(logprobs), Optional.ToNullable(echo), Optional.ToList(stop), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(bestOf), Optional.ToNullable(stream), model.Value, serializedAdditionalRawData);
+            return new CompletionsOptions(
+                prompt,
+                Optional.ToNullable(maxTokens),
+                Optional.ToNullable(temperature),
+                Optional.ToNullable(topP),
+                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                user.Value,
+                Optional.ToNullable(n),
+                Optional.ToNullable(logprobs),
+                Optional.ToNullable(echo),
+                stop ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(presencePenalty),
+                Optional.ToNullable(frequencyPenalty),
+                Optional.ToNullable(bestOf),
+                Optional.ToNullable(stream),
+                model.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompletionsOptions>.Write(ModelReaderWriterOptions options)

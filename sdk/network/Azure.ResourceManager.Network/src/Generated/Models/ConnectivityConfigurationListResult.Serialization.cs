@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityConfigurationData>> value = default;
+            IReadOnlyList<ConnectivityConfigurationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityConfigurationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConnectivityConfigurationListResult(value ?? new ChangeTrackingList<ConnectivityConfigurationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityConfigurationListResult>.Write(ModelReaderWriterOptions options)

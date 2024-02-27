@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -360,7 +360,27 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, Optional.ToNullable(isSystemTask), serializedAdditionalRawData);
+            return new ContainerRegistryTaskData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(status),
+                platform.Value,
+                agentConfiguration.Value,
+                agentPoolName.Value,
+                Optional.ToNullable(timeout),
+                step.Value,
+                trigger.Value,
+                credentials.Value,
+                logTemplate.Value,
+                Optional.ToNullable(isSystemTask),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskData>.Write(ModelReaderWriterOptions options)

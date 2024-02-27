@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 return null;
             }
             Optional<string> domainName = default;
-            Optional<IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>> endpointDetails = default;
+            IReadOnlyList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName.Value, endpointDetails ?? new ChangeTrackingList<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

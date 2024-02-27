@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<AutoMLVerticalRegressionModel>> allowedTrainingAlgorithms = default;
-            Optional<IList<AutoMLVerticalRegressionModel>> blockedTrainingAlgorithms = default;
+            IList<AutoMLVerticalRegressionModel> allowedTrainingAlgorithms = default;
+            IList<AutoMLVerticalRegressionModel> blockedTrainingAlgorithms = default;
             Optional<bool> enableDnnTraining = default;
             Optional<bool> enableModelExplainability = default;
             Optional<bool> enableOnnxCompatibleModels = default;
@@ -268,7 +268,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegressionTrainingSettings(Optional.ToNullable(enableDnnTraining), Optional.ToNullable(enableModelExplainability), Optional.ToNullable(enableOnnxCompatibleModels), Optional.ToNullable(enableStackEnsemble), Optional.ToNullable(enableVoteEnsemble), Optional.ToNullable(ensembleModelDownloadTimeout), stackEnsembleSettings.Value, Optional.ToNullable(trainingMode), serializedAdditionalRawData, Optional.ToList(allowedTrainingAlgorithms), Optional.ToList(blockedTrainingAlgorithms));
+            return new RegressionTrainingSettings(
+                Optional.ToNullable(enableDnnTraining),
+                Optional.ToNullable(enableModelExplainability),
+                Optional.ToNullable(enableOnnxCompatibleModels),
+                Optional.ToNullable(enableStackEnsemble),
+                Optional.ToNullable(enableVoteEnsemble),
+                Optional.ToNullable(ensembleModelDownloadTimeout),
+                stackEnsembleSettings.Value,
+                Optional.ToNullable(trainingMode),
+                serializedAdditionalRawData,
+                allowedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>(),
+                blockedTrainingAlgorithms ?? new ChangeTrackingList<AutoMLVerticalRegressionModel>());
         }
 
         BinaryData IPersistableModel<RegressionTrainingSettings>.Write(ModelReaderWriterOptions options)

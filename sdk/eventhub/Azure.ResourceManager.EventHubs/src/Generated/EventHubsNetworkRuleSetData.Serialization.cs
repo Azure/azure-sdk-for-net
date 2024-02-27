@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.EventHubs
             Optional<SystemData> systemData = default;
             Optional<bool> trustedServiceAccessEnabled = default;
             Optional<EventHubsNetworkRuleSetDefaultAction> defaultAction = default;
-            Optional<IList<EventHubsNetworkRuleSetVirtualNetworkRules>> virtualNetworkRules = default;
-            Optional<IList<EventHubsNetworkRuleSetIPRules>> ipRules = default;
+            IList<EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default;
+            IList<EventHubsNetworkRuleSetIPRules> ipRules = default;
             Optional<EventHubsPublicNetworkAccessFlag> publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), Optional.ToList(virtualNetworkRules), Optional.ToList(ipRules), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(trustedServiceAccessEnabled),
+                Optional.ToNullable(defaultAction),
+                virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(),
+                ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

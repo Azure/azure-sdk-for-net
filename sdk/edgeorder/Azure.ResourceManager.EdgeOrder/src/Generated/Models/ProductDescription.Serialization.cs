@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ProductDescriptionType> descriptionType = default;
             Optional<string> shortDescription = default;
             Optional<string> longDescription = default;
-            Optional<IReadOnlyList<string>> keywords = default;
-            Optional<IReadOnlyList<string>> attributes = default;
-            Optional<IReadOnlyList<ProductLink>> links = default;
+            IReadOnlyList<string> keywords = default;
+            IReadOnlyList<string> attributes = default;
+            IReadOnlyList<ProductLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDescription(Optional.ToNullable(descriptionType), shortDescription.Value, longDescription.Value, Optional.ToList(keywords), Optional.ToList(attributes), Optional.ToList(links), serializedAdditionalRawData);
+            return new ProductDescription(
+                Optional.ToNullable(descriptionType),
+                shortDescription.Value,
+                longDescription.Value,
+                keywords ?? new ChangeTrackingList<string>(),
+                attributes ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<ProductLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDescription>.Write(ModelReaderWriterOptions options)

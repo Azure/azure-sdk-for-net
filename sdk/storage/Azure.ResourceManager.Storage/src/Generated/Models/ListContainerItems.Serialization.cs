@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BlobContainerData>> value = default;
+            IReadOnlyList<BlobContainerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListContainerItems(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListContainerItems(value ?? new ChangeTrackingList<BlobContainerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListContainerItems>.Write(ModelReaderWriterOptions options)

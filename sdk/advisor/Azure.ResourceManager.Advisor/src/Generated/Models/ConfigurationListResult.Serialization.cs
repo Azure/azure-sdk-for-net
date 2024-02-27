@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfigData>> value = default;
+            IReadOnlyList<ConfigData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfigurationListResult(value ?? new ChangeTrackingList<ConfigData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationListResult>.Write(ModelReaderWriterOptions options)

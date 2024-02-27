@@ -241,7 +241,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, serializedAdditionalRawData);
+            return new DeletedSiteData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(deletedSiteId),
+                deletedTimestamp.Value,
+                subscription.Value,
+                resourceGroup.Value,
+                deletedSiteName.Value,
+                slot.Value,
+                kind0.Value,
+                geoRegionName.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options)

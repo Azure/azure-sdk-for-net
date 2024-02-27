@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
+            return new EdgeKubernetesRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(hostPlatform),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(hostPlatformType),
+                kubernetesClusterInfo.Value,
+                kubernetesRoleResources.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRole>.Write(ModelReaderWriterOptions options)

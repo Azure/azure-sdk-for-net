@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> sqlAdministratorLoginPassword = default;
             Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
@@ -230,7 +230,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspacePatch(Optional.ToDictionary(tags), identity, sqlAdministratorLoginPassword.Value, managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, provisioningState.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new SynapseWorkspacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sqlAdministratorLoginPassword.Value,
+                managedVirtualNetworkSettings.Value,
+                workspaceRepositoryConfiguration.Value,
+                purviewConfiguration.Value,
+                provisioningState.Value,
+                encryption.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspacePatch>.Write(ModelReaderWriterOptions options)

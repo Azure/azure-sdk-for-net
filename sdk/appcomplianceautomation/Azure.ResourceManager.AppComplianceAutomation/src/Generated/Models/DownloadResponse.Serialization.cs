@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceItem>> resourceList = default;
-            Optional<IReadOnlyList<ComplianceReportItem>> complianceReport = default;
+            IReadOnlyList<ResourceItem> resourceList = default;
+            IReadOnlyList<ComplianceReportItem> complianceReport = default;
             Optional<DownloadResponseCompliancePdfReport> compliancePdfReport = default;
             Optional<DownloadResponseComplianceDetailedPdfReport> complianceDetailedPdfReport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DownloadResponse(Optional.ToList(resourceList), Optional.ToList(complianceReport), compliancePdfReport.Value, complianceDetailedPdfReport.Value, serializedAdditionalRawData);
+            return new DownloadResponse(resourceList ?? new ChangeTrackingList<ResourceItem>(), complianceReport ?? new ChangeTrackingList<ComplianceReportItem>(), compliancePdfReport.Value, complianceDetailedPdfReport.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DownloadResponse>.Write(ModelReaderWriterOptions options)

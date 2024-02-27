@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
             Optional<string> code = default;
             Optional<string> message = default;
-            Optional<IReadOnlyList<SapVirtualInstanceErrorDetail>> details = default;
+            IReadOnlyList<SapVirtualInstanceErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapVirtualInstanceErrorDetail(code.Value, message.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SapVirtualInstanceErrorDetail(code.Value, message.Value, details ?? new ChangeTrackingList<SapVirtualInstanceErrorDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapVirtualInstanceErrorDetail>.Write(ModelReaderWriterOptions options)

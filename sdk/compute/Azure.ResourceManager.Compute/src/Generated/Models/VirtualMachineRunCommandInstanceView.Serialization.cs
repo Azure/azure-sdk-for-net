@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> error = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses), serializedAdditionalRawData);
+            return new VirtualMachineRunCommandInstanceView(
+                Optional.ToNullable(executionState),
+                executionMessage.Value,
+                Optional.ToNullable(exitCode),
+                output.Value,
+                error.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)

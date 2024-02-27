@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<SystemData> systemData = default;
             Optional<ContainerRegistryWebhookStatus> status = default;
             Optional<string> scope = default;
-            Optional<IList<ContainerRegistryWebhookAction>> actions = default;
+            IList<ContainerRegistryWebhookAction> actions = default;
             Optional<ContainerRegistryProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(status), scope.Value, Optional.ToList(actions), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerRegistryWebhookData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(status),
+                scope.Value,
+                actions ?? new ChangeTrackingList<ContainerRegistryWebhookAction>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookData>.Write(ModelReaderWriterOptions options)

@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ShareDestinationFormatType> shareType = default;
             Optional<string> userName = default;
             Optional<string> password = default;
-            Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
+            IReadOnlyList<DataBoxAccessProtocol> supportedAccessProtocols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, Optional.ToList(supportedAccessProtocols), serializedAdditionalRawData);
+            return new ShareCredentialDetails(
+                shareName.Value,
+                Optional.ToNullable(shareType),
+                userName.Value,
+                password.Value,
+                supportedAccessProtocols ?? new ChangeTrackingList<DataBoxAccessProtocol>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareCredentialDetails>.Write(ModelReaderWriterOptions options)

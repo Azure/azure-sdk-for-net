@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value, serializedAdditionalRawData);
+            return new PostgreSqlSku(
+                name,
+                Optional.ToNullable(tier),
+                Optional.ToNullable(capacity),
+                size.Value,
+                family.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlSku>.Write(ModelReaderWriterOptions options)

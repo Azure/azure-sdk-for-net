@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> containerName = default;
             Optional<string> containerType = default;
             Optional<string> workloadType = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<DpmErrorInfo>> errorDetails = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<DpmErrorInfo> errorDetails = default;
             Optional<DpmBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -295,7 +295,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), dpmServerName.Value, containerName.Value, containerType.Value, workloadType.Value, Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new DpmBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(duration),
+                dpmServerName.Value,
+                containerName.Value,
+                containerType.Value,
+                workloadType.Value,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<DpmErrorInfo>(),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<DpmBackupJob>.Write(ModelReaderWriterOptions options)

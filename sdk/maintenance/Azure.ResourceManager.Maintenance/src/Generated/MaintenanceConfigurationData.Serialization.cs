@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Maintenance
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> @namespace = default;
-            Optional<IDictionary<string, string>> extensionProperties = default;
+            IDictionary<string, string> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
             Optional<MaintenancePatchConfiguration> installPatches = default;
@@ -337,7 +337,24 @@ namespace Azure.ResourceManager.Maintenance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value, serializedAdditionalRawData);
+            return new MaintenanceConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                @namespace.Value,
+                extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(maintenanceScope),
+                Optional.ToNullable(visibility),
+                installPatches.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(expirationDateTime),
+                Optional.ToNullable(duration),
+                timeZone.Value,
+                recurEvery.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceConfigurationData>.Write(ModelReaderWriterOptions options)

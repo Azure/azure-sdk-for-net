@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<SubResource> privateEndpoint = default;
             Optional<ApiManagementPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<string> provisioningState = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnectionWrapper(id.Value, name.Value, Optional.ToNullable(type), privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value, Optional.ToList(groupIds), serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnectionWrapper(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                provisioningState.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnectionWrapper>.Write(ModelReaderWriterOptions options)

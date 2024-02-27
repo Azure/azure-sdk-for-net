@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaDimension(id.Value, scope.Value, period.Value, Optional.ToNullable(quota), name.Value, description.Value, unit.Value, unitPlural.Value, serializedAdditionalRawData);
+            return new QuotaDimension(
+                id.Value,
+                scope.Value,
+                period.Value,
+                Optional.ToNullable(quota),
+                name.Value,
+                description.Value,
+                unit.Value,
+                unitPlural.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaDimension>.Write(ModelReaderWriterOptions options)

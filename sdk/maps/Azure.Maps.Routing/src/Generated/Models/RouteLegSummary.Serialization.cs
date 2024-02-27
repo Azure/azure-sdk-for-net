@@ -122,7 +122,17 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteLegSummary(Optional.ToNullable(lengthInMeters), Optional.ToNullable(travelTimeInSeconds), Optional.ToNullable(trafficDelayInSeconds), Optional.ToNullable(departureTime), Optional.ToNullable(arrivalTime), Optional.ToNullable(noTrafficTravelTimeInSeconds), Optional.ToNullable(historicTrafficTravelTimeInSeconds), Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds), Optional.ToNullable(fuelConsumptionInLiters), Optional.ToNullable(batteryConsumptionInkWh));
+            return new RouteLegSummary(
+                Optional.ToNullable(lengthInMeters),
+                Optional.ToNullable(travelTimeInSeconds),
+                Optional.ToNullable(trafficDelayInSeconds),
+                Optional.ToNullable(departureTime),
+                Optional.ToNullable(arrivalTime),
+                Optional.ToNullable(noTrafficTravelTimeInSeconds),
+                Optional.ToNullable(historicTrafficTravelTimeInSeconds),
+                Optional.ToNullable(liveTrafficIncidentsTravelTimeInSeconds),
+                Optional.ToNullable(fuelConsumptionInLiters),
+                Optional.ToNullable(batteryConsumptionInkWh));
         }
     }
 }

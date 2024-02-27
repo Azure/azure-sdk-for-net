@@ -85,9 +85,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> sessionId = default;
             Optional<DataFlowDebugResource> dataFlow = default;
-            Optional<IList<DataFlowDebugResource>> dataFlows = default;
-            Optional<IList<DatasetDebugResource>> datasets = default;
-            Optional<IList<LinkedServiceDebugResource>> linkedServices = default;
+            IList<DataFlowDebugResource> dataFlows = default;
+            IList<DatasetDebugResource> datasets = default;
+            IList<LinkedServiceDebugResource> linkedServices = default;
             Optional<DataFlowStagingInfo> staging = default;
             Optional<DataFlowDebugPackageDebugSettings> debugSettings = default;
             IDictionary<string, object> additionalProperties = default;
@@ -171,7 +171,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugPackage(sessionId.Value, dataFlow.Value, Optional.ToList(dataFlows), Optional.ToList(datasets), Optional.ToList(linkedServices), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFlowDebugPackage(
+                sessionId.Value,
+                dataFlow.Value,
+                dataFlows ?? new ChangeTrackingList<DataFlowDebugResource>(),
+                datasets ?? new ChangeTrackingList<DatasetDebugResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceDebugResource>(),
+                staging.Value,
+                debugSettings.Value,
+                additionalProperties);
         }
 
         internal partial class DataFlowDebugPackageConverter : JsonConverter<DataFlowDebugPackage>

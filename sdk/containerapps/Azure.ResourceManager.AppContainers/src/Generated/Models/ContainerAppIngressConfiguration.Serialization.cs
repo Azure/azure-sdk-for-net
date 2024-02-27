@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> targetPort = default;
             Optional<int> exposedPort = default;
             Optional<ContainerAppIngressTransportMethod> transport = default;
-            Optional<IList<ContainerAppRevisionTrafficWeight>> traffic = default;
-            Optional<IList<ContainerAppCustomDomain>> customDomains = default;
+            IList<ContainerAppRevisionTrafficWeight> traffic = default;
+            IList<ContainerAppCustomDomain> customDomains = default;
             Optional<bool> allowInsecure = default;
-            Optional<IList<ContainerAppIPSecurityRestrictionRule>> ipSecurityRestrictions = default;
+            IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default;
             Optional<IngressStickySessions> stickySessions = default;
             Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
             Optional<ContainerAppCorsPolicy> corsPolicy = default;
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppIngressConfiguration(
+                fqdn.Value,
+                Optional.ToNullable(external),
+                Optional.ToNullable(targetPort),
+                Optional.ToNullable(exposedPort),
+                Optional.ToNullable(transport),
+                traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(),
+                customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(),
+                Optional.ToNullable(allowInsecure),
+                ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(),
+                stickySessions.Value,
+                Optional.ToNullable(clientCertificateMode),
+                corsPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorSingleMetricBaseline(id, name, type, systemData.Value, timespan, interval, @namespace.Value, baselines, serializedAdditionalRawData);
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timespan,
+                interval,
+                @namespace.Value,
+                baselines,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorSingleMetricBaseline>.Write(ModelReaderWriterOptions options)

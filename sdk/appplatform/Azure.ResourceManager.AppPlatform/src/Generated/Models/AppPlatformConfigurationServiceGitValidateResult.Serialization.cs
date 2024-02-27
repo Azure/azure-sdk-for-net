@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 return null;
             }
             Optional<bool> isValid = default;
-            Optional<IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages>> gitReposValidationResult = default;
+            IReadOnlyList<AppPlatformConfigurationServiceGitReposValidationMessages> gitReposValidationResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), Optional.ToList(gitReposValidationResult), serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceGitValidateResult(Optional.ToNullable(isValid), gitReposValidationResult ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitReposValidationMessages>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceGitValidateResult>.Write(ModelReaderWriterOptions options)

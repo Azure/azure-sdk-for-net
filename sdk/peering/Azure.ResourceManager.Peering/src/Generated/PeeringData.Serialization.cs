@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering
             }
             PeeringSku sku = default;
             PeeringKind kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, kind, direct.Value, exchange.Value, peeringLocation.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind,
+                direct.Value,
+                exchange.Value,
+                peeringLocation.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringData>.Write(ModelReaderWriterOptions options)

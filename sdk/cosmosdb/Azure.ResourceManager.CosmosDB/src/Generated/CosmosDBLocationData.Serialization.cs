@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBLocationData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CosmosDBLocationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBLocationData>.Write(ModelReaderWriterOptions options)

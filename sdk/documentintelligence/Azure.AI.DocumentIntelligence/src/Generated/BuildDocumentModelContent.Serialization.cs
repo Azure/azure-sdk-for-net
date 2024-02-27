@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentBuildMode buildMode = default;
             Optional<AzureBlobContentSource> azureBlobSource = default;
             Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentModelContent(modelId, description.Value, buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new BuildDocumentModelContent(
+                modelId,
+                description.Value,
+                buildMode,
+                azureBlobSource.Value,
+                azureBlobFileListSource.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentModelContent>.Write(ModelReaderWriterOptions options)

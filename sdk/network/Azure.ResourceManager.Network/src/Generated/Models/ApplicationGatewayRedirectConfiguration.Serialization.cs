@@ -153,9 +153,9 @@ namespace Azure.ResourceManager.Network.Models
             Optional<Uri> targetUrl = default;
             Optional<bool> includePath = default;
             Optional<bool> includeQueryString = default;
-            Optional<IList<WritableSubResource>> requestRoutingRules = default;
-            Optional<IList<WritableSubResource>> urlPathMaps = default;
-            Optional<IList<WritableSubResource>> pathRules = default;
+            IList<WritableSubResource> requestRoutingRules = default;
+            IList<WritableSubResource> urlPathMaps = default;
+            IList<WritableSubResource> pathRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,7 +297,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayRedirectConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(redirectType), targetListener, targetUrl.Value, Optional.ToNullable(includePath), Optional.ToNullable(includeQueryString), Optional.ToList(requestRoutingRules), Optional.ToList(urlPathMaps), Optional.ToList(pathRules));
+            return new ApplicationGatewayRedirectConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(redirectType),
+                targetListener,
+                targetUrl.Value,
+                Optional.ToNullable(includePath),
+                Optional.ToNullable(includeQueryString),
+                requestRoutingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                urlPathMaps ?? new ChangeTrackingList<WritableSubResource>(),
+                pathRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayRedirectConfiguration>.Write(ModelReaderWriterOptions options)

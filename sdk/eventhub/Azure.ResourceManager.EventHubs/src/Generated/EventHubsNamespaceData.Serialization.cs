@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.EventHubs
             }
             Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventHubs
             Optional<bool> kafkaEnabled = default;
             Optional<bool> zoneRedundant = default;
             Optional<EventHubsEncryption> encryption = default;
-            Optional<IList<EventHubsPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IList<EventHubsPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<bool> disableLocalAuth = default;
             Optional<string> alternateName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -448,7 +448,33 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(minimumTlsVersion), provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, clusterArmId.Value, metricId.Value, Optional.ToNullable(isAutoInflateEnabled), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(maximumThroughputUnits), Optional.ToNullable(kafkaEnabled), Optional.ToNullable(zoneRedundant), encryption.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
+            return new EventHubsNamespaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                Optional.ToNullable(minimumTlsVersion),
+                provisioningState.Value,
+                status.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serviceBusEndpoint.Value,
+                clusterArmId.Value,
+                metricId.Value,
+                Optional.ToNullable(isAutoInflateEnabled),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(maximumThroughputUnits),
+                Optional.ToNullable(kafkaEnabled),
+                Optional.ToNullable(zoneRedundant),
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<EventHubsPrivateEndpointConnectionData>(),
+                Optional.ToNullable(disableLocalAuth),
+                alternateName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNamespaceData>.Write(ModelReaderWriterOptions options)

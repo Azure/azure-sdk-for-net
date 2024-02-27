@@ -116,7 +116,13 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new VectorizedQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), Optional.ToNullable(oversampling), vector);
+            return new VectorizedQuery(
+                kind,
+                Optional.ToNullable(k),
+                fields.Value,
+                Optional.ToNullable(exhaustive),
+                Optional.ToNullable(oversampling),
+                vector);
         }
     }
 }

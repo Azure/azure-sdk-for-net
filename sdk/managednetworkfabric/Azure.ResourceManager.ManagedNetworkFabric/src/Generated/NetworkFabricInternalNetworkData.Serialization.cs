@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
             Optional<int> mtu = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
+            IList<ConnectedSubnet> connectedIPv4Subnets = default;
+            IList<ConnectedSubnet> connectedIPv6Subnets = default;
             Optional<ResourceIdentifier> importRoutePolicyId = default;
             Optional<ResourceIdentifier> exportRoutePolicyId = default;
             Optional<ImportRoutePolicy> importRoutePolicy = default;
@@ -418,7 +418,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), Optional.ToNullable(extension), vlanId, bgpConfiguration.Value, staticRouteConfiguration.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricInternalNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                annotation.Value,
+                Optional.ToNullable(mtu),
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                ingressAclId.Value,
+                egressAclId.Value,
+                Optional.ToNullable(isMonitoringEnabled),
+                Optional.ToNullable(extension),
+                vlanId,
+                bgpConfiguration.Value,
+                staticRouteConfiguration.Value,
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkData>.Write(ModelReaderWriterOptions options)

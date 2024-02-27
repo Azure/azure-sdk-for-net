@@ -21,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
             }
             Optional<string> registry = default;
             Optional<string> imageName = default;
-            Optional<IReadOnlyList<ManifestAttributesBase>> manifests = default;
+            IReadOnlyList<ManifestAttributesBase> manifests = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrManifests(registry.Value, imageName.Value, Optional.ToList(manifests), link.Value);
+            return new AcrManifests(registry.Value, imageName.Value, manifests ?? new ChangeTrackingList<ManifestAttributesBase>(), link.Value);
         }
     }
 }

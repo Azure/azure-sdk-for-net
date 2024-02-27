@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<double> limit = default;
             Optional<PerformanceLevelUnit> unit = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>> supportedPerDatabaseMinPerformanceLevels = default;
+            IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToList(supportedPerDatabaseMinPerformanceLevels), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(
+                Optional.ToNullable(limit),
+                Optional.ToNullable(unit),
+                supportedPerDatabaseMinPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

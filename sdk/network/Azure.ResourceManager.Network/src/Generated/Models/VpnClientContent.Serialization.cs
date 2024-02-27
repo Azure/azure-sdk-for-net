@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ProcessorArchitecture> processorArchitecture = default;
             Optional<NetworkAuthenticationMethod> authenticationMethod = default;
             Optional<string> radiusServerAuthCertificate = default;
-            Optional<IList<string>> clientRootCertificates = default;
+            IList<string> clientRootCertificates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientContent(Optional.ToNullable(processorArchitecture), Optional.ToNullable(authenticationMethod), radiusServerAuthCertificate.Value, Optional.ToList(clientRootCertificates), serializedAdditionalRawData);
+            return new VpnClientContent(Optional.ToNullable(processorArchitecture), Optional.ToNullable(authenticationMethod), radiusServerAuthCertificate.Value, clientRootCertificates ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientContent>.Write(ModelReaderWriterOptions options)

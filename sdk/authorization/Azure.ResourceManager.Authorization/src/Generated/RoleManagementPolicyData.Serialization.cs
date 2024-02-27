@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.Authorization
             Optional<bool> isOrganizationDefault = default;
             Optional<RoleManagementPrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<IList<RoleManagementPolicyRule>> rules = default;
-            Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
+            IList<RoleManagementPolicyRule> rules = default;
+            IReadOnlyList<RoleManagementPolicyRule> effectiveRules = default;
             Optional<RoleManagementPolicyProperties> policyProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -282,7 +282,21 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyData(id, name, type, systemData.Value, scope.Value, displayName.Value, description.Value, Optional.ToNullable(isOrganizationDefault), lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), Optional.ToList(rules), Optional.ToList(effectiveRules), policyProperties.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(isOrganizationDefault),
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedDateTime),
+                rules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                policyProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyData>.Write(ModelReaderWriterOptions options)

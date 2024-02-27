@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
-            Optional<IList<ContainerAppDiagnosticSupportTopic>> supportTopicList = default;
-            Optional<IList<string>> analysisTypes = default;
+            IList<ContainerAppDiagnosticSupportTopic> supportTopicList = default;
+            IList<string> analysisTypes = default;
             Optional<float> score = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisTypes), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                author.Value,
+                category.Value,
+                supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(),
+                analysisTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(score),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsMetadata>.Write(ModelReaderWriterOptions options)

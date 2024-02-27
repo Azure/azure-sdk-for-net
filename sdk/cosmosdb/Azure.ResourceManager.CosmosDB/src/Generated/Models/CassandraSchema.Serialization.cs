@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<CassandraColumn>> columns = default;
-            Optional<IList<CassandraPartitionKey>> partitionKeys = default;
-            Optional<IList<CassandraClusterKey>> clusterKeys = default;
+            IList<CassandraColumn> columns = default;
+            IList<CassandraPartitionKey> partitionKeys = default;
+            IList<CassandraClusterKey> clusterKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys), serializedAdditionalRawData);
+            return new CassandraSchema(columns ?? new ChangeTrackingList<CassandraColumn>(), partitionKeys ?? new ChangeTrackingList<CassandraPartitionKey>(), clusterKeys ?? new ChangeTrackingList<CassandraClusterKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraSchema>.Write(ModelReaderWriterOptions options)

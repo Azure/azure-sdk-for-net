@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<bool> logVerbose = default;
             Optional<bool> logProgress = default;
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookPatch(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), description.Value, Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new AutomationRunbookPatch(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                Optional.ToNullable(logVerbose),
+                Optional.ToNullable(logProgress),
+                Optional.ToNullable(logActivityTrace),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookPatch>.Write(ModelReaderWriterOptions options)

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> startTimeUtc = default;
             Optional<DateTimeOffset> endTimeUtc = default;
             Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<HciUpdateStep>> steps = default;
+            IList<HciUpdateStep> steps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps), serializedAdditionalRawData);
+            return new HciUpdateStep(
+                name.Value,
+                description.Value,
+                errorMessage.Value,
+                status.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciUpdateStep>.Write(ModelReaderWriterOptions options)

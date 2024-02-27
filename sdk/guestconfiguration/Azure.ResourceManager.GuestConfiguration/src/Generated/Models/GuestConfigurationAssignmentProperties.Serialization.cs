@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> assignmentHash = default;
             Optional<GuestConfigurationProvisioningState?> provisioningState = default;
             Optional<string> resourceType = default;
-            Optional<IList<GuestConfigurationVmssVmInfo>> vmssVmList = default;
+            IList<GuestConfigurationVmssVmInfo> vmssVmList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -324,7 +324,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationAssignmentProperties(targetResourceId.Value, guestConfiguration.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(lastComplianceStatusChecked), latestReportId.Value, parameterHash.Value, latestAssignmentReport.Value, context.Value, assignmentHash.Value, Optional.ToNullable(provisioningState), resourceType.Value, Optional.ToList(vmssVmList), serializedAdditionalRawData);
+            return new GuestConfigurationAssignmentProperties(
+                targetResourceId.Value,
+                guestConfiguration.Value,
+                Optional.ToNullable(complianceStatus),
+                Optional.ToNullable(lastComplianceStatusChecked),
+                latestReportId.Value,
+                parameterHash.Value,
+                latestAssignmentReport.Value,
+                context.Value,
+                assignmentHash.Value,
+                Optional.ToNullable(provisioningState),
+                resourceType.Value,
+                vmssVmList ?? new ChangeTrackingList<GuestConfigurationVmssVmInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationAssignmentProperties>.Write(ModelReaderWriterOptions options)

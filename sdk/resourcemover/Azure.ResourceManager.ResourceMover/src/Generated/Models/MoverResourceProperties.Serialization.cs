@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<MoverResourceSettings> resourceSettings = default;
             Optional<MoverResourceSettings> sourceResourceSettings = default;
             Optional<MoverResourcePropertiesMoveStatus> moveStatus = default;
-            Optional<IReadOnlyList<MoverResourceDependency>> dependsOn = default;
-            Optional<IList<MoverResourceDependencyOverride>> dependsOnOverrides = default;
+            IReadOnlyList<MoverResourceDependency> dependsOn = default;
+            IList<MoverResourceDependencyOverride> dependsOnOverrides = default;
             Optional<bool> isResolveRequired = default;
             Optional<MoveResourcePropertiesErrors> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -292,7 +292,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, Optional.ToList(dependsOn), Optional.ToList(dependsOnOverrides), Optional.ToNullable(isResolveRequired), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceProperties(
+                Optional.ToNullable(provisioningState),
+                sourceId,
+                targetId.Value,
+                existingTargetId.Value,
+                resourceSettings.Value,
+                sourceResourceSettings.Value,
+                moveStatus.Value,
+                dependsOn ?? new ChangeTrackingList<MoverResourceDependency>(),
+                dependsOnOverrides ?? new ChangeTrackingList<MoverResourceDependencyOverride>(),
+                Optional.ToNullable(isResolveRequired),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceProperties>.Write(ModelReaderWriterOptions options)

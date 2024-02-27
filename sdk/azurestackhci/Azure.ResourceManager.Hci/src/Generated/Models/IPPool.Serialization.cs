@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPPool(name.Value, Optional.ToNullable(ipPoolType), start.Value, end.Value, info.Value, serializedAdditionalRawData);
+            return new IPPool(
+                name.Value,
+                Optional.ToNullable(ipPoolType),
+                start.Value,
+                end.Value,
+                info.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPPool>.Write(ModelReaderWriterOptions options)

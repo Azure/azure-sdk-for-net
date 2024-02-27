@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<WinRMListener>> listeners = default;
+            IList<WinRMListener> listeners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WinRMConfiguration(Optional.ToList(listeners), serializedAdditionalRawData);
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<WinRMListener>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WinRMConfiguration>.Write(ModelReaderWriterOptions options)

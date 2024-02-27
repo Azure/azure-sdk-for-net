@@ -274,7 +274,21 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), Optional.ToNullable(status), Optional.ToNullable(lastExecutionTime), Optional.ToNullable(nextExecutionTime), recurrence.Value, workflow.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                Optional.ToNullable(state),
+                Optional.ToNullable(status),
+                Optional.ToNullable(lastExecutionTime),
+                Optional.ToNullable(nextExecutionTime),
+                recurrence.Value,
+                workflow.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerData>.Write(ModelReaderWriterOptions options)

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 return null;
             }
             Optional<CapacitySku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<DedicatedCapacityAdministrators> administration = default;
             Optional<Mode> mode = default;
             Optional<Guid> tenantId = default;
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityPatch(sku.Value, Optional.ToDictionary(tags), administration.Value, Optional.ToNullable(mode), Optional.ToNullable(tenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new DedicatedCapacityPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administration.Value,
+                Optional.ToNullable(mode),
+                Optional.ToNullable(tenantId),
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityPatch>.Write(ModelReaderWriterOptions options)

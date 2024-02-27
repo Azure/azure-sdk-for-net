@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServicePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity);
+            return new FhirServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity);
         }
 
         BinaryData IPersistableModel<FhirServicePatch>.Write(ModelReaderWriterOptions options)

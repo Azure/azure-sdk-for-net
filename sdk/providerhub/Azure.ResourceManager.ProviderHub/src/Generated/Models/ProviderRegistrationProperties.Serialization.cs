@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<ProviderHubProvisioningState> provisioningState = default;
             Optional<SubscriptionLifecycleNotificationSpecifications> subscriptionLifecycleNotificationSpecifications = default;
             Optional<ResourceProviderAuthentication> providerAuthentication = default;
-            Optional<IList<ResourceProviderAuthorization>> providerAuthorizations = default;
+            IList<ResourceProviderAuthorization> providerAuthorizations = default;
             Optional<string> @namespace = default;
             Optional<string> providerVersion = default;
             Optional<ResourceProviderType> providerType = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> requiredFeatures = default;
             Optional<FeaturesRule> featuresRule = default;
             Optional<RequestHeaderOptions> requestHeaderOptions = default;
             Optional<ResourceProviderManagement> management = default;
-            Optional<IList<ResourceProviderCapabilities>> capabilities = default;
+            IList<ResourceProviderCapabilities> capabilities = default;
             Optional<BinaryData> metadata = default;
             Optional<TemplateDeploymentOptions> templateDeploymentOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -328,7 +328,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderRegistrationProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, serializedAdditionalRawData, providerHubMetadata.Value, Optional.ToNullable(provisioningState), subscriptionLifecycleNotificationSpecifications.Value);
+            return new ProviderRegistrationProperties(
+                providerAuthentication.Value,
+                providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
+                @namespace.Value,
+                providerVersion.Value,
+                Optional.ToNullable(providerType),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                requestHeaderOptions.Value,
+                management.Value,
+                capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                metadata.Value,
+                templateDeploymentOptions.Value,
+                serializedAdditionalRawData,
+                providerHubMetadata.Value,
+                Optional.ToNullable(provisioningState),
+                subscriptionLifecycleNotificationSpecifications.Value);
         }
 
         BinaryData IPersistableModel<ProviderRegistrationProperties>.Write(ModelReaderWriterOptions options)

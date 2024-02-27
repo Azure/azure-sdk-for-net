@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadTestingQuotaData>> value = default;
+            IReadOnlyList<LoadTestingQuotaData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaListResult(value ?? new ChangeTrackingList<LoadTestingQuotaData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaListResult>.Write(ModelReaderWriterOptions options)

@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<MonitorCategoryType> categoryType = default;
-            Optional<IList<string>> categoryGroups = default;
+            IList<string> categoryGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Optional.ToNullable(categoryType), Optional.ToList(categoryGroups), serializedAdditionalRawData);
+            return new DiagnosticSettingsCategoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(categoryType),
+                categoryGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options)

@@ -257,7 +257,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new MarketplaceAgreementTermData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publisher.Value,
+                product.Value,
+                plan.Value,
+                licenseTextLink.Value,
+                privacyPolicyLink.Value,
+                marketplaceTermsLink.Value,
+                Optional.ToNullable(retrieveDatetime),
+                signature.Value,
+                Optional.ToNullable(accepted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceAgreementTermData>.Write(ModelReaderWriterOptions options)

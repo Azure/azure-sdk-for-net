@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SiteRecoveryInnerHealthError>> innerHealthErrors = default;
+            IReadOnlyList<SiteRecoveryInnerHealthError> innerHealthErrors = default;
             Optional<string> errorSource = default;
             Optional<string> errorType = default;
             Optional<string> errorLevel = default;
@@ -261,7 +261,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryHealthError(Optional.ToList(innerHealthErrors), errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), serializedAdditionalRawData);
+            return new SiteRecoveryHealthError(
+                innerHealthErrors ?? new ChangeTrackingList<SiteRecoveryInnerHealthError>(),
+                errorSource.Value,
+                errorType.Value,
+                errorLevel.Value,
+                errorCategory.Value,
+                errorCode.Value,
+                summaryMessage.Value,
+                errorMessage.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                Optional.ToNullable(creationTimeUtc),
+                recoveryProviderErrorMessage.Value,
+                entityId.Value,
+                errorId.Value,
+                Optional.ToNullable(customerResolvability),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryHealthError>.Write(ModelReaderWriterOptions options)

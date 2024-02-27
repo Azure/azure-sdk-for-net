@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute
             Optional<Uri> releaseNoteUri = default;
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<SupportedOperatingSystemType> supportedOSType = default;
-            Optional<IList<GalleryApplicationCustomAction>> customActions = default;
+            IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -280,7 +280,21 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions), serializedAdditionalRawData);
+            return new GalleryApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                eula.Value,
+                privacyStatementUri.Value,
+                releaseNoteUri.Value,
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(supportedOSType),
+                customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationData>.Write(ModelReaderWriterOptions options)

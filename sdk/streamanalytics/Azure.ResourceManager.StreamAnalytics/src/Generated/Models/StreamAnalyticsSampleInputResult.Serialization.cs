@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             Optional<StreamAnalyticsSampleInputResultStatus> status = default;
-            Optional<IReadOnlyList<string>> diagnostics = default;
+            IReadOnlyList<string> diagnostics = default;
             Optional<Uri> eventsDownloadUrl = default;
             Optional<DateTimeOffset> lastArrivalTime = default;
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData, Optional.ToNullable(status), Optional.ToList(diagnostics), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
+            return new StreamAnalyticsSampleInputResult(
+                code.Value,
+                message.Value,
+                target.Value,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(status),
+                diagnostics ?? new ChangeTrackingList<string>(),
+                eventsDownloadUrl.Value,
+                Optional.ToNullable(lastArrivalTime));
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSampleInputResult>.Write(ModelReaderWriterOptions options)

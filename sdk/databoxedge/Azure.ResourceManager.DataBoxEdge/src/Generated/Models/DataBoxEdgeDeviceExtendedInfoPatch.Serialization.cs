@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceExtendedInfoPatch(clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(syncStatus), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceExtendedInfoPatch(
+                clientSecretStoreId.Value,
+                clientSecretStoreUrl.Value,
+                channelIntegrityKeyName.Value,
+                channelIntegrityKeyVersion.Value,
+                Optional.ToNullable(syncStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(ModelReaderWriterOptions options)

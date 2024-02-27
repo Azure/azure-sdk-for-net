@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch
             Optional<SystemData> systemData = default;
             Optional<BatchPrivateEndpointConnectionProvisioningState> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
-            Optional<IReadOnlyList<string>> groupIds = default;
+            IReadOnlyList<string> groupIds = default;
             Optional<BatchPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

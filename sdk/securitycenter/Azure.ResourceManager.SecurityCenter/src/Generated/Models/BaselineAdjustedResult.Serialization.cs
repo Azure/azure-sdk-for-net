@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
             Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
-            Optional<IList<IList<string>>> resultsNotInBaseline = default;
-            Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
+            IList<IList<string>> resultsNotInBaseline = default;
+            IList<IList<string>> resultsOnlyInBaseline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), Optional.ToList(resultsNotInBaseline), Optional.ToList(resultsOnlyInBaseline), serializedAdditionalRawData);
+            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>(), resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BaselineAdjustedResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScheduledQueryRuleData>> value = default;
+            IReadOnlyList<ScheduledQueryRuleData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledQueryRuleResourceCollection(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScheduledQueryRuleResourceCollection(value ?? new ChangeTrackingList<ScheduledQueryRuleData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduledQueryRuleResourceCollection>.Write(ModelReaderWriterOptions options)

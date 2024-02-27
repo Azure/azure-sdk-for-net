@@ -80,7 +80,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageProtocol>> supportedProtocols = default;
+            IList<MessageProtocol> supportedProtocols = default;
             Optional<MessageRecurrence> recurrence = default;
             Optional<string> helpMessage = default;
             Optional<string> optOutMessage = default;
@@ -88,7 +88,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> optInReply = default;
             Optional<string> confirmationMessage = default;
             Optional<MessageDirectionality> directionality = default;
-            Optional<IList<UseCase>> useCases = default;
+            IList<UseCase> useCases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProtocols"u8))
@@ -163,7 +163,16 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases));
+            return new MessageDetails(
+                supportedProtocols ?? new ChangeTrackingList<MessageProtocol>(),
+                Optional.ToNullable(recurrence),
+                helpMessage.Value,
+                optOutMessage.Value,
+                optInMessage.Value,
+                optInReply.Value,
+                confirmationMessage.Value,
+                Optional.ToNullable(directionality),
+                useCases ?? new ChangeTrackingList<UseCase>());
         }
     }
 }

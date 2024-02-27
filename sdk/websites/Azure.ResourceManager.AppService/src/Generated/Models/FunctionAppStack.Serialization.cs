@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayText = default;
             Optional<string> value = default;
-            Optional<IReadOnlyList<FunctionAppMajorVersion>> majorVersions = default;
+            IReadOnlyList<FunctionAppMajorVersion> majorVersions = default;
             Optional<StackPreferredOS> preferredOS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionAppStack(id, name, type, systemData.Value, Optional.ToNullable(location), displayText.Value, value.Value, Optional.ToList(majorVersions), Optional.ToNullable(preferredOS), kind.Value, serializedAdditionalRawData);
+            return new FunctionAppStack(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                displayText.Value,
+                value.Value,
+                majorVersions ?? new ChangeTrackingList<FunctionAppMajorVersion>(),
+                Optional.ToNullable(preferredOS),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionAppStack>.Write(ModelReaderWriterOptions options)

@@ -97,13 +97,13 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Optional<bool> isVanity = default;
-            Optional<IList<string>> preferredVanityNumbers = default;
+            IList<string> preferredVanityNumbers = default;
             Optional<NumberType> numberType = default;
             Optional<bool> isPoliticalCampaign = default;
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<Uri> url = default;
-            Optional<IList<ProgramSignUpType>> signUpTypes = default;
+            IList<ProgramSignUpType> signUpTypes = default;
             Optional<Uri> signUpUrl = default;
             Optional<Uri> termsOfServiceUrl = default;
             Optional<Uri> privacyPolicyUrl = default;
@@ -221,7 +221,19 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ProgramDetails(Optional.ToNullable(isVanity), Optional.ToList(preferredVanityNumbers), Optional.ToNullable(numberType), Optional.ToNullable(isPoliticalCampaign), name.Value, description.Value, url.Value, Optional.ToList(signUpTypes), signUpUrl.Value, termsOfServiceUrl.Value, privacyPolicyUrl.Value, Optional.ToNullable(expectedDateOfService));
+            return new ProgramDetails(
+                Optional.ToNullable(isVanity),
+                preferredVanityNumbers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(numberType),
+                Optional.ToNullable(isPoliticalCampaign),
+                name.Value,
+                description.Value,
+                url.Value,
+                signUpTypes ?? new ChangeTrackingList<ProgramSignUpType>(),
+                signUpUrl.Value,
+                termsOfServiceUrl.Value,
+                privacyPolicyUrl.Value,
+                Optional.ToNullable(expectedDateOfService));
         }
     }
 }

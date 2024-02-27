@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkVirtualApplianceSkuData>> value = default;
+            IReadOnlyList<NetworkVirtualApplianceSkuData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new NetworkVirtualApplianceSkuListResult(value ?? new ChangeTrackingList<NetworkVirtualApplianceSkuData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceSkuListResult>.Write(ModelReaderWriterOptions options)

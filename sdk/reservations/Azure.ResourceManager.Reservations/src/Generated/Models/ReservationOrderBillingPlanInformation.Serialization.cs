@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
-            Optional<IReadOnlyList<PaymentDetail>> transactions = default;
+            IReadOnlyList<PaymentDetail> transactions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), serializedAdditionalRawData);
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), transactions ?? new ChangeTrackingList<PaymentDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderBillingPlanInformation>.Write(ModelReaderWriterOptions options)

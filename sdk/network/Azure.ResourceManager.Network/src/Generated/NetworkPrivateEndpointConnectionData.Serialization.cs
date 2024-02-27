@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPrivateEndpointConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateEndpoint.Value, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), linkIdentifier.Value, privateEndpointLocation.Value);
+            return new NetworkPrivateEndpointConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                privateEndpoint.Value,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                linkIdentifier.Value,
+                privateEndpointLocation.Value);
         }
 
         BinaryData IPersistableModel<NetworkPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

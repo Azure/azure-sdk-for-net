@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> logins = default;
             Optional<string> message = default;
             Optional<string> serverRoleResults = default;
-            Optional<IReadOnlyList<OrphanedUserInfo>> orphanedUsersInfo = default;
+            IReadOnlyList<OrphanedUserInfo> orphanedUsersInfo = default;
             Optional<string> databases = default;
             Optional<string> sourceServerVersion = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<string> targetServerVersion = default;
             Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -302,7 +302,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), Optional.ToNullable(state), agentJobs.Value, logins.Value, message.Value, serverRoleResults.Value, Optional.ToList(orphanedUsersInfo), databases.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSqlServerSqlMITaskOutputMigrationLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(status),
+                Optional.ToNullable(state),
+                agentJobs.Value,
+                logins.Value,
+                message.Value,
+                serverRoleResults.Value,
+                orphanedUsersInfo ?? new ChangeTrackingList<OrphanedUserInfo>(),
+                databases.Value,
+                sourceServerVersion.Value,
+                sourceServerBrandVersion.Value,
+                targetServerVersion.Value,
+                targetServerBrandVersion.Value,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

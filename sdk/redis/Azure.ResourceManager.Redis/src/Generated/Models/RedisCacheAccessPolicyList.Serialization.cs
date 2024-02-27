@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RedisCacheAccessPolicyData>> value = default;
+            IReadOnlyList<RedisCacheAccessPolicyData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisCacheAccessPolicyList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RedisCacheAccessPolicyList(value ?? new ChangeTrackingList<RedisCacheAccessPolicyData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisCacheAccessPolicyList>.Write(ModelReaderWriterOptions options)

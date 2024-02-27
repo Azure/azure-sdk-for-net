@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<RecommendedSecurityRule>> rules = default;
+            IList<RecommendedSecurityRule> rules = default;
             Optional<DateTimeOffset> rulesCalculationTime = default;
-            Optional<IList<EffectiveNetworkSecurityGroups>> effectiveNetworkSecurityGroups = default;
+            IList<EffectiveNetworkSecurityGroups> effectiveNetworkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdaptiveNetworkHardeningData(id, name, type, systemData.Value, Optional.ToList(rules), Optional.ToNullable(rulesCalculationTime), Optional.ToList(effectiveNetworkSecurityGroups), serializedAdditionalRawData);
+            return new AdaptiveNetworkHardeningData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rules ?? new ChangeTrackingList<RecommendedSecurityRule>(),
+                Optional.ToNullable(rulesCalculationTime),
+                effectiveNetworkSecurityGroups ?? new ChangeTrackingList<EffectiveNetworkSecurityGroups>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdaptiveNetworkHardeningData>.Write(ModelReaderWriterOptions options)

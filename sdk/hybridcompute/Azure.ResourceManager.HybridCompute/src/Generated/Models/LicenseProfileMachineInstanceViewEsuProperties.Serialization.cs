@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<EsuEligibility> esuEligibility = default;
             Optional<EsuKeyState> esuKeyState = default;
             Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileMachineInstanceViewEsuProperties(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState), assignedLicense.Value, Optional.ToNullable(licenseAssignmentState));
+            return new LicenseProfileMachineInstanceViewEsuProperties(
+                Optional.ToNullable(assignedLicenseImmutableId),
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(serverType),
+                Optional.ToNullable(esuEligibility),
+                Optional.ToNullable(esuKeyState),
+                assignedLicense.Value,
+                Optional.ToNullable(licenseAssignmentState));
         }
 
         BinaryData IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>.Write(ModelReaderWriterOptions options)

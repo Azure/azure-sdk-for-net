@@ -192,15 +192,15 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<FrontendIPConfigurationData>> loadBalancerFrontendIPConfigurations = default;
-            Optional<IList<PrivateLinkServiceIPConfiguration>> ipConfigurations = default;
-            Optional<IReadOnlyList<NetworkInterfaceData>> networkInterfaces = default;
+            IDictionary<string, string> tags = default;
+            IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
+            IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
+            IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<NetworkPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<PrivateLinkServicePropertiesVisibility> visibility = default;
             Optional<PrivateLinkServicePropertiesAutoApproval> autoApproval = default;
-            Optional<IList<string>> fqdns = default;
+            IList<string> fqdns = default;
             Optional<string> @alias = default;
             Optional<bool> enableProxyProtocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -400,7 +400,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), Optional.ToList(loadBalancerFrontendIPConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
+            return new PrivateLinkServiceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                Optional.ToNullable(provisioningState),
+                privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),
+                visibility.Value,
+                autoApproval.Value,
+                fqdns ?? new ChangeTrackingList<string>(),
+                @alias.Value,
+                Optional.ToNullable(enableProxyProtocol));
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options)

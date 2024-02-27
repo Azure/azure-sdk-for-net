@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicContentLink(uri.Value, contentVersion.Value, Optional.ToNullable(contentSize), contentHash.Value, metadata.Value, serializedAdditionalRawData);
+            return new LogicContentLink(
+                uri.Value,
+                contentVersion.Value,
+                Optional.ToNullable(contentSize),
+                contentHash.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicContentLink>.Write(ModelReaderWriterOptions options)

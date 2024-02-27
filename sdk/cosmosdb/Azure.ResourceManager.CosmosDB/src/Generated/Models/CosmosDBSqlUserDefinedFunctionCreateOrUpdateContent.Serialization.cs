@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource, options0.Value, identity, serializedAdditionalRawData);
+            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                options0.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

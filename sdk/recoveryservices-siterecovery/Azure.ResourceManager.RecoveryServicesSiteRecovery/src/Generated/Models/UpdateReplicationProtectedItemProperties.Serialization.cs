@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> selectedTfoAzureNetworkId = default;
             Optional<string> selectedSourceNicId = default;
             Optional<string> enableRdpOnTargetOption = default;
-            Optional<IList<VmNicContentDetails>> vmNics = default;
+            IList<VmNicContentDetails> vmNics = default;
             Optional<SiteRecoveryLicenseType> licenseType = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
             Optional<UpdateReplicationProtectedItemProviderContent> providerSpecificDetails = default;
@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateReplicationProtectedItemProperties(recoveryAzureVmName.Value, recoveryAzureVmSize.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, enableRdpOnTargetOption.Value, Optional.ToList(vmNics), Optional.ToNullable(licenseType), recoveryAvailabilitySetId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new UpdateReplicationProtectedItemProperties(
+                recoveryAzureVmName.Value,
+                recoveryAzureVmSize.Value,
+                selectedRecoveryAzureNetworkId.Value,
+                selectedTfoAzureNetworkId.Value,
+                selectedSourceNicId.Value,
+                enableRdpOnTargetOption.Value,
+                vmNics ?? new ChangeTrackingList<VmNicContentDetails>(),
+                Optional.ToNullable(licenseType),
+                recoveryAvailabilitySetId.Value,
+                providerSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

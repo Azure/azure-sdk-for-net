@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<string> timeZone = default;
             Optional<string> exclusionTag = default;
-            Optional<IList<ScalingSchedule>> schedules = default;
-            Optional<IList<ScalingHostPoolReference>> hostPoolReferences = default;
+            IList<ScalingSchedule> schedules = default;
+            IList<ScalingHostPoolReference> hostPoolReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, timeZone.Value, exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), serializedAdditionalRawData);
+            return new ScalingPlanPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                timeZone.Value,
+                exclusionTag.Value,
+                schedules ?? new ChangeTrackingList<ScalingSchedule>(),
+                hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPatch>.Write(ModelReaderWriterOptions options)

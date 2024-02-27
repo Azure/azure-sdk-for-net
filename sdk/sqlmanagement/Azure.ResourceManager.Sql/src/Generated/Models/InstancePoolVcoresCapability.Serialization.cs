@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolVcoresCapability(name.Value, Optional.ToNullable(value), storageLimit.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolVcoresCapability(
+                name.Value,
+                Optional.ToNullable(value),
+                storageLimit.Value,
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolVcoresCapability>.Write(ModelReaderWriterOptions options)

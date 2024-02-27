@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<AllowASOverride> allowASOverride = default;
             Optional<long> fabricAsn = default;
             Optional<long> peerAsn = default;
-            Optional<IList<string>> ipv4ListenRangePrefixes = default;
-            Optional<IList<string>> ipv6ListenRangePrefixes = default;
-            Optional<IList<NeighborAddress>> ipv4NeighborAddress = default;
-            Optional<IList<NeighborAddress>> ipv6NeighborAddress = default;
+            IList<string> ipv4ListenRangePrefixes = default;
+            IList<string> ipv6ListenRangePrefixes = default;
+            IList<NeighborAddress> ipv4NeighborAddress = default;
+            IList<NeighborAddress> ipv6NeighborAddress = default;
             Optional<string> annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -275,7 +275,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpConfiguration(annotation.Value, serializedAdditionalRawData, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
+            return new BgpConfiguration(
+                annotation.Value,
+                serializedAdditionalRawData,
+                bfdConfiguration.Value,
+                Optional.ToNullable(defaultRouteOriginate),
+                Optional.ToNullable(allowAS),
+                Optional.ToNullable(allowASOverride),
+                Optional.ToNullable(fabricAsn),
+                Optional.ToNullable(peerAsn),
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
 
         BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)

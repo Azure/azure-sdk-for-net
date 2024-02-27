@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 return null;
             }
             Optional<SourceCodeRepoUpdateContent> sourceRepository = default;
-            Optional<IList<ContainerRegistrySourceTriggerEvent>> sourceTriggerEvents = default;
+            IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
             Optional<ContainerRegistryTriggerStatus> status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository.Value, Optional.ToList(sourceTriggerEvents), Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository.Value, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>(), Optional.ToNullable(status), name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

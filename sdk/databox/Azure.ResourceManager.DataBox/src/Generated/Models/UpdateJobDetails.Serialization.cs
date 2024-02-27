@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateJobDetails(contactDetails.Value, shippingAddress.Value, reverseShippingDetails.Value, preferences.Value, keyEncryptionKey.Value, returnToCustomerPackageDetails.Value, serializedAdditionalRawData);
+            return new UpdateJobDetails(
+                contactDetails.Value,
+                shippingAddress.Value,
+                reverseShippingDetails.Value,
+                preferences.Value,
+                keyEncryptionKey.Value,
+                returnToCustomerPackageDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateJobDetails>.Write(ModelReaderWriterOptions options)

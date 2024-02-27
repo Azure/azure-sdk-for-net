@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<long> invalidDirectoriesProcessed = default;
             Optional<bool> isEnumerationInProgress = default;
             Optional<ResponseError> error = default;
-            Optional<IReadOnlyList<CustomerResolutionCode>> actions = default;
+            IReadOnlyList<CustomerResolutionCode> actions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -362,7 +362,27 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxCustomerDiskCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, Optional.ToList(actions), serializedAdditionalRawData, serialNumber.Value, Optional.ToNullable(copyStatus));
+            return new DataBoxCustomerDiskCopyProgress(
+                storageAccountName.Value,
+                Optional.ToNullable(transferType),
+                Optional.ToNullable(dataAccountType),
+                accountId.Value,
+                Optional.ToNullable(bytesProcessed),
+                Optional.ToNullable(totalBytesToProcess),
+                Optional.ToNullable(filesProcessed),
+                Optional.ToNullable(totalFilesToProcess),
+                Optional.ToNullable(invalidFilesProcessed),
+                Optional.ToNullable(invalidFileBytesUploaded),
+                Optional.ToNullable(renamedContainerCount),
+                Optional.ToNullable(filesErroredOut),
+                Optional.ToNullable(directoriesErroredOut),
+                Optional.ToNullable(invalidDirectoriesProcessed),
+                Optional.ToNullable(isEnumerationInProgress),
+                error.Value,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData,
+                serialNumber.Value,
+                Optional.ToNullable(copyStatus));
         }
 
         BinaryData IPersistableModel<DataBoxCustomerDiskCopyProgress>.Write(ModelReaderWriterOptions options)

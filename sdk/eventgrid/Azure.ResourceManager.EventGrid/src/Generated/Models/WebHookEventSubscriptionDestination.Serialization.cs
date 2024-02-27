@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<int> preferredBatchSizeInKilobytes = default;
             Optional<Guid> azureActiveDirectoryTenantId = default;
             Optional<string> azureActiveDirectoryApplicationIdOrUri = default;
-            Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
+            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebHookEventSubscriptionDestination(endpointType, serializedAdditionalRawData, endpointUri.Value, endpointBaseUri.Value, Optional.ToNullable(maxEventsPerBatch), Optional.ToNullable(preferredBatchSizeInKilobytes), Optional.ToNullable(azureActiveDirectoryTenantId), azureActiveDirectoryApplicationIdOrUri.Value, Optional.ToList(deliveryAttributeMappings), Optional.ToNullable(minimumTlsVersionAllowed));
+            return new WebHookEventSubscriptionDestination(
+                endpointType,
+                serializedAdditionalRawData,
+                endpointUri.Value,
+                endpointBaseUri.Value,
+                Optional.ToNullable(maxEventsPerBatch),
+                Optional.ToNullable(preferredBatchSizeInKilobytes),
+                Optional.ToNullable(azureActiveDirectoryTenantId),
+                azureActiveDirectoryApplicationIdOrUri.Value,
+                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
+                Optional.ToNullable(minimumTlsVersionAllowed));
         }
 
         BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)

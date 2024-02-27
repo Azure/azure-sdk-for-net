@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FetchTieringCostSavingsInfoForProtectedItemContent(sourceTierType, targetTierType, objectType, serializedAdditionalRawData, containerName, protectedItemName);
+            return new FetchTieringCostSavingsInfoForProtectedItemContent(
+                sourceTierType,
+                targetTierType,
+                objectType,
+                serializedAdditionalRawData,
+                containerName,
+                protectedItemName);
         }
 
         BinaryData IPersistableModel<FetchTieringCostSavingsInfoForProtectedItemContent>.Write(ModelReaderWriterOptions options)

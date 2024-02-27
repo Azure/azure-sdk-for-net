@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
         public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BenefitRecommendationProperties properties = null, BillingAccountBenefitKind? kind = null)
         {
-            return new BenefitRecommendationModel(id, name, resourceType, systemData, properties, kind, serializedAdditionalRawData: null);
+            return new BenefitRecommendationModel(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationProperties"/>. </summary>
@@ -52,7 +59,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.BenefitRecommendationProperties"/> instance for mocking. </returns>
         public static BenefitRecommendationProperties BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string scope = "Unknown")
         {
-            return new UnknownBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope, serializedAdditionalRawData: null);
+            return new UnknownBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                scope,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RecommendationUsageDetails"/>. </summary>
@@ -79,7 +100,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.AllSavingsBenefitDetails"/> instance for mocking. </returns>
         public static AllSavingsBenefitDetails AllSavingsBenefitDetails(decimal? overageCost = null, decimal? benefitCost = null, decimal? totalCost = null, decimal? savingsAmount = null, decimal? savingsPercentage = null, decimal? coveragePercentage = null, decimal? commitmentAmount = null, decimal? averageUtilizationPercentage = null, decimal? wastageCost = null)
         {
-            return new AllSavingsBenefitDetails(overageCost, benefitCost, totalCost, savingsAmount, savingsPercentage, coveragePercentage, commitmentAmount, averageUtilizationPercentage, wastageCost, serializedAdditionalRawData: null);
+            return new AllSavingsBenefitDetails(
+                overageCost,
+                benefitCost,
+                totalCost,
+                savingsAmount,
+                savingsPercentage,
+                coveragePercentage,
+                commitmentAmount,
+                averageUtilizationPercentage,
+                wastageCost,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AllSavingsList"/>. </summary>
@@ -111,7 +142,13 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.BenefitUtilizationSummary"/> instance for mocking. </returns>
         public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
         {
-            return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind, serializedAdditionalRawData: null);
+            return new BenefitUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummariesOperationStatus"/>. </summary>
@@ -152,7 +189,20 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             runHistoryValue ??= new List<ExportRun>();
 
-            return new CostManagementExportData(id, name, resourceType, systemData, format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null, partitionData, nextRunTimeEstimate, schedule, eTag, serializedAdditionalRawData: null);
+            return new CostManagementExportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                format,
+                deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null,
+                definition,
+                runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null,
+                partitionData,
+                nextRunTimeEstimate,
+                schedule,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommonExportProperties"/>. </summary>
@@ -167,7 +217,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             runHistoryValue ??= new List<ExportRun>();
 
-            return new CommonExportProperties(format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null, partitionData, nextRunTimeEstimate, serializedAdditionalRawData: null);
+            return new CommonExportProperties(
+                format,
+                deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null,
+                definition,
+                runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null,
+                partitionData,
+                nextRunTimeEstimate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
@@ -188,7 +245,22 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
         public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
-            return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag, serializedAdditionalRawData: null);
+            return new ExportRun(
+                id,
+                name,
+                resourceType,
+                systemData,
+                executionType,
+                status,
+                submittedBy,
+                submittedOn,
+                processingStartOn,
+                processingEndOn,
+                fileName,
+                runSettings,
+                error,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementViewData"/>. </summary>
@@ -219,7 +291,29 @@ namespace Azure.ResourceManager.CostManagement.Models
             kpis ??= new List<ViewKpiProperties>();
             pivots ??= new List<ViewPivotProperties>();
 
-            return new CostManagementViewData(id, name, resourceType, systemData, displayName, scope, createdOn, modifiedOn, dateRange, currency, chart, accumulated, metric, kpis?.ToList(), pivots?.ToList(), typePropertiesQueryType, timeframe, timePeriod, dataSet, includeMonetaryCommitment, eTag, serializedAdditionalRawData: null);
+            return new CostManagementViewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                scope,
+                createdOn,
+                modifiedOn,
+                dateRange,
+                currency,
+                chart,
+                accumulated,
+                metric,
+                kpis?.ToList(),
+                pivots?.ToList(),
+                typePropertiesQueryType,
+                timeframe,
+                timePeriod,
+                dataSet,
+                includeMonetaryCommitment,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementAlertData"/>. </summary>
@@ -242,7 +336,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
         public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? eTag = null)
         {
-            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, createdOn, closeOn, modifiedOn, statusModificationUserName, statusModifiedOn, eTag, serializedAdditionalRawData: null);
+            return new CostManagementAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                createdOn,
+                closeOn,
+                modifiedOn,
+                statusModificationUserName,
+                statusModifiedOn,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ForecastDefinition"/>. </summary>
@@ -255,7 +366,14 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.ForecastDefinition"/> instance for mocking. </returns>
         public static ForecastDefinition ForecastDefinition(ForecastType forecastType = default, ForecastTimeframe timeframe = default, ForecastTimePeriod timePeriod = null, ForecastDataset dataset = null, bool? includeActualCost = null, bool? includeFreshPartialCost = null)
         {
-            return new ForecastDefinition(forecastType, timeframe, timePeriod, dataset, includeActualCost, includeFreshPartialCost, serializedAdditionalRawData: null);
+            return new ForecastDefinition(
+                forecastType,
+                timeframe,
+                timePeriod,
+                dataset,
+                includeActualCost,
+                includeFreshPartialCost,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ForecastResult"/>. </summary>
@@ -277,7 +395,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             rows ??= new List<IList<BinaryData>>();
             tags ??= new Dictionary<string, string>();
 
-            return new ForecastResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags, serializedAdditionalRawData: null);
+            return new ForecastResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                nextLink,
+                columns?.ToList(),
+                rows?.ToList(),
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ForecastColumn"/>. </summary>
@@ -313,7 +443,25 @@ namespace Azure.ResourceManager.CostManagement.Models
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new CostManagementDimension(id, name, resourceType, systemData, description, isFilterEnabled, isGroupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags, serializedAdditionalRawData: null);
+            return new CostManagementDimension(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                isFilterEnabled,
+                isGroupingEnabled,
+                data?.ToList(),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryDefinition"/>. </summary>
@@ -346,7 +494,19 @@ namespace Azure.ResourceManager.CostManagement.Models
             rows ??= new List<IList<BinaryData>>();
             tags ??= new Dictionary<string, string>();
 
-            return new QueryResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags, serializedAdditionalRawData: null);
+            return new QueryResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                nextLink,
+                columns?.ToList(),
+                rows?.ToList(),
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryColumn"/>. </summary>
@@ -398,7 +558,22 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             fileFormats ??= new List<ScheduledActionFileFormat>();
 
-            return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList(), serializedAdditionalRawData: null) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind, serializedAdditionalRawData: null);
+            return new ScheduledActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                fileFormats != null ? new FileDestination(fileFormats?.ToList(), serializedAdditionalRawData: null) : null,
+                notification,
+                notificationEmail,
+                schedule,
+                scope,
+                status,
+                viewId,
+                eTag,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CostManagementNameAvailabilityResult"/>. </summary>
@@ -429,7 +604,23 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SingleScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SingleScopeBenefitRecommendationProperties SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new SingleScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Single, serializedAdditionalRawData: null, subscriptionId, resourceGroup);
+            return new SingleScopeBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                BenefitRecommendationScope.Single,
+                serializedAdditionalRawData: null,
+                subscriptionId,
+                resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedScopeBenefitRecommendationProperties"/>. </summary>
@@ -448,7 +639,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SharedScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SharedScopeBenefitRecommendationProperties SharedScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null)
         {
-            return new SharedScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Shared, serializedAdditionalRawData: null);
+            return new SharedScopeBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                BenefitRecommendationScope.Shared,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IncludedQuantityUtilizationSummary"/>. </summary>
@@ -465,7 +670,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.IncludedQuantityUtilizationSummary"/> instance for mocking. </returns>
         public static IncludedQuantityUtilizationSummary IncludedQuantityUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? utilizationPercentage = null)
         {
-            return new IncludedQuantityUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.IncludedQuantity, serializedAdditionalRawData: null, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, utilizationPercentage);
+            return new IncludedQuantityUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                BillingAccountBenefitKind.IncludedQuantity,
+                serializedAdditionalRawData: null,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageOn,
+                utilizationPercentage);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanUtilizationSummary"/>. </summary>
@@ -484,7 +701,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SavingsPlanUtilizationSummary"/> instance for mocking. </returns>
         public static SavingsPlanUtilizationSummary SavingsPlanUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? avgUtilizationPercentage = null, decimal? minUtilizationPercentage = null, decimal? maxUtilizationPercentage = null)
         {
-            return new SavingsPlanUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.SavingsPlan, serializedAdditionalRawData: null, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, avgUtilizationPercentage, minUtilizationPercentage, maxUtilizationPercentage);
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                BillingAccountBenefitKind.SavingsPlan,
+                serializedAdditionalRawData: null,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageOn,
+                avgUtilizationPercentage,
+                minUtilizationPercentage,
+                maxUtilizationPercentage);
         }
     }
 }

@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> logVerbose = default;
             Optional<bool> logProgress = default;
             Optional<AutomationContentSource> source = default;
-            Optional<IDictionary<string, DscConfigurationParameterDefinition>> parameters = default;
+            IDictionary<string, DscConfigurationParameterDefinition> parameters = default;
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,7 +208,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscConfigurationPatch(name.Value, Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), source.Value, Optional.ToDictionary(parameters), description.Value, serializedAdditionalRawData);
+            return new DscConfigurationPatch(
+                name.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(logVerbose),
+                Optional.ToNullable(logProgress),
+                source.Value,
+                parameters ?? new ChangeTrackingDictionary<string, DscConfigurationParameterDefinition>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscConfigurationPatch>.Write(ModelReaderWriterOptions options)

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<string> scopes = default;
             Optional<string> serviceProviderId = default;
             Optional<string> serviceProviderDisplayName = default;
-            Optional<IList<BotConnectionSettingParameter>> parameters = default;
+            IList<BotConnectionSettingParameter> parameters = default;
             Optional<string> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -176,7 +176,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, Optional.ToList(parameters), provisioningState.Value, serializedAdditionalRawData);
+            return new BotConnectionSettingProperties(
+                clientId.Value,
+                settingId.Value,
+                clientSecret.Value,
+                scopes.Value,
+                serviceProviderId.Value,
+                serviceProviderDisplayName.Value,
+                parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options)

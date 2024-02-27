@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> migrationState = default;
-            Optional<IReadOnlyList<string>> sqlDataCopyErrors = default;
-            Optional<IReadOnlyList<CopyProgressDetails>> listOfCopyProgressDetails = default;
+            IReadOnlyList<string> sqlDataCopyErrors = default;
+            IReadOnlyList<CopyProgressDetails> listOfCopyProgressDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBMigrationStatusDetails(migrationState.Value, Optional.ToList(sqlDataCopyErrors), Optional.ToList(listOfCopyProgressDetails), serializedAdditionalRawData);
+            return new SqlDBMigrationStatusDetails(migrationState.Value, sqlDataCopyErrors ?? new ChangeTrackingList<string>(), listOfCopyProgressDetails ?? new ChangeTrackingList<CopyProgressDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDBMigrationStatusDetails>.Write(ModelReaderWriterOptions options)

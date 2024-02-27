@@ -448,14 +448,14 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<string>> zones = default;
+            IDictionary<string, string> tags = default;
+            IList<string> zones = default;
             Optional<Guid> fileSystemId = default;
             string creationToken = default;
             Optional<NetAppFileServiceLevel> serviceLevel = default;
             long usageThreshold = default;
             Optional<VolumePropertiesExportPolicy> exportPolicy = default;
-            Optional<IList<string>> protocolTypes = default;
+            IList<string> protocolTypes = default;
             Optional<string> provisioningState = default;
             Optional<string> snapshotId = default;
             Optional<bool> deleteBaseSnapshot = default;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppNetworkFeature> networkFeatures = default;
             Optional<Guid> networkSiblingSetId = default;
             Optional<NetAppVolumeStorageToNetworkProximity> storageToNetworkProximity = default;
-            Optional<IReadOnlyList<NetAppVolumeMountTarget>> mountTargets = default;
+            IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             Optional<string> volumeType = default;
             Optional<NetAppVolumeDataProtection> dataProtection = default;
             Optional<bool> isRestoring = default;
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<int?> cloneProgress = default;
             Optional<NetAppFileAccessLog> fileAccessLogs = default;
             Optional<NetAppAvsDataStore> avsDataStore = default;
-            Optional<IReadOnlyList<ResourceIdentifier>> dataStoreResourceId = default;
+            IReadOnlyList<ResourceIdentifier> dataStoreResourceId = default;
             Optional<bool> isDefaultQuotaEnabled = default;
             Optional<long> defaultUserQuotaInKiBs = default;
             Optional<long> defaultGroupQuotaInKiBs = default;
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> t2Network = default;
             Optional<string> volumeSpecName = default;
             Optional<bool> encrypted = default;
-            Optional<IList<NetAppVolumePlacementRule>> placementRules = default;
+            IList<NetAppVolumePlacementRule> placementRules = default;
             Optional<EnableNetAppSubvolume> enableSubvolumes = default;
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
@@ -1062,7 +1062,67 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, serializedAdditionalRawData);
+            return new NetAppVolumeGroupVolume(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(fileSystemId),
+                creationToken,
+                Optional.ToNullable(serviceLevel),
+                usageThreshold,
+                exportPolicy.Value,
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                provisioningState.Value,
+                snapshotId.Value,
+                Optional.ToNullable(deleteBaseSnapshot),
+                backupId.Value,
+                baremetalTenantId.Value,
+                subnetId,
+                Optional.ToNullable(networkFeatures),
+                Optional.ToNullable(networkSiblingSetId),
+                Optional.ToNullable(storageToNetworkProximity),
+                mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
+                volumeType.Value,
+                dataProtection.Value,
+                Optional.ToNullable(isRestoring),
+                Optional.ToNullable(snapshotDirectoryVisible),
+                Optional.ToNullable(kerberosEnabled),
+                Optional.ToNullable(securityStyle),
+                Optional.ToNullable(smbEncryption),
+                Optional.ToNullable(smbAccessBasedEnumeration),
+                Optional.ToNullable(smbNonBrowsable),
+                Optional.ToNullable(smbContinuouslyAvailable),
+                Optional.ToNullable(throughputMibps),
+                Optional.ToNullable(actualThroughputMibps),
+                Optional.ToNullable(encryptionKeySource),
+                keyVaultPrivateEndpointResourceId.Value,
+                Optional.ToNullable(ldapEnabled),
+                Optional.ToNullable(coolAccess),
+                Optional.ToNullable(coolnessPeriod),
+                Optional.ToNullable(coolAccessRetrievalPolicy),
+                unixPermissions.Value,
+                Optional.ToNullable(cloneProgress),
+                Optional.ToNullable(fileAccessLogs),
+                Optional.ToNullable(avsDataStore),
+                dataStoreResourceId ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(isDefaultQuotaEnabled),
+                Optional.ToNullable(defaultUserQuotaInKiBs),
+                Optional.ToNullable(defaultGroupQuotaInKiBs),
+                Optional.ToNullable(maximumNumberOfFiles),
+                volumeGroupName.Value,
+                capacityPoolResourceId.Value,
+                proximityPlacementGroup.Value,
+                t2Network.Value,
+                volumeSpecName.Value,
+                Optional.ToNullable(encrypted),
+                placementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
+                Optional.ToNullable(enableSubvolumes),
+                provisionedAvailabilityZone.Value,
+                Optional.ToNullable(isLargeVolume),
+                originatingResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupVolume>.Write(ModelReaderWriterOptions options)

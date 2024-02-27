@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> customData = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
             Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
+            IList<VaultSecretGroup> secrets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateOSProfile(customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdateOSProfile(customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.Write(ModelReaderWriterOptions options)

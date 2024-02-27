@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmbSetting(multichannel.Value, versions.Value, authenticationMethods.Value, kerberosTicketEncryption.Value, channelEncryption.Value, serializedAdditionalRawData);
+            return new SmbSetting(
+                multichannel.Value,
+                versions.Value,
+                authenticationMethods.Value,
+                kerberosTicketEncryption.Value,
+                channelEncryption.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmbSetting>.Write(ModelReaderWriterOptions options)

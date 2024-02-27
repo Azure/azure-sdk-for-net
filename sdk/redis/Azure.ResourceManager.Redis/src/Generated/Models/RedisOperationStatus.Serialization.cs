@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
+            IReadOnlyDictionary<string, BinaryData> properties = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             string status = default;
             Optional<float> percentComplete = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            IReadOnlyList<OperationStatusResult> operations = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -252,7 +252,17 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisOperationStatus(id.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value, Optional.ToDictionary(properties), serializedAdditionalRawData);
+            return new RedisOperationStatus(
+                id.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error.Value,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisOperationStatus>.Write(ModelReaderWriterOptions options)

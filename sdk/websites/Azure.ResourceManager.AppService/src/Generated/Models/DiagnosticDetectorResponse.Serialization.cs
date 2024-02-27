@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<bool> issueDetected = default;
             Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<DetectorAbnormalTimePeriod> abnormalTimePeriods = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
             Optional<DetectorMetadata> responseMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -321,7 +321,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value, kind.Value, serializedAdditionalRawData);
+            return new DiagnosticDetectorResponse(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(issueDetected),
+                detectorDefinition.Value,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                responseMetaData.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDetectorResponse>.Write(ModelReaderWriterOptions options)

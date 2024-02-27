@@ -160,11 +160,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IPAddress> recoveryStaticIPAddress = default;
             Optional<string> recoveryIPAddressType = default;
             Optional<ResourceIdentifier> recoveryPublicIPAddressId = default;
-            Optional<IReadOnlyList<string>> recoveryLBBackendAddressPoolIds = default;
+            IReadOnlyList<string> recoveryLBBackendAddressPoolIds = default;
             Optional<string> tfoSubnetName = default;
             Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
-            Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
+            IReadOnlyList<string> tfoLBBackendAddressPoolIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
+            return new HyperVIPConfigDetails(
+                name.Value,
+                Optional.ToNullable(isPrimary),
+                subnetName.Value,
+                staticIPAddress.Value,
+                ipAddressType.Value,
+                Optional.ToNullable(isSeletedForFailover),
+                recoverySubnetName.Value,
+                recoveryStaticIPAddress.Value,
+                recoveryIPAddressType.Value,
+                recoveryPublicIPAddressId.Value,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName.Value,
+                tfoStaticIPAddress.Value,
+                tfoPublicIPAddressId.Value,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVIPConfigDetails>.Write(ModelReaderWriterOptions options)

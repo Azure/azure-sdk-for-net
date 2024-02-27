@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>> value = default;
+            IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessSignatureAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedAccessSignatureAuthorizationRuleListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessSignatureAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)

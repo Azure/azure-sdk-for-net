@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
             Optional<string> publicIPAllocationMethod = default;
@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                domainNameLabel.Value,
+                fqdn.Value,
+                publicIPAllocationMethod.Value,
+                sku.Value,
+                zones.Value);
         }
 
         BinaryData IPersistableModel<PublicIPAddressResourceSettings>.Write(ModelReaderWriterOptions options)

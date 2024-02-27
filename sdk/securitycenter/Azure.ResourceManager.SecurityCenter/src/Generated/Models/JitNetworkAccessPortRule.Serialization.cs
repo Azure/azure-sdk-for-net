@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
             Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            IList<string> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration, serializedAdditionalRawData);
+            return new JitNetworkAccessPortRule(
+                number,
+                protocol,
+                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                maxRequestAccessDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPortRule>.Write(ModelReaderWriterOptions options)

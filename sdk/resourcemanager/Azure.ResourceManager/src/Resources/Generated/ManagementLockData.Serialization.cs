@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Resources
             Optional<SystemData> systemData = default;
             ManagementLockLevel level = default;
             Optional<string> notes = default;
-            Optional<IList<ManagementLockOwner>> owners = default;
+            IList<ManagementLockOwner> owners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementLockData(id, name, type, systemData.Value, level, notes.Value, Optional.ToList(owners), serializedAdditionalRawData);
+            return new ManagementLockData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                level,
+                notes.Value,
+                owners ?? new ChangeTrackingList<ManagementLockOwner>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementLockData>.Write(ModelReaderWriterOptions options)

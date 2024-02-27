@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value, serializedAdditionalRawData);
+            return new ReportableException(
+                message.Value,
+                actionableMessage.Value,
+                filePath.Value,
+                lineNumber.Value,
+                Optional.ToNullable(hResult),
+                stackTrace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportableException>.Write(ModelReaderWriterOptions options)

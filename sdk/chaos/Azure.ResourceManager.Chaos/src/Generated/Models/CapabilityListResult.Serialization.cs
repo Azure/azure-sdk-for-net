@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ChaosCapabilityData>> value = default;
+            IReadOnlyList<ChaosCapabilityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CapabilityListResult(value ?? new ChangeTrackingList<ChaosCapabilityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilityListResult>.Write(ModelReaderWriterOptions options)

@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<IPAddress> serviceIPAddress = default;
             Optional<IPAddress> internalIPAddress = default;
-            Optional<IList<IPAddress>> outboundIPAddresses = default;
-            Optional<IList<VirtualIPMapping>> vipMappings = default;
+            IList<IPAddress> outboundIPAddresses = default;
+            IList<VirtualIPMapping> vipMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -242,7 +242,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value, serializedAdditionalRawData);
+            return new AppServiceEnvironmentAddressResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceIPAddress.Value,
+                internalIPAddress.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEnvironmentAddressResult>.Write(ModelReaderWriterOptions options)

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.VoiceServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesTestLineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), phoneNumber.Value, Optional.ToNullable(purpose), serializedAdditionalRawData);
+            return new VoiceServicesTestLineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                phoneNumber.Value,
+                Optional.ToNullable(purpose),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesTestLineData>.Write(ModelReaderWriterOptions options)

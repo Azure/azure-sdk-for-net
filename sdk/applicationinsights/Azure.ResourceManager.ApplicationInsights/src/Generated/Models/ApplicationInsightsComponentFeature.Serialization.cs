@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Optional<string> meterRateFrequency = default;
             Optional<string> resouceId = default;
             Optional<bool> isHidden = default;
-            Optional<IReadOnlyList<ApplicationInsightsComponentFeatureCapability>> capabilities = default;
+            IReadOnlyList<ApplicationInsightsComponentFeatureCapability> capabilities = default;
             Optional<string> title = default;
             Optional<bool> isMainFeature = default;
             Optional<string> supportedAddonFeatures = default;
@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeature(featureName.Value, meterId.Value, meterRateFrequency.Value, resouceId.Value, Optional.ToNullable(isHidden), Optional.ToList(capabilities), title.Value, Optional.ToNullable(isMainFeature), supportedAddonFeatures.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeature(
+                featureName.Value,
+                meterId.Value,
+                meterRateFrequency.Value,
+                resouceId.Value,
+                Optional.ToNullable(isHidden),
+                capabilities ?? new ChangeTrackingList<ApplicationInsightsComponentFeatureCapability>(),
+                title.Value,
+                Optional.ToNullable(isMainFeature),
+                supportedAddonFeatures.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeature>.Write(ModelReaderWriterOptions options)

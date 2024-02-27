@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> timeGrain = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<CosmosDBMetricName> name = default;
-            Optional<IReadOnlyList<CosmosDBMetricValue>> metricValues = default;
+            IReadOnlyList<CosmosDBMetricValue> metricValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartitionMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, Optional.ToList(metricValues), serializedAdditionalRawData, Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
+            return new PartitionMetric(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                Optional.ToNullable(unit),
+                name.Value,
+                metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(partitionId),
+                partitionKeyRangeId.Value);
         }
 
         BinaryData IPersistableModel<PartitionMetric>.Write(ModelReaderWriterOptions options)

@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> databaseName = default;
             Optional<string> status = default;
             Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionRequestStatus>> privateEndpointConnections = default;
+            IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -270,7 +270,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportExportOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
+            return new ImportExportOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                requestType.Value,
+                queuedTime.Value,
+                lastModifiedTime.Value,
+                blobUri.Value,
+                serverName.Value,
+                databaseName.Value,
+                status.Value,
+                errorMessage.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportExportOperationResult>.Write(ModelReaderWriterOptions options)

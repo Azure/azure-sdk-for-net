@@ -174,8 +174,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryCloudServiceId = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
             Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
-            Optional<IList<A2AVmManagedDiskDetails>> vmManagedDisks = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
+            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> multiVmGroupId = default;
             Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
@@ -360,7 +360,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId, recoveryContainerId.Value, recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, recoveryProximityPlacementGroupId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccountId.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryExtendedLocation.Value, recoveryAzureNetworkId.Value, recoverySubnetName.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk));
+            return new A2AEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                recoveryContainerId.Value,
+                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId.Value,
+                recoveryAvailabilitySetId.Value,
+                recoveryProximityPlacementGroupId.Value,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                multiVmGroupName.Value,
+                multiVmGroupId.Value,
+                recoveryBootDiagStorageAccountId.Value,
+                diskEncryptionInfo.Value,
+                recoveryAvailabilityZone.Value,
+                recoveryExtendedLocation.Value,
+                recoveryAzureNetworkId.Value,
+                recoverySubnetName.Value,
+                recoveryVirtualMachineScaleSetId.Value,
+                recoveryCapacityReservationGroupId.Value,
+                Optional.ToNullable(autoProtectionOfDataDisk));
         }
 
         BinaryData IPersistableModel<A2AEnableProtectionContent>.Write(ModelReaderWriterOptions options)

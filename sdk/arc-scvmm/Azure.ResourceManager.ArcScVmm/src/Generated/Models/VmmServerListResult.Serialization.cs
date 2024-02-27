@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScVmmServerData>> value = default;
+            IReadOnlyList<ScVmmServerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmmServerListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VmmServerListResult(value ?? new ChangeTrackingList<ScVmmServerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmmServerListResult>.Write(ModelReaderWriterOptions options)

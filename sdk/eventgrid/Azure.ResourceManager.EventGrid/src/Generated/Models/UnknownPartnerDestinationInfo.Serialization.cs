@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> name = default;
             PartnerEndpointType endpointType = "Unknown";
             Optional<string> endpointServiceContext = default;
-            Optional<IList<ResourceMoveChangeHistory>> resourceMoveChangeHistory = default;
+            IList<ResourceMoveChangeHistory> resourceMoveChangeHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPartnerDestinationInfo(azureSubscriptionId.Value, resourceGroupName.Value, name.Value, endpointType, endpointServiceContext.Value, Optional.ToList(resourceMoveChangeHistory), serializedAdditionalRawData);
+            return new UnknownPartnerDestinationInfo(
+                azureSubscriptionId.Value,
+                resourceGroupName.Value,
+                name.Value,
+                endpointType,
+                endpointServiceContext.Value,
+                resourceMoveChangeHistory ?? new ChangeTrackingList<ResourceMoveChangeHistory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerDestinationInfo>.Write(ModelReaderWriterOptions options)

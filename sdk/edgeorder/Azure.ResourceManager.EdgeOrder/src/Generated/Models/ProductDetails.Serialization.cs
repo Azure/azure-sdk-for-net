@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
+            IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(count), Optional.ToNullable(productDoubleEncryptionStatus), Optional.ToList(deviceDetails), serializedAdditionalRawData);
+            return new ProductDetails(
+                displayInfo.Value,
+                hierarchyInformation,
+                Optional.ToNullable(count),
+                Optional.ToNullable(productDoubleEncryptionStatus),
+                deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDetails>.Write(ModelReaderWriterOptions options)

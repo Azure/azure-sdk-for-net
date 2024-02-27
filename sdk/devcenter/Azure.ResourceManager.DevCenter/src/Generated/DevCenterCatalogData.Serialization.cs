@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterCatalogData(id, name, type, systemData.Value, gitHub.Value, adoGit.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(syncState), Optional.ToNullable(lastSyncTime), serializedAdditionalRawData);
+            return new DevCenterCatalogData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                gitHub.Value,
+                adoGit.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(syncState),
+                Optional.ToNullable(lastSyncTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterCatalogData>.Write(ModelReaderWriterOptions options)

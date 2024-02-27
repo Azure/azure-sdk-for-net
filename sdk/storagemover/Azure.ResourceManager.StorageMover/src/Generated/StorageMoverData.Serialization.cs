@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new StorageMoverData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverData>.Write(ModelReaderWriterOptions options)

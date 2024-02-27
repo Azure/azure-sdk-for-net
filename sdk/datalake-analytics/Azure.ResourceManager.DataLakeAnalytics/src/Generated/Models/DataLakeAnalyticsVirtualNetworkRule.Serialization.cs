@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsVirtualNetworkRule(id, name, type, systemData.Value, subnetId.Value, Optional.ToNullable(virtualNetworkRuleState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsVirtualNetworkRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subnetId.Value,
+                Optional.ToNullable(virtualNetworkRuleState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

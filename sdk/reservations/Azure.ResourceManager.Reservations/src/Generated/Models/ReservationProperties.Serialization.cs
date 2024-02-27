@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<ReservedResourceType> reservedResourceType = default;
             Optional<InstanceFlexibility> instanceFlexibility = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<string>> appliedScopes = default;
+            IReadOnlyList<string> appliedScopes = default;
             Optional<AppliedScopeType> appliedScopeType = default;
             Optional<bool> archived = default;
             Optional<string> capabilities = default;
@@ -573,7 +573,43 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value, serializedAdditionalRawData);
+            return new ReservationProperties(
+                Optional.ToNullable(reservedResourceType),
+                Optional.ToNullable(instanceFlexibility),
+                displayName.Value,
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(appliedScopeType),
+                Optional.ToNullable(archived),
+                capabilities.Value,
+                Optional.ToNullable(quantity),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(effectiveDateTime),
+                Optional.ToNullable(benefitStartTime),
+                Optional.ToNullable(lastUpdatedDateTime),
+                Optional.ToNullable(expiryDate),
+                Optional.ToNullable(expiryDateTime),
+                Optional.ToNullable(reviewDateTime),
+                skuDescription.Value,
+                extendedStatusInfo.Value,
+                Optional.ToNullable(billingPlan),
+                displayProvisioningState.Value,
+                provisioningSubState.Value,
+                Optional.ToNullable(purchaseDate),
+                Optional.ToNullable(purchaseDateTime),
+                splitProperties.Value,
+                mergeProperties.Value,
+                swapProperties.Value,
+                appliedScopeProperties.Value,
+                billingScopeId.Value,
+                Optional.ToNullable(renew),
+                renewSource.Value,
+                renewDestination.Value,
+                renewProperties.Value,
+                Optional.ToNullable(term),
+                userFriendlyAppliedScopeType.Value,
+                userFriendlyRenewState.Value,
+                utilization.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationProperties>.Write(ModelReaderWriterOptions options)

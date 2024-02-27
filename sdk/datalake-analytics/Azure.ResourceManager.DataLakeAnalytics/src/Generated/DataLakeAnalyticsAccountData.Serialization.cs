@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -298,13 +298,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> endpoint = default;
             Optional<string> defaultDataLakeStoreAccount = default;
-            Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> dataLakeStoreAccounts = default;
-            Optional<IReadOnlyList<DataLakeStoreAccountInformationData>> publicDataLakeStoreAccounts = default;
-            Optional<IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData>> storageAccounts = default;
-            Optional<IReadOnlyList<DataLakeAnalyticsComputePolicyData>> computePolicies = default;
-            Optional<IReadOnlyList<DataLakeAnalyticsHiveMetastore>> hiveMetastores = default;
-            Optional<IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule>> virtualNetworkRules = default;
-            Optional<IReadOnlyList<DataLakeAnalyticsFirewallRuleData>> firewallRules = default;
+            IReadOnlyList<DataLakeStoreAccountInformationData> dataLakeStoreAccounts = default;
+            IReadOnlyList<DataLakeStoreAccountInformationData> publicDataLakeStoreAccounts = default;
+            IReadOnlyList<DataLakeAnalyticsStorageAccountInformationData> storageAccounts = default;
+            IReadOnlyList<DataLakeAnalyticsComputePolicyData> computePolicies = default;
+            IReadOnlyList<DataLakeAnalyticsHiveMetastore> hiveMetastores = default;
+            IReadOnlyList<DataLakeAnalyticsVirtualNetworkRule> virtualNetworkRules = default;
+            IReadOnlyList<DataLakeAnalyticsFirewallRuleData> firewallRules = default;
             Optional<DataLakeAnalyticsFirewallState> firewallState = default;
             Optional<DataLakeAnalyticsFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
             Optional<DataLakeAnalyticsCommitmentTierType> newTier = default;
@@ -677,7 +677,43 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountData(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultDataLakeStoreAccount.Value, Optional.ToList(dataLakeStoreAccounts), Optional.ToList(publicDataLakeStoreAccounts), Optional.ToList(storageAccounts), Optional.ToList(computePolicies), Optional.ToList(hiveMetastores), Optional.ToList(virtualNetworkRules), Optional.ToList(firewallRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(maxJobCount), Optional.ToNullable(maxActiveJobCountPerUser), Optional.ToNullable(maxQueuedJobCountPerUser), Optional.ToNullable(maxJobRunningTimeInMin), Optional.ToNullable(systemMaxJobCount), Optional.ToNullable(maxDegreeOfParallelism), Optional.ToNullable(systemMaxDegreeOfParallelism), Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), Optional.ToNullable(queryStoreRetention), Optional.ToNullable(debugDataAccessLevel), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(accountId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                endpoint.Value,
+                defaultDataLakeStoreAccount.Value,
+                dataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreAccountInformationData>(),
+                publicDataLakeStoreAccounts ?? new ChangeTrackingList<DataLakeStoreAccountInformationData>(),
+                storageAccounts ?? new ChangeTrackingList<DataLakeAnalyticsStorageAccountInformationData>(),
+                computePolicies ?? new ChangeTrackingList<DataLakeAnalyticsComputePolicyData>(),
+                hiveMetastores ?? new ChangeTrackingList<DataLakeAnalyticsHiveMetastore>(),
+                virtualNetworkRules ?? new ChangeTrackingList<DataLakeAnalyticsVirtualNetworkRule>(),
+                firewallRules ?? new ChangeTrackingList<DataLakeAnalyticsFirewallRuleData>(),
+                Optional.ToNullable(firewallState),
+                Optional.ToNullable(firewallAllowAzureIPs),
+                Optional.ToNullable(newTier),
+                Optional.ToNullable(currentTier),
+                Optional.ToNullable(maxJobCount),
+                Optional.ToNullable(maxActiveJobCountPerUser),
+                Optional.ToNullable(maxQueuedJobCountPerUser),
+                Optional.ToNullable(maxJobRunningTimeInMin),
+                Optional.ToNullable(systemMaxJobCount),
+                Optional.ToNullable(maxDegreeOfParallelism),
+                Optional.ToNullable(systemMaxDegreeOfParallelism),
+                Optional.ToNullable(maxDegreeOfParallelismPerJob),
+                Optional.ToNullable(minPriorityPerJob),
+                Optional.ToNullable(queryStoreRetention),
+                Optional.ToNullable(debugDataAccessLevel),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountData>.Write(ModelReaderWriterOptions options)

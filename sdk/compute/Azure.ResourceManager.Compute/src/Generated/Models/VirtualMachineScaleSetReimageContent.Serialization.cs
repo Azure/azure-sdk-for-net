@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<string>> instanceIds = default;
+            IList<string> instanceIds = default;
             Optional<bool> tempDisk = default;
             Optional<string> exactVersion = default;
             Optional<OSProfileProvisioningData> osProfile = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetReimageContent(Optional.ToNullable(tempDisk), exactVersion.Value, osProfile.Value, serializedAdditionalRawData, Optional.ToList(instanceIds));
+            return new VirtualMachineScaleSetReimageContent(Optional.ToNullable(tempDisk), exactVersion.Value, osProfile.Value, serializedAdditionalRawData, instanceIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetReimageContent>.Write(ModelReaderWriterOptions options)

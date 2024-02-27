@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Sql
                 return null;
             }
             Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> deletionDate = default;
             Optional<DateTimeOffset> earliestRestoreDate = default;
             Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
-            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            IDictionary<string, SqlDatabaseKey> keys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,7 +300,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableDroppedDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, databaseName.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(backupStorageRedundancy), Optional.ToDictionary(keys), serializedAdditionalRawData);
+            return new RestorableDroppedDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                databaseName.Value,
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(earliestRestoreDate),
+                Optional.ToNullable(backupStorageRedundancy),
+                keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableDroppedDatabaseData>.Write(ModelReaderWriterOptions options)

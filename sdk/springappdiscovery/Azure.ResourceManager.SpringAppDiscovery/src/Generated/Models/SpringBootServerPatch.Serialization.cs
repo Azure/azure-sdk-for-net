@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SpringBootServerProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootServerPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), properties.Value, serializedAdditionalRawData);
+            return new SpringBootServerPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootServerPatch>.Write(ModelReaderWriterOptions options)

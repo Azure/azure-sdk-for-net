@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<string>> authorizedIPRanges = default;
+            IList<string> authorizedIPRanges = default;
             Optional<bool> enablePrivateCluster = default;
             Optional<string> privateDnsZone = default;
             Optional<bool> enablePrivateClusterPublicFQDN = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), serializedAdditionalRawData);
+            return new ManagedClusterApiServerAccessProfile(
+                authorizedIPRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enablePrivateCluster),
+                privateDnsZone.Value,
+                Optional.ToNullable(enablePrivateClusterPublicFQDN),
+                Optional.ToNullable(disableRunCommand),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterApiServerAccessProfile>.Write(ModelReaderWriterOptions options)

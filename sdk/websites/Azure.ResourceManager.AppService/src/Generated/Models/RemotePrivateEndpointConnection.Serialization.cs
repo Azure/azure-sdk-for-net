@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> provisioningState = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
-            Optional<IList<IPAddress>> ipAddresses = default;
+            IList<IPAddress> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnection(id, name, type, systemData.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToList(ipAddresses), kind.Value, serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

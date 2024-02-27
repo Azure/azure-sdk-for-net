@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
             Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<IReadOnlyList<CommunicationIdentifierModel>> participants = default;
+            IReadOnlyList<CommunicationIdentifierModel> participants = default;
             Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -90,7 +90,16 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AddParticipantsSucceededInternal(eventSource.Value, operationContext.Value, resultInformation.Value, Optional.ToList(participants), version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new AddParticipantsSucceededInternal(
+                eventSource.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                participants ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                version.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

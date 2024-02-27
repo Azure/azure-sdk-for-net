@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> databaseTdeCertificateMapping = default;
             Optional<string> sourceServerVersion = default;
             Optional<string> sourceServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -184,7 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databases.Value,
+                logins.Value,
+                agentJobs.Value,
+                databaseTdeCertificateMapping.Value,
+                sourceServerVersion.Value,
+                sourceServerBrandVersion.Value,
+                validationErrors ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)

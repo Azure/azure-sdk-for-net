@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryFunction(name, type, bindingType, inputs, output, serializedAdditionalRawData);
+            return new StreamAnalyticsQueryFunction(
+                name,
+                type,
+                bindingType,
+                inputs,
+                output,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryFunction>.Write(ModelReaderWriterOptions options)

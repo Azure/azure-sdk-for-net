@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             ContainerRegistrySku sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -206,8 +206,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryPolicies> policies = default;
             Optional<ContainerRegistryEncryption> encryption = default;
             Optional<bool> dataEndpointEnabled = default;
-            Optional<IReadOnlyList<string>> dataEndpointHostNames = default;
-            Optional<IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<string> dataEndpointHostNames = default;
+            IReadOnlyList<ContainerRegistryPrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
             Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
@@ -422,7 +422,30 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
+            return new ContainerRegistryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                loginServer.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                Optional.ToNullable(adminUserEnabled),
+                networkRuleSet.Value,
+                policies.Value,
+                encryption.Value,
+                Optional.ToNullable(dataEndpointEnabled),
+                dataEndpointHostNames ?? new ChangeTrackingList<string>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(networkRuleBypassOptions),
+                Optional.ToNullable(zoneRedundancy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryData>.Write(ModelReaderWriterOptions options)

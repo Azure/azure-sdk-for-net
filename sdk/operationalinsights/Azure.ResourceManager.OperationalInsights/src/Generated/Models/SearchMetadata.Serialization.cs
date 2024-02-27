@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<long> total = default;
             Optional<long> top = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<OperationalInsightsSearchCoreSummary>> coreSummaries = default;
+            IReadOnlyList<OperationalInsightsSearchCoreSummary> coreSummaries = default;
             Optional<string> status = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<ETag> eTag = default;
-            Optional<IReadOnlyList<SearchSort>> sort = default;
+            IReadOnlyList<SearchSort> sort = default;
             Optional<long> requestTime = default;
             Optional<string> aggregatedValueField = default;
             Optional<string> aggregatedGroupingFields = default;
@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, Optional.ToList(coreSummaries), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), Optional.ToList(sort), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value, serializedAdditionalRawData);
+            return new SearchMetadata(
+                requestId.Value,
+                resultType.Value,
+                Optional.ToNullable(total),
+                Optional.ToNullable(top),
+                id.Value,
+                coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(),
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(eTag),
+                sort ?? new ChangeTrackingList<SearchSort>(),
+                Optional.ToNullable(requestTime),
+                aggregatedValueField.Value,
+                aggregatedGroupingFields.Value,
+                Optional.ToNullable(sum),
+                Optional.ToNullable(max),
+                schema.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options)

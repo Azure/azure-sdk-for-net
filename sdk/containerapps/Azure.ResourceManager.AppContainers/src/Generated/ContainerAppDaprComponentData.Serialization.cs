@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> version = default;
             Optional<bool> ignoreErrors = default;
             Optional<string> initTimeout = default;
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            IList<ContainerAppWritableSecret> secrets = default;
             Optional<string> secretStoreComponent = default;
-            Optional<IList<ContainerAppDaprMetadata>> metadata = default;
-            Optional<IList<string>> scopes = default;
+            IList<ContainerAppDaprMetadata> metadata = default;
+            IList<string> scopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes), serializedAdditionalRawData);
+            return new ContainerAppDaprComponentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                componentType.Value,
+                version.Value,
+                Optional.ToNullable(ignoreErrors),
+                initTimeout.Value,
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                secretStoreComponent.Value,
+                metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
+                scopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprComponentData>.Write(ModelReaderWriterOptions options)

@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.IotHub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubPrivateEndpointConnectionData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new IotHubPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

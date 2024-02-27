@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<PerfCounterDataSource>> performanceCounters = default;
-            Optional<IList<WindowsEventLogDataSource>> windowsEventLogs = default;
-            Optional<IList<SyslogDataSource>> syslog = default;
-            Optional<IList<ExtensionDataSource>> extensions = default;
-            Optional<IList<LogFilesDataSource>> logFiles = default;
-            Optional<IList<IisLogsDataSource>> iisLogs = default;
-            Optional<IList<WindowsFirewallLogsDataSource>> windowsFirewallLogs = default;
-            Optional<IList<PrometheusForwarderDataSource>> prometheusForwarder = default;
-            Optional<IList<PlatformTelemetryDataSource>> platformTelemetry = default;
+            IList<PerfCounterDataSource> performanceCounters = default;
+            IList<WindowsEventLogDataSource> windowsEventLogs = default;
+            IList<SyslogDataSource> syslog = default;
+            IList<ExtensionDataSource> extensions = default;
+            IList<LogFilesDataSource> logFiles = default;
+            IList<IisLogsDataSource> iisLogs = default;
+            IList<WindowsFirewallLogsDataSource> windowsFirewallLogs = default;
+            IList<PrometheusForwarderDataSource> prometheusForwarder = default;
+            IList<PlatformTelemetryDataSource> platformTelemetry = default;
             Optional<DataSourcesSpecDataImports> dataImports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -314,7 +314,18 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleDataSources(Optional.ToList(performanceCounters), Optional.ToList(windowsEventLogs), Optional.ToList(syslog), Optional.ToList(extensions), Optional.ToList(logFiles), Optional.ToList(iisLogs), Optional.ToList(windowsFirewallLogs), Optional.ToList(prometheusForwarder), Optional.ToList(platformTelemetry), dataImports.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleDataSources(
+                performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
+                windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
+                syslog ?? new ChangeTrackingList<SyslogDataSource>(),
+                extensions ?? new ChangeTrackingList<ExtensionDataSource>(),
+                logFiles ?? new ChangeTrackingList<LogFilesDataSource>(),
+                iisLogs ?? new ChangeTrackingList<IisLogsDataSource>(),
+                windowsFirewallLogs ?? new ChangeTrackingList<WindowsFirewallLogsDataSource>(),
+                prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(),
+                platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(),
+                dataImports.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleDataSources>.Write(ModelReaderWriterOptions options)

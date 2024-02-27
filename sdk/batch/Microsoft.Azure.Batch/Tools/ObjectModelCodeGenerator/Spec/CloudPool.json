@@ -470,6 +470,17 @@
         },
         {
           "Key": {
+            "Type": "UpgradePolicy",
+            "Name": "UpgradePolicy",
+            "SummaryComment": "The upgrade policy for the pool.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
             "Type": "IDictionary<string, string>",
             "Name": "ResourceTags",
             "SummaryComment": "The user-specified tags associated with the pool.",

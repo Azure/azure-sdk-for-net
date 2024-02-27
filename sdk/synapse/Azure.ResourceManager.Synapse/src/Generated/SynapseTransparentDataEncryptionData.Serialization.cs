@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseTransparentDataEncryptionData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new SynapseTransparentDataEncryptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseTransparentDataEncryptionData>.Write(ModelReaderWriterOptions options)

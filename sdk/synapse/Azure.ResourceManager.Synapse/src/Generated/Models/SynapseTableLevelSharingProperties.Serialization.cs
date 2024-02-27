@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
+            IList<string> tablesToInclude = default;
+            IList<string> tablesToExclude = default;
+            IList<string> externalTablesToInclude = default;
+            IList<string> externalTablesToExclude = default;
+            IList<string> materializedViewsToInclude = default;
+            IList<string> materializedViewsToExclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude), serializedAdditionalRawData);
+            return new SynapseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)

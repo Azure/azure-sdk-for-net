@@ -26,10 +26,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> offerId = default;
             Optional<string> assignmentId = default;
             Optional<int> jobPriority = default;
-            Optional<IReadOnlyDictionary<string, string>> workerLabels = default;
-            Optional<IReadOnlyDictionary<string, string>> workerTags = default;
-            Optional<IReadOnlyDictionary<string, string>> jobLabels = default;
-            Optional<IReadOnlyDictionary<string, string>> jobTags = default;
+            IReadOnlyDictionary<string, string> workerLabels = default;
+            IReadOnlyDictionary<string, string> workerTags = default;
+            IReadOnlyDictionary<string, string> jobLabels = default;
+            IReadOnlyDictionary<string, string> jobTags = default;
             Optional<string> workerId = default;
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
@@ -137,7 +137,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerOfferAcceptedEventData(jobId.Value, channelReference.Value, channelId.Value, workerId.Value, queueId.Value, offerId.Value, assignmentId.Value, Optional.ToNullable(jobPriority), Optional.ToDictionary(workerLabels), Optional.ToDictionary(workerTags), Optional.ToDictionary(jobLabels), Optional.ToDictionary(jobTags));
+            return new AcsRouterWorkerOfferAcceptedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                workerId.Value,
+                queueId.Value,
+                offerId.Value,
+                assignmentId.Value,
+                Optional.ToNullable(jobPriority),
+                workerLabels ?? new ChangeTrackingDictionary<string, string>(),
+                workerTags ?? new ChangeTrackingDictionary<string, string>(),
+                jobLabels ?? new ChangeTrackingDictionary<string, string>(),
+                jobTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerOfferAcceptedEventDataConverter : JsonConverter<AcsRouterWorkerOfferAcceptedEventData>

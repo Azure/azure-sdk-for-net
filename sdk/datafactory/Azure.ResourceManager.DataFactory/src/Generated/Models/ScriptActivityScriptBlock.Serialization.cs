@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> text = default;
             DataFactoryScriptType type = default;
-            Optional<IList<ScriptActivityParameter>> parameters = default;
+            IList<ScriptActivityParameter> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActivityScriptBlock(text, type, Optional.ToList(parameters), serializedAdditionalRawData);
+            return new ScriptActivityScriptBlock(text, type, parameters ?? new ChangeTrackingList<ScriptActivityParameter>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActivityScriptBlock>.Write(ModelReaderWriterOptions options)

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceType> type = default;
             Optional<string> description = default;
             Optional<string> service = default;
-            Optional<IList<ResourceIdentifier>> serviceResources = default;
+            IList<ResourceIdentifier> serviceResources = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -221,7 +221,16 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointPolicyDefinitionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), description.Value, service.Value, Optional.ToList(serviceResources), Optional.ToNullable(provisioningState));
+            return new ServiceEndpointPolicyDefinitionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                description.Value,
+                service.Value,
+                serviceResources ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options)

@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<VaultBackupJobErrorInfo>> errorDetails = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<VaultBackupJobErrorInfo> errorDetails = default;
             Optional<VaultBackupJobExtendedInfo> extendedInfo = default;
             Optional<string> entityFriendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), extendedInfo.Value);
+            return new VaultBackupJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(duration),
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<VaultBackupJobErrorInfo>(),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<VaultBackupJob>.Write(ModelReaderWriterOptions options)

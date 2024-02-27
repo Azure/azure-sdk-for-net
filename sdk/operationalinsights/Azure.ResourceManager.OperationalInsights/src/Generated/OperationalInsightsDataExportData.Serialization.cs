@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> dataExportId = default;
-            Optional<IList<string>> tableNames = default;
+            IList<string> tableNames = default;
             Optional<bool> enable = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<DateTimeOffset> lastModifiedDate = default;
@@ -295,7 +295,20 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsDataExportData(id, name, type, systemData.Value, Optional.ToNullable(dataExportId), Optional.ToList(tableNames), Optional.ToNullable(enable), Optional.ToNullable(createdDate), Optional.ToNullable(lastModifiedDate), resourceId.Value, Optional.ToNullable(type0), eventHubName.Value, serializedAdditionalRawData);
+            return new OperationalInsightsDataExportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataExportId),
+                tableNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enable),
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(lastModifiedDate),
+                resourceId.Value,
+                Optional.ToNullable(type0),
+                eventHubName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsDataExportData>.Write(ModelReaderWriterOptions options)

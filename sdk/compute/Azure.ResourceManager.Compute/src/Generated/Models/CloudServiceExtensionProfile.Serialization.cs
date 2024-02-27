@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceExtension>> extensions = default;
+            IList<CloudServiceExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceExtensionProfile(Optional.ToList(extensions), serializedAdditionalRawData);
+            return new CloudServiceExtensionProfile(extensions ?? new ChangeTrackingList<CloudServiceExtension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceExtensionProfile>.Write(ModelReaderWriterOptions options)

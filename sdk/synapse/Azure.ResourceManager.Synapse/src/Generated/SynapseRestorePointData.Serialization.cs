@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value, serializedAdditionalRawData);
+            return new SynapseRestorePointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(restorePointType),
+                Optional.ToNullable(earliestRestoreDate),
+                Optional.ToNullable(restorePointCreationDate),
+                restorePointLabel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRestorePointData>.Write(ModelReaderWriterOptions options)

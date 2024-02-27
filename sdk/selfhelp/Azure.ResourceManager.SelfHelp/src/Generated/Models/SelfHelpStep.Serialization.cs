@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> executionStatusDescription = default;
             Optional<SelfHelpType> type = default;
             Optional<bool> isLastStep = default;
-            Optional<IReadOnlyList<StepInput>> inputs = default;
+            IReadOnlyList<StepInput> inputs = default;
             Optional<AutomatedCheckResult> automatedCheckResults = default;
-            Optional<IReadOnlyList<SelfHelpDiagnosticInsight>> insights = default;
+            IReadOnlyList<SelfHelpDiagnosticInsight> insights = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -255,7 +255,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpStep(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), Optional.ToList(inputs), automatedCheckResults.Value, Optional.ToList(insights), error.Value, serializedAdditionalRawData);
+            return new SelfHelpStep(
+                id.Value,
+                title.Value,
+                description.Value,
+                guidance.Value,
+                Optional.ToNullable(executionStatus),
+                executionStatusDescription.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(isLastStep),
+                inputs ?? new ChangeTrackingList<StepInput>(),
+                automatedCheckResults.Value,
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpStep>.Write(ModelReaderWriterOptions options)

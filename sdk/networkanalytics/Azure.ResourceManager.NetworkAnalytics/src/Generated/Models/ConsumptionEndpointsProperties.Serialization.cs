@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionEndpointsProperties(ingestionUrl.Value, ingestionResourceId.Value, fileAccessUrl.Value, fileAccessResourceId.Value, queryUrl.Value, queryResourceId.Value, serializedAdditionalRawData);
+            return new ConsumptionEndpointsProperties(
+                ingestionUrl.Value,
+                ingestionResourceId.Value,
+                fileAccessUrl.Value,
+                fileAccessResourceId.Value,
+                queryUrl.Value,
+                queryResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionEndpointsProperties>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterNatGatewayProfile>.Write(ModelReaderWriterOptions options)

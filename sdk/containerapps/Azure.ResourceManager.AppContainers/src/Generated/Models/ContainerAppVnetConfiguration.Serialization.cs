@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, serializedAdditionalRawData);
+            return new ContainerAppVnetConfiguration(
+                Optional.ToNullable(@internal),
+                infrastructureSubnetId.Value,
+                dockerBridgeCidr.Value,
+                platformReservedCidr.Value,
+                platformReservedDnsIP.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVnetConfiguration>.Write(ModelReaderWriterOptions options)

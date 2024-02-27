@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureServersSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(selectedProvider));
+            return new AzureServersSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(selectedProvider));
         }
 
         BinaryData IPersistableModel<AzureServersSetting>.Write(ModelReaderWriterOptions options)

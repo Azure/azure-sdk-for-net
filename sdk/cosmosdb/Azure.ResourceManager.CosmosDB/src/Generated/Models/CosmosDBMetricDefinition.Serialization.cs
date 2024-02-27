@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
+            IReadOnlyList<CosmosDBMetricAvailability> metricAvailabilities = default;
             Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<ResourceIdentifier> resourceUri = default;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBMetricDefinition(Optional.ToList(metricAvailabilities), Optional.ToNullable(primaryAggregationType), Optional.ToNullable(unit), resourceUri.Value, name.Value, serializedAdditionalRawData);
+            return new CosmosDBMetricDefinition(
+                metricAvailabilities ?? new ChangeTrackingList<CosmosDBMetricAvailability>(),
+                Optional.ToNullable(primaryAggregationType),
+                Optional.ToNullable(unit),
+                resourceUri.Value,
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBMetricDefinition>.Write(ModelReaderWriterOptions options)

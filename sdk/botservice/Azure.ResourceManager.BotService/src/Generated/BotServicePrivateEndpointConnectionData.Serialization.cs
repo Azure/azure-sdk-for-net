@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BotService
             Optional<SubResource> privateEndpoint = default;
             Optional<BotServicePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<BotServicePrivateEndpointConnectionProvisioningState> provisioningState = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.BotService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServicePrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToList(groupIds), serializedAdditionalRawData);
+            return new BotServicePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

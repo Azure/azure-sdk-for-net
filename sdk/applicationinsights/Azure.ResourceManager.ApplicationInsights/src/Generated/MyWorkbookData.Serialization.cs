@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ApplicationInsights
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> etag = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> etag = default;
             Optional<string> displayName = default;
             Optional<string> serializedData = default;
             Optional<string> version = default;
@@ -348,7 +348,25 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MyWorkbookData(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToDictionary(etag), serializedAdditionalRawData, Optional.ToNullable(kind), systemData, displayName.Value, serializedData.Value, version.Value, timeModified.Value, category.Value, userId.Value, sourceId.Value, storageUri.Value);
+            return new MyWorkbookData(
+                identity.Value,
+                id.Value,
+                name.Value,
+                type.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(kind),
+                systemData,
+                displayName.Value,
+                serializedData.Value,
+                version.Value,
+                timeModified.Value,
+                category.Value,
+                userId.Value,
+                sourceId.Value,
+                storageUri.Value);
         }
 
         BinaryData IPersistableModel<MyWorkbookData>.Write(ModelReaderWriterOptions options)

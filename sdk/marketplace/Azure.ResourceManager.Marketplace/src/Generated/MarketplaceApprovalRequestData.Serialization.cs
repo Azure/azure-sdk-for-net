@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<string> offerId = default;
             Optional<string> offerDisplayName = default;
             Optional<string> publisherId = default;
-            Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
+            IList<PrivateStorePlanDetails> plansDetails = default;
             Optional<bool> isClosed = default;
             Optional<long> messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -227,7 +227,18 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceApprovalRequestData(id, name, type, systemData.Value, offerId.Value, offerDisplayName.Value, publisherId.Value, Optional.ToList(plansDetails), Optional.ToNullable(isClosed), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+            return new MarketplaceApprovalRequestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                offerId.Value,
+                offerDisplayName.Value,
+                publisherId.Value,
+                plansDetails ?? new ChangeTrackingList<PrivateStorePlanDetails>(),
+                Optional.ToNullable(isClosed),
+                Optional.ToNullable(messageCode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceApprovalRequestData>.Write(ModelReaderWriterOptions options)

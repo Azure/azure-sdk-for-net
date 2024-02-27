@@ -99,7 +99,13 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new VectorizableTextQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), Optional.ToNullable(oversampling), text);
+            return new VectorizableTextQuery(
+                kind,
+                Optional.ToNullable(k),
+                fields.Value,
+                Optional.ToNullable(exhaustive),
+                Optional.ToNullable(oversampling),
+                text);
         }
     }
 }

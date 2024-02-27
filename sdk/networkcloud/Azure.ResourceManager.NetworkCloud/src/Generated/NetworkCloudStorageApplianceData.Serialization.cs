@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -353,7 +353,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudStorageApplianceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, administratorCredentials, Optional.ToNullable(capacity), Optional.ToNullable(capacityUsed), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, managementIPv4Address.Value, Optional.ToNullable(provisioningState), rackId, rackSlot, Optional.ToNullable(remoteVendorManagementFeature), Optional.ToNullable(remoteVendorManagementStatus), serialNumber, storageApplianceSkuId, serializedAdditionalRawData);
+            return new NetworkCloudStorageApplianceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                administratorCredentials,
+                Optional.ToNullable(capacity),
+                Optional.ToNullable(capacityUsed),
+                clusterId.Value,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                managementIPv4Address.Value,
+                Optional.ToNullable(provisioningState),
+                rackId,
+                rackSlot,
+                Optional.ToNullable(remoteVendorManagementFeature),
+                Optional.ToNullable(remoteVendorManagementStatus),
+                serialNumber,
+                storageApplianceSkuId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageApplianceData>.Write(ModelReaderWriterOptions options)

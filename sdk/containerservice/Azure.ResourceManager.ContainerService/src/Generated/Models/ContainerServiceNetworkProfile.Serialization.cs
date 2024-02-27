@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<ContainerServiceLoadBalancerSku> loadBalancerSku = default;
             Optional<ManagedClusterLoadBalancerProfile> loadBalancerProfile = default;
             Optional<ManagedClusterNatGatewayProfile> natGatewayProfile = default;
-            Optional<IList<string>> podCidrs = default;
-            Optional<IList<string>> serviceCidrs = default;
-            Optional<IList<IPFamily>> ipFamilies = default;
+            IList<string> podCidrs = default;
+            IList<string> serviceCidrs = default;
+            IList<IPFamily> ipFamilies = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -317,7 +317,23 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceNetworkProfile(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(networkDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, Optional.ToNullable(outboundType), Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, Optional.ToList(podCidrs), Optional.ToList(serviceCidrs), Optional.ToList(ipFamilies), serializedAdditionalRawData);
+            return new ContainerServiceNetworkProfile(
+                Optional.ToNullable(networkPlugin),
+                Optional.ToNullable(networkPluginMode),
+                Optional.ToNullable(networkPolicy),
+                Optional.ToNullable(networkMode),
+                Optional.ToNullable(networkDataplane),
+                podCidr.Value,
+                serviceCidr.Value,
+                dnsServiceIP.Value,
+                Optional.ToNullable(outboundType),
+                Optional.ToNullable(loadBalancerSku),
+                loadBalancerProfile.Value,
+                natGatewayProfile.Value,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                ipFamilies ?? new ChangeTrackingList<IPFamily>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

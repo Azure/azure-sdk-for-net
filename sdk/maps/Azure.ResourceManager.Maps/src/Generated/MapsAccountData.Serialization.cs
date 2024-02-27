@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Maps
             Optional<MapsAccountKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MapsAccountProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.Maps
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), identity, properties.Value, serializedAdditionalRawData);
+            return new MapsAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                Optional.ToNullable(kind),
+                identity,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountData>.Write(ModelReaderWriterOptions options)

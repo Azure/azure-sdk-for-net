@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.PolicyInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyMetadataData(id, name, type, systemData.Value, metadataId.Value, category.Value, title.Value, owner.Value, additionalContentUrl.Value, metadata.Value, description.Value, requirements.Value, serializedAdditionalRawData);
+            return new PolicyMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadataId.Value,
+                category.Value,
+                title.Value,
+                owner.Value,
+                additionalContentUrl.Value,
+                metadata.Value,
+                description.Value,
+                requirements.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyMetadataData>.Write(ModelReaderWriterOptions options)

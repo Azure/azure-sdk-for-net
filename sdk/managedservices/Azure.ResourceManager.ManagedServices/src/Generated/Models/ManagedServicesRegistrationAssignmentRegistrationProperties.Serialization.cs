@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 return null;
             }
             Optional<string> description = default;
-            Optional<IReadOnlyList<ManagedServicesAuthorization>> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
+            IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
+            IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
             Optional<string> registrationDefinitionName = default;
             Optional<ManagedServicesProvisioningState> provisioningState = default;
             Optional<Guid> manageeTenantId = default;
@@ -213,7 +213,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesRegistrationAssignmentRegistrationProperties(description.Value, Optional.ToList(authorizations), Optional.ToList(eligibleAuthorizations), registrationDefinitionName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(manageeTenantId), manageeTenantName.Value, Optional.ToNullable(managedByTenantId), managedByTenantName.Value, serializedAdditionalRawData);
+            return new ManagedServicesRegistrationAssignmentRegistrationProperties(
+                description.Value,
+                authorizations ?? new ChangeTrackingList<ManagedServicesAuthorization>(),
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                registrationDefinitionName.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(manageeTenantId),
+                manageeTenantName.Value,
+                Optional.ToNullable(managedByTenantId),
+                managedByTenantName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationProperties>.Write(ModelReaderWriterOptions options)

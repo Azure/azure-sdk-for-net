@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<long> intervalInSeconds = default;
             Optional<long> timeoutInSeconds = default;
             Optional<long> toleratedNumberOfFailures = default;
-            Optional<IList<TrafficManagerMonitorConfigCustomHeaderInfo>> customHeaders = default;
-            Optional<IList<ExpectedStatusCodeRangeInfo>> expectedStatusCodeRanges = default;
+            IList<TrafficManagerMonitorConfigCustomHeaderInfo> customHeaders = default;
+            IList<ExpectedStatusCodeRangeInfo> expectedStatusCodeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges), serializedAdditionalRawData);
+            return new TrafficManagerMonitorConfig(
+                Optional.ToNullable(profileMonitorStatus),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(port),
+                path.Value,
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(timeoutInSeconds),
+                Optional.ToNullable(toleratedNumberOfFailures),
+                customHeaders ?? new ChangeTrackingList<TrafficManagerMonitorConfigCustomHeaderInfo>(),
+                expectedStatusCodeRanges ?? new ChangeTrackingList<ExpectedStatusCodeRangeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options)

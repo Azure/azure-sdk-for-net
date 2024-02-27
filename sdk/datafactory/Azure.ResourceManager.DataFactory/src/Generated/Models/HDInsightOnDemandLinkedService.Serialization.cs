@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
             DataFactoryElement<int> clusterSize = default;
             DataFactoryElement<string> timeToLive = default;
             DataFactoryElement<string> version = default;
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactorySecretBaseDefinition> clusterPassword = default;
             Optional<DataFactoryElement<string>> clusterSshUserName = default;
             Optional<DataFactorySecretBaseDefinition> clusterSshPassword = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> additionalLinkedServiceNames = default;
+            IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames = default;
             Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
             Optional<DataFactoryElement<string>> clusterType = default;
             Optional<DataFactoryElement<string>> sparkVersion = default;
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> headNodeSize = default;
             Optional<BinaryData> dataNodeSize = default;
             Optional<BinaryData> zookeeperNodeSize = default;
-            Optional<IList<DataFactoryScriptAction>> scriptActions = default;
+            IList<DataFactoryScriptAction> scriptActions = default;
             Optional<DataFactoryElement<string>> virtualNetworkId = default;
             Optional<DataFactoryElement<string>> subnetName = default;
             Optional<DataFactoryCredentialReference> credential = default;
@@ -742,7 +742,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightOnDemandLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterSize, timeToLive, version, linkedServiceName, hostSubscriptionId, servicePrincipalId.Value, servicePrincipalKey, tenant, clusterResourceGroup, clusterNamePrefix.Value, clusterUserName.Value, clusterPassword, clusterSshUserName.Value, clusterSshPassword, Optional.ToList(additionalLinkedServiceNames), hcatalogLinkedServiceName, clusterType.Value, sparkVersion.Value, coreConfiguration.Value, hBaseConfiguration.Value, hdfsConfiguration.Value, hiveConfiguration.Value, mapReduceConfiguration.Value, oozieConfiguration.Value, stormConfiguration.Value, yarnConfiguration.Value, encryptedCredential.Value, headNodeSize.Value, dataNodeSize.Value, zookeeperNodeSize.Value, Optional.ToList(scriptActions), virtualNetworkId.Value, subnetName.Value, credential.Value);
+            return new HDInsightOnDemandLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                clusterSize,
+                timeToLive,
+                version,
+                linkedServiceName,
+                hostSubscriptionId,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant,
+                clusterResourceGroup,
+                clusterNamePrefix.Value,
+                clusterUserName.Value,
+                clusterPassword,
+                clusterSshUserName.Value,
+                clusterSshPassword,
+                additionalLinkedServiceNames ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                hcatalogLinkedServiceName,
+                clusterType.Value,
+                sparkVersion.Value,
+                coreConfiguration.Value,
+                hBaseConfiguration.Value,
+                hdfsConfiguration.Value,
+                hiveConfiguration.Value,
+                mapReduceConfiguration.Value,
+                oozieConfiguration.Value,
+                stormConfiguration.Value,
+                yarnConfiguration.Value,
+                encryptedCredential.Value,
+                headNodeSize.Value,
+                dataNodeSize.Value,
+                zookeeperNodeSize.Value,
+                scriptActions ?? new ChangeTrackingList<DataFactoryScriptAction>(),
+                virtualNetworkId.Value,
+                subnetName.Value,
+                credential.Value);
         }
 
         BinaryData IPersistableModel<HDInsightOnDemandLinkedService>.Write(ModelReaderWriterOptions options)

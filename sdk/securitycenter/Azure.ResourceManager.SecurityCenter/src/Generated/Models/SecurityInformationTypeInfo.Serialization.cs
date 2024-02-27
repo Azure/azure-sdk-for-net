@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<Guid> recommendedLabelId = default;
             Optional<bool> enabled = default;
             Optional<bool> custom = default;
-            Optional<IList<InformationProtectionKeyword>> keywords = default;
+            IList<InformationProtectionKeyword> keywords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Optional.ToNullable(order), Optional.ToNullable(recommendedLabelId), Optional.ToNullable(enabled), Optional.ToNullable(custom), Optional.ToList(keywords), serializedAdditionalRawData);
+            return new SecurityInformationTypeInfo(
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(order),
+                Optional.ToNullable(recommendedLabelId),
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(custom),
+                keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options)

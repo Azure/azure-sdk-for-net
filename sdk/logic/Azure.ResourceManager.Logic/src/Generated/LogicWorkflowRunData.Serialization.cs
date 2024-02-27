@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Logic
             Optional<Correlation> correlation = default;
             Optional<LogicResourceReference> workflow = default;
             Optional<LogicWorkflowRunTrigger> trigger = default;
-            Optional<IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo>> outputs = default;
+            IReadOnlyDictionary<string, LogicWorkflowOutputParameterInfo> outputs = default;
             Optional<LogicWorkflowRunTrigger> response = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -329,7 +329,24 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunData(id, name, type, systemData.Value, Optional.ToNullable(waitEndTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, correlationId.Value, correlation.Value, workflow.Value, trigger.Value, Optional.ToDictionary(outputs), response.Value, serializedAdditionalRawData);
+            return new LogicWorkflowRunData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(waitEndTime),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(status),
+                code.Value,
+                error.Value,
+                correlationId.Value,
+                correlation.Value,
+                workflow.Value,
+                trigger.Value,
+                outputs ?? new ChangeTrackingDictionary<string, LogicWorkflowOutputParameterInfo>(),
+                response.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunData>.Write(ModelReaderWriterOptions options)

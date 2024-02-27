@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<int> ready = default;
             Optional<PodStatus> status = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<IReadOnlyList<PodEvent>> events = default;
+            IReadOnlyList<PodEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events), serializedAdditionalRawData);
+            return new KubernetesPod(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                events ?? new ChangeTrackingList<PodEvent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)

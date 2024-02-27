@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTargetUtilizationScaleSettings(scaleType, serializedAdditionalRawData, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
+            return new MachineLearningTargetUtilizationScaleSettings(
+                scaleType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(maxInstances),
+                Optional.ToNullable(minInstances),
+                Optional.ToNullable(pollingInterval),
+                Optional.ToNullable(targetUtilizationPercentage));
         }
 
         BinaryData IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Write(ModelReaderWriterOptions options)

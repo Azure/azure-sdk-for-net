@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DigitalTwinsPrivateLinkResourceData>> value = default;
+            IReadOnlyList<DigitalTwinsPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GroupIdInformationResponse(Optional.ToList(value), serializedAdditionalRawData);
+            return new GroupIdInformationResponse(value ?? new ChangeTrackingList<DigitalTwinsPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupIdInformationResponse>.Write(ModelReaderWriterOptions options)

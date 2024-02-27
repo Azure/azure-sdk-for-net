@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.PrivateDns
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkLinkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), virtualNetwork, Optional.ToNullable(registrationEnabled), Optional.ToNullable(virtualNetworkLinkState), Optional.ToNullable(privateDnsProvisioningState), serializedAdditionalRawData);
+            return new VirtualNetworkLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                virtualNetwork,
+                Optional.ToNullable(registrationEnabled),
+                Optional.ToNullable(virtualNetworkLinkState),
+                Optional.ToNullable(privateDnsProvisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkLinkData>.Write(ModelReaderWriterOptions options)

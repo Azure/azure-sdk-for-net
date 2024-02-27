@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<FhirServiceData>> value = default;
+            IReadOnlyList<FhirServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceCollection(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new FhirServiceCollection(nextLink.Value, value ?? new ChangeTrackingList<FhirServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceCollection>.Write(ModelReaderWriterOptions options)

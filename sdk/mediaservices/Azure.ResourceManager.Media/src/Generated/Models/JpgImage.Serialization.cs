@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<JpgLayer>> layers = default;
+            IList<JpgLayer> layers = default;
             Optional<int> spriteColumn = default;
             string start = default;
             Optional<string> step = default;
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JpgImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, Optional.ToList(layers), Optional.ToNullable(spriteColumn));
+            return new JpgImage(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                start,
+                step.Value,
+                range.Value,
+                layers ?? new ChangeTrackingList<JpgLayer>(),
+                Optional.ToNullable(spriteColumn));
         }
 
         BinaryData IPersistableModel<JpgImage>.Write(ModelReaderWriterOptions options)

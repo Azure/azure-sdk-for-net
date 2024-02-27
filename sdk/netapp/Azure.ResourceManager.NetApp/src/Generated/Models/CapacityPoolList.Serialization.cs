@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacityPoolData>> value = default;
+            IReadOnlyList<CapacityPoolData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CapacityPoolList(value ?? new ChangeTrackingList<CapacityPoolData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolList>.Write(ModelReaderWriterOptions options)

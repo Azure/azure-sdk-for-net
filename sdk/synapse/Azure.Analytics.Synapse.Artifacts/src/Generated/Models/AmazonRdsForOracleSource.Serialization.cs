@@ -168,7 +168,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForOracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, partitionOption.Value, partitionSettings.Value, additionalColumns.Value);
+            return new AmazonRdsForOracleSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                oracleReaderQuery.Value,
+                queryTimeout.Value,
+                partitionOption.Value,
+                partitionSettings.Value,
+                additionalColumns.Value);
         }
 
         internal partial class AmazonRdsForOracleSourceConverter : JsonConverter<AmazonRdsForOracleSource>

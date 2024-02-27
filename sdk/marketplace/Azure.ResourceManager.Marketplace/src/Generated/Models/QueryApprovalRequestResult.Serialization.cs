@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             Optional<string> uniqueOfferId = default;
-            Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
+            IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default;
             Optional<ETag> etag = default;
             Optional<long> messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
+            return new QueryApprovalRequestResult(uniqueOfferId.Value, plansDetails ?? new ChangeTrackingDictionary<string, PrivateStorePlanDetails>(), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryApprovalRequestResult>.Write(ModelReaderWriterOptions options)

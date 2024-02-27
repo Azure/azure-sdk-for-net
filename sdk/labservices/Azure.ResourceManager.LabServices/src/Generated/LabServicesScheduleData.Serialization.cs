@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesScheduleData(id, name, type, systemData.Value, Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LabServicesScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startAt),
+                Optional.ToNullable(stopAt),
+                recurrencePattern.Value,
+                timeZoneId.Value,
+                notes.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesScheduleData>.Write(ModelReaderWriterOptions options)

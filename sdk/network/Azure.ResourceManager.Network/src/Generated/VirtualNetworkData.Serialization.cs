@@ -207,12 +207,12 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AddressSpace> addressSpace = default;
             Optional<DhcpOptions> dhcpOptions = default;
             Optional<int> flowTimeoutInMinutes = default;
-            Optional<IList<SubnetData>> subnets = default;
-            Optional<IList<VirtualNetworkPeeringData>> virtualNetworkPeerings = default;
+            IList<SubnetData> subnets = default;
+            IList<VirtualNetworkPeeringData> virtualNetworkPeerings = default;
             Optional<Guid> resourceGuid = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> enableDdosProtection = default;
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.Network
             Optional<WritableSubResource> ddosProtectionPlan = default;
             Optional<VirtualNetworkBgpCommunities> bgpCommunities = default;
             Optional<VirtualNetworkEncryption> encryption = default;
-            Optional<IList<WritableSubResource>> ipAllocations = default;
-            Optional<IReadOnlyList<FlowLogData>> flowLogs = default;
+            IList<WritableSubResource> ipAllocations = default;
+            IReadOnlyList<FlowLogData> flowLogs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -454,7 +454,29 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), Optional.ToList(subnets), Optional.ToList(virtualNetworkPeerings), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, Optional.ToList(ipAllocations), Optional.ToList(flowLogs));
+            return new VirtualNetworkData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                addressSpace.Value,
+                dhcpOptions.Value,
+                Optional.ToNullable(flowTimeoutInMinutes),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(enableDdosProtection),
+                Optional.ToNullable(enableVmProtection),
+                ddosProtectionPlan,
+                bgpCommunities.Value,
+                encryption.Value,
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>());
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)

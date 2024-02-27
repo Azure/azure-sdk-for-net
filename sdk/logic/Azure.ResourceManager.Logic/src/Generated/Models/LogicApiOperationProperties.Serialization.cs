@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<LogicApiOperationAnnotation> annotation = default;
             Optional<LogicApiReference> api = default;
             Optional<SwaggerSchema> inputsDefinition = default;
-            Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
+            IDictionary<string, SwaggerSchema> responsesDefinition = default;
             Optional<bool> isWebhook = default;
             Optional<bool> isNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification), serializedAdditionalRawData);
+            return new LogicApiOperationProperties(
+                summary.Value,
+                description.Value,
+                visibility.Value,
+                trigger.Value,
+                triggerHint.Value,
+                Optional.ToNullable(pageable),
+                annotation.Value,
+                api.Value,
+                inputsDefinition.Value,
+                responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
+                Optional.ToNullable(isWebhook),
+                Optional.ToNullable(isNotification),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationProperties>.Write(ModelReaderWriterOptions options)

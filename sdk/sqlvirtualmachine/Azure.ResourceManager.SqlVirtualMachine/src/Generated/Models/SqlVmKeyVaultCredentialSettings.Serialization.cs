@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmKeyVaultCredentialSettings(Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value, serializedAdditionalRawData);
+            return new SqlVmKeyVaultCredentialSettings(
+                Optional.ToNullable(enable),
+                credentialName.Value,
+                azureKeyVaultUrl.Value,
+                servicePrincipalName.Value,
+                servicePrincipalSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmKeyVaultCredentialSettings>.Write(ModelReaderWriterOptions options)

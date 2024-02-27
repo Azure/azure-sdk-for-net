@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Authorization
             Optional<SystemData> systemData = default;
             Optional<string> denyAssignmentName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<DenyAssignmentPermission>> permissions = default;
+            IReadOnlyList<DenyAssignmentPermission> permissions = default;
             Optional<string> scope = default;
             Optional<bool> doNotApplyToChildScopes = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> principals = default;
-            Optional<IReadOnlyList<RoleManagementPrincipal>> excludePrincipals = default;
+            IReadOnlyList<RoleManagementPrincipal> principals = default;
+            IReadOnlyList<RoleManagementPrincipal> excludePrincipals = default;
             Optional<bool> isSystemProtected = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -277,7 +277,20 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenyAssignmentData(id, name, type, systemData.Value, denyAssignmentName.Value, description.Value, Optional.ToList(permissions), scope.Value, Optional.ToNullable(doNotApplyToChildScopes), Optional.ToList(principals), Optional.ToList(excludePrincipals), Optional.ToNullable(isSystemProtected), serializedAdditionalRawData);
+            return new DenyAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                denyAssignmentName.Value,
+                description.Value,
+                permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
+                scope.Value,
+                Optional.ToNullable(doNotApplyToChildScopes),
+                principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
+                Optional.ToNullable(isSystemProtected),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DenyAssignmentData>.Write(ModelReaderWriterOptions options)

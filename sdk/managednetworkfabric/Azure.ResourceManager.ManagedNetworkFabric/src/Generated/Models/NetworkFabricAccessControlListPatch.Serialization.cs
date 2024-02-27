@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NetworkFabricConfigurationType> configurationType = default;
             Optional<Uri> aclsUrl = default;
             Optional<CommunityActionType> defaultAction = default;
-            Optional<IList<AccessControlListMatchConfiguration>> matchConfigurations = default;
-            Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
+            IList<AccessControlListMatchConfiguration> matchConfigurations = default;
+            IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = default;
             Optional<string> annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -221,7 +221,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricAccessControlListPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(configurationType), aclsUrl.Value, Optional.ToNullable(defaultAction), Optional.ToList(matchConfigurations), Optional.ToList(dynamicMatchConfigurations), annotation.Value);
+            return new NetworkFabricAccessControlListPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(configurationType),
+                aclsUrl.Value,
+                Optional.ToNullable(defaultAction),
+                matchConfigurations ?? new ChangeTrackingList<AccessControlListMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>(),
+                annotation.Value);
         }
 
         BinaryData IPersistableModel<NetworkFabricAccessControlListPatch>.Write(ModelReaderWriterOptions options)

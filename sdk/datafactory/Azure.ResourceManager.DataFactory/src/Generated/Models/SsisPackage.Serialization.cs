@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<long> folderId = default;
             Optional<long> projectVersion = default;
             Optional<long> projectId = default;
-            Optional<IReadOnlyList<SsisParameterInfo>> parameters = default;
+            IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
             Optional<long> id = default;
             Optional<string> name = default;
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPackage(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(projectVersion), Optional.ToNullable(projectId), Optional.ToList(parameters));
+            return new SsisPackage(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                Optional.ToNullable(projectVersion),
+                Optional.ToNullable(projectId),
+                parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 
         BinaryData IPersistableModel<SsisPackage>.Write(ModelReaderWriterOptions options)

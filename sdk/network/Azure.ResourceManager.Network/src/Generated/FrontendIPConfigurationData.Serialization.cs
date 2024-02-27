@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IList<string>> zones = default;
+            IList<string> zones = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> inboundNatPools = default;
-            Optional<IReadOnlyList<WritableSubResource>> outboundRules = default;
-            Optional<IReadOnlyList<WritableSubResource>> loadBalancingRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatRules = default;
+            IReadOnlyList<WritableSubResource> inboundNatPools = default;
+            IReadOnlyList<WritableSubResource> outboundRules = default;
+            IReadOnlyList<WritableSubResource> loadBalancingRules = default;
             Optional<string> privateIPAddress = default;
             Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<NetworkIPVersion> privateIPAddressVersion = default;
@@ -389,7 +389,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToList(inboundNatRules), Optional.ToList(inboundNatPools), Optional.ToList(outboundRules), Optional.ToList(loadBalancingRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
+            return new FrontendIPConfigurationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                Optional.ToNullable(privateIPAddressVersion),
+                subnet.Value,
+                publicIPAddress.Value,
+                publicIPPrefix,
+                gatewayLoadBalancer,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<FrontendIPConfigurationData>.Write(ModelReaderWriterOptions options)

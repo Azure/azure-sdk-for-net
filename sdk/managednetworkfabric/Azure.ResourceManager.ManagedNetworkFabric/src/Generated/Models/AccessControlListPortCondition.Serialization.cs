@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IList<string>> flags = default;
+            IList<string> flags = default;
             Optional<NetworkFabricPortType> portType = default;
             Layer4Protocol layer4Protocol = default;
-            Optional<IList<string>> ports = default;
-            Optional<IList<string>> portGroupNames = default;
+            IList<string> ports = default;
+            IList<string> portGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListPortCondition(Optional.ToNullable(portType), layer4Protocol, Optional.ToList(ports), Optional.ToList(portGroupNames), serializedAdditionalRawData, Optional.ToList(flags));
+            return new AccessControlListPortCondition(
+                Optional.ToNullable(portType),
+                layer4Protocol,
+                ports ?? new ChangeTrackingList<string>(),
+                portGroupNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                flags ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AccessControlListPortCondition>.Write(ModelReaderWriterOptions options)

@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.LabServices.Models
             Optional<string> size = default;
             Optional<string> family = default;
             Optional<AvailableLabServicesSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<AzureLocation>> locations = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuCost>> costs = default;
-            Optional<IReadOnlyList<AvailableLabServicesSkuRestrictions>> restrictions = default;
+            IReadOnlyList<AvailableLabServicesSkuCapability> capabilities = default;
+            IReadOnlyList<AzureLocation> locations = default;
+            IReadOnlyList<AvailableLabServicesSkuCost> costs = default;
+            IReadOnlyList<AvailableLabServicesSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSku(resourceType.Value, name.Value, Optional.ToNullable(tier), size.Value, family.Value, capacity.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(costs), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new AvailableLabServicesSku(
+                resourceType.Value,
+                name.Value,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                capacity.Value,
+                capabilities ?? new ChangeTrackingList<AvailableLabServicesSkuCapability>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                costs ?? new ChangeTrackingList<AvailableLabServicesSkuCost>(),
+                restrictions ?? new ChangeTrackingList<AvailableLabServicesSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSku>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricBoundaryCondition(Optional.ToNullable(lower), Optional.ToNullable(upper), direction, Optional.ToNullable(type), metricId.Value, Optional.ToNullable(triggerForMissing));
+            return new MetricBoundaryCondition(
+                Optional.ToNullable(lower),
+                Optional.ToNullable(upper),
+                direction,
+                Optional.ToNullable(type),
+                metricId.Value,
+                Optional.ToNullable(triggerForMissing));
         }
     }
 }

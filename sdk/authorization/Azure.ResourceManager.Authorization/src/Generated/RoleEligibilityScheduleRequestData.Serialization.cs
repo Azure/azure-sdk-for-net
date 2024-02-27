@@ -449,7 +449,32 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleEligibilityScheduleId.Value, targetRoleEligibilityScheduleInstanceId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration), serializedAdditionalRawData);
+            return new RoleEligibilityScheduleRequestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                roleDefinitionId.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(principalType),
+                Optional.ToNullable(requestType),
+                Optional.ToNullable(status),
+                approvalId.Value,
+                targetRoleEligibilityScheduleId.Value,
+                targetRoleEligibilityScheduleInstanceId.Value,
+                justification.Value,
+                ticketInfo.Value,
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(requestorId),
+                expandedProperties.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(type0),
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(duration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleRequestData>.Write(ModelReaderWriterOptions options)

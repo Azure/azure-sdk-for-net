@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<IdpsQueryFilterItems>> filters = default;
+            IList<IdpsQueryFilterItems> filters = default;
             Optional<string> search = default;
             Optional<IdpsQueryOrderBy> orderBy = default;
             Optional<int> resultsPerPage = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryContent(Optional.ToList(filters), search.Value, orderBy.Value, Optional.ToNullable(resultsPerPage), Optional.ToNullable(skip), serializedAdditionalRawData);
+            return new IdpsQueryContent(
+                filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(),
+                search.Value,
+                orderBy.Value,
+                Optional.ToNullable(resultsPerPage),
+                Optional.ToNullable(skip),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryContent>.Write(ModelReaderWriterOptions options)

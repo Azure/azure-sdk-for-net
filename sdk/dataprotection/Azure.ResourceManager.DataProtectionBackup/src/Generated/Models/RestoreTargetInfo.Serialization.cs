@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestoreTargetInfo(objectType, recoveryOption, Optional.ToNullable(restoreLocation), serializedAdditionalRawData, datasourceInfo, datasourceSetInfo.Value, datasourceAuthCredentials.Value);
+            return new RestoreTargetInfo(
+                objectType,
+                recoveryOption,
+                Optional.ToNullable(restoreLocation),
+                serializedAdditionalRawData,
+                datasourceInfo,
+                datasourceSetInfo.Value,
+                datasourceAuthCredentials.Value);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfo>.Write(ModelReaderWriterOptions options)

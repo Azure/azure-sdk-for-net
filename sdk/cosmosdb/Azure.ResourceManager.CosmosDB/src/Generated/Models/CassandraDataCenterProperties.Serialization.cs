@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<AzureLocation> dataCenterLocation = default;
             Optional<ResourceIdentifier> delegatedSubnetId = default;
             Optional<int> nodeCount = default;
-            Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
+            IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             Optional<string> base64EncodedCassandraYamlFragment = default;
             Optional<Uri> managedDiskCustomerKeyUri = default;
             Optional<Uri> backupStorageCustomerKeyUri = default;
@@ -297,7 +297,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value, serializedAdditionalRawData);
+            return new CassandraDataCenterProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(dataCenterLocation),
+                delegatedSubnetId.Value,
+                Optional.ToNullable(nodeCount),
+                seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
+                base64EncodedCassandraYamlFragment.Value,
+                managedDiskCustomerKeyUri.Value,
+                backupStorageCustomerKeyUri.Value,
+                sku.Value,
+                diskSku.Value,
+                Optional.ToNullable(diskCapacity),
+                Optional.ToNullable(availabilityZone),
+                authenticationMethodLdapProperties.Value,
+                Optional.ToNullable(deallocated),
+                provisionError.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraDataCenterProperties>.Write(ModelReaderWriterOptions options)

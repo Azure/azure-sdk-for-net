@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceGalleryImageStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, downloadStatus.Value, Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new MarketplaceGalleryImageStatus(
+                errorCode.Value,
+                errorMessage.Value,
+                provisioningStatus.Value,
+                downloadStatus.Value,
+                Optional.ToNullable(progressPercentage),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceGalleryImageStatus>.Write(ModelReaderWriterOptions options)

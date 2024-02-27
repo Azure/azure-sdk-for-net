@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> countryOrRegionForHolidays = default;
             Optional<int?> cvStepSize = default;
             Optional<MachineLearningFeatureLag> featureLags = default;
-            Optional<IList<string>> featuresUnknownAtForecastTime = default;
+            IList<string> featuresUnknownAtForecastTime = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
             Optional<ForecastingSeasonality> seasonality = default;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TargetLags> targetLags = default;
             Optional<TargetRollingWindowSize> targetRollingWindowSize = default;
             Optional<string> timeColumnName = default;
-            Optional<IList<string>> timeSeriesIdColumnNames = default;
+            IList<string> timeSeriesIdColumnNames = default;
             Optional<MachineLearningUseStl> useStl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -368,7 +368,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), Optional.ToList(featuresUnknownAtForecastTime), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl), serializedAdditionalRawData);
+            return new ForecastingSettings(
+                countryOrRegionForHolidays.Value,
+                Optional.ToNullable(cvStepSize),
+                Optional.ToNullable(featureLags),
+                featuresUnknownAtForecastTime ?? new ChangeTrackingList<string>(),
+                forecastHorizon.Value,
+                frequency.Value,
+                seasonality.Value,
+                Optional.ToNullable(shortSeriesHandlingConfig),
+                Optional.ToNullable(targetAggregateFunction),
+                targetLags.Value,
+                targetRollingWindowSize.Value,
+                timeColumnName.Value,
+                timeSeriesIdColumnNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(useStl),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ForecastingSettings>.Write(ModelReaderWriterOptions options)

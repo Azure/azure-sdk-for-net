@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> usageName = default;
             Optional<DateTimeOffset> deprecationDate = default;
             Optional<CognitiveServicesCapacityConfig> capacity = default;
-            Optional<IReadOnlyList<ServiceAccountCallRateLimit>> rateLimits = default;
+            IReadOnlyList<ServiceAccountCallRateLimit> rateLimits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, Optional.ToList(rateLimits), serializedAdditionalRawData);
+            return new CognitiveServicesModelSku(
+                name.Value,
+                usageName.Value,
+                Optional.ToNullable(deprecationDate),
+                capacity.Value,
+                rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesModelSku>.Write(ModelReaderWriterOptions options)

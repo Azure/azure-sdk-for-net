@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.Network
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<HubRoute>> routes = default;
-            Optional<IList<string>> labels = default;
-            Optional<IReadOnlyList<string>> associatedConnections = default;
-            Optional<IReadOnlyList<string>> propagatingConnections = default;
+            IList<HubRoute> routes = default;
+            IList<string> labels = default;
+            IReadOnlyList<string> associatedConnections = default;
+            IReadOnlyList<string> propagatingConnections = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -262,7 +262,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HubRouteTableData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(routes), Optional.ToList(labels), Optional.ToList(associatedConnections), Optional.ToList(propagatingConnections), Optional.ToNullable(provisioningState));
+            return new HubRouteTableData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routes ?? new ChangeTrackingList<HubRoute>(),
+                labels ?? new ChangeTrackingList<string>(),
+                associatedConnections ?? new ChangeTrackingList<string>(),
+                propagatingConnections ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options)

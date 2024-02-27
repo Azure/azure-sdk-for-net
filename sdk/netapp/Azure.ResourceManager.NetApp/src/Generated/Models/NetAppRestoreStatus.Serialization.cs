@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppRestoreStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(totalTransferBytes), serializedAdditionalRawData);
+            return new NetAppRestoreStatus(
+                Optional.ToNullable(healthy),
+                Optional.ToNullable(relationshipStatus),
+                Optional.ToNullable(mirrorState),
+                unhealthyReason.Value,
+                errorMessage.Value,
+                Optional.ToNullable(totalTransferBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppRestoreStatus>.Write(ModelReaderWriterOptions options)

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> vpnSites = default;
+            IList<string> vpnSites = default;
             Uri outputBlobSasUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetVpnSitesConfigurationContent(Optional.ToList(vpnSites), outputBlobSasUrl, serializedAdditionalRawData);
+            return new GetVpnSitesConfigurationContent(vpnSites ?? new ChangeTrackingList<string>(), outputBlobSasUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetVpnSitesConfigurationContent>.Write(ModelReaderWriterOptions options)

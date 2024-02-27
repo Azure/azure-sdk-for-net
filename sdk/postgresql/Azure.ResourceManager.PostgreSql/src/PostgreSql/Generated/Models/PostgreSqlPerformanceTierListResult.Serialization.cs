@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PostgreSqlPerformanceTierProperties>> value = default;
+            IReadOnlyList<PostgreSqlPerformanceTierProperties> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlPerformanceTierListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new PostgreSqlPerformanceTierListResult(value ?? new ChangeTrackingList<PostgreSqlPerformanceTierProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlPerformanceTierListResult>.Write(ModelReaderWriterOptions options)

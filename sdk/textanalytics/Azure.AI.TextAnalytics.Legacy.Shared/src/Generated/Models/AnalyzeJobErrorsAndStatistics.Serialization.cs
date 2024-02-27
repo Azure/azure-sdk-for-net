@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
+            IReadOnlyList<TextAnalyticsError> errors = default;
             Optional<RequestStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new AnalyzeJobErrorsAndStatistics(Optional.ToList(errors), statistics.Value);
+            return new AnalyzeJobErrorsAndStatistics(errors ?? new ChangeTrackingList<TextAnalyticsError>(), statistics.Value);
         }
     }
 }

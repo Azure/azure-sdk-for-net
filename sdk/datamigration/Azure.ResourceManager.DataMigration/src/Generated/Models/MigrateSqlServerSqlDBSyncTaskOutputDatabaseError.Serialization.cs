@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
+            IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
             Optional<string> id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, Optional.ToList(events));
+            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.Write(ModelReaderWriterOptions options)

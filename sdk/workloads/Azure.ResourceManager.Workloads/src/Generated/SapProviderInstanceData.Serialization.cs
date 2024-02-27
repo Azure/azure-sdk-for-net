@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapProviderInstanceData(id, name, type, systemData.Value, identity.Value, Optional.ToNullable(provisioningState), errors.Value, providerSettings.Value, serializedAdditionalRawData);
+            return new SapProviderInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                providerSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapProviderInstanceData>.Write(ModelReaderWriterOptions options)

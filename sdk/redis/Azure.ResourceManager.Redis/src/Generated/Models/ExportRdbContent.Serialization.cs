@@ -123,7 +123,13 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRdbContent(format.Value, prefix, container, preferredDataArchiveAuthMethod.Value, storageSubscriptionId.Value, serializedAdditionalRawData);
+            return new ExportRdbContent(
+                format.Value,
+                prefix,
+                container,
+                preferredDataArchiveAuthMethod.Value,
+                storageSubscriptionId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRdbContent>.Write(ModelReaderWriterOptions options)

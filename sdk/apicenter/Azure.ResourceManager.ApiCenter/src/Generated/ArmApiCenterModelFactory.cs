@@ -30,7 +30,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ApiCenterServiceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, serializedAdditionalRawData: null);
+            return new ApiCenterServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApiCenterServicePatch"/>. </summary>

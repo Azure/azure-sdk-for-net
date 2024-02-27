@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CaptureDescription(Optional.ToNullable(enabled), Optional.ToNullable(encoding), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(sizeLimitInBytes), destination.Value, Optional.ToNullable(skipEmptyArchives), serializedAdditionalRawData);
+            return new CaptureDescription(
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(encoding),
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(sizeLimitInBytes),
+                destination.Value,
+                Optional.ToNullable(skipEmptyArchives),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemAssignedIdentityData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(tenantId), Optional.ToNullable(principalId), Optional.ToNullable(clientId), clientSecretUrl.Value, serializedAdditionalRawData);
+            return new SystemAssignedIdentityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(clientId),
+                clientSecretUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemAssignedIdentityData>.Write(ModelReaderWriterOptions options)

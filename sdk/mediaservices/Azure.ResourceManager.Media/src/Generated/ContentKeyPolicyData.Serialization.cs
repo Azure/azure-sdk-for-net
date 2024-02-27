@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Media
             Optional<DateTimeOffset> created = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<string> description = default;
-            Optional<IList<ContentKeyPolicyOption>> options0 = default;
+            IList<ContentKeyPolicyOption> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyData(id, name, type, systemData.Value, Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, Optional.ToList(options0), serializedAdditionalRawData);
+            return new ContentKeyPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(policyId),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                description.Value,
+                options0 ?? new ChangeTrackingList<ContentKeyPolicyOption>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyData>.Write(ModelReaderWriterOptions options)

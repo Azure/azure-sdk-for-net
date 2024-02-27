@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
+            IDictionary<string, string> metadata = default;
             Optional<int> approximateMessageCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQueueData(id, name, type, systemData.Value, Optional.ToDictionary(metadata), Optional.ToNullable(approximateMessageCount), serializedAdditionalRawData);
+            return new StorageQueueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(approximateMessageCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageQueueData>.Write(ModelReaderWriterOptions options)

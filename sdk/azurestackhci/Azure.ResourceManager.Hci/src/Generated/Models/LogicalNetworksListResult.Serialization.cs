@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LogicalNetworkData>> value = default;
+            IReadOnlyList<LogicalNetworkData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LogicalNetworksListResult(value ?? new ChangeTrackingList<LogicalNetworkData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworksListResult>.Write(ModelReaderWriterOptions options)

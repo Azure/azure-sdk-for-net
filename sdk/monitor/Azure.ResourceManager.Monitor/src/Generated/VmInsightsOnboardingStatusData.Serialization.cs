@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<ResourceIdentifier> resourceId = default;
             Optional<OnboardingStatus> onboardingStatus = default;
             Optional<DataStatus> dataStatus = default;
-            Optional<IReadOnlyList<DataContainer>> data = default;
+            IReadOnlyList<DataContainer> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInsightsOnboardingStatusData(id, name, type, systemData.Value, resourceId.Value, Optional.ToNullable(onboardingStatus), Optional.ToNullable(dataStatus), Optional.ToList(data), serializedAdditionalRawData);
+            return new VmInsightsOnboardingStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceId.Value,
+                Optional.ToNullable(onboardingStatus),
+                Optional.ToNullable(dataStatus),
+                data ?? new ChangeTrackingList<DataContainer>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInsightsOnboardingStatusData>.Write(ModelReaderWriterOptions options)

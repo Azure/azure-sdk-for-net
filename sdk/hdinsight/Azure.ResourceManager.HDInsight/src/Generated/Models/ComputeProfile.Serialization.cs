@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightClusterRole>> roles = default;
+            IList<HDInsightClusterRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeProfile(Optional.ToList(roles), serializedAdditionalRawData);
+            return new ComputeProfile(roles ?? new ChangeTrackingList<HDInsightClusterRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeProfile>.Write(ModelReaderWriterOptions options)

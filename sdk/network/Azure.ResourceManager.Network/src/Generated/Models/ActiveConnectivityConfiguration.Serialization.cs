@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Network.Models
             Optional<DateTimeOffset> commitTime = default;
             Optional<AzureLocation> region = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
+            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
             Optional<string> description = default;
             Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
+            IReadOnlyList<ConnectivityHub> hubs = default;
             Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
+            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<DeleteExistingPeering> deleteExistingPeering = default;
             Optional<Guid> resourceGuid = default;
@@ -291,7 +291,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData, Optional.ToNullable(commitTime), Optional.ToNullable(region));
+            return new ActiveConnectivityConfiguration(
+                id.Value,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description.Value,
+                Optional.ToNullable(connectivityTopology),
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                Optional.ToNullable(isGlobal),
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deleteExistingPeering),
+                Optional.ToNullable(resourceGuid),
+                serializedAdditionalRawData,
+                Optional.ToNullable(commitTime),
+                Optional.ToNullable(region));
         }
 
         BinaryData IPersistableModel<ActiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)

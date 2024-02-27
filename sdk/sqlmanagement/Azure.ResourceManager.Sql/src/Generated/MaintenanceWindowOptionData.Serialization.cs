@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<bool> isEnabled = default;
-            Optional<IList<MaintenanceWindowTimeRange>> maintenanceWindowCycles = default;
+            IList<MaintenanceWindowTimeRange> maintenanceWindowCycles = default;
             Optional<int> minDurationInMinutes = default;
             Optional<int> defaultDurationInMinutes = default;
             Optional<int> minCycles = default;
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceWindowOptionData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToList(maintenanceWindowCycles), Optional.ToNullable(minDurationInMinutes), Optional.ToNullable(defaultDurationInMinutes), Optional.ToNullable(minCycles), Optional.ToNullable(timeGranularityInMinutes), Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle), serializedAdditionalRawData);
+            return new MaintenanceWindowOptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                maintenanceWindowCycles ?? new ChangeTrackingList<MaintenanceWindowTimeRange>(),
+                Optional.ToNullable(minDurationInMinutes),
+                Optional.ToNullable(defaultDurationInMinutes),
+                Optional.ToNullable(minCycles),
+                Optional.ToNullable(timeGranularityInMinutes),
+                Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options)

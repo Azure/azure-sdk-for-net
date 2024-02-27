@@ -243,7 +243,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionProtectorData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new EncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                subregion.Value,
+                serverKeyName.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                thumbprint.Value,
+                Optional.ToNullable(autoRotationEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionProtectorData>.Write(ModelReaderWriterOptions options)

@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerConfigurationsManagementSettings(sqlConnectivityUpdateSettings.Value, sqlWorkloadTypeUpdateSettings.Value, sqlStorageUpdateSettings.Value, additionalFeaturesServerConfigurations.Value, sqlInstanceSettings.Value, serializedAdditionalRawData);
+            return new SqlServerConfigurationsManagementSettings(
+                sqlConnectivityUpdateSettings.Value,
+                sqlWorkloadTypeUpdateSettings.Value,
+                sqlStorageUpdateSettings.Value,
+                additionalFeaturesServerConfigurations.Value,
+                sqlInstanceSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerConfigurationsManagementSettings>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, partnerAuthorization.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PartnerConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                partnerAuthorization.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerConfigurationData>.Write(ModelReaderWriterOptions options)

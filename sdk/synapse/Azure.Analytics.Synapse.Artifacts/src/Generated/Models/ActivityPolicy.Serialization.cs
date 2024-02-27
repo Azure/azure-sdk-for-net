@@ -115,7 +115,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new ActivityPolicy(
+                timeout.Value,
+                retry.Value,
+                Optional.ToNullable(retryIntervalInSeconds),
+                Optional.ToNullable(secureInput),
+                Optional.ToNullable(secureOutput),
+                additionalProperties);
         }
 
         internal partial class ActivityPolicyConverter : JsonConverter<ActivityPolicy>

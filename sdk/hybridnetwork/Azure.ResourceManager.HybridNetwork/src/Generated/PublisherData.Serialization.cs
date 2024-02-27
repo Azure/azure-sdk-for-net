@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridNetwork
             }
             Optional<PublisherPropertiesFormat> properties = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublisherData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, identity, serializedAdditionalRawData);
+            return new PublisherData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublisherData>.Write(ModelReaderWriterOptions options)

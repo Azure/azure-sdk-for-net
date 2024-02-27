@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RuntimeScriptActionDetail>> value = default;
+            IReadOnlyList<RuntimeScriptActionDetail> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ScriptActionsList(value ?? new ChangeTrackingList<RuntimeScriptActionDetail>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActionsList>.Write(ModelReaderWriterOptions options)

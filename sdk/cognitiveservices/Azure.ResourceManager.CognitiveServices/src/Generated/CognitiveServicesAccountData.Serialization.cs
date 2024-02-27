@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<ManagedServiceIdentity> identity = default;
             Optional<CognitiveServicesAccountProperties> properties = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -230,7 +230,19 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new CognitiveServicesAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind.Value,
+                sku.Value,
+                identity,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options)

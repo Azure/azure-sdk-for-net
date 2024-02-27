@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<GitHubOwnerData>> value = default;
+            IReadOnlyList<GitHubOwnerData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubOwnerListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GitHubOwnerListResponse(value ?? new ChangeTrackingList<GitHubOwnerData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubOwnerListResponse>.Write(ModelReaderWriterOptions options)

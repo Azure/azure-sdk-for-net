@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<StorageCacheSkuInfo> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<SystemData> systemData = default;
             Optional<int> cacheSizeGB = default;
             Optional<StorageCacheHealth> health = default;
-            Optional<IReadOnlyList<IPAddress>> mountAddresses = default;
+            IReadOnlyList<IPAddress> mountAddresses = default;
             Optional<StorageCacheProvisioningStateType> provisioningState = default;
             Optional<ResourceIdentifier> subnet = default;
             Optional<StorageCacheUpgradeStatus> upgradeStatus = default;
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.StorageCache
             Optional<StorageCacheEncryptionSettings> encryptionSettings = default;
             Optional<StorageCacheSecuritySettings> securitySettings = default;
             Optional<StorageCacheDirectorySettings> directoryServicesSettings = default;
-            Optional<IList<string>> zones = default;
-            Optional<IReadOnlyList<PrimingJob>> primingJobs = default;
-            Optional<IReadOnlyList<StorageTargetSpaceAllocation>> spaceAllocation = default;
+            IList<string> zones = default;
+            IReadOnlyList<PrimingJob> primingJobs = default;
+            IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -466,7 +466,30 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, Optional.ToList(mountAddresses), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, Optional.ToList(zones), Optional.ToList(primingJobs), Optional.ToList(spaceAllocation), serializedAdditionalRawData);
+            return new StorageCacheData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                Optional.ToNullable(cacheSizeGB),
+                health.Value,
+                mountAddresses ?? new ChangeTrackingList<IPAddress>(),
+                Optional.ToNullable(provisioningState),
+                subnet.Value,
+                upgradeStatus.Value,
+                upgradeSettings.Value,
+                networkSettings.Value,
+                encryptionSettings.Value,
+                securitySettings.Value,
+                directoryServicesSettings.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                primingJobs ?? new ChangeTrackingList<PrimingJob>(),
+                spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheData>.Write(ModelReaderWriterOptions options)

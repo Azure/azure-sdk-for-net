@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSslConfiguration(Optional.ToNullable(status), cert.Value, key.Value, cname.Value, leafDomainLabel.Value, Optional.ToNullable(overwriteExistingDomain), serializedAdditionalRawData);
+            return new MachineLearningSslConfiguration(
+                Optional.ToNullable(status),
+                cert.Value,
+                key.Value,
+                cname.Value,
+                leafDomainLabel.Value,
+                Optional.ToNullable(overwriteExistingDomain),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSslConfiguration>.Write(ModelReaderWriterOptions options)

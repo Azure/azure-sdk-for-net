@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> ipAddress = default;
             Optional<WritableSubResource> networkInterfaceIPConfiguration = default;
             Optional<WritableSubResource> loadBalancerFrontendIPConfiguration = default;
-            Optional<IReadOnlyList<NatRulePortMapping>> inboundNatRulesPortMapping = default;
+            IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping = default;
             Optional<LoadBalancerBackendAddressAdminState> adminState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -212,7 +212,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerBackendAddress(name.Value, virtualNetwork, subnet, ipAddress.Value, networkInterfaceIPConfiguration, loadBalancerFrontendIPConfiguration, Optional.ToList(inboundNatRulesPortMapping), Optional.ToNullable(adminState), serializedAdditionalRawData);
+            return new LoadBalancerBackendAddress(
+                name.Value,
+                virtualNetwork,
+                subnet,
+                ipAddress.Value,
+                networkInterfaceIPConfiguration,
+                loadBalancerFrontendIPConfiguration,
+                inboundNatRulesPortMapping ?? new ChangeTrackingList<NatRulePortMapping>(),
+                Optional.ToNullable(adminState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerBackendAddress>.Write(ModelReaderWriterOptions options)

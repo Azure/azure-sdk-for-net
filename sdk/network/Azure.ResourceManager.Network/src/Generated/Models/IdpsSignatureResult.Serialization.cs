@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> group = default;
             Optional<string> description = default;
             Optional<string> protocol = default;
-            Optional<IReadOnlyList<string>> sourcePorts = default;
-            Optional<IReadOnlyList<string>> destinationPorts = default;
+            IReadOnlyList<string> sourcePorts = default;
+            IReadOnlyList<string> destinationPorts = default;
             Optional<string> lastUpdated = default;
             Optional<bool> inheritedFromParentPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Optional.ToList(sourcePorts), Optional.ToList(destinationPorts), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy), serializedAdditionalRawData);
+            return new IdpsSignatureResult(
+                Optional.ToNullable(signatureId),
+                Optional.ToNullable(mode),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(direction),
+                group.Value,
+                description.Value,
+                protocol.Value,
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                lastUpdated.Value,
+                Optional.ToNullable(inheritedFromParentPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureResult>.Write(ModelReaderWriterOptions options)

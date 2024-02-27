@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             Optional<CloneAbilityResult> result = default;
-            Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingFeatures = default;
-            Optional<IReadOnlyList<SiteCloneabilityCriterion>> unsupportedFeatures = default;
-            Optional<IReadOnlyList<SiteCloneabilityCriterion>> blockingCharacteristics = default;
+            IReadOnlyList<SiteCloneabilityCriterion> blockingFeatures = default;
+            IReadOnlyList<SiteCloneabilityCriterion> unsupportedFeatures = default;
+            IReadOnlyList<SiteCloneabilityCriterion> blockingCharacteristics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteCloneability(Optional.ToNullable(result), Optional.ToList(blockingFeatures), Optional.ToList(unsupportedFeatures), Optional.ToList(blockingCharacteristics), serializedAdditionalRawData);
+            return new SiteCloneability(Optional.ToNullable(result), blockingFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), unsupportedFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), blockingCharacteristics ?? new ChangeTrackingList<SiteCloneabilityCriterion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteCloneability>.Write(ModelReaderWriterOptions options)

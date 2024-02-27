@@ -189,7 +189,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmReleaseProperties(Optional.ToNullable(lastRevisionApplied), helmChartRef.Value, Optional.ToNullable(failureCount), Optional.ToNullable(installFailureCount), Optional.ToNullable(upgradeFailureCount), serializedAdditionalRawData);
+            return new HelmReleaseProperties(
+                Optional.ToNullable(lastRevisionApplied),
+                helmChartRef.Value,
+                Optional.ToNullable(failureCount),
+                Optional.ToNullable(installFailureCount),
+                Optional.ToNullable(upgradeFailureCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmReleaseProperties>.Write(ModelReaderWriterOptions options)

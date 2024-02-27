@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementGatewayCertificateAuthorityData>> value = default;
+            IReadOnlyList<ApiManagementGatewayCertificateAuthorityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayCertificateAuthorityListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new GatewayCertificateAuthorityListResult(value ?? new ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayCertificateAuthorityListResult>.Write(ModelReaderWriterOptions options)

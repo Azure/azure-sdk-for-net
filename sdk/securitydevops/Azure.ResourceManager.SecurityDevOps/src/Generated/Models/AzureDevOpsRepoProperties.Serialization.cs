@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsRepoProperties(Optional.ToNullable(provisioningState), repoId.Value, repoUrl.Value, orgName.Value, projectName.Value, visibility.Value, actionableRemediation.Value, serializedAdditionalRawData);
+            return new AzureDevOpsRepoProperties(
+                Optional.ToNullable(provisioningState),
+                repoId.Value,
+                repoUrl.Value,
+                orgName.Value,
+                projectName.Value,
+                visibility.Value,
+                actionableRemediation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsRepoProperties>.Write(ModelReaderWriterOptions options)

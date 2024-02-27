@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterResizeContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(targetWorkerNodeCount), serializedAdditionalRawData);
+            return new ClusterResizeContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(targetWorkerNodeCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterResizeContent>.Write(ModelReaderWriterOptions options)

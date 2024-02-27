@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> name = default;
             Optional<string> description = default;
             Optional<string> provisioningState = default;
             Optional<bool> isEnabled = default;
             Optional<AlertRuleCondition> condition = default;
             Optional<AlertRuleAction> action = default;
-            Optional<IList<AlertRuleAction>> actions = default;
+            IList<AlertRuleAction> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -233,7 +233,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRulePatch(Optional.ToDictionary(tags), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                name.Value,
+                description.Value,
+                provisioningState.Value,
+                Optional.ToNullable(isEnabled),
+                condition.Value,
+                action.Value,
+                actions ?? new ChangeTrackingList<AlertRuleAction>(),
+                Optional.ToNullable(lastUpdatedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRulePatch>.Write(ModelReaderWriterOptions options)

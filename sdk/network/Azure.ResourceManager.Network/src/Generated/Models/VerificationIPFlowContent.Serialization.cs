@@ -145,7 +145,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VerificationIPFlowContent(targetResourceId, direction, protocol, localPort, remotePort, localIPAddress, remoteIPAddress, targetNicResourceId.Value, serializedAdditionalRawData);
+            return new VerificationIPFlowContent(
+                targetResourceId,
+                direction,
+                protocol,
+                localPort,
+                remotePort,
+                localIPAddress,
+                remoteIPAddress,
+                targetNicResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VerificationIPFlowContent>.Write(ModelReaderWriterOptions options)

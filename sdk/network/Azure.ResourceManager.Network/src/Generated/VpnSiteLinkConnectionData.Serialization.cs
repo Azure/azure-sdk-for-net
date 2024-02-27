@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.Network
             Optional<int> connectionBandwidth = default;
             Optional<string> sharedKey = default;
             Optional<bool> enableBgp = default;
-            Optional<IList<GatewayCustomBgpIPAddressIPConfiguration>> vpnGatewayCustomBgpAddresses = default;
+            IList<GatewayCustomBgpIPAddressIPConfiguration> vpnGatewayCustomBgpAddresses = default;
             Optional<bool> usePolicyBasedTrafficSelectors = default;
-            Optional<IList<IPsecPolicy>> ipsecPolicies = default;
+            IList<IPsecPolicy> ipsecPolicies = default;
             Optional<bool> enableRateLimiting = default;
             Optional<bool> useLocalAzureIPAddress = default;
             Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<IList<WritableSubResource>> ingressNatRules = default;
-            Optional<IList<WritableSubResource>> egressNatRules = default;
+            IList<WritableSubResource> ingressNatRules = default;
+            IList<WritableSubResource> egressNatRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -454,7 +454,30 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToList(vpnGatewayCustomBgpAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
+            return new VpnSiteLinkConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                vpnSiteLink,
+                Optional.ToNullable(routingWeight),
+                Optional.ToNullable(vpnLinkConnectionMode),
+                Optional.ToNullable(connectionStatus),
+                Optional.ToNullable(vpnConnectionProtocolType),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                Optional.ToNullable(connectionBandwidth),
+                sharedKey.Value,
+                Optional.ToNullable(enableBgp),
+                vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
+                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                Optional.ToNullable(enableRateLimiting),
+                Optional.ToNullable(useLocalAzureIPAddress),
+                Optional.ToNullable(provisioningState),
+                ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                egressNatRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<VpnSiteLinkConnectionData>.Write(ModelReaderWriterOptions options)

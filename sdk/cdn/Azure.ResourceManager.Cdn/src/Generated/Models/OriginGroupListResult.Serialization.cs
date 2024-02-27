@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CdnOriginGroupData>> value = default;
+            IReadOnlyList<CdnOriginGroupData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OriginGroupListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new OriginGroupListResult(value ?? new ChangeTrackingList<CdnOriginGroupData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginGroupListResult>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.FrontDoor
             }
             Optional<ETag> etag = default;
             Optional<FrontDoorSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<FrontDoorWebApplicationFirewallPolicySettings> policySettings = default;
             Optional<CustomRuleList> customRules = default;
             Optional<ManagedRuleSetList> managedRules = default;
-            Optional<IReadOnlyList<SubResource>> frontendEndpointLinks = default;
-            Optional<IReadOnlyList<SubResource>> routingRuleLinks = default;
-            Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
+            IReadOnlyList<SubResource> frontendEndpointLinks = default;
+            IReadOnlyList<SubResource> routingRuleLinks = default;
+            IReadOnlyList<SubResource> securityPolicyLinks = default;
             Optional<string> provisioningState = default;
             Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -351,7 +351,24 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorWebApplicationFirewallPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                sku.Value,
+                policySettings.Value,
+                customRules.Value,
+                managedRules.Value,
+                frontendEndpointLinks ?? new ChangeTrackingList<SubResource>(),
+                routingRuleLinks ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyLinks ?? new ChangeTrackingList<SubResource>(),
+                provisioningState.Value,
+                Optional.ToNullable(resourceState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

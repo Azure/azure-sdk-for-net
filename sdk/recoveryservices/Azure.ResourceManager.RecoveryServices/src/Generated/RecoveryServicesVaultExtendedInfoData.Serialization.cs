@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.RecoveryServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultExtendedInfoData(id, name, type, systemData.Value, integrityKey.Value, encryptionKey.Value, encryptionKeyThumbprint.Value, algorithm.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultExtendedInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                integrityKey.Value,
+                encryptionKey.Value,
+                encryptionKeyThumbprint.Value,
+                algorithm.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultExtendedInfoData>.Write(ModelReaderWriterOptions options)

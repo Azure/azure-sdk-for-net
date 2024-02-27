@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Synapse
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<SynapseMaintenanceWindowTimeRange>> timeRanges = default;
+            IList<SynapseMaintenanceWindowTimeRange> timeRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMaintenanceWindowData(id, name, type, systemData.Value, Optional.ToList(timeRanges), serializedAdditionalRawData);
+            return new SynapseMaintenanceWindowData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                timeRanges ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowData>.Write(ModelReaderWriterOptions options)

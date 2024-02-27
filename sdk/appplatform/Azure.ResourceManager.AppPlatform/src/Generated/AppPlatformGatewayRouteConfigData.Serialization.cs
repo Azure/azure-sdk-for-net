@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayRouteConfigData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AppPlatformGatewayRouteConfigData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayRouteConfigData>.Write(ModelReaderWriterOptions options)

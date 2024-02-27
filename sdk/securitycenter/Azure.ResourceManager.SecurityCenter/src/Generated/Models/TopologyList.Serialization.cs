@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityTopologyResource>> value = default;
+            IReadOnlyList<SecurityTopologyResource> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopologyList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new TopologyList(value ?? new ChangeTrackingList<SecurityTopologyResource>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopologyList>.Write(ModelReaderWriterOptions options)

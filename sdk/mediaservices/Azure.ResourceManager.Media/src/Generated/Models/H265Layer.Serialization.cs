@@ -257,7 +257,22 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265Layer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames));
+            return new H265Layer(
+                width.Value,
+                height.Value,
+                label.Value,
+                serializedAdditionalRawData,
+                bitrate,
+                Optional.ToNullable(maxBitrate),
+                Optional.ToNullable(bFrames),
+                frameRate.Value,
+                Optional.ToNullable(slices),
+                Optional.ToNullable(adaptiveBFrame),
+                Optional.ToNullable(profile),
+                level.Value,
+                Optional.ToNullable(bufferWindow),
+                Optional.ToNullable(crf),
+                Optional.ToNullable(referenceFrames));
         }
 
         BinaryData IPersistableModel<H265Layer>.Write(ModelReaderWriterOptions options)

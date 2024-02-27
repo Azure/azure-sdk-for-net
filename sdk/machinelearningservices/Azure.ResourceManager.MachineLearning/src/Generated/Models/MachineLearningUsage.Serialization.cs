@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningUsage(id.Value, amlWorkspaceLocation.Value, type.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new MachineLearningUsage(
+                id.Value,
+                amlWorkspaceLocation.Value,
+                type.Value,
+                Optional.ToNullable(unit),
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningUsage>.Write(ModelReaderWriterOptions options)

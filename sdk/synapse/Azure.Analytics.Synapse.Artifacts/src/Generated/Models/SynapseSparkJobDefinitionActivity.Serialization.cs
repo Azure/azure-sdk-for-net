@@ -220,16 +220,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<ActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             SynapseSparkJobReference sparkJob = default;
-            Optional<IList<object>> args = default;
+            IList<object> args = default;
             Optional<object> file = default;
             Optional<object> scanFolder = default;
             Optional<object> className = default;
-            Optional<IList<object>> files = default;
-            Optional<IList<object>> pythonCodeReference = default;
-            Optional<IList<object>> filesV2 = default;
+            IList<object> files = default;
+            IList<object> pythonCodeReference = default;
+            IList<object> filesV2 = default;
             Optional<BigDataPoolParametrizationReference> targetBigDataPool = default;
             Optional<object> executorSize = default;
             Optional<object> conf = default;
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> numExecutors = default;
             Optional<ConfigurationType> configurationType = default;
             Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
-            Optional<IDictionary<string, object>> sparkConfig = default;
+            IDictionary<string, object> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -536,7 +536,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSparkJobDefinitionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, sparkJob, Optional.ToList(args), file.Value, scanFolder.Value, className.Value, Optional.ToList(files), Optional.ToList(pythonCodeReference), Optional.ToList(filesV2), targetBigDataPool.Value, executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
+            return new SynapseSparkJobDefinitionActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                sparkJob,
+                args ?? new ChangeTrackingList<object>(),
+                file.Value,
+                scanFolder.Value,
+                className.Value,
+                files ?? new ChangeTrackingList<object>(),
+                pythonCodeReference ?? new ChangeTrackingList<object>(),
+                filesV2 ?? new ChangeTrackingList<object>(),
+                targetBigDataPool.Value,
+                executorSize.Value,
+                conf.Value,
+                driverSize.Value,
+                numExecutors.Value,
+                Optional.ToNullable(configurationType),
+                targetSparkConfiguration.Value,
+                sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class SynapseSparkJobDefinitionActivityConverter : JsonConverter<SynapseSparkJobDefinitionActivity>

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> addressType = default;
             Optional<string> additionalShippingInformation = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
             Optional<AzureLocation> dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -265,7 +265,24 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAddressLocationResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData, contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
+            return new DataCenterAddressLocationResult(
+                dataCenterAddressType,
+                supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(dataCenterAzureLocation),
+                serializedAdditionalRawData,
+                contactPersonName.Value,
+                company.Value,
+                street1.Value,
+                street2.Value,
+                street3.Value,
+                city.Value,
+                state.Value,
+                zip.Value,
+                country.Value,
+                phone.Value,
+                phoneExtension.Value,
+                addressType.Value,
+                additionalShippingInformation.Value);
         }
 
         BinaryData IPersistableModel<DataCenterAddressLocationResult>.Write(ModelReaderWriterOptions options)

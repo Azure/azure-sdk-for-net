@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanPurchase(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, commitment.Value, serializedAdditionalRawData);
+            return new SavingsPlanPurchase(
+                sku.Value,
+                displayName.Value,
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(appliedScopeType),
+                appliedScopeProperties.Value,
+                commitment.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanPurchase>.Write(ModelReaderWriterOptions options)

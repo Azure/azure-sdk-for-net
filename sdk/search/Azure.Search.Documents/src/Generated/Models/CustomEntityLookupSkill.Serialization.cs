@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             Optional<CustomEntityLookupSkillLanguage?> defaultLanguageCode = default;
             Optional<Uri> entitiesDefinitionUri = default;
-            Optional<IList<CustomEntity>> inlineEntitiesDefinition = default;
+            IList<CustomEntity> inlineEntitiesDefinition = default;
             Optional<bool?> globalDefaultCaseSensitive = default;
             Optional<bool?> globalDefaultAccentSensitive = default;
             Optional<int?> globalDefaultFuzzyEditDistance = default;
@@ -254,7 +254,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntityLookupSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), entitiesDefinitionUri.Value, Optional.ToList(inlineEntitiesDefinition), Optional.ToNullable(globalDefaultCaseSensitive), Optional.ToNullable(globalDefaultAccentSensitive), Optional.ToNullable(globalDefaultFuzzyEditDistance));
+            return new CustomEntityLookupSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(defaultLanguageCode),
+                entitiesDefinitionUri.Value,
+                inlineEntitiesDefinition ?? new ChangeTrackingList<CustomEntity>(),
+                Optional.ToNullable(globalDefaultCaseSensitive),
+                Optional.ToNullable(globalDefaultAccentSensitive),
+                Optional.ToNullable(globalDefaultFuzzyEditDistance));
         }
     }
 }

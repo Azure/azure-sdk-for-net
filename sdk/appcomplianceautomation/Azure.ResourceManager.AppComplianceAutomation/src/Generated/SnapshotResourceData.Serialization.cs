@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SnapshotResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotResourceData>.Write(ModelReaderWriterOptions options)

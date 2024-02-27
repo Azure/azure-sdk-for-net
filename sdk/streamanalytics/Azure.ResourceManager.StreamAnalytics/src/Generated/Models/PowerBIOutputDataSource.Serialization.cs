@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerBIOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, dataset.Value, table.Value, Optional.ToNullable(groupId), groupName.Value, Optional.ToNullable(authenticationMode));
+            return new PowerBIOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken.Value,
+                tokenUserPrincipalName.Value,
+                tokenUserDisplayName.Value,
+                dataset.Value,
+                table.Value,
+                Optional.ToNullable(groupId),
+                groupName.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<PowerBIOutputDataSource>.Write(ModelReaderWriterOptions options)

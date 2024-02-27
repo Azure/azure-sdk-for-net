@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<string> resourceUri = default;
             Optional<SqlMetricDefinitionUnitType> unit = default;
-            Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
+            IReadOnlyList<SqlMetricAvailability> metricAvailabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricDefinition(name.Value, Optional.ToNullable(primaryAggregationType), resourceUri.Value, Optional.ToNullable(unit), Optional.ToList(metricAvailabilities), serializedAdditionalRawData);
+            return new SqlMetricDefinition(
+                name.Value,
+                Optional.ToNullable(primaryAggregationType),
+                resourceUri.Value,
+                Optional.ToNullable(unit),
+                metricAvailabilities ?? new ChangeTrackingList<SqlMetricAvailability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricDefinition>.Write(ModelReaderWriterOptions options)

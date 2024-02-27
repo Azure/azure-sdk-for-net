@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailablePrivateEndpointType(id, name, type, systemData.Value, resourceName.Value, displayName.Value, serializedAdditionalRawData);
+            return new AvailablePrivateEndpointType(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceName.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailablePrivateEndpointType>.Write(ModelReaderWriterOptions options)

@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayLoadDistributionTarget(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(weightPerServer), backendAddressPool);
+            return new ApplicationGatewayLoadDistributionTarget(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(weightPerServer),
+                backendAddressPool);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionTarget>.Write(ModelReaderWriterOptions options)

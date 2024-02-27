@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownDataSet(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareDataSetData>.Write(ModelReaderWriterOptions options)

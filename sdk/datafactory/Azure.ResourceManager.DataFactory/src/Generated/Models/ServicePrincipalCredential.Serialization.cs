@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
+            IList<BinaryData> annotations = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryKeyVaultSecretReference> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServicePrincipalCredential(type, description.Value, Optional.ToList(annotations), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
+            return new ServicePrincipalCredential(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value);
         }
 
         BinaryData IPersistableModel<ServicePrincipalCredential>.Write(ModelReaderWriterOptions options)

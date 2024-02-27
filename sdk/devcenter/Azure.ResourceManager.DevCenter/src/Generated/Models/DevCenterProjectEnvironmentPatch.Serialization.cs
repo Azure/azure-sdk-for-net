@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceIdentifier> deploymentTargetId = default;
             Optional<EnvironmentTypeEnableStatus> status = default;
             Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
-            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
+            IDictionary<string, DevCenterUserRoleAssignments> userRoleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentPatch(Optional.ToDictionary(tags), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                deploymentTargetId.Value,
+                Optional.ToNullable(status),
+                creatorRoleAssignment.Value,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)

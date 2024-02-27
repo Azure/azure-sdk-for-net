@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, Optional.ToNullable(provisioningState));
+            return new VirtualRouterPeeringData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(peerAsn),
+                peerIP.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualRouterPeeringData>.Write(ModelReaderWriterOptions options)

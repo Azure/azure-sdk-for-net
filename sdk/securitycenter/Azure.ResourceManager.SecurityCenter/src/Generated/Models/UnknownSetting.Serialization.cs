@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySettingData>.Write(ModelReaderWriterOptions options)

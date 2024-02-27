@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> environmentId = default;
             Optional<ContainerAppJobConfiguration> configuration = default;
             Optional<ContainerAppJobTemplate> template = default;
-            Optional<IList<string>> outboundIPAddresses = default;
+            IList<string> outboundIPAddresses = default;
             Optional<string> eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobPatchProperties(environmentId.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppJobPatchProperties(
+                environmentId.Value,
+                configuration.Value,
+                template.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<string>(),
+                eventStreamEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobPatchProperties>.Write(ModelReaderWriterOptions options)

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> serviceRuntimeNetworkResourceGroup = default;
             Optional<string> appNetworkResourceGroup = default;
             Optional<NetworkProfileOutboundIPs> outboundIPs = default;
-            Optional<IReadOnlyList<AppPlatformServiceRequiredTraffic>> requiredTraffics = default;
+            IReadOnlyList<AppPlatformServiceRequiredTraffic> requiredTraffics = default;
             Optional<IngressConfig> ingressConfig = default;
             Optional<string> outboundType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, Optional.ToList(requiredTraffics), ingressConfig.Value, outboundType.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceNetworkProfile(
+                serviceRuntimeSubnetId.Value,
+                appSubnetId.Value,
+                serviceCidr.Value,
+                serviceRuntimeNetworkResourceGroup.Value,
+                appNetworkResourceGroup.Value,
+                outboundIPs.Value,
+                requiredTraffics ?? new ChangeTrackingList<AppPlatformServiceRequiredTraffic>(),
+                ingressConfig.Value,
+                outboundType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

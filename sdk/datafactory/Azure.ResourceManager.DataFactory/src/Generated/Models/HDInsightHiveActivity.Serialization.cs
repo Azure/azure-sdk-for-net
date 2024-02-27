@@ -219,15 +219,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<PipelineActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<BinaryData>> arguments = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
+            IList<BinaryData> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             Optional<DataFactoryElement<string>> scriptPath = default;
             Optional<DataFactoryLinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, BinaryData>> defines = default;
-            Optional<IDictionary<string, BinaryData>> variables = default;
+            IDictionary<string, BinaryData> defines = default;
+            IDictionary<string, BinaryData> variables = default;
             Optional<int> queryTimeout = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -440,7 +440,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService, Optional.ToDictionary(defines), Optional.ToDictionary(variables), Optional.ToNullable(queryTimeout));
+            return new HDInsightHiveActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                Optional.ToNullable(getDebugInfo),
+                scriptPath.Value,
+                scriptLinkedService,
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                variables ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(queryTimeout));
         }
 
         BinaryData IPersistableModel<HDInsightHiveActivity>.Write(ModelReaderWriterOptions options)
