@@ -145,13 +145,6 @@ namespace Azure.Provisioning.AppService
         Dotnetcore = 1,
     }
 }
-namespace Azure.Provisioning.Authorization
-{
-    public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
-    {
-        public RoleAssignment(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource resource, System.Guid roleDefinitionId, System.Guid principalId, Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType principalType, Azure.Core.ResourceIdentifier? delegatedManagedIdentityResourceId = null) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>)) { }
-    }
-}
 namespace Azure.Provisioning.KeyVaults
 {
     public partial class KeyVault : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultData>
