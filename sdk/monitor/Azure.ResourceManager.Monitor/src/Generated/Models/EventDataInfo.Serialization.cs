@@ -301,11 +301,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("level"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    level = property.Value.GetString().ToMonitorEventLevel();
+                    ReadLevel(property, ref level);
                     continue;
                 }
                 if (property.NameEquals("resourceGroupName"u8))

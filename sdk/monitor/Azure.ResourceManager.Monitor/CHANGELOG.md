@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fix deserialization for property `level` on `EventDataInfo` with [issue42100](https://github.com/Azure/azure-sdk-for-net/issues/42100).
+
 ### Other Changes
 
 ## 1.3.0 (2023-11-21)
