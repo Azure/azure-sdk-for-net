@@ -2228,8 +2228,8 @@ namespace Azure.ResourceManager.Migrate.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AzureNetworkAdapterSuitabilityDetail(string value) { throw null; }
-        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedMissing { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedOutOfRange { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedMissing { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedMissing { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedOutOfRange { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.AzureNetworkAdapterSuitabilityDetail None { get { throw null; } }
@@ -4052,7 +4052,7 @@ namespace Azure.ResourceManager.Migrate.Models
         private readonly int _dummyPrimitive;
         public SqlMigrationGuidelineCategory(string value) { throw null; }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory AvailabilityGroupGuideline { get { throw null; } }
-        public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory FailoverClusterInstanceGuideLine { get { throw null; } }
+        public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory FailoverCluterInstanceGuideLine { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory General { get { throw null; } }
         public static Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Migrate.Models.SqlMigrationGuidelineCategory other) { throw null; }

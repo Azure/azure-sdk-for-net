@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Migrate.Models
 
         private const string UnknownValue = "Unknown";
         private const string GeneralValue = "General";
-        private const string FailoverClusterInstanceGuideLineValue = "FailoverCluterInstanceGuideLine";
+        private const string FailoverCluterInstanceGuideLineValue = "FailoverCluterInstanceGuideLine";
         private const string AvailabilityGroupGuidelineValue = "AvailabilityGroupGuideline";
 
         /// <summary> Unknown. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> General. </summary>
         public static SqlMigrationGuidelineCategory General { get; } = new SqlMigrationGuidelineCategory(GeneralValue);
         /// <summary> FailoverCluterInstanceGuideLine. </summary>
-        public static SqlMigrationGuidelineCategory FailoverClusterInstanceGuideLine { get; } = new SqlMigrationGuidelineCategory(FailoverClusterInstanceGuideLineValue);
+        public static SqlMigrationGuidelineCategory FailoverCluterInstanceGuideLine { get; } = new SqlMigrationGuidelineCategory(FailoverCluterInstanceGuideLineValue);
         /// <summary> AvailabilityGroupGuideline. </summary>
         public static SqlMigrationGuidelineCategory AvailabilityGroupGuideline { get; } = new SqlMigrationGuidelineCategory(AvailabilityGroupGuidelineValue);
         /// <summary> Determines if two <see cref="SqlMigrationGuidelineCategory"/> values are the same. </summary>

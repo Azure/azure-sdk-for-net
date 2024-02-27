@@ -755,7 +755,13 @@
         "Ebsv",
         "Edsv",
         "Mdsv",
-        "Idms"
+        "Idms",
+        "FailoverCluterInstanceGuideLine",
+        "FailoverCluterInstanceGuideLineValue",
+        "MegabytesOfDataRecievedMissing",
+        "MegabytesOfDataRecievedMissingValue",
+        "MegabytesOfDataRecievedOutOfRange"
+        "MegabytesOfDataRecievedOutOfRangeValue"
       ]
     },
     {

@@ -134,7 +134,7 @@ rename-mapping:
   SqlCollector.properties.updatedTimestamp: UpdatedOn
   VmwareCollector.properties.createdTimestamp: CreatedOn
   VmwareCollector.properties.updatedTimestamp: UpdatedOn
-  SqlMigrationGuidelineCategory.FailoverCluterInstanceGuideLine: FailoverClusterInstanceGuideLine
+  SqlMigrationGuidelineCategory.FailoverCluterInstanceGuideLine: FailoverCluterInstanceGuideLine
   AzureDiskSize.StandardSSD_E10: StandardSsdE10
   AzureDiskSize.StandardSSD_E15: StandardSsdE15
   AzureDiskSize.StandardSSD_E20: StandardSsdE20
@@ -149,8 +149,6 @@ rename-mapping:
   AzureDiskSize.StandardSSD_E3: StandardSsdE3
   AzureDiskSize.StandardSSD_E4: StandardSsdE4
   AzureDiskSize.StandardSSD_E6: StandardSsdE6
-  AzureNetworkAdapterSuitabilityDetail.MegabytesOfDataRecievedMissing: MegabytesOfDataReceivedMissing
-  AzureNetworkAdapterSuitabilityDetail.MegabytesOfDataRecievedOutOfRange: MegabytesOfDataReceivedOutOfRange
 
 prepend-rp-prefix:
   # Correct the violations of the naming rules

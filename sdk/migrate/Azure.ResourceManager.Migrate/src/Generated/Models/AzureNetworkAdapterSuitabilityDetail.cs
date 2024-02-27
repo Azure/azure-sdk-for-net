@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Migrate.Models
         private const string NoneValue = "None";
         private const string MegabytesOfDataTransmittedMissingValue = "MegabytesOfDataTransmittedMissing";
         private const string MegabytesOfDataTransmittedOutOfRangeValue = "MegabytesOfDataTransmittedOutOfRange";
-        private const string MegabytesOfDataReceivedMissingValue = "MegabytesOfDataRecievedMissing";
-        private const string MegabytesOfDataReceivedOutOfRangeValue = "MegabytesOfDataRecievedOutOfRange";
+        private const string MegabytesOfDataRecievedMissingValue = "MegabytesOfDataRecievedMissing";
+        private const string MegabytesOfDataRecievedOutOfRangeValue = "MegabytesOfDataRecievedOutOfRange";
 
         /// <summary> None. </summary>
         public static AzureNetworkAdapterSuitabilityDetail None { get; } = new AzureNetworkAdapterSuitabilityDetail(NoneValue);
@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> MegabytesOfDataTransmittedOutOfRange. </summary>
         public static AzureNetworkAdapterSuitabilityDetail MegabytesOfDataTransmittedOutOfRange { get; } = new AzureNetworkAdapterSuitabilityDetail(MegabytesOfDataTransmittedOutOfRangeValue);
         /// <summary> MegabytesOfDataRecievedMissing. </summary>
-        public static AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedMissing { get; } = new AzureNetworkAdapterSuitabilityDetail(MegabytesOfDataReceivedMissingValue);
+        public static AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedMissing { get; } = new AzureNetworkAdapterSuitabilityDetail(MegabytesOfDataRecievedMissingValue);
         /// <summary> MegabytesOfDataRecievedOutOfRange. </summary>
-        public static AzureNetworkAdapterSuitabilityDetail MegabytesOfDataReceivedOutOfRange { get; } = new AzureNetworkAdapterSuitabilityDetail(MegabytesOfDataReceivedOutOfRangeValue);
+        public static AzureNetworkAdapterSuitabilityDetail MegabytesOfDataRecievedOutOfRange { get; } = new AzureNetworkAdapterSuitabilityDetail(MegabytesOfDataRecievedOutOfRangeValue);
         /// <summary> Determines if two <see cref="AzureNetworkAdapterSuitabilityDetail"/> values are the same. </summary>
         public static bool operator ==(AzureNetworkAdapterSuitabilityDetail left, AzureNetworkAdapterSuitabilityDetail right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureNetworkAdapterSuitabilityDetail"/> values are not the same. </summary>
