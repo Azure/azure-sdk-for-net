@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -16,18 +15,8 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <summary> Initializes a new instance of <see cref="MetricSeriesDefinition"/>. </summary>
         /// <param name="metricId"> metric unique id. </param>
         /// <param name="dimension"> dimension name and value pair. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricId"/> or <paramref name="dimension"/> is null. </exception>
         internal MetricSeriesDefinition(string metricId, IReadOnlyDictionary<string, string> dimension)
         {
-            if (metricId == null)
-            {
-                throw new ArgumentNullException(nameof(metricId));
-            }
-            if (dimension == null)
-            {
-                throw new ArgumentNullException(nameof(dimension));
-            }
-
             MetricId = metricId;
             Dimension = dimension;
         }
