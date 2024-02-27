@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabTargetCost(Optional.ToNullable(status), Optional.ToNullable(target), costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(), Optional.ToNullable(cycleStartDateTime), Optional.ToNullable(cycleEndDateTime), Optional.ToNullable(cycleType), serializedAdditionalRawData);
+            return new DevTestLabTargetCost(
+                Optional.ToNullable(status),
+                Optional.ToNullable(target),
+                costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
+                Optional.ToNullable(cycleStartDateTime),
+                Optional.ToNullable(cycleEndDateTime),
+                Optional.ToNullable(cycleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options)

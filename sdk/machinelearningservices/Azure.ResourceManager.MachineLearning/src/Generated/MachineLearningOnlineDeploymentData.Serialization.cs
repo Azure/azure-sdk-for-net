@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.MachineLearning
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningOnlineDeploymentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, kind.Value, properties, sku.Value, serializedAdditionalRawData);
+            return new MachineLearningOnlineDeploymentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                kind.Value,
+                properties,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineDeploymentData>.Write(ModelReaderWriterOptions options)

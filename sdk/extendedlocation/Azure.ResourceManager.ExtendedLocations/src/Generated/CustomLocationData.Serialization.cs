@@ -303,7 +303,22 @@ namespace Azure.ResourceManager.ExtendedLocations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, authentication.Value, clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>(), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CustomLocationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                authentication.Value,
+                clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                displayName.Value,
+                hostResourceId.Value,
+                Optional.ToNullable(hostType),
+                @namespace.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationData>.Write(ModelReaderWriterOptions options)

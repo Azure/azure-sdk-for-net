@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MediaServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

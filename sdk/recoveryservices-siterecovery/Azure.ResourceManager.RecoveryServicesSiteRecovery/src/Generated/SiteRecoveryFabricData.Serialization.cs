@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricData(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SiteRecoveryFabricData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricData>.Write(ModelReaderWriterOptions options)

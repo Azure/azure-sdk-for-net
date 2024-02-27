@@ -186,7 +186,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoLayer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame));
+            return new VideoLayer(
+                width.Value,
+                height.Value,
+                label.Value,
+                serializedAdditionalRawData,
+                bitrate,
+                Optional.ToNullable(maxBitrate),
+                Optional.ToNullable(bFrames),
+                frameRate.Value,
+                Optional.ToNullable(slices),
+                Optional.ToNullable(adaptiveBFrame));
         }
 
         BinaryData IPersistableModel<VideoLayer>.Write(ModelReaderWriterOptions options)

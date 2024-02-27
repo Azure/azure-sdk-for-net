@@ -349,7 +349,26 @@ namespace Azure.ResourceManager.NewRelicObservability
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
+            return new NewRelicMonitorResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(monitoringStatus),
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                marketplaceSubscriptionId.Value,
+                newRelicAccountProperties.Value,
+                userInfo.Value,
+                planData.Value,
+                Optional.ToNullable(liftrResourceCategory),
+                Optional.ToNullable(liftrResourcePreference),
+                Optional.ToNullable(orgCreationSource),
+                Optional.ToNullable(accountCreationSource),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicMonitorResourceData>.Write(ModelReaderWriterOptions options)

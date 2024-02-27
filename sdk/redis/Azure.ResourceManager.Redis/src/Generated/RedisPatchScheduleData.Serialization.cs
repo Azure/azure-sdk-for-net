@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPatchScheduleData(id, name, type, systemData.Value, Optional.ToNullable(location), scheduleEntries, serializedAdditionalRawData);
+            return new RedisPatchScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                scheduleEntries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatchScheduleData>.Write(ModelReaderWriterOptions options)

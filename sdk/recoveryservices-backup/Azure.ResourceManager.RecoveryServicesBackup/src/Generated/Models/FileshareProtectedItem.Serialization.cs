@@ -446,7 +446,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileshareProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, protectionStatus.Value, Optional.ToNullable(protectionState), lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(), extendedInfo.Value);
+            return new FileshareProtectedItem(
+                protectedItemType,
+                Optional.ToNullable(backupManagementType),
+                Optional.ToNullable(workloadType),
+                containerName.Value,
+                sourceResourceId.Value,
+                policyId.Value,
+                Optional.ToNullable(lastRecoveryPoint),
+                backupSetName.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(deferredDeleteTimeInUTC),
+                Optional.ToNullable(isScheduledForDeferredDelete),
+                deferredDeleteTimeRemaining.Value,
+                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
+                Optional.ToNullable(isRehydrate),
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isArchiveEnabled),
+                policyName.Value,
+                Optional.ToNullable(softDeleteRetentionPeriodInDays),
+                vaultId.Value,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                protectionStatus.Value,
+                Optional.ToNullable(protectionState),
+                lastBackupStatus.Value,
+                Optional.ToNullable(lastBackupTime),
+                kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<FileshareProtectedItem>.Write(ModelReaderWriterOptions options)

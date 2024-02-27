@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value, serializedAdditionalRawData);
+            return new SecretProperties(
+                value.Value,
+                contentType.Value,
+                attributes.Value,
+                secretUri.Value,
+                secretUriWithVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)

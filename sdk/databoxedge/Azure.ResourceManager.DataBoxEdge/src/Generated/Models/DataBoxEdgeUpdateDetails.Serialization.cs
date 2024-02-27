@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle.Value,
+                Optional.ToNullable(updateSize),
+                Optional.ToNullable(updateType),
+                targetVersion.Value,
+                friendlyVersionNumber.Value,
+                Optional.ToNullable(estimatedInstallTimeInMins),
+                Optional.ToNullable(rebootBehavior),
+                Optional.ToNullable(installationImpact),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)

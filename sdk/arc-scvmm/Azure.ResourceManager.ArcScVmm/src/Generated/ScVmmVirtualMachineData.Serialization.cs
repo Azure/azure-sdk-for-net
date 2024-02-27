@@ -406,7 +406,31 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, checkpointType.Value, checkpoints ?? new ChangeTrackingList<Checkpoint>(), availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(), osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, vmName.Value, uuid.Value, Optional.ToNullable(generation), powerState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId.Value,
+                vmmServerId.Value,
+                cloudId.Value,
+                templateId.Value,
+                checkpointType.Value,
+                checkpoints ?? new ChangeTrackingList<Checkpoint>(),
+                availabilitySets ?? new ChangeTrackingList<AvailabilitySetListItem>(),
+                osProfile.Value,
+                hardwareProfile.Value,
+                networkProfile.Value,
+                storageProfile.Value,
+                vmName.Value,
+                uuid.Value,
+                Optional.ToNullable(generation),
+                powerState.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualMachineData>.Write(ModelReaderWriterOptions options)

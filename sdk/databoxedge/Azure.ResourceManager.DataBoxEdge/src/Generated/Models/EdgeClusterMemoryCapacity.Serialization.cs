@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterMemoryCapacity(Optional.ToNullable(clusterFreeMemoryMb), Optional.ToNullable(clusterUsedMemoryMb), Optional.ToNullable(clusterFailoverMemoryMb), Optional.ToNullable(clusterFragmentationMemoryMb), Optional.ToNullable(clusterHyperVReserveMemoryMb), Optional.ToNullable(clusterInfraVmMemoryMb), Optional.ToNullable(clusterTotalMemoryMb), Optional.ToNullable(clusterNonFailoverVmMb), Optional.ToNullable(clusterMemoryUsedByVmsMb), serializedAdditionalRawData);
+            return new EdgeClusterMemoryCapacity(
+                Optional.ToNullable(clusterFreeMemoryMb),
+                Optional.ToNullable(clusterUsedMemoryMb),
+                Optional.ToNullable(clusterFailoverMemoryMb),
+                Optional.ToNullable(clusterFragmentationMemoryMb),
+                Optional.ToNullable(clusterHyperVReserveMemoryMb),
+                Optional.ToNullable(clusterInfraVmMemoryMb),
+                Optional.ToNullable(clusterTotalMemoryMb),
+                Optional.ToNullable(clusterNonFailoverVmMb),
+                Optional.ToNullable(clusterMemoryUsedByVmsMb),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterMemoryCapacity>.Write(ModelReaderWriterOptions options)

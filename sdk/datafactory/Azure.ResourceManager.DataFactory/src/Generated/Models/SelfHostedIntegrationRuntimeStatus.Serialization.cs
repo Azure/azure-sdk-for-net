@@ -397,7 +397,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>(), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), capabilities ?? new ChangeTrackingDictionary<string, string>(), serviceUrls ?? new ChangeTrackingList<string>(), Optional.ToNullable(autoUpdate), versionStatus.Value, links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
+            return new SelfHostedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(taskQueueId),
+                Optional.ToNullable(internalChannelEncryption),
+                version.Value,
+                nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>(),
+                Optional.ToNullable(scheduledUpdateDate),
+                Optional.ToNullable(updateDelayOffset),
+                Optional.ToNullable(localTimeZoneOffset),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUrls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(autoUpdate),
+                versionStatus.Value,
+                links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(),
+                pushedVersion.Value,
+                latestVersion.Value,
+                Optional.ToNullable(autoUpdateEta),
+                Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

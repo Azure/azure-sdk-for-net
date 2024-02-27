@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlRoleData(id, name, type, systemData.Value, password, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlRoleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                password,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlRoleData>.Write(ModelReaderWriterOptions options)

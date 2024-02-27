@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value, serializedAdditionalRawData);
+            return new PaymentDetail(
+                Optional.ToNullable(dueDate),
+                Optional.ToNullable(paymentDate),
+                pricingCurrencyTotal.Value,
+                billingCurrencyTotal.Value,
+                billingAccount.Value,
+                Optional.ToNullable(status),
+                extendedStatusInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaymentDetail>.Write(ModelReaderWriterOptions options)

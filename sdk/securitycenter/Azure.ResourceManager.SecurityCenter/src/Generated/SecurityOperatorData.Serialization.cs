@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityOperatorData(id, name, type, systemData.Value, identity, serializedAdditionalRawData);
+            return new SecurityOperatorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityOperatorData>.Write(ModelReaderWriterOptions options)

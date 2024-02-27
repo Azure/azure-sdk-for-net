@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNotificationData(id, name, type, systemData.Value, title.Value, description.Value, recipients.Value, serializedAdditionalRawData);
+            return new ApiManagementNotificationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                title.Value,
+                description.Value,
+                recipients.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNotificationData>.Write(ModelReaderWriterOptions options)

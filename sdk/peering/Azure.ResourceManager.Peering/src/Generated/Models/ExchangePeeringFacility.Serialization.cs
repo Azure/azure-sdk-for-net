@@ -179,7 +179,16 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangePeeringFacility(exchangeName.Value, Optional.ToNullable(bandwidthInMbps), microsoftIPv4Address.Value, microsoftIPv6Address.Value, facilityIPv4Prefix.Value, facilityIPv6Prefix.Value, Optional.ToNullable(peeringDBFacilityId), peeringDBFacilityLink.Value, serializedAdditionalRawData);
+            return new ExchangePeeringFacility(
+                exchangeName.Value,
+                Optional.ToNullable(bandwidthInMbps),
+                microsoftIPv4Address.Value,
+                microsoftIPv6Address.Value,
+                facilityIPv4Prefix.Value,
+                facilityIPv6Prefix.Value,
+                Optional.ToNullable(peeringDBFacilityId),
+                peeringDBFacilityLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangePeeringFacility>.Write(ModelReaderWriterOptions options)

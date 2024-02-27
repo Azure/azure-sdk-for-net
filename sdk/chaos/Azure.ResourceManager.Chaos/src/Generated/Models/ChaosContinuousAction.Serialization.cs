@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosContinuousAction(type, name, serializedAdditionalRawData, duration, parameters, selectorId);
+            return new ChaosContinuousAction(
+                type,
+                name,
+                serializedAdditionalRawData,
+                duration,
+                parameters,
+                selectorId);
         }
 
         BinaryData IPersistableModel<ChaosContinuousAction>.Write(ModelReaderWriterOptions options)

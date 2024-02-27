@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TerminalServerConfiguration(username.Value, password.Value, serialNumber.Value, serializedAdditionalRawData, networkDeviceId.Value, primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value);
+            return new TerminalServerConfiguration(
+                username.Value,
+                password.Value,
+                serialNumber.Value,
+                serializedAdditionalRawData,
+                networkDeviceId.Value,
+                primaryIPv4Prefix.Value,
+                primaryIPv6Prefix.Value,
+                secondaryIPv4Prefix.Value,
+                secondaryIPv6Prefix.Value);
         }
 
         BinaryData IPersistableModel<TerminalServerConfiguration>.Write(ModelReaderWriterOptions options)

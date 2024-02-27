@@ -239,7 +239,23 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value, serializedAdditionalRawData);
+            return new EdifactEnvelopeOverride(
+                messageId.Value,
+                messageVersion.Value,
+                messageRelease.Value,
+                messageAssociationAssignedCode.Value,
+                targetNamespace.Value,
+                functionalGroupId.Value,
+                senderApplicationQualifier.Value,
+                senderApplicationId.Value,
+                receiverApplicationQualifier.Value,
+                receiverApplicationId.Value,
+                controllingAgencyCode.Value,
+                groupHeaderMessageVersion.Value,
+                groupHeaderMessageRelease.Value,
+                associationAssignedCode.Value,
+                applicationPassword.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactEnvelopeOverride>.Write(ModelReaderWriterOptions options)

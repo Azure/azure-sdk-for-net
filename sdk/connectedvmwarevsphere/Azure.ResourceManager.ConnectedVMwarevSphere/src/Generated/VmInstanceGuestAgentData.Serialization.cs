@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceGuestAgentData(id, name, type, systemData.Value, uuid.Value, credentials.Value, privateLinkScopeResourceId.Value, httpProxyConfig.Value, Optional.ToNullable(provisioningAction), status.Value, customResourceName.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VmInstanceGuestAgentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                uuid.Value,
+                credentials.Value,
+                privateLinkScopeResourceId.Value,
+                httpProxyConfig.Value,
+                Optional.ToNullable(provisioningAction),
+                status.Value,
+                customResourceName.Value,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceGuestAgentData>.Write(ModelReaderWriterOptions options)

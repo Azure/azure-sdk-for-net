@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorResponse(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value, serializedAdditionalRawData);
+            return new MonitorResponse(
+                Optional.ToNullable(cost),
+                timespan,
+                Optional.ToNullable(interval),
+                @namespace.Value,
+                resourceregion.Value,
+                value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorResponse>.Write(ModelReaderWriterOptions options)

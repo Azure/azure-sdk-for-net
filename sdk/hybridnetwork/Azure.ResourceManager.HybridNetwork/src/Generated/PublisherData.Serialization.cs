@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublisherData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, identity, serializedAdditionalRawData);
+            return new PublisherData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublisherData>.Write(ModelReaderWriterOptions options)

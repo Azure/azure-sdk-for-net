@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.EnergyServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, serializedAdditionalRawData);
+            return new EnergyServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceData>.Write(ModelReaderWriterOptions options)

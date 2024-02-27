@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownCopySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties);
+            return new UnknownCopySource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<CopyActivitySource>.Write(ModelReaderWriterOptions options)

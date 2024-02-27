@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceLongTermRetentionBackupData(id, name, type, systemData.Value, managedInstanceName.Value, Optional.ToNullable(managedInstanceCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), serializedAdditionalRawData);
+            return new ManagedInstanceLongTermRetentionBackupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedInstanceName.Value,
+                Optional.ToNullable(managedInstanceCreateTime),
+                databaseName.Value,
+                Optional.ToNullable(databaseDeletionTime),
+                Optional.ToNullable(backupTime),
+                Optional.ToNullable(backupExpirationTime),
+                Optional.ToNullable(backupStorageRedundancy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceLongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)

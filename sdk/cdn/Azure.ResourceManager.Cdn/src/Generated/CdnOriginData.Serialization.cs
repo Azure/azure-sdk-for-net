@@ -377,7 +377,26 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnOriginData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointStatus), serializedAdditionalRawData);
+            return new CdnOriginData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(enabled),
+                privateLinkAlias.Value,
+                privateLinkResourceId.Value,
+                privateLinkLocation.Value,
+                privateLinkApprovalMessage.Value,
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(privateEndpointStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnOriginData>.Write(ModelReaderWriterOptions options)

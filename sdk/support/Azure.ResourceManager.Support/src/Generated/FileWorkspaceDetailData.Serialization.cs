@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileWorkspaceDetailData(id, name, type, systemData.Value, Optional.ToNullable(createdOn), Optional.ToNullable(expirationTime), serializedAdditionalRawData);
+            return new FileWorkspaceDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(expirationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileWorkspaceDetailData>.Write(ModelReaderWriterOptions options)

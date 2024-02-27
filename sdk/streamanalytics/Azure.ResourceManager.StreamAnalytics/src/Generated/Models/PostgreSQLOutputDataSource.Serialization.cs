@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSQLOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new PostgreSQLOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server.Value,
+                database.Value,
+                table.Value,
+                user.Value,
+                password.Value,
+                Optional.ToNullable(maxWriterCount),
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<PostgreSQLOutputDataSource>.Write(ModelReaderWriterOptions options)

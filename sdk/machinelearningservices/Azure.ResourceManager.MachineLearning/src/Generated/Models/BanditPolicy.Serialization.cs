@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BanditPolicy(Optional.ToNullable(delayEvaluation), Optional.ToNullable(evaluationInterval), policyType, serializedAdditionalRawData, Optional.ToNullable(slackAmount), Optional.ToNullable(slackFactor));
+            return new BanditPolicy(
+                Optional.ToNullable(delayEvaluation),
+                Optional.ToNullable(evaluationInterval),
+                policyType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(slackAmount),
+                Optional.ToNullable(slackFactor));
         }
 
         BinaryData IPersistableModel<BanditPolicy>.Write(ModelReaderWriterOptions options)

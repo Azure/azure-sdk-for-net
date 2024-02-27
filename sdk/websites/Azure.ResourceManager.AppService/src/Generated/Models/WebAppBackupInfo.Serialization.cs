@@ -230,7 +230,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(), kind.Value, serializedAdditionalRawData);
+            return new WebAppBackupInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                backupName.Value,
+                Optional.ToNullable(enabled),
+                storageAccountUrl.Value,
+                backupSchedule.Value,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupInfo>.Write(ModelReaderWriterOptions options)

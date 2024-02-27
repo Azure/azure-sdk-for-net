@@ -152,7 +152,15 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleDefinition(id.Value, name.Value, Optional.ToNullable(type), roleName.Value, description.Value, Optional.ToNullable(type0), permissions ?? new ChangeTrackingList<KeyVaultPermission>(), assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
+            return new KeyVaultRoleDefinition(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                roleName.Value,
+                description.Value,
+                Optional.ToNullable(type0),
+                permissions ?? new ChangeTrackingList<KeyVaultPermission>(),
+                assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
         }
     }
 }

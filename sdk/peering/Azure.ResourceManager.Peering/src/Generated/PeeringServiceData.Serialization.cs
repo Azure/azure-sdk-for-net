@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, peeringServiceLocation.Value, peeringServiceProvider.Value, Optional.ToNullable(provisioningState), providerPrimaryPeeringLocation.Value, providerBackupPeeringLocation.Value, logAnalyticsWorkspaceProperties.Value, serializedAdditionalRawData);
+            return new PeeringServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                peeringServiceLocation.Value,
+                peeringServiceProvider.Value,
+                Optional.ToNullable(provisioningState),
+                providerPrimaryPeeringLocation.Value,
+                providerBackupPeeringLocation.Value,
+                logAnalyticsWorkspaceProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServiceData>.Write(ModelReaderWriterOptions options)

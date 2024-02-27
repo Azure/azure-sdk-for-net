@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), patches ?? new ChangeTrackingList<PatchInstallationDetail>(), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesResult(
+                Optional.ToNullable(status),
+                installationActivityId.Value,
+                Optional.ToNullable(rebootStatus),
+                Optional.ToNullable(maintenanceWindowExceeded),
+                Optional.ToNullable(excludedPatchCount),
+                Optional.ToNullable(notSelectedPatchCount),
+                Optional.ToNullable(pendingPatchCount),
+                Optional.ToNullable(installedPatchCount),
+                Optional.ToNullable(failedPatchCount),
+                patches ?? new ChangeTrackingList<PatchInstallationDetail>(),
+                Optional.ToNullable(startDateTime),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)

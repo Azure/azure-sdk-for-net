@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAzureFileVolume(type, mountPath, Optional.ToNullable(readOnly), mountOptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, shareName);
+            return new AppPlatformAzureFileVolume(
+                type,
+                mountPath,
+                Optional.ToNullable(readOnly),
+                mountOptions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                shareName);
         }
 
         BinaryData IPersistableModel<AppPlatformAzureFileVolume>.Write(ModelReaderWriterOptions options)

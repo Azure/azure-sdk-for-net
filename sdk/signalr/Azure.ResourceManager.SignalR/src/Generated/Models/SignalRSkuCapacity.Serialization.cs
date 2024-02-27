@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), allowedValues ?? new ChangeTrackingList<int>(), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new SignalRSkuCapacity(
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(@default),
+                allowedValues ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(scaleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRSkuCapacity>.Write(ModelReaderWriterOptions options)

@@ -237,7 +237,19 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeletConfig(cpuManagerPolicy.Value, Optional.ToNullable(cpuCfsQuota), cpuCfsQuotaPeriod.Value, Optional.ToNullable(imageGcHighThreshold), Optional.ToNullable(imageGcLowThreshold), topologyManagerPolicy.Value, allowedUnsafeSysctls ?? new ChangeTrackingList<string>(), Optional.ToNullable(failSwapOn), Optional.ToNullable(containerLogMaxSizeMB), Optional.ToNullable(containerLogMaxFiles), Optional.ToNullable(podMaxPids), serializedAdditionalRawData);
+            return new KubeletConfig(
+                cpuManagerPolicy.Value,
+                Optional.ToNullable(cpuCfsQuota),
+                cpuCfsQuotaPeriod.Value,
+                Optional.ToNullable(imageGcHighThreshold),
+                Optional.ToNullable(imageGcLowThreshold),
+                topologyManagerPolicy.Value,
+                allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(failSwapOn),
+                Optional.ToNullable(containerLogMaxSizeMB),
+                Optional.ToNullable(containerLogMaxFiles),
+                Optional.ToNullable(podMaxPids),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options)

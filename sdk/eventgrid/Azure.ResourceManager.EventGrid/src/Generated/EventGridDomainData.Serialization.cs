@@ -429,7 +429,30 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridDomainData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(inputSchema), eventTypeInfo.Value, inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(autoCreateTopicWithFirstSubscription), Optional.ToNullable(autoDeleteTopicWithLastSubscription), Optional.ToNullable(dataResidencyBoundary), serializedAdditionalRawData);
+            return new EventGridDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(minimumTlsVersionAllowed),
+                endpoint.Value,
+                Optional.ToNullable(inputSchema),
+                eventTypeInfo.Value,
+                inputSchemaMapping.Value,
+                metricResourceId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(autoCreateTopicWithFirstSubscription),
+                Optional.ToNullable(autoDeleteTopicWithLastSubscription),
+                Optional.ToNullable(dataResidencyBoundary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridDomainData>.Write(ModelReaderWriterOptions options)

@@ -454,7 +454,31 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), asn.Value, cidr.Value, signedMessage.Value, authorizationMessage.Value, customIPPrefixParent, childCustomIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(commissionedState), Optional.ToNullable(expressRouteAdvertise), Optional.ToNullable(geo), Optional.ToNullable(noInternetAdvertise), Optional.ToNullable(prefixType), publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
+            return new CustomIPPrefixData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                asn.Value,
+                cidr.Value,
+                signedMessage.Value,
+                authorizationMessage.Value,
+                customIPPrefixParent,
+                childCustomIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(commissionedState),
+                Optional.ToNullable(expressRouteAdvertise),
+                Optional.ToNullable(geo),
+                Optional.ToNullable(noInternetAdvertise),
+                Optional.ToNullable(prefixType),
+                publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(resourceGuid),
+                failedReason.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options)

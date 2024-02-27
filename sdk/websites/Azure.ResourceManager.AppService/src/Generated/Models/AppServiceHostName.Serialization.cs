@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceHostName(name.Value, siteNames ?? new ChangeTrackingList<string>(), azureResourceName.Value, Optional.ToNullable(azureResourceType), Optional.ToNullable(customHostNameDnsRecordType), Optional.ToNullable(hostNameType), serializedAdditionalRawData);
+            return new AppServiceHostName(
+                name.Value,
+                siteNames ?? new ChangeTrackingList<string>(),
+                azureResourceName.Value,
+                Optional.ToNullable(azureResourceType),
+                Optional.ToNullable(customHostNameDnsRecordType),
+                Optional.ToNullable(hostNameType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceHostName>.Write(ModelReaderWriterOptions options)

@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceDataMount(source.Value, Optional.ToNullable(sourceType), mountName.Value, Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Optional.ToNullable(mountState), Optional.ToNullable(mountedOn), error.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceDataMount(
+                source.Value,
+                Optional.ToNullable(sourceType),
+                mountName.Value,
+                Optional.ToNullable(mountAction),
+                createdBy.Value,
+                mountPath.Value,
+                Optional.ToNullable(mountState),
+                Optional.ToNullable(mountedOn),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceDataMount>.Write(ModelReaderWriterOptions options)

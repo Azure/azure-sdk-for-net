@@ -556,7 +556,37 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), virtualMachine, networkSecurityGroup.Value, privateEndpoint.Value, ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(), dnsSettings.Value, macAddress.Value, Optional.ToNullable(primary), Optional.ToNullable(vnetEncryptionSupported), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableIPForwarding), hostedWorkloads ?? new ChangeTrackingList<string>(), dscpConfiguration, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), workloadType.Value, Optional.ToNullable(nicType), privateLinkService.Value, Optional.ToNullable(migrationPhase), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new NetworkInterfaceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                virtualMachine,
+                networkSecurityGroup.Value,
+                privateEndpoint.Value,
+                ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>(),
+                dnsSettings.Value,
+                macAddress.Value,
+                Optional.ToNullable(primary),
+                Optional.ToNullable(vnetEncryptionSupported),
+                Optional.ToNullable(enableAcceleratedNetworking),
+                Optional.ToNullable(disableTcpStateTracking),
+                Optional.ToNullable(enableIPForwarding),
+                hostedWorkloads ?? new ChangeTrackingList<string>(),
+                dscpConfiguration,
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                workloadType.Value,
+                Optional.ToNullable(nicType),
+                privateLinkService.Value,
+                Optional.ToNullable(migrationPhase),
+                Optional.ToNullable(auxiliaryMode),
+                Optional.ToNullable(auxiliarySku));
         }
 
         BinaryData IPersistableModel<NetworkInterfaceData>.Write(ModelReaderWriterOptions options)

@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoScriptData(id, name, type, systemData.Value, scriptUrl.Value, scriptUrlSasToken.Value, scriptContent.Value, forceUpdateTag.Value, Optional.ToNullable(continueOnErrors), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new KustoScriptData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scriptUrl.Value,
+                scriptUrlSasToken.Value,
+                scriptContent.Value,
+                forceUpdateTag.Value,
+                Optional.ToNullable(continueOnErrors),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoScriptData>.Write(ModelReaderWriterOptions options)

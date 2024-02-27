@@ -193,7 +193,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, Optional.ToNullable(workLoadType), schedulePolicy.Value, retentionPolicy.Value, vaultRetentionPolicy.Value, timeZone.Value);
+            return new FileShareProtectionPolicy(
+                Optional.ToNullable(protectedItemsCount),
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(workLoadType),
+                schedulePolicy.Value,
+                retentionPolicy.Value,
+                vaultRetentionPolicy.Value,
+                timeZone.Value);
         }
 
         BinaryData IPersistableModel<FileShareProtectionPolicy>.Write(ModelReaderWriterOptions options)

@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPropertiesForGeoRestore(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData, sourceServerId);
+            return new MySqlServerPropertiesForGeoRestore(
+                Optional.ToNullable(version),
+                Optional.ToNullable(sslEnforcement),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(infrastructureEncryption),
+                Optional.ToNullable(publicNetworkAccess),
+                storageProfile.Value,
+                createMode,
+                serializedAdditionalRawData,
+                sourceServerId);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForGeoRestore>.Write(ModelReaderWriterOptions options)

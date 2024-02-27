@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, Optional.ToNullable(playerVisibility), hlsSettings.Value);
+            return new TextTrack(
+                odataType,
+                serializedAdditionalRawData,
+                fileName.Value,
+                displayName.Value,
+                languageCode.Value,
+                Optional.ToNullable(playerVisibility),
+                hlsSettings.Value);
         }
 
         BinaryData IPersistableModel<TextTrack>.Write(ModelReaderWriterOptions options)

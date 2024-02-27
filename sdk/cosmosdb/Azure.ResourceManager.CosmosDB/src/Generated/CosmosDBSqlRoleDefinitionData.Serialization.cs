@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), assignableScopes ?? new ChangeTrackingList<string>(), permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(), serializedAdditionalRawData);
+            return new CosmosDBSqlRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                roleName.Value,
+                Optional.ToNullable(type0),
+                assignableScopes ?? new ChangeTrackingList<string>(),
+                permissions ?? new ChangeTrackingList<CosmosDBSqlRolePermission>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlRoleDefinitionData>.Write(ModelReaderWriterOptions options)

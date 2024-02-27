@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorHealthProbeSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, path.Value, Optional.ToNullable(protocol), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(healthProbeMethod), Optional.ToNullable(enabledState), Optional.ToNullable(resourceState));
+            return new FrontDoorHealthProbeSettingsData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                path.Value,
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(healthProbeMethod),
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorHealthProbeSettingsData>.Write(ModelReaderWriterOptions options)

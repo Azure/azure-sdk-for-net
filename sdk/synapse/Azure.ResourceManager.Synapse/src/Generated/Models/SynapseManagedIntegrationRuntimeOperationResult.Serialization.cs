@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeOperationResult(type.Value, Optional.ToNullable(startTime), result.Value, errorCode.Value, parameters ?? new ChangeTrackingList<string>(), activityId.Value, additionalProperties);
+            return new SynapseManagedIntegrationRuntimeOperationResult(
+                type.Value,
+                Optional.ToNullable(startTime),
+                result.Value,
+                errorCode.Value,
+                parameters ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeOperationResult>.Write(ModelReaderWriterOptions options)

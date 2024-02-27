@@ -330,7 +330,20 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataPolicyManifestData(id, name, type, systemData.Value, namespaces ?? new ChangeTrackingList<string>(), policyMode.Value, Optional.ToNullable(isBuiltInOnly), resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(), effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(), fieldValues ?? new ChangeTrackingList<string>(), standard ?? new ChangeTrackingList<string>(), custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>(), serializedAdditionalRawData);
+            return new DataPolicyManifestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                namespaces ?? new ChangeTrackingList<string>(),
+                policyMode.Value,
+                Optional.ToNullable(isBuiltInOnly),
+                resourceTypeAliases ?? new ChangeTrackingList<ResourceTypeAliases>(),
+                effects ?? new ChangeTrackingList<DataPolicyManifestEffect>(),
+                fieldValues ?? new ChangeTrackingList<string>(),
+                standard ?? new ChangeTrackingList<string>(),
+                custom ?? new ChangeTrackingList<DataManifestCustomResourceFunctionDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataPolicyManifestData>.Write(ModelReaderWriterOptions options)

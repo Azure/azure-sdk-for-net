@@ -229,7 +229,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, subjectAlternativeNames ?? new ChangeTrackingList<string>(), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, serializedAdditionalRawData);
+            return new ContainerAppCertificateProperties(
+                Optional.ToNullable(provisioningState),
+                password.Value,
+                subjectName.Value,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                value.Value,
+                issuer.Value,
+                Optional.ToNullable(issueDate),
+                Optional.ToNullable(expirationDate),
+                thumbprint.Value,
+                Optional.ToNullable(valid),
+                publicKeyHash.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCertificateProperties>.Write(ModelReaderWriterOptions options)

@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(ruleSetAction), exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(), serializedAdditionalRawData);
+            return new ManagedRuleSet(
+                ruleSetType,
+                ruleSetVersion,
+                Optional.ToNullable(ruleSetAction),
+                exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(),
+                ruleGroupOverrides ?? new ChangeTrackingList<ManagedRuleGroupOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSet>.Write(ModelReaderWriterOptions options)

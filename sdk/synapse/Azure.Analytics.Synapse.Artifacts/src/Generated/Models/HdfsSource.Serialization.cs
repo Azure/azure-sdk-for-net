@@ -123,7 +123,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, recursive.Value, distcpSettings.Value);
+            return new HdfsSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                distcpSettings.Value);
         }
 
         internal partial class HdfsSourceConverter : JsonConverter<HdfsSource>

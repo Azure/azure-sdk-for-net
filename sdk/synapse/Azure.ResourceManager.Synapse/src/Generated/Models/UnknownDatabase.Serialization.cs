@@ -147,7 +147,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData);
+            return new UnknownDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDatabaseData>.Write(ModelReaderWriterOptions options)

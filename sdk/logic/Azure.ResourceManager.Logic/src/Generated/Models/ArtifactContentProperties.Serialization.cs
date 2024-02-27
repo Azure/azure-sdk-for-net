@@ -178,7 +178,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactContentProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, content.Value, Optional.ToNullable(contentType), contentLink.Value);
+            return new ArtifactContentProperties(
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                serializedAdditionalRawData,
+                content.Value,
+                Optional.ToNullable(contentType),
+                contentLink.Value);
         }
 
         BinaryData IPersistableModel<ArtifactContentProperties>.Write(ModelReaderWriterOptions options)

@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobContainerImmutabilityPolicy(Optional.ToNullable(etag), updateHistory ?? new ChangeTrackingList<UpdateHistoryEntry>(), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
+            return new BlobContainerImmutabilityPolicy(
+                Optional.ToNullable(etag),
+                updateHistory ?? new ChangeTrackingList<UpdateHistoryEntry>(),
+                Optional.ToNullable(immutabilityPeriodSinceCreationInDays),
+                Optional.ToNullable(state),
+                Optional.ToNullable(allowProtectedAppendWrites),
+                Optional.ToNullable(allowProtectedAppendWritesAll),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobContainerImmutabilityPolicy>.Write(ModelReaderWriterOptions options)

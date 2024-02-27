@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Subscription
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SubscriptionAliasData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasData>.Write(ModelReaderWriterOptions options)

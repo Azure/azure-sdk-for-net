@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublisherData(id, name, type, systemData.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new PublisherData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PublisherData>.Write(ModelReaderWriterOptions options)

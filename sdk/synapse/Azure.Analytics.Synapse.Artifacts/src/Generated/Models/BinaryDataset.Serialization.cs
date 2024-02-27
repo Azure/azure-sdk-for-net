@@ -220,7 +220,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinaryDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, location.Value, compression.Value);
+            return new BinaryDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                location.Value,
+                compression.Value);
         }
 
         internal partial class BinaryDatasetConverter : JsonConverter<BinaryDataset>

@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallUpdateProperties(Optional.ToNullable(panETag), networkProfile.Value, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings.Value, frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(), planData.Value, marketplaceDetails.Value, serializedAdditionalRawData);
+            return new FirewallUpdateProperties(
+                Optional.ToNullable(panETag),
+                networkProfile.Value,
+                Optional.ToNullable(isPanoramaManaged),
+                panoramaConfig.Value,
+                associatedRulestack.Value,
+                dnsSettings.Value,
+                frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
+                planData.Value,
+                marketplaceDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallUpdateProperties>.Write(ModelReaderWriterOptions options)

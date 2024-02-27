@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceDelegation(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), serviceName.Value, actions ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState));
+            return new ServiceDelegation(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                serviceName.Value,
+                actions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ServiceDelegation>.Write(ModelReaderWriterOptions options)

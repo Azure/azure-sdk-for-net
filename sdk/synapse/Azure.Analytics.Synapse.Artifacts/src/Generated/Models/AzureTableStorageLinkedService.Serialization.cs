@@ -223,7 +223,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, encryptedCredential.Value);
+            return new AzureTableStorageLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString.Value,
+                accountKey.Value,
+                sasUri.Value,
+                sasToken.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class AzureTableStorageLinkedServiceConverter : JsonConverter<AzureTableStorageLinkedService>

@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitesWorkflowPreview(id, name, type, systemData.Value, path.Value, contents.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitesWorkflowPreview(
+                id,
+                name,
+                type,
+                systemData.Value,
+                path.Value,
+                contents.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitesWorkflowPreview>.Write(ModelReaderWriterOptions options)

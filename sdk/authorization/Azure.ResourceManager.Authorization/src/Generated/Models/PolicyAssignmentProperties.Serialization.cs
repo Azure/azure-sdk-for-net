@@ -295,7 +295,21 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentProperties(id, name, type, systemData.Value, id0.Value, lastModifiedBy.Value, Optional.ToNullable(lastModifiedDateTime), id1.Value, displayName.Value, Optional.ToNullable(type0), id2.Value, displayName0.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
+            return new PolicyAssignmentProperties(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedDateTime),
+                id1.Value,
+                displayName.Value,
+                Optional.ToNullable(type0),
+                id2.Value,
+                displayName0.Value,
+                Optional.ToNullable(type1),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentProperties>.Write(ModelReaderWriterOptions options)

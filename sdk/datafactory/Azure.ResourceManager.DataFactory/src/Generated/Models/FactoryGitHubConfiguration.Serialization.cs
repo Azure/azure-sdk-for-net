@@ -177,7 +177,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData, hostName.Value, clientId.Value, clientSecret.Value);
+            return new FactoryGitHubConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId.Value,
+                Optional.ToNullable(disablePublish),
+                serializedAdditionalRawData,
+                hostName.Value,
+                clientId.Value,
+                clientSecret.Value);
         }
 
         BinaryData IPersistableModel<FactoryGitHubConfiguration>.Write(ModelReaderWriterOptions options)

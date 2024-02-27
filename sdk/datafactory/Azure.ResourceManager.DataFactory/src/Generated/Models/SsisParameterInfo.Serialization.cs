@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisParameterInfo(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
+            return new SsisParameterInfo(
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                dataType.Value,
+                Optional.ToNullable(required),
+                Optional.ToNullable(sensitive),
+                designDefaultValue.Value,
+                defaultValue.Value,
+                sensitiveDefaultValue.Value,
+                valueType.Value,
+                Optional.ToNullable(valueSet),
+                variable.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisParameterInfo>.Write(ModelReaderWriterOptions options)

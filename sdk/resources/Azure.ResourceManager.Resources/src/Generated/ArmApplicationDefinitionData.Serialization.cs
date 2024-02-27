@@ -438,7 +438,30 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationDefinitionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, managedBy.Value, sku.Value, serializedAdditionalRawData, lockLevel, displayName.Value, Optional.ToNullable(isEnabled), authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(), artifacts ?? new ChangeTrackingList<ArmApplicationDefinitionArtifact>(), description.Value, packageFileUri.Value, mainTemplate.Value, createUiDefinition.Value, notificationPolicy.Value, lockingPolicy.Value, deploymentPolicy.Value, managementPolicy.Value, policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
+            return new ArmApplicationDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                sku.Value,
+                serializedAdditionalRawData,
+                lockLevel,
+                displayName.Value,
+                Optional.ToNullable(isEnabled),
+                authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
+                artifacts ?? new ChangeTrackingList<ArmApplicationDefinitionArtifact>(),
+                description.Value,
+                packageFileUri.Value,
+                mainTemplate.Value,
+                createUiDefinition.Value,
+                notificationPolicy.Value,
+                lockingPolicy.Value,
+                deploymentPolicy.Value,
+                managementPolicy.Value,
+                policies ?? new ChangeTrackingList<ArmApplicationPolicy>());
         }
 
         BinaryData IPersistableModel<ArmApplicationDefinitionData>.Write(ModelReaderWriterOptions options)

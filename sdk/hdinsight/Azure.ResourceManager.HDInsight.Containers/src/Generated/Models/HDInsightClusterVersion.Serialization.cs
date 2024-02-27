@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterVersion(id, name, type, systemData.Value, clusterType.Value, clusterVersion.Value, ossVersion.Value, clusterPoolVersion.Value, Optional.ToNullable(isPreview), components ?? new ChangeTrackingList<ClusterComponentItem>(), serializedAdditionalRawData);
+            return new HDInsightClusterVersion(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterType.Value,
+                clusterVersion.Value,
+                ossVersion.Value,
+                clusterPoolVersion.Value,
+                Optional.ToNullable(isPreview),
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterVersion>.Write(ModelReaderWriterOptions options)

@@ -37,7 +37,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             frontends ??= new List<SubResource>();
             associations ??= new List<SubResource>();
 
-            return new TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints?.ToList(), frontends?.ToList(), associations?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new TrafficControllerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                configurationEndpoints?.ToList(),
+                frontends?.ToList(),
+                associations?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
@@ -55,7 +66,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AssociationData(id, name, resourceType, systemData, tags, location, associationType, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState, serializedAdditionalRawData: null);
+            return new AssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                associationType,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworking.FrontendData"/>. </summary>
@@ -72,7 +93,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FrontendData(id, name, resourceType, systemData, tags, location, fqdn, provisioningState, serializedAdditionalRawData: null);
+            return new FrontendData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                fqdn,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

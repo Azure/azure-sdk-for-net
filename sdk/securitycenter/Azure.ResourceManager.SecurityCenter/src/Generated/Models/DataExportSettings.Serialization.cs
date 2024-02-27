@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExportSettings(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(enabled));
+            return new DataExportSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(enabled));
         }
 
         BinaryData IPersistableModel<DataExportSettings>.Write(ModelReaderWriterOptions options)

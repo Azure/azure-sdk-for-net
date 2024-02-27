@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicalNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, dhcpOptions.Value, subnets ?? new ChangeTrackingList<Subnet>(), Optional.ToNullable(provisioningState), vmSwitchName.Value, status.Value, serializedAdditionalRawData);
+            return new LogicalNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                dhcpOptions.Value,
+                subnets ?? new ChangeTrackingList<Subnet>(),
+                Optional.ToNullable(provisioningState),
+                vmSwitchName.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicalNetworkData>.Write(ModelReaderWriterOptions options)

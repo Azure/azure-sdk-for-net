@@ -486,7 +486,36 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), categoryTags ?? new ChangeTrackingList<string>(), actionName.Value, Optional.ToNullable(enabled), states ?? new ChangeTrackingList<string>(), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceRecommendation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(recommendationId),
+                resourceId.Value,
+                Optional.ToNullable(resourceScope),
+                ruleName.Value,
+                displayName.Value,
+                message.Value,
+                Optional.ToNullable(level),
+                Optional.ToNullable(channels),
+                categoryTags ?? new ChangeTrackingList<string>(),
+                actionName.Value,
+                Optional.ToNullable(enabled),
+                states ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(nextNotificationTime),
+                Optional.ToNullable(notificationExpirationTime),
+                Optional.ToNullable(notifiedTime),
+                Optional.ToNullable(score),
+                Optional.ToNullable(isDynamic),
+                extensionName.Value,
+                bladeName.Value,
+                forwardLink.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceRecommendation>.Write(ModelReaderWriterOptions options)

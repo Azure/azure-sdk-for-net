@@ -235,7 +235,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new JsonDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, location.Value, encodingName.Value, compression.Value);
+            return new JsonDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                location.Value,
+                encodingName.Value,
+                compression.Value);
         }
 
         internal partial class JsonDatasetConverter : JsonConverter<JsonDataset>

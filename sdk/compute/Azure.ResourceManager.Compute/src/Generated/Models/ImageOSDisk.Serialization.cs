@@ -196,7 +196,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageOSDisk(snapshot, managedDisk, blobUri.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), Optional.ToNullable(storageAccountType), diskEncryptionSet, serializedAdditionalRawData, osType, osState);
+            return new ImageOSDisk(
+                snapshot,
+                managedDisk,
+                blobUri.Value,
+                Optional.ToNullable(caching),
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(storageAccountType),
+                diskEncryptionSet,
+                serializedAdditionalRawData,
+                osType,
+                osState);
         }
 
         BinaryData IPersistableModel<ImageOSDisk>.Write(ModelReaderWriterOptions options)

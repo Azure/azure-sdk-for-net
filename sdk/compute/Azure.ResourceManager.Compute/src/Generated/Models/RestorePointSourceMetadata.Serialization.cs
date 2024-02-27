@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceMetadata(hardwareProfile.Value, storageProfile.Value, osProfile.Value, diagnosticsProfile.Value, licenseType.Value, vmId.Value, securityProfile.Value, Optional.ToNullable(location), userData.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
+            return new RestorePointSourceMetadata(
+                hardwareProfile.Value,
+                storageProfile.Value,
+                osProfile.Value,
+                diagnosticsProfile.Value,
+                licenseType.Value,
+                vmId.Value,
+                securityProfile.Value,
+                Optional.ToNullable(location),
+                userData.Value,
+                Optional.ToNullable(hyperVGeneration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceMetadata>.Write(ModelReaderWriterOptions options)

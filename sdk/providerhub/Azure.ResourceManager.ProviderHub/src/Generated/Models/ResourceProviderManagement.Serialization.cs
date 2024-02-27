@@ -241,7 +241,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManagement(schemaOwners ?? new ChangeTrackingList<string>(), manifestOwners ?? new ChangeTrackingList<string>(), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(), Optional.ToNullable(resourceAccessPolicy), resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new ResourceProviderManagement(
+                schemaOwners ?? new ChangeTrackingList<string>(),
+                manifestOwners ?? new ChangeTrackingList<string>(),
+                incidentRoutingService.Value,
+                incidentRoutingTeam.Value,
+                incidentContactEmail.Value,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                Optional.ToNullable(resourceAccessPolicy),
+                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManagement>.Write(ModelReaderWriterOptions options)

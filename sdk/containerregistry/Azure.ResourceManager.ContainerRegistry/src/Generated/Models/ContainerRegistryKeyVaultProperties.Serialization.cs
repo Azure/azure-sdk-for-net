@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Optional.ToNullable(keyRotationEnabled), Optional.ToNullable(lastKeyRotationTimestamp), serializedAdditionalRawData);
+            return new ContainerRegistryKeyVaultProperties(
+                keyIdentifier.Value,
+                versionedKeyIdentifier.Value,
+                identity.Value,
+                Optional.ToNullable(keyRotationEnabled),
+                Optional.ToNullable(lastKeyRotationTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryKeyVaultProperties>.Write(ModelReaderWriterOptions options)

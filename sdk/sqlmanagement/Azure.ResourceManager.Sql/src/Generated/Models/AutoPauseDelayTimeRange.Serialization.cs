@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue), serializedAdditionalRawData);
+            return new AutoPauseDelayTimeRange(
+                Optional.ToNullable(minValue),
+                Optional.ToNullable(maxValue),
+                Optional.ToNullable(stepSize),
+                Optional.ToNullable(@default),
+                Optional.ToNullable(unit),
+                Optional.ToNullable(doNotPauseValue),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)

@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdvancedThreatProtectionSettingData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), serializedAdditionalRawData);
+            return new AdvancedThreatProtectionSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdvancedThreatProtectionSettingData>.Write(ModelReaderWriterOptions options)

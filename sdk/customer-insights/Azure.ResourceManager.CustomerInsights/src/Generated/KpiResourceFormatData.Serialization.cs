@@ -472,7 +472,31 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
+            return new KpiResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(entityType),
+                entityTypeName.Value,
+                Optional.ToNullable(tenantId),
+                kpiName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(calculationWindow),
+                calculationWindowFieldName.Value,
+                Optional.ToNullable(function),
+                expression.Value,
+                unit.Value,
+                filter.Value,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                Optional.ToNullable(provisioningState),
+                thresHolds.Value,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options)

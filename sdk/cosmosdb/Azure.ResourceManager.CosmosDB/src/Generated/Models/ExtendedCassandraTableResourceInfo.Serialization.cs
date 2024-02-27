@@ -169,7 +169,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedCassandraTableResourceInfo(id, Optional.ToNullable(defaultTtl), schema.Value, Optional.ToNullable(analyticalStorageTtl), serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCassandraTableResourceInfo(
+                id,
+                Optional.ToNullable(defaultTtl),
+                schema.Value,
+                Optional.ToNullable(analyticalStorageTtl),
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedCassandraTableResourceInfo>.Write(ModelReaderWriterOptions options)

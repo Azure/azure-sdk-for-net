@@ -136,7 +136,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobReceivedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(jobStatus), classificationPolicyId.Value, Optional.ToNullable(priority), requestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(), Optional.ToNullable(scheduledOn), unavailableForMatching);
+            return new AcsRouterJobReceivedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(jobStatus),
+                classificationPolicyId.Value,
+                Optional.ToNullable(priority),
+                requestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                Optional.ToNullable(scheduledOn),
+                unavailableForMatching);
         }
 
         internal partial class AcsRouterJobReceivedEventDataConverter : JsonConverter<AcsRouterJobReceivedEventData>

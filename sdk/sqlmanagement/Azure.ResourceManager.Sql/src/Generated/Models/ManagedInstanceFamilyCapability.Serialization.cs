@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceFamilyCapability(name.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceFamilyCapability(
+                name.Value,
+                sku.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceFamilyCapability>.Write(ModelReaderWriterOptions options)

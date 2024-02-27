@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingInfoSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new BillingInfoSku(
+                name,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingInfoSku>.Write(ModelReaderWriterOptions options)

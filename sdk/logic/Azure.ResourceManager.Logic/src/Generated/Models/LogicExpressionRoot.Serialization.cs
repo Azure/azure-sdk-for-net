@@ -158,7 +158,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicExpressionRoot(text.Value, value.Value, subexpressions ?? new ChangeTrackingList<LogicExpression>(), error.Value, serializedAdditionalRawData, path.Value);
+            return new LogicExpressionRoot(
+                text.Value,
+                value.Value,
+                subexpressions ?? new ChangeTrackingList<LogicExpression>(),
+                error.Value,
+                serializedAdditionalRawData,
+                path.Value);
         }
 
         BinaryData IPersistableModel<LogicExpressionRoot>.Write(ModelReaderWriterOptions options)

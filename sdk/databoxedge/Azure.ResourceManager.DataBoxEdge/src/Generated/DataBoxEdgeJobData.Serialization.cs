@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), error.Value, Optional.ToNullable(jobType), Optional.ToNullable(currentStage), downloadProgress.Value, installProgress.Value, Optional.ToNullable(totalRefreshErrors), errorManifestFile.Value, refreshedEntityId.Value, folder.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(percentComplete),
+                error.Value,
+                Optional.ToNullable(jobType),
+                Optional.ToNullable(currentStage),
+                downloadProgress.Value,
+                installProgress.Value,
+                Optional.ToNullable(totalRefreshErrors),
+                errorManifestFile.Value,
+                refreshedEntityId.Value,
+                folder.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobData>.Write(ModelReaderWriterOptions options)

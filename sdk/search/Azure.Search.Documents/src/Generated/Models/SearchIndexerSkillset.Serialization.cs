@@ -144,7 +144,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, knowledgeStore.Value, indexProjections.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerSkillset(
+                name,
+                description.Value,
+                skills,
+                cognitiveServices.Value,
+                knowledgeStore.Value,
+                indexProjections.Value,
+                odataEtag.Value,
+                encryptionKey.Value);
         }
     }
 }

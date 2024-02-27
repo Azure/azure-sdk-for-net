@@ -333,7 +333,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), capabilities ?? new ChangeTrackingDictionary<string, string>(), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
+            return new SelfHostedIntegrationRuntimeNode(
+                nodeName.Value,
+                machineName.Value,
+                hostServiceUri.Value,
+                Optional.ToNullable(status),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                versionStatus.Value,
+                version.Value,
+                Optional.ToNullable(registerTime),
+                Optional.ToNullable(lastConnectTime),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(lastStartTime),
+                Optional.ToNullable(lastStopTime),
+                Optional.ToNullable(lastUpdateResult),
+                Optional.ToNullable(lastStartUpdateTime),
+                Optional.ToNullable(lastEndUpdateTime),
+                Optional.ToNullable(isActiveDispatcher),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(maxConcurrentJobs),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

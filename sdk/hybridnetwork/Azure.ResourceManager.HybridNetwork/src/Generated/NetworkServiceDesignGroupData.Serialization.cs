@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, serializedAdditionalRawData);
+            return new NetworkServiceDesignGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignGroupData>.Write(ModelReaderWriterOptions options)

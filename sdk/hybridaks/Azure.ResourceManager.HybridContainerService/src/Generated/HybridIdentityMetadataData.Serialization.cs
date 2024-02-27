@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new HybridIdentityMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceUid.Value,
+                publicKey.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options)

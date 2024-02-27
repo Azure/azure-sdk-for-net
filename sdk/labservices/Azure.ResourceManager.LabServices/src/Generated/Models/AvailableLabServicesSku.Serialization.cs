@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableLabServicesSku(resourceType.Value, name.Value, Optional.ToNullable(tier), size.Value, family.Value, capacity.Value, capabilities ?? new ChangeTrackingList<AvailableLabServicesSkuCapability>(), locations ?? new ChangeTrackingList<AzureLocation>(), costs ?? new ChangeTrackingList<AvailableLabServicesSkuCost>(), restrictions ?? new ChangeTrackingList<AvailableLabServicesSkuRestrictions>(), serializedAdditionalRawData);
+            return new AvailableLabServicesSku(
+                resourceType.Value,
+                name.Value,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                capacity.Value,
+                capabilities ?? new ChangeTrackingList<AvailableLabServicesSkuCapability>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                costs ?? new ChangeTrackingList<AvailableLabServicesSkuCost>(),
+                restrictions ?? new ChangeTrackingList<AvailableLabServicesSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableLabServicesSku>.Write(ModelReaderWriterOptions options)

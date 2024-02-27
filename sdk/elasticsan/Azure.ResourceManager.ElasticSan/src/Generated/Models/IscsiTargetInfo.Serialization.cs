@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new IscsiTargetInfo(
+                targetIqn.Value,
+                targetPortalHostname.Value,
+                Optional.ToNullable(targetPortalPort),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IscsiTargetInfo>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkServiceDataFlowTemplate(templateName, direction, protocol, remoteIPList, ports ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MobileNetworkServiceDataFlowTemplate(
+                templateName,
+                direction,
+                protocol,
+                remoteIPList,
+                ports ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkServiceDataFlowTemplate>.Write(ModelReaderWriterOptions options)

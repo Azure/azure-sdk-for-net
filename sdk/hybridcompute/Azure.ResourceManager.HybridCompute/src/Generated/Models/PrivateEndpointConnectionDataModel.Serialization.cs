@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionDataModel(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionDataModel(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionDataModel>.Write(ModelReaderWriterOptions options)

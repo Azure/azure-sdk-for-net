@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulePatch(ruleSetName.Value, Optional.ToNullable(order), conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(), actions ?? new ChangeTrackingList<DeliveryRuleAction>(), Optional.ToNullable(matchProcessingBehavior), serializedAdditionalRawData);
+            return new FrontDoorRulePatch(
+                ruleSetName.Value,
+                Optional.ToNullable(order),
+                conditions ?? new ChangeTrackingList<DeliveryRuleCondition>(),
+                actions ?? new ChangeTrackingList<DeliveryRuleAction>(),
+                Optional.ToNullable(matchProcessingBehavior),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulePatch>.Write(ModelReaderWriterOptions options)

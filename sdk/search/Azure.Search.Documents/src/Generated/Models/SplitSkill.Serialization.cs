@@ -212,7 +212,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SplitSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(textSplitMode), Optional.ToNullable(maximumPageLength), Optional.ToNullable(pageOverlapLength), Optional.ToNullable(maximumPagesToTake));
+            return new SplitSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(defaultLanguageCode),
+                Optional.ToNullable(textSplitMode),
+                Optional.ToNullable(maximumPageLength),
+                Optional.ToNullable(pageOverlapLength),
+                Optional.ToNullable(maximumPagesToTake));
         }
     }
 }

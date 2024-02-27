@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBenefitUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownBenefitUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummary>.Write(ModelReaderWriterOptions options)

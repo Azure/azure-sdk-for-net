@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), databaseErrorResultPrefix.Value, schemaErrorResultPrefix.Value, Optional.ToNullable(numberOfSuccessfulOperations), Optional.ToNullable(numberOfFailedOperations), fileId.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                databaseErrorResultPrefix.Value,
+                schemaErrorResultPrefix.Value,
+                Optional.ToNullable(numberOfSuccessfulOperations),
+                Optional.ToNullable(numberOfFailedOperations),
+                fileId.Value);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

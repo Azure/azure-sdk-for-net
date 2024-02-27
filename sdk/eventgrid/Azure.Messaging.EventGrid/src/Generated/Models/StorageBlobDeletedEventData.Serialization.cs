@@ -82,7 +82,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageBlobDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, contentType.Value, blobType.Value, url.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageBlobDeletedEventData(
+                api.Value,
+                clientRequestId.Value,
+                requestId.Value,
+                contentType.Value,
+                blobType.Value,
+                url.Value,
+                sequencer.Value,
+                identity.Value,
+                storageDiagnostics.Value);
         }
 
         internal partial class StorageBlobDeletedEventDataConverter : JsonConverter<StorageBlobDeletedEventData>

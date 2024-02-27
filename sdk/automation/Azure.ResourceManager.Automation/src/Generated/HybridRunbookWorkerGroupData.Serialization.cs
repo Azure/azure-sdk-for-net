@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerGroupData(id, name, type, systemData.Value, Optional.ToNullable(groupType), credential.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(groupType),
+                credential.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerGroupData>.Write(ModelReaderWriterOptions options)

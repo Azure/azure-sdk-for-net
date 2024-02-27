@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaAvailabilityResult(id, name, type, systemData.Value, Optional.ToNullable(isAvailable), availabilityStatus.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaAvailabilityResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isAvailable),
+                availabilityStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaAvailabilityResult>.Write(ModelReaderWriterOptions options)

@@ -248,7 +248,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceInputDataSource(type, serializedAdditionalRawData, storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
+            return new BlobReferenceInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                container.Value,
+                pathPattern.Value,
+                dateFormat.Value,
+                timeFormat.Value,
+                Optional.ToNullable(authenticationMode),
+                blobName.Value,
+                deltaPathPattern.Value,
+                Optional.ToNullable(sourcePartitionCount),
+                Optional.ToNullable(fullSnapshotRefreshRate),
+                Optional.ToNullable(deltaSnapshotRefreshRate));
         }
 
         BinaryData IPersistableModel<BlobReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

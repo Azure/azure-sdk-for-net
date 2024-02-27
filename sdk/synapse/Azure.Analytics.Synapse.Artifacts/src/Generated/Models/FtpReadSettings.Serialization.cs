@@ -198,7 +198,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, useBinaryTransfer.Value, disableChunking.Value);
+            return new FtpReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                fileListPath.Value,
+                useBinaryTransfer.Value,
+                disableChunking.Value);
         }
 
         internal partial class FtpReadSettingsConverter : JsonConverter<FtpReadSettings>

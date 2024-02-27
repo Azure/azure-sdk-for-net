@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlInstanceSettings(collation.Value, Optional.ToNullable(maxDop), Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled), Optional.ToNullable(minServerMemoryMB), Optional.ToNullable(maxServerMemoryMB), Optional.ToNullable(isLpimEnabled), Optional.ToNullable(isIfiEnabled), serializedAdditionalRawData);
+            return new SqlInstanceSettings(
+                collation.Value,
+                Optional.ToNullable(maxDop),
+                Optional.ToNullable(isOptimizeForAdHocWorkloadsEnabled),
+                Optional.ToNullable(minServerMemoryMB),
+                Optional.ToNullable(maxServerMemoryMB),
+                Optional.ToNullable(isLpimEnabled),
+                Optional.ToNullable(isIfiEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlInstanceSettings>.Write(ModelReaderWriterOptions options)

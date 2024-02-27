@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterPoolVersion(id, name, type, systemData.Value, clusterPoolVersion.Value, aksVersion.Value, Optional.ToNullable(isPreview), serializedAdditionalRawData);
+            return new ClusterPoolVersion(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterPoolVersion.Value,
+                aksVersion.Value,
+                Optional.ToNullable(isPreview),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterPoolVersion>.Write(ModelReaderWriterOptions options)

@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxSecret(deviceSerialNumber.Value, devicePassword.Value, networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(), encodedValidationCertPubKey.Value, accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(), serializedAdditionalRawData);
+            return new DataBoxSecret(
+                deviceSerialNumber.Value,
+                devicePassword.Value,
+                networkConfigurations ?? new ChangeTrackingList<ApplianceNetworkConfiguration>(),
+                encodedValidationCertPubKey.Value,
+                accountCredentialDetails ?? new ChangeTrackingList<DataBoxAccountCredentialDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSecret>.Write(ModelReaderWriterOptions options)

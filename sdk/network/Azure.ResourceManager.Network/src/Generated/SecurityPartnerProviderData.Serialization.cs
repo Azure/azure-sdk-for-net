@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityPartnerProviderData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(securityProviderName), Optional.ToNullable(connectionStatus), virtualHub);
+            return new SecurityPartnerProviderData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(securityProviderName),
+                Optional.ToNullable(connectionStatus),
+                virtualHub);
         }
 
         BinaryData IPersistableModel<SecurityPartnerProviderData>.Write(ModelReaderWriterOptions options)

@@ -318,7 +318,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsFusionAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(alertRulesCreatedByTemplateCount), Optional.ToNullable(createdDateUTC), Optional.ToNullable(lastUpdatedDateUTC), description.Value, displayName.Value, requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(), Optional.ToNullable(status), Optional.ToNullable(severity), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>());
+            return new SecurityInsightsFusionAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(alertRulesCreatedByTemplateCount),
+                Optional.ToNullable(createdDateUTC),
+                Optional.ToNullable(lastUpdatedDateUTC),
+                description.Value,
+                displayName.Value,
+                requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(severity),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsFusionAlertRuleTemplate>.Write(ModelReaderWriterOptions options)

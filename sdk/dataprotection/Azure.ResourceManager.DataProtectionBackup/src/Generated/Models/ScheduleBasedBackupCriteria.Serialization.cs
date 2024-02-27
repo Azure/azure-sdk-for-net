@@ -232,7 +232,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleBasedBackupCriteria(objectType, serializedAdditionalRawData, absoluteCriteria ?? new ChangeTrackingList<BackupAbsoluteMarker>(), daysOfMonth ?? new ChangeTrackingList<DataProtectionBackupDay>(), daysOfTheWeek ?? new ChangeTrackingList<DataProtectionBackupDayOfWeek>(), monthsOfYear ?? new ChangeTrackingList<DataProtectionBackupMonth>(), scheduleTimes ?? new ChangeTrackingList<DateTimeOffset>(), weeksOfTheMonth ?? new ChangeTrackingList<DataProtectionBackupWeekNumber>());
+            return new ScheduleBasedBackupCriteria(
+                objectType,
+                serializedAdditionalRawData,
+                absoluteCriteria ?? new ChangeTrackingList<BackupAbsoluteMarker>(),
+                daysOfMonth ?? new ChangeTrackingList<DataProtectionBackupDay>(),
+                daysOfTheWeek ?? new ChangeTrackingList<DataProtectionBackupDayOfWeek>(),
+                monthsOfYear ?? new ChangeTrackingList<DataProtectionBackupMonth>(),
+                scheduleTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                weeksOfTheMonth ?? new ChangeTrackingList<DataProtectionBackupWeekNumber>());
         }
 
         BinaryData IPersistableModel<ScheduleBasedBackupCriteria>.Write(ModelReaderWriterOptions options)

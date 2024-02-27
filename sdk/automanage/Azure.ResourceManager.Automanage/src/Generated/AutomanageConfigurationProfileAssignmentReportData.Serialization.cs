@@ -284,7 +284,22 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, resources ?? new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>(), error.Value, reportFormatVersion.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileAssignmentReportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(duration),
+                type0.Value,
+                status.Value,
+                configurationProfile.Value,
+                resources ?? new ChangeTrackingList<ConfigurationProfileAssignmentReportResourceDetails>(),
+                error.Value,
+                reportFormatVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options)

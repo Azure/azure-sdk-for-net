@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionTypeData(id, name, type, systemData.Value, Optional.ToNullable(isGlobal), fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationConnectionTypeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isGlobal),
+                fieldDefinitions ?? new ChangeTrackingDictionary<string, AutomationConnectionFieldDefinition>(),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionTypeData>.Write(ModelReaderWriterOptions options)

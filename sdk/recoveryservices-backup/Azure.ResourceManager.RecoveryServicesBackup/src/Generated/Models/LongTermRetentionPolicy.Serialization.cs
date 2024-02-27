@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, yearlySchedule.Value);
+            return new LongTermRetentionPolicy(
+                retentionPolicyType,
+                serializedAdditionalRawData,
+                dailySchedule.Value,
+                weeklySchedule.Value,
+                monthlySchedule.Value,
+                yearlySchedule.Value);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options)

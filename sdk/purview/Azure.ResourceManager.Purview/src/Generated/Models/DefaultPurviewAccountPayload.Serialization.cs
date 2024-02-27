@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value, serializedAdditionalRawData);
+            return new DefaultPurviewAccountPayload(
+                accountName.Value,
+                resourceGroupName.Value,
+                scope.Value,
+                Optional.ToNullable(scopeTenantId),
+                Optional.ToNullable(scopeType),
+                subscriptionId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultPurviewAccountPayload>.Write(ModelReaderWriterOptions options)

@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vmMembers, affinityType);
+            return new VmPlacementPolicyProperties(
+                type,
+                Optional.ToNullable(state),
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                vmMembers,
+                affinityType);
         }
 
         BinaryData IPersistableModel<VmPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)

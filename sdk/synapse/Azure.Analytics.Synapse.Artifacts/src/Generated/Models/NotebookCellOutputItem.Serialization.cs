@@ -109,7 +109,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new NotebookCellOutputItem(name.Value, Optional.ToNullable(executionCount), outputType, text.Value, data.Value, metadata.Value);
+            return new NotebookCellOutputItem(
+                name.Value,
+                Optional.ToNullable(executionCount),
+                outputType,
+                text.Value,
+                data.Value,
+                metadata.Value);
         }
 
         internal partial class NotebookCellOutputItemConverter : JsonConverter<NotebookCellOutputItem>

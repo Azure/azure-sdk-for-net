@@ -258,7 +258,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(), tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>());
+            return new ApplicationGatewayFirewallRuleSet(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                ruleGroups ?? new ChangeTrackingList<ApplicationGatewayFirewallRuleGroup>(),
+                tiers ?? new ChangeTrackingList<ApplicationGatewayTierType>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallRuleSet>.Write(ModelReaderWriterOptions options)

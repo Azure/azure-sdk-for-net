@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFeatureData(id, name, type, systemData.Value, virtualNetworkName.Value, virtualNetworkConnection.Value, hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(), hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(), kind.Value, serializedAdditionalRawData);
+            return new NetworkFeatureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualNetworkName.Value,
+                virtualNetworkConnection.Value,
+                hybridConnections ?? new ChangeTrackingList<RelayServiceConnectionEntityData>(),
+                hybridConnectionsV2 ?? new ChangeTrackingList<HybridConnectionData>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options)

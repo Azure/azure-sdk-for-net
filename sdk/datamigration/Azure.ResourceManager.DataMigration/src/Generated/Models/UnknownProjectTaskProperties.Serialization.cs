@@ -173,7 +173,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownProjectTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new UnknownProjectTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectTaskProperties>.Write(ModelReaderWriterOptions options)

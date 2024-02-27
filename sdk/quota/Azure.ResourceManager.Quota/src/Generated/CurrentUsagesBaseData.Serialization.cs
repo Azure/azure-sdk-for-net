@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Quota
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CurrentUsagesBaseData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CurrentUsagesBaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CurrentUsagesBaseData>.Write(ModelReaderWriterOptions options)

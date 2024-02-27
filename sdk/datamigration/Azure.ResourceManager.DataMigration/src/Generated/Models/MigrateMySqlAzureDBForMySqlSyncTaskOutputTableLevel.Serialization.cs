@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, cdcInsertCounter.Value, cdcUpdateCounter.Value, cdcDeleteCounter.Value, Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            return new MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                tableName.Value,
+                databaseName.Value,
+                cdcInsertCounter.Value,
+                cdcUpdateCounter.Value,
+                cdcDeleteCounter.Value,
+                Optional.ToNullable(fullLoadEstFinishTime),
+                Optional.ToNullable(fullLoadStartedOn),
+                Optional.ToNullable(fullLoadEndedOn),
+                Optional.ToNullable(fullLoadTotalRows),
+                Optional.ToNullable(state),
+                Optional.ToNullable(totalChangesApplied),
+                Optional.ToNullable(dataErrorsCounter),
+                Optional.ToNullable(lastModifiedTime));
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

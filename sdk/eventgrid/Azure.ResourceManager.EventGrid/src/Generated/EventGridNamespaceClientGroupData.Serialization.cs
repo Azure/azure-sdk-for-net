@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespaceClientGroupData(id, name, type, systemData.Value, description.Value, query.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespaceClientGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                query.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespaceClientGroupData>.Write(ModelReaderWriterOptions options)

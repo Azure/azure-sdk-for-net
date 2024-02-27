@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatchInstallationDetail(patchId.Value, name.Value, version.Value, kbId.Value, classifications ?? new ChangeTrackingList<string>(), Optional.ToNullable(installationState), serializedAdditionalRawData);
+            return new PatchInstallationDetail(
+                patchId.Value,
+                name.Value,
+                version.Value,
+                kbId.Value,
+                classifications ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(installationState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatchInstallationDetail>.Write(ModelReaderWriterOptions options)

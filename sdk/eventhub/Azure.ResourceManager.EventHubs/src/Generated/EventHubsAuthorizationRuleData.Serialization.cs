@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsAuthorizationRuleData(id, name, type, systemData.Value, rights ?? new ChangeTrackingList<EventHubsAccessRight>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rights ?? new ChangeTrackingList<EventHubsAccessRight>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

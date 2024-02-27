@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginGroupData(id, name, type, systemData.Value, profileName.Value, loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes), Optional.ToNullable(sessionAffinityState), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
+            return new FrontDoorOriginGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                profileName.Value,
+                loadBalancingSettings.Value,
+                healthProbeSettings.Value,
+                Optional.ToNullable(trafficRestorationTimeToHealedOrNewEndpointsInMinutes),
+                Optional.ToNullable(sessionAffinityState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(deploymentStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginGroupData>.Write(ModelReaderWriterOptions options)

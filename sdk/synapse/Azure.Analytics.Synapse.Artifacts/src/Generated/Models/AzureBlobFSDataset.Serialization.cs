@@ -250,7 +250,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, folderPath.Value, fileName.Value, format.Value, compression.Value);
+            return new AzureBlobFSDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                folderPath.Value,
+                fileName.Value,
+                format.Value,
+                compression.Value);
         }
 
         internal partial class AzureBlobFSDatasetConverter : JsonConverter<AzureBlobFSDataset>

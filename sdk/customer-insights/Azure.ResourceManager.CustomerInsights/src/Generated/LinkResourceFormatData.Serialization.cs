@@ -364,7 +364,25 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), linkName.Value, Optional.ToNullable(sourceEntityType), Optional.ToNullable(targetEntityType), sourceEntityTypeName.Value, targetEntityTypeName.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), mappings ?? new ChangeTrackingList<TypePropertiesMapping>(), participantPropertyReferences ?? new ChangeTrackingList<ParticipantPropertyReference>(), Optional.ToNullable(provisioningState), Optional.ToNullable(referenceOnly), Optional.ToNullable(operationType), serializedAdditionalRawData);
+            return new LinkResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                linkName.Value,
+                Optional.ToNullable(sourceEntityType),
+                Optional.ToNullable(targetEntityType),
+                sourceEntityTypeName.Value,
+                targetEntityTypeName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                mappings ?? new ChangeTrackingList<TypePropertiesMapping>(),
+                participantPropertyReferences ?? new ChangeTrackingList<ParticipantPropertyReference>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(referenceOnly),
+                Optional.ToNullable(operationType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkResourceFormatData>.Write(ModelReaderWriterOptions options)

@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationStatusExtendedResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), operations ?? new ChangeTrackingList<OperationStatusResult>(), error.Value, serializedAdditionalRawData, properties ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new OperationStatusExtendedResult(
+                id.Value,
+                resourceId.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<OperationStatusResult>(),
+                error.Value,
+                serializedAdditionalRawData,
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<OperationStatusExtendedResult>.Write(ModelReaderWriterOptions options)

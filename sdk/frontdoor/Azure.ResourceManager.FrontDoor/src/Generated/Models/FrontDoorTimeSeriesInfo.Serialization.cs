@@ -283,7 +283,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorTimeSeriesInfo(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, endpoint.Value, Optional.ToNullable(startDateTimeUtc), Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aggregationInterval), Optional.ToNullable(timeSeriesType), country.Value, timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(), serializedAdditionalRawData);
+            return new FrontDoorTimeSeriesInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                endpoint.Value,
+                Optional.ToNullable(startDateTimeUtc),
+                Optional.ToNullable(endDateTimeUtc),
+                Optional.ToNullable(aggregationInterval),
+                Optional.ToNullable(timeSeriesType),
+                country.Value,
+                timeSeriesData ?? new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorTimeSeriesInfo>.Write(ModelReaderWriterOptions options)

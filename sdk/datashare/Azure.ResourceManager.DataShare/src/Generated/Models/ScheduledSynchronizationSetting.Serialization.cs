@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledSynchronizationSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(createdAt), Optional.ToNullable(provisioningState), recurrenceInterval, synchronizationTime, userName.Value);
+            return new ScheduledSynchronizationSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(provisioningState),
+                recurrenceInterval,
+                synchronizationTime,
+                userName.Value);
         }
 
         BinaryData IPersistableModel<ScheduledSynchronizationSetting>.Write(ModelReaderWriterOptions options)

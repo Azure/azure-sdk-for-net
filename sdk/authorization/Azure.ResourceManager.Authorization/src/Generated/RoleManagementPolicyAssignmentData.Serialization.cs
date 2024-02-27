@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, policyId.Value, effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(), policyAssignmentProperties.Value, serializedAdditionalRawData);
+            return new RoleManagementPolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                roleDefinitionId.Value,
+                policyId.Value,
+                effectiveRules ?? new ChangeTrackingList<RoleManagementPolicyRule>(),
+                policyAssignmentProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options)

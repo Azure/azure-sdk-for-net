@@ -214,7 +214,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServersCapabilityData(id, name, type, systemData.Value, supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(), supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(), serializedAdditionalRawData);
+            return new MySqlFlexibleServersCapabilityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
+                supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
+                supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersCapabilityData>.Write(ModelReaderWriterOptions options)

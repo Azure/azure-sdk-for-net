@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateHistoryEntry(Optional.ToNullable(update), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
+            return new UpdateHistoryEntry(
+                Optional.ToNullable(update),
+                Optional.ToNullable(immutabilityPeriodSinceCreationInDays),
+                Optional.ToNullable(timestamp),
+                objectIdentifier.Value,
+                Optional.ToNullable(tenantId),
+                upn.Value,
+                Optional.ToNullable(allowProtectedAppendWrites),
+                Optional.ToNullable(allowProtectedAppendWritesAll),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateHistoryEntry>.Write(ModelReaderWriterOptions options)

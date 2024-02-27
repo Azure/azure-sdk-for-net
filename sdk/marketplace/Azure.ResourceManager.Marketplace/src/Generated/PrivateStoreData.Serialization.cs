@@ -332,7 +332,22 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), collectionIds ?? new ChangeTrackingList<Guid>(), branding ?? new ChangeTrackingDictionary<string, string>(), recipients ?? new ChangeTrackingList<NotificationRecipient>(), Optional.ToNullable(sendToAllMarketplaceAdmins), serializedAdditionalRawData);
+            return new PrivateStoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(availability),
+                Optional.ToNullable(privateStoreId),
+                Optional.ToNullable(eTag),
+                privateStoreName.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(isGov),
+                collectionIds ?? new ChangeTrackingList<Guid>(),
+                branding ?? new ChangeTrackingDictionary<string, string>(),
+                recipients ?? new ChangeTrackingList<NotificationRecipient>(),
+                Optional.ToNullable(sendToAllMarketplaceAdmins),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreData>.Write(ModelReaderWriterOptions options)

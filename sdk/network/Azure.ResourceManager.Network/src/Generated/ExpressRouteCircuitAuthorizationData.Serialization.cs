@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), Optional.ToNullable(provisioningState));
+            return new ExpressRouteCircuitAuthorizationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                authorizationKey.Value,
+                Optional.ToNullable(authorizationUseStatus),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitAuthorizationData>.Write(ModelReaderWriterOptions options)

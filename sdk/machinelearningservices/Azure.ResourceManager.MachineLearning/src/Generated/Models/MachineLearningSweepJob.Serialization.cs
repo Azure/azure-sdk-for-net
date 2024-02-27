@@ -565,7 +565,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSweepJob(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), earlyTermination.Value, inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(), limits.Value, objective, outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(), queueSettings.Value, samplingAlgorithm, searchSpace, trial);
+            return new MachineLearningSweepJob(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId.Value,
+                computeId.Value,
+                displayName.Value,
+                experimentName.Value,
+                identity.Value,
+                Optional.ToNullable(isArchived),
+                jobType,
+                notificationSetting.Value,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                Optional.ToNullable(status),
+                earlyTermination.Value,
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                limits.Value,
+                objective,
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                queueSettings.Value,
+                samplingAlgorithm,
+                searchSpace,
+                trial);
         }
 
         BinaryData IPersistableModel<MachineLearningSweepJob>.Write(ModelReaderWriterOptions options)

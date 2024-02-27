@@ -289,7 +289,22 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevBoxDefinitionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, imageReference.Value, sku.Value, osStorageType.Value, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), Optional.ToNullable(imageValidationStatus), imageValidationErrorDetails.Value, activeImageReference.Value, serializedAdditionalRawData);
+            return new DevBoxDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                imageReference.Value,
+                sku.Value,
+                osStorageType.Value,
+                Optional.ToNullable(hibernateSupport),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(imageValidationStatus),
+                imageValidationErrorDetails.Value,
+                activeImageReference.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevBoxDefinitionData>.Write(ModelReaderWriterOptions options)

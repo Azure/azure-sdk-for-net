@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetDescription(id.Value, name.Value, description.Value, acceptedDataFormats ?? new ChangeTrackingList<string>(), acceptedContentEncodings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new TargetDescription(
+                id.Value,
+                name.Value,
+                description.Value,
+                acceptedDataFormats ?? new ChangeTrackingList<string>(),
+                acceptedContentEncodings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetDescription>.Write(ModelReaderWriterOptions options)

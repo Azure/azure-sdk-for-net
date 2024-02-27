@@ -304,7 +304,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForStorageSettingData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(overrideSubscriptionLevelSettings), Optional.ToNullable(isEnabled0), operationStatus.Value, scanResultsEventGridTopicResourceId.Value, operationStatus0.Value, Optional.ToNullable(isEnabled1), Optional.ToNullable(capGBPerMonth), serializedAdditionalRawData);
+            return new DefenderForStorageSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(overrideSubscriptionLevelSettings),
+                Optional.ToNullable(isEnabled0),
+                operationStatus.Value,
+                scanResultsEventGridTopicResourceId.Value,
+                operationStatus0.Value,
+                Optional.ToNullable(isEnabled1),
+                Optional.ToNullable(capGBPerMonth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefenderForStorageSettingData>.Write(ModelReaderWriterOptions options)

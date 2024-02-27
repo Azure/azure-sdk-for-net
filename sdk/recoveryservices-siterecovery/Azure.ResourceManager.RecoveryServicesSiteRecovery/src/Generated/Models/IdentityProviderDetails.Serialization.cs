@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityProviderDetails(Optional.ToNullable(tenantId), applicationId.Value, objectId.Value, audience.Value, aadAuthority.Value, serializedAdditionalRawData);
+            return new IdentityProviderDetails(
+                Optional.ToNullable(tenantId),
+                applicationId.Value,
+                objectId.Value,
+                audience.Value,
+                aadAuthority.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityProviderDetails>.Write(ModelReaderWriterOptions options)

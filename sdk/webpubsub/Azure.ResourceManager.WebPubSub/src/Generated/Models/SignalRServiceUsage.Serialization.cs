@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRServiceUsage(id.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new SignalRServiceUsage(
+                id.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRServiceUsage>.Write(ModelReaderWriterOptions options)

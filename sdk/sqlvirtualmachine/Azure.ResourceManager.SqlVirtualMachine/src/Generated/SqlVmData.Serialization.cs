@@ -406,7 +406,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, serializedAdditionalRawData);
+            return new SqlVmData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                virtualMachineResourceId.Value,
+                provisioningState.Value,
+                sqlImageOffer.Value,
+                Optional.ToNullable(sqlServerLicenseType),
+                Optional.ToNullable(sqlManagement),
+                Optional.ToNullable(sqlImageSku),
+                sqlVmGroupResourceId.Value,
+                windowsServerFailoverClusterDomainCredentials.Value,
+                windowsServerFailoverClusterStaticIP.Value,
+                autoPatchingSettings.Value,
+                autoBackupSettings.Value,
+                keyVaultCredentialSettings.Value,
+                serverConfigurationsManagementSettings.Value,
+                storageConfigurationSettings.Value,
+                assessmentSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options)

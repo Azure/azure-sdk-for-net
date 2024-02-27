@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobScheduleData(id, name, type, systemData.Value, Optional.ToNullable(jobScheduleId), schedule.Value, runbook.Value, runOn.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AutomationJobScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(jobScheduleId),
+                schedule.Value,
+                runbook.Value,
+                runOn.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobScheduleData>.Write(ModelReaderWriterOptions options)

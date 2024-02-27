@@ -465,7 +465,34 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryRunData(id, name, type, systemData.Value, runId.Value, Optional.ToNullable(status), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(runType), agentPoolName.Value, Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(finishTime), outputImages ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(), task.Value, imageUpdateTrigger.Value, sourceTrigger.Value, timerTrigger.Value, platform.Value, agentConfiguration.Value, sourceRegistryAuth.Value, customRegistries ?? new ChangeTrackingList<string>(), runErrorMessage.Value, updateTriggerToken.Value, logArtifact.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isArchiveEnabled), serializedAdditionalRawData);
+            return new ContainerRegistryRunData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                runId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(runType),
+                agentPoolName.Value,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(finishTime),
+                outputImages ?? new ChangeTrackingList<ContainerRegistryImageDescriptor>(),
+                task.Value,
+                imageUpdateTrigger.Value,
+                sourceTrigger.Value,
+                timerTrigger.Value,
+                platform.Value,
+                agentConfiguration.Value,
+                sourceRegistryAuth.Value,
+                customRegistries ?? new ChangeTrackingList<string>(),
+                runErrorMessage.Value,
+                updateTriggerToken.Value,
+                logArtifact.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(isArchiveEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunData>.Write(ModelReaderWriterOptions options)

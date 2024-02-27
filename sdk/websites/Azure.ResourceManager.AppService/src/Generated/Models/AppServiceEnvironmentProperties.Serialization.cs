@@ -319,7 +319,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipSslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), clusterSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(), userWhitelistedIPRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), serializedAdditionalRawData);
+            return new AppServiceEnvironmentProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                virtualNetwork,
+                Optional.ToNullable(internalLoadBalancingMode),
+                multiSize.Value,
+                Optional.ToNullable(multiRoleCount),
+                Optional.ToNullable(ipSslAddressCount),
+                dnsSuffix.Value,
+                Optional.ToNullable(maximumNumberOfMachines),
+                Optional.ToNullable(frontEndScaleFactor),
+                Optional.ToNullable(suspended),
+                clusterSettings ?? new ChangeTrackingList<AppServiceNameValuePair>(),
+                userWhitelistedIPRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(hasLinuxWorkers),
+                Optional.ToNullable(dedicatedHostCount),
+                Optional.ToNullable(zoneRedundant),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

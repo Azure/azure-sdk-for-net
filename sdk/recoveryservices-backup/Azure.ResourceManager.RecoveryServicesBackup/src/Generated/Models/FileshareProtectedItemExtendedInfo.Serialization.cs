@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileshareProtectedItemExtendedInfo(Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), policyState.Value, resourceState.Value, Optional.ToNullable(resourceStateSyncTime), serializedAdditionalRawData);
+            return new FileshareProtectedItemExtendedInfo(
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(recoveryPointCount),
+                policyState.Value,
+                resourceState.Value,
+                Optional.ToNullable(resourceStateSyncTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileshareProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

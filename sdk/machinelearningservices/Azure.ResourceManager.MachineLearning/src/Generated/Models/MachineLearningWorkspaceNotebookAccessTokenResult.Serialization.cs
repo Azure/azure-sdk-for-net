@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(
+                accessToken.Value,
+                Optional.ToNullable(expiresIn),
+                hostName.Value,
+                notebookResourceId.Value,
+                publicDns.Value,
+                refreshToken.Value,
+                scope.Value,
+                tokenType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(ModelReaderWriterOptions options)

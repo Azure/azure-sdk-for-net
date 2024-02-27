@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(duration), status.Value, serializedAdditionalRawData);
+            return new MabBackupJobTaskDetails(
+                taskId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(duration),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MabBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)

@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlMITaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<ConnectToTargetSqlMITaskOutput>());
+            return new ConnectToTargetSqlMITaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<ConnectToTargetSqlMITaskOutput>());
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlMITaskProperties>.Write(ModelReaderWriterOptions options)

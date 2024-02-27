@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerTopicInfo(Optional.ToNullable(azureSubscriptionId), resourceGroupName.Value, name.Value, eventTypeInfo.Value, source.Value, serializedAdditionalRawData);
+            return new PartnerTopicInfo(
+                Optional.ToNullable(azureSubscriptionId),
+                resourceGroupName.Value,
+                name.Value,
+                eventTypeInfo.Value,
+                source.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerTopicInfo>.Write(ModelReaderWriterOptions options)

@@ -223,7 +223,15 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClinicalTrialMetadata(phases ?? new ChangeTrackingList<ClinicalTrialPhase>(), Optional.ToNullable(studyType), Optional.ToNullable(recruitmentStatus), conditions, sponsors ?? new ChangeTrackingList<string>(), contacts ?? new ChangeTrackingList<ContactDetails>(), facilities ?? new ChangeTrackingList<ClinicalTrialResearchFacility>(), serializedAdditionalRawData);
+            return new ClinicalTrialMetadata(
+                phases ?? new ChangeTrackingList<ClinicalTrialPhase>(),
+                Optional.ToNullable(studyType),
+                Optional.ToNullable(recruitmentStatus),
+                conditions,
+                sponsors ?? new ChangeTrackingList<string>(),
+                contacts ?? new ChangeTrackingList<ContactDetails>(),
+                facilities ?? new ChangeTrackingList<ClinicalTrialResearchFacility>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClinicalTrialMetadata>.Write(ModelReaderWriterOptions options)

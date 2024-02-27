@@ -431,7 +431,32 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(messageCount), Optional.ToNullable(createdAt), Optional.ToNullable(accessedAt), Optional.ToNullable(updatedAt), countDetails.Value, Optional.ToNullable(lockDuration), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(isClientAffine), clientAffineProperties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusSubscriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(messageCount),
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(accessedAt),
+                Optional.ToNullable(updatedAt),
+                countDetails.Value,
+                Optional.ToNullable(lockDuration),
+                Optional.ToNullable(requiresSession),
+                Optional.ToNullable(defaultMessageTimeToLive),
+                Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions),
+                Optional.ToNullable(deadLetteringOnMessageExpiration),
+                Optional.ToNullable(duplicateDetectionHistoryTimeWindow),
+                Optional.ToNullable(maxDeliveryCount),
+                Optional.ToNullable(status),
+                Optional.ToNullable(enableBatchedOperations),
+                Optional.ToNullable(autoDeleteOnIdle),
+                forwardTo.Value,
+                forwardDeadLetteredMessagesTo.Value,
+                Optional.ToNullable(isClientAffine),
+                clientAffineProperties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusSubscriptionData>.Write(ModelReaderWriterOptions options)

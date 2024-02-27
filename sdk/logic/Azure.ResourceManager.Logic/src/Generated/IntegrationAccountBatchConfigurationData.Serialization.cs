@@ -166,7 +166,15 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountBatchConfigurationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, serializedAdditionalRawData);
+            return new IntegrationAccountBatchConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountBatchConfigurationData>.Write(ModelReaderWriterOptions options)

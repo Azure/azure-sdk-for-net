@@ -277,7 +277,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSchema(name.Value, displayName.Value, description.Value, columns ?? new ChangeTrackingList<OperationalInsightsColumn>(), standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(), categories ?? new ChangeTrackingList<string>(), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(source), Optional.ToNullable(tableType), Optional.ToNullable(tableSubType), solutions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OperationalInsightsSchema(
+                name.Value,
+                displayName.Value,
+                description.Value,
+                columns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                standardColumns ?? new ChangeTrackingList<OperationalInsightsColumn>(),
+                categories ?? new ChangeTrackingList<string>(),
+                labels ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(source),
+                Optional.ToNullable(tableType),
+                Optional.ToNullable(tableSubType),
+                solutions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSchema>.Write(ModelReaderWriterOptions options)

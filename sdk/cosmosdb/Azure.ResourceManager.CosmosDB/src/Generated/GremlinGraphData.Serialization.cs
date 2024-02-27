@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GremlinGraphData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource.Value, options0.Value, identity, serializedAdditionalRawData);
+            return new GremlinGraphData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource.Value,
+                options0.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GremlinGraphData>.Write(ModelReaderWriterOptions options)

@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint.Value, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new WebPubSubPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountSasContent(signingKey, principalId, regions ?? new ChangeTrackingList<string>(), maxRatePerSecond, start, expiry, serializedAdditionalRawData);
+            return new MapsAccountSasContent(
+                signingKey,
+                principalId,
+                regions ?? new ChangeTrackingList<string>(),
+                maxRatePerSecond,
+                start,
+                expiry,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountSasContent>.Write(ModelReaderWriterOptions options)

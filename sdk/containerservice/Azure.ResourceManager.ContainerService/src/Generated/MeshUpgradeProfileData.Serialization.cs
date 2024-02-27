@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshUpgradeProfileData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MeshUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshUpgradeProfileData>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Quota(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new Quota(
+                Optional.ToNullable(currentValue),
+                id.Value,
+                Optional.ToNullable(limit),
+                name.Value,
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Quota>.Write(ModelReaderWriterOptions options)

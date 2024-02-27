@@ -357,7 +357,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationContent(alertType, emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(), smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(), webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(), itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(), azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(), automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(), voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(), logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(), azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(), armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(), eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(), serializedAdditionalRawData);
+            return new NotificationContent(
+                alertType,
+                emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
+                smsReceivers ?? new ChangeTrackingList<MonitorSmsReceiver>(),
+                webhookReceivers ?? new ChangeTrackingList<MonitorWebhookReceiver>(),
+                itsmReceivers ?? new ChangeTrackingList<MonitorItsmReceiver>(),
+                azureAppPushReceivers ?? new ChangeTrackingList<MonitorAzureAppPushReceiver>(),
+                automationRunbookReceivers ?? new ChangeTrackingList<MonitorAutomationRunbookReceiver>(),
+                voiceReceivers ?? new ChangeTrackingList<MonitorVoiceReceiver>(),
+                logicAppReceivers ?? new ChangeTrackingList<MonitorLogicAppReceiver>(),
+                azureFunctionReceivers ?? new ChangeTrackingList<MonitorAzureFunctionReceiver>(),
+                armRoleReceivers ?? new ChangeTrackingList<MonitorArmRoleReceiver>(),
+                eventHubReceivers ?? new ChangeTrackingList<MonitorEventHubReceiver>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationContent>.Write(ModelReaderWriterOptions options)

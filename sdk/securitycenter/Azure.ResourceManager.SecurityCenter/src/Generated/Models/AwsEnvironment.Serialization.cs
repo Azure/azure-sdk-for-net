@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, regions ?? new ChangeTrackingList<string>(), accountName.Value, Optional.ToNullable(scanInterval));
+            return new AwsEnvironment(
+                environmentType,
+                serializedAdditionalRawData,
+                organizationalData.Value,
+                regions ?? new ChangeTrackingList<string>(),
+                accountName.Value,
+                Optional.ToNullable(scanInterval));
         }
 
         BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)

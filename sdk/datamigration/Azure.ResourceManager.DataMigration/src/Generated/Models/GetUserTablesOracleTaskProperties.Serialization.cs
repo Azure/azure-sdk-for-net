@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesOracleTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<GetUserTablesOracleTaskOutput>());
+            return new GetUserTablesOracleTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<GetUserTablesOracleTaskOutput>());
         }
 
         BinaryData IPersistableModel<GetUserTablesOracleTaskProperties>.Write(ModelReaderWriterOptions options)

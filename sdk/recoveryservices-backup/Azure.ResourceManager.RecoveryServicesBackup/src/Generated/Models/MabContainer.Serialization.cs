@@ -248,7 +248,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), registrationStatus.Value, healthStatus.Value, containerType, protectableObjectType.Value, serializedAdditionalRawData, Optional.ToNullable(canReRegister), Optional.ToNullable(containerId), Optional.ToNullable(protectedItemCount), agentVersion.Value, extendedInfo.Value, mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(), containerHealthState.Value);
+            return new MabContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                registrationStatus.Value,
+                healthStatus.Value,
+                containerType,
+                protectableObjectType.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(canReRegister),
+                Optional.ToNullable(containerId),
+                Optional.ToNullable(protectedItemCount),
+                agentVersion.Value,
+                extendedInfo.Value,
+                mabContainerHealthDetails ?? new ChangeTrackingList<MabContainerHealthDetails>(),
+                containerHealthState.Value);
         }
 
         BinaryData IPersistableModel<MabContainer>.Write(ModelReaderWriterOptions options)

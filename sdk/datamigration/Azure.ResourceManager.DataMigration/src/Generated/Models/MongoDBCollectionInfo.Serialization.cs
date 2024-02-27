@@ -180,7 +180,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBCollectionInfo(averageDocumentSize, dataSize, documentCount, name, qualifiedName, serializedAdditionalRawData, databaseName, isCapped, isSystemCollection, isView, shardKey.Value, supportsSharding, viewOf.Value);
+            return new MongoDBCollectionInfo(
+                averageDocumentSize,
+                dataSize,
+                documentCount,
+                name,
+                qualifiedName,
+                serializedAdditionalRawData,
+                databaseName,
+                isCapped,
+                isSystemCollection,
+                isView,
+                shardKey.Value,
+                supportsSharding,
+                viewOf.Value);
         }
 
         BinaryData IPersistableModel<MongoDBCollectionInfo>.Write(ModelReaderWriterOptions options)

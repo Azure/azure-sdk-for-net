@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(), validStatusCodeRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
+            return new ConnectionMonitorHttpConfiguration(
+                Optional.ToNullable(port),
+                Optional.ToNullable(method),
+                path.Value,
+                requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
+                validStatusCodeRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(preferHTTPS),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)

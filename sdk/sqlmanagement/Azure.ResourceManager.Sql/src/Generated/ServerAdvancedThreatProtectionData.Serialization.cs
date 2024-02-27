@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerAdvancedThreatProtectionData(id, name, type, systemData.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new ServerAdvancedThreatProtectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options)

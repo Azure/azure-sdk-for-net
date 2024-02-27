@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetResourceEndpointAccess(namespaceName.Value, namespaceNameSuffix.Value, hybridConnectionName.Value, accessKey.Value, Optional.ToNullable(expiresOn), serializedAdditionalRawData);
+            return new TargetResourceEndpointAccess(
+                namespaceName.Value,
+                namespaceNameSuffix.Value,
+                hybridConnectionName.Value,
+                accessKey.Value,
+                Optional.ToNullable(expiresOn),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetResourceEndpointAccess>.Write(ModelReaderWriterOptions options)

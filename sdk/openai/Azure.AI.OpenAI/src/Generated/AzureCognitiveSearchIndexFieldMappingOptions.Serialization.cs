@@ -194,7 +194,15 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields ?? new ChangeTrackingList<string>(), contentFieldsSeparator.Value, vectorFields ?? new ChangeTrackingList<string>(), imageVectorFields ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AzureCognitiveSearchIndexFieldMappingOptions(
+                titleField.Value,
+                urlField.Value,
+                filepathField.Value,
+                contentFields ?? new ChangeTrackingList<string>(),
+                contentFieldsSeparator.Value,
+                vectorFields ?? new ChangeTrackingList<string>(),
+                imageVectorFields ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)

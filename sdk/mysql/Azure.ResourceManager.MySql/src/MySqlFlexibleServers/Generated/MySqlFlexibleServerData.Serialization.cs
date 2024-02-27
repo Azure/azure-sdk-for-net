@@ -482,7 +482,35 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, sku.Value, administratorLogin.Value, administratorLoginPassword.Value, Optional.ToNullable(version), availabilityZone.Value, Optional.ToNullable(createMode), sourceServerResourceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(replicationRole), Optional.ToNullable(replicaCapacity), dataEncryption.Value, Optional.ToNullable(state), fullyQualifiedDomainName.Value, storage.Value, backup.Value, highAvailability.Value, network.Value, privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>(), maintenanceWindow.Value, importSourceProperties.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                Optional.ToNullable(version),
+                availabilityZone.Value,
+                Optional.ToNullable(createMode),
+                sourceServerResourceId.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(replicationRole),
+                Optional.ToNullable(replicaCapacity),
+                dataEncryption.Value,
+                Optional.ToNullable(state),
+                fullyQualifiedDomainName.Value,
+                storage.Value,
+                backup.Value,
+                highAvailability.Value,
+                network.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>(),
+                maintenanceWindow.Value,
+                importSourceProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerData>.Write(ModelReaderWriterOptions options)

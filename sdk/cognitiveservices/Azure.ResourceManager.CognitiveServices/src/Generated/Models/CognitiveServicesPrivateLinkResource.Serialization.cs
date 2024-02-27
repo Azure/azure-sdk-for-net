@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesPrivateLinkResource(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CognitiveServicesPrivateLinkResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesPrivateLinkResource>.Write(ModelReaderWriterOptions options)

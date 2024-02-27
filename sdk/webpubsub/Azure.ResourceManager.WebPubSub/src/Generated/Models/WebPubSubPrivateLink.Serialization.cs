@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubPrivateLink(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(), serializedAdditionalRawData);
+            return new WebPubSubPrivateLink(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                shareablePrivateLinkResourceTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubPrivateLink>.Write(ModelReaderWriterOptions options)

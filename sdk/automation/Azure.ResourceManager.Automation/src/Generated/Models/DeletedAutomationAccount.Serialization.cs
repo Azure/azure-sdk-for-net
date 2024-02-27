@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new DeletedAutomationAccount(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                automationAccountResourceId.Value,
+                automationAccountId.Value,
+                location0.Value,
+                Optional.ToNullable(deletionTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAutomationAccount>.Write(ModelReaderWriterOptions options)

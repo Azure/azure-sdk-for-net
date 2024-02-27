@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUserProvidedFunctionAppData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                functionAppResourceId.Value,
+                functionAppRegion.Value,
+                Optional.ToNullable(createdOn),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Write(ModelReaderWriterOptions options)

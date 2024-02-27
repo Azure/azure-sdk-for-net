@@ -106,7 +106,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error, result.Value);
+            return new DocumentClassifierBuildOperationDetails(
+                operationId,
+                status,
+                Optional.ToNullable(percentCompleted),
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                result.Value);
         }
     }
 }

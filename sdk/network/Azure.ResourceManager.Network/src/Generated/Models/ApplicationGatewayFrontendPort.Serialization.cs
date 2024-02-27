@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFrontendPort(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayFrontendPort(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(port),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFrontendPort>.Write(ModelReaderWriterOptions options)

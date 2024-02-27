@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SwitchActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, @on, cases ?? new ChangeTrackingList<SwitchCaseActivity>(), defaultActivities ?? new ChangeTrackingList<PipelineActivity>());
+            return new SwitchActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                @on,
+                cases ?? new ChangeTrackingList<SwitchCaseActivity>(),
+                defaultActivities ?? new ChangeTrackingList<PipelineActivity>());
         }
 
         BinaryData IPersistableModel<SwitchActivity>.Write(ModelReaderWriterOptions options)

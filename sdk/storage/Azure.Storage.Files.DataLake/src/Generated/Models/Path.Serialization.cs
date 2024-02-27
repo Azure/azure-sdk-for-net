@@ -98,7 +98,19 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            return new Path(
+                name.Value,
+                Optional.ToNullable(lastModified),
+                owner.Value,
+                group.Value,
+                permissions.Value,
+                encryptionScope.Value,
+                creationTime.Value,
+                expiryTime.Value,
+                encryptionContext.Value,
+                contentLength.Value,
+                isDirectory.Value,
+                etag.Value);
         }
     }
 }

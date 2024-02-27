@@ -337,7 +337,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Optional.ToNullable(source), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), poNumber.Value, Optional.ToNullable(purchasedDate), Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionLotSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                originalAmount.Value,
+                closedBalance.Value,
+                Optional.ToNullable(source),
+                Optional.ToNullable(startDate),
+                Optional.ToNullable(expirationDate),
+                poNumber.Value,
+                Optional.ToNullable(purchasedDate),
+                Optional.ToNullable(status),
+                creditCurrency.Value,
+                billingCurrency.Value,
+                originalAmountInBillingCurrency.Value,
+                closedBalanceInBillingCurrency.Value,
+                reseller.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options)

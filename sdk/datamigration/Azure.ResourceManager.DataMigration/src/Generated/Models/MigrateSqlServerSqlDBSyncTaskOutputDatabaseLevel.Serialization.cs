@@ -314,7 +314,25 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(migrationState), Optional.ToNullable(incomingChanges), Optional.ToNullable(appliedChanges), Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(fullLoadCompletedTables), Optional.ToNullable(fullLoadLoadingTables), Optional.ToNullable(fullLoadQueuedTables), Optional.ToNullable(fullLoadErroredTables), Optional.ToNullable(initializationCompleted), Optional.ToNullable(latency));
+            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databaseName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(migrationState),
+                Optional.ToNullable(incomingChanges),
+                Optional.ToNullable(appliedChanges),
+                Optional.ToNullable(cdcInsertCounter),
+                Optional.ToNullable(cdcDeleteCounter),
+                Optional.ToNullable(cdcUpdateCounter),
+                Optional.ToNullable(fullLoadCompletedTables),
+                Optional.ToNullable(fullLoadLoadingTables),
+                Optional.ToNullable(fullLoadQueuedTables),
+                Optional.ToNullable(fullLoadErroredTables),
+                Optional.ToNullable(initializationCompleted),
+                Optional.ToNullable(latency));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

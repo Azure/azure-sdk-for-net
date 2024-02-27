@@ -276,7 +276,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetJob(Optional.ToNullable(createdDate), displayName.Value, Optional.ToNullable(duration), experimentId.Value, featureWindow.Value, jobId.Value, Optional.ToNullable(status), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MachineLearningFeatureSetJob(
+                Optional.ToNullable(createdDate),
+                displayName.Value,
+                Optional.ToNullable(duration),
+                experimentId.Value,
+                featureWindow.Value,
+                jobId.Value,
+                Optional.ToNullable(status),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetJob>.Write(ModelReaderWriterOptions options)

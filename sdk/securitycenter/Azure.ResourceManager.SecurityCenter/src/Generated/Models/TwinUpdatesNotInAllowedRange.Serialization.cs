@@ -136,7 +136,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TwinUpdatesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new TwinUpdatesNotInAllowedRange(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<TwinUpdatesNotInAllowedRange>.Write(ModelReaderWriterOptions options)

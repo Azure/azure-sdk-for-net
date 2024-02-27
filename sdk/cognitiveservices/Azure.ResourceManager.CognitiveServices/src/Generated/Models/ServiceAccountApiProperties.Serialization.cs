@@ -194,7 +194,18 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
+            return new ServiceAccountApiProperties(
+                qnaRuntimeEndpoint.Value,
+                qnaAzureSearchEndpointKey.Value,
+                qnaAzureSearchEndpointId.Value,
+                Optional.ToNullable(statisticsEnabled),
+                eventHubConnectionString.Value,
+                storageAccountConnectionString.Value,
+                Optional.ToNullable(aadClientId),
+                Optional.ToNullable(aadTenantId),
+                superUser.Value,
+                websiteName.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)

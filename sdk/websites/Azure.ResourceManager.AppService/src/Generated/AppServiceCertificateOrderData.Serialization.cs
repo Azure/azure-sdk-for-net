@@ -489,7 +489,35 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateOrderData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                certificates ?? new ChangeTrackingDictionary<string, AppServiceCertificateProperties>(),
+                distinguishedName.Value,
+                domainVerificationToken.Value,
+                Optional.ToNullable(validityInYears),
+                Optional.ToNullable(keySize),
+                Optional.ToNullable(productType),
+                Optional.ToNullable(autoRenew),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                signedCertificate.Value,
+                csr.Value,
+                intermediate.Value,
+                root.Value,
+                serialNumber.Value,
+                Optional.ToNullable(lastCertificateIssuanceTime),
+                Optional.ToNullable(expirationTime),
+                Optional.ToNullable(isPrivateKeyExternal),
+                appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
+                Optional.ToNullable(nextAutoRenewalTimeStamp),
+                contact.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateOrderData>.Write(ModelReaderWriterOptions options)

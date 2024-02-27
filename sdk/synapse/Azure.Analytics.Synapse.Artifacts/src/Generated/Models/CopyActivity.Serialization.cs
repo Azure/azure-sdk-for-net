@@ -497,7 +497,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CopyActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, inputs ?? new ChangeTrackingList<DatasetReference>(), outputs ?? new ChangeTrackingList<DatasetReference>(), source, sink, translator.Value, enableStaging.Value, stagingSettings.Value, parallelCopies.Value, dataIntegrationUnits.Value, enableSkipIncompatibleRow.Value, redirectIncompatibleRowSettings.Value, logStorageSettings.Value, logSettings.Value, preserveRules ?? new ChangeTrackingList<object>(), preserve ?? new ChangeTrackingList<object>(), validateDataConsistency.Value, skipErrorFile.Value);
+            return new CopyActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                inputs ?? new ChangeTrackingList<DatasetReference>(),
+                outputs ?? new ChangeTrackingList<DatasetReference>(),
+                source,
+                sink,
+                translator.Value,
+                enableStaging.Value,
+                stagingSettings.Value,
+                parallelCopies.Value,
+                dataIntegrationUnits.Value,
+                enableSkipIncompatibleRow.Value,
+                redirectIncompatibleRowSettings.Value,
+                logStorageSettings.Value,
+                logSettings.Value,
+                preserveRules ?? new ChangeTrackingList<object>(),
+                preserve ?? new ChangeTrackingList<object>(),
+                validateDataConsistency.Value,
+                skipErrorFile.Value);
         }
 
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>

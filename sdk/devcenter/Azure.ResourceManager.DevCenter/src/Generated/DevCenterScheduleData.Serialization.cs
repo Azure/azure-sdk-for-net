@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterScheduleData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(type0),
+                Optional.ToNullable(frequency),
+                time.Value,
+                timeZone.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterScheduleData>.Write(ModelReaderWriterOptions options)

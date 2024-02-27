@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkVirtualMachineData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(vmType), serializedAdditionalRawData);
+            return new WorkloadNetworkVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                Optional.ToNullable(vmType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkVirtualMachineData>.Write(ModelReaderWriterOptions options)

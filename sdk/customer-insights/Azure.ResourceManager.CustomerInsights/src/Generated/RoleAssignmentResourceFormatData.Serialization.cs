@@ -467,7 +467,32 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), assignmentName.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), Optional.ToNullable(role), principals ?? new ChangeTrackingList<AssignmentPrincipal>(), profiles.Value, interactions.Value, links.Value, kpis.Value, sasPolicies.Value, connectors.Value, views.Value, relationshipLinks.Value, relationships.Value, widgetTypes.Value, roleAssignments.Value, conflationPolicies.Value, segments.Value, serializedAdditionalRawData);
+            return new RoleAssignmentResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                assignmentName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(role),
+                principals ?? new ChangeTrackingList<AssignmentPrincipal>(),
+                profiles.Value,
+                interactions.Value,
+                links.Value,
+                kpis.Value,
+                sasPolicies.Value,
+                connectors.Value,
+                views.Value,
+                relationshipLinks.Value,
+                relationships.Value,
+                widgetTypes.Value,
+                roleAssignments.Value,
+                conflationPolicies.Value,
+                segments.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentResourceFormatData>.Write(ModelReaderWriterOptions options)

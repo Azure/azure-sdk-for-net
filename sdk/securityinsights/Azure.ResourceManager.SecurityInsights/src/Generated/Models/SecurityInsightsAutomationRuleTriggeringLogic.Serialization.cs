@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAutomationRuleTriggeringLogic(isEnabled, Optional.ToNullable(expirationTimeUtc), triggersOn, triggersWhen, conditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(), serializedAdditionalRawData);
+            return new SecurityInsightsAutomationRuleTriggeringLogic(
+                isEnabled,
+                Optional.ToNullable(expirationTimeUtc),
+                triggersOn,
+                triggersWhen,
+                conditions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleCondition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAutomationRuleTriggeringLogic>.Write(ModelReaderWriterOptions options)

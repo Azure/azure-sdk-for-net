@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value, serializedAdditionalRawData);
+            return new AppliedScopeProperties(
+                Optional.ToNullable(tenantId),
+                managementGroupId.Value,
+                subscriptionId.Value,
+                resourceGroupId.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppliedScopeProperties>.Write(ModelReaderWriterOptions options)

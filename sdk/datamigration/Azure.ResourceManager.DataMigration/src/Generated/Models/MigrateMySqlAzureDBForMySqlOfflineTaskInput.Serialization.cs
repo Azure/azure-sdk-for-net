@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, Optional.ToNullable(makeSourceServerReadOnly), Optional.ToNullable(startedOn), optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(), encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new MigrateMySqlAzureDBForMySqlOfflineTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                selectedDatabases,
+                Optional.ToNullable(makeSourceServerReadOnly),
+                Optional.ToNullable(startedOn),
+                optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),
+                encryptedKeyForSecureFields.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineTaskInput>.Write(ModelReaderWriterOptions options)

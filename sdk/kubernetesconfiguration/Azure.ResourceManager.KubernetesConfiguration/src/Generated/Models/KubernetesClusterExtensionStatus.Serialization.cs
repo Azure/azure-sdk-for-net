@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionStatus(code.Value, displayStatus.Value, Optional.ToNullable(level), message.Value, time.Value, serializedAdditionalRawData);
+            return new KubernetesClusterExtensionStatus(
+                code.Value,
+                displayStatus.Value,
+                Optional.ToNullable(level),
+                message.Value,
+                time.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionStatus>.Write(ModelReaderWriterOptions options)

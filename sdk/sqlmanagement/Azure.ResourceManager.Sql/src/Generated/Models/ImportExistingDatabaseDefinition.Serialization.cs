@@ -140,7 +140,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportExistingDatabaseDefinition(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, serializedAdditionalRawData);
+            return new ImportExistingDatabaseDefinition(
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType.Value,
+                networkIsolation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportExistingDatabaseDefinition>.Write(ModelReaderWriterOptions options)

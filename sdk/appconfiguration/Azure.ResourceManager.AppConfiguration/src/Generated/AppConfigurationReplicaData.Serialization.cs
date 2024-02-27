@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationReplicaData(id, name, type, systemData.Value, Optional.ToNullable(location), endpoint.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppConfigurationReplicaData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                endpoint.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationReplicaData>.Write(ModelReaderWriterOptions options)

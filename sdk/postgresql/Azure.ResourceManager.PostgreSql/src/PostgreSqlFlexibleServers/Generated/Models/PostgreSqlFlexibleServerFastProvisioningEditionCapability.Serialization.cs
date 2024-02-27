@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData,
+                supportedTier.Value,
+                supportedSku.Value,
+                Optional.ToNullable(supportedStorageGb),
+                supportedServerVersions.Value,
+                Optional.ToNullable(serverCount));
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(ModelReaderWriterOptions options)

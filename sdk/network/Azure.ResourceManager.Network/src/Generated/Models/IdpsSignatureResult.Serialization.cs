@@ -243,7 +243,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, sourcePorts ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy), serializedAdditionalRawData);
+            return new IdpsSignatureResult(
+                Optional.ToNullable(signatureId),
+                Optional.ToNullable(mode),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(direction),
+                group.Value,
+                description.Value,
+                protocol.Value,
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                lastUpdated.Value,
+                Optional.ToNullable(inheritedFromParentPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsSignatureResult>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobPatchProperties(environmentId.Value, configuration.Value, template.Value, outboundIPAddresses ?? new ChangeTrackingList<string>(), eventStreamEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppJobPatchProperties(
+                environmentId.Value,
+                configuration.Value,
+                template.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<string>(),
+                eventStreamEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobPatchProperties>.Write(ModelReaderWriterOptions options)

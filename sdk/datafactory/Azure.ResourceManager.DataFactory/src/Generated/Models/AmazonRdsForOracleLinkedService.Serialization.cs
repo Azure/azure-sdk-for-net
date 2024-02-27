@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForOracleLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString, password, encryptedCredential.Value);
+            return new AmazonRdsForOracleLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                password,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AmazonRdsForOracleLinkedService>.Write(ModelReaderWriterOptions options)

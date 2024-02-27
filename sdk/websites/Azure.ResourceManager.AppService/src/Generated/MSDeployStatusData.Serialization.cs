@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MSDeployStatusData(id, name, type, systemData.Value, deployer.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complete), kind.Value, serializedAdditionalRawData);
+            return new MSDeployStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deployer.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(complete),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options)

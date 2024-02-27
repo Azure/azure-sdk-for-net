@@ -218,7 +218,16 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new ApplicationSecurityGroupData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationSecurityGroupData>.Write(ModelReaderWriterOptions options)

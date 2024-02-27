@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthErrorSummary(summaryCode.Value, Optional.ToNullable(category), Optional.ToNullable(severity), summaryMessage.Value, affectedResourceType.Value, affectedResourceSubtype.Value, affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HealthErrorSummary(
+                summaryCode.Value,
+                Optional.ToNullable(category),
+                Optional.ToNullable(severity),
+                summaryMessage.Value,
+                affectedResourceType.Value,
+                affectedResourceSubtype.Value,
+                affectedResourceCorrelationIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthErrorSummary>.Write(ModelReaderWriterOptions options)

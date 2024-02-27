@@ -242,7 +242,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, useBinaryTransfer.Value, disableChunking.Value);
+            return new FtpReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                fileListPath.Value,
+                useBinaryTransfer.Value,
+                disableChunking.Value);
         }
 
         BinaryData IPersistableModel<FtpReadSettings>.Write(ModelReaderWriterOptions options)

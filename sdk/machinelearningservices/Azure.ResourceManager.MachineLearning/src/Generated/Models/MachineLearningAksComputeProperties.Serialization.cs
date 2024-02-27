@@ -275,7 +275,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAksComputeProperties(clusterFqdn.Value, systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(), Optional.ToNullable(agentCount), agentVmSize.Value, Optional.ToNullable(clusterPurpose), sslConfiguration.Value, aksNetworkingConfiguration.Value, Optional.ToNullable(loadBalancerType), loadBalancerSubnet.Value, serializedAdditionalRawData);
+            return new MachineLearningAksComputeProperties(
+                clusterFqdn.Value,
+                systemServices ?? new ChangeTrackingList<MachineLearningComputeSystemService>(),
+                Optional.ToNullable(agentCount),
+                agentVmSize.Value,
+                Optional.ToNullable(clusterPurpose),
+                sslConfiguration.Value,
+                aksNetworkingConfiguration.Value,
+                Optional.ToNullable(loadBalancerType),
+                loadBalancerSubnet.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAksComputeProperties>.Write(ModelReaderWriterOptions options)

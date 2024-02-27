@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsSavingsPlanPatchProperties(displayName.Value, Optional.ToNullable(appliedScopeType), appliedScopeProperties.Value, Optional.ToNullable(renew), renewProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsSavingsPlanPatchProperties(
+                displayName.Value,
+                Optional.ToNullable(appliedScopeType),
+                appliedScopeProperties.Value,
+                Optional.ToNullable(renew),
+                renewProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanPatchProperties>.Write(ModelReaderWriterOptions options)

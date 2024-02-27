@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), referenceName.Value, type0.Value, id.Value, computeProperties.Value, ssisProperties.Value);
+            return new SynapseManagedIntegrationRuntime(
+                type,
+                description.Value,
+                additionalProperties,
+                Optional.ToNullable(state),
+                referenceName.Value,
+                type0.Value,
+                id.Value,
+                computeProperties.Value,
+                ssisProperties.Value);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

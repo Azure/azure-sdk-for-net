@@ -317,7 +317,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImage(id.Value, serializedAdditionalRawData, name, location, tags ?? new ChangeTrackingDictionary<string, string>(), extendedLocation, plan.Value, osDiskImage.Value, dataDiskImages ?? new ChangeTrackingList<DataDiskImage>(), automaticOSUpgradeProperties.Value, Optional.ToNullable(hyperVGeneration), disallowed.Value, features ?? new ChangeTrackingList<VirtualMachineImageFeature>(), Optional.ToNullable(architecture), imageDeprecationStatus.Value);
+            return new VirtualMachineImage(
+                id.Value,
+                serializedAdditionalRawData,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation,
+                plan.Value,
+                osDiskImage.Value,
+                dataDiskImages ?? new ChangeTrackingList<DataDiskImage>(),
+                automaticOSUpgradeProperties.Value,
+                Optional.ToNullable(hyperVGeneration),
+                disallowed.Value,
+                features ?? new ChangeTrackingList<VirtualMachineImageFeature>(),
+                Optional.ToNullable(architecture),
+                imageDeprecationStatus.Value);
         }
 
         BinaryData IPersistableModel<VirtualMachineImage>.Write(ModelReaderWriterOptions options)

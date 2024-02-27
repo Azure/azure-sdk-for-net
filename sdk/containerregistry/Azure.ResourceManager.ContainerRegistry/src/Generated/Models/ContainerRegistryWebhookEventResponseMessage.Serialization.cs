@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventResponseMessage(content.Value, headers ?? new ChangeTrackingDictionary<string, string>(), reasonPhrase.Value, statusCode.Value, version.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventResponseMessage(
+                content.Value,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                reasonPhrase.Value,
+                statusCode.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventResponseMessage>.Write(ModelReaderWriterOptions options)

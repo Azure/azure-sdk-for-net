@@ -191,7 +191,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EditionCapability(name.Value, supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(), Optional.ToNullable(zoneRedundant), readScale.Value, supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new EditionCapability(
+                name.Value,
+                supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(),
+                Optional.ToNullable(zoneRedundant),
+                readScale.Value,
+                supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EditionCapability>.Write(ModelReaderWriterOptions options)

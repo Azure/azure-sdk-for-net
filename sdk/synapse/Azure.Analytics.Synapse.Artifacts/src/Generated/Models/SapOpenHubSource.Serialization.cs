@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, excludeLastRequest.Value, baseRequestId.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value);
+            return new SapOpenHubSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                excludeLastRequest.Value,
+                baseRequestId.Value,
+                customRfcReadTableFunctionModule.Value,
+                sapDataColumnDelimiter.Value);
         }
 
         internal partial class SapOpenHubSourceConverter : JsonConverter<SapOpenHubSource>

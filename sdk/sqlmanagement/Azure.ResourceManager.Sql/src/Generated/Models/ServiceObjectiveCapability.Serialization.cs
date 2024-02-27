@@ -312,7 +312,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), performanceLevel.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(), computeModel.Value, supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ServiceObjectiveCapability(
+                Optional.ToNullable(id),
+                name.Value,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                performanceLevel.Value,
+                sku.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                includedMaxSize.Value,
+                Optional.ToNullable(zoneRedundant),
+                supportedAutoPauseDelay.Value,
+                supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
+                computeModel.Value,
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)

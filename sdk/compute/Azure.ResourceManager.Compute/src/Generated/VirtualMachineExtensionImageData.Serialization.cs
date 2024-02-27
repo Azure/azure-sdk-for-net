@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionImageData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, operatingSystem.Value, computeRole.Value, handlerSchema.Value, Optional.ToNullable(virtualMachineScaleSetEnabled), Optional.ToNullable(supportsMultipleExtensions), serializedAdditionalRawData);
+            return new VirtualMachineExtensionImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                operatingSystem.Value,
+                computeRole.Value,
+                handlerSchema.Value,
+                Optional.ToNullable(virtualMachineScaleSetEnabled),
+                Optional.ToNullable(supportsMultipleExtensions),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionImageData>.Write(ModelReaderWriterOptions options)

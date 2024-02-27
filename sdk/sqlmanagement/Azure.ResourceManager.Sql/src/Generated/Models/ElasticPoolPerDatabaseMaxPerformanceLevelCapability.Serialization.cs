@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), supportedPerDatabaseMinPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(
+                Optional.ToNullable(limit),
+                Optional.ToNullable(unit),
+                supportedPerDatabaseMinPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

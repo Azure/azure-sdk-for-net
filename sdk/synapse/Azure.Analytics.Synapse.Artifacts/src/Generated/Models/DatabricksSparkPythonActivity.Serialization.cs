@@ -297,7 +297,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksSparkPythonActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, pythonFile, parameters ?? new ChangeTrackingList<object>(), libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
+            return new DatabricksSparkPythonActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                pythonFile,
+                parameters ?? new ChangeTrackingList<object>(),
+                libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
 
         internal partial class DatabricksSparkPythonActivityConverter : JsonConverter<DatabricksSparkPythonActivity>

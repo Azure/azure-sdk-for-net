@@ -315,7 +315,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceEndpointPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, serviceEndpointPolicyDefinitions ?? new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>(), subnets ?? new ChangeTrackingList<SubnetData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), serviceAlias.Value, contextualServiceEndpointPolicies ?? new ChangeTrackingList<string>());
+            return new ServiceEndpointPolicyData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                kind.Value,
+                serviceEndpointPolicyDefinitions ?? new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                serviceAlias.Value,
+                contextualServiceEndpointPolicies ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ServiceEndpointPolicyData>.Write(ModelReaderWriterOptions options)

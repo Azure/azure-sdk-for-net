@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoProvisioningSettingData(id, name, type, systemData.Value, Optional.ToNullable(autoProvision), serializedAdditionalRawData);
+            return new AutoProvisioningSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(autoProvision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoProvisioningSettingData>.Write(ModelReaderWriterOptions options)

@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeGroupPatch(identity, Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, serializedAdditionalRawData);
+            return new ElasticSanVolumeGroupPatch(
+                identity,
+                Optional.ToNullable(protocolType),
+                Optional.ToNullable(encryption),
+                encryptionProperties.Value,
+                networkAcls.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeGroupPatch>.Write(ModelReaderWriterOptions options)

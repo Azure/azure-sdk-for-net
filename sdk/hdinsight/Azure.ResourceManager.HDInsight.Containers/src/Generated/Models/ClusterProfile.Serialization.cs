@@ -451,7 +451,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, components ?? new ChangeTrackingList<ClusterComponentItem>(), identityProfile, authorizationProfile, secretsProfile.Value, serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, kafkaProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), trinoProfile.Value, llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), flinkProfile.Value, sparkProfile.Value, stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(), scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(), serializedAdditionalRawData);
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile.Value,
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                connectivityProfile.Value,
+                logAnalyticsProfile.Value,
+                prometheusProfile.Value,
+                sshProfile.Value,
+                autoscaleProfile.Value,
+                kafkaProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                trinoProfile.Value,
+                llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                flinkProfile.Value,
+                sparkProfile.Value,
+                stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)

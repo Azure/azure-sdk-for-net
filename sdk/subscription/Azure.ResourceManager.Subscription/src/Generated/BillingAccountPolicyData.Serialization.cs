@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Subscription
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingAccountPolicyData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new BillingAccountPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingAccountPolicyData>.Write(ModelReaderWriterOptions options)

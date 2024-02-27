@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.Dynatrace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceSingleSignOnData(id, name, type, systemData.Value, Optional.ToNullable(singleSignOnState), Optional.ToNullable(enterpriseAppId), singleSignOnUrl.Value, aadDomains ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DynatraceSingleSignOnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(singleSignOnState),
+                Optional.ToNullable(enterpriseAppId),
+                singleSignOnUrl.Value,
+                aadDomains ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options)

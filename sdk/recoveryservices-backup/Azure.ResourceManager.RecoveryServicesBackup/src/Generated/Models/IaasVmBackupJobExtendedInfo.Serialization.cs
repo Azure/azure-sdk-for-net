@@ -188,7 +188,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobExtendedInfo(tasksList ?? new ChangeTrackingList<IaasVmBackupJobTaskDetails>(), propertyBag ?? new ChangeTrackingDictionary<string, string>(), internalPropertyBag ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(progressPercentage), estimatedRemainingDuration.Value, dynamicErrorMessage.Value, serializedAdditionalRawData);
+            return new IaasVmBackupJobExtendedInfo(
+                tasksList ?? new ChangeTrackingList<IaasVmBackupJobTaskDetails>(),
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                internalPropertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(progressPercentage),
+                estimatedRemainingDuration.Value,
+                dynamicErrorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobExtendedInfo>.Write(ModelReaderWriterOptions options)

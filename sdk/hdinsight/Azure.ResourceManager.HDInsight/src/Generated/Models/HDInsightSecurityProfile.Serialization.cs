@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, ldapsUrls ?? new ChangeTrackingList<Uri>(), domainUsername.Value, domainUserPassword.Value, clusterUsersGroupDNs ?? new ChangeTrackingList<string>(), aaddsResourceId.Value, msiResourceId.Value, serializedAdditionalRawData);
+            return new HDInsightSecurityProfile(
+                Optional.ToNullable(directoryType),
+                domain.Value,
+                organizationalUnitDN.Value,
+                ldapsUrls ?? new ChangeTrackingList<Uri>(),
+                domainUsername.Value,
+                domainUserPassword.Value,
+                clusterUsersGroupDNs ?? new ChangeTrackingList<string>(),
+                aaddsResourceId.Value,
+                msiResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightSecurityProfile>.Write(ModelReaderWriterOptions options)

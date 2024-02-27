@@ -739,7 +739,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkJob(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), archives ?? new ChangeTrackingList<string>(), args.Value, codeId, conf ?? new ChangeTrackingDictionary<string, string>(), entry, environmentId.Value, files ?? new ChangeTrackingList<string>(), inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(), jars ?? new ChangeTrackingList<string>(), outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(), pyFiles ?? new ChangeTrackingList<string>(), queueSettings.Value, resources.Value);
+            return new SparkJob(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId.Value,
+                computeId.Value,
+                displayName.Value,
+                experimentName.Value,
+                identity.Value,
+                Optional.ToNullable(isArchived),
+                jobType,
+                notificationSetting.Value,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                Optional.ToNullable(status),
+                archives ?? new ChangeTrackingList<string>(),
+                args.Value,
+                codeId,
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                entry,
+                environmentId.Value,
+                files ?? new ChangeTrackingList<string>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                jars ?? new ChangeTrackingList<string>(),
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                queueSettings.Value,
+                resources.Value);
         }
 
         BinaryData IPersistableModel<SparkJob>.Write(ModelReaderWriterOptions options)

@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData);
+            return new UnknownDigitalTwinsEndpointResourceProperties(
+                endpointType,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(authenticationType),
+                deadLetterSecret.Value,
+                deadLetterUri.Value,
+                identity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEndpointResourceProperties>.Write(ModelReaderWriterOptions options)

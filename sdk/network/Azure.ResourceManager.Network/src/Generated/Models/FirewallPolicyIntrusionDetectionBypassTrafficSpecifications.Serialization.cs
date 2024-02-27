@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(name.Value, description.Value, Optional.ToNullable(protocol), sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), destinationPorts ?? new ChangeTrackingList<string>(), sourceIPGroups ?? new ChangeTrackingList<string>(), destinationIPGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FirewallPolicyIntrusionDetectionBypassTrafficSpecifications(
+                name.Value,
+                description.Value,
+                Optional.ToNullable(protocol),
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                destinationIPGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>.Write(ModelReaderWriterOptions options)

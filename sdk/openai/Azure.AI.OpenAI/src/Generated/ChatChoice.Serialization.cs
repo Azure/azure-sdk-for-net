@@ -178,7 +178,15 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatChoice(message.Value, index, finishReason, finishDetails.Value, delta.Value, contentFilterResults.Value, enhancements.Value, serializedAdditionalRawData);
+            return new ChatChoice(
+                message.Value,
+                index,
+                finishReason,
+                finishDetails.Value,
+                delta.Value,
+                contentFilterResults.Value,
+                enhancements.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatChoice>.Write(ModelReaderWriterOptions options)

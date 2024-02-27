@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationEnabledResourceType(id, name, type, systemData.Value, clusterExtensionId.Value, extensionType.Value, typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(), serializedAdditionalRawData);
+            return new CustomLocationEnabledResourceType(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterExtensionId.Value,
+                extensionType.Value,
+                typesMetadata ?? new ChangeTrackingList<CustomLocationEnabledResourceTypeMetadata>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationEnabledResourceType>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningSharedPrivateLinkResource(name.Value, groupId.Value, privateLinkResourceId.Value, requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new MachineLearningSharedPrivateLinkResource(
+                name.Value,
+                groupId.Value,
+                privateLinkResourceId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningSharedPrivateLinkResource>.Write(ModelReaderWriterOptions options)

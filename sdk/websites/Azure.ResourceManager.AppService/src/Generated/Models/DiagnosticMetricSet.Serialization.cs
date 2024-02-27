@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticMetricSet(name.Value, unit.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, values ?? new ChangeTrackingList<DiagnosticMetricSample>(), serializedAdditionalRawData);
+            return new DiagnosticMetricSet(
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                values ?? new ChangeTrackingList<DiagnosticMetricSample>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticMetricSet>.Write(ModelReaderWriterOptions options)

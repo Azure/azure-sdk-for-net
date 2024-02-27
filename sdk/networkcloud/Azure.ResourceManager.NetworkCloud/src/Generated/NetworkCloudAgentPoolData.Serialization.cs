@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudAgentPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, availabilityZones ?? new ChangeTrackingList<string>(), count, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, kubernetesVersion.Value, labels ?? new ChangeTrackingList<KubernetesLabel>(), mode, Optional.ToNullable(provisioningState), taints ?? new ChangeTrackingList<KubernetesLabel>(), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                administratorConfiguration.Value,
+                agentOptions.Value,
+                attachedNetworkConfiguration.Value,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                count,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                kubernetesVersion.Value,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                mode,
+                Optional.ToNullable(provisioningState),
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                upgradeSettings.Value,
+                vmSkuName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolData>.Write(ModelReaderWriterOptions options)

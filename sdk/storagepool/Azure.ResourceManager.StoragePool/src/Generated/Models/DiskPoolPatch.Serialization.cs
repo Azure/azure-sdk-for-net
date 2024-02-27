@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolPatch(managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), disks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new DiskPoolPatch(
+                managedBy.Value,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                disks ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolPatch>.Write(ModelReaderWriterOptions options)
