@@ -133,7 +133,14 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations, serializedAdditionalRawData);
+            return new DictionaryTranslation(
+                normalizedTarget,
+                displayTarget,
+                posTag,
+                confidence,
+                prefixWord,
+                backTranslations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DictionaryTranslation>.Write(ModelReaderWriterOptions options)

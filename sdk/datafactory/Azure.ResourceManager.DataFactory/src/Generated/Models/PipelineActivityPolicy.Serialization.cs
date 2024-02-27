@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new PipelineActivityPolicy(
+                timeout.Value,
+                retry.Value,
+                Optional.ToNullable(retryIntervalInSeconds),
+                Optional.ToNullable(secureInput),
+                Optional.ToNullable(secureOutput),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)

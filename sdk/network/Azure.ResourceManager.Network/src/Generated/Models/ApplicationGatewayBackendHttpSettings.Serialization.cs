@@ -365,7 +365,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendHttpSettings(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(cookieBasedAffinity), Optional.ToNullable(requestTimeout), probe, authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(), trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(), connectionDraining.Value, hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), affinityCookieName.Value, Optional.ToNullable(probeEnabled), path.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendHttpSettings(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(port),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(cookieBasedAffinity),
+                Optional.ToNullable(requestTimeout),
+                probe,
+                authenticationCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                connectionDraining.Value,
+                hostName.Value,
+                Optional.ToNullable(pickHostNameFromBackendAddress),
+                affinityCookieName.Value,
+                Optional.ToNullable(probeEnabled),
+                path.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendHttpSettings>.Write(ModelReaderWriterOptions options)

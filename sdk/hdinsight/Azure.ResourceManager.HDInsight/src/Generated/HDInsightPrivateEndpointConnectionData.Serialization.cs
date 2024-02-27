@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState, linkIdentifier.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new HDInsightPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                linkIdentifier.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

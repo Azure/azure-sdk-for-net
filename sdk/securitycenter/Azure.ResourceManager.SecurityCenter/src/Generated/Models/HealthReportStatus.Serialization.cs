@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthReportStatus(Optional.ToNullable(code), reason.Value, Optional.ToNullable(lastScannedDate), Optional.ToNullable(statusChangeDate), Optional.ToNullable(firstEvaluationDate), serializedAdditionalRawData);
+            return new HealthReportStatus(
+                Optional.ToNullable(code),
+                reason.Value,
+                Optional.ToNullable(lastScannedDate),
+                Optional.ToNullable(statusChangeDate),
+                Optional.ToNullable(firstEvaluationDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthReportStatus>.Write(ModelReaderWriterOptions options)

@@ -101,7 +101,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText.Value,
+                fileExtension,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>

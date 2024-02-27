@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceCapacityInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(timeStamp),
+                clusterStorageCapacityInfo.Value,
+                clusterComputeCapacityInfo.Value,
+                nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)

@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), threats ?? new ChangeTrackingList<SecurityThreat>(), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId.Value,
+                description.Value,
+                remediationDescription.Value,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                Optional.ToNullable(userImpact),
+                Optional.ToNullable(implementationEffort),
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                Optional.ToNullable(preview),
+                assessmentType,
+                partnerData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)

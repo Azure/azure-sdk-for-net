@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmAppContainerProtectableContainer(friendlyName.Value, Optional.ToNullable(backupManagementType), protectableContainerType, healthStatus.Value, containerId.Value, serializedAdditionalRawData);
+            return new VmAppContainerProtectableContainer(
+                friendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                protectableContainerType,
+                healthStatus.Value,
+                containerId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmAppContainerProtectableContainer>.Write(ModelReaderWriterOptions options)

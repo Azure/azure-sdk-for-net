@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonEncryptionCenc(enabledProtocols.Value, clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(), contentKeys.Value, drm.Value, clearKeyEncryptionConfiguration.Value, serializedAdditionalRawData);
+            return new CommonEncryptionCenc(
+                enabledProtocols.Value,
+                clearTracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                contentKeys.Value,
+                drm.Value,
+                clearKeyEncryptionConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonEncryptionCenc>.Write(ModelReaderWriterOptions options)

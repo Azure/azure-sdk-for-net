@@ -276,7 +276,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageObjectDetection(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageObjectDetection(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                Optional.ToNullable(primaryMetric),
+                modelSettings.Value,
+                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsObjectDetection>(),
+                limitSettings,
+                sweepSettings.Value,
+                validationData.Value,
+                Optional.ToNullable(validationDataSize));
         }
 
         BinaryData IPersistableModel<ImageObjectDetection>.Write(ModelReaderWriterOptions options)

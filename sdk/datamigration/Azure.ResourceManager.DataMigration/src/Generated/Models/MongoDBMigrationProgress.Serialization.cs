@@ -243,7 +243,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBMigrationProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData, databases ?? new ChangeTrackingDictionary<string, MongoDBDatabaseProgress>());
+            return new MongoDBMigrationProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                Optional.ToNullable(lastEventTime),
+                Optional.ToNullable(lastReplayTime),
+                name.Value,
+                qualifiedName.Value,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData,
+                databases ?? new ChangeTrackingDictionary<string, MongoDBDatabaseProgress>());
         }
 
         BinaryData IPersistableModel<MongoDBMigrationProgress>.Write(ModelReaderWriterOptions options)

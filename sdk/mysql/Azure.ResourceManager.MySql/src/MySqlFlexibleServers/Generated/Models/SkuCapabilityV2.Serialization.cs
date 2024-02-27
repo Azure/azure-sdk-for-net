@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuCapabilityV2(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), supportedZones ?? new ChangeTrackingList<string>(), supportedHAMode ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SkuCapabilityV2(
+                name.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(supportedIops),
+                Optional.ToNullable(supportedMemoryPerVCoreMB),
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHAMode ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuCapabilityV2>.Write(ModelReaderWriterOptions options)

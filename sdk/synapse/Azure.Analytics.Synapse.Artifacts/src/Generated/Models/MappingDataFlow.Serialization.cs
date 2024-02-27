@@ -228,7 +228,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, annotations ?? new ChangeTrackingList<object>(), folder.Value, sources ?? new ChangeTrackingList<DataFlowSource>(), sinks ?? new ChangeTrackingList<DataFlowSink>(), transformations ?? new ChangeTrackingList<Transformation>(), script.Value, scriptLines ?? new ChangeTrackingList<string>());
+            return new MappingDataFlow(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script.Value,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>

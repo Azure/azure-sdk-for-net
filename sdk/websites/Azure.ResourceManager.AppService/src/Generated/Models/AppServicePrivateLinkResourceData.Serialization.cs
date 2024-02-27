@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServicePrivateLinkResourceData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new AppServicePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

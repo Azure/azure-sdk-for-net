@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModelSku(name.Value, usageName.Value, Optional.ToNullable(deprecationDate), capacity.Value, rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(), serializedAdditionalRawData);
+            return new CognitiveServicesModelSku(
+                name.Value,
+                usageName.Value,
+                Optional.ToNullable(deprecationDate),
+                capacity.Value,
+                rateLimits ?? new ChangeTrackingList<ServiceAccountCallRateLimit>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesModelSku>.Write(ModelReaderWriterOptions options)

@@ -229,7 +229,22 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value, unit.Value, cityDistrict.Value, stateDistrict.Value, suburb.Value, house.Value, level.Value, serializedAdditionalRawData);
+            return new AddressValue(
+                houseNumber.Value,
+                poBox.Value,
+                road.Value,
+                city.Value,
+                state.Value,
+                postalCode.Value,
+                countryRegion.Value,
+                streetAddress.Value,
+                unit.Value,
+                cityDistrict.Value,
+                stateDistrict.Value,
+                suburb.Value,
+                house.Value,
+                level.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValue>.Write(ModelReaderWriterOptions options)

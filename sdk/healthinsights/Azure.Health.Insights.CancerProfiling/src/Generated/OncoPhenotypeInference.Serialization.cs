@@ -153,7 +153,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OncoPhenotypeInference(type, value, description.Value, Optional.ToNullable(confidenceScore), evidence ?? new ChangeTrackingList<InferenceEvidence>(), caseId.Value, serializedAdditionalRawData);
+            return new OncoPhenotypeInference(
+                type,
+                value,
+                description.Value,
+                Optional.ToNullable(confidenceScore),
+                evidence ?? new ChangeTrackingList<InferenceEvidence>(),
+                caseId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OncoPhenotypeInference>.Write(ModelReaderWriterOptions options)

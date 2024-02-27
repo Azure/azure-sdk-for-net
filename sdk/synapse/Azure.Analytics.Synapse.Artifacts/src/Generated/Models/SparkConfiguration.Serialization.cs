@@ -149,7 +149,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfiguration(description.Value, configs, annotations ?? new ChangeTrackingList<string>(), notes.Value, createdBy.Value, Optional.ToNullable(created), configMergeRule ?? new ChangeTrackingDictionary<string, string>());
+            return new SparkConfiguration(
+                description.Value,
+                configs,
+                annotations ?? new ChangeTrackingList<string>(),
+                notes.Value,
+                createdBy.Value,
+                Optional.ToNullable(created),
+                configMergeRule ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>

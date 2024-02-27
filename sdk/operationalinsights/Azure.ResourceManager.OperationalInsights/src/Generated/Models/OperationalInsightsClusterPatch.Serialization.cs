@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), keyVaultProperties.Value, Optional.ToNullable(billingType), serializedAdditionalRawData);
+            return new OperationalInsightsClusterPatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                keyVaultProperties.Value,
+                Optional.ToNullable(billingType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterPatch>.Write(ModelReaderWriterOptions options)

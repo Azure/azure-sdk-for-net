@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultMonitoringSummary(Optional.ToNullable(unHealthyVmCount), Optional.ToNullable(unHealthyProviderCount), Optional.ToNullable(eventsCount), Optional.ToNullable(deprecatedProviderCount), Optional.ToNullable(supportedProviderCount), Optional.ToNullable(unsupportedProviderCount), serializedAdditionalRawData);
+            return new VaultMonitoringSummary(
+                Optional.ToNullable(unHealthyVmCount),
+                Optional.ToNullable(unHealthyProviderCount),
+                Optional.ToNullable(eventsCount),
+                Optional.ToNullable(deprecatedProviderCount),
+                Optional.ToNullable(supportedProviderCount),
+                Optional.ToNullable(unsupportedProviderCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultMonitoringSummary>.Write(ModelReaderWriterOptions options)

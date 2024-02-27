@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesDaemonSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(current), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesDaemonSet(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(current),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(upToDate),
+                Optional.ToNullable(available),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesDaemonSet>.Write(ModelReaderWriterOptions options)

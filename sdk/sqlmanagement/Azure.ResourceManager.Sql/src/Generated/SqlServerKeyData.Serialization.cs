@@ -247,7 +247,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), subregion.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new SqlServerKeyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                subregion.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                thumbprint.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(autoRotationEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerKeyData>.Write(ModelReaderWriterOptions options)

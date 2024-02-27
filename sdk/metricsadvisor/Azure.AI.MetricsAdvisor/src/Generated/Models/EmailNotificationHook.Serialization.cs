@@ -106,7 +106,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new EmailNotificationHook(hookType, hookId.Value, hookName, description.Value, externalLink.Value, admins ?? new ChangeTrackingList<string>(), hookParameter);
+            return new EmailNotificationHook(
+                hookType,
+                hookId.Value,
+                hookName,
+                description.Value,
+                externalLink.Value,
+                admins ?? new ChangeTrackingList<string>(),
+                hookParameter);
         }
     }
 }

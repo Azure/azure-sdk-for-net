@@ -248,7 +248,18 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderProperties(description.Value, providerType.Value, company.Value, defaultEndpoint.Value, aad.Value, managedApplication.Value, targets ?? new ChangeTrackingList<TargetDescription>(), skus ?? new ChangeTrackingList<SkuDescription>(), quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(), pricingDimensions ?? new ChangeTrackingList<PricingDimension>(), serializedAdditionalRawData);
+            return new ProviderProperties(
+                description.Value,
+                providerType.Value,
+                company.Value,
+                defaultEndpoint.Value,
+                aad.Value,
+                managedApplication.Value,
+                targets ?? new ChangeTrackingList<TargetDescription>(),
+                skus ?? new ChangeTrackingList<SkuDescription>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDimensions ?? new ChangeTrackingList<PricingDimension>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderProperties>.Write(ModelReaderWriterOptions options)

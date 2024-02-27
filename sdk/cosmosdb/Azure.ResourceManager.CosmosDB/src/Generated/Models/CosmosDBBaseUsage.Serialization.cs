@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBBaseUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), serializedAdditionalRawData);
+            return new CosmosDBBaseUsage(
+                Optional.ToNullable(unit),
+                name.Value,
+                quotaPeriod.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(currentValue),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBBaseUsage>.Write(ModelReaderWriterOptions options)

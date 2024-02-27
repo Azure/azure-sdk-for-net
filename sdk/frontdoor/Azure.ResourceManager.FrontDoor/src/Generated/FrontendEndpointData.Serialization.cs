@@ -272,7 +272,19 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                hostName.Value,
+                Optional.ToNullable(sessionAffinityEnabledState),
+                Optional.ToNullable(sessionAffinityTtlSeconds),
+                webApplicationFirewallPolicyLink,
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(customHttpsProvisioningState),
+                Optional.ToNullable(customHttpsProvisioningSubstate),
+                customHttpsConfiguration.Value);
         }
 
         BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)

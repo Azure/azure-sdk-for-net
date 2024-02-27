@@ -397,7 +397,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), techniques ?? new ChangeTrackingList<string>(), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
+            return new AnomalySecurityMLAnalyticsSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                description.Value,
+                displayName.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(lastModifiedUtc),
+                requiredDataConnectors ?? new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                techniques ?? new ChangeTrackingList<string>(),
+                anomalyVersion.Value,
+                customizableObservations.Value,
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(settingsStatus),
+                Optional.ToNullable(isDefaultSettings),
+                Optional.ToNullable(anomalySettingsVersion),
+                Optional.ToNullable(settingsDefinitionId));
         }
 
         BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)

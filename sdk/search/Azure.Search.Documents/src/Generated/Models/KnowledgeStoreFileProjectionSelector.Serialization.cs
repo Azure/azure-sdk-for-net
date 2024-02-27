@@ -105,7 +105,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreFileProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(), storageContainer);
+            return new KnowledgeStoreFileProjectionSelector(
+                referenceKeyName.Value,
+                generatedKeyName.Value,
+                source.Value,
+                sourceContext.Value,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                storageContainer);
         }
     }
 }

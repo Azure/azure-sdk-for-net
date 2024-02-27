@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobExecutionContainer(image.Value, name.Value, command ?? new ChangeTrackingList<string>(), args ?? new ChangeTrackingList<string>(), env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(), resources.Value, serializedAdditionalRawData);
+            return new JobExecutionContainer(
+                image.Value,
+                name.Value,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobExecutionContainer>.Write(ModelReaderWriterOptions options)

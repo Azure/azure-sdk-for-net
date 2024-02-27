@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, devBoxDefinitionName.Value, networkConnectionName.Value, Optional.ToNullable(licenseType), Optional.ToNullable(localAdministrator), stopOnDisconnect.Value);
+            return new DevCenterPoolPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                devBoxDefinitionName.Value,
+                networkConnectionName.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(localAdministrator),
+                stopOnDisconnect.Value);
         }
 
         BinaryData IPersistableModel<DevCenterPoolPatch>.Write(ModelReaderWriterOptions options)

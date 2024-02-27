@@ -168,7 +168,19 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactAcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, batchFunctionalAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
+            return new EdifactAcknowledgementSettings(
+                needTechnicalAcknowledgement,
+                batchTechnicalAcknowledgements,
+                needFunctionalAcknowledgement,
+                batchFunctionalAcknowledgements,
+                needLoopForValidMessages,
+                sendSynchronousAcknowledgement,
+                acknowledgementControlNumberPrefix.Value,
+                acknowledgementControlNumberSuffix.Value,
+                acknowledgementControlNumberLowerBound,
+                acknowledgementControlNumberUpperBound,
+                rolloverAcknowledgementControlNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactAcknowledgementSettings>.Write(ModelReaderWriterOptions options)

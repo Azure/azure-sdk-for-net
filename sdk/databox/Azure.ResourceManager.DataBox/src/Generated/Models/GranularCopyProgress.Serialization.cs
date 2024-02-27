@@ -336,7 +336,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GranularCopyProgress(storageAccountName.Value, Optional.ToNullable(transferType), Optional.ToNullable(dataAccountType), accountId.Value, Optional.ToNullable(bytesProcessed), Optional.ToNullable(totalBytesToProcess), Optional.ToNullable(filesProcessed), Optional.ToNullable(totalFilesToProcess), Optional.ToNullable(invalidFilesProcessed), Optional.ToNullable(invalidFileBytesUploaded), Optional.ToNullable(renamedContainerCount), Optional.ToNullable(filesErroredOut), Optional.ToNullable(directoriesErroredOut), Optional.ToNullable(invalidDirectoriesProcessed), Optional.ToNullable(isEnumerationInProgress), error.Value, actions ?? new ChangeTrackingList<CustomerResolutionCode>(), serializedAdditionalRawData);
+            return new GranularCopyProgress(
+                storageAccountName.Value,
+                Optional.ToNullable(transferType),
+                Optional.ToNullable(dataAccountType),
+                accountId.Value,
+                Optional.ToNullable(bytesProcessed),
+                Optional.ToNullable(totalBytesToProcess),
+                Optional.ToNullable(filesProcessed),
+                Optional.ToNullable(totalFilesToProcess),
+                Optional.ToNullable(invalidFilesProcessed),
+                Optional.ToNullable(invalidFileBytesUploaded),
+                Optional.ToNullable(renamedContainerCount),
+                Optional.ToNullable(filesErroredOut),
+                Optional.ToNullable(directoriesErroredOut),
+                Optional.ToNullable(invalidDirectoriesProcessed),
+                Optional.ToNullable(isEnumerationInProgress),
+                error.Value,
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GranularCopyProgress>.Write(ModelReaderWriterOptions options)

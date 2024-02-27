@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationRegistrationProperties(Optional.ToNullable(notificationMode), Optional.ToNullable(messageScope), includedEvents ?? new ChangeTrackingList<string>(), notificationEndpoints ?? new ChangeTrackingList<NotificationEndpoint>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NotificationRegistrationProperties(
+                Optional.ToNullable(notificationMode),
+                Optional.ToNullable(messageScope),
+                includedEvents ?? new ChangeTrackingList<string>(),
+                notificationEndpoints ?? new ChangeTrackingList<NotificationEndpoint>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationRegistrationProperties>.Write(ModelReaderWriterOptions options)

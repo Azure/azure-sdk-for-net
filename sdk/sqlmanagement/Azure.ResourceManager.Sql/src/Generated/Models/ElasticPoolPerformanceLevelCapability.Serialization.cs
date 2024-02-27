@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPerformanceLevelCapability(performanceLevel.Value, sku.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), Optional.ToNullable(maxDatabaseCount), includedMaxSize.Value, supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(), Optional.ToNullable(zoneRedundant), supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ElasticPoolPerformanceLevelCapability(
+                performanceLevel.Value,
+                sku.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                Optional.ToNullable(maxDatabaseCount),
+                includedMaxSize.Value,
+                supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
+                Optional.ToNullable(zoneRedundant),
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)

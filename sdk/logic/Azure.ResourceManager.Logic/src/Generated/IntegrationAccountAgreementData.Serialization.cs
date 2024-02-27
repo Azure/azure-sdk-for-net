@@ -273,7 +273,23 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                agreementType,
+                hostPartner,
+                guestPartner,
+                hostIdentity,
+                guestIdentity,
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options)

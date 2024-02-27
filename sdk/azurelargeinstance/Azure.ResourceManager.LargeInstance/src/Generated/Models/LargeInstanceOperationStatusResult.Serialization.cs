@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), operations ?? new ChangeTrackingList<LargeInstanceOperationStatusResult>(), error.Value, serializedAdditionalRawData);
+            return new LargeInstanceOperationStatusResult(
+                id.Value,
+                resourceId.Value,
+                name.Value,
+                status,
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                operations ?? new ChangeTrackingList<LargeInstanceOperationStatusResult>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceOperationStatusResult>.Write(ModelReaderWriterOptions options)

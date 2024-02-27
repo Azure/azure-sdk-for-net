@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkPeeringPolicyProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(etag), serializedAdditionalRawData, type, hub, spokes ?? new ChangeTrackingList<WritableSubResource>(), mesh ?? new ChangeTrackingList<WritableSubResource>());
+            return new ManagedNetworkPeeringPolicyProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                type,
+                hub,
+                spokes ?? new ChangeTrackingList<WritableSubResource>(),
+                mesh ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<ManagedNetworkPeeringPolicyProperties>.Write(ModelReaderWriterOptions options)

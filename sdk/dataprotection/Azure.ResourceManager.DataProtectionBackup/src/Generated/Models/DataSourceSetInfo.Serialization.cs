@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourceSetInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value, resourceProperties.Value, serializedAdditionalRawData);
+            return new DataSourceSetInfo(
+                datasourceType.Value,
+                objectType.Value,
+                resourceId,
+                Optional.ToNullable(resourceLocation),
+                resourceName.Value,
+                Optional.ToNullable(resourceType),
+                resourceUri.Value,
+                resourceProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourceSetInfo>.Write(ModelReaderWriterOptions options)

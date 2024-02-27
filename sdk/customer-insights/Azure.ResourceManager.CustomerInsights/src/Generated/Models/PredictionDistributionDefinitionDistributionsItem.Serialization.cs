@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDistributionDefinitionDistributionsItem(Optional.ToNullable(scoreThreshold), Optional.ToNullable(positives), Optional.ToNullable(negatives), Optional.ToNullable(positivesAboveThreshold), Optional.ToNullable(negativesAboveThreshold), serializedAdditionalRawData);
+            return new PredictionDistributionDefinitionDistributionsItem(
+                Optional.ToNullable(scoreThreshold),
+                Optional.ToNullable(positives),
+                Optional.ToNullable(negatives),
+                Optional.ToNullable(positivesAboveThreshold),
+                Optional.ToNullable(negativesAboveThreshold),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDistributionDefinitionDistributionsItem>.Write(ModelReaderWriterOptions options)

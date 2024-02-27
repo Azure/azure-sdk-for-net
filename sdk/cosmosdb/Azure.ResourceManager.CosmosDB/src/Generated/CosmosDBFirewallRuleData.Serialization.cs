@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBFirewallRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new CosmosDBFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBFirewallRuleData>.Write(ModelReaderWriterOptions options)

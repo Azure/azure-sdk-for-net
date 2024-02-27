@@ -440,7 +440,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService, defines ?? new ChangeTrackingDictionary<string, BinaryData>(), variables ?? new ChangeTrackingDictionary<string, BinaryData>(), Optional.ToNullable(queryTimeout));
+            return new HDInsightHiveActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                Optional.ToNullable(getDebugInfo),
+                scriptPath.Value,
+                scriptLinkedService,
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                variables ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(queryTimeout));
         }
 
         BinaryData IPersistableModel<HDInsightHiveActivity>.Write(ModelReaderWriterOptions options)

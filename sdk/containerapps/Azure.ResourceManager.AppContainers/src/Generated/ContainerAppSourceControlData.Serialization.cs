@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppSourceControlData(id, name, type, systemData.Value, Optional.ToNullable(operationState), repoUrl.Value, branch.Value, gitHubActionConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppSourceControlData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(operationState),
+                repoUrl.Value,
+                branch.Value,
+                gitHubActionConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppSourceControlData>.Write(ModelReaderWriterOptions options)

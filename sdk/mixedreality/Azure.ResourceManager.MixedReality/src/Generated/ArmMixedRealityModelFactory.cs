@@ -45,7 +45,21 @@ namespace Azure.ResourceManager.MixedReality.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SpatialAnchorsAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain, serializedAdditionalRawData: null);
+            return new SpatialAnchorsAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                plan,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MixedRealityAccountKeys"/>. </summary>
@@ -76,7 +90,21 @@ namespace Azure.ResourceManager.MixedReality.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new RemoteRenderingAccountData(id, name, resourceType, systemData, tags, location, identity, plan, sku, kind, storageAccountName, accountId, accountDomain, serializedAdditionalRawData: null);
+            return new RemoteRenderingAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                plan,
+                sku,
+                kind,
+                storageAccountName,
+                accountId,
+                accountDomain,
+                serializedAdditionalRawData: null);
         }
     }
 }

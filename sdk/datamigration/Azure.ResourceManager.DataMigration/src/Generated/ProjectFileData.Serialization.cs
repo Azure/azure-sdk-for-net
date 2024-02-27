@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectFileData(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new ProjectFileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectFileData>.Write(ModelReaderWriterOptions options)

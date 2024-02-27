@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MySqlServerCreateOrUpdateContent(
+                identity,
+                sku.Value,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPooledSchedulePatch(id, name, type, systemData.Value, daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm), serializedAdditionalRawData);
+            return new ScalingPlanPooledSchedulePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
+                rampUpStartTime.Value,
+                Optional.ToNullable(rampUpLoadBalancingAlgorithm),
+                Optional.ToNullable(rampUpMinimumHostsPct),
+                Optional.ToNullable(rampUpCapacityThresholdPct),
+                peakStartTime.Value,
+                Optional.ToNullable(peakLoadBalancingAlgorithm),
+                rampDownStartTime.Value,
+                Optional.ToNullable(rampDownLoadBalancingAlgorithm),
+                Optional.ToNullable(rampDownMinimumHostsPct),
+                Optional.ToNullable(rampDownCapacityThresholdPct),
+                Optional.ToNullable(rampDownForceLogoffUsers),
+                Optional.ToNullable(rampDownStopHostsWhen),
+                Optional.ToNullable(rampDownWaitTimeMinutes),
+                rampDownNotificationMessage.Value,
+                offPeakStartTime.Value,
+                Optional.ToNullable(offPeakLoadBalancingAlgorithm),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPooledSchedulePatch>.Write(ModelReaderWriterOptions options)

@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuleMetricDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData, metricName.Value);
+            return new RuleMetricDataSource(
+                odataType,
+                resourceUri.Value,
+                legacyResourceId.Value,
+                resourceLocation.Value,
+                metricNamespace.Value,
+                serializedAdditionalRawData,
+                metricName.Value);
         }
 
         BinaryData IPersistableModel<RuleMetricDataSource>.Write(ModelReaderWriterOptions options)

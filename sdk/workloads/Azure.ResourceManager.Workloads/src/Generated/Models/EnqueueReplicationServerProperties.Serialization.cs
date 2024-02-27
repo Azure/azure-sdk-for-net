@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnqueueReplicationServerProperties(Optional.ToNullable(ersVersion), instanceNo.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
+            return new EnqueueReplicationServerProperties(
+                Optional.ToNullable(ersVersion),
+                instanceNo.Value,
+                hostname.Value,
+                kernelVersion.Value,
+                kernelPatch.Value,
+                ipAddress.Value,
+                Optional.ToNullable(health),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnqueueReplicationServerProperties>.Write(ModelReaderWriterOptions options)

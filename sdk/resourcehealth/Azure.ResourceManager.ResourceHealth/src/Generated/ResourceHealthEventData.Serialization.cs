@@ -605,7 +605,44 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSubType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, links ?? new ChangeTrackingList<ResourceHealthEventLink>(), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(), recommendedActions.Value, faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>(), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, maintenanceId.Value, maintenanceType.Value, argQuery.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eventType),
+                Optional.ToNullable(eventSubType),
+                Optional.ToNullable(eventSource),
+                Optional.ToNullable(status),
+                title.Value,
+                summary.Value,
+                header.Value,
+                Optional.ToNullable(level),
+                Optional.ToNullable(eventLevel),
+                externalIncidentId.Value,
+                reason.Value,
+                article.Value,
+                links ?? new ChangeTrackingList<ResourceHealthEventLink>(),
+                Optional.ToNullable(impactStartTime),
+                Optional.ToNullable(impactMitigationTime),
+                impact ?? new ChangeTrackingList<ResourceHealthEventImpact>(),
+                recommendedActions.Value,
+                faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>(),
+                Optional.ToNullable(isHIR),
+                Optional.ToNullable(enableMicrosoftSupport),
+                description.Value,
+                Optional.ToNullable(platformInitiated),
+                Optional.ToNullable(enableChatWithUs),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(lastUpdateTime),
+                hirStage.Value,
+                additionalInformation.Value,
+                Optional.ToNullable(duration),
+                impactType.Value,
+                maintenanceId.Value,
+                maintenanceType.Value,
+                argQuery.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventData>.Write(ModelReaderWriterOptions options)

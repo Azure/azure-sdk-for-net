@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Maintenance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceApplyUpdateData(id, name, type, systemData.Value, Optional.ToNullable(status), resourceId.Value, Optional.ToNullable(lastUpdateTime), serializedAdditionalRawData);
+            return new MaintenanceApplyUpdateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                resourceId.Value,
+                Optional.ToNullable(lastUpdateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceApplyUpdateData>.Write(ModelReaderWriterOptions options)

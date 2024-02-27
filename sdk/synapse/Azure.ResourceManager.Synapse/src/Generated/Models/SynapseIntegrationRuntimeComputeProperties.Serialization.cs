@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new SynapseIntegrationRuntimeComputeProperties(
+                Optional.ToNullable(location),
+                nodeSize.Value,
+                Optional.ToNullable(numberOfNodes),
+                Optional.ToNullable(maxParallelExecutionsPerNode),
+                dataFlowProperties.Value,
+                vNetProperties.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)

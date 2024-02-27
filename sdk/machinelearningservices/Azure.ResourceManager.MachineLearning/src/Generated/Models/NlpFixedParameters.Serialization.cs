@@ -273,7 +273,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpFixedParameters(Optional.ToNullable(gradientAccumulationSteps), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(numberOfEpochs), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupRatio), Optional.ToNullable(weightDecay), serializedAdditionalRawData);
+            return new NlpFixedParameters(
+                Optional.ToNullable(gradientAccumulationSteps),
+                Optional.ToNullable(learningRate),
+                Optional.ToNullable(learningRateScheduler),
+                modelName.Value,
+                Optional.ToNullable(numberOfEpochs),
+                Optional.ToNullable(trainingBatchSize),
+                Optional.ToNullable(validationBatchSize),
+                Optional.ToNullable(warmupRatio),
+                Optional.ToNullable(weightDecay),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpFixedParameters>.Write(ModelReaderWriterOptions options)

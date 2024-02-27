@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value, serializedAdditionalRawData);
+            return new FirewallSupportInfo(
+                productSku.Value,
+                productSerial.Value,
+                Optional.ToNullable(accountRegistered),
+                accountId.Value,
+                Optional.ToNullable(userDomainSupported),
+                Optional.ToNullable(userRegistered),
+                Optional.ToNullable(freeTrial),
+                Optional.ToNullable(freeTrialDaysLeft),
+                Optional.ToNullable(freeTrialCreditLeft),
+                helpURL.Value,
+                supportURL.Value,
+                registerURL.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallSupportInfo>.Write(ModelReaderWriterOptions options)

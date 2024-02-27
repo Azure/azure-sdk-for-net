@@ -424,7 +424,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax), serializedAdditionalRawData);
+            return new ReportRecordContract(
+                name.Value,
+                Optional.ToNullable(timestamp),
+                interval.Value,
+                country.Value,
+                region.Value,
+                zip.Value,
+                userId.Value,
+                productId.Value,
+                apiId.Value,
+                operationId.Value,
+                apiRegion.Value,
+                subscriptionId.Value,
+                Optional.ToNullable(callCountSuccess),
+                Optional.ToNullable(callCountBlocked),
+                Optional.ToNullable(callCountFailed),
+                Optional.ToNullable(callCountOther),
+                Optional.ToNullable(callCountTotal),
+                Optional.ToNullable(bandwidth),
+                Optional.ToNullable(cacheHitCount),
+                Optional.ToNullable(cacheMissCount),
+                Optional.ToNullable(apiTimeAvg),
+                Optional.ToNullable(apiTimeMin),
+                Optional.ToNullable(apiTimeMax),
+                Optional.ToNullable(serviceTimeAvg),
+                Optional.ToNullable(serviceTimeMin),
+                Optional.ToNullable(serviceTimeMax),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportRecordContract>.Write(ModelReaderWriterOptions options)

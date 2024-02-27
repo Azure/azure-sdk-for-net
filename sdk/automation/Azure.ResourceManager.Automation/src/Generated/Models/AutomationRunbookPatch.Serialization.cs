@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookPatch(name.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+            return new AutomationRunbookPatch(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                Optional.ToNullable(logVerbose),
+                Optional.ToNullable(logProgress),
+                Optional.ToNullable(logActivityTrace),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookPatch>.Write(ModelReaderWriterOptions options)

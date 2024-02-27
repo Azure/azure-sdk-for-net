@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, sku.Value, provisioningState.Value, ruleSetType.Value, ruleSetVersion.Value, ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(), serializedAdditionalRawData);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                provisioningState.Value,
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)

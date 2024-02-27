@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedRestorableTableResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
+            return new ExtendedRestorableTableResourceInfo(
+                rid.Value,
+                Optional.ToNullable(operationType),
+                eventTimestamp.Value,
+                ownerId.Value,
+                ownerResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedRestorableTableResourceInfo>.Write(ModelReaderWriterOptions options)

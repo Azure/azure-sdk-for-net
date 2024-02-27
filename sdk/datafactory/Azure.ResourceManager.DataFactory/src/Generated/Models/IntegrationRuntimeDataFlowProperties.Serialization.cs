@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeDataFlowProperties(Optional.ToNullable(computeType), Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), Optional.ToNullable(cleanup), customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(), additionalProperties);
+            return new IntegrationRuntimeDataFlowProperties(
+                Optional.ToNullable(computeType),
+                Optional.ToNullable(coreCount),
+                Optional.ToNullable(timeToLive),
+                Optional.ToNullable(cleanup),
+                customProperties ?? new ChangeTrackingList<IntegrationRuntimeDataFlowCustomItem>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeDataFlowProperties>.Write(ModelReaderWriterOptions options)

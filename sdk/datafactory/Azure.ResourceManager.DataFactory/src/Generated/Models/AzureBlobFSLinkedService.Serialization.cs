@@ -364,7 +364,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url.Value, accountKey.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, encryptedCredential.Value, credential.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, sasUri.Value, sasToken);
+            return new AzureBlobFSLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url.Value,
+                accountKey.Value,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value,
+                azureCloudType.Value,
+                encryptedCredential.Value,
+                credential.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential,
+                sasUri.Value,
+                sasToken);
         }
 
         BinaryData IPersistableModel<AzureBlobFSLinkedService>.Write(ModelReaderWriterOptions options)

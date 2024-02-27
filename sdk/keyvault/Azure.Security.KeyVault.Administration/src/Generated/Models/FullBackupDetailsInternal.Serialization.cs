@@ -78,7 +78,14 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new FullBackupDetailsInternal(status.Value, statusDetails.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), jobId.Value, azureStorageBlobContainerUri.Value);
+            return new FullBackupDetailsInternal(
+                status.Value,
+                statusDetails.Value,
+                error.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                jobId.Value,
+                azureStorageBlobContainerUri.Value);
         }
     }
 }

@@ -274,7 +274,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySetDefinitionData(id, name, type, systemData.Value, Optional.ToNullable(policyType), displayName.Value, description.Value, metadata.Value, parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(), policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(), policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(), serializedAdditionalRawData);
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(policyType),
+                displayName.Value,
+                description.Value,
+                metadata.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameter>(),
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>(),
+                policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySetDefinitionData>.Write(ModelReaderWriterOptions options)

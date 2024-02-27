@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSsisTaskOutputProjectLevel(id.Value, resultType, serializedAdditionalRawData, folderName.Value, projectName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+            return new MigrateSsisTaskOutputProjectLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                folderName.Value,
+                projectName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                message.Value,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskOutputProjectLevel>.Write(ModelReaderWriterOptions options)

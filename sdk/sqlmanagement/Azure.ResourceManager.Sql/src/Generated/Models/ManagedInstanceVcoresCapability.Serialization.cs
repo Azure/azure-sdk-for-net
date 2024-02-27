@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceVcoresCapability(name.Value, Optional.ToNullable(value), includedMaxSize.Value, supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(), Optional.ToNullable(instancePoolSupported), Optional.ToNullable(standaloneSupported), supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new ManagedInstanceVcoresCapability(
+                name.Value,
+                Optional.ToNullable(value),
+                includedMaxSize.Value,
+                supportedStorageSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
+                Optional.ToNullable(instancePoolSupported),
+                Optional.ToNullable(standaloneSupported),
+                supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceVcoresCapability>.Write(ModelReaderWriterOptions options)

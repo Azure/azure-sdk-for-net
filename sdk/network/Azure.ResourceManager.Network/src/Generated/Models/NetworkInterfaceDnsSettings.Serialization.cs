@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceDnsSettings(dnsServers ?? new ChangeTrackingList<string>(), appliedDnsServers ?? new ChangeTrackingList<string>(), internalDnsNameLabel.Value, internalFqdn.Value, internalDomainNameSuffix.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceDnsSettings(
+                dnsServers ?? new ChangeTrackingList<string>(),
+                appliedDnsServers ?? new ChangeTrackingList<string>(),
+                internalDnsNameLabel.Value,
+                internalFqdn.Value,
+                internalDomainNameSuffix.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceDnsSettings>.Write(ModelReaderWriterOptions options)

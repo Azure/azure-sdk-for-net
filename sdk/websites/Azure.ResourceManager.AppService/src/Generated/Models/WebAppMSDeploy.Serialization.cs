@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, setParameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeploy(
+                id,
+                name,
+                type,
+                systemData.Value,
+                packageUri.Value,
+                connectionString.Value,
+                dbType.Value,
+                setParametersXmlFileUri.Value,
+                setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(skipAppData),
+                Optional.ToNullable(appOffline),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeploy>.Write(ModelReaderWriterOptions options)

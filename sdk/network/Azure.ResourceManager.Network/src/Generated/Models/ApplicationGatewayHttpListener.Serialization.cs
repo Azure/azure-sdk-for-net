@@ -328,7 +328,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayHttpListener(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, frontendPort, Optional.ToNullable(protocol), hostName.Value, sslCertificate, sslProfile, Optional.ToNullable(requireServerNameIndication), Optional.ToNullable(provisioningState), customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(), firewallPolicy, hostNames ?? new ChangeTrackingList<string>());
+            return new ApplicationGatewayHttpListener(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                frontendIPConfiguration,
+                frontendPort,
+                Optional.ToNullable(protocol),
+                hostName.Value,
+                sslCertificate,
+                sslProfile,
+                Optional.ToNullable(requireServerNameIndication),
+                Optional.ToNullable(provisioningState),
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                firewallPolicy,
+                hostNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<ApplicationGatewayHttpListener>.Write(ModelReaderWriterOptions options)

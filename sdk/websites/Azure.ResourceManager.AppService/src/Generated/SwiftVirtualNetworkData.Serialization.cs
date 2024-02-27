@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwiftVirtualNetworkData(id, name, type, systemData.Value, subnetResourceId.Value, Optional.ToNullable(swiftSupported), kind.Value, serializedAdditionalRawData);
+            return new SwiftVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                subnetResourceId.Value,
+                Optional.ToNullable(swiftSupported),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwiftVirtualNetworkData>.Write(ModelReaderWriterOptions options)

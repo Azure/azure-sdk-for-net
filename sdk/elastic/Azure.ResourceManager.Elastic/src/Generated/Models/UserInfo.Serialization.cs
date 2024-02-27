@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInfo(firstName.Value, lastName.Value, companyName.Value, emailAddress.Value, companyInfo.Value, serializedAdditionalRawData);
+            return new UserInfo(
+                firstName.Value,
+                lastName.Value,
+                companyName.Value,
+                emailAddress.Value,
+                companyInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInfo>.Write(ModelReaderWriterOptions options)

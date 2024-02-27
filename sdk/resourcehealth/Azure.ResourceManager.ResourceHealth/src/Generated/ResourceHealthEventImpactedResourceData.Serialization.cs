@@ -260,7 +260,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpactedResourceData(id, name, type, systemData.Value, Optional.ToNullable(targetResourceType), targetResourceId.Value, targetRegion.Value, resourceName.Value, resourceGroup.Value, status.Value, maintenanceStartTime.Value, maintenanceEndTime.Value, info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(), serializedAdditionalRawData);
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(targetResourceType),
+                targetResourceId.Value,
+                targetRegion.Value,
+                resourceName.Value,
+                resourceGroup.Value,
+                status.Value,
+                maintenanceStartTime.Value,
+                maintenanceEndTime.Value,
+                info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpactedResourceData>.Write(ModelReaderWriterOptions options)

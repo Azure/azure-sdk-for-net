@@ -431,7 +431,34 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MabFileFolderProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), vaultId.Value, serializedAdditionalRawData, friendlyName.Value, computerName.Value, lastBackupStatus.Value, Optional.ToNullable(lastBackupTime), protectionState.Value, Optional.ToNullable(deferredDeleteSyncTimeInUTC), extendedInfo.Value);
+            return new MabFileFolderProtectedItem(
+                protectedItemType,
+                Optional.ToNullable(backupManagementType),
+                Optional.ToNullable(workloadType),
+                containerName.Value,
+                sourceResourceId.Value,
+                policyId.Value,
+                Optional.ToNullable(lastRecoveryPoint),
+                backupSetName.Value,
+                Optional.ToNullable(createMode),
+                Optional.ToNullable(deferredDeleteTimeInUTC),
+                Optional.ToNullable(isScheduledForDeferredDelete),
+                deferredDeleteTimeRemaining.Value,
+                Optional.ToNullable(isDeferredDeleteScheduleUpcoming),
+                Optional.ToNullable(isRehydrate),
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isArchiveEnabled),
+                policyName.Value,
+                Optional.ToNullable(softDeleteRetentionPeriodInDays),
+                vaultId.Value,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                computerName.Value,
+                lastBackupStatus.Value,
+                Optional.ToNullable(lastBackupTime),
+                protectionState.Value,
+                Optional.ToNullable(deferredDeleteSyncTimeInUTC),
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<MabFileFolderProtectedItem>.Write(ModelReaderWriterOptions options)

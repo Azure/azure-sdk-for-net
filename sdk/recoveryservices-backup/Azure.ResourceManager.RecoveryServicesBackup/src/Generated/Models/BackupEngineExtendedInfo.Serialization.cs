@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupEngineExtendedInfo(databaseName.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(protectedServersCount), Optional.ToNullable(diskCount), Optional.ToNullable(usedDiskSpace), Optional.ToNullable(availableDiskSpace), Optional.ToNullable(refreshedAt), Optional.ToNullable(azureProtectedInstances), serializedAdditionalRawData);
+            return new BackupEngineExtendedInfo(
+                databaseName.Value,
+                Optional.ToNullable(protectedItemsCount),
+                Optional.ToNullable(protectedServersCount),
+                Optional.ToNullable(diskCount),
+                Optional.ToNullable(usedDiskSpace),
+                Optional.ToNullable(availableDiskSpace),
+                Optional.ToNullable(refreshedAt),
+                Optional.ToNullable(azureProtectedInstances),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupEngineExtendedInfo>.Write(ModelReaderWriterOptions options)

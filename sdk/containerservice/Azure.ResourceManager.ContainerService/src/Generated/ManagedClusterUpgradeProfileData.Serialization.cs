@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterUpgradeProfileData(id, name, type, systemData.Value, controlPlaneProfile, agentPoolProfiles, serializedAdditionalRawData);
+            return new ManagedClusterUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                controlPlaneProfile,
+                agentPoolProfiles,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options)

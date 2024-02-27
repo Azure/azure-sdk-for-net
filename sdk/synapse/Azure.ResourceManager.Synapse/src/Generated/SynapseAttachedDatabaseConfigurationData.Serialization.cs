@@ -250,7 +250,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, attachedDatabaseNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, serializedAdditionalRawData);
+            return new SynapseAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                databaseName.Value,
+                clusterResourceId.Value,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultPrincipalsModificationKind),
+                tableLevelSharingProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

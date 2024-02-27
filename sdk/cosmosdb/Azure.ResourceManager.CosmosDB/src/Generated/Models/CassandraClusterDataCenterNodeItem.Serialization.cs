@@ -330,7 +330,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, tokens ?? new ChangeTrackingList<string>(), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage), Optional.ToNullable(isLatestModel), serializedAdditionalRawData);
+            return new CassandraClusterDataCenterNodeItem(
+                address.Value,
+                Optional.ToNullable(state),
+                status.Value,
+                cassandraProcessStatus.Value,
+                load.Value,
+                tokens ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(size),
+                Optional.ToNullable(hostId),
+                rack.Value,
+                timestamp.Value,
+                Optional.ToNullable(diskUsedKB),
+                Optional.ToNullable(diskFreeKB),
+                Optional.ToNullable(memoryUsedKB),
+                Optional.ToNullable(memoryBuffersAndCachedKB),
+                Optional.ToNullable(memoryFreeKB),
+                Optional.ToNullable(memoryTotalKB),
+                Optional.ToNullable(cpuUsage),
+                Optional.ToNullable(isLatestModel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)

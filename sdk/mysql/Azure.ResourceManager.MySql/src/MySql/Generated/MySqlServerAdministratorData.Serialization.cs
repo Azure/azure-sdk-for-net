@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new MySqlServerAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(administratorType),
+                login.Value,
+                Optional.ToNullable(sid),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerAdministratorData>.Write(ModelReaderWriterOptions options)

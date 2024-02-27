@@ -429,7 +429,33 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsWatchlistData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(watchlistId),
+                displayName.Value,
+                provider.Value,
+                Optional.ToNullable(source),
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                createdBy.Value,
+                updatedBy.Value,
+                description.Value,
+                watchlistType.Value,
+                watchlistAlias.Value,
+                Optional.ToNullable(isDeleted),
+                labels ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultDuration),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(numberOfLinesToSkip),
+                rawContent.Value,
+                itemsSearchKey.Value,
+                contentType.Value,
+                uploadStatus.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsWatchlistData>.Write(ModelReaderWriterOptions options)

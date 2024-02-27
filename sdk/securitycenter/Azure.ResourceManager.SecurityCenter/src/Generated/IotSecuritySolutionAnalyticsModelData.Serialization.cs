@@ -269,7 +269,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>(), topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>(), mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>(), mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>(), serializedAdditionalRawData);
+            return new IotSecuritySolutionAnalyticsModelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metrics.Value,
+                Optional.ToNullable(unhealthyDeviceCount),
+                devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>(),
+                topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>(),
+                mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>(),
+                mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options)

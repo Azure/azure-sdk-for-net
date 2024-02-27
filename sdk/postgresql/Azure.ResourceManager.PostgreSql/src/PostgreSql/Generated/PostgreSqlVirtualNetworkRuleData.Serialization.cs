@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new PostgreSqlVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualNetworkSubnetId.Value,
+                Optional.ToNullable(ignoreMissingVnetServiceEndpoint),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

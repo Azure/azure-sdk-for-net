@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedCertificateProperties(Optional.ToNullable(provisioningState), subjectName.Value, error.Value, Optional.ToNullable(domainControlValidation), validationToken.Value, serializedAdditionalRawData);
+            return new ManagedCertificateProperties(
+                Optional.ToNullable(provisioningState),
+                subjectName.Value,
+                error.Value,
+                Optional.ToNullable(domainControlValidation),
+                validationToken.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedCertificateProperties>.Write(ModelReaderWriterOptions options)

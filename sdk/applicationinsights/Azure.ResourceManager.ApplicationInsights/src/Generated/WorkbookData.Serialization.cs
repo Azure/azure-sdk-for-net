@@ -381,7 +381,27 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, displayName.Value, serializedData.Value, version.Value, Optional.ToNullable(timeModified), category.Value, userId.Value, sourceId.Value, storageUri.Value, description.Value, revision.Value, identity, Optional.ToNullable(kind), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new WorkbookData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                displayName.Value,
+                serializedData.Value,
+                version.Value,
+                Optional.ToNullable(timeModified),
+                category.Value,
+                userId.Value,
+                sourceId.Value,
+                storageUri.Value,
+                description.Value,
+                revision.Value,
+                identity,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookData>.Write(ModelReaderWriterOptions options)

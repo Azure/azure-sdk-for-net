@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSqlPointInTimeRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, propertyBag ?? new ChangeTrackingDictionary<string, string>(), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value, Optional.ToNullable(shouldUseAlternateTargetLocation), Optional.ToNullable(isNonRecoverable), alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(), Optional.ToNullable(pointInTime));
+            return new WorkloadSqlPointInTimeRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo.Value,
+                Optional.ToNullable(recoveryMode),
+                targetResourceGroupName.Value,
+                userAssignedManagedIdentityDetails.Value,
+                snapshotRestoreParameters.Value,
+                targetVirtualMachineId.Value,
+                Optional.ToNullable(shouldUseAlternateTargetLocation),
+                Optional.ToNullable(isNonRecoverable),
+                alternateDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectoryMapping>(),
+                Optional.ToNullable(pointInTime));
         }
 
         BinaryData IPersistableModel<WorkloadSqlPointInTimeRestoreContent>.Write(ModelReaderWriterOptions options)

@@ -411,7 +411,32 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value, serializedAdditionalRawData);
+            return new StorageSyncServerEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverLocalPath.Value,
+                Optional.ToNullable(cloudTiering),
+                Optional.ToNullable(volumeFreeSpacePercent),
+                Optional.ToNullable(tierFilesOlderThanDays),
+                friendlyName.Value,
+                serverResourceId.Value,
+                provisioningState.Value,
+                lastWorkflowId.Value,
+                lastOperationName.Value,
+                syncStatus.Value,
+                Optional.ToNullable(offlineDataTransfer),
+                offlineDataTransferStorageAccountResourceId.Value,
+                Optional.ToNullable(offlineDataTransferStorageAccountTenantId),
+                offlineDataTransferShareName.Value,
+                cloudTieringStatus.Value,
+                recallStatus.Value,
+                Optional.ToNullable(initialDownloadPolicy),
+                Optional.ToNullable(localCacheMode),
+                Optional.ToNullable(initialUploadPolicy),
+                serverName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options)

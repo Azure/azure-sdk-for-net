@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageContainerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation.Value, path.Value, Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new StorageContainerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                path.Value,
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageContainerData>.Write(ModelReaderWriterOptions options)

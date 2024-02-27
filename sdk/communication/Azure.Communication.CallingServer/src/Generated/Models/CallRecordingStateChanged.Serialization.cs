@@ -100,7 +100,18 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallRecordingStateChanged(eventSource.Value, recordingId.Value, state, Optional.ToNullable(startDateTime), version.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new CallRecordingStateChanged(
+                eventSource.Value,
+                recordingId.Value,
+                state,
+                Optional.ToNullable(startDateTime),
+                version.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value,
+                publicEventType.Value);
         }
     }
 }

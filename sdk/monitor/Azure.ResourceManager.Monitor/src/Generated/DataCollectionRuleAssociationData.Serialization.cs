@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), description.Value, dataCollectionRuleId.Value, dataCollectionEndpointId.Value, Optional.ToNullable(provisioningState), metadata.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleAssociationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                description.Value,
+                dataCollectionRuleId.Value,
+                dataCollectionEndpointId.Value,
+                Optional.ToNullable(provisioningState),
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options)

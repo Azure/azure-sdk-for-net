@@ -343,7 +343,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableDataBoxEdgeSku(resourceType.Value, Optional.ToNullable(name), kind.Value, Optional.ToNullable(tier), size.Value, family.Value, locations ?? new ChangeTrackingList<AzureLocation>(), apiVersions ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>(), costs ?? new ChangeTrackingList<DataBoxEdgeSkuCost>(), Optional.ToNullable(signupOption), Optional.ToNullable(version), Optional.ToNullable(availability), shipmentTypes ?? new ChangeTrackingList<DataBoxEdgeShipmentType>(), capabilities ?? new ChangeTrackingList<DataBoxEdgeSkuCapability>(), serializedAdditionalRawData);
+            return new AvailableDataBoxEdgeSku(
+                resourceType.Value,
+                Optional.ToNullable(name),
+                kind.Value,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<DataBoxEdgeSkuLocationInfo>(),
+                costs ?? new ChangeTrackingList<DataBoxEdgeSkuCost>(),
+                Optional.ToNullable(signupOption),
+                Optional.ToNullable(version),
+                Optional.ToNullable(availability),
+                shipmentTypes ?? new ChangeTrackingList<DataBoxEdgeShipmentType>(),
+                capabilities ?? new ChangeTrackingList<DataBoxEdgeSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableDataBoxEdgeSku>.Write(ModelReaderWriterOptions options)

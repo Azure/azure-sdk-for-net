@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareResourceStatus(type.Value, status.Value, reason.Value, message.Value, severity.Value, Optional.ToNullable(lastUpdatedAt), serializedAdditionalRawData);
+            return new VMwareResourceStatus(
+                type.Value,
+                status.Value,
+                reason.Value,
+                message.Value,
+                severity.Value,
+                Optional.ToNullable(lastUpdatedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourceStatus>.Write(ModelReaderWriterOptions options)

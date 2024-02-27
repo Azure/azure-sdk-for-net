@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfacesUpdate(name.Value, macAddress.Value, virtualNetworkId.Value, Optional.ToNullable(ipv4AddressType), Optional.ToNullable(ipv6AddressType), Optional.ToNullable(macAddressType), nicId.Value, serializedAdditionalRawData);
+            return new NetworkInterfacesUpdate(
+                name.Value,
+                macAddress.Value,
+                virtualNetworkId.Value,
+                Optional.ToNullable(ipv4AddressType),
+                Optional.ToNullable(ipv6AddressType),
+                Optional.ToNullable(macAddressType),
+                nicId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfacesUpdate>.Write(ModelReaderWriterOptions options)

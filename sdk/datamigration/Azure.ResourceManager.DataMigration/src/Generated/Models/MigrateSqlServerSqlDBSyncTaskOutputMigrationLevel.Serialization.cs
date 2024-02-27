@@ -182,7 +182,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Optional.ToNullable(databaseCount));
+            return new MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                sourceServerVersion.Value,
+                sourceServer.Value,
+                targetServerVersion.Value,
+                targetServer.Value,
+                Optional.ToNullable(databaseCount));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

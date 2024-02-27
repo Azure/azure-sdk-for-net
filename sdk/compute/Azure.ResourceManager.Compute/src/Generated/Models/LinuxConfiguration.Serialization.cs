@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), patchSettings.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
+            return new LinuxConfiguration(
+                Optional.ToNullable(disablePasswordAuthentication),
+                ssh.Value,
+                Optional.ToNullable(provisionVmAgent),
+                patchSettings.Value,
+                Optional.ToNullable(enableVmAgentPlatformUpdates),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinuxConfiguration>.Write(ModelReaderWriterOptions options)

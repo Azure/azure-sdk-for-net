@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesRunStatusChangedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value, runStatus.Value);
+            return new MachineLearningServicesRunStatusChangedEventData(
+                experimentId.Value,
+                experimentName.Value,
+                runId.Value,
+                runType.Value,
+                runTags.Value,
+                runProperties.Value,
+                runStatus.Value);
         }
 
         internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>

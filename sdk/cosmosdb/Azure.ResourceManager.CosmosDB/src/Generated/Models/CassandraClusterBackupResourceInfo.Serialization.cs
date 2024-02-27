@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterBackupResourceInfo(backupId.Value, Optional.ToNullable(backupState), Optional.ToNullable(backupStartTimestamp), Optional.ToNullable(backupStopTimestamp), Optional.ToNullable(backupExpiryTimestamp), serializedAdditionalRawData);
+            return new CassandraClusterBackupResourceInfo(
+                backupId.Value,
+                Optional.ToNullable(backupState),
+                Optional.ToNullable(backupStartTimestamp),
+                Optional.ToNullable(backupStopTimestamp),
+                Optional.ToNullable(backupExpiryTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupResourceInfo>.Write(ModelReaderWriterOptions options)

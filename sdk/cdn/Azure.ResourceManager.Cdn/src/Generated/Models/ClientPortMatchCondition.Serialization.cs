@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClientPortMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), matchValues ?? new ChangeTrackingList<string>(), transforms ?? new ChangeTrackingList<PreTransformCategory>(), serializedAdditionalRawData);
+            return new ClientPortMatchCondition(
+                typeName,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClientPortMatchCondition>.Write(ModelReaderWriterOptions options)

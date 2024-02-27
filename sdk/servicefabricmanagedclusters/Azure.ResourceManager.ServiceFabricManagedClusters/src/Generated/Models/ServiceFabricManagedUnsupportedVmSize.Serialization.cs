@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedUnsupportedVmSize(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ServiceFabricManagedUnsupportedVmSize(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedUnsupportedVmSize>.Write(ModelReaderWriterOptions options)

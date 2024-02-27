@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate), serializedAdditionalRawData);
+            return new CommitmentPeriod(
+                tier.Value,
+                Optional.ToNullable(count),
+                quota.Value,
+                Optional.ToNullable(startDate),
+                Optional.ToNullable(endDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPeriod>.Write(ModelReaderWriterOptions options)

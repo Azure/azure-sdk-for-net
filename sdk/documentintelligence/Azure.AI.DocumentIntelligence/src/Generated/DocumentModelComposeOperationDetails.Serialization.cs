@@ -205,7 +205,19 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelComposeOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error.Value, serializedAdditionalRawData, result.Value);
+            return new DocumentModelComposeOperationDetails(
+                operationId,
+                status,
+                Optional.ToNullable(percentCompleted),
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error.Value,
+                serializedAdditionalRawData,
+                result.Value);
         }
 
         BinaryData IPersistableModel<DocumentModelComposeOperationDetails>.Write(ModelReaderWriterOptions options)

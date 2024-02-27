@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendAddressPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), backendAddresses ?? new ChangeTrackingList<ApplicationGatewayBackendAddress>(), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendAddressPool(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                backendAddresses ?? new ChangeTrackingList<ApplicationGatewayBackendAddress>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendAddressPool>.Write(ModelReaderWriterOptions options)

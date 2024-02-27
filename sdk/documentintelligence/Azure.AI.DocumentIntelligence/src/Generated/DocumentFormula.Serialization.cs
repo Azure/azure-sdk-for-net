@@ -132,7 +132,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFormula(kind, value, polygon ?? new ChangeTrackingList<float>(), span, confidence, serializedAdditionalRawData);
+            return new DocumentFormula(
+                kind,
+                value,
+                polygon ?? new ChangeTrackingList<float>(),
+                span,
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFormula>.Write(ModelReaderWriterOptions options)

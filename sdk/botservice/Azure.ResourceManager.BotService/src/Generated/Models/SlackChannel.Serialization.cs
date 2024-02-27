@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlackChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new SlackChannel(
+                channelName,
+                Optional.ToNullable(etag),
+                provisioningState.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<SlackChannel>.Write(ModelReaderWriterOptions options)

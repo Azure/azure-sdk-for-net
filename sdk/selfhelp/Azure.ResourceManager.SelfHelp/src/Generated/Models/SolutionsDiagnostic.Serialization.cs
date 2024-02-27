@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionsDiagnostic(solutionId.Value, Optional.ToNullable(status), statusDetails.Value, replacementKey.Value, requiredParameters ?? new ChangeTrackingList<string>(), insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(), serializedAdditionalRawData);
+            return new SolutionsDiagnostic(
+                solutionId.Value,
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                replacementKey.Value,
+                requiredParameters ?? new ChangeTrackingList<string>(),
+                insights ?? new ChangeTrackingList<SelfHelpDiagnosticInsight>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)

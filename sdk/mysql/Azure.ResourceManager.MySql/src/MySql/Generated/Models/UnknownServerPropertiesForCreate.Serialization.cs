@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData);
+            return new UnknownServerPropertiesForCreate(
+                Optional.ToNullable(version),
+                Optional.ToNullable(sslEnforcement),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(infrastructureEncryption),
+                Optional.ToNullable(publicNetworkAccess),
+                storageProfile.Value,
+                createMode,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)

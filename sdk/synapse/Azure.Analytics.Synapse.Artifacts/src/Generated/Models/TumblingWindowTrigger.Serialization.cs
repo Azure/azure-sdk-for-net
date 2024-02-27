@@ -231,7 +231,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, dependsOn ?? new ChangeTrackingList<DependencyReference>());
+            return new TumblingWindowTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                Optional.ToNullable(endTime),
+                delay.Value,
+                maxConcurrency,
+                retryPolicy.Value,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 
         internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>

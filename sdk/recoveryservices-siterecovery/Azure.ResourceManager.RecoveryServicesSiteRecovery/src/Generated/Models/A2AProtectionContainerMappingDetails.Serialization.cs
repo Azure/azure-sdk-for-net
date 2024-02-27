@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType), scheduleName.Value, jobScheduleName.Value);
+            return new A2AProtectionContainerMappingDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(agentAutoUpdateStatus),
+                automationAccountArmId.Value,
+                Optional.ToNullable(automationAccountAuthenticationType),
+                scheduleName.Value,
+                jobScheduleName.Value);
         }
 
         BinaryData IPersistableModel<A2AProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)

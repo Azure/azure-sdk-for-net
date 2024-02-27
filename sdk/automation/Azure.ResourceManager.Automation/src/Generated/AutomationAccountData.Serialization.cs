@@ -371,7 +371,27 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), identity, sku.Value, lastModifiedBy.Value, Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), automationHybridServiceUrl.Value, serializedAdditionalRawData);
+            return new AutomationAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                identity,
+                sku.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<AutomationPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(disableLocalAuth),
+                automationHybridServiceUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options)

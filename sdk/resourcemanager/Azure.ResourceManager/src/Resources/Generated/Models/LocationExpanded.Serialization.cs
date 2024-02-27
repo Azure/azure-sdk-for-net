@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationExpanded(id.Value, subscriptionId.Value, name.Value, Optional.ToNullable(type), displayName.Value, regionalDisplayName.Value, metadata.Value, availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(), serializedAdditionalRawData);
+            return new LocationExpanded(
+                id.Value,
+                subscriptionId.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                displayName.Value,
+                regionalDisplayName.Value,
+                metadata.Value,
+                availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMappings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationExpanded>.Write(ModelReaderWriterOptions options)

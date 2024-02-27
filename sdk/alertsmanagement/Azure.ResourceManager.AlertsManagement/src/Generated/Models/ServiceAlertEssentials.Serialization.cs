@@ -323,7 +323,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertEssentials(Optional.ToNullable(severity), Optional.ToNullable(signalType), Optional.ToNullable(alertState), Optional.ToNullable(monitorCondition), targetResource.Value, targetResourceName.Value, targetResourceGroup.Value, targetResourceType.Value, Optional.ToNullable(monitorService), alertRule.Value, sourceCreatedId.Value, Optional.ToNullable(smartGroupId), smartGroupingReason.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(monitorConditionResolvedDateTime), lastModifiedUserName.Value, actionStatus.Value, description.Value, serializedAdditionalRawData);
+            return new ServiceAlertEssentials(
+                Optional.ToNullable(severity),
+                Optional.ToNullable(signalType),
+                Optional.ToNullable(alertState),
+                Optional.ToNullable(monitorCondition),
+                targetResource.Value,
+                targetResourceName.Value,
+                targetResourceGroup.Value,
+                targetResourceType.Value,
+                Optional.ToNullable(monitorService),
+                alertRule.Value,
+                sourceCreatedId.Value,
+                Optional.ToNullable(smartGroupId),
+                smartGroupingReason.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                Optional.ToNullable(monitorConditionResolvedDateTime),
+                lastModifiedUserName.Value,
+                actionStatus.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertEssentials>.Write(ModelReaderWriterOptions options)

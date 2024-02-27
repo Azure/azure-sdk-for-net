@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesStatefulSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new KubernetesStatefulSet(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesStatefulSet>.Write(ModelReaderWriterOptions options)

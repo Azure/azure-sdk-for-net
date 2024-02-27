@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadSapHanaPointInTimeRestoreContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryType), sourceResourceId.Value, propertyBag ?? new ChangeTrackingDictionary<string, string>(), targetInfo.Value, Optional.ToNullable(recoveryMode), targetResourceGroupName.Value, userAssignedManagedIdentityDetails.Value, snapshotRestoreParameters.Value, targetVirtualMachineId.Value, Optional.ToNullable(pointInTime));
+            return new WorkloadSapHanaPointInTimeRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                propertyBag ?? new ChangeTrackingDictionary<string, string>(),
+                targetInfo.Value,
+                Optional.ToNullable(recoveryMode),
+                targetResourceGroupName.Value,
+                userAssignedManagedIdentityDetails.Value,
+                snapshotRestoreParameters.Value,
+                targetVirtualMachineId.Value,
+                Optional.ToNullable(pointInTime));
         }
 
         BinaryData IPersistableModel<WorkloadSapHanaPointInTimeRestoreContent>.Write(ModelReaderWriterOptions options)

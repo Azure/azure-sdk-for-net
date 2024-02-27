@@ -204,7 +204,19 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlackChannelProperties(clientId.Value, clientSecret.Value, verificationToken.Value, scopes.Value, landingPageUrl.Value, redirectAction.Value, lastSubmissionId.Value, Optional.ToNullable(registerBeforeOAuthFlow), Optional.ToNullable(isValidated), signingSecret.Value, isEnabled, serializedAdditionalRawData);
+            return new SlackChannelProperties(
+                clientId.Value,
+                clientSecret.Value,
+                verificationToken.Value,
+                scopes.Value,
+                landingPageUrl.Value,
+                redirectAction.Value,
+                lastSubmissionId.Value,
+                Optional.ToNullable(registerBeforeOAuthFlow),
+                Optional.ToNullable(isValidated),
+                signingSecret.Value,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlackChannelProperties>.Write(ModelReaderWriterOptions options)

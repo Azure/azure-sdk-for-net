@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaSubRequestDetail(name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), limit.Value, serializedAdditionalRawData);
+            return new QuotaSubRequestDetail(
+                name.Value,
+                resourceType.Value,
+                unit.Value,
+                Optional.ToNullable(provisioningState),
+                message.Value,
+                Optional.ToNullable(subRequestId),
+                limit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaSubRequestDetail>.Write(ModelReaderWriterOptions options)

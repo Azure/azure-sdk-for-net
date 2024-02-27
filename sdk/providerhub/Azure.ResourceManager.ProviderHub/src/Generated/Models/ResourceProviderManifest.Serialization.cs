@@ -333,7 +333,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManifest(providerAuthentication.Value, providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, requestHeaderOptions.Value, resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(), management.Value, capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(), metadata.Value, globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), reRegisterSubscriptionMetadata.Value, serializedAdditionalRawData);
+            return new ResourceProviderManifest(
+                providerAuthentication.Value,
+                providerAuthorizations ?? new ChangeTrackingList<ResourceProviderAuthorization>(),
+                @namespace.Value,
+                providerVersion.Value,
+                Optional.ToNullable(providerType),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                requestHeaderOptions.Value,
+                resourceTypes ?? new ChangeTrackingList<ProviderResourceType>(),
+                management.Value,
+                capabilities ?? new ChangeTrackingList<ResourceProviderCapabilities>(),
+                metadata.Value,
+                globalNotificationEndpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
+                reRegisterSubscriptionMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManifest>.Write(ModelReaderWriterOptions options)

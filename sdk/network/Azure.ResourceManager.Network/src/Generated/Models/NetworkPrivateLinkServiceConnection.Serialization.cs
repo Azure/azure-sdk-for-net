@@ -227,7 +227,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPrivateLinkServiceConnection(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateLinkServiceId.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, privateLinkServiceConnectionState.Value);
+            return new NetworkPrivateLinkServiceConnection(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                privateLinkServiceId.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                requestMessage.Value,
+                privateLinkServiceConnectionState.Value);
         }
 
         BinaryData IPersistableModel<NetworkPrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)

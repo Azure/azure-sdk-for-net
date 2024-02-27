@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), ipConfigurations ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(), containerNetworkInterfaces ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterfaceConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                ipConfigurations ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(),
+                containerNetworkInterfaces ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)

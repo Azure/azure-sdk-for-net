@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunicationDomainResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), dataLocation.Value, fromSenderDomain.Value, mailFromSenderDomain.Value, Optional.ToNullable(domainManagement), verificationStates.Value, verificationRecords.Value, Optional.ToNullable(userEngagementTracking), serializedAdditionalRawData);
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                dataLocation.Value,
+                fromSenderDomain.Value,
+                mailFromSenderDomain.Value,
+                Optional.ToNullable(domainManagement),
+                verificationStates.Value,
+                verificationRecords.Value,
+                Optional.ToNullable(userEngagementTracking),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommunicationDomainResourceData>.Write(ModelReaderWriterOptions options)

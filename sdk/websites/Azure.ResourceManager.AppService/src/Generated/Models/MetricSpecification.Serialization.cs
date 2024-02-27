@@ -333,7 +333,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Optional.ToNullable(supportsInstanceLevelAggregation), Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Optional.ToNullable(fillGapWithZero), Optional.ToNullable(isInternal), dimensions ?? new ChangeTrackingList<MetricDimension>(), category.Value, availabilities ?? new ChangeTrackingList<MetricAvailability>(), supportedTimeGrainTypes ?? new ChangeTrackingList<string>(), supportedAggregationTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MetricSpecification(
+                name.Value,
+                displayName.Value,
+                displayDescription.Value,
+                unit.Value,
+                aggregationType.Value,
+                Optional.ToNullable(supportsInstanceLevelAggregation),
+                Optional.ToNullable(enableRegionalMdmAccount),
+                sourceMdmAccount.Value,
+                sourceMdmNamespace.Value,
+                metricFilterPattern.Value,
+                Optional.ToNullable(fillGapWithZero),
+                Optional.ToNullable(isInternal),
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                category.Value,
+                availabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                supportedTimeGrainTypes ?? new ChangeTrackingList<string>(),
+                supportedAggregationTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricSpecification>.Write(ModelReaderWriterOptions options)

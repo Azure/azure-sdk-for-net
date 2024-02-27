@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, secrets ?? new ChangeTrackingList<SecretVolumeItem>(), mountOptions.Value, serializedAdditionalRawData);
+            return new ContainerAppVolume(
+                name.Value,
+                Optional.ToNullable(storageType),
+                storageName.Value,
+                secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
+                mountOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)

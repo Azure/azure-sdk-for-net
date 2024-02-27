@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereDeploymentData(id, name, type, systemData.Value, deploymentId.Value, deployedImages ?? new ChangeTrackingList<SphereImageData>(), Optional.ToNullable(deploymentDateUtc), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereDeploymentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deploymentId.Value,
+                deployedImages ?? new ChangeTrackingList<SphereImageData>(),
+                Optional.ToNullable(deploymentDateUtc),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereDeploymentData>.Write(ModelReaderWriterOptions options)

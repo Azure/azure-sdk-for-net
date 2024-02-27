@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalRevisionData(id, name, type, systemData.Value, description.Value, statusDetails.Value, Optional.ToNullable(status), Optional.ToNullable(isCurrent), Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), serializedAdditionalRawData);
+            return new ApiManagementPortalRevisionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                statusDetails.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(updatedDateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalRevisionData>.Write(ModelReaderWriterOptions options)

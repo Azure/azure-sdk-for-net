@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionUsageProperties(firstConsumptionDate.Value, lastConsumptionDate.Value, lookBackUnitType.Value, usageData ?? new ChangeTrackingList<float>(), usageGrain.Value, serializedAdditionalRawData);
+            return new ConsumptionUsageProperties(
+                firstConsumptionDate.Value,
+                lastConsumptionDate.Value,
+                lookBackUnitType.Value,
+                usageData ?? new ChangeTrackingList<float>(),
+                usageGrain.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageProperties>.Write(ModelReaderWriterOptions options)

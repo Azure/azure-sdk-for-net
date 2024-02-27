@@ -237,7 +237,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryPrivateEndpointConnection(id.Value, Optional.ToNullable(location), groupIds ?? new ChangeTrackingList<string>(), privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new RegistryPrivateEndpointConnection(
+                id.Value,
+                Optional.ToNullable(location),
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint.Value,
+                privateLinkServiceConnectionState.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

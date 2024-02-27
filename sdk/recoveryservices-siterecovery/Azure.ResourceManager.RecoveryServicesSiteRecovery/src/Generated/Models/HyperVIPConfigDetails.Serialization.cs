@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HyperVIPConfigDetails(
+                name.Value,
+                Optional.ToNullable(isPrimary),
+                subnetName.Value,
+                staticIPAddress.Value,
+                ipAddressType.Value,
+                Optional.ToNullable(isSeletedForFailover),
+                recoverySubnetName.Value,
+                recoveryStaticIPAddress.Value,
+                recoveryIPAddressType.Value,
+                recoveryPublicIPAddressId.Value,
+                recoveryLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                tfoSubnetName.Value,
+                tfoStaticIPAddress.Value,
+                tfoPublicIPAddressId.Value,
+                tfoLBBackendAddressPoolIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVIPConfigDetails>.Write(ModelReaderWriterOptions options)

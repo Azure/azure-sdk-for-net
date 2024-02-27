@@ -18,20 +18,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <param name="definition"></param>
         /// <param name="timestamps"> timestamps of the data related to this time series. </param>
         /// <param name="metricValues"> values of the data related to this time series. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/>, <paramref name="timestamps"/> or <paramref name="metricValues"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
         internal MetricSeriesData(MetricSeriesDefinition definition, IEnumerable<DateTimeOffset> timestamps, IEnumerable<double> metricValues)
         {
             if (definition == null)
             {
                 throw new ArgumentNullException(nameof(definition));
-            }
-            if (timestamps == null)
-            {
-                throw new ArgumentNullException(nameof(timestamps));
-            }
-            if (metricValues == null)
-            {
-                throw new ArgumentNullException(nameof(metricValues));
             }
 
             Definition = definition;

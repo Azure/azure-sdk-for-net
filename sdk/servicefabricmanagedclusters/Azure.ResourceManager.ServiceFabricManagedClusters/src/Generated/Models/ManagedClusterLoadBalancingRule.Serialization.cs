@@ -143,7 +143,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value, serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancingRule(
+                frontendPort,
+                backendPort,
+                protocol,
+                Optional.ToNullable(probePort),
+                probeProtocol,
+                probeRequestPath.Value,
+                loadDistribution.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancingRule>.Write(ModelReaderWriterOptions options)

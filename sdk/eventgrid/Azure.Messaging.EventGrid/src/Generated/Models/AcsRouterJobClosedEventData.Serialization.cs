@@ -97,7 +97,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClosedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), assignmentId.Value, workerId.Value, dispositionCode.Value);
+            return new AcsRouterJobClosedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                assignmentId.Value,
+                workerId.Value,
+                dispositionCode.Value);
         }
 
         internal partial class AcsRouterJobClosedEventDataConverter : JsonConverter<AcsRouterJobClosedEventData>

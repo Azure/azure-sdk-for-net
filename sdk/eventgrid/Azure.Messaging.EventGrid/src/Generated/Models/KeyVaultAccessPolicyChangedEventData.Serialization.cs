@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new KeyVaultAccessPolicyChangedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultAccessPolicyChangedEventData(
+                id.Value,
+                vaultName.Value,
+                objectType.Value,
+                objectName.Value,
+                version.Value,
+                Optional.ToNullable(nbf),
+                Optional.ToNullable(exp));
         }
 
         internal partial class KeyVaultAccessPolicyChangedEventDataConverter : JsonConverter<KeyVaultAccessPolicyChangedEventData>

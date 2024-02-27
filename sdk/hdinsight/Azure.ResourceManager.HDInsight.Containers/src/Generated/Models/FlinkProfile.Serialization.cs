@@ -143,7 +143,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, serializedAdditionalRawData);
+            return new FlinkProfile(
+                storage,
+                Optional.ToNullable(numReplicas),
+                jobManager,
+                historyServer.Value,
+                taskManager,
+                catalogOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkProfile>.Write(ModelReaderWriterOptions options)

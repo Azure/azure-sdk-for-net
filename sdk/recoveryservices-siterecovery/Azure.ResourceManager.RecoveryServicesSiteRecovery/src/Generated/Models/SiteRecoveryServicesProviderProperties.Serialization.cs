@@ -350,7 +350,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), allowedScenarios ?? new ChangeTrackingList<string>(), healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryServicesProviderProperties(
+                fabricType.Value,
+                friendlyName.Value,
+                providerVersion.Value,
+                serverVersion.Value,
+                providerVersionState.Value,
+                Optional.ToNullable(providerVersionExpireOn),
+                fabricFriendlyName.Value,
+                Optional.ToNullable(lastHeartBeat),
+                connectionStatus.Value,
+                Optional.ToNullable(protectedItemCount),
+                allowedScenarios ?? new ChangeTrackingList<string>(),
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                draIdentifier.Value,
+                machineId.Value,
+                machineName.Value,
+                biosId.Value,
+                authenticationIdentityDetails.Value,
+                resourceAccessIdentityDetails.Value,
+                dataPlaneAuthenticationIdentityDetails.Value,
+                providerVersionDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)

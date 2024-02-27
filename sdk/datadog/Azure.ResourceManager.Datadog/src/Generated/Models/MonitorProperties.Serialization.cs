@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
+            return new MonitorProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(monitoringStatus),
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                datadogOrganizationProperties.Value,
+                userInfo.Value,
+                Optional.ToNullable(liftrResourceCategory),
+                Optional.ToNullable(liftrResourcePreference),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)

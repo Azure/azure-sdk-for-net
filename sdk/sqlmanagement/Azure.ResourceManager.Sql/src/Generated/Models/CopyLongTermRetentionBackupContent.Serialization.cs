@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyLongTermRetentionBackupContent(targetSubscriptionId.Value, targetResourceGroup.Value, targetServerResourceId.Value, targetServerFullyQualifiedDomainName.Value, targetDatabaseName.Value, Optional.ToNullable(targetBackupStorageRedundancy), serializedAdditionalRawData);
+            return new CopyLongTermRetentionBackupContent(
+                targetSubscriptionId.Value,
+                targetResourceGroup.Value,
+                targetServerResourceId.Value,
+                targetServerFullyQualifiedDomainName.Value,
+                targetDatabaseName.Value,
+                Optional.ToNullable(targetBackupStorageRedundancy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyLongTermRetentionBackupContent>.Write(ModelReaderWriterOptions options)

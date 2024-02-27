@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLink(name, polarization, direction, Optional.ToNullable(gainOverTemperature), Optional.ToNullable(eirpdBW), channels, serializedAdditionalRawData);
+            return new OrbitalContactProfileLink(
+                name,
+                polarization,
+                direction,
+                Optional.ToNullable(gainOverTemperature),
+                Optional.ToNullable(eirpdBW),
+                channels,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLink>.Write(ModelReaderWriterOptions options)

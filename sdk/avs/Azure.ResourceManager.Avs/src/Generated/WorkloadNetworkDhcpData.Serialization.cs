@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDhcpData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new WorkloadNetworkDhcpData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDhcpData>.Write(ModelReaderWriterOptions options)

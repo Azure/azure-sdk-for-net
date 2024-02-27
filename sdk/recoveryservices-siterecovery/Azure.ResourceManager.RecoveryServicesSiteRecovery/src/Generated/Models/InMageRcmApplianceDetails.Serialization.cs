@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmApplianceDetails(id.Value, name.Value, fabricArmId.Value, processServer.Value, rcmProxy.Value, pushInstaller.Value, replicationAgent.Value, reprotectAgent.Value, marsAgent.Value, dra.Value, switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>(), serializedAdditionalRawData);
+            return new InMageRcmApplianceDetails(
+                id.Value,
+                name.Value,
+                fabricArmId.Value,
+                processServer.Value,
+                rcmProxy.Value,
+                pushInstaller.Value,
+                replicationAgent.Value,
+                reprotectAgent.Value,
+                marsAgent.Value,
+                dra.Value,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageRcmFabricSwitchProviderBlockingErrorDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmApplianceDetails>.Write(ModelReaderWriterOptions options)

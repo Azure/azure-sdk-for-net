@@ -223,7 +223,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNode(id, name, type, systemData.Value, Optional.ToNullable(nodeStatus), nodeChassisSerialNumber.Value, nodeSerialNumber.Value, nodeDisplayName.Value, nodeFriendlySoftwareVersion.Value, nodeHcsVersion.Value, Optional.ToNullable(nodeInstanceId), serializedAdditionalRawData);
+            return new DataBoxEdgeNode(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(nodeStatus),
+                nodeChassisSerialNumber.Value,
+                nodeSerialNumber.Value,
+                nodeDisplayName.Value,
+                nodeFriendlySoftwareVersion.Value,
+                nodeHcsVersion.Value,
+                Optional.ToNullable(nodeInstanceId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNode>.Write(ModelReaderWriterOptions options)

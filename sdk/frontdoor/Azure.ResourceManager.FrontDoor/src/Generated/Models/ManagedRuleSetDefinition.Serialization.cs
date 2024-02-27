@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(), serializedAdditionalRawData);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                ruleSetId.Value,
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)

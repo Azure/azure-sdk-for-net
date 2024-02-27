@@ -413,7 +413,29 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumePatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(serviceLevel), Optional.ToNullable(usageThreshold), exportPolicy.Value, Optional.ToNullable(throughputMibps), dataProtection.Value, Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), unixPermissions.Value, Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), serializedAdditionalRawData);
+            return new NetAppVolumePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(serviceLevel),
+                Optional.ToNullable(usageThreshold),
+                exportPolicy.Value,
+                Optional.ToNullable(throughputMibps),
+                dataProtection.Value,
+                Optional.ToNullable(isDefaultQuotaEnabled),
+                Optional.ToNullable(defaultUserQuotaInKiBs),
+                Optional.ToNullable(defaultGroupQuotaInKiBs),
+                unixPermissions.Value,
+                Optional.ToNullable(coolAccess),
+                Optional.ToNullable(coolnessPeriod),
+                Optional.ToNullable(coolAccessRetrievalPolicy),
+                Optional.ToNullable(snapshotDirectoryVisible),
+                Optional.ToNullable(smbAccessBasedEnumeration),
+                Optional.ToNullable(smbNonBrowsable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatch>.Write(ModelReaderWriterOptions options)

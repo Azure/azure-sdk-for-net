@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, friendlyName.Value, timeZone.Value, exclusionTag.Value, schedules ?? new ChangeTrackingList<ScalingSchedule>(), hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(), serializedAdditionalRawData);
+            return new ScalingPlanPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                timeZone.Value,
+                exclusionTag.Value,
+                schedules ?? new ChangeTrackingList<ScalingSchedule>(),
+                hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPatch>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PerfMonSet(name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, values ?? new ChangeTrackingList<PerfMonSample>(), serializedAdditionalRawData);
+            return new PerfMonSet(
+                name.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                values ?? new ChangeTrackingList<PerfMonSample>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PerfMonSet>.Write(ModelReaderWriterOptions options)

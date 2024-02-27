@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, affectedDefendersPlans ?? new ChangeTrackingList<string>(), affectedDefendersSubPlans ?? new ChangeTrackingList<string>(), reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(), issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(), serializedAdditionalRawData);
+            return new SecurityHealthReportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceDetails.Value,
+                environmentDetails.Value,
+                healthDataClassification.Value,
+                status.Value,
+                affectedDefendersPlans ?? new ChangeTrackingList<string>(),
+                affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
+                reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

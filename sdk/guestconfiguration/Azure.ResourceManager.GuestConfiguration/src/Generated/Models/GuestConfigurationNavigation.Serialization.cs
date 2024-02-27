@@ -287,7 +287,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationNavigation(Optional.ToNullable(kind), name.Value, version.Value, contentUri.Value, contentHash.Value, Optional.ToNullable(assignmentType), assignmentSource.Value, contentType.Value, configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(), configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(), configurationSetting.Value, serializedAdditionalRawData);
+            return new GuestConfigurationNavigation(
+                Optional.ToNullable(kind),
+                name.Value,
+                version.Value,
+                contentUri.Value,
+                contentHash.Value,
+                Optional.ToNullable(assignmentType),
+                assignmentSource.Value,
+                contentType.Value,
+                configurationParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationProtectedParameter ?? new ChangeTrackingList<GuestConfigurationParameter>(),
+                configurationSetting.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationNavigation>.Write(ModelReaderWriterOptions options)

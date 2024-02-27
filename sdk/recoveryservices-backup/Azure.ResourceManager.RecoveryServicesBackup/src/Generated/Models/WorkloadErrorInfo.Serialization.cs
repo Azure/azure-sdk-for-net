@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadErrorInfo(Optional.ToNullable(errorCode), errorString.Value, errorTitle.Value, recommendations ?? new ChangeTrackingList<string>(), additionalDetails.Value, serializedAdditionalRawData);
+            return new WorkloadErrorInfo(
+                Optional.ToNullable(errorCode),
+                errorString.Value,
+                errorTitle.Value,
+                recommendations ?? new ChangeTrackingList<string>(),
+                additionalDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadErrorInfo>.Write(ModelReaderWriterOptions options)

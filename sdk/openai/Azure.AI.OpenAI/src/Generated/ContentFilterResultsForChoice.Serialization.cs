@@ -220,7 +220,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value, serializedAdditionalRawData);
+            return new ContentFilterResultsForChoice(
+                sexual.Value,
+                violence.Value,
+                hate.Value,
+                selfHarm.Value,
+                profanity.Value,
+                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                error.Value,
+                protectedMaterialText.Value,
+                protectedMaterialCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentFilterResultsForChoice>.Write(ModelReaderWriterOptions options)

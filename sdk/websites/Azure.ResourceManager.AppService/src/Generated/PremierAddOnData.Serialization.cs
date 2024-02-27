@@ -238,7 +238,20 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PremierAddOnData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value, serializedAdditionalRawData);
+            return new PremierAddOnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                product.Value,
+                vendor.Value,
+                marketplacePublisher.Value,
+                marketplaceOffer.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PremierAddOnData>.Write(ModelReaderWriterOptions options)

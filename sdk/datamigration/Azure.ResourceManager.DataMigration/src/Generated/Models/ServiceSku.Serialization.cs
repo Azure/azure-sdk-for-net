@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSku(name.Value, tier.Value, family.Value, size.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new ServiceSku(
+                name.Value,
+                tier.Value,
+                family.Value,
+                size.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSku>.Write(ModelReaderWriterOptions options)

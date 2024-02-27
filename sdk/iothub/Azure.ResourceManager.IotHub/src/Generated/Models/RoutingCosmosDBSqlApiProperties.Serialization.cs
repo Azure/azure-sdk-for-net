@@ -213,7 +213,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingCosmosDBSqlApiProperties(name, id.Value, subscriptionId.Value, resourceGroup.Value, endpointUri, Optional.ToNullable(authenticationType), identity.Value, primaryKey.Value, secondaryKey.Value, databaseName, containerName, partitionKeyName.Value, partitionKeyTemplate.Value, serializedAdditionalRawData);
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                endpointUri,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                databaseName,
+                containerName,
+                partitionKeyName.Value,
+                partitionKeyTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingCosmosDBSqlApiProperties>.Write(ModelReaderWriterOptions options)

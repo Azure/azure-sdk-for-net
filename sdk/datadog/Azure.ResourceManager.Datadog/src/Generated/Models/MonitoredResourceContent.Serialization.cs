@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoredResourceContent(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new MonitoredResourceContent(
+                id.Value,
+                Optional.ToNullable(sendingMetrics),
+                reasonForMetricsStatus.Value,
+                Optional.ToNullable(sendingLogs),
+                reasonForLogsStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoredResourceContent>.Write(ModelReaderWriterOptions options)

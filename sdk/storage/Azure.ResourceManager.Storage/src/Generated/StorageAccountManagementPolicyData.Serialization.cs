@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountManagementPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value, serializedAdditionalRawData);
+            return new StorageAccountManagementPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastModifiedTime),
+                policy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountManagementPolicyData>.Write(ModelReaderWriterOptions options)

@@ -414,7 +414,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeProperties(Optional.ToNullable(osType), vmSize.Value, Optional.ToNullable(vmPriority), virtualMachineImage.Value, Optional.ToNullable(isolatedNetwork), scaleSettings.Value, userAccountCredentials.Value, subnet.Value, Optional.ToNullable(remoteLoginPortPublicAccess), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), errors ?? new ChangeTrackingList<MachineLearningError>(), Optional.ToNullable(currentNodeCount), Optional.ToNullable(targetNodeCount), nodeStateCounts.Value, Optional.ToNullable(enableNodePublicIP), propertyBag.Value, serializedAdditionalRawData);
+            return new AmlComputeProperties(
+                Optional.ToNullable(osType),
+                vmSize.Value,
+                Optional.ToNullable(vmPriority),
+                virtualMachineImage.Value,
+                Optional.ToNullable(isolatedNetwork),
+                scaleSettings.Value,
+                userAccountCredentials.Value,
+                subnet.Value,
+                Optional.ToNullable(remoteLoginPortPublicAccess),
+                Optional.ToNullable(allocationState),
+                Optional.ToNullable(allocationStateTransitionTime),
+                errors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(currentNodeCount),
+                Optional.ToNullable(targetNodeCount),
+                nodeStateCounts.Value,
+                Optional.ToNullable(enableNodePublicIP),
+                propertyBag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeProperties>.Write(ModelReaderWriterOptions options)

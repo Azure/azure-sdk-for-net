@@ -315,7 +315,23 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppBackupPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), backupPolicyId.Value, provisioningState.Value, Optional.ToNullable(dailyBackupsToKeep), Optional.ToNullable(weeklyBackupsToKeep), Optional.ToNullable(monthlyBackupsToKeep), Optional.ToNullable(volumesAssigned), Optional.ToNullable(enabled), volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(), serializedAdditionalRawData);
+            return new NetAppBackupPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                backupPolicyId.Value,
+                provisioningState.Value,
+                Optional.ToNullable(dailyBackupsToKeep),
+                Optional.ToNullable(weeklyBackupsToKeep),
+                Optional.ToNullable(monthlyBackupsToKeep),
+                Optional.ToNullable(volumesAssigned),
+                Optional.ToNullable(enabled),
+                volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppBackupPolicyData>.Write(ModelReaderWriterOptions options)

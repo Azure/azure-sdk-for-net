@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.FrontDoor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorRulesEngineData(id, name, type, systemData.Value, rules ?? new ChangeTrackingList<RulesEngineRule>(), Optional.ToNullable(resourceState), serializedAdditionalRawData);
+            return new FrontDoorRulesEngineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rules ?? new ChangeTrackingList<RulesEngineRule>(),
+                Optional.ToNullable(resourceState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options)

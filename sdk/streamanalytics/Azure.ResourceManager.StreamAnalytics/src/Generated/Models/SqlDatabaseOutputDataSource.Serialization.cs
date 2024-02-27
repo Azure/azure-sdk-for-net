@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            return new SqlDatabaseOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server.Value,
+                database.Value,
+                user.Value,
+                password.Value,
+                table.Value,
+                Optional.ToNullable(maxBatchCount),
+                Optional.ToNullable(maxWriterCount),
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<SqlDatabaseOutputDataSource>.Write(ModelReaderWriterOptions options)

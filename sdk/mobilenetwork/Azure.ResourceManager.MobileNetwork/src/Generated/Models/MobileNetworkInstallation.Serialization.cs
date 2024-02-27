@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkInstallation(Optional.ToNullable(desiredState), Optional.ToNullable(state), Optional.ToNullable(reinstallRequired), reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(), operation, serializedAdditionalRawData);
+            return new MobileNetworkInstallation(
+                Optional.ToNullable(desiredState),
+                Optional.ToNullable(state),
+                Optional.ToNullable(reinstallRequired),
+                reasons ?? new ChangeTrackingList<MobileNetworkInstallationReason>(),
+                operation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInstallation>.Write(ModelReaderWriterOptions options)

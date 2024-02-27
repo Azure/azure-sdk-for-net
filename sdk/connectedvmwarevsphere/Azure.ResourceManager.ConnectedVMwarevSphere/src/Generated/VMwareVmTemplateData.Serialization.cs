@@ -475,7 +475,35 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVmTemplateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(osType), osName.Value, folderPath.Value, networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(), disks ?? new ChangeTrackingList<VMwareVirtualDisk>(), customResourceName.Value, toolsVersionStatus.Value, toolsVersion.Value, Optional.ToNullable(firmwareType), statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareVmTemplateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind.Value,
+                uuid.Value,
+                vCenterId.Value,
+                moRefId.Value,
+                inventoryItemId.Value,
+                moName.Value,
+                Optional.ToNullable(memorySizeMB),
+                Optional.ToNullable(numCpus),
+                Optional.ToNullable(numCoresPerSocket),
+                Optional.ToNullable(osType),
+                osName.Value,
+                folderPath.Value,
+                networkInterfaces ?? new ChangeTrackingList<VMwareNetworkInterface>(),
+                disks ?? new ChangeTrackingList<VMwareVirtualDisk>(),
+                customResourceName.Value,
+                toolsVersionStatus.Value,
+                toolsVersion.Value,
+                Optional.ToNullable(firmwareType),
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVmTemplateData>.Write(ModelReaderWriterOptions options)

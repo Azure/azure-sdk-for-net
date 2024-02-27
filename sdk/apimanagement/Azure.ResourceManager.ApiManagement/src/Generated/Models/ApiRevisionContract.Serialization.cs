@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiRevisionContract(apiId.Value, apiRevision.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), description.Value, privateUri.Value, Optional.ToNullable(isOnline), Optional.ToNullable(isCurrent), serializedAdditionalRawData);
+            return new ApiRevisionContract(
+                apiId.Value,
+                apiRevision.Value,
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(updatedDateTime),
+                description.Value,
+                privateUri.Value,
+                Optional.ToNullable(isOnline),
+                Optional.ToNullable(isCurrent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiRevisionContract>.Write(ModelReaderWriterOptions options)

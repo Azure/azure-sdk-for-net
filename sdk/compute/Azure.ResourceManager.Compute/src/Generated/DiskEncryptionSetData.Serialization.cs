@@ -310,7 +310,23 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(encryptionType), activeKey.Value, previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>(), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value, serializedAdditionalRawData);
+            return new DiskEncryptionSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(encryptionType),
+                activeKey.Value,
+                previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>(),
+                provisioningState.Value,
+                Optional.ToNullable(rotationToLatestKeyVersionEnabled),
+                Optional.ToNullable(lastKeyRotationTimestamp),
+                autoKeyRotationError.Value,
+                federatedClientId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options)

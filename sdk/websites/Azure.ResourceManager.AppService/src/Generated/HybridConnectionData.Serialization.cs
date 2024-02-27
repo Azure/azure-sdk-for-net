@@ -245,7 +245,21 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceBusNamespace.Value,
+                relayName.Value,
+                relayArmUri.Value,
+                hostname.Value,
+                Optional.ToNullable(port),
+                sendKeyName.Value,
+                sendKeyValue.Value,
+                serviceBusSuffix.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options)

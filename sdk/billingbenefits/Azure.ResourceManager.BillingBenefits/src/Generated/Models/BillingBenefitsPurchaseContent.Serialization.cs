@@ -235,7 +235,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsPurchaseContent(sku.Value, displayName.Value, billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(appliedScopeType), commitment.Value, Optional.ToNullable(effectiveDateTime), Optional.ToNullable(renew), appliedScopeProperties.Value, serializedAdditionalRawData);
+            return new BillingBenefitsPurchaseContent(
+                sku.Value,
+                displayName.Value,
+                billingScopeId.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(billingPlan),
+                Optional.ToNullable(appliedScopeType),
+                commitment.Value,
+                Optional.ToNullable(effectiveDateTime),
+                Optional.ToNullable(renew),
+                appliedScopeProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsPurchaseContent>.Write(ModelReaderWriterOptions options)

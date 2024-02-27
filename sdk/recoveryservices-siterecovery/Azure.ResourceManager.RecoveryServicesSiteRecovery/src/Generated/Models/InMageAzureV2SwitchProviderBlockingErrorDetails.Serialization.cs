@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2SwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(), errorTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new InMageAzureV2SwitchProviderBlockingErrorDetails(
+                errorCode.Value,
+                errorMessage.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(),
+                errorTags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2SwitchProviderBlockingErrorDetails>.Write(ModelReaderWriterOptions options)

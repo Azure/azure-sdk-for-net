@@ -149,7 +149,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAttachment(attachedNetworkId, Optional.ToNullable(defaultGateway), ipAllocationMethod, ipv4Address.Value, ipv6Address.Value, macAddress.Value, networkAttachmentName.Value, serializedAdditionalRawData);
+            return new NetworkAttachment(
+                attachedNetworkId,
+                Optional.ToNullable(defaultGateway),
+                ipAllocationMethod,
+                ipv4Address.Value,
+                ipv6Address.Value,
+                macAddress.Value,
+                networkAttachmentName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkAttachment>.Write(ModelReaderWriterOptions options)

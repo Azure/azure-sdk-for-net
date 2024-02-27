@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(), warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(), kind.Value, serializedAdditionalRawData);
+            return new VirtualNetworkValidationFailureDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                message.Value,
+                Optional.ToNullable(failed),
+                failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkValidationFailureDetails>.Write(ModelReaderWriterOptions options)

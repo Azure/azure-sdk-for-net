@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(), deploymentSpecId.Value, Optional.ToNullable(volumesCount), serializedAdditionalRawData);
+            return new NetAppVolumeGroupMetadata(
+                groupDescription.Value,
+                Optional.ToNullable(applicationType),
+                applicationIdentifier.Value,
+                globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
+                deploymentSpecId.Value,
+                Optional.ToNullable(volumesCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupMetadata>.Write(ModelReaderWriterOptions options)

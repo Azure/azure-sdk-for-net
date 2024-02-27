@@ -243,7 +243,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ResponsysLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, endpoint, clientId, clientSecret.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new ResponsysLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                endpoint,
+                clientId,
+                clientSecret.Value,
+                useEncryptedEndpoints.Value,
+                useHostVerification.Value,
+                usePeerVerification.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class ResponsysLinkedServiceConverter : JsonConverter<ResponsysLinkedService>

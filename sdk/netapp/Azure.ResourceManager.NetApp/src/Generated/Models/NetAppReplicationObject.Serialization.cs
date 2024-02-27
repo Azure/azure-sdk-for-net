@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppReplicationObject(replicationId.Value, Optional.ToNullable(endpointType), Optional.ToNullable(replicationSchedule), remoteVolumeResourceId, remoteVolumeRegion.Value, serializedAdditionalRawData);
+            return new NetAppReplicationObject(
+                replicationId.Value,
+                Optional.ToNullable(endpointType),
+                Optional.ToNullable(replicationSchedule),
+                remoteVolumeResourceId,
+                remoteVolumeRegion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppReplicationObject>.Write(ModelReaderWriterOptions options)

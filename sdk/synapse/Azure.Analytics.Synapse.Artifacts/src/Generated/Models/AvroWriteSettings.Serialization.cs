@@ -100,7 +100,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AvroWriteSettings(type, additionalProperties, recordName.Value, recordNamespace.Value, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new AvroWriteSettings(
+                type,
+                additionalProperties,
+                recordName.Value,
+                recordNamespace.Value,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         internal partial class AvroWriteSettingsConverter : JsonConverter<AvroWriteSettings>

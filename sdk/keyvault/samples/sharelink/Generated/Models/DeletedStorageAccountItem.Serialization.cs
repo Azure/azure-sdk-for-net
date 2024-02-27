@@ -86,7 +86,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageAccountItem(id.Value, resourceId.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>(), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageAccountItem(
+                id.Value,
+                resourceId.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletedDate));
         }
     }
 }

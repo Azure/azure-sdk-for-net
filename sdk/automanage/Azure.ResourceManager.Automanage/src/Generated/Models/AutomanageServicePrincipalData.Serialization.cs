@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageServicePrincipalData(id, name, type, systemData.Value, servicePrincipalId.Value, Optional.ToNullable(authorizationSet), serializedAdditionalRawData);
+            return new AutomanageServicePrincipalData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                servicePrincipalId.Value,
+                Optional.ToNullable(authorizationSet),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageServicePrincipalData>.Write(ModelReaderWriterOptions options)

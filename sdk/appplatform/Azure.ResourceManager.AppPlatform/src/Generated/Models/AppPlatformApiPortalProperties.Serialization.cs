@@ -263,7 +263,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(@public), uri.Value, Optional.ToNullable(httpsOnly), gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(), sourceUris ?? new ChangeTrackingList<Uri>(), ssoProperties.Value, resourceRequests.Value, instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(), serializedAdditionalRawData);
+            return new AppPlatformApiPortalProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(@public),
+                uri.Value,
+                Optional.ToNullable(httpsOnly),
+                gatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                sourceUris ?? new ChangeTrackingList<Uri>(),
+                ssoProperties.Value,
+                resourceRequests.Value,
+                instances ?? new ChangeTrackingList<AppPlatformApiPortalInstance>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalProperties>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppPushSettings(id, name, type, systemData.Value, Optional.ToNullable(isPushEnabled), tagWhitelistJson.Value, tagsRequiringAuth.Value, dynamicTagsJson.Value, kind.Value, serializedAdditionalRawData);
+            return new WebAppPushSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isPushEnabled),
+                tagWhitelistJson.Value,
+                tagsRequiringAuth.Value,
+                dynamicTagsJson.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppPushSettings>.Write(ModelReaderWriterOptions options)

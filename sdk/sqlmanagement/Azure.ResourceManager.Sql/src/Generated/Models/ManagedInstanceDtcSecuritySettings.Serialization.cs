@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcSecuritySettings(transactionManagerCommunicationSettings.Value, Optional.ToNullable(xaTransactionsEnabled), Optional.ToNullable(snaLu6point2TransactionsEnabled), Optional.ToNullable(xaTransactionsDefaultTimeout), Optional.ToNullable(xaTransactionsMaximumTimeout), serializedAdditionalRawData);
+            return new ManagedInstanceDtcSecuritySettings(
+                transactionManagerCommunicationSettings.Value,
+                Optional.ToNullable(xaTransactionsEnabled),
+                Optional.ToNullable(snaLu6point2TransactionsEnabled),
+                Optional.ToNullable(xaTransactionsDefaultTimeout),
+                Optional.ToNullable(xaTransactionsMaximumTimeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcSecuritySettings>.Write(ModelReaderWriterOptions options)

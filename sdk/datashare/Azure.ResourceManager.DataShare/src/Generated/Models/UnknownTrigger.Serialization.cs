@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareTriggerData>.Write(ModelReaderWriterOptions options)

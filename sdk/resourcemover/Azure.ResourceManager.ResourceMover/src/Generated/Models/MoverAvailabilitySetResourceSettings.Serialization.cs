@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverAvailabilitySetResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(faultDomain), Optional.ToNullable(updateDomain));
+            return new MoverAvailabilitySetResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(faultDomain),
+                Optional.ToNullable(updateDomain));
         }
 
         BinaryData IPersistableModel<MoverAvailabilitySetResourceSettings>.Write(ModelReaderWriterOptions options)

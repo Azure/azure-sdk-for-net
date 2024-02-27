@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlComputeNodeInformation(nodeId.Value, privateIPAddress.Value, publicIPAddress.Value, Optional.ToNullable(port), Optional.ToNullable(nodeState), runId.Value, serializedAdditionalRawData);
+            return new AmlComputeNodeInformation(
+                nodeId.Value,
+                privateIPAddress.Value,
+                publicIPAddress.Value,
+                Optional.ToNullable(port),
+                Optional.ToNullable(nodeState),
+                runId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlComputeNodeInformation>.Write(ModelReaderWriterOptions options)

@@ -108,7 +108,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, copyBehavior.Value, additionalProperties, operationTimeout.Value, useTempFileRename.Value);
+            return new SftpWriteSettings(
+                type,
+                maxConcurrentConnections.Value,
+                copyBehavior.Value,
+                additionalProperties,
+                operationTimeout.Value,
+                useTempFileRename.Value);
         }
 
         internal partial class SftpWriteSettingsConverter : JsonConverter<SftpWriteSettings>

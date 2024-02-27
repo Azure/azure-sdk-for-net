@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAppRestoreContent(id, name, type, systemData.Value, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary), kind.Value, serializedAdditionalRawData);
+            return new DeletedAppRestoreContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deletedSiteId.Value,
+                Optional.ToNullable(recoverConfiguration),
+                snapshotTime.Value,
+                Optional.ToNullable(useDRSecondary),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAppRestoreContent>.Write(ModelReaderWriterOptions options)

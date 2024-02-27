@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value, serializedAdditionalRawData);
+            return new MachineLearningWorkspaceGetKeysResult(
+                appInsightsInstrumentationKey.Value,
+                containerRegistryCredentials.Value,
+                notebookAccessKeys.Value,
+                userStorageArmId.Value,
+                userStorageKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceGetKeysResult>.Write(ModelReaderWriterOptions options)

@@ -229,7 +229,20 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapNetWeaverProviderInstanceProperties(providerType, serializedAdditionalRawData, sapSid.Value, sapHostname.Value, sapInstanceNr.Value, sapHostFileEntries ?? new ChangeTrackingList<string>(), sapUsername.Value, sapPassword.Value, sapPasswordUri.Value, sapClientId.Value, sapPortNumber.Value, sslCertificateUri.Value, Optional.ToNullable(sslPreference));
+            return new SapNetWeaverProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                sapSid.Value,
+                sapHostname.Value,
+                sapInstanceNr.Value,
+                sapHostFileEntries ?? new ChangeTrackingList<string>(),
+                sapUsername.Value,
+                sapPassword.Value,
+                sapPasswordUri.Value,
+                sapClientId.Value,
+                sapPortNumber.Value,
+                sslCertificateUri.Value,
+                Optional.ToNullable(sslPreference));
         }
 
         BinaryData IPersistableModel<SapNetWeaverProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

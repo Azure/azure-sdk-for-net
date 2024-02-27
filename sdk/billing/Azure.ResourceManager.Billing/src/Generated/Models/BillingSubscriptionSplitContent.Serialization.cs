@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionSplitContent(billingFrequency.Value, Optional.ToNullable(quantity), targetProductTypeId.Value, targetSkuId.Value, Optional.ToNullable(termDuration), serializedAdditionalRawData);
+            return new BillingSubscriptionSplitContent(
+                billingFrequency.Value,
+                Optional.ToNullable(quantity),
+                targetProductTypeId.Value,
+                targetSkuId.Value,
+                Optional.ToNullable(termDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionSplitContent>.Write(ModelReaderWriterOptions options)

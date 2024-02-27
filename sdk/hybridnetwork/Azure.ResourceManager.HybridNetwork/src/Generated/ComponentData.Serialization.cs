@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ComponentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentData>.Write(ModelReaderWriterOptions options)

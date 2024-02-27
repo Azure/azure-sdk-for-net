@@ -163,7 +163,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2SecuritySettings(overrideGroupSigningCertificate, signingCertificateName.Value, encryptionCertificateName.Value, enableNrrForInboundEncodedMessages, enableNrrForInboundDecodedMessages, enableNrrForOutboundMdn, enableNrrForOutboundEncodedMessages, enableNrrForOutboundDecodedMessages, enableNrrForInboundMdn, sha2AlgorithmFormat.Value, serializedAdditionalRawData);
+            return new AS2SecuritySettings(
+                overrideGroupSigningCertificate,
+                signingCertificateName.Value,
+                encryptionCertificateName.Value,
+                enableNrrForInboundEncodedMessages,
+                enableNrrForInboundDecodedMessages,
+                enableNrrForOutboundMdn,
+                enableNrrForOutboundEncodedMessages,
+                enableNrrForOutboundDecodedMessages,
+                enableNrrForInboundMdn,
+                sha2AlgorithmFormat.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2SecuritySettings>.Write(ModelReaderWriterOptions options)

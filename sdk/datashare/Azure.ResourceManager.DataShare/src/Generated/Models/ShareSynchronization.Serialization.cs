@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareSynchronization(consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(durationMs), Optional.ToNullable(endTime), message.Value, Optional.ToNullable(startTime), status.Value, Optional.ToNullable(synchronizationId), Optional.ToNullable(synchronizationMode), serializedAdditionalRawData);
+            return new ShareSynchronization(
+                consumerEmail.Value,
+                consumerName.Value,
+                consumerTenantName.Value,
+                Optional.ToNullable(durationMs),
+                Optional.ToNullable(endTime),
+                message.Value,
+                Optional.ToNullable(startTime),
+                status.Value,
+                Optional.ToNullable(synchronizationId),
+                Optional.ToNullable(synchronizationMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareSynchronization>.Write(ModelReaderWriterOptions options)

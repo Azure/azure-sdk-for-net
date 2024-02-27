@@ -485,7 +485,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationTask(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, positiveLabel.Value, Optional.ToNullable(primaryMetric), trainingSettings.Value, cvSplitColumnNames ?? new ChangeTrackingList<string>(), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, nCrossValidations.Value, searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(), sweepSettings.Value, testData.Value, Optional.ToNullable(testDataSize), validationData.Value, Optional.ToNullable(validationDataSize), weightColumnName.Value);
+            return new ClassificationTask(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                positiveLabel.Value,
+                Optional.ToNullable(primaryMetric),
+                trainingSettings.Value,
+                cvSplitColumnNames ?? new ChangeTrackingList<string>(),
+                featurizationSettings.Value,
+                fixedParameters.Value,
+                limitSettings.Value,
+                nCrossValidations.Value,
+                searchSpace ?? new ChangeTrackingList<TableParameterSubspace>(),
+                sweepSettings.Value,
+                testData.Value,
+                Optional.ToNullable(testDataSize),
+                validationData.Value,
+                Optional.ToNullable(validationDataSize),
+                weightColumnName.Value);
         }
 
         BinaryData IPersistableModel<ClassificationTask>.Write(ModelReaderWriterOptions options)

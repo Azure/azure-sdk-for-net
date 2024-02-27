@@ -157,7 +157,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(expirationTime), error.Value, serializedAdditionalRawData);
+            return new ScriptStatus(
+                containerInstanceId.Value,
+                storageAccountId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(expirationTime),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptStatus>.Write(ModelReaderWriterOptions options)

@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedMaintenanceWindowStatus(Optional.ToNullable(isWindowEnabled), Optional.ToNullable(isRegionReady), Optional.ToNullable(isWindowActive), Optional.ToNullable(canApplyUpdates), Optional.ToNullable(lastWindowStatusUpdateAtUTC), Optional.ToNullable(lastWindowStartTimeUTC), Optional.ToNullable(lastWindowEndTimeUTC), serializedAdditionalRawData);
+            return new ManagedMaintenanceWindowStatus(
+                Optional.ToNullable(isWindowEnabled),
+                Optional.ToNullable(isRegionReady),
+                Optional.ToNullable(isWindowActive),
+                Optional.ToNullable(canApplyUpdates),
+                Optional.ToNullable(lastWindowStatusUpdateAtUTC),
+                Optional.ToNullable(lastWindowStartTimeUTC),
+                Optional.ToNullable(lastWindowEndTimeUTC),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedMaintenanceWindowStatus>.Write(ModelReaderWriterOptions options)

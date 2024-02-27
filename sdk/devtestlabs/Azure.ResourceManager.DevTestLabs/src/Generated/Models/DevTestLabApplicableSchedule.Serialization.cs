@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, labVmsShutdown.Value, labVmsStartup.Value, serializedAdditionalRawData);
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                labVmsShutdown.Value,
+                labVmsStartup.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabApplicableSchedule>.Write(ModelReaderWriterOptions options)

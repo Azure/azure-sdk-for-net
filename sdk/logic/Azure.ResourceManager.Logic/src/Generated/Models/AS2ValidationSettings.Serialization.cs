@@ -161,7 +161,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AS2ValidationSettings(overrideMessageProperties, encryptMessage, signMessage, compressMessage, checkDuplicateMessage, interchangeDuplicatesValidityDays, checkCertificateRevocationListOnSend, checkCertificateRevocationListOnReceive, encryptionAlgorithm, Optional.ToNullable(signingAlgorithm), serializedAdditionalRawData);
+            return new AS2ValidationSettings(
+                overrideMessageProperties,
+                encryptMessage,
+                signMessage,
+                compressMessage,
+                checkDuplicateMessage,
+                interchangeDuplicatesValidityDays,
+                checkCertificateRevocationListOnSend,
+                checkCertificateRevocationListOnReceive,
+                encryptionAlgorithm,
+                Optional.ToNullable(signingAlgorithm),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AS2ValidationSettings>.Write(ModelReaderWriterOptions options)

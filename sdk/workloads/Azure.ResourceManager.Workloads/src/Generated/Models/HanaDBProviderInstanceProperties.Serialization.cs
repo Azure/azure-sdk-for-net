@@ -215,7 +215,20 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HanaDBProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sslCertificateUri.Value, sslHostNameInCertificate.Value, Optional.ToNullable(sslPreference), sapSid.Value);
+            return new HanaDBProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                hostname.Value,
+                dbName.Value,
+                sqlPort.Value,
+                instanceNumber.Value,
+                dbUsername.Value,
+                dbPassword.Value,
+                dbPasswordUri.Value,
+                sslCertificateUri.Value,
+                sslHostNameInCertificate.Value,
+                Optional.ToNullable(sslPreference),
+                sapSid.Value);
         }
 
         BinaryData IPersistableModel<HanaDBProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

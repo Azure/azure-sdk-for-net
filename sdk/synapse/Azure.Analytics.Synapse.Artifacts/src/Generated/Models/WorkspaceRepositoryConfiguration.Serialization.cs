@@ -159,7 +159,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), clientId.Value, clientSecret.Value);
+            return new WorkspaceRepositoryConfiguration(
+                type.Value,
+                hostName.Value,
+                accountName.Value,
+                projectName.Value,
+                repositoryName.Value,
+                collaborationBranch.Value,
+                rootFolder.Value,
+                lastCommitId.Value,
+                Optional.ToNullable(tenantId),
+                clientId.Value,
+                clientSecret.Value);
         }
 
         internal partial class WorkspaceRepositoryConfigurationConverter : JsonConverter<WorkspaceRepositoryConfiguration>

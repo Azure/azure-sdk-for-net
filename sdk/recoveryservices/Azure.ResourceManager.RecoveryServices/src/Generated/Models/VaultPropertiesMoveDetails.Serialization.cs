@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultPropertiesMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourceId.Value, targetResourceId.Value, serializedAdditionalRawData);
+            return new VaultPropertiesMoveDetails(
+                operationId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(completionTimeUtc),
+                sourceResourceId.Value,
+                targetResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultPropertiesMoveDetails>.Write(ModelReaderWriterOptions options)

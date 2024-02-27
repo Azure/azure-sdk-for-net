@@ -346,7 +346,26 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingSchedule(name.Value, daysOfWeek ?? new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>(), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm), serializedAdditionalRawData);
+            return new ScalingSchedule(
+                name.Value,
+                daysOfWeek ?? new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>(),
+                rampUpStartTime.Value,
+                Optional.ToNullable(rampUpLoadBalancingAlgorithm),
+                Optional.ToNullable(rampUpMinimumHostsPct),
+                Optional.ToNullable(rampUpCapacityThresholdPct),
+                peakStartTime.Value,
+                Optional.ToNullable(peakLoadBalancingAlgorithm),
+                rampDownStartTime.Value,
+                Optional.ToNullable(rampDownLoadBalancingAlgorithm),
+                Optional.ToNullable(rampDownMinimumHostsPct),
+                Optional.ToNullable(rampDownCapacityThresholdPct),
+                Optional.ToNullable(rampDownForceLogoffUsers),
+                Optional.ToNullable(rampDownStopHostsWhen),
+                Optional.ToNullable(rampDownWaitTimeMinutes),
+                rampDownNotificationMessage.Value,
+                offPeakStartTime.Value,
+                Optional.ToNullable(offPeakLoadBalancingAlgorithm),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingSchedule>.Write(ModelReaderWriterOptions options)

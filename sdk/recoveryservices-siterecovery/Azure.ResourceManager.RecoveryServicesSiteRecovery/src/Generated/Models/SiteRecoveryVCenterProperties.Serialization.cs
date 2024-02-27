@@ -222,7 +222,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new SiteRecoveryVCenterProperties(
+                friendlyName.Value,
+                internalId.Value,
+                Optional.ToNullable(lastHeartbeat),
+                discoveryStatus.Value,
+                Optional.ToNullable(processServerId),
+                ipAddress.Value,
+                infrastructureId.Value,
+                port.Value,
+                runAsAccountId.Value,
+                fabricArmResourceName.Value,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVCenterProperties>.Write(ModelReaderWriterOptions options)

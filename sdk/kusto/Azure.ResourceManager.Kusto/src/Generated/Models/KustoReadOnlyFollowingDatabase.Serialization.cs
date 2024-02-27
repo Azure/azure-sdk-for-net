@@ -314,7 +314,25 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind), tableLevelSharingProperties.Value, originalDatabaseName.Value, Optional.ToNullable(databaseShareOrigin), suspensionDetails.Value);
+            return new KustoReadOnlyFollowingDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(softDeletePeriod),
+                Optional.ToNullable(hotCachePeriod),
+                statistics.Value,
+                leaderClusterResourceId.Value,
+                attachedDatabaseConfigurationName.Value,
+                Optional.ToNullable(principalsModificationKind),
+                tableLevelSharingProperties.Value,
+                originalDatabaseName.Value,
+                Optional.ToNullable(databaseShareOrigin),
+                suspensionDetails.Value);
         }
 
         BinaryData IPersistableModel<KustoReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)

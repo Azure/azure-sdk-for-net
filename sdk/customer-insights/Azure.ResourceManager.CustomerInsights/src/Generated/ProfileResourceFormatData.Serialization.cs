@@ -490,7 +490,30 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileResourceFormatData(id, name, type, systemData.Value, attributes ?? new ChangeTrackingDictionary<string, IList<string>>(), description ?? new ChangeTrackingDictionary<string, string>(), displayName ?? new ChangeTrackingDictionary<string, string>(), localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, strongIds ?? new ChangeTrackingList<StrongId>(), serializedAdditionalRawData);
+            return new ProfileResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                attributes ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(),
+                smallImage.Value,
+                mediumImage.Value,
+                largeImage.Value,
+                apiEntitySetName.Value,
+                Optional.ToNullable(entityType),
+                fields ?? new ChangeTrackingList<PropertyDefinition>(),
+                Optional.ToNullable(instancesCount),
+                Optional.ToNullable(lastChangedUtc),
+                Optional.ToNullable(provisioningState),
+                schemaItemTypeLink.Value,
+                Optional.ToNullable(tenantId),
+                timestampFieldName.Value,
+                typeName.Value,
+                strongIds ?? new ChangeTrackingList<StrongId>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileResourceFormatData>.Write(ModelReaderWriterOptions options)

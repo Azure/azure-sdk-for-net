@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hibernateSupport), serializedAdditionalRawData);
+            return new DevCenterImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                publisher.Value,
+                offer.Value,
+                sku.Value,
+                recommendedMachineConfiguration.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(hibernateSupport),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterImageData>.Write(ModelReaderWriterOptions options)

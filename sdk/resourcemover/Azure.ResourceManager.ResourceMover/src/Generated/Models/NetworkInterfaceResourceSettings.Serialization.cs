@@ -178,7 +178,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, tags ?? new ChangeTrackingDictionary<string, string>(), ipConfigurations ?? new ChangeTrackingList<NicIPConfigurationResourceSettings>(), Optional.ToNullable(enableAcceleratedNetworking));
+            return new NetworkInterfaceResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                ipConfigurations ?? new ChangeTrackingList<NicIPConfigurationResourceSettings>(),
+                Optional.ToNullable(enableAcceleratedNetworking));
         }
 
         BinaryData IPersistableModel<NetworkInterfaceResourceSettings>.Write(ModelReaderWriterOptions options)

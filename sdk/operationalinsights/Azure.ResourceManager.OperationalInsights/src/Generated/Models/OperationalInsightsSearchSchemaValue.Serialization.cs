@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSearchSchemaValue(name.Value, displayName.Value, type.Value, indexed, stored, facet, ownerType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OperationalInsightsSearchSchemaValue(
+                name.Value,
+                displayName.Value,
+                type.Value,
+                indexed,
+                stored,
+                facet,
+                ownerType ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSearchSchemaValue>.Write(ModelReaderWriterOptions options)

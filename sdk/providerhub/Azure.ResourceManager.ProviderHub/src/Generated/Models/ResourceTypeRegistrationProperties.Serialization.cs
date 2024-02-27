@@ -625,7 +625,37 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeRegistrationProperties(Optional.ToNullable(routingType), Optional.ToNullable(regionality), endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(), extensionOptions.Value, Optional.ToNullable(marketplaceType), swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(), allowedUnauthorizedActions ?? new ChangeTrackingList<string>(), authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(), linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(), defaultApiVersion.Value, loggingRules ?? new ChangeTrackingList<LoggingRule>(), throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(), requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, Optional.ToNullable(enableAsyncOperation), Optional.ToNullable(provisioningState), Optional.ToNullable(enableThirdPartyS2S), subscriptionLifecycleNotificationSpecifications.Value, Optional.ToNullable(isPureProxy), identityManagement.Value, checkNameAvailabilitySpecifications.Value, disallowedActionVerbs ?? new ChangeTrackingList<string>(), serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(), requestHeaderOptions.Value, subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(), templateDeploymentOptions.Value, extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(), resourceMovePolicy.Value, Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
+            return new ResourceTypeRegistrationProperties(
+                Optional.ToNullable(routingType),
+                Optional.ToNullable(regionality),
+                endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(),
+                extensionOptions.Value,
+                Optional.ToNullable(marketplaceType),
+                swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(),
+                allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
+                authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
+                linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
+                defaultApiVersion.Value,
+                loggingRules ?? new ChangeTrackingList<LoggingRule>(),
+                throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                Optional.ToNullable(enableAsyncOperation),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(enableThirdPartyS2S),
+                subscriptionLifecycleNotificationSpecifications.Value,
+                Optional.ToNullable(isPureProxy),
+                identityManagement.Value,
+                checkNameAvailabilitySpecifications.Value,
+                disallowedActionVerbs ?? new ChangeTrackingList<string>(),
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                requestHeaderOptions.Value,
+                subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
+                templateDeploymentOptions.Value,
+                extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
+                resourceMovePolicy.Value,
+                Optional.ToNullable(resourceDeletionPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeRegistrationProperties>.Write(ModelReaderWriterOptions options)

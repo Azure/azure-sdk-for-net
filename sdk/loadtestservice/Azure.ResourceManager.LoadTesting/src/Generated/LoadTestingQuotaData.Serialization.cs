@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.LoadTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaData(id, name, type, systemData.Value, Optional.ToNullable(limit), Optional.ToNullable(usage), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LoadTestingQuotaData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(limit),
+                Optional.ToNullable(usage),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options)

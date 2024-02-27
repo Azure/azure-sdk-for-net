@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(), actions ?? new ChangeTrackingList<AccessControlListAction>(), serializedAdditionalRawData);
+            return new AccessControlListMatchConfiguration(
+                matchConfigurationName.Value,
+                Optional.ToNullable(sequenceNumber),
+                Optional.ToNullable(ipAddressType),
+                matchConditions ?? new ChangeTrackingList<AccessControlListMatchCondition>(),
+                actions ?? new ChangeTrackingList<AccessControlListAction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccessControlListMatchConfiguration>.Write(ModelReaderWriterOptions options)

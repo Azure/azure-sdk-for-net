@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecuritySolution(id, name, type, systemData.Value, Optional.ToNullable(securityFamily), Optional.ToNullable(provisioningState), template.Value, protectionStatus.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecuritySolution(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(securityFamily),
+                Optional.ToNullable(provisioningState),
+                template.Value,
+                protectionStatus.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecuritySolution>.Write(ModelReaderWriterOptions options)

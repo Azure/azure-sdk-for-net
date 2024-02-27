@@ -203,7 +203,18 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, reviewNotes ?? new ChangeTrackingList<ReviewNote>(), costs ?? new ChangeTrackingList<ShortCodeCost>(), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
+            return new USProgramBrief(
+                id,
+                Optional.ToNullable(status),
+                number.Value,
+                reviewNotes ?? new ChangeTrackingList<ReviewNote>(),
+                costs ?? new ChangeTrackingList<ShortCodeCost>(),
+                Optional.ToNullable(submissionDate),
+                Optional.ToNullable(statusUpdatedDate),
+                programDetails.Value,
+                companyInformation.Value,
+                messageDetails.Value,
+                trafficDetails.Value);
         }
     }
 }

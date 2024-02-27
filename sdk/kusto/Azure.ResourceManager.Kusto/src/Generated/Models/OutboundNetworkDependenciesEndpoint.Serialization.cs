@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundNetworkDependenciesEndpoint(id, name, type, systemData.Value, Optional.ToNullable(etag), category.Value, endpoints ?? new ChangeTrackingList<EndpointDependency>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new OutboundNetworkDependenciesEndpoint(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                category.Value,
+                endpoints ?? new ChangeTrackingList<EndpointDependency>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundNetworkDependenciesEndpoint>.Write(ModelReaderWriterOptions options)

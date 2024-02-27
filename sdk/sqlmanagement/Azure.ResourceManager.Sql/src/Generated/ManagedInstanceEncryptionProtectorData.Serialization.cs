@@ -217,7 +217,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new ManagedInstanceEncryptionProtectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                serverKeyName.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                thumbprint.Value,
+                Optional.ToNullable(autoRotationEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceEncryptionProtectorData>.Write(ModelReaderWriterOptions options)

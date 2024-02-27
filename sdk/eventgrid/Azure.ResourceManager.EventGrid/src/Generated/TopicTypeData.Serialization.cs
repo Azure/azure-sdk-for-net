@@ -303,7 +303,22 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), supportedLocations ?? new ChangeTrackingList<string>(), sourceResourceFormat.Value, supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(), serializedAdditionalRawData);
+            return new TopicTypeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provider.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(resourceRegionType),
+                Optional.ToNullable(provisioningState),
+                supportedLocations ?? new ChangeTrackingList<string>(),
+                sourceResourceFormat.Value,
+                supportedScopesForSource ?? new ChangeTrackingList<TopicTypeSourceScope>(),
+                Optional.ToNullable(areRegionalAndGlobalSourcesSupported),
+                additionalEnforcedPermissions ?? new ChangeTrackingList<TopicTypeAdditionalEnforcedPermission>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options)

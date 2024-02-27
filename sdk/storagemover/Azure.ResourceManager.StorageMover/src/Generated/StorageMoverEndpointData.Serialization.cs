@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverEndpointData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new StorageMoverEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverEndpointData>.Write(ModelReaderWriterOptions options)

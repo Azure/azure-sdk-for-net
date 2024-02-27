@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypeUnderTopic(id, name, type, systemData.Value, displayName.Value, description.Value, schemaUri.Value, Optional.ToNullable(isInDefaultSet), serializedAdditionalRawData);
+            return new EventTypeUnderTopic(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                schemaUri.Value,
+                Optional.ToNullable(isInDefaultSet),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypeUnderTopic>.Write(ModelReaderWriterOptions options)

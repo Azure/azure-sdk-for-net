@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSize(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new TargetComputeSize(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSize>.Write(ModelReaderWriterOptions options)

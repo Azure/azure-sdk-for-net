@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseServerUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime), serializedAdditionalRawData);
+            return new SynapseServerUsage(
+                name.Value,
+                resourceName.Value,
+                displayName.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                unit.Value,
+                Optional.ToNullable(nextResetTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseServerUsage>.Write(ModelReaderWriterOptions options)

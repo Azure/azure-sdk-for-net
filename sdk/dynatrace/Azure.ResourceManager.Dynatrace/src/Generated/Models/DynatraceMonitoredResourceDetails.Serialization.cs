@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceMonitoredResourceDetails(id.Value, Optional.ToNullable(sendingMetrics), reasonForMetricsStatus.Value, Optional.ToNullable(sendingLogs), reasonForLogsStatus.Value, serializedAdditionalRawData);
+            return new DynatraceMonitoredResourceDetails(
+                id.Value,
+                Optional.ToNullable(sendingMetrics),
+                reasonForMetricsStatus.Value,
+                Optional.ToNullable(sendingLogs),
+                reasonForLogsStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceMonitoredResourceDetails>.Write(ModelReaderWriterOptions options)

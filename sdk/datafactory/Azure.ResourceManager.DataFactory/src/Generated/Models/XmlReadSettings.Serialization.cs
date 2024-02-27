@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties.Value,
+                validationMode.Value,
+                detectDataType.Value,
+                namespaces.Value,
+                namespacePrefixes.Value);
         }
 
         BinaryData IPersistableModel<XmlReadSettings>.Write(ModelReaderWriterOptions options)

@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlTempDBSettings(Optional.ToNullable(dataFileSize), Optional.ToNullable(dataGrowth), Optional.ToNullable(logFileSize), Optional.ToNullable(logGrowth), Optional.ToNullable(dataFileCount), Optional.ToNullable(persistFolder), persistFolderPath.Value, luns ?? new ChangeTrackingList<int>(), defaultFilePath.Value, serializedAdditionalRawData);
+            return new SqlTempDBSettings(
+                Optional.ToNullable(dataFileSize),
+                Optional.ToNullable(dataGrowth),
+                Optional.ToNullable(logFileSize),
+                Optional.ToNullable(logGrowth),
+                Optional.ToNullable(dataFileCount),
+                Optional.ToNullable(persistFolder),
+                persistFolderPath.Value,
+                luns ?? new ChangeTrackingList<int>(),
+                defaultFilePath.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlTempDBSettings>.Write(ModelReaderWriterOptions options)

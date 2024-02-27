@@ -340,7 +340,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
+            return new DelimitedTextDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                location.Value,
+                columnDelimiter.Value,
+                rowDelimiter.Value,
+                encodingName.Value,
+                compressionCodec.Value,
+                compressionLevel.Value,
+                quoteChar.Value,
+                escapeChar.Value,
+                firstRowAsHeader.Value,
+                nullValue.Value);
         }
 
         internal partial class DelimitedTextDatasetConverter : JsonConverter<DelimitedTextDataset>

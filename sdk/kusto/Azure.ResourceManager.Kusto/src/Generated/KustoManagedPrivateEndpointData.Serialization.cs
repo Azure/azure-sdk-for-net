@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoManagedPrivateEndpointData(id, name, type, systemData.Value, privateLinkResourceId.Value, privateLinkResourceRegion.Value, groupId.Value, requestMessage.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new KustoManagedPrivateEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateLinkResourceId.Value,
+                privateLinkResourceRegion.Value,
+                groupId.Value,
+                requestMessage.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoManagedPrivateEndpointData>.Write(ModelReaderWriterOptions options)

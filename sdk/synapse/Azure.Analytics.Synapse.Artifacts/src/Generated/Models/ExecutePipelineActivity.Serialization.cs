@@ -223,7 +223,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecutePipelineActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, pipeline, parameters ?? new ChangeTrackingDictionary<string, object>(), Optional.ToNullable(waitOnCompletion));
+            return new ExecutePipelineActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                pipeline,
+                parameters ?? new ChangeTrackingDictionary<string, object>(),
+                Optional.ToNullable(waitOnCompletion));
         }
 
         internal partial class ExecutePipelineActivityConverter : JsonConverter<ExecutePipelineActivity>

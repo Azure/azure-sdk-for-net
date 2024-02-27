@@ -430,7 +430,30 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentData(id, name, type, systemData.Value, additionalData.Value, Optional.ToNullable(classification), classificationComment.Value, Optional.ToNullable(classificationReason), Optional.ToNullable(createdTimeUtc), description.Value, Optional.ToNullable(firstActivityTimeUtc), incidentUrl.Value, Optional.ToNullable(incidentNumber), labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(), Optional.ToNullable(lastActivityTimeUtc), Optional.ToNullable(lastModifiedTimeUtc), owner.Value, relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(severity), Optional.ToNullable(status), title.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                additionalData.Value,
+                Optional.ToNullable(classification),
+                classificationComment.Value,
+                Optional.ToNullable(classificationReason),
+                Optional.ToNullable(createdTimeUtc),
+                description.Value,
+                Optional.ToNullable(firstActivityTimeUtc),
+                incidentUrl.Value,
+                Optional.ToNullable(incidentNumber),
+                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
+                Optional.ToNullable(lastActivityTimeUtc),
+                Optional.ToNullable(lastModifiedTimeUtc),
+                owner.Value,
+                relatedAnalyticRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(status),
+                title.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentData>.Write(ModelReaderWriterOptions options)

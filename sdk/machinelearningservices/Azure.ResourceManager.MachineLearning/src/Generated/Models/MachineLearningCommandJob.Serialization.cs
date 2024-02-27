@@ -675,7 +675,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCommandJob(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(), services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(), Optional.ToNullable(status), autologgerSettings.Value, codeId.Value, command, distribution.Value, environmentId, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(), limits.Value, outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(), parameters.Value, queueSettings.Value, resources.Value);
+            return new MachineLearningCommandJob(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                componentId.Value,
+                computeId.Value,
+                displayName.Value,
+                experimentName.Value,
+                identity.Value,
+                Optional.ToNullable(isArchived),
+                jobType,
+                notificationSetting.Value,
+                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
+                services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
+                Optional.ToNullable(status),
+                autologgerSettings.Value,
+                codeId.Value,
+                command,
+                distribution.Value,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                limits.Value,
+                outputs ?? new ChangeTrackingDictionary<string, MachineLearningJobOutput>(),
+                parameters.Value,
+                queueSettings.Value,
+                resources.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningCommandJob>.Write(ModelReaderWriterOptions options)

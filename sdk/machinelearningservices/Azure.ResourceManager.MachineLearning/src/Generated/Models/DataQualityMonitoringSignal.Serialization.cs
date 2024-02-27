@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataQualityMonitoringSignal(Optional.ToNullable(mode), properties ?? new ChangeTrackingDictionary<string, string>(), signalType, serializedAdditionalRawData, featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(), features.Value, metricThresholds, productionData, referenceData);
+            return new DataQualityMonitoringSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                features.Value,
+                metricThresholds,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<DataQualityMonitoringSignal>.Write(ModelReaderWriterOptions options)

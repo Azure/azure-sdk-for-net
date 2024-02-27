@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedAccessCheck(actionName.Value, linkedProperty.Value, linkedAction.Value, linkedActionVerb.Value, linkedType.Value, serializedAdditionalRawData);
+            return new LinkedAccessCheck(
+                actionName.Value,
+                linkedProperty.Value,
+                linkedAction.Value,
+                linkedActionVerb.Value,
+                linkedType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedAccessCheck>.Write(ModelReaderWriterOptions options)

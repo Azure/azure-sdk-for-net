@@ -190,7 +190,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscCompilationJobCreateOrUpdateContent(name.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), configuration, parameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
+            return new DscCompilationJobCreateOrUpdateContent(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                configuration,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(incrementNodeConfigurationBuild),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscCompilationJobCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIPAddress.Value,
+                endIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options)

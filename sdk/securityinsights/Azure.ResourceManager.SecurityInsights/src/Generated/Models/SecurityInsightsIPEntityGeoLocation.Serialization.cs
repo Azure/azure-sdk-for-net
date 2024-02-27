@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIPEntityGeoLocation(Optional.ToNullable(asn), city.Value, countryCode.Value, countryName.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), state.Value, serializedAdditionalRawData);
+            return new SecurityInsightsIPEntityGeoLocation(
+                Optional.ToNullable(asn),
+                city.Value,
+                countryCode.Value,
+                countryName.Value,
+                Optional.ToNullable(latitude),
+                Optional.ToNullable(longitude),
+                state.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIPEntityGeoLocation>.Write(ModelReaderWriterOptions options)

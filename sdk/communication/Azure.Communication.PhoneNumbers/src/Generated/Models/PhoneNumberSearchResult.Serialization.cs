@@ -90,7 +90,16 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PhoneNumberSearchResult(searchId, phoneNumbers, phoneNumberType, assignmentType, capabilities, cost, searchExpiresBy, Optional.ToNullable(errorCode), Optional.ToNullable(error));
+            return new PhoneNumberSearchResult(
+                searchId,
+                phoneNumbers,
+                phoneNumberType,
+                assignmentType,
+                capabilities,
+                cost,
+                searchExpiresBy,
+                Optional.ToNullable(errorCode),
+                Optional.ToNullable(error));
         }
     }
 }

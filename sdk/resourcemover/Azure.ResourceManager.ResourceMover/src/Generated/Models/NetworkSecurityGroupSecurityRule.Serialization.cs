@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value, serializedAdditionalRawData);
+            return new NetworkSecurityGroupSecurityRule(
+                name.Value,
+                access.Value,
+                description.Value,
+                destinationAddressPrefix.Value,
+                destinationPortRange.Value,
+                direction.Value,
+                Optional.ToNullable(priority),
+                protocol.Value,
+                sourceAddressPrefix.Value,
+                sourcePortRange.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupSecurityRule>.Write(ModelReaderWriterOptions options)
