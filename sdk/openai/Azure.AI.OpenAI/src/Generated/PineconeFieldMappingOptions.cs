@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.AI.OpenAI
 {
@@ -47,11 +47,16 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
-        public PineconeFieldMappingOptions()
+        /// <param name="contentFieldNames"> The names of index fields that should be treated as content. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contentFieldNames"/> is null. </exception>
+        public PineconeFieldMappingOptions(IEnumerable<string> contentFieldNames)
         {
-            ContentFieldNames = new ChangeTrackingList<string>();
-            VectorFieldNames = new ChangeTrackingList<string>();
-            ImageVectorFieldNames = new ChangeTrackingList<string>();
+            if (contentFieldNames == null)
+            {
+                throw new ArgumentNullException(nameof(contentFieldNames));
+            }
+
+            ContentFieldNames = contentFieldNames.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/>. </summary>
@@ -60,19 +65,20 @@ namespace Azure.AI.OpenAI
         /// <param name="filepathFieldName"> The name of the index field to use as a filepath. </param>
         /// <param name="contentFieldNames"> The names of index fields that should be treated as content. </param>
         /// <param name="contentFieldSeparator"> The separator pattern that content fields should use. </param>
-        /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
-        /// <param name="imageVectorFieldNames"> The names of fields that represent image vector data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PineconeFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IList<string> imageVectorFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PineconeFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TitleFieldName = titleFieldName;
             UrlFieldName = urlFieldName;
             FilepathFieldName = filepathFieldName;
             ContentFieldNames = contentFieldNames;
             ContentFieldSeparator = contentFieldSeparator;
-            VectorFieldNames = vectorFieldNames;
-            ImageVectorFieldNames = imageVectorFieldNames;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PineconeFieldMappingOptions"/> for deserialization. </summary>
+        internal PineconeFieldMappingOptions()
+        {
         }
 
         /// <summary> The name of the index field to use as a title. </summary>
@@ -85,9 +91,5 @@ namespace Azure.AI.OpenAI
         public IList<string> ContentFieldNames { get; }
         /// <summary> The separator pattern that content fields should use. </summary>
         public string ContentFieldSeparator { get; set; }
-        /// <summary> The names of fields that represent vector data. </summary>
-        public IList<string> VectorFieldNames { get; }
-        /// <summary> The names of fields that represent image vector data. </summary>
-        public IList<string> ImageVectorFieldNames { get; }
     }
 }

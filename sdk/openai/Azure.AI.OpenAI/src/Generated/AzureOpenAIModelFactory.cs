@@ -535,6 +535,22 @@ namespace Azure.AI.OpenAI
             return new OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType.KeyAndKeyId, serializedAdditionalRawData: null, key, keyId);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="encodedApiKey"> The encoded API key to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null)
+        {
+            return new OnYourDataEncodedApiKeyAuthenticationOptions(OnYourDataAuthenticationType.EncodedApiKey, serializedAdditionalRawData: null, encodedApiKey);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>. </summary>
+        /// <param name="accessToken"> The access token to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null)
+        {
+            return new OnYourDataAccessTokenAuthenticationOptions(OnYourDataAuthenticationType.AccessToken, serializedAdditionalRawData: null, accessToken);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
         /// <param name="managedIdentityResourceId"> The resource ID of the user-assigned managed identity to use for authentication. </param>
         /// <returns> A new <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/> instance for mocking. </returns>

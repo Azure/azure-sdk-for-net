@@ -36,16 +36,16 @@ namespace Azure.AI.OpenAI
             writer.WriteNumberValue(Index);
             if (FinishReason != null)
             {
-                writer.WritePropertyName("finish_reason"u8);
+                writer.WritePropertyName("finishReason"u8);
                 writer.WriteStringValue(FinishReason.Value.ToString());
             }
             else
             {
-                writer.WriteNull("finish_reason");
+                writer.WriteNull("finishReason");
             }
             if (FinishDetails != null)
             {
-                writer.WritePropertyName("finish_details"u8);
+                writer.WritePropertyName("finishDetails"u8);
                 writer.WriteObjectValue(FinishDetails);
             }
             if (InternalStreamingDeltaMessage != null)
@@ -55,7 +55,7 @@ namespace Azure.AI.OpenAI
             }
             if (ContentFilterResults != null)
             {
-                writer.WritePropertyName("content_filter_results"u8);
+                writer.WritePropertyName("contentFilterResults"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
             if (Enhancements != null)
@@ -126,7 +126,7 @@ namespace Azure.AI.OpenAI
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("finish_reason"u8))
+                if (property.NameEquals("finishReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("finish_details"u8))
+                if (property.NameEquals("finishDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -154,7 +154,7 @@ namespace Azure.AI.OpenAI
                     delta = ChatResponseMessage.DeserializeChatResponseMessage(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("content_filter_results"u8))
+                if (property.NameEquals("contentFilterResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -37,11 +37,11 @@ namespace Azure.AI.OpenAI
             writer.WriteStringValue(Text);
             writer.WritePropertyName("temperature"u8);
             writer.WriteNumberValue(Temperature);
-            writer.WritePropertyName("avg_logprob"u8);
+            writer.WritePropertyName("avgLogprob"u8);
             writer.WriteNumberValue(AverageLogProbability);
-            writer.WritePropertyName("compression_ratio"u8);
+            writer.WritePropertyName("compressionRatio"u8);
             writer.WriteNumberValue(CompressionRatio);
-            writer.WritePropertyName("no_speech_prob"u8);
+            writer.WritePropertyName("noSpeechProb"u8);
             writer.WriteNumberValue(NoSpeechProbability);
             writer.WritePropertyName("tokens"u8);
             writer.WriteStartArray();
@@ -129,17 +129,17 @@ namespace Azure.AI.OpenAI
                     temperature = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("avg_logprob"u8))
+                if (property.NameEquals("avgLogprob"u8))
                 {
                     avgLogprob = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("compression_ratio"u8))
+                if (property.NameEquals("compressionRatio"u8))
                 {
                     compressionRatio = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("no_speech_prob"u8))
+                if (property.NameEquals("noSpeechProb"u8))
                 {
                     noSpeechProb = property.Value.GetSingle();
                     continue;

@@ -27,7 +27,7 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("image_url"u8);
+            writer.WritePropertyName("imageUrl"u8);
             writer.WriteObjectValue(ImageUrl);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
@@ -75,7 +75,7 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("image_url"u8))
+                if (property.NameEquals("imageUrl"u8))
                 {
                     imageUrl = ChatMessageImageUrl.DeserializeChatMessageImageUrl(property.Value, options);
                     continue;

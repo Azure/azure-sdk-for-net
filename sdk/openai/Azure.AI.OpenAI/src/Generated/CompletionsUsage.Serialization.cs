@@ -27,11 +27,11 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("completion_tokens"u8);
+            writer.WritePropertyName("completionTokens"u8);
             writer.WriteNumberValue(CompletionTokens);
-            writer.WritePropertyName("prompt_tokens"u8);
+            writer.WritePropertyName("promptTokens"u8);
             writer.WriteNumberValue(PromptTokens);
-            writer.WritePropertyName("total_tokens"u8);
+            writer.WritePropertyName("totalTokens"u8);
             writer.WriteNumberValue(TotalTokens);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,17 +78,17 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("completion_tokens"u8))
+                if (property.NameEquals("completionTokens"u8))
                 {
                     completionTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("prompt_tokens"u8))
+                if (property.NameEquals("promptTokens"u8))
                 {
                     promptTokens = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("total_tokens"u8))
+                if (property.NameEquals("totalTokens"u8))
                 {
                     totalTokens = property.Value.GetInt32();
                     continue;

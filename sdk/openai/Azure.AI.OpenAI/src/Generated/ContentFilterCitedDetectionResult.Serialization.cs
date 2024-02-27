@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
             writer.WriteBooleanValue(Detected);
             if (Url != null)
             {
-                writer.WritePropertyName("URL"u8);
+                writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
             writer.WritePropertyName("license"u8);
@@ -94,7 +94,7 @@ namespace Azure.AI.OpenAI
                     detected = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("URL"u8))
+                if (property.NameEquals("url"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
