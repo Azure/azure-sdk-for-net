@@ -10,6 +10,7 @@ trigger:
     include:
     - sdk/hdinsight/
     exclude:
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
     - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
 
 pr:
