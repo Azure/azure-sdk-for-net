@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<string>> seedNodes = default;
-            Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
+            IReadOnlyList<string> seedNodes = default;
+            IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterPublicStatusDataCentersItem(name.Value, Optional.ToList(seedNodes), Optional.ToList(nodes), serializedAdditionalRawData);
+            return new CassandraClusterPublicStatusDataCentersItem(name.Value, seedNodes ?? new ChangeTrackingList<string>(), nodes ?? new ChangeTrackingList<CassandraClusterDataCenterNodeItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterPublicStatusDataCentersItem>.Write(ModelReaderWriterOptions options)

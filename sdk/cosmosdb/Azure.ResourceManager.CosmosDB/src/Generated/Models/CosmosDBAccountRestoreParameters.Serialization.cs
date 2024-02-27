@@ -115,9 +115,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<CosmosDBAccountRestoreMode> restoreMode = default;
-            Optional<IList<DatabaseRestoreResourceInfo>> databasesToRestore = default;
-            Optional<IList<GremlinDatabaseRestoreResourceInfo>> gremlinDatabasesToRestore = default;
-            Optional<IList<string>> tablesToRestore = default;
+            IList<DatabaseRestoreResourceInfo> databasesToRestore = default;
+            IList<GremlinDatabaseRestoreResourceInfo> gremlinDatabasesToRestore = default;
+            IList<string> tablesToRestore = default;
             Optional<string> sourceBackupLocation = default;
             Optional<string> restoreSource = default;
             Optional<DateTimeOffset> restoreTimestampInUtc = default;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData, Optional.ToNullable(restoreMode), Optional.ToList(databasesToRestore), Optional.ToList(gremlinDatabasesToRestore), Optional.ToList(tablesToRestore), sourceBackupLocation.Value);
+            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData, Optional.ToNullable(restoreMode), databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(), gremlinDatabasesToRestore ?? new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>(), tablesToRestore ?? new ChangeTrackingList<string>(), sourceBackupLocation.Value);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountRestoreParameters>.Write(ModelReaderWriterOptions options)

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             Optional<string> domainName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<DevCenterEndpointDetail>> endpointDetails = default;
+            IReadOnlyList<DevCenterEndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDependency(domainName.Value, description.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new EndpointDependency(domainName.Value, description.Value, endpointDetails ?? new ChangeTrackingList<DevCenterEndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)

@@ -91,7 +91,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             Optional<ParagraphRole> role = default;
             string content = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentParagraph(Optional.ToNullable(role), content, Optional.ToList(boundingRegions), spans, serializedAdditionalRawData);
+            return new DocumentParagraph(Optional.ToNullable(role), content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentParagraph>.Write(ModelReaderWriterOptions options)

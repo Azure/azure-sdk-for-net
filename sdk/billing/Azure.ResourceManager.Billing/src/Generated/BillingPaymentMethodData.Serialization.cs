@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Billing
             Optional<string> expiration = default;
             Optional<string> lastFourDigits = default;
             Optional<string> displayName = default;
-            Optional<IList<PaymentMethodLogo>> logos = default;
+            IList<PaymentMethodLogo> logos = default;
             Optional<PaymentMethodStatus> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Billing
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new BillingPaymentMethodData(id, name, type, systemData.Value, Optional.ToNullable(family), type0.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, logos ?? new ChangeTrackingList<PaymentMethodLogo>(), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingPaymentMethodData>.Write(ModelReaderWriterOptions options)

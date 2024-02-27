@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, ApplianceArtifactProfile>> artifactProfiles = default;
-            Optional<IReadOnlyList<ApplianceCredentialKubeconfig>> kubeconfigs = default;
-            Optional<IReadOnlyDictionary<string, ApplianceSshKey>> sshKeys = default;
+            IReadOnlyDictionary<string, ApplianceArtifactProfile> artifactProfiles = default;
+            IReadOnlyList<ApplianceCredentialKubeconfig> kubeconfigs = default;
+            IReadOnlyDictionary<string, ApplianceSshKey> sshKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceClusterUserKeysResult(Optional.ToDictionary(artifactProfiles), Optional.ToList(kubeconfigs), Optional.ToDictionary(sshKeys), serializedAdditionalRawData);
+            return new ApplianceClusterUserKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceClusterUserKeysResult>.Write(ModelReaderWriterOptions options)

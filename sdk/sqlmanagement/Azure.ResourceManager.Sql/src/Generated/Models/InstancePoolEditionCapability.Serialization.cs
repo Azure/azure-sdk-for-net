@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<InstancePoolFamilyCapability>> supportedFamilies = default;
+            IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolEditionCapability(name.Value, supportedFamilies ?? new ChangeTrackingList<InstancePoolFamilyCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolEditionCapability>.Write(ModelReaderWriterOptions options)

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<EventSubscriptionDestination> destination = default;
             Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
             Optional<EventSubscriptionFilter> filter = default;
-            Optional<IList<string>> labels = default;
+            IList<string> labels = default;
             Optional<DateTimeOffset> expirationTimeUtc = default;
             Optional<EventDeliverySchema> eventDeliverySchema = default;
             Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridSubscriptionPatch(destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new EventGridSubscriptionPatch(destination.Value, deliveryWithResourceIdentity.Value, filter.Value, labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridSubscriptionPatch>.Write(ModelReaderWriterOptions options)

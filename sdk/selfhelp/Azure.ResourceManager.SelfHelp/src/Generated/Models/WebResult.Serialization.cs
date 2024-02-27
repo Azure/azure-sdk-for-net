@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 return null;
             }
             Optional<string> replacementKey = default;
-            Optional<IList<SearchResult>> searchResults = default;
+            IList<SearchResult> searchResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebResult(replacementKey.Value, Optional.ToList(searchResults), serializedAdditionalRawData);
+            return new WebResult(replacementKey.Value, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebResult>.Write(ModelReaderWriterOptions options)

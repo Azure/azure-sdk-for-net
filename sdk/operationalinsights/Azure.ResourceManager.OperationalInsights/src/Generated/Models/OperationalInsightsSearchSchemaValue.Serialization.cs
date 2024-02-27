@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool indexed = default;
             bool stored = default;
             bool facet = default;
-            Optional<IReadOnlyList<string>> ownerType = default;
+            IReadOnlyList<string> ownerType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSearchSchemaValue(name.Value, displayName.Value, type.Value, indexed, stored, facet, Optional.ToList(ownerType), serializedAdditionalRawData);
+            return new OperationalInsightsSearchSchemaValue(name.Value, displayName.Value, type.Value, indexed, stored, facet, ownerType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSearchSchemaValue>.Write(ModelReaderWriterOptions options)

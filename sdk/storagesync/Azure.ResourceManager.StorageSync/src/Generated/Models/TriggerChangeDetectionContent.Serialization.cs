@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             Optional<string> directoryPath = default;
             Optional<ChangeDetectionMode> changeDetectionMode = default;
-            Optional<IList<string>> paths = default;
+            IList<string> paths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerChangeDetectionContent(directoryPath.Value, Optional.ToNullable(changeDetectionMode), Optional.ToList(paths), serializedAdditionalRawData);
+            return new TriggerChangeDetectionContent(directoryPath.Value, Optional.ToNullable(changeDetectionMode), paths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerChangeDetectionContent>.Write(ModelReaderWriterOptions options)

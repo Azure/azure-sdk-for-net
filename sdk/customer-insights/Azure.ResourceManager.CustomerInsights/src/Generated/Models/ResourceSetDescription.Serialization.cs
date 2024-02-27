@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IList<string>> elements = default;
-            Optional<IList<string>> exceptions = default;
+            IList<string> elements = default;
+            IList<string> exceptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSetDescription(Optional.ToList(elements), Optional.ToList(exceptions), serializedAdditionalRawData);
+            return new ResourceSetDescription(elements ?? new ChangeTrackingList<string>(), exceptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSetDescription>.Write(ModelReaderWriterOptions options)

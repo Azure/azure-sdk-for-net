@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IntegrationAccountKeyVaultKey>> value = default;
+            IReadOnlyList<IntegrationAccountKeyVaultKey> value = default;
             Optional<string> skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountKeyVaultKeyList(Optional.ToList(value), skipToken.Value, serializedAdditionalRawData);
+            return new IntegrationAccountKeyVaultKeyList(value ?? new ChangeTrackingList<IntegrationAccountKeyVaultKey>(), skipToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountKeyVaultKeyList>.Write(ModelReaderWriterOptions options)

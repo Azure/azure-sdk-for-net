@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<string> earliestRestoreTime = default;
             Optional<CosmosDBProvisioningState> provisioningState = default;
             Optional<MongoClusterStatus> clusterStatus = default;
-            Optional<IList<NodeGroupSpec>> nodeGroupSpecs = default;
+            IList<NodeGroupSpec> nodeGroupSpecs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), Optional.ToList(nodeGroupSpecs), serializedAdditionalRawData);
+            return new MongoClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(createMode), restoreParameters.Value, administratorLogin.Value, administratorLoginPassword.Value, serverVersion.Value, connectionString.Value, earliestRestoreTime.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(clusterStatus), nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoClusterData>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IReadOnlyList<InstancesSearchStringSuggestion>> suggestions = default;
+            IReadOnlyList<InstancesSearchStringSuggestion> suggestions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suggestions"u8))
@@ -37,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstancesSuggestResponse(Optional.ToList(suggestions));
+            return new InstancesSuggestResponse(suggestions ?? new ChangeTrackingList<InstancesSearchStringSuggestion>());
         }
     }
 }

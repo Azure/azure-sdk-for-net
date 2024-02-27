@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<CosmosDBUniqueKey>> uniqueKeys = default;
+            IList<CosmosDBUniqueKey> uniqueKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBUniqueKeyPolicy(Optional.ToList(uniqueKeys), serializedAdditionalRawData);
+            return new CosmosDBUniqueKeyPolicy(uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBUniqueKeyPolicy>.Write(ModelReaderWriterOptions options)

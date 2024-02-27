@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.StorageCache.Models
                 return null;
             }
             Optional<string> resourceType = default;
-            Optional<IReadOnlyList<StorageCacheSkuCapability>> capabilities = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<StorageCacheSkuLocationInfo>> locationInfo = default;
+            IReadOnlyList<StorageCacheSkuCapability> capabilities = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<StorageCacheSkuLocationInfo> locationInfo = default;
             Optional<string> name = default;
-            Optional<IReadOnlyList<StorageCacheRestriction>> restrictions = default;
+            IReadOnlyList<StorageCacheRestriction> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheSku(resourceType.Value, Optional.ToList(capabilities), Optional.ToList(locations), Optional.ToList(locationInfo), name.Value, Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new StorageCacheSku(resourceType.Value, capabilities ?? new ChangeTrackingList<StorageCacheSkuCapability>(), locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<StorageCacheSkuLocationInfo>(), name.Value, restrictions ?? new ChangeTrackingList<StorageCacheRestriction>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheSku>.Write(ModelReaderWriterOptions options)

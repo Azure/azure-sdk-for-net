@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<DateTimeOffset> updated = default;
             Optional<string> resultInfo = default;
             Optional<ErrorResponseBody> error = default;
-            Optional<IReadOnlyList<OperationResultLogItemContract>> actionLog = default;
+            IReadOnlyList<OperationResultLogItemContract> actionLog = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, Optional.ToList(actionLog), serializedAdditionalRawData);
+            return new GitOperationResultContractData(id, name, type, systemData.Value, id0.Value, Optional.ToNullable(status), Optional.ToNullable(started), Optional.ToNullable(updated), resultInfo.Value, error.Value, actionLog ?? new ChangeTrackingList<OperationResultLogItemContract>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitOperationResultContractData>.Write(ModelReaderWriterOptions options)

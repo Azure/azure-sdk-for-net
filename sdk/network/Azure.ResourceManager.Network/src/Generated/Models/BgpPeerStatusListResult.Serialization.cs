@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BgpPeerStatus>> value = default;
+            IReadOnlyList<BgpPeerStatus> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatusListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new BgpPeerStatusListResult(value ?? new ChangeTrackingList<BgpPeerStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatusListResult>.Write(ModelReaderWriterOptions options)

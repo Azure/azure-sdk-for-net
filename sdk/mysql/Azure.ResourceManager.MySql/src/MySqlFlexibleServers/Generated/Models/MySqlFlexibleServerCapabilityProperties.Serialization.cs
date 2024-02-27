@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             Optional<string> zone = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
-            Optional<IReadOnlyList<string>> supportedGeoBackupRegions = default;
-            Optional<IReadOnlyList<MySqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
+            IReadOnlyList<string> supportedHAMode = default;
+            IReadOnlyList<string> supportedGeoBackupRegions = default;
+            IReadOnlyList<MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), serializedAdditionalRawData);
+            return new MySqlFlexibleServerCapabilityProperties(zone.Value, supportedHAMode ?? new ChangeTrackingList<string>(), supportedGeoBackupRegions ?? new ChangeTrackingList<string>(), supportedFlexibleServerEditions ?? new ChangeTrackingList<MySqlFlexibleServerEditionCapability>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerCapabilityProperties>.Write(ModelReaderWriterOptions options)

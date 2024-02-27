@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HcxEnterpriseSiteData>> value = default;
+            IReadOnlyList<HcxEnterpriseSiteData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HcxEnterpriseSiteList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HcxEnterpriseSiteList(value ?? new ChangeTrackingList<HcxEnterpriseSiteData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HcxEnterpriseSiteList>.Write(ModelReaderWriterOptions options)

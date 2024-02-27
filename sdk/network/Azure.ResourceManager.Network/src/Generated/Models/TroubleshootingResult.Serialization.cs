@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> code = default;
-            Optional<IReadOnlyList<TroubleshootingDetails>> results = default;
+            IReadOnlyList<TroubleshootingDetails> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingResult(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, Optional.ToList(results), serializedAdditionalRawData);
+            return new TroubleshootingResult(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, results ?? new ChangeTrackingList<TroubleshootingDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingResult>.Write(ModelReaderWriterOptions options)

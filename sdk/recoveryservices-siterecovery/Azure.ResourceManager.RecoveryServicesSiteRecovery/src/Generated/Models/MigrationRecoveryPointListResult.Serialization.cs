@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MigrationRecoveryPointData>> value = default;
+            IReadOnlyList<MigrationRecoveryPointData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationRecoveryPointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new MigrationRecoveryPointListResult(value ?? new ChangeTrackingList<MigrationRecoveryPointData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationRecoveryPointListResult>.Write(ModelReaderWriterOptions options)

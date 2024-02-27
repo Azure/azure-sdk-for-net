@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<IotHubPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubPrivateEndpointConnectionsList(Optional.ToList(value), serializedAdditionalRawData);
+            return new IotHubPrivateEndpointConnectionsList(value ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubPrivateEndpointConnectionsList>.Write(ModelReaderWriterOptions options)

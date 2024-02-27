@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Optional<IList<AddressPrefixItem>> sources = default;
-            Optional<IList<AddressPrefixItem>> destinations = default;
-            Optional<IList<string>> sourcePortRanges = default;
-            Optional<IList<string>> destinationPortRanges = default;
+            IList<AddressPrefixItem> sources = default;
+            IList<AddressPrefixItem> destinations = default;
+            IList<string> sourcePortRanges = default;
+            IList<string> destinationPortRanges = default;
             Optional<SecurityConfigurationRuleAccess> access = default;
             Optional<int> priority = default;
             Optional<SecurityConfigurationRuleDirection> direction = default;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, Optional.ToNullable(protocol), sources ?? new ChangeTrackingList<AddressPrefixItem>(), destinations ?? new ChangeTrackingList<AddressPrefixItem>(), sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<NetworkAdminRule>.Write(ModelReaderWriterOptions options)

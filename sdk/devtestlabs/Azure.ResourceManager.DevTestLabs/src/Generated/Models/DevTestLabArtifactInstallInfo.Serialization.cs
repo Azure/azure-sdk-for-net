@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
             Optional<string> artifactId = default;
             Optional<string> artifactTitle = default;
-            Optional<IList<DevTestLabArtifactParameter>> parameters = default;
+            IList<DevTestLabArtifactParameter> parameters = default;
             Optional<string> status = default;
             Optional<string> deploymentStatusMessage = default;
             Optional<string> vmExtensionStatusMessage = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, Optional.ToList(parameters), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime), serializedAdditionalRawData);
+            return new DevTestLabArtifactInstallInfo(artifactId.Value, artifactTitle.Value, parameters ?? new ChangeTrackingList<DevTestLabArtifactParameter>(), status.Value, deploymentStatusMessage.Value, vmExtensionStatusMessage.Value, Optional.ToNullable(installTime), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactInstallInfo>.Write(ModelReaderWriterOptions options)

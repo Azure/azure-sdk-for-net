@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StoragePoolSkuInfo>> value = default;
+            IReadOnlyList<StoragePoolSkuInfo> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StoragePoolSkuListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StoragePoolSkuListResult(value ?? new ChangeTrackingList<StoragePoolSkuInfo>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StoragePoolSkuListResult>.Write(ModelReaderWriterOptions options)

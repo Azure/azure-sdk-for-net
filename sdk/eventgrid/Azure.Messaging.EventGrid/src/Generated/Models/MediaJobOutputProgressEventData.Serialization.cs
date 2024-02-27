@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<string> label = default;
             Optional<long> progress = default;
-            Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
+            IReadOnlyDictionary<string, string> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -56,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputProgressEventData(label.Value, Optional.ToNullable(progress), Optional.ToDictionary(jobCorrelationData));
+            return new MediaJobOutputProgressEventData(label.Value, Optional.ToNullable(progress), jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class MediaJobOutputProgressEventDataConverter : JsonConverter<MediaJobOutputProgressEventData>

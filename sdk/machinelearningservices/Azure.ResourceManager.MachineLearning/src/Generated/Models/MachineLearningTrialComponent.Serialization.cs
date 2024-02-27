@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string command = default;
             Optional<MachineLearningDistributionConfiguration> distribution = default;
             ResourceIdentifier environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
+            IDictionary<string, string> environmentVariables = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value, serializedAdditionalRawData);
+            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), resources.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningTrialComponent>.Write(ModelReaderWriterOptions options)

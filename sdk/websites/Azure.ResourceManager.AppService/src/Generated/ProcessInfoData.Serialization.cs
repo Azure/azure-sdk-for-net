@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> isIisProfileRunning = default;
             Optional<double> iisProfileTimeoutInSeconds = default;
             Optional<string> parent = default;
-            Optional<IList<string>> children = default;
-            Optional<IList<ProcessThreadInfo>> threads = default;
-            Optional<IList<string>> openFileHandles = default;
-            Optional<IList<ProcessModuleInfoData>> modules = default;
+            IList<string> children = default;
+            IList<ProcessThreadInfo> threads = default;
+            IList<string> openFileHandles = default;
+            IList<ProcessModuleInfoData> modules = default;
             Optional<string> fileName = default;
             Optional<string> commandLine = default;
             Optional<string> userName = default;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AppService
             Optional<long> pagedMemory = default;
             Optional<long> peakPagedMemory = default;
             Optional<DateTimeOffset> timeStamp = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
+            IDictionary<string, string> environmentVariables = default;
             Optional<bool> isScmSite = default;
             Optional<bool> isWebjob = default;
             Optional<string> description = default;
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, Optional.ToList(children), Optional.ToList(threads), Optional.ToList(openFileHandles), Optional.ToList(modules), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), Optional.ToDictionary(environmentVariables), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessInfoData(id, name, type, systemData.Value, Optional.ToNullable(identifier), deploymentName.Value, href.Value, minidump.Value, Optional.ToNullable(isProfileRunning), Optional.ToNullable(isIisProfileRunning), Optional.ToNullable(iisProfileTimeoutInSeconds), parent.Value, children ?? new ChangeTrackingList<string>(), threads ?? new ChangeTrackingList<ProcessThreadInfo>(), openFileHandles ?? new ChangeTrackingList<string>(), modules ?? new ChangeTrackingList<ProcessModuleInfoData>(), fileName.Value, commandLine.Value, userName.Value, Optional.ToNullable(handleCount), Optional.ToNullable(moduleCount), Optional.ToNullable(threadCount), Optional.ToNullable(startTime), totalCpuTime.Value, userCpuTime.Value, privilegedCpuTime.Value, Optional.ToNullable(workingSet), Optional.ToNullable(peakWorkingSet), Optional.ToNullable(privateMemory), Optional.ToNullable(virtualMemory), Optional.ToNullable(peakVirtualMemory), Optional.ToNullable(pagedSystemMemory), Optional.ToNullable(nonPagedSystemMemory), Optional.ToNullable(pagedMemory), Optional.ToNullable(peakPagedMemory), Optional.ToNullable(timeStamp), environmentVariables ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(isScmSite), Optional.ToNullable(isWebjob), description.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessInfoData>.Write(ModelReaderWriterOptions options)

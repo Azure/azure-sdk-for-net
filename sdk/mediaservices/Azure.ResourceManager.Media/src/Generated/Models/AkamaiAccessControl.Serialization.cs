@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<IList<AkamaiSignatureHeaderAuthenticationKey>> akamaiSignatureHeaderAuthenticationKeyList = default;
+            IList<AkamaiSignatureHeaderAuthenticationKey> akamaiSignatureHeaderAuthenticationKeyList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AkamaiAccessControl(Optional.ToList(akamaiSignatureHeaderAuthenticationKeyList), serializedAdditionalRawData);
+            return new AkamaiAccessControl(akamaiSignatureHeaderAuthenticationKeyList ?? new ChangeTrackingList<AkamaiSignatureHeaderAuthenticationKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AkamaiAccessControl>.Write(ModelReaderWriterOptions options)

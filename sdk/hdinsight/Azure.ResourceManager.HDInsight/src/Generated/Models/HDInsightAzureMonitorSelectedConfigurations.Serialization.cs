@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             Optional<string> configurationVersion = default;
-            Optional<IDictionary<string, string>> globalConfigurations = default;
-            Optional<IList<HDInsightAzureMonitorTableConfiguration>> tableList = default;
+            IDictionary<string, string> globalConfigurations = default;
+            IList<HDInsightAzureMonitorTableConfiguration> tableList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, Optional.ToDictionary(globalConfigurations), Optional.ToList(tableList), serializedAdditionalRawData);
+            return new HDInsightAzureMonitorSelectedConfigurations(configurationVersion.Value, globalConfigurations ?? new ChangeTrackingDictionary<string, string>(), tableList ?? new ChangeTrackingList<HDInsightAzureMonitorTableConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAzureMonitorSelectedConfigurations>.Write(ModelReaderWriterOptions options)

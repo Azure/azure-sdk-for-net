@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningUserFeature>> value = default;
+            IReadOnlyList<MachineLearningUserFeature> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListAmlUserFeatureResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ListAmlUserFeatureResult(value ?? new ChangeTrackingList<MachineLearningUserFeature>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListAmlUserFeatureResult>.Write(ModelReaderWriterOptions options)

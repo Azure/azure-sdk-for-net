@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<LogAnalyticsDestination>> logAnalytics = default;
-            Optional<IList<MonitoringAccountDestination>> monitoringAccounts = default;
+            IList<LogAnalyticsDestination> logAnalytics = default;
+            IList<MonitoringAccountDestination> monitoringAccounts = default;
             Optional<DestinationsSpecAzureMonitorMetrics> azureMonitorMetrics = default;
-            Optional<IList<DataCollectionRuleEventHubDestination>> eventHubs = default;
-            Optional<IList<DataCollectionRuleEventHubDirectDestination>> eventHubsDirect = default;
-            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
-            Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
-            Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
+            IList<DataCollectionRuleEventHubDestination> eventHubs = default;
+            IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect = default;
+            IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect = default;
+            IList<DataCollectionRuleStorageTableDestination> storageTablesDirect = default;
+            IList<DataCollectionRuleStorageBlobDestination> storageAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts), serializedAdditionalRawData);
+            return new DestinationsSpec(logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(), monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(), azureMonitorMetrics.Value, eventHubs ?? new ChangeTrackingList<DataCollectionRuleEventHubDestination>(), eventHubsDirect ?? new ChangeTrackingList<DataCollectionRuleEventHubDirectDestination>(), storageBlobsDirect ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(), storageTablesDirect ?? new ChangeTrackingList<DataCollectionRuleStorageTableDestination>(), storageAccounts ?? new ChangeTrackingList<DataCollectionRuleStorageBlobDestination>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DestinationsSpec>.Write(ModelReaderWriterOptions options)

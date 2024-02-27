@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<SynapseSensitivityLabelUpdate>> operations = default;
+            IList<SynapseSensitivityLabelUpdate> operations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSensitivityLabelUpdateListResult(Optional.ToList(operations), serializedAdditionalRawData);
+            return new SynapseSensitivityLabelUpdateListResult(operations ?? new ChangeTrackingList<SynapseSensitivityLabelUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSensitivityLabelUpdateListResult>.Write(ModelReaderWriterOptions options)

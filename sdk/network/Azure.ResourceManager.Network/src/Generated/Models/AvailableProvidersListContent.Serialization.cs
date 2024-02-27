@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<AzureLocation> azureLocations = default;
             Optional<string> country = default;
             Optional<string> state = default;
             Optional<string> city = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListContent(Optional.ToList(azureLocations), country.Value, state.Value, city.Value, serializedAdditionalRawData);
+            return new AvailableProvidersListContent(azureLocations ?? new ChangeTrackingList<AzureLocation>(), country.Value, state.Value, city.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListContent>.Write(ModelReaderWriterOptions options)

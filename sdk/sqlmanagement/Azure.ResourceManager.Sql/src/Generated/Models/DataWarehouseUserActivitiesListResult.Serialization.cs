@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataWarehouseUserActivityData>> value = default;
+            IReadOnlyList<DataWarehouseUserActivityData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataWarehouseUserActivitiesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataWarehouseUserActivitiesListResult(value ?? new ChangeTrackingList<DataWarehouseUserActivityData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataWarehouseUserActivitiesListResult>.Write(ModelReaderWriterOptions options)

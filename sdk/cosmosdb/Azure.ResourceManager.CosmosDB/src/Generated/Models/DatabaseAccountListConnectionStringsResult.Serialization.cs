@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
+            IReadOnlyList<CosmosDBAccountConnectionString> connectionStrings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseAccountListConnectionStringsResult(Optional.ToList(connectionStrings), serializedAdditionalRawData);
+            return new DatabaseAccountListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<CosmosDBAccountConnectionString>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseAccountListConnectionStringsResult>.Write(ModelReaderWriterOptions options)

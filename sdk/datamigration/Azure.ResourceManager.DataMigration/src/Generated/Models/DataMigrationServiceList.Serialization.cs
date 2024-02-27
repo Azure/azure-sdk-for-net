@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataMigrationServiceData>> value = default;
+            IReadOnlyList<DataMigrationServiceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DataMigrationServiceList(value ?? new ChangeTrackingList<DataMigrationServiceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceList>.Write(ModelReaderWriterOptions options)

@@ -10,13 +10,21 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// Represents an HTTP pipeline transport used to send and receive HTTP requests
+/// and responses.
+/// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
     #region CreateMessage
 
     /// <summary>
-    /// TBD: needed for inheritdoc.
+    /// Create an instance of <see cref="PipelineMessage"/> that can be sent
+    /// using this transport instance. This method will rarely be called directly;
+    /// <see cref="ClientPipeline.CreateMessage"/> should be called instead.
     /// </summary>
+    /// <returns>A <see cref="PipelineMessage"/> that can be passed to
+    /// <see cref="Process(PipelineMessage)"/>.</returns>
     public PipelineMessage CreateMessage()
     {
         PipelineMessage message = CreateMessageCore();
@@ -35,6 +43,13 @@ public abstract class PipelineTransport : PipelinePolicy
         return message;
     }
 
+    /// <summary>
+    /// Creates a new transport-specific instance of <see cref="PipelineMessage"/>.
+    /// Types that derive from <see cref="PipelineTransport"/> must implement this
+    /// method to provide transport-specific functionality.
+    /// </summary>
+    /// <returns>A <see cref="PipelineMessage"/> that can be passed to
+    /// <see cref="Process(PipelineMessage)"/>.</returns>
     protected abstract PipelineMessage CreateMessageCore();
 
     #endregion
@@ -42,16 +57,20 @@ public abstract class PipelineTransport : PipelinePolicy
     #region Process message
 
     /// <summary>
-    /// TBD: needed for inheritdoc.
+    /// Sends the HTTP request contained by <see cref="PipelineMessage.Request"/>
+    /// and sets the value of <see cref="PipelineMessage.Response"/>.
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// request that was sent and response that was received by the transport.</param>
     public void Process(PipelineMessage message)
         => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 
     /// <summary>
-    /// TBD: needed for inheritdoc.
+    /// Sends the HTTP request contained by <see cref="PipelineMessage.Request"/>
+    /// and sets the value of <see cref="PipelineMessage.Response"/>.
     /// </summary>
-    /// <param name="message"></param>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// request that was sent and response that was received by the transport.</param>
     public async ValueTask ProcessAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
@@ -146,8 +165,26 @@ public abstract class PipelineTransport : PipelinePolicy
         }
     }
 
+    /// <summary>
+    /// Transport-specific implementation used to sends the HTTP request
+    /// contained by <see cref="PipelineMessage.Request"/> and set the
+    /// value of <see cref="PipelineMessage.Response"/>. Types that derive
+    /// from <see cref="PipelineTransport"/> must implement this method to
+    /// provide transport-specific functionality.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// request that was sent and response that was received by the transport.</param>
     protected abstract void ProcessCore(PipelineMessage message);
 
+    /// <summary>
+    /// Transport-specific implementation used to sends the HTTP request
+    /// contained by <see cref="PipelineMessage.Request"/> and set the
+    /// value of <see cref="PipelineMessage.Response"/>. Types that derive
+    /// from <see cref="PipelineTransport"/> must implement this method to
+    /// provide transport-specific functionality.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// request that was sent and response that was received by the transport.</param>
     protected abstract ValueTask ProcessCoreAsync(PipelineMessage message);
 
     private static bool ClassifyResponse(PipelineMessage message)
@@ -168,6 +205,17 @@ public abstract class PipelineTransport : PipelinePolicy
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
+
+    /// <summary>
+    /// Implementation of <see cref="PipelinePolicy.Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>.
+    /// Since the transport is the last policy in the <see cref="ClientPipeline"/> policy
+    /// chain, this method does not call <see cref="PipelinePolicy.ProcessNext(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// as other policy implementations do.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to pass to <see cref="Process(PipelineMessage)"/>.</param>
+    /// <param name="pipeline">The collection of policies in the pipeline.</param>
+    /// <param name="currentIndex">The index of the current policy being processed
+    /// in the pipeline invocation.</param>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         Process(message);
@@ -175,6 +223,16 @@ public abstract class PipelineTransport : PipelinePolicy
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 
+    /// <summary>
+    /// Implementation of <see cref="PipelinePolicy.Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>.
+    /// Since the transport is the last policy in the <see cref="ClientPipeline"/> policy
+    /// chain, this method does not call <see cref="PipelinePolicy.ProcessNext(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
+    /// as other policy implementations do.
+    /// </summary>
+    /// <param name="message">The <see cref="PipelineMessage"/> to pass to <see cref="Process(PipelineMessage)"/>.</param>
+    /// <param name="pipeline">The collection of policies in the pipeline.</param>
+    /// <param name="currentIndex">The index of the current policy being processed
+    /// in the pipeline invocation.</param>
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         await ProcessAsync(message).ConfigureAwait(false);

@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<IList<Uri>> vmDisksUris = default;
-            Optional<IList<string>> vmManagedDisksIds = default;
+            IList<Uri> vmDisksUris = default;
+            IList<string> vmManagedDisksIds = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ARemoveDisksContent(instanceType, serializedAdditionalRawData, Optional.ToList(vmDisksUris), Optional.ToList(vmManagedDisksIds));
+            return new A2ARemoveDisksContent(instanceType, serializedAdditionalRawData, vmDisksUris ?? new ChangeTrackingList<Uri>(), vmManagedDisksIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<A2ARemoveDisksContent>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusDisasterRecoveryData>> value = default;
+            IReadOnlyList<ServiceBusDisasterRecoveryData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDisasterRecoveryListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDisasterRecoveryListResult(value ?? new ChangeTrackingList<ServiceBusDisasterRecoveryData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDisasterRecoveryListResult>.Write(ModelReaderWriterOptions options)

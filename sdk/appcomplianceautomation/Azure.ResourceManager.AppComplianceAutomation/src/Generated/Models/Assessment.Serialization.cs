@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> remediation = default;
             Optional<IsPass> isPass = default;
             Optional<string> policyId = default;
-            Optional<IReadOnlyList<AssessmentResourceContent>> resourceList = default;
+            IReadOnlyList<AssessmentResourceContent> resourceList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, Optional.ToList(resourceList), serializedAdditionalRawData);
+            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Assessment>.Write(ModelReaderWriterOptions options)

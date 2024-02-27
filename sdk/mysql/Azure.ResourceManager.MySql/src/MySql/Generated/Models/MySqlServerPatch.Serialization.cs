@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<MySqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<MySqlStorageProfile> storageProfile = default;
             Optional<string> administratorLoginPassword = default;
             Optional<MySqlServerVersion> version = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPatch(identity, sku.Value, Optional.ToDictionary(tags), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
+            return new MySqlServerPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPatch>.Write(ModelReaderWriterOptions options)

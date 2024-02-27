@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<decimal> marketplaceCharges = default;
             Optional<decimal> chargesBilledSeparately = default;
             Optional<string> currency = default;
-            Optional<IReadOnlyList<ConsumptionAggregatedCostResult>> children = default;
-            Optional<IReadOnlyList<string>> includedSubscriptions = default;
-            Optional<IReadOnlyList<string>> excludedSubscriptions = default;
+            IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
+            IReadOnlyList<string> includedSubscriptions = default;
+            IReadOnlyList<string> excludedSubscriptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, Optional.ToList(children), Optional.ToList(includedSubscriptions), Optional.ToList(excludedSubscriptions), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(), includedSubscriptions ?? new ChangeTrackingList<string>(), excludedSubscriptions ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionAggregatedCostResult>.Write(ModelReaderWriterOptions options)

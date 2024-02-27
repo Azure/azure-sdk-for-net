@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, AppServiceStorageAccessInfo>> properties = default;
+            IDictionary<string, AppServiceStorageAccessInfo> properties = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStoragePropertyDictionary(id, name, type, systemData.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new AzureStoragePropertyDictionary(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(), kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureStoragePropertyDictionary>.Write(ModelReaderWriterOptions options)

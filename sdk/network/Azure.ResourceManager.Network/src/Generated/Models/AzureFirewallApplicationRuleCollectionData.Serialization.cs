@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceType> type = default;
             Optional<int> priority = default;
             Optional<AzureFirewallRCAction> action = default;
-            Optional<IList<AzureFirewallApplicationRule>> rules = default;
+            IList<AzureFirewallApplicationRule> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallApplicationRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallApplicationRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, rules ?? new ChangeTrackingList<AzureFirewallApplicationRule>(), Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<AzureFirewallApplicationRuleCollectionData>.Write(ModelReaderWriterOptions options)

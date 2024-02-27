@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<AzureLocation> targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             Optional<bool> autoMitigate = default;
-            Optional<IList<MetricAlertAction>> actions = default;
+            IList<MetricAlertAction> actions = default;
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<bool> isMigrated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
+            return new MetricAlertData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), actions ?? new ChangeTrackingList<MetricAlertAction>(), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options)

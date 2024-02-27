@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CollectionOffersByContext>> value = default;
+            IReadOnlyList<CollectionOffersByContext> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectionOffersByContextList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CollectionOffersByContextList(value ?? new ChangeTrackingList<CollectionOffersByContext>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectionOffersByContextList>.Write(ModelReaderWriterOptions options)

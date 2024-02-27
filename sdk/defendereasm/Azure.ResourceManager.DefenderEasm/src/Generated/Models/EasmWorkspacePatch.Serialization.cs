@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SystemData> systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspacePatch(Optional.ToDictionary(tags), systemData, serializedAdditionalRawData);
+            return new EasmWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), systemData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspacePatch>.Write(ModelReaderWriterOptions options)

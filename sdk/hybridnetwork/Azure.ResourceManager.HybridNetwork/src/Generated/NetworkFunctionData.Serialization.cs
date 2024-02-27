@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork
             Optional<NetworkFunctionPropertiesFormat> properties = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToNullable(etag), identity, serializedAdditionalRawData);
+            return new NetworkFunctionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(etag), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionData>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PrivateEndpointData>> value = default;
+            IReadOnlyList<PrivateEndpointData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateEndpointListResult(value ?? new ChangeTrackingList<PrivateEndpointData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointListResult>.Write(ModelReaderWriterOptions options)

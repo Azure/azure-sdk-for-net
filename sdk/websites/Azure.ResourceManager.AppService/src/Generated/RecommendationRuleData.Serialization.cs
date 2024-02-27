@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> actionName = default;
             Optional<NotificationLevel> level = default;
             Optional<RecommendationChannel> channels = default;
-            Optional<IReadOnlyList<string>> categoryTags = default;
+            IReadOnlyList<string> categoryTags = default;
             Optional<bool> isDynamic = default;
             Optional<string> extensionName = default;
             Optional<string> bladeName = default;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Optional.ToNullable(recommendationId), description.Value, actionName.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
+            return new RecommendationRuleData(id, name, type, systemData.Value, recommendationName.Value, displayName.Value, message.Value, Optional.ToNullable(recommendationId), description.Value, actionName.Value, Optional.ToNullable(level), Optional.ToNullable(channels), categoryTags ?? new ChangeTrackingList<string>(), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationRuleData>.Write(ModelReaderWriterOptions options)

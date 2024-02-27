@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> supportedPath = default;
+            IReadOnlyList<string> supportedPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpgradableVersionPathResult(Optional.ToList(supportedPath), serializedAdditionalRawData);
+            return new UpgradableVersionPathResult(supportedPath ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpgradableVersionPathResult>.Write(ModelReaderWriterOptions options)

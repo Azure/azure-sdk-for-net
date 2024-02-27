@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string name = default;
             string image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerPort>> ports = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
+            IList<string> command = default;
+            IList<ContainerPort> ports = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
             Optional<ContainerInstanceView> instanceView = default;
             ContainerResourceRequirements resources = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
             Optional<ContainerProbe> livenessProbe = default;
             Optional<ContainerProbe> readinessProbe = default;
             Optional<ContainerSecurityContextDefinition> securityContext = default;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceContainer(name, image, Optional.ToList(command), Optional.ToList(ports), Optional.ToList(environmentVariables), instanceView.Value, resources, Optional.ToList(volumeMounts), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
+            return new ContainerInstanceContainer(name, image, command ?? new ChangeTrackingList<string>(), ports ?? new ChangeTrackingList<ContainerPort>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, resources, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceContainer>.Write(ModelReaderWriterOptions options)

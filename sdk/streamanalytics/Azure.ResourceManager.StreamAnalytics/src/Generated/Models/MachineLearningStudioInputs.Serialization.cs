@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IList<MachineLearningStudioInputColumn>> columnNames = default;
+            IList<MachineLearningStudioInputColumn> columnNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningStudioInputs(name.Value, Optional.ToList(columnNames), serializedAdditionalRawData);
+            return new MachineLearningStudioInputs(name.Value, columnNames ?? new ChangeTrackingList<MachineLearningStudioInputColumn>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningStudioInputs>.Write(ModelReaderWriterOptions options)

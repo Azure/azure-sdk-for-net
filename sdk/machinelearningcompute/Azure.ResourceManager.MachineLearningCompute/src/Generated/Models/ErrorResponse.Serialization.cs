@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
             string code = default;
             string message = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            IReadOnlyList<ErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorResponse(code, message, Optional.ToList(details), serializedAdditionalRawData);
+            return new ErrorResponse(code, message, details ?? new ChangeTrackingList<ErrorDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorResponse>.Write(ModelReaderWriterOptions options)

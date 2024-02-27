@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<string> content = default;
             Optional<HDInsightContentEncoding> encoding = default;
             Optional<string> path = default;
-            Optional<IDictionary<string, string>> values = default;
+            IDictionary<string, string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterConfigFile(fileName, content.Value, Optional.ToNullable(encoding), path.Value, Optional.ToDictionary(values), serializedAdditionalRawData);
+            return new ClusterConfigFile(fileName, content.Value, Optional.ToNullable(encoding), path.Value, values ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterConfigFile>.Write(ModelReaderWriterOptions options)

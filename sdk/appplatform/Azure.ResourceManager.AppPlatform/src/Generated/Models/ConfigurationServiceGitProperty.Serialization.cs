@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IList<AppPlatformConfigurationServiceGitRepository>> repositories = default;
+            IList<AppPlatformConfigurationServiceGitRepository> repositories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationServiceGitProperty(Optional.ToList(repositories), serializedAdditionalRawData);
+            return new ConfigurationServiceGitProperty(repositories ?? new ChangeTrackingList<AppPlatformConfigurationServiceGitRepository>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationServiceGitProperty>.Write(ModelReaderWriterOptions options)

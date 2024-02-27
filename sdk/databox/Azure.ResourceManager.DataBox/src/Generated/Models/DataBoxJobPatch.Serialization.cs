@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<UpdateJobDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobPatch(Optional.ToDictionary(tags), identity, details.Value, serializedAdditionalRawData);
+            return new DataBoxJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, details.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobPatch>.Write(ModelReaderWriterOptions options)

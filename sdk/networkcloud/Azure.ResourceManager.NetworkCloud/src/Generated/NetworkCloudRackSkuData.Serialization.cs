@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.NetworkCloud
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> computeMachines = default;
-            Optional<IReadOnlyList<MachineSkuSlot>> controllerMachines = default;
+            IReadOnlyList<MachineSkuSlot> computeMachines = default;
+            IReadOnlyList<MachineSkuSlot> controllerMachines = default;
             Optional<string> description = default;
             Optional<long> maxClusterSlots = default;
             Optional<RackSkuProvisioningState> provisioningState = default;
             Optional<RackSkuType> rackType = default;
-            Optional<IReadOnlyList<StorageApplianceSkuSlot>> storageAppliances = default;
-            Optional<IReadOnlyList<string>> supportedRackSkuIds = default;
+            IReadOnlyList<StorageApplianceSkuSlot> storageAppliances = default;
+            IReadOnlyList<string> supportedRackSkuIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackSkuData(id, name, type, systemData.Value, Optional.ToList(computeMachines), Optional.ToList(controllerMachines), description.Value, Optional.ToNullable(maxClusterSlots), Optional.ToNullable(provisioningState), Optional.ToNullable(rackType), Optional.ToList(storageAppliances), Optional.ToList(supportedRackSkuIds), serializedAdditionalRawData);
+            return new NetworkCloudRackSkuData(id, name, type, systemData.Value, computeMachines ?? new ChangeTrackingList<MachineSkuSlot>(), controllerMachines ?? new ChangeTrackingList<MachineSkuSlot>(), description.Value, Optional.ToNullable(maxClusterSlots), Optional.ToNullable(provisioningState), Optional.ToNullable(rackType), storageAppliances ?? new ChangeTrackingList<StorageApplianceSkuSlot>(), supportedRackSkuIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackSkuData>.Write(ModelReaderWriterOptions options)

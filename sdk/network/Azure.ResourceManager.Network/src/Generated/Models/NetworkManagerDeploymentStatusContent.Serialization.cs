@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> regions = default;
-            Optional<IList<NetworkConfigurationDeploymentType>> deploymentTypes = default;
+            IList<string> regions = default;
+            IList<NetworkConfigurationDeploymentType> deploymentTypes = default;
             Optional<string> skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatusContent(Optional.ToList(regions), Optional.ToList(deploymentTypes), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatusContent(regions ?? new ChangeTrackingList<string>(), deploymentTypes ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), skipToken.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatusContent>.Write(ModelReaderWriterOptions options)

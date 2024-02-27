@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            IList<string> dependsOn = default;
             string roleDefinitionId = default;
             BinaryData principalIds = default;
             Optional<string> resourceGroup = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), roleDefinitionId, principalIds, resourceGroup.Value);
+            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, dependsOn ?? new ChangeTrackingList<string>(), roleDefinitionId, principalIds, resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<RoleAssignmentArtifact>.Write(ModelReaderWriterOptions options)

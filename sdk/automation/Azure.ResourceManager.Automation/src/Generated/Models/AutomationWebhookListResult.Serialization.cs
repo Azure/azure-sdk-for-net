@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationWebhookData>> value = default;
+            IReadOnlyList<AutomationWebhookData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationWebhookListResult(value ?? new ChangeTrackingList<AutomationWebhookData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookListResult>.Write(ModelReaderWriterOptions options)

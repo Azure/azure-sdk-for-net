@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> generatedInteractionTypes = default;
-            Optional<IReadOnlyList<string>> generatedLinks = default;
-            Optional<IReadOnlyDictionary<string, string>> generatedKpis = default;
+            IReadOnlyList<string> generatedInteractionTypes = default;
+            IReadOnlyList<string> generatedLinks = default;
+            IReadOnlyDictionary<string, string> generatedKpis = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionSystemGeneratedEntities(Optional.ToList(generatedInteractionTypes), Optional.ToList(generatedLinks), Optional.ToDictionary(generatedKpis), serializedAdditionalRawData);
+            return new PredictionSystemGeneratedEntities(generatedInteractionTypes ?? new ChangeTrackingList<string>(), generatedLinks ?? new ChangeTrackingList<string>(), generatedKpis ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionSystemGeneratedEntities>.Write(ModelReaderWriterOptions options)

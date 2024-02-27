@@ -98,9 +98,9 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string docType = default;
-            Optional<IReadOnlyList<BoundingRegion>> boundingRegions = default;
+            IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyDictionary<string, DocumentField>> fields = default;
+            IReadOnlyDictionary<string, DocumentField> fields = default;
             float confidence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzedDocument(docType, Optional.ToList(boundingRegions), spans, Optional.ToDictionary(fields), confidence, serializedAdditionalRawData);
+            return new AnalyzedDocument(docType, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, fields ?? new ChangeTrackingDictionary<string, DocumentField>(), confidence, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzedDocument>.Write(ModelReaderWriterOptions options)

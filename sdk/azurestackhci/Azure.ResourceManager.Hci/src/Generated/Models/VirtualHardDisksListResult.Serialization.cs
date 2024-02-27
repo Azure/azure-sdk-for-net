@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHardDiskData>> value = default;
+            IReadOnlyList<VirtualHardDiskData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHardDisksListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new VirtualHardDisksListResult(value ?? new ChangeTrackingList<VirtualHardDiskData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHardDisksListResult>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MobileNetworkDiagnosticsPackageData>> value = default;
+            IReadOnlyList<MobileNetworkDiagnosticsPackageData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticsPackageListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiagnosticsPackageListResult(value ?? new ChangeTrackingList<MobileNetworkDiagnosticsPackageData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticsPackageListResult>.Write(ModelReaderWriterOptions options)

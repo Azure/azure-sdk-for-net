@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<long> baseSizeTiB = default;
             Optional<long> extendedCapacitySizeTiB = default;
             Optional<ElasticSanPublicNetworkAccess> publicNetworkAccess = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanPatch(Optional.ToDictionary(tags), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(baseSizeTiB), Optional.ToNullable(extendedCapacitySizeTiB), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanPatch>.Write(ModelReaderWriterOptions options)

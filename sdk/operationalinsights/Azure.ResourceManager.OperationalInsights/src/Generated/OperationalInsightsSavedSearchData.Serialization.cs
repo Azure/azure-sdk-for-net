@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<string> functionAlias = default;
             Optional<string> functionParameters = default;
             Optional<long> version = default;
-            Optional<IList<OperationalInsightsTag>> tags = default;
+            IList<OperationalInsightsTag> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), Optional.ToList(tags), serializedAdditionalRawData);
+            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), tags ?? new ChangeTrackingList<OperationalInsightsTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSavedSearchData>.Write(ModelReaderWriterOptions options)

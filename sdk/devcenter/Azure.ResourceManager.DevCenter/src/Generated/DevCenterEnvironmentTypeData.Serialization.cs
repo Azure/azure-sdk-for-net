@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DevCenter
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEnvironmentTypeData(id, name, type, systemData.Value, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DevCenterEnvironmentTypeData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironmentTypeData>.Write(ModelReaderWriterOptions options)

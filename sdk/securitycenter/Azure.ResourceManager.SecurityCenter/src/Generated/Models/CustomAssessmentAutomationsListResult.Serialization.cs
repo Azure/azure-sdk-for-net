@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CustomAssessmentAutomationData>> value = default;
+            IReadOnlyList<CustomAssessmentAutomationData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomAssessmentAutomationsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CustomAssessmentAutomationsListResult(value ?? new ChangeTrackingList<CustomAssessmentAutomationData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomAssessmentAutomationsListResult>.Write(ModelReaderWriterOptions options)

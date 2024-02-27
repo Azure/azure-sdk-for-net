@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             Optional<string> metric = default;
             Optional<MetricsResponseSeriesItemUnit> unit = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem>> groups = default;
-            Optional<IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>> data = default;
+            IReadOnlyList<MetricsResponseSeriesPropertiesItemsItem> groups = default;
+            IReadOnlyList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems> data = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), Optional.ToList(groups), Optional.ToList(data), serializedAdditionalRawData);
+            return new MetricsResponseSeriesItem(metric.Value, Optional.ToNullable(unit), groups ?? new ChangeTrackingList<MetricsResponseSeriesPropertiesItemsItem>(), data ?? new ChangeTrackingList<Components1Gs0LlpSchemasMetricsresponsePropertiesSeriesItemsPropertiesDataItems>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricsResponseSeriesItem>.Write(ModelReaderWriterOptions options)

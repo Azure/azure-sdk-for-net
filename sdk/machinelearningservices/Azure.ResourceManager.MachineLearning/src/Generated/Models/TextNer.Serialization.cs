@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<NlpVerticalFeaturizationSettings> featurizationSettings = default;
             Optional<NlpFixedParameters> fixedParameters = default;
             Optional<NlpVerticalLimitSettings> limitSettings = default;
-            Optional<IList<NlpParameterSubspace>> searchSpace = default;
+            IList<NlpParameterSubspace> searchSpace = default;
             Optional<NlpSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> validationData = default;
             Optional<MachineLearningLogVerbosity> logVerbosity = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TextNer(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, Optional.ToList(searchSpace), sweepSettings.Value, validationData.Value);
+            return new TextNer(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), featurizationSettings.Value, fixedParameters.Value, limitSettings.Value, searchSpace ?? new ChangeTrackingList<NlpParameterSubspace>(), sweepSettings.Value, validationData.Value);
         }
 
         BinaryData IPersistableModel<TextNer>.Write(ModelReaderWriterOptions options)

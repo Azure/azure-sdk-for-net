@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DescendantData>> value = default;
+            IReadOnlyList<DescendantData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DescendantListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DescendantListResult(value ?? new ChangeTrackingList<DescendantData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DescendantListResult>.Write(ModelReaderWriterOptions options)

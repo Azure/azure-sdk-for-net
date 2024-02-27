@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
             Optional<string> description = default;
             Optional<Uri> uri = default;
-            Optional<IDictionary<string, BinaryData>> extensions = default;
+            IDictionary<string, BinaryData> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerExternalDocumentation(description.Value, uri.Value, Optional.ToDictionary(extensions), serializedAdditionalRawData);
+            return new SwaggerExternalDocumentation(description.Value, uri.Value, extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerExternalDocumentation>.Write(ModelReaderWriterOptions options)

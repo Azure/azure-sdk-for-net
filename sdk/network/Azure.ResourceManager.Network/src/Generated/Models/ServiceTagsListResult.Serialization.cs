@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             Optional<string> changeNumber = default;
             Optional<string> cloud = default;
-            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
+            IReadOnlyList<ServiceTagInformation> values = default;
             Optional<string> nextLink = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, values ?? new ChangeTrackingList<ServiceTagInformation>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagsListResult>.Write(ModelReaderWriterOptions options)

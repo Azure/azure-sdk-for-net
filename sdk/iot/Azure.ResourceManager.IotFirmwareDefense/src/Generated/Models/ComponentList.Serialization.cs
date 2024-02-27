@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SbomComponent>> value = default;
+            IReadOnlyList<SbomComponent> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComponentList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ComponentList(value ?? new ChangeTrackingList<SbomComponent>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComponentList>.Write(ModelReaderWriterOptions options)
