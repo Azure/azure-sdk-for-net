@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private const string NoneValue = "none";
         private const string LogValue = "log";
 
-        /// <summary> none. </summary>
+        /// <summary> No mapping to OpenTelemetry. </summary>
         public static EventsObservabilityMode None { get; } = new EventsObservabilityMode(NoneValue);
-        /// <summary> log. </summary>
+        /// <summary> Map as log to OpenTelemetry. </summary>
         public static EventsObservabilityMode Log { get; } = new EventsObservabilityMode(LogValue);
         /// <summary> Determines if two <see cref="EventsObservabilityMode"/> values are the same. </summary>
         public static bool operator ==(EventsObservabilityMode left, EventsObservabilityMode right) => left.Equals(right);

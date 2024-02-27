@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Provisioning state of the resource. </summary>
+    /// <summary> The provisioning status of the resource. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
         /// <summary> Resource creation failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Resource creation has been canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
         /// <summary> Resource has been accepted by the server. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);

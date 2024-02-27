@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
     public partial class Sample_AssetResource
     {
-        // List Assets in a Subscription
+        // List Assets in a Subscription.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAssets_ListAssetsInASubscription()
@@ -47,73 +47,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Patch an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_PatchAnAsset()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assets/Update_Asset.json
-            // this example is just showing the usage of "Assets_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
-
-            // invoke the operation
-            AssetPatch patch = new AssetPatch()
-            {
-                Properties = new AdrAssetProperties()
-                {
-                    Enabled = false,
-                    AssetEndpointProfileUri = new Uri("https://www.example.com/myConnectivityProfile"),
-                },
-            };
-            ArmOperation<AssetResource> lro = await asset.UpdateAsync(WaitUntil.Completed, patch);
-            AssetResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AssetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Delete an Asset
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_DeleteAnAsset()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assets/Delete_Asset.json
-            // this example is just showing the usage of "Assets_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AssetResource created on azure
-            // for more information of creating AssetResource, please refer to the document of AssetResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string assetName = "my-asset";
-            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
-            AssetResource asset = client.GetAssetResource(assetResourceId);
-
-            // invoke the operation
-            await asset.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -149,7 +82,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Asset with Sync Status
+        // Get an Asset with Sync Status.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnAssetWithSyncStatus()
@@ -178,6 +111,70 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             AssetData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Patch an Asset.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_PatchAnAsset()
+        {
+            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assets/Update_Asset.json
+            // this example is just showing the usage of "Assets_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AssetResource created on azure
+            // for more information of creating AssetResource, please refer to the document of AssetResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string assetName = "my-asset";
+            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            AssetResource asset = client.GetAssetResource(assetResourceId);
+
+            // invoke the operation
+            AssetPatch patch = new AssetPatch()
+            {
+                Enabled = false,
+                DisplayName = "NewAssetDisplayName",
+            };
+            ArmOperation<AssetResource> lro = await asset.UpdateAsync(WaitUntil.Completed, patch);
+            AssetResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AssetData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Delete an Asset.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Delete_DeleteAnAsset()
+        {
+            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assets/Delete_Asset.json
+            // this example is just showing the usage of "Assets_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AssetResource created on azure
+            // for more information of creating AssetResource, please refer to the document of AssetResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string assetName = "my-asset";
+            ResourceIdentifier assetResourceId = AssetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, assetName);
+            AssetResource asset = client.GetAssetResource(assetResourceId);
+
+            // invoke the operation
+            await asset.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }

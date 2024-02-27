@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Retrieve a single Asset Endpoint Profile.
+        /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// Retrieve a single Asset Endpoint Profile.
+        /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

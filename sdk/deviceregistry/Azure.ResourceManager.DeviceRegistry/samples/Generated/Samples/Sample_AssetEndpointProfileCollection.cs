@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
     public partial class Sample_AssetEndpointProfileCollection
     {
-        // List Asset Endpoint Profiles in a Resource Group
+        // List Asset Endpoint Profiles in a Resource Group.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAssetEndpointProfilesInAResourceGroup()
@@ -55,57 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Create an Asset Endpoint Profile
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateAnAssetEndpointProfile()
-        {
-            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assetEndpointProfiles/Create_AssetEndpointProfile.json
-            // this example is just showing the usage of "AssetEndpointProfiles_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this AssetEndpointProfileResource
-            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
-
-            // invoke the operation
-            string assetEndpointProfileName = "my-assetendpointprofile";
-            AssetEndpointProfileData data = new AssetEndpointProfileData(new AzureLocation("West Europe"), new AssetEndpointProfileExtendedLocation()
-            {
-                AssetEndpointProfileExtendedLocationType = "CustomLocation",
-                Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1",
-            })
-            {
-                Properties = new AssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"))
-                {
-                    UserAuthentication = new AssetEndpointProfilePropertiesUserAuthentication(Mode.Anonymous),
-                },
-                Tags =
-{
-["site"] = "building-1",
-},
-            };
-            ArmOperation<AssetEndpointProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, data);
-            AssetEndpointProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AssetEndpointProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get an Asset Endpoint Profile
+        // Get an Asset Endpoint Profile.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnAssetEndpointProfile()
@@ -139,7 +89,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get an Asset Endpoint Profile
+        // Get an Asset Endpoint Profile.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAnAssetEndpointProfile()
@@ -169,7 +119,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Get an Asset Endpoint Profile
+        // Get an Asset Endpoint Profile.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAnAssetEndpointProfile()
@@ -209,6 +159,50 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+        }
+
+        // Create an Asset Endpoint Profile.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_CreateAnAssetEndpointProfile()
+        {
+            // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/assetEndpointProfiles/Create_AssetEndpointProfile.json
+            // this example is just showing the usage of "AssetEndpointProfiles_CreateOrReplace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this AssetEndpointProfileResource
+            AssetEndpointProfileCollection collection = resourceGroupResource.GetAssetEndpointProfiles();
+
+            // invoke the operation
+            string assetEndpointProfileName = "my-assetendpointprofile";
+            AssetEndpointProfileData data = new AssetEndpointProfileData(new AzureLocation("West Europe"), new ExtendedLocation("CustomLocation", "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/location1"))
+            {
+                TargetAddress = new Uri("https://www.example.com/myTargetAddress"),
+                UserAuthentication = new UserAuthentication(UserAuthenticationMode.Anonymous),
+                Tags =
+{
+["site"] = "building-1",
+},
+            };
+            ArmOperation<AssetEndpointProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, data);
+            AssetEndpointProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AssetEndpointProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

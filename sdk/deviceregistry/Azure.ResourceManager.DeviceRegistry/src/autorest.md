@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: DeviceRegistry
 namespace: Azure.ResourceManager.DeviceRegistry
-require: https://github.com/Azure/azure-rest-api-specs/blob/0a29f9763e50adf092908d090ae4b91037bdc3e7/specification/deviceregistry/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/7b097c7e91a72a8930b94282274158b71e604695/specification/deviceregistry/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -58,109 +58,4 @@ directive:
     where: $.definitions.AssetProperties
     transform: >
       $["x-ms-client-name"] = "AdrAssetProperties";
-  - from: asset.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}"].put
-    transform: >
-      $.parameters[3] = {
-                "name": "assetName",
-                "description": "Asset name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: asset.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}"].patch
-    transform: >
-      $.parameters[3] = {
-                "name": "assetName",
-                "description": "Asset name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: asset.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}"].delete
-    transform: >
-      $.parameters[3] = {
-                "name": "assetName",
-                "description": "Asset name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: asset.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assets/{assetName}"].get
-    transform: >
-      $.parameters[3] = {
-                "name": "assetName",
-                "description": "Asset name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: assetendpointprofile.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}"].put
-    transform: >
-      $.parameters[3] = {
-                "name": "assetEndpointProfileName",
-                "description": "Asset Endpoint Profile name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: assetendpointprofile.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}"].patch
-    transform: >
-      $.parameters[3] = {
-                "name": "assetEndpointProfileName",
-                "description": "Asset Endpoint Profile name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: assetendpointprofile.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}"].delete
-    transform: >
-      $.parameters[3] = {
-                "name": "assetEndpointProfileName",
-                "description": "Asset Endpoint Profile name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-  - from: assetendpointprofile.json
-    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/{assetEndpointProfileName}"].get
-    transform: >
-      $.parameters[3] = {
-                "name": "assetEndpointProfileName",
-                "description": "Asset Endpoint Profile name parameter.",
-                "in": "path",
-                "required": true,
-                "type": "string",
-                "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-                "maxLength": 63,
-                "minLength": 3
-            }
-
 ```

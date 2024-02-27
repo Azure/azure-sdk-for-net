@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// List all assets in a subscription.
+        /// List Asset resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// List all assets in a subscription.
+        /// List Asset resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// List all Asset Endpoint Profiles in a subscription.
+        /// List AssetEndpointProfile resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         }
 
         /// <summary>
-        /// List all Asset Endpoint Profiles in a subscription.
+        /// List AssetEndpointProfile resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<OperationStatusResult>> GetOperationStatuAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = OperationStatusClientDiagnostics.CreateScope("MockableDeviceRegistrySubscriptionResource.GetOperationStatu");
             scope.Start();
@@ -237,7 +244,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<OperationStatusResult> GetOperationStatu(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            if (operationId == null)
+            {
+                throw new ArgumentNullException(nameof(operationId));
+            }
+            if (operationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(operationId));
+            }
 
             using var scope = OperationStatusClientDiagnostics.CreateScope("MockableDeviceRegistrySubscriptionResource.GetOperationStatu");
             scope.Start();

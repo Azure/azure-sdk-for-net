@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private const string HistogramValue = "histogram";
         private const string LogValue = "log";
 
-        /// <summary> none. </summary>
+        /// <summary> No mapping to OpenTelemetry. </summary>
         public static DataPointsObservabilityMode None { get; } = new DataPointsObservabilityMode(NoneValue);
-        /// <summary> counter. </summary>
+        /// <summary> Map as counter to OpenTelemetry. </summary>
         public static DataPointsObservabilityMode Counter { get; } = new DataPointsObservabilityMode(CounterValue);
-        /// <summary> gauge. </summary>
+        /// <summary> Map as gauge to OpenTelemetry. </summary>
         public static DataPointsObservabilityMode Gauge { get; } = new DataPointsObservabilityMode(GaugeValue);
-        /// <summary> histogram. </summary>
+        /// <summary> Map as histogram to OpenTelemetry. </summary>
         public static DataPointsObservabilityMode Histogram { get; } = new DataPointsObservabilityMode(HistogramValue);
-        /// <summary> log. </summary>
+        /// <summary> Map as log to OpenTelemetry. </summary>
         public static DataPointsObservabilityMode Log { get; } = new DataPointsObservabilityMode(LogValue);
         /// <summary> Determines if two <see cref="DataPointsObservabilityMode"/> values are the same. </summary>
         public static bool operator ==(DataPointsObservabilityMode left, DataPointsObservabilityMode right) => left.Equals(right);

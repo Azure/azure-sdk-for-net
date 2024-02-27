@@ -26,21 +26,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Get IoT Central apps collection for resource group.
             var subscription = Client.GetSubscriptionResource(new ResourceIdentifier($"/subscriptions/{SessionEnvironment.SubscriptionId}"));
             var rg = await CreateResourceGroup(subscription, "deviceregistry-test-sdk-rg", AzureLocation.WestUS);
-            var extendedLocation = new AssetEndpointProfileExtendedLocation() { AssetEndpointProfileExtendedLocationType = "CustomLocation", Name = "" };
+            var extendedLocation = new ExtendedLocation() { ExtendedLocationType = "CustomLocation", Name = "" };
 
             var assetEndpointProfilesCollection = rg.GetAssetEndpointProfiles();
 
             // Create DeviceRegistry AssetEndpointProfile
             var assetEndpointProfileData = new AssetEndpointProfileData(AzureLocation.WestUS, extendedLocation)
             {
-                Properties =
-                {
-                    TargetAddress = new Uri("opc.tcp://aep-uri"),
-                    UserAuthentication =
+                TargetAddress = new Uri("opc.tcp://aep-uri"),
+                UserAuthentication =
                     {
-                        Mode = Models.Mode.Anonymous
+                        Mode = UserAuthenticationMode.Anonymous
                     }
-                }
             };
             var assetCreateOrUpdateResponse = await assetEndpointProfilesCollection.CreateOrUpdateAsync(WaitUntil.Completed, assetEndpointProfileName, assetEndpointProfileData, CancellationToken.None);
             Assert.IsNotNull(assetCreateOrUpdateResponse.Value);
@@ -53,10 +50,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             // Update DeviceRegistry AssetEndpointProfile
             var assetPatchData = new AssetEndpointProfilePatch()
             {
-                Properties =
-                {
-                    AdditionalConfiguration = "{\"foo\":\"bar\"}"
-                }
+                AdditionalConfiguration = "{\"foo\":\"bar\"}"
             };
             var assetEndpointProfileUpdateResponse = await assetEndpointProfile.UpdateAsync(WaitUntil.Completed, assetPatchData, CancellationToken.None);
             Assert.IsNotNull(assetEndpointProfileUpdateResponse.Value);

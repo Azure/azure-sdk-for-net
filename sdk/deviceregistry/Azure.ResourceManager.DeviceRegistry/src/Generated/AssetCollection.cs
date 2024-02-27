@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Create a new asset or replace an existing asset.
+        /// Create a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -77,21 +77,31 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
-        /// <param name="data"> Resource create or replace parameters. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AssetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = await _assetRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, assetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation<AssetResource>(new AssetOperationSource(Client), _assetClientDiagnostics, Pipeline, _assetRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeviceRegistryArmOperation<AssetResource>(new AssetOperationSource(Client), _assetClientDiagnostics, Pipeline, _assetRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Create a new asset or replace an existing asset.
+        /// Create a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -126,21 +136,31 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="assetName"> Asset name parameter. </param>
-        /// <param name="data"> Resource create or replace parameters. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AssetResource> CreateOrUpdate(WaitUntil waitUntil, string assetName, AssetData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 var response = _assetRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, assetName, data, cancellationToken);
-                var operation = new DeviceRegistryArmOperation<AssetResource>(new AssetOperationSource(Client), _assetClientDiagnostics, Pipeline, _assetRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DeviceRegistryArmOperation<AssetResource>(new AssetOperationSource(Client), _assetClientDiagnostics, Pipeline, _assetRestClient.CreateCreateOrReplaceRequest(Id.SubscriptionId, Id.ResourceGroupName, assetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -153,7 +173,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<AssetResource>> GetAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Get");
             scope.Start();
@@ -198,7 +225,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<AssetResource> Get(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Get");
             scope.Start();
@@ -243,7 +277,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// List all assets in a resource group.
+        /// List Asset resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -273,7 +307,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// List all assets in a resource group.
+        /// List Asset resources by resource group
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual Response<bool> Exists(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssetResource>> GetIfExistsAsync(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public virtual NullableResponse<AssetResource> GetIfExists(string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+            if (assetName == null)
+            {
+                throw new ArgumentNullException(nameof(assetName));
+            }
+            if (assetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetName));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetCollection.GetIfExists");
             scope.Start();

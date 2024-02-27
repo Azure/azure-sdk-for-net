@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
 {
     public partial class Sample_SubscriptionResourceExtensions
     {
-        // Get operation status
+        // Get the status of an async operation.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetOperationStatu_GetOperationStatus()
+        public async Task GetOperationStatu_GetTheStatusOfAnAsyncOperation()
         {
             // Generated from example definition: specification/deviceregistry/resource-manager/Microsoft.DeviceRegistry/preview/2023-11-01-preview/examples/Get_OperationStatus.json
             // this example is just showing the usage of "OperationStatus_Get" operation, for the dependent resources, they will have to be created separately.

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Delete an asset.
+        /// Delete a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Delete an asset.
+        /// Delete a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Update specific asset properties.
+        /// Update a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -278,12 +278,15 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Resource Update parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<AssetResource>> UpdateAsync(WaitUntil waitUntil, AssetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Update");
             scope.Start();
@@ -303,7 +306,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Update specific asset properties.
+        /// Update a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -324,12 +327,15 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Resource Update parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<AssetResource> Update(WaitUntil waitUntil, AssetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.Update");
             scope.Start();
@@ -375,8 +381,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AssetResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.AddTag");
             scope.Start();
@@ -437,8 +449,14 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AssetResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.AddTag");
             scope.Start();
@@ -498,7 +516,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AssetResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.SetTags");
             scope.Start();
@@ -555,7 +576,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AssetResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.SetTags");
             scope.Start();
@@ -612,7 +636,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AssetResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.RemoveTag");
             scope.Start();
@@ -672,7 +699,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AssetResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _assetClientDiagnostics.CreateScope("AssetResource.RemoveTag");
             scope.Start();

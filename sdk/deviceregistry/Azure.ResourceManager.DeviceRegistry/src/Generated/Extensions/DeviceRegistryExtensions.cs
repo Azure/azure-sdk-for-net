@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> Returns a <see cref="AssetResource"/> object. </returns>
         public static AssetResource GetAssetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDeviceRegistryArmClient(client).GetAssetResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> Returns a <see cref="AssetEndpointProfileResource"/> object. </returns>
         public static AssetEndpointProfileResource GetAssetEndpointProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableDeviceRegistryArmClient(client).GetAssetEndpointProfileResource(id);
         }
@@ -85,13 +91,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> An object representing collection of AssetResources and their operations over a AssetResource. </returns>
         public static AssetCollection GetAssets(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAssets();
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,13 +132,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         [ForwardsClientCalls]
         public static async Task<Response<AssetResource>> GetAssetAsync(this ResourceGroupResource resourceGroupResource, string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAssetAsync(assetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieve a single asset.
+        /// Get a Asset
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,7 +173,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         [ForwardsClientCalls]
         public static Response<AssetResource> GetAsset(this ResourceGroupResource resourceGroupResource, string assetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAsset(assetName, cancellationToken);
         }
@@ -178,13 +193,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> An object representing collection of AssetEndpointProfileResources and their operations over a AssetEndpointProfileResource. </returns>
         public static AssetEndpointProfileCollection GetAssetEndpointProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAssetEndpointProfiles();
         }
 
         /// <summary>
-        /// Retrieve a single Asset Endpoint Profile.
+        /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,13 +234,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         [ForwardsClientCalls]
         public static async Task<Response<AssetEndpointProfileResource>> GetAssetEndpointProfileAsync(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAssetEndpointProfileAsync(assetEndpointProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieve a single Asset Endpoint Profile.
+        /// Get a AssetEndpointProfile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -254,13 +275,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         [ForwardsClientCalls]
         public static Response<AssetEndpointProfileResource> GetAssetEndpointProfile(this ResourceGroupResource resourceGroupResource, string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableDeviceRegistryResourceGroupResource(resourceGroupResource).GetAssetEndpointProfile(assetEndpointProfileName, cancellationToken);
         }
 
         /// <summary>
-        /// List all assets in a subscription.
+        /// List Asset resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -290,13 +314,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> An async collection of <see cref="AssetResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AssetResource> GetAssetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetAssetsAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List all assets in a subscription.
+        /// List Asset resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -326,13 +353,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> A collection of <see cref="AssetResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AssetResource> GetAssets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetAssets(cancellationToken);
         }
 
         /// <summary>
-        /// List all Asset Endpoint Profiles in a subscription.
+        /// List AssetEndpointProfile resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -362,13 +392,16 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> An async collection of <see cref="AssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AssetEndpointProfileResource> GetAssetEndpointProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetAssetEndpointProfilesAsync(cancellationToken);
         }
 
         /// <summary>
-        /// List all Asset Endpoint Profiles in a subscription.
+        /// List AssetEndpointProfile resources by subscription ID
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -398,7 +431,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <returns> A collection of <see cref="AssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AssetEndpointProfileResource> GetAssetEndpointProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetAssetEndpointProfiles(cancellationToken);
         }
@@ -432,7 +468,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<OperationStatusResult>> GetOperationStatuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetOperationStatuAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
@@ -466,7 +505,10 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="operationId"/> is null. </exception>
         public static Response<OperationStatusResult> GetOperationStatu(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableDeviceRegistrySubscriptionResource(subscriptionResource).GetOperationStatu(location, operationId, cancellationToken);
         }

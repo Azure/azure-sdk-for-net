@@ -54,14 +54,21 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a subscription. </summary>
+        /// <summary> List AssetEndpointProfile resources by subscription ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetEndpointProfileResponseList>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AssetEndpointProfileListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -69,9 +76,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -79,14 +86,21 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a subscription. </summary>
+        /// <summary> List AssetEndpointProfile resources by subscription ID. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetEndpointProfileResponseList> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AssetEndpointProfileListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -94,9 +108,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -123,16 +137,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a resource group. </summary>
+        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetEndpointProfileResponseList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AssetEndpointProfileListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -140,9 +168,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -150,16 +178,30 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a resource group. </summary>
+        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetEndpointProfileResponseList> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AssetEndpointProfileListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -167,11 +209,135 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string assetEndpointProfileName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/", false);
+            uri.AppendPath(assetEndpointProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get a AssetEndpointProfile. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<AssetEndpointProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AssetEndpointProfileData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AssetEndpointProfileData.DeserializeAssetEndpointProfileData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((AssetEndpointProfileData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get a AssetEndpointProfile. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<AssetEndpointProfileData> Get(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
+        {
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AssetEndpointProfileData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AssetEndpointProfileData.DeserializeAssetEndpointProfileData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                case 404:
+                    return Response.FromValue((AssetEndpointProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -201,20 +367,44 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> Create a new Asset Endpoint Profile or replace an existing Asset Endpoint Profile. </summary>
+        /// <summary> Create a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="data"> Resource create or replace parameters. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrReplaceAsync(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, assetEndpointProfileName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -228,20 +418,44 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Create a new Asset Endpoint Profile or replace an existing Asset Endpoint Profile. </summary>
+        /// <summary> Create a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="data"> Resource create or replace parameters. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="assetEndpointProfileName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrReplace(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, AssetEndpointProfileData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrReplaceRequest(subscriptionId, resourceGroupName, assetEndpointProfileName, data);
             _pipeline.Send(message, cancellationToken);
@@ -279,20 +493,44 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> Update specific Asset Endpoint Profile properties. </summary>
+        /// <summary> Update a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="patch"> Resource Update parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="assetEndpointProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, AssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, assetEndpointProfileName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -306,20 +544,44 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Update specific Asset Endpoint Profile properties. </summary>
+        /// <summary> Update a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="patch"> Resource Update parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="assetEndpointProfileName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, AssetEndpointProfilePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, assetEndpointProfileName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -353,7 +615,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> Delete an Asset Endpoint Profile. </summary>
+        /// <summary> Delete a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
@@ -362,9 +624,30 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -378,7 +661,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> Delete an Asset Endpoint Profile. </summary>
+        /// <summary> Delete a AssetEndpointProfile. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
@@ -387,9 +670,30 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (assetEndpointProfileName == null)
+            {
+                throw new ArgumentNullException(nameof(assetEndpointProfileName));
+            }
+            if (assetEndpointProfileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assetEndpointProfileName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
             _pipeline.Send(message, cancellationToken);
@@ -398,88 +702,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                 case 202:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string assetEndpointProfileName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DeviceRegistry/assetEndpointProfiles/", false);
-            uri.AppendPath(assetEndpointProfileName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Retrieve a single Asset Endpoint Profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetEndpointProfileData>> GetAsync(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AssetEndpointProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetEndpointProfileData.DeserializeAssetEndpointProfileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AssetEndpointProfileData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Retrieve a single Asset Endpoint Profile. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="assetEndpointProfileName"> Asset Endpoint Profile name parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="assetEndpointProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetEndpointProfileData> Get(string subscriptionId, string resourceGroupName, string assetEndpointProfileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(assetEndpointProfileName, nameof(assetEndpointProfileName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, assetEndpointProfileName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AssetEndpointProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetEndpointProfileData.DeserializeAssetEndpointProfileData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((AssetEndpointProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -499,16 +721,26 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a subscription. </summary>
+        /// <summary> List AssetEndpointProfile resources by subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetEndpointProfileResponseList>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<AssetEndpointProfileListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -516,9 +748,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -526,16 +758,26 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a subscription. </summary>
+        /// <summary> List AssetEndpointProfile resources by subscription ID. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetEndpointProfileResponseList> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<AssetEndpointProfileListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
 
             using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -543,9 +785,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -567,18 +809,35 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a resource group. </summary>
+        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AssetEndpointProfileResponseList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public async Task<Response<AssetEndpointProfileListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -586,9 +845,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -596,18 +855,35 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List all Asset Endpoint Profiles in a resource group. </summary>
+        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AssetEndpointProfileResponseList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public Response<AssetEndpointProfileListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
 
             using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -615,9 +891,9 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case 200:
                     {
-                        AssetEndpointProfileResponseList value = default;
+                        AssetEndpointProfileListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AssetEndpointProfileResponseList.DeserializeAssetEndpointProfileResponseList(document.RootElement);
+                        value = AssetEndpointProfileListResult.DeserializeAssetEndpointProfileListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
