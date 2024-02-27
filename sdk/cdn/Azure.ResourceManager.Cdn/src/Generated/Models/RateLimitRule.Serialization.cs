@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(
+                name,
+                Optional.ToNullable(enabledState),
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData,
+                rateLimitThreshold,
+                rateLimitDurationInMinutes);
         }
 
         BinaryData IPersistableModel<RateLimitRule>.Write(ModelReaderWriterOptions options)

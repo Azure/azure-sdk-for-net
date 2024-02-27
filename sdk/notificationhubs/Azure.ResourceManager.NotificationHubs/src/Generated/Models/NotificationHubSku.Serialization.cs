@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubSku(name, tier.Value, size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new NotificationHubSku(
+                name,
+                tier.Value,
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubSku>.Write(ModelReaderWriterOptions options)

@@ -328,7 +328,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState));
+            return new InboundNatRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                frontendIPConfiguration,
+                backendIPConfiguration.Value,
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(frontendPort),
+                Optional.ToNullable(backendPort),
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(enableFloatingIP),
+                Optional.ToNullable(enableTcpReset),
+                Optional.ToNullable(frontendPortRangeStart),
+                Optional.ToNullable(frontendPortRangeEnd),
+                backendAddressPool,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options)

@@ -210,7 +210,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(), authenticationType, serializedAdditionalRawData, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
+            return new GcpCredentialsDetailsProperties(
+                Optional.ToNullable(authenticationProvisioningState),
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                organizationId,
+                type,
+                projectId,
+                privateKeyId,
+                privateKey,
+                clientEmail,
+                clientId,
+                authUri,
+                tokenUri,
+                authProviderX509CertUrl,
+                clientX509CertUrl);
         }
 
         BinaryData IPersistableModel<GcpCredentialsDetailsProperties>.Write(ModelReaderWriterOptions options)

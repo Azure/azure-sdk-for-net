@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2PolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new InMageAzureV2PolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointThresholdInMinutes),
+                Optional.ToNullable(recoveryPointHistory),
+                Optional.ToNullable(crashConsistentFrequencyInMinutes),
+                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                multiVmSyncStatus);
         }
 
         BinaryData IPersistableModel<InMageAzureV2PolicyContent>.Write(ModelReaderWriterOptions options)

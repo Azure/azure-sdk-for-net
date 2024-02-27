@@ -185,7 +185,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateDetails(
+                Optional.ToNullable(version),
+                serialNumber.Value,
+                thumbprint.Value,
+                subject.Value,
+                Optional.ToNullable(notBefore),
+                Optional.ToNullable(notAfter),
+                signatureAlgorithm.Value,
+                issuer.Value,
+                rawData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)

@@ -173,7 +173,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemCreatedStorageAccount(Optional.ToNullable(allowBlobPublicAccess), armResourceId.Value, Optional.ToNullable(storageAccountHnsEnabled), storageAccountName.Value, storageAccountType.Value, serializedAdditionalRawData);
+            return new SystemCreatedStorageAccount(
+                Optional.ToNullable(allowBlobPublicAccess),
+                armResourceId.Value,
+                Optional.ToNullable(storageAccountHnsEnabled),
+                storageAccountName.Value,
+                storageAccountType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemCreatedStorageAccount>.Write(ModelReaderWriterOptions options)

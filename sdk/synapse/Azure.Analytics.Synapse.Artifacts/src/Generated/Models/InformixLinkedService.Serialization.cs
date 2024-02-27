@@ -235,7 +235,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new InformixLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString, authenticationType.Value, credential.Value, userName.Value, password.Value, encryptedCredential.Value);
+            return new InformixLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString,
+                authenticationType.Value,
+                credential.Value,
+                userName.Value,
+                password.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class InformixLinkedServiceConverter : JsonConverter<InformixLinkedService>

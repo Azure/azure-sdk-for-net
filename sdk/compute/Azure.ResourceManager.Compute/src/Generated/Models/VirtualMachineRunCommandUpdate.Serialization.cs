@@ -333,7 +333,23 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure));
+            return new VirtualMachineRunCommandUpdate(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source.Value,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                Optional.ToNullable(asyncExecution),
+                runAsUser.Value,
+                runAsPassword.Value,
+                Optional.ToNullable(timeoutInSeconds),
+                outputBlobUri.Value,
+                errorBlobUri.Value,
+                outputBlobManagedIdentity.Value,
+                errorBlobManagedIdentity.Value,
+                provisioningState.Value,
+                instanceView.Value,
+                Optional.ToNullable(treatFailureAsDeploymentFailure));
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)

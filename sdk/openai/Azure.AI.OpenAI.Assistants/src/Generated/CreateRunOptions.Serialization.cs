@@ -217,7 +217,14 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateRunOptions(assistantId, model.Value, instructions.Value, additionalInstructions.Value, tools ?? new ChangeTrackingList<ToolDefinition>(), metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new CreateRunOptions(
+                assistantId,
+                model.Value,
+                instructions.Value,
+                additionalInstructions.Value,
+                tools ?? new ChangeTrackingList<ToolDefinition>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateRunOptions>.Write(ModelReaderWriterOptions options)

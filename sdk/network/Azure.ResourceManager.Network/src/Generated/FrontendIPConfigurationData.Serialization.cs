@@ -389,7 +389,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(), inboundNatPools ?? new ChangeTrackingList<WritableSubResource>(), outboundRules ?? new ChangeTrackingList<WritableSubResource>(), loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, publicIPAddress.Value, publicIPPrefix, gatewayLoadBalancer, Optional.ToNullable(provisioningState));
+            return new FrontendIPConfigurationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                privateIPAddress.Value,
+                Optional.ToNullable(privateIPAllocationMethod),
+                Optional.ToNullable(privateIPAddressVersion),
+                subnet.Value,
+                publicIPAddress.Value,
+                publicIPPrefix,
+                gatewayLoadBalancer,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<FrontendIPConfigurationData>.Write(ModelReaderWriterOptions options)

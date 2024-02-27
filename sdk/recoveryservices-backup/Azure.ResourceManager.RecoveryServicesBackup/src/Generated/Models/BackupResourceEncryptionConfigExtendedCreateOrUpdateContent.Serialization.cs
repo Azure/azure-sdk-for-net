@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

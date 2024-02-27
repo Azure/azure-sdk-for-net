@@ -423,7 +423,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(), testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(), testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(), outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType), serializedAdditionalRawData);
+            return new ConnectionMonitorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source.Value,
+                destination.Value,
+                Optional.ToNullable(autoStart),
+                Optional.ToNullable(monitoringIntervalInSeconds),
+                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
+                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
+                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
+                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
+                notes.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(startTime),
+                monitoringStatus.Value,
+                Optional.ToNullable(connectionMonitorType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options)

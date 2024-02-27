@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.SelfHelp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshooterResourceData(id, name, type, systemData.Value, solutionId.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), steps ?? new ChangeTrackingList<SelfHelpStep>(), serializedAdditionalRawData);
+            return new TroubleshooterResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                solutionId.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                steps ?? new ChangeTrackingList<SelfHelpStep>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshooterResourceData>.Write(ModelReaderWriterOptions options)

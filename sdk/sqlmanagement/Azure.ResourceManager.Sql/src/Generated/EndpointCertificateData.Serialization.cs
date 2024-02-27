@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointCertificateData(id, name, type, systemData.Value, publicBlob.Value, serializedAdditionalRawData);
+            return new EndpointCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publicBlob.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointCertificateData>.Write(ModelReaderWriterOptions options)

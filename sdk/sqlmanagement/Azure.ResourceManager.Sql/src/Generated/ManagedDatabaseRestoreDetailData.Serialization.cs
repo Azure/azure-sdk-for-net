@@ -481,7 +481,34 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseRestoreDetailData(id, name, type, systemData.Value, type0.Value, status.Value, blockReason.Value, lastUploadedFileName.Value, Optional.ToNullable(lastUploadedFileTime), lastRestoredFileName.Value, Optional.ToNullable(lastRestoredFileTime), Optional.ToNullable(percentCompleted), Optional.ToNullable(currentRestoredSizeMB), Optional.ToNullable(currentRestorePlanSizeMB), currentBackupType.Value, currentRestoringFileName.Value, Optional.ToNullable(numberOfFilesDetected), Optional.ToNullable(numberOfFilesQueued), Optional.ToNullable(numberOfFilesSkipped), Optional.ToNullable(numberOfFilesRestoring), Optional.ToNullable(numberOfFilesRestored), Optional.ToNullable(numberOfFilesUnrestorable), fullBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(), diffBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(), logBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(), unrestorableFiles ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(), serializedAdditionalRawData);
+            return new ManagedDatabaseRestoreDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                type0.Value,
+                status.Value,
+                blockReason.Value,
+                lastUploadedFileName.Value,
+                Optional.ToNullable(lastUploadedFileTime),
+                lastRestoredFileName.Value,
+                Optional.ToNullable(lastRestoredFileTime),
+                Optional.ToNullable(percentCompleted),
+                Optional.ToNullable(currentRestoredSizeMB),
+                Optional.ToNullable(currentRestorePlanSizeMB),
+                currentBackupType.Value,
+                currentRestoringFileName.Value,
+                Optional.ToNullable(numberOfFilesDetected),
+                Optional.ToNullable(numberOfFilesQueued),
+                Optional.ToNullable(numberOfFilesSkipped),
+                Optional.ToNullable(numberOfFilesRestoring),
+                Optional.ToNullable(numberOfFilesRestored),
+                Optional.ToNullable(numberOfFilesUnrestorable),
+                fullBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                diffBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                logBackupSets ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>(),
+                unrestorableFiles ?? new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailData>.Write(ModelReaderWriterOptions options)

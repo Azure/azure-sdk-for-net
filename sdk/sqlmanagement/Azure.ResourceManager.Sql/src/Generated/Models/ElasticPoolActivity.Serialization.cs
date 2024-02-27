@@ -429,7 +429,33 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolActivity(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee), serializedAdditionalRawData);
+            return new ElasticPoolActivity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(errorCode),
+                errorMessage.Value,
+                Optional.ToNullable(errorSeverity),
+                operation.Value,
+                Optional.ToNullable(operationId),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(requestedDatabaseDtuMax),
+                Optional.ToNullable(requestedDatabaseDtuMin),
+                Optional.ToNullable(requestedDtu),
+                requestedElasticPoolName.Value,
+                Optional.ToNullable(requestedStorageLimitInGB),
+                elasticPoolName.Value,
+                serverName.Value,
+                Optional.ToNullable(startTime),
+                state.Value,
+                Optional.ToNullable(requestedStorageLimitInMB),
+                Optional.ToNullable(requestedDatabaseDtuGuarantee),
+                Optional.ToNullable(requestedDatabaseDtuCap),
+                Optional.ToNullable(requestedDtuGuarantee),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolActivity>.Write(ModelReaderWriterOptions options)

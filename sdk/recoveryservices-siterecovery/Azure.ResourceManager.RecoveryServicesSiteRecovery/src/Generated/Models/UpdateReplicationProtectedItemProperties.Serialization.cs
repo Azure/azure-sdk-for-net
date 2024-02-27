@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateReplicationProtectedItemProperties(recoveryAzureVmName.Value, recoveryAzureVmSize.Value, selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, enableRdpOnTargetOption.Value, vmNics ?? new ChangeTrackingList<VmNicContentDetails>(), Optional.ToNullable(licenseType), recoveryAvailabilitySetId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new UpdateReplicationProtectedItemProperties(
+                recoveryAzureVmName.Value,
+                recoveryAzureVmSize.Value,
+                selectedRecoveryAzureNetworkId.Value,
+                selectedTfoAzureNetworkId.Value,
+                selectedSourceNicId.Value,
+                enableRdpOnTargetOption.Value,
+                vmNics ?? new ChangeTrackingList<VmNicContentDetails>(),
+                Optional.ToNullable(licenseType),
+                recoveryAvailabilitySetId.Value,
+                providerSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

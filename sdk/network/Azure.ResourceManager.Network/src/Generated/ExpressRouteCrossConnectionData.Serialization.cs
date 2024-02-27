@@ -333,7 +333,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), peerings ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>());
+            return new ExpressRouteCrossConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                primaryAzurePort.Value,
+                secondaryAzurePort.Value,
+                Optional.ToNullable(sTag),
+                peeringLocation.Value,
+                Optional.ToNullable(bandwidthInMbps),
+                expressRouteCircuit,
+                Optional.ToNullable(serviceProviderProvisioningState),
+                serviceProviderNotes.Value,
+                Optional.ToNullable(provisioningState),
+                peerings ?? new ChangeTrackingList<ExpressRouteCrossConnectionPeeringData>());
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionData>.Write(ModelReaderWriterOptions options)

@@ -294,7 +294,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeShareData(id, name, type, systemData.Value, description.Value, shareStatus, monitoringStatus, azureContainerInfo.Value, accessProtocol, userAccessRights ?? new ChangeTrackingList<UserAccessRight>(), clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(), refreshDetails.Value, shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(), Optional.ToNullable(dataPolicy), serializedAdditionalRawData);
+            return new DataBoxEdgeShareData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                shareStatus,
+                monitoringStatus,
+                azureContainerInfo.Value,
+                accessProtocol,
+                userAccessRights ?? new ChangeTrackingList<UserAccessRight>(),
+                clientAccessRights ?? new ChangeTrackingList<ClientAccessRight>(),
+                refreshDetails.Value,
+                shareMappings ?? new ChangeTrackingList<DataBoxEdgeMountPointMap>(),
+                Optional.ToNullable(dataPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeShareData>.Write(ModelReaderWriterOptions options)

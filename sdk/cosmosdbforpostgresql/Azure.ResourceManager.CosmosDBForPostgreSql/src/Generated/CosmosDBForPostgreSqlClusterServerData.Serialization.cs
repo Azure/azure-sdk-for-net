@@ -317,7 +317,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlClusterServerData(id, name, type, systemData.Value, serverEdition.Value, Optional.ToNullable(storageQuotaInMb), Optional.ToNullable(vCores), Optional.ToNullable(enableHa), Optional.ToNullable(enablePublicIPAccess), Optional.ToNullable(isReadOnly), administratorLogin.Value, fullyQualifiedDomainName.Value, Optional.ToNullable(role), state.Value, haState.Value, availabilityZone.Value, postgresqlVersion.Value, citusVersion.Value, serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlClusterServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverEdition.Value,
+                Optional.ToNullable(storageQuotaInMb),
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(enableHa),
+                Optional.ToNullable(enablePublicIPAccess),
+                Optional.ToNullable(isReadOnly),
+                administratorLogin.Value,
+                fullyQualifiedDomainName.Value,
+                Optional.ToNullable(role),
+                state.Value,
+                haState.Value,
+                availabilityZone.Value,
+                postgresqlVersion.Value,
+                citusVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterServerData>.Write(ModelReaderWriterOptions options)

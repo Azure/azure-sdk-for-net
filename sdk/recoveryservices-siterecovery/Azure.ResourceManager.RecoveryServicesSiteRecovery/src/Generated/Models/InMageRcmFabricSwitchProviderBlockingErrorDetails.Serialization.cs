@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFabricSwitchProviderBlockingErrorDetails(errorCode.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(), errorTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new InMageRcmFabricSwitchProviderBlockingErrorDetails(
+                errorCode.Value,
+                errorMessage.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                errorMessageParameters ?? new ChangeTrackingDictionary<string, string>(),
+                errorTags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFabricSwitchProviderBlockingErrorDetails>.Write(ModelReaderWriterOptions options)

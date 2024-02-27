@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVmDiskDetails(vhdType.Value, vhdId.Value, diskId.Value, vhdName.Value, maxSizeMB.Value, targetDiskLocation.Value, targetDiskName.Value, lunId.Value, diskEncryptionSetId.Value, customTargetDiskName.Value, serializedAdditionalRawData);
+            return new SiteRecoveryVmDiskDetails(
+                vhdType.Value,
+                vhdId.Value,
+                diskId.Value,
+                vhdName.Value,
+                maxSizeMB.Value,
+                targetDiskLocation.Value,
+                targetDiskName.Value,
+                lunId.Value,
+                diskEncryptionSetId.Value,
+                customTargetDiskName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVmDiskDetails>.Write(ModelReaderWriterOptions options)

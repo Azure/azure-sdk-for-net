@@ -136,7 +136,20 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new JobResponse(jobId.Value, queryCondition.Value, Optional.ToNullable(createdTime), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(maxExecutionTimeInSeconds), Optional.ToNullable(type), cloudToDeviceMethod.Value, updateTwin.Value, Optional.ToNullable(status), failureReason.Value, statusMessage.Value, deviceJobStatistics.Value);
+            return new JobResponse(
+                jobId.Value,
+                queryCondition.Value,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(maxExecutionTimeInSeconds),
+                Optional.ToNullable(type),
+                cloudToDeviceMethod.Value,
+                updateTwin.Value,
+                Optional.ToNullable(status),
+                failureReason.Value,
+                statusMessage.Value,
+                deviceJobStatistics.Value);
         }
     }
 }

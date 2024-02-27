@@ -292,7 +292,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceProperties(Optional.ToNullable(provisioningState), sourceId, targetId.Value, existingTargetId.Value, resourceSettings.Value, sourceResourceSettings.Value, moveStatus.Value, dependsOn ?? new ChangeTrackingList<MoverResourceDependency>(), dependsOnOverrides ?? new ChangeTrackingList<MoverResourceDependencyOverride>(), Optional.ToNullable(isResolveRequired), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceProperties(
+                Optional.ToNullable(provisioningState),
+                sourceId,
+                targetId.Value,
+                existingTargetId.Value,
+                resourceSettings.Value,
+                sourceResourceSettings.Value,
+                moveStatus.Value,
+                dependsOn ?? new ChangeTrackingList<MoverResourceDependency>(),
+                dependsOnOverrides ?? new ChangeTrackingList<MoverResourceDependencyOverride>(),
+                Optional.ToNullable(isResolveRequired),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceProperties>.Write(ModelReaderWriterOptions options)

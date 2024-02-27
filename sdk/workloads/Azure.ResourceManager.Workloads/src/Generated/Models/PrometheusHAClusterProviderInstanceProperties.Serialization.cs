@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusHAClusterProviderInstanceProperties(providerType, serializedAdditionalRawData, prometheusUrl.Value, hostname.Value, sid.Value, clusterName.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
+            return new PrometheusHAClusterProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                prometheusUrl.Value,
+                hostname.Value,
+                sid.Value,
+                clusterName.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value);
         }
 
         BinaryData IPersistableModel<PrometheusHAClusterProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

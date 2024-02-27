@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRuleMatchCondition(protocolTypes ?? new ChangeTrackingList<string>(), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToNullable(encapsulationType), portCondition.Value);
+            return new NetworkTapRuleMatchCondition(
+                protocolTypes ?? new ChangeTrackingList<string>(),
+                vlanMatchCondition.Value,
+                ipCondition.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(encapsulationType),
+                portCondition.Value);
         }
 
         BinaryData IPersistableModel<NetworkTapRuleMatchCondition>.Write(ModelReaderWriterOptions options)

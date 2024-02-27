@@ -344,7 +344,27 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCrossConnectionPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, ipv6PeeringConfig.Value);
+            return new ExpressRouteCrossConnectionPeeringData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(peeringType),
+                Optional.ToNullable(state),
+                Optional.ToNullable(azureASN),
+                Optional.ToNullable(peerASN),
+                primaryPeerAddressPrefix.Value,
+                secondaryPeerAddressPrefix.Value,
+                primaryAzurePort.Value,
+                secondaryAzurePort.Value,
+                sharedKey.Value,
+                Optional.ToNullable(vlanId),
+                microsoftPeeringConfig.Value,
+                Optional.ToNullable(provisioningState),
+                gatewayManagerETag.Value,
+                lastModifiedBy.Value,
+                ipv6PeeringConfig.Value);
         }
 
         BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options)

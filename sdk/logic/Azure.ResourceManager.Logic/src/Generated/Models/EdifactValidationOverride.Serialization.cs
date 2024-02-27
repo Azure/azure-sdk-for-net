@@ -130,7 +130,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactValidationOverride(messageId, enforceCharacterSet, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, trimLeadingAndTrailingSpacesAndZeroes, serializedAdditionalRawData);
+            return new EdifactValidationOverride(
+                messageId,
+                enforceCharacterSet,
+                validateEdiTypes,
+                validateXsdTypes,
+                allowLeadingAndTrailingSpacesAndZeroes,
+                trailingSeparatorPolicy,
+                trimLeadingAndTrailingSpacesAndZeroes,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactValidationOverride>.Write(ModelReaderWriterOptions options)

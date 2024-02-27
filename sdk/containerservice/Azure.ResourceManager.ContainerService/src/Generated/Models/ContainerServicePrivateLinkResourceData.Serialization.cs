@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourceData(id.Value, name.Value, Optional.ToNullable(type), groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), privateLinkServiceId.Value, serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                privateLinkServiceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

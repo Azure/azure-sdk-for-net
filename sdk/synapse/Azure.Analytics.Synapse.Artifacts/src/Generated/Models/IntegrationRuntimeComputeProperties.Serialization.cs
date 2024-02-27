@@ -122,7 +122,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeComputeProperties(location.Value, nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
+            return new IntegrationRuntimeComputeProperties(
+                location.Value,
+                nodeSize.Value,
+                Optional.ToNullable(numberOfNodes),
+                Optional.ToNullable(maxParallelExecutionsPerNode),
+                dataFlowProperties.Value,
+                vNetProperties.Value,
+                additionalProperties);
         }
 
         internal partial class IntegrationRuntimeComputePropertiesConverter : JsonConverter<IntegrationRuntimeComputeProperties>

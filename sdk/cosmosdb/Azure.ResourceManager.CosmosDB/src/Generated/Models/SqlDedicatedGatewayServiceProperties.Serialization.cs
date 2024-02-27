@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDedicatedGatewayServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, sqlDedicatedGatewayEndpoint.Value, locations ?? new ChangeTrackingList<SqlDedicatedGatewayRegionalService>());
+            return new SqlDedicatedGatewayServiceProperties(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(instanceSize),
+                Optional.ToNullable(instanceCount),
+                serviceType,
+                Optional.ToNullable(status),
+                additionalProperties,
+                sqlDedicatedGatewayEndpoint.Value,
+                locations ?? new ChangeTrackingList<SqlDedicatedGatewayRegionalService>());
         }
 
         BinaryData IPersistableModel<SqlDedicatedGatewayServiceProperties>.Write(ModelReaderWriterOptions options)

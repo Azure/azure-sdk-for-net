@@ -263,7 +263,19 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy, serializedAdditionalRawData);
+            return new LogProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                storageAccountId.Value,
+                serviceBusRuleId.Value,
+                locations,
+                categories,
+                retentionPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogProfileData>.Write(ModelReaderWriterOptions options)

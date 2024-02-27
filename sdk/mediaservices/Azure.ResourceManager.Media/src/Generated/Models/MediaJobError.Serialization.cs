@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobError(Optional.ToNullable(code), message.Value, Optional.ToNullable(category), Optional.ToNullable(retry), details ?? new ChangeTrackingList<MediaJobErrorDetail>(), serializedAdditionalRawData);
+            return new MediaJobError(
+                Optional.ToNullable(code),
+                message.Value,
+                Optional.ToNullable(category),
+                Optional.ToNullable(retry),
+                details ?? new ChangeTrackingList<MediaJobErrorDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaJobError>.Write(ModelReaderWriterOptions options)

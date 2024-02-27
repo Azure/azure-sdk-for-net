@@ -109,7 +109,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobWorkerSelectorsExpiredEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(), expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
+            return new AcsRouterJobWorkerSelectorsExpiredEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
+                expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
         internal partial class AcsRouterJobWorkerSelectorsExpiredEventDataConverter : JsonConverter<AcsRouterJobWorkerSelectorsExpiredEventData>

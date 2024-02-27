@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(), Optional.ToNullable(connectionTimeoutInMs), serializedAdditionalRawData);
+            return new AuthenticationMethodLdapProperties(
+                serverHostname.Value,
+                Optional.ToNullable(serverPort),
+                serviceUserDistinguishedName.Value,
+                serviceUserPassword.Value,
+                searchBaseDistinguishedName.Value,
+                searchFilterTemplate.Value,
+                serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
+                Optional.ToNullable(connectionTimeoutInMs),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)

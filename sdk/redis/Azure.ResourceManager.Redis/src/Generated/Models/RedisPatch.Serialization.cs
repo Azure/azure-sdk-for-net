@@ -303,7 +303,21 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), tenantSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku.Value, serializedAdditionalRawData);
+            return new RedisPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                redisConfiguration.Value,
+                redisVersion.Value,
+                Optional.ToNullable(enableNonSslPort),
+                Optional.ToNullable(replicasPerMaster),
+                Optional.ToNullable(replicasPerPrimary),
+                tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(shardCount),
+                Optional.ToNullable(minimumTlsVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(updateChannel),
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatch>.Write(ModelReaderWriterOptions options)

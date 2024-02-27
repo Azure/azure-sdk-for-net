@@ -192,7 +192,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), azureVirtualMachines ?? new ChangeTrackingList<string>(), nonAzureComputerNames ?? new ChangeTrackingList<string>(), targets.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationSpecificProperties(
+                operatingSystem,
+                windows.Value,
+                linux.Value,
+                Optional.ToNullable(duration),
+                azureVirtualMachines ?? new ChangeTrackingList<string>(),
+                nonAzureComputerNames ?? new ChangeTrackingList<string>(),
+                targets.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>.Write(ModelReaderWriterOptions options)

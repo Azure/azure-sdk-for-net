@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateMigrationInputSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, selectedLogins ?? new ChangeTrackingList<string>(), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), serializedAdditionalRawData);
+            return new ValidateMigrationInputSqlServerSqlMITaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                selectedDatabases,
+                selectedLogins ?? new ChangeTrackingList<string>(),
+                backupFileShare.Value,
+                backupBlobShare,
+                Optional.ToNullable(backupMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)

@@ -313,7 +313,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value, serializedAdditionalRawData);
+            return new AseV3NetworkingConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                windowsOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                linuxOutboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                Optional.ToNullable(allowNewPrivateEndpointConnections),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options)

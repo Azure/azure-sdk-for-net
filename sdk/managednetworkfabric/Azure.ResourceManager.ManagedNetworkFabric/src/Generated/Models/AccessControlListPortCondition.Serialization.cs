@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccessControlListPortCondition(Optional.ToNullable(portType), layer4Protocol, ports ?? new ChangeTrackingList<string>(), portGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, flags ?? new ChangeTrackingList<string>());
+            return new AccessControlListPortCondition(
+                Optional.ToNullable(portType),
+                layer4Protocol,
+                ports ?? new ChangeTrackingList<string>(),
+                portGroupNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                flags ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AccessControlListPortCondition>.Write(ModelReaderWriterOptions options)

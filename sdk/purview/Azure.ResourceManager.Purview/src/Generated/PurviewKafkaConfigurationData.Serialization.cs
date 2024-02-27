@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewKafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType), serializedAdditionalRawData);
+            return new PurviewKafkaConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                consumerGroup.Value,
+                credentials.Value,
+                eventHubPartitionId.Value,
+                eventHubResourceId.Value,
+                Optional.ToNullable(eventHubType),
+                Optional.ToNullable(eventStreamingState),
+                Optional.ToNullable(eventStreamingType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options)

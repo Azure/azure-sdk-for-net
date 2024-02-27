@@ -427,7 +427,28 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourceAddressPrefix.Value, sourceAddressPrefixes ?? new ChangeTrackingList<string>(), sourceApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), destinationAddressPrefix.Value, destinationAddressPrefixes ?? new ChangeTrackingList<string>(), destinationApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState));
+            return new SecurityRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                description.Value,
+                Optional.ToNullable(protocol),
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                sourceAddressPrefix.Value,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                sourceApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                destinationAddressPrefix.Value,
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationApplicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<SecurityRuleData>.Write(ModelReaderWriterOptions options)

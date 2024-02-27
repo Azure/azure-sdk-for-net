@@ -454,7 +454,29 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), addressSpace.Value, dhcpOptions.Value, Optional.ToNullable(flowTimeoutInMinutes), subnets ?? new ChangeTrackingList<SubnetData>(), virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDdosProtection), Optional.ToNullable(enableVmProtection), ddosProtectionPlan, bgpCommunities.Value, encryption.Value, ipAllocations ?? new ChangeTrackingList<WritableSubResource>(), flowLogs ?? new ChangeTrackingList<FlowLogData>());
+            return new VirtualNetworkData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                addressSpace.Value,
+                dhcpOptions.Value,
+                Optional.ToNullable(flowTimeoutInMinutes),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(enableDdosProtection),
+                Optional.ToNullable(enableVmProtection),
+                ddosProtectionPlan,
+                bgpCommunities.Value,
+                encryption.Value,
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>());
         }
 
         BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options)

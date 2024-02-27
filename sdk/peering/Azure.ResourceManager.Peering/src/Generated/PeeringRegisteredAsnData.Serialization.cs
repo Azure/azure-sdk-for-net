@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringRegisteredAsnData(id, name, type, systemData.Value, Optional.ToNullable(asn), peeringServicePrefixKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PeeringRegisteredAsnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(asn),
+                peeringServicePrefixKey.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options)

@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevOpsConfigurationProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), authorization.Value, Optional.ToNullable(autoDiscovery), topLevelInventoryList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DevOpsConfigurationProperties(
+                provisioningStatusMessage.Value,
+                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
+                Optional.ToNullable(provisioningState),
+                authorization.Value,
+                Optional.ToNullable(autoDiscovery),
+                topLevelInventoryList ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevOpsConfigurationProperties>.Write(ModelReaderWriterOptions options)

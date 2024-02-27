@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubHubData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new WebPubSubHubData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubHubData>.Write(ModelReaderWriterOptions options)

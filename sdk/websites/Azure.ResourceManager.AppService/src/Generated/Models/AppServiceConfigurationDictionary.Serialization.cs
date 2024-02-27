@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceConfigurationDictionary(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, string>(), kind.Value, serializedAdditionalRawData);
+            return new AppServiceConfigurationDictionary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceConfigurationDictionary>.Write(ModelReaderWriterOptions options)

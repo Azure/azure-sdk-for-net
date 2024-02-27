@@ -206,7 +206,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationDraProperties(correlationId.Value, machineId, machineName, authenticationIdentity, resourceAccessIdentity, Optional.ToNullable(isResponsive), Optional.ToNullable(lastHeartbeat), versionNumber.Value, Optional.ToNullable(provisioningState), healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(), customProperties, serializedAdditionalRawData);
+            return new DataReplicationDraProperties(
+                correlationId.Value,
+                machineId,
+                machineName,
+                authenticationIdentity,
+                resourceAccessIdentity,
+                Optional.ToNullable(isResponsive),
+                Optional.ToNullable(lastHeartbeat),
+                versionNumber.Value,
+                Optional.ToNullable(provisioningState),
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationDraProperties>.Write(ModelReaderWriterOptions options)

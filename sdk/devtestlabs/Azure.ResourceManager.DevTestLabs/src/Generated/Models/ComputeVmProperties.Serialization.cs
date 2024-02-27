@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeVmProperties(statuses ?? new ChangeTrackingList<ComputeVmInstanceViewStatus>(), osType.Value, vmSize.Value, networkInterfaceId.Value, osDiskId.Value, dataDiskIds ?? new ChangeTrackingList<string>(), dataDisks ?? new ChangeTrackingList<ComputeDataDisk>(), serializedAdditionalRawData);
+            return new ComputeVmProperties(
+                statuses ?? new ChangeTrackingList<ComputeVmInstanceViewStatus>(),
+                osType.Value,
+                vmSize.Value,
+                networkInterfaceId.Value,
+                osDiskId.Value,
+                dataDiskIds ?? new ChangeTrackingList<string>(),
+                dataDisks ?? new ChangeTrackingList<ComputeDataDisk>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeVmProperties>.Write(ModelReaderWriterOptions options)

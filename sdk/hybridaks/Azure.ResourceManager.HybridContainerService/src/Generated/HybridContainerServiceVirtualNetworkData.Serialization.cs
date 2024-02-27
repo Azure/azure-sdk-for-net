@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVirtualNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, extendedLocation.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                extendedLocation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options)

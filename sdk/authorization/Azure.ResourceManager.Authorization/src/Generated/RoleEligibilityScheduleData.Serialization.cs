@@ -337,7 +337,26 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleEligibilityScheduleData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleEligibilityScheduleRequestId.Value, Optional.ToNullable(memberType), Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), expandedProperties.Value, serializedAdditionalRawData);
+            return new RoleEligibilityScheduleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                roleDefinitionId.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(principalType),
+                roleEligibilityScheduleRequestId.Value,
+                Optional.ToNullable(memberType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(endDateTime),
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(updatedOn),
+                expandedProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleEligibilityScheduleData>.Write(ModelReaderWriterOptions options)

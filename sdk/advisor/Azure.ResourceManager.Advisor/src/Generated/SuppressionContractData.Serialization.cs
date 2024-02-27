@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SuppressionContractData(id, name, type, systemData.Value, suppressionId.Value, ttl.Value, Optional.ToNullable(expirationTimeStamp), serializedAdditionalRawData);
+            return new SuppressionContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                suppressionId.Value,
+                ttl.Value,
+                Optional.ToNullable(expirationTimeStamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SuppressionContractData>.Write(ModelReaderWriterOptions options)

@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailablePatchCountByClassification(Optional.ToNullable(security), Optional.ToNullable(critical), Optional.ToNullable(definition), Optional.ToNullable(updateRollup), Optional.ToNullable(featurePack), Optional.ToNullable(servicePack), Optional.ToNullable(tools), Optional.ToNullable(updates), Optional.ToNullable(other), serializedAdditionalRawData);
+            return new AvailablePatchCountByClassification(
+                Optional.ToNullable(security),
+                Optional.ToNullable(critical),
+                Optional.ToNullable(definition),
+                Optional.ToNullable(updateRollup),
+                Optional.ToNullable(featurePack),
+                Optional.ToNullable(servicePack),
+                Optional.ToNullable(tools),
+                Optional.ToNullable(updates),
+                Optional.ToNullable(other),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailablePatchCountByClassification>.Write(ModelReaderWriterOptions options)

@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerBIDedicatedResourceData(id.Value, name.Value, type.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), systemData.Value, serializedAdditionalRawData);
+            return new PowerBIDedicatedResourceData(
+                id.Value,
+                name.Value,
+                type.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                systemData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PowerBIDedicatedResourceData>.Write(ModelReaderWriterOptions options)

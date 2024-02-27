@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMySqlContent(id, name, type, systemData.Value, connectionString.Value, Optional.ToNullable(migrationType), kind.Value, serializedAdditionalRawData);
+            return new MigrateMySqlContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                connectionString.Value,
+                Optional.ToNullable(migrationType),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMySqlContent>.Write(ModelReaderWriterOptions options)

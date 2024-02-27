@@ -123,7 +123,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileSystemSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, recursive.Value, additionalColumns.Value);
+            return new FileSystemSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                additionalColumns.Value);
         }
 
         internal partial class FileSystemSourceConverter : JsonConverter<FileSystemSource>

@@ -167,7 +167,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasComputeVmProtectableItem(backupManagementType.Value, workloadType.Value, protectableItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, virtualMachineId.Value, virtualMachineVersion.Value, resourceGroup.Value);
+            return new IaasComputeVmProtectableItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                protectableItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                virtualMachineId.Value,
+                virtualMachineVersion.Value,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<IaasComputeVmProtectableItem>.Write(ModelReaderWriterOptions options)

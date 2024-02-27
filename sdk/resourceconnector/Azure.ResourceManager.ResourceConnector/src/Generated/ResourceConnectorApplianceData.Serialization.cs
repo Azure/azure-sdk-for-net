@@ -266,7 +266,21 @@ namespace Azure.ResourceManager.ResourceConnector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceConnectorApplianceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, Optional.ToNullable(distro), infrastructureConfig.Value, provisioningState.Value, publicKey.Value, Optional.ToNullable(status), version.Value, serializedAdditionalRawData);
+            return new ResourceConnectorApplianceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(distro),
+                infrastructureConfig.Value,
+                provisioningState.Value,
+                publicKey.Value,
+                Optional.ToNullable(status),
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceConnectorApplianceData>.Write(ModelReaderWriterOptions options)

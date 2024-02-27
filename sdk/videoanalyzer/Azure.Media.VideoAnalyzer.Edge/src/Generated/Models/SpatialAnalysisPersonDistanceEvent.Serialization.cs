@@ -101,7 +101,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonDistanceEvent(threshold.Value, Optional.ToNullable(focus), Optional.ToNullable(trigger), outputFrequency.Value, minimumDistanceThreshold.Value, maximumDistanceThreshold.Value);
+            return new SpatialAnalysisPersonDistanceEvent(
+                threshold.Value,
+                Optional.ToNullable(focus),
+                Optional.ToNullable(trigger),
+                outputFrequency.Value,
+                minimumDistanceThreshold.Value,
+                maximumDistanceThreshold.Value);
         }
     }
 }

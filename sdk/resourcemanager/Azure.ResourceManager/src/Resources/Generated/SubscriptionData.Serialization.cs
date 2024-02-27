@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionData(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(state), subscriptionPolicies.Value, authorizationSource.Value, managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SubscriptionData(
+                id.Value,
+                subscriptionId.Value,
+                displayName.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(state),
+                subscriptionPolicies.Value,
+                authorizationSource.Value,
+                managedByTenants ?? new ChangeTrackingList<ManagedByTenant>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionData>.Write(ModelReaderWriterOptions options)

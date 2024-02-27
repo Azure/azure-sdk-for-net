@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointLastChangeEnumerationStatus(Optional.ToNullable(startedTimestamp), Optional.ToNullable(completedTimestamp), Optional.ToNullable(namespaceFilesCount), Optional.ToNullable(namespaceDirectoriesCount), Optional.ToNullable(namespaceSizeBytes), Optional.ToNullable(nextRunTimestamp), serializedAdditionalRawData);
+            return new CloudEndpointLastChangeEnumerationStatus(
+                Optional.ToNullable(startedTimestamp),
+                Optional.ToNullable(completedTimestamp),
+                Optional.ToNullable(namespaceFilesCount),
+                Optional.ToNullable(namespaceDirectoriesCount),
+                Optional.ToNullable(namespaceSizeBytes),
+                Optional.ToNullable(nextRunTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)

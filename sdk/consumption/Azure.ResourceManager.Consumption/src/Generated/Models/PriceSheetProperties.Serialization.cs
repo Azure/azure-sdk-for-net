@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
+            return new PriceSheetProperties(
+                billingPeriodId.Value,
+                Optional.ToNullable(meterId),
+                meterDetails.Value,
+                unitOfMeasure.Value,
+                Optional.ToNullable(includedQuantity),
+                partNumber.Value,
+                Optional.ToNullable(unitPrice),
+                currencyCode.Value,
+                offerId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)

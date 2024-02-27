@@ -240,7 +240,18 @@ namespace Azure.ResourceManager.ServiceFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationTypeVersionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, appPackageUrl.Value, defaultParameterList ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationTypeVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                appPackageUrl.Value,
+                defaultParameterList ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationTypeVersionData>.Write(ModelReaderWriterOptions options)

@@ -66,7 +66,30 @@ namespace Azure.ResourceManager.Search.Models
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName, serializedAdditionalRawData: null) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList(), serializedAdditionalRawData: null) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), semanticSearch, sharedPrivateLinkResources?.ToList(), serializedAdditionalRawData: null);
+            return new SearchServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new SearchSku(skuName, serializedAdditionalRawData: null) : null,
+                identity,
+                replicaCount,
+                partitionCount,
+                hostingMode,
+                publicNetworkAccess,
+                status,
+                statusDetails,
+                provisioningState,
+                ipRules != null ? new NetworkRuleSet(ipRules?.ToList(), serializedAdditionalRawData: null) : null,
+                encryptionWithCmk,
+                isLocalAuthDisabled,
+                authOptions,
+                privateEndpointConnections?.ToList(),
+                semanticSearch,
+                sharedPrivateLinkResources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchEncryptionWithCmk"/>. </summary>
@@ -87,7 +110,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Search.SearchPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static SearchPrivateEndpointConnectionData SearchPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SearchServicePrivateEndpointConnectionProperties properties = null)
         {
-            return new SearchPrivateEndpointConnectionData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new SearchPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Search.SharedSearchServicePrivateLinkResourceData"/>. </summary>
@@ -99,7 +128,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Search.SharedSearchServicePrivateLinkResourceData"/> instance for mocking. </returns>
         public static SharedSearchServicePrivateLinkResourceData SharedSearchServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SharedSearchServicePrivateLinkResourceProperties properties = null)
         {
-            return new SharedSearchServicePrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new SharedSearchServicePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchServicePatch"/>. </summary>
@@ -133,7 +168,30 @@ namespace Azure.ResourceManager.Search.Models
             privateEndpointConnections ??= new List<SearchPrivateEndpointConnectionData>();
             sharedPrivateLinkResources ??= new List<SharedSearchServicePrivateLinkResourceData>();
 
-            return new SearchServicePatch(id, name, resourceType, systemData, tags, location, skuName != null ? new SearchSku(skuName, serializedAdditionalRawData: null) : null, identity, replicaCount, partitionCount, hostingMode, publicNetworkAccess, status, statusDetails, provisioningState, ipRules != null ? new NetworkRuleSet(ipRules?.ToList(), serializedAdditionalRawData: null) : null, encryptionWithCmk, isLocalAuthDisabled, authOptions, privateEndpointConnections?.ToList(), semanticSearch, sharedPrivateLinkResources?.ToList(), serializedAdditionalRawData: null);
+            return new SearchServicePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new SearchSku(skuName, serializedAdditionalRawData: null) : null,
+                identity,
+                replicaCount,
+                partitionCount,
+                hostingMode,
+                publicNetworkAccess,
+                status,
+                statusDetails,
+                provisioningState,
+                ipRules != null ? new NetworkRuleSet(ipRules?.ToList(), serializedAdditionalRawData: null) : null,
+                encryptionWithCmk,
+                isLocalAuthDisabled,
+                authOptions,
+                privateEndpointConnections?.ToList(),
+                semanticSearch,
+                sharedPrivateLinkResources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchPrivateLinkResource"/>. </summary>
@@ -145,7 +203,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.SearchPrivateLinkResource"/> instance for mocking. </returns>
         public static SearchPrivateLinkResource SearchPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SearchPrivateLinkResourceProperties properties = null)
         {
-            return new SearchPrivateLinkResource(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new SearchPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SearchPrivateLinkResourceProperties"/>. </summary>
@@ -210,7 +274,13 @@ namespace Azure.ResourceManager.Search.Models
         /// <returns> A new <see cref="Models.QuotaUsageResult"/> instance for mocking. </returns>
         public static QuotaUsageResult QuotaUsageResult(ResourceIdentifier id = null, string unit = null, int? currentValue = null, int? limit = null, QuotaUsageResultName name = null)
         {
-            return new QuotaUsageResult(id, unit, currentValue, limit, name, serializedAdditionalRawData: null);
+            return new QuotaUsageResult(
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaUsageResultName"/>. </summary>

@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubSharedPrivateLinkData(id, name, type, systemData.Value, groupId.Value, privateLinkResourceId.Value, Optional.ToNullable(provisioningState), requestMessage.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new WebPubSubSharedPrivateLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                privateLinkResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                requestMessage.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubSharedPrivateLinkData>.Write(ModelReaderWriterOptions options)

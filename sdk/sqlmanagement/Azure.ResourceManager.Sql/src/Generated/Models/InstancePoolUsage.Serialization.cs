@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolUsage(id.Value, name.Value, Optional.ToNullable(type), unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(requestedLimit), serializedAdditionalRawData);
+            return new InstancePoolUsage(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(requestedLimit),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolUsage>.Write(ModelReaderWriterOptions options)

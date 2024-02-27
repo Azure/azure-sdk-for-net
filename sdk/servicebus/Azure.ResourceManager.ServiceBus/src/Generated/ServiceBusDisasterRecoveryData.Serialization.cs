@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusDisasterRecoveryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(pendingReplicationOperationsCount), partnerNamespace.Value, alternateName.Value, Optional.ToNullable(role), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusDisasterRecoveryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(pendingReplicationOperationsCount),
+                partnerNamespace.Value,
+                alternateName.Value,
+                Optional.ToNullable(role),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusDisasterRecoveryData>.Write(ModelReaderWriterOptions options)

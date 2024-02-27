@@ -91,7 +91,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobCompletedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), assignmentId.Value, workerId.Value);
+            return new AcsRouterJobCompletedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                assignmentId.Value,
+                workerId.Value);
         }
 
         internal partial class AcsRouterJobCompletedEventDataConverter : JsonConverter<AcsRouterJobCompletedEventData>

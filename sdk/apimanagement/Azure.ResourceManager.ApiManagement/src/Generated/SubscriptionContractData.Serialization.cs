@@ -310,7 +310,25 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing), serializedAdditionalRawData);
+            return new SubscriptionContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                ownerId.Value,
+                scope.Value,
+                displayName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(startDate),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(endDate),
+                Optional.ToNullable(notificationDate),
+                primaryKey.Value,
+                secondaryKey.Value,
+                stateComment.Value,
+                Optional.ToNullable(allowTracing),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionContractData>.Write(ModelReaderWriterOptions options)

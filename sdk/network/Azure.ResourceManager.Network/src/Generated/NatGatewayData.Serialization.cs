@@ -349,7 +349,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NatGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku.Value, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(etag), Optional.ToNullable(idleTimeoutInMinutes), publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(), publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(), subnets ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NatGatewayData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(etag),
+                Optional.ToNullable(idleTimeoutInMinutes),
+                publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                subnets ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NatGatewayData>.Write(ModelReaderWriterOptions options)

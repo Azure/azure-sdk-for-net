@@ -202,7 +202,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterProjectEnvironmentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(), serializedAdditionalRawData);
+            return new DevCenterProjectEnvironmentPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                deploymentTargetId.Value,
+                Optional.ToNullable(status),
+                creatorRoleAssignment.Value,
+                userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)

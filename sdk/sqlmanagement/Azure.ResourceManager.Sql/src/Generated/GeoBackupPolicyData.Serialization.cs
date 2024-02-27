@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GeoBackupPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), state, storageType.Value, serializedAdditionalRawData);
+            return new GeoBackupPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                state,
+                storageType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options)

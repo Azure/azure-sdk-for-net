@@ -115,7 +115,18 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageInternal(id, type, sequenceId, version, content.Value, senderDisplayName.Value, createdOn, senderCommunicationIdentifier.Value, Optional.ToNullable(deletedOn), Optional.ToNullable(editedOn), metadata ?? new ChangeTrackingDictionary<string, string>());
+            return new ChatMessageInternal(
+                id,
+                type,
+                sequenceId,
+                version,
+                content.Value,
+                senderDisplayName.Value,
+                createdOn,
+                senderCommunicationIdentifier.Value,
+                Optional.ToNullable(deletedOn),
+                Optional.ToNullable(editedOn),
+                metadata ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

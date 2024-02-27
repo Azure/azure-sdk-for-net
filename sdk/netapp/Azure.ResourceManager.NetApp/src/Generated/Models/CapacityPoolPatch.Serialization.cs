@@ -217,7 +217,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityPoolPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(size), Optional.ToNullable(qosType), Optional.ToNullable(coolAccess), serializedAdditionalRawData);
+            return new CapacityPoolPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(size),
+                Optional.ToNullable(qosType),
+                Optional.ToNullable(coolAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityPoolPatch>.Write(ModelReaderWriterOptions options)

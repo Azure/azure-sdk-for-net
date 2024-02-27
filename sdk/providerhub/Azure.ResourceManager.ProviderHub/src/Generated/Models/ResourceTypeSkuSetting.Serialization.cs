@@ -291,7 +291,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuSetting(name, tier.Value, size.Value, family.Value, kind.Value, locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(), requiredQuotaIds ?? new ChangeTrackingList<string>(), requiredFeatures ?? new ChangeTrackingList<string>(), capacity.Value, costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(), serializedAdditionalRawData);
+            return new ResourceTypeSkuSetting(
+                name,
+                tier.Value,
+                size.Value,
+                family.Value,
+                kind.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(),
+                requiredQuotaIds ?? new ChangeTrackingList<string>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                capacity.Value,
+                costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuSetting>.Write(ModelReaderWriterOptions options)

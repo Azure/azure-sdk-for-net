@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount), serializedAdditionalRawData);
+            return new SynapseDataWarehouseUserActivityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(activeQueriesCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options)

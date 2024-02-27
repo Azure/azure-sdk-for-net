@@ -376,7 +376,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEnvironmentVersionProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, intellectualProperty.Value, Optional.ToNullable(osType), Optional.ToNullable(provisioningState), stage.Value);
+            return new MachineLearningEnvironmentVersionProperties(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(isAnonymous),
+                Optional.ToNullable(isArchived),
+                Optional.ToNullable(autoRebuild),
+                build.Value,
+                condaFile.Value,
+                Optional.ToNullable(environmentType),
+                image.Value,
+                inferenceConfig.Value,
+                intellectualProperty.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(provisioningState),
+                stage.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningEnvironmentVersionProperties>.Write(ModelReaderWriterOptions options)

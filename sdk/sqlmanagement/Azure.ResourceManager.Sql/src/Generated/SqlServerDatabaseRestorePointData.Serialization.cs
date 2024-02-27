@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDatabaseRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(restorePointType), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(restorePointCreationDate), restorePointLabel.Value, serializedAdditionalRawData);
+            return new SqlServerDatabaseRestorePointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(restorePointType),
+                Optional.ToNullable(earliestRestoreDate),
+                Optional.ToNullable(restorePointCreationDate),
+                restorePointLabel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerDatabaseRestorePointData>.Write(ModelReaderWriterOptions options)

@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridJsonInputSchemaMapping(inputSchemaMappingType, serializedAdditionalRawData, id.Value, topic.Value, eventTime.Value, eventType.Value, subject.Value, dataVersion.Value);
+            return new EventGridJsonInputSchemaMapping(
+                inputSchemaMappingType,
+                serializedAdditionalRawData,
+                id.Value,
+                topic.Value,
+                eventTime.Value,
+                eventType.Value,
+                subject.Value,
+                dataVersion.Value);
         }
 
         BinaryData IPersistableModel<EventGridJsonInputSchemaMapping>.Write(ModelReaderWriterOptions options)

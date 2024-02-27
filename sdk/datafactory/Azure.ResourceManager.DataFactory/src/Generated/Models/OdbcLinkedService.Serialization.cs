@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OdbcLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString, authenticationType.Value, credential, userName.Value, password, encryptedCredential.Value);
+            return new OdbcLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString,
+                authenticationType.Value,
+                credential,
+                userName.Value,
+                password,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<OdbcLinkedService>.Write(ModelReaderWriterOptions options)

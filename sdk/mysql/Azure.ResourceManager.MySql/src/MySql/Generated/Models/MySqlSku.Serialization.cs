@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), size.Value, family.Value, serializedAdditionalRawData);
+            return new MySqlSku(
+                name,
+                Optional.ToNullable(tier),
+                Optional.ToNullable(capacity),
+                size.Value,
+                family.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlSku>.Write(ModelReaderWriterOptions options)

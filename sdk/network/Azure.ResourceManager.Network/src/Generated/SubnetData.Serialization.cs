@@ -550,7 +550,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, addressPrefixes ?? new ChangeTrackingList<string>(), networkSecurityGroup.Value, routeTable.Value, natGateway, serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(), serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(), privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(), ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(), ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(), ipAllocations ?? new ChangeTrackingList<WritableSubResource>(), resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(), serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(), delegations ?? new ChangeTrackingList<ServiceDelegation>(), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(), Optional.ToNullable(defaultOutboundAccess));
+            return new SubnetData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                addressPrefix.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                networkSecurityGroup.Value,
+                routeTable.Value,
+                natGateway,
+                serviceEndpoints ?? new ChangeTrackingList<ServiceEndpointProperties>(),
+                serviceEndpointPolicies ?? new ChangeTrackingList<ServiceEndpointPolicyData>(),
+                privateEndpoints ?? new ChangeTrackingList<PrivateEndpointData>(),
+                ipConfigurations ?? new ChangeTrackingList<NetworkIPConfiguration>(),
+                ipConfigurationProfiles ?? new ChangeTrackingList<NetworkIPConfigurationProfile>(),
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
+                resourceNavigationLinks ?? new ChangeTrackingList<ResourceNavigationLink>(),
+                serviceAssociationLinks ?? new ChangeTrackingList<ServiceAssociationLink>(),
+                delegations ?? new ChangeTrackingList<ServiceDelegation>(),
+                purpose.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(privateEndpointNetworkPolicies),
+                Optional.ToNullable(privateLinkServiceNetworkPolicies),
+                applicationGatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                Optional.ToNullable(defaultOutboundAccess));
         }
 
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)

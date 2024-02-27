@@ -301,7 +301,20 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedNetworkGroupData(id, name, type, systemData.Value, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToNullable(etag), managementGroups ?? new ChangeTrackingList<WritableSubResource>(), subscriptions ?? new ChangeTrackingList<WritableSubResource>(), virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), subnets ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ManagedNetworkGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                managementGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                subscriptions ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                subnets ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkGroupData>.Write(ModelReaderWriterOptions options)

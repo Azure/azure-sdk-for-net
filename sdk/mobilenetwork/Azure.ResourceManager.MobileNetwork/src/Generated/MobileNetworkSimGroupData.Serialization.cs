@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, Optional.ToNullable(provisioningState), encryptionKey.Value, mobileNetwork, serializedAdditionalRawData);
+            return new MobileNetworkSimGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                Optional.ToNullable(provisioningState),
+                encryptionKey.Value,
+                mobileNetwork,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimGroupData>.Write(ModelReaderWriterOptions options)

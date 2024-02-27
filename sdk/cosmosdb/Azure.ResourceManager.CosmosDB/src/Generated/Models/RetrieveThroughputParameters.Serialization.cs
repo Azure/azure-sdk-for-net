@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RetrieveThroughputParameters(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource, identity, serializedAdditionalRawData);
+            return new RetrieveThroughputParameters(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RetrieveThroughputParameters>.Write(ModelReaderWriterOptions options)

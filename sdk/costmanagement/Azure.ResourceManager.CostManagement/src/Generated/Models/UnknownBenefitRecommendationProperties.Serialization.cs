@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBenefitRecommendationProperties(Optional.ToNullable(firstConsumptionDate), Optional.ToNullable(lastConsumptionDate), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(totalHours), usage.Value, armSkuName.Value, Optional.ToNullable(term), Optional.ToNullable(commitmentGranularity), currencyCode.Value, Optional.ToNullable(costWithoutBenefit), recommendationDetails.Value, allRecommendationDetails.Value, scope, serializedAdditionalRawData);
+            return new UnknownBenefitRecommendationProperties(
+                Optional.ToNullable(firstConsumptionDate),
+                Optional.ToNullable(lastConsumptionDate),
+                Optional.ToNullable(lookBackPeriod),
+                Optional.ToNullable(totalHours),
+                usage.Value,
+                armSkuName.Value,
+                Optional.ToNullable(term),
+                Optional.ToNullable(commitmentGranularity),
+                currencyCode.Value,
+                Optional.ToNullable(costWithoutBenefit),
+                recommendationDetails.Value,
+                allRecommendationDetails.Value,
+                scope,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationProperties>.Write(ModelReaderWriterOptions options)

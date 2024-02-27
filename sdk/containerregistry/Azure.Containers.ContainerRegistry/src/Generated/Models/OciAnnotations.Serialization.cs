@@ -186,7 +186,20 @@ namespace Azure.Containers.ContainerRegistry
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OciAnnotations(Optional.ToNullable(orgOpencontainersImageCreated), orgOpencontainersImageAuthors.Value, orgOpencontainersImageUrl.Value, orgOpencontainersImageDocumentation.Value, orgOpencontainersImageSource.Value, orgOpencontainersImageVersion.Value, orgOpencontainersImageRevision.Value, orgOpencontainersImageVendor.Value, orgOpencontainersImageLicenses.Value, orgOpencontainersImageRefName.Value, orgOpencontainersImageTitle.Value, orgOpencontainersImageDescription.Value, additionalProperties);
+            return new OciAnnotations(
+                Optional.ToNullable(orgOpencontainersImageCreated),
+                orgOpencontainersImageAuthors.Value,
+                orgOpencontainersImageUrl.Value,
+                orgOpencontainersImageDocumentation.Value,
+                orgOpencontainersImageSource.Value,
+                orgOpencontainersImageVersion.Value,
+                orgOpencontainersImageRevision.Value,
+                orgOpencontainersImageVendor.Value,
+                orgOpencontainersImageLicenses.Value,
+                orgOpencontainersImageRefName.Value,
+                orgOpencontainersImageTitle.Value,
+                orgOpencontainersImageDescription.Value,
+                additionalProperties);
         }
     }
 }

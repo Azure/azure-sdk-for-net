@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationToPurchaseExchange(reservationOrderId.Value, reservationId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ReservationToPurchaseExchange(
+                reservationOrderId.Value,
+                reservationId.Value,
+                properties.Value,
+                billingCurrencyTotal.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationToPurchaseExchange>.Write(ModelReaderWriterOptions options)

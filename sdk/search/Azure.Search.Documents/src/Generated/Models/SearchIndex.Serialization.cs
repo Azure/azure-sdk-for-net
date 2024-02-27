@@ -358,7 +358,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndex(name, fields, scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(), defaultScoringProfile.Value, corsOptions.Value, suggesters ?? new ChangeTrackingList<SearchSuggester>(), analyzers ?? new ChangeTrackingList<LexicalAnalyzer>(), tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(), tokenFilters ?? new ChangeTrackingList<TokenFilter>(), charFilters ?? new ChangeTrackingList<CharFilter>(), normalizers ?? new ChangeTrackingList<LexicalNormalizer>(), encryptionKey.Value, similarity.Value, semantic.Value, vectorSearch.Value, odataEtag.Value);
+            return new SearchIndex(
+                name,
+                fields,
+                scoringProfiles ?? new ChangeTrackingList<ScoringProfile>(),
+                defaultScoringProfile.Value,
+                corsOptions.Value,
+                suggesters ?? new ChangeTrackingList<SearchSuggester>(),
+                analyzers ?? new ChangeTrackingList<LexicalAnalyzer>(),
+                tokenizers ?? new ChangeTrackingList<LexicalTokenizer>(),
+                tokenFilters ?? new ChangeTrackingList<TokenFilter>(),
+                charFilters ?? new ChangeTrackingList<CharFilter>(),
+                normalizers ?? new ChangeTrackingList<LexicalNormalizer>(),
+                encryptionKey.Value,
+                similarity.Value,
+                semantic.Value,
+                vectorSearch.Value,
+                odataEtag.Value);
         }
     }
 }

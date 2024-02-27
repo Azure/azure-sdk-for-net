@@ -546,7 +546,41 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, kind, Optional.ToNullable(etag), applicationId.Value, appId.Value, name0.Value, Optional.ToNullable(applicationType), Optional.ToNullable(flowType), Optional.ToNullable(requestSource), instrumentationKey.Value, Optional.ToNullable(creationDate), Optional.ToNullable(tenantId), hockeyAppId.Value, hockeyAppToken.Value, provisioningState.Value, Optional.ToNullable(samplingPercentage), connectionString.Value, Optional.ToNullable(retentionInDays), Optional.ToNullable(disableIPMasking), Optional.ToNullable(immediatePurgeDataOn30Days), workspaceResourceId.Value, Optional.ToNullable(laMigrationDate), privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(ingestionMode), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(forceCustomerStorageForProfiler), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind,
+                Optional.ToNullable(etag),
+                applicationId.Value,
+                appId.Value,
+                name0.Value,
+                Optional.ToNullable(applicationType),
+                Optional.ToNullable(flowType),
+                Optional.ToNullable(requestSource),
+                instrumentationKey.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(tenantId),
+                hockeyAppId.Value,
+                hockeyAppToken.Value,
+                provisioningState.Value,
+                Optional.ToNullable(samplingPercentage),
+                connectionString.Value,
+                Optional.ToNullable(retentionInDays),
+                Optional.ToNullable(disableIPMasking),
+                Optional.ToNullable(immediatePurgeDataOn30Days),
+                workspaceResourceId.Value,
+                Optional.ToNullable(laMigrationDate),
+                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(),
+                Optional.ToNullable(publicNetworkAccessForIngestion),
+                Optional.ToNullable(publicNetworkAccessForQuery),
+                Optional.ToNullable(ingestionMode),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(forceCustomerStorageForProfiler),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentData>.Write(ModelReaderWriterOptions options)

@@ -355,7 +355,26 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationOrderData(id, name, type, systemData.Value, Optional.ToNullable(etag), displayName.Value, Optional.ToNullable(requestDateTime), Optional.ToNullable(createdDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(originalQuantity), Optional.ToNullable(term), Optional.ToNullable(provisioningState), Optional.ToNullable(billingPlan), planInformation.Value, reservations ?? new ChangeTrackingList<ReservationDetailData>(), Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                displayName.Value,
+                Optional.ToNullable(requestDateTime),
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(expiryDate),
+                Optional.ToNullable(expiryDateTime),
+                Optional.ToNullable(benefitStartTime),
+                Optional.ToNullable(originalQuantity),
+                Optional.ToNullable(term),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(billingPlan),
+                planInformation.Value,
+                reservations ?? new ChangeTrackingList<ReservationDetailData>(),
+                Optional.ToNullable(reviewDateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationOrderData>.Write(ModelReaderWriterOptions options)

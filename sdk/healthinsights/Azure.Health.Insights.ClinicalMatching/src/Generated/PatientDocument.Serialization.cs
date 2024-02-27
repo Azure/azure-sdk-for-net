@@ -140,7 +140,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PatientDocument(type, Optional.ToNullable(clinicalType), id, language.Value, Optional.ToNullable(createdDateTime), content, serializedAdditionalRawData);
+            return new PatientDocument(
+                type,
+                Optional.ToNullable(clinicalType),
+                id,
+                language.Value,
+                Optional.ToNullable(createdDateTime),
+                content,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PatientDocument>.Write(ModelReaderWriterOptions options)

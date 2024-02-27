@@ -328,7 +328,23 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerNamespaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), partnerRegistrationFullyQualifiedId.Value, Optional.ToNullable(minimumTlsVersionAllowed), endpoint.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(partnerTopicRoutingMode), serializedAdditionalRawData);
+            return new PartnerNamespaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                partnerRegistrationFullyQualifiedId.Value,
+                Optional.ToNullable(minimumTlsVersionAllowed),
+                endpoint.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(partnerTopicRoutingMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerNamespaceData>.Write(ModelReaderWriterOptions options)

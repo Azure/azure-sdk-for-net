@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+            return new ClusterCodeVersionsResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                codeVersion.Value,
+                Optional.ToNullable(supportExpiryUtc),
+                Optional.ToNullable(environment),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCodeVersionsResult>.Write(ModelReaderWriterOptions options)

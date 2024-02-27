@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeployLog(id, name, type, systemData.Value, entries ?? new ChangeTrackingList<WebAppMSDeployLogEntry>(), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeployLog(
+                id,
+                name,
+                type,
+                systemData.Value,
+                entries ?? new ChangeTrackingList<WebAppMSDeployLogEntry>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeployLog>.Write(ModelReaderWriterOptions options)

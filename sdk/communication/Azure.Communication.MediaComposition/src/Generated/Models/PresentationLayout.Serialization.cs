@@ -119,7 +119,14 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new PresentationLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), presenterId, audienceIds, Optional.ToNullable(audiencePosition));
+            return new PresentationLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                presenterId,
+                audienceIds,
+                Optional.ToNullable(audiencePosition));
         }
     }
 }

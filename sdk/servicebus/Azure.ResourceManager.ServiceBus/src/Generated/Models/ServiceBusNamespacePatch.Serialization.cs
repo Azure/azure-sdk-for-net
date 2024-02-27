@@ -343,7 +343,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusNamespacePatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, identity, provisioningState.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, metricId.Value, encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(), Optional.ToNullable(disableLocalAuth), alternateName.Value, serializedAdditionalRawData);
+            return new ServiceBusNamespacePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                provisioningState.Value,
+                status.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serviceBusEndpoint.Value,
+                metricId.Value,
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>(),
+                Optional.ToNullable(disableLocalAuth),
+                alternateName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusNamespacePatch>.Write(ModelReaderWriterOptions options)

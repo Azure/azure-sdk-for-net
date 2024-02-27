@@ -197,7 +197,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmWorkloadSapAseSystemWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData, parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount));
+            return new VmWorkloadSapAseSystemWorkloadItem(
+                backupManagementType.Value,
+                workloadType.Value,
+                workloadItemType,
+                friendlyName.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData,
+                parentName.Value,
+                serverName.Value,
+                Optional.ToNullable(isAutoProtectable),
+                Optional.ToNullable(subinquireditemcount),
+                Optional.ToNullable(subWorkloadItemCount));
         }
 
         BinaryData IPersistableModel<VmWorkloadSapAseSystemWorkloadItem>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteCustomDomainContent(id, name, type, systemData.Value, validationMethod.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteCustomDomainContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                validationMethod.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteCustomDomainContent>.Write(ModelReaderWriterOptions options)

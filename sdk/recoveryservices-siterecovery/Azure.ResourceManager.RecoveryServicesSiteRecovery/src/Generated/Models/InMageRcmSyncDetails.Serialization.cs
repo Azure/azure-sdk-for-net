@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), lastDataTransferTimeUtc.Value, Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
+            return new InMageRcmSyncDetails(
+                Optional.ToNullable(progressHealth),
+                Optional.ToNullable(transferredBytes),
+                Optional.ToNullable(last15MinutesTransferredBytes),
+                lastDataTransferTimeUtc.Value,
+                Optional.ToNullable(processedBytes),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(lastRefreshTime),
+                Optional.ToNullable(progressPercentage),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmSyncDetails>.Write(ModelReaderWriterOptions options)

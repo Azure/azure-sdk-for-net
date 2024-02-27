@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitLabProjectData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SecurityConnectorGitLabProjectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitLabProjectData>.Write(ModelReaderWriterOptions options)

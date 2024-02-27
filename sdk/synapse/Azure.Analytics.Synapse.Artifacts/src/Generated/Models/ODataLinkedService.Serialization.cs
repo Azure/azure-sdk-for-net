@@ -340,7 +340,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ODataLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, tenant.Value, servicePrincipalId.Value, azureCloudType.Value, aadResourceId.Value, Optional.ToNullable(aadServicePrincipalCredentialType), servicePrincipalKey.Value, servicePrincipalEmbeddedCert.Value, servicePrincipalEmbeddedCertPassword.Value, encryptedCredential.Value);
+            return new ODataLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                Optional.ToNullable(authenticationType),
+                userName.Value,
+                password.Value,
+                tenant.Value,
+                servicePrincipalId.Value,
+                azureCloudType.Value,
+                aadResourceId.Value,
+                Optional.ToNullable(aadServicePrincipalCredentialType),
+                servicePrincipalKey.Value,
+                servicePrincipalEmbeddedCert.Value,
+                servicePrincipalEmbeddedCertPassword.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class ODataLinkedServiceConverter : JsonConverter<ODataLinkedService>

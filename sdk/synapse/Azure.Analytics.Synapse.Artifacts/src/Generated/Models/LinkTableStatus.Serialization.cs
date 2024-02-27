@@ -94,7 +94,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime));
+            return new LinkTableStatus(
+                id.Value,
+                status.Value,
+                errorMessage.Value,
+                startTime.Value,
+                stopTime.Value,
+                linkTableId.Value,
+                errorCode.Value,
+                Optional.ToNullable(lastProcessedData),
+                Optional.ToNullable(lastTransactionCommitTime));
         }
 
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>

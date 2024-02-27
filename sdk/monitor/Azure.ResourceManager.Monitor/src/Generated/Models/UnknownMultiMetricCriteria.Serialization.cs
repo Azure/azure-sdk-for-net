@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownMultiMetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, dimensions ?? new ChangeTrackingList<MetricDimension>(), Optional.ToNullable(skipMetricValidation), additionalProperties);
+            return new UnknownMultiMetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace.Value,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                Optional.ToNullable(skipMetricValidation),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<MultiMetricCriteria>.Write(ModelReaderWriterOptions options)

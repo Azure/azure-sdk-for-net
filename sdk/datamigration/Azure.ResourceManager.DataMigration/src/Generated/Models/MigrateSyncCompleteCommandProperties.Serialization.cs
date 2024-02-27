@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSyncCompleteCommandProperties(commandType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), serializedAdditionalRawData, input.Value, output.Value, commandId.Value);
+            return new MigrateSyncCompleteCommandProperties(
+                commandType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData,
+                input.Value,
+                output.Value,
+                commandId.Value);
         }
 
         BinaryData IPersistableModel<MigrateSyncCompleteCommandProperties>.Write(ModelReaderWriterOptions options)

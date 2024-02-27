@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwareWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareWorkspaceData>.Write(ModelReaderWriterOptions options)

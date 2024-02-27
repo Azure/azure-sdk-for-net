@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskInput(sourceConnectionInfo, Optional.ToNullable(checkPermissionsGroup), Optional.ToNullable(collectDatabases), Optional.ToNullable(collectLogins), Optional.ToNullable(collectAgentJobs), Optional.ToNullable(collectTdeCertificateInfo), Optional.ToNullable(validateSsisCatalogOnly), encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new ConnectToSourceSqlServerTaskInput(
+                sourceConnectionInfo,
+                Optional.ToNullable(checkPermissionsGroup),
+                Optional.ToNullable(collectDatabases),
+                Optional.ToNullable(collectLogins),
+                Optional.ToNullable(collectAgentJobs),
+                Optional.ToNullable(collectTdeCertificateInfo),
+                Optional.ToNullable(validateSsisCatalogOnly),
+                encryptedKeyForSecureFields.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskInput>.Write(ModelReaderWriterOptions options)

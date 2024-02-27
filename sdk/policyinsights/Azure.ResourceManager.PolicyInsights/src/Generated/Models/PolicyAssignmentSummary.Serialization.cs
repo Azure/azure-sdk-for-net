@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentSummary(policyAssignmentId.Value, policySetDefinitionId.Value, results.Value, policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionSummary>(), policyGroups ?? new ChangeTrackingList<PolicyGroupSummary>(), serializedAdditionalRawData);
+            return new PolicyAssignmentSummary(
+                policyAssignmentId.Value,
+                policySetDefinitionId.Value,
+                results.Value,
+                policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionSummary>(),
+                policyGroups ?? new ChangeTrackingList<PolicyGroupSummary>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentSummary>.Write(ModelReaderWriterOptions options)

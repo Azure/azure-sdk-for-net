@@ -172,7 +172,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(authentication), additionalSettings.Value);
+            return new MySqlConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource.Value,
+                port,
+                Optional.ToNullable(encryptConnection),
+                Optional.ToNullable(authentication),
+                additionalSettings.Value);
         }
 
         BinaryData IPersistableModel<MySqlConnectionInfo>.Write(ModelReaderWriterOptions options)

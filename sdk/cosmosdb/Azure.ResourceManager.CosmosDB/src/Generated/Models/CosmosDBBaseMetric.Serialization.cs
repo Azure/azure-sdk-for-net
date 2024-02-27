@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBBaseMetric(Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToNullable(unit), name.Value, metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(), serializedAdditionalRawData);
+            return new CosmosDBBaseMetric(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                Optional.ToNullable(unit),
+                name.Value,
+                metricValues ?? new ChangeTrackingList<CosmosDBMetricValue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBBaseMetric>.Write(ModelReaderWriterOptions options)

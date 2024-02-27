@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCertificateData(id, name, type, systemData.Value, thumbprint.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(isExportable), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                thumbprint.Value,
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(isExportable),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCertificateData>.Write(ModelReaderWriterOptions options)

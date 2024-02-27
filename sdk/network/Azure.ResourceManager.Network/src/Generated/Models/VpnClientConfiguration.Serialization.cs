@@ -319,7 +319,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConfiguration(vpnClientAddressPool.Value, vpnClientRootCertificates ?? new ChangeTrackingList<VpnClientRootCertificate>(), vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(), vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(), vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(), vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(), radiusServerAddress.Value, radiusServerSecret.Value, radiusServers ?? new ChangeTrackingList<RadiusServer>(), aadTenant.Value, aadAudience.Value, aadIssuer.Value, vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>(), serializedAdditionalRawData);
+            return new VpnClientConfiguration(
+                vpnClientAddressPool.Value,
+                vpnClientRootCertificates ?? new ChangeTrackingList<VpnClientRootCertificate>(),
+                vpnClientRevokedCertificates ?? new ChangeTrackingList<VpnClientRevokedCertificate>(),
+                vpnClientProtocols ?? new ChangeTrackingList<VpnClientProtocol>(),
+                vpnAuthenticationTypes ?? new ChangeTrackingList<VpnAuthenticationType>(),
+                vpnClientIPsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                radiusServerAddress.Value,
+                radiusServerSecret.Value,
+                radiusServers ?? new ChangeTrackingList<RadiusServer>(),
+                aadTenant.Value,
+                aadAudience.Value,
+                aadIssuer.Value,
+                vngClientConnectionConfigurations ?? new ChangeTrackingList<VngClientConnectionConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConfiguration>.Write(ModelReaderWriterOptions options)

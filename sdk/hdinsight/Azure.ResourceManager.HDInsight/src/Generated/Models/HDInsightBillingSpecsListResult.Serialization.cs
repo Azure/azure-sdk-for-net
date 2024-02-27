@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightBillingSpecsListResult(vmSizes ?? new ChangeTrackingList<string>(), vmSizesWithEncryptionAtHost ?? new ChangeTrackingList<string>(), vmSizeFilters ?? new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>(), vmSizeProperties ?? new ChangeTrackingList<HDInsightVmSizeProperty>(), billingResources ?? new ChangeTrackingList<HDInsightBillingResources>(), serializedAdditionalRawData);
+            return new HDInsightBillingSpecsListResult(
+                vmSizes ?? new ChangeTrackingList<string>(),
+                vmSizesWithEncryptionAtHost ?? new ChangeTrackingList<string>(),
+                vmSizeFilters ?? new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>(),
+                vmSizeProperties ?? new ChangeTrackingList<HDInsightVmSizeProperty>(),
+                billingResources ?? new ChangeTrackingList<HDInsightBillingResources>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightBillingSpecsListResult>.Write(ModelReaderWriterOptions options)

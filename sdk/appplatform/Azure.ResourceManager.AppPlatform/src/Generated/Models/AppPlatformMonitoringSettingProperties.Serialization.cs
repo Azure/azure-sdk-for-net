@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformMonitoringSettingProperties(Optional.ToNullable(provisioningState), error.Value, Optional.ToNullable(traceEnabled), appInsightsInstrumentationKey.Value, Optional.ToNullable(appInsightsSamplingRate), appInsightsAgentVersions.Value, serializedAdditionalRawData);
+            return new AppPlatformMonitoringSettingProperties(
+                Optional.ToNullable(provisioningState),
+                error.Value,
+                Optional.ToNullable(traceEnabled),
+                appInsightsInstrumentationKey.Value,
+                Optional.ToNullable(appInsightsSamplingRate),
+                appInsightsAgentVersions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformMonitoringSettingProperties>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, networkSecurityGroupRules ?? new ChangeTrackingList<BatchNetworkSecurityGroupRule>(), serializedAdditionalRawData);
+            return new BatchInboundNatPool(
+                name,
+                protocol,
+                backendPort,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                networkSecurityGroupRules ?? new ChangeTrackingList<BatchNetworkSecurityGroupRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchInboundNatPool>.Write(ModelReaderWriterOptions options)

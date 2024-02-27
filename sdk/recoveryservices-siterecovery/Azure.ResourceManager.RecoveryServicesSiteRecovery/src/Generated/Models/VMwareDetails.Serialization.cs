@@ -542,7 +542,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareDetails(instanceType, serializedAdditionalRawData, processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(), masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(), runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
+            return new VMwareDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServer>(),
+                masterTargetServers ?? new ChangeTrackingList<MasterTargetServer>(),
+                runAsAccounts ?? new ChangeTrackingList<SiteRecoveryRunAsAccount>(),
+                replicationPairCount.Value,
+                processServerCount.Value,
+                agentCount.Value,
+                protectedServers.Value,
+                systemLoad.Value,
+                systemLoadStatus.Value,
+                cpuLoad.Value,
+                cpuLoadStatus.Value,
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                memoryUsageStatus.Value,
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                spaceUsageStatus.Value,
+                webLoad.Value,
+                webLoadStatus.Value,
+                databaseServerLoad.Value,
+                databaseServerLoadStatus.Value,
+                csServiceStatus.Value,
+                ipAddress.Value,
+                agentVersion.Value,
+                hostName.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                Optional.ToNullable(sslCertExpireOn),
+                Optional.ToNullable(sslCertExpiryRemainingDays),
+                psTemplateVersion.Value,
+                Optional.ToNullable(agentExpireOn),
+                agentVersionDetails.Value,
+                switchProviderBlockingErrorDetails ?? new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>());
         }
 
         BinaryData IPersistableModel<VMwareDetails>.Write(ModelReaderWriterOptions options)

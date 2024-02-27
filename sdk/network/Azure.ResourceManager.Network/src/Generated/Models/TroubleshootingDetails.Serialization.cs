@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingDetails(id.Value, reasonType.Value, summary.Value, detail.Value, recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(), serializedAdditionalRawData);
+            return new TroubleshootingDetails(
+                id.Value,
+                reasonType.Value,
+                summary.Value,
+                detail.Value,
+                recommendedActions ?? new ChangeTrackingList<TroubleshootingRecommendedActions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingDetails>.Write(ModelReaderWriterOptions options)

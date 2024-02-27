@@ -269,7 +269,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderForContainersAwsOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                kubernetesService.Value,
+                kubernetesScubaReader.Value,
+                cloudWatchToKinesis.Value,
+                kinesisToS3.Value,
+                containerVulnerabilityAssessment.Value,
+                containerVulnerabilityAssessmentTask.Value,
+                Optional.ToNullable(enableContainerVulnerabilityAssessment),
+                Optional.ToNullable(autoProvisioning),
+                Optional.ToNullable(kubeAuditRetentionTime),
+                scubaExternalId.Value,
+                mdcContainersImageAssessment.Value,
+                mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options)

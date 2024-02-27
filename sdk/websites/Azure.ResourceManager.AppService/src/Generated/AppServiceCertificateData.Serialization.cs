@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(provisioningState), kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                keyVaultId.Value,
+                keyVaultSecretName.Value,
+                Optional.ToNullable(provisioningState),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateData>.Write(ModelReaderWriterOptions options)

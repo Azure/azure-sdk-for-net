@@ -192,7 +192,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ServicePrincipalCredential(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
+            return new ServicePrincipalCredential(
+                type,
+                description.Value,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                servicePrincipalId.Value,
+                servicePrincipalKey,
+                tenant.Value);
         }
 
         BinaryData IPersistableModel<ServicePrincipalCredential>.Write(ModelReaderWriterOptions options)

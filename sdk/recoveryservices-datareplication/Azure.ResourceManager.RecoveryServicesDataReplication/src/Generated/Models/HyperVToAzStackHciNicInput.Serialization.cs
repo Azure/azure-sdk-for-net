@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciNicInput(nicId, networkName.Value, targetNetworkId, testNetworkId, selectionTypeForFailover, serializedAdditionalRawData);
+            return new HyperVToAzStackHciNicInput(
+                nicId,
+                networkName.Value,
+                targetNetworkId,
+                testNetworkId,
+                selectionTypeForFailover,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)

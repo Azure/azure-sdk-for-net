@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentUpgrade(desiredVersion.Value, Optional.ToNullable(correlationId), Optional.ToNullable(enableAutomaticUpgrade), lastAttemptDesiredVersion.Value, Optional.ToNullable(lastAttemptTimestamp), Optional.ToNullable(lastAttemptStatus), lastAttemptMessage.Value, serializedAdditionalRawData);
+            return new AgentUpgrade(
+                desiredVersion.Value,
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                lastAttemptDesiredVersion.Value,
+                Optional.ToNullable(lastAttemptTimestamp),
+                Optional.ToNullable(lastAttemptStatus),
+                lastAttemptMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentUpgrade>.Write(ModelReaderWriterOptions options)

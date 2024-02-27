@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAwsCloudTrailDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, awsRoleArn.Value, dataTypes.Value);
+            return new SecurityInsightsAwsCloudTrailDataConnector(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                awsRoleArn.Value,
+                dataTypes.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAwsCloudTrailDataConnector>.Write(ModelReaderWriterOptions options)

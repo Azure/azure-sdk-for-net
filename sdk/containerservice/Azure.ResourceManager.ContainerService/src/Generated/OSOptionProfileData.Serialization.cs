@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSOptionProfileData(id, name, type, systemData.Value, osOptionPropertyList, serializedAdditionalRawData);
+            return new OSOptionProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                osOptionPropertyList,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSOptionProfileData>.Write(ModelReaderWriterOptions options)

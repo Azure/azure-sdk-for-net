@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityComplianceData(id, name, type, systemData.Value, Optional.ToNullable(assessmentTimestampUtcDate), Optional.ToNullable(resourceCount), assessmentResult ?? new ChangeTrackingList<ComplianceSegment>(), serializedAdditionalRawData);
+            return new SecurityComplianceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(assessmentTimestampUtcDate),
+                Optional.ToNullable(resourceCount),
+                assessmentResult ?? new ChangeTrackingList<ComplianceSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityComplianceData>.Write(ModelReaderWriterOptions options)

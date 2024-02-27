@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFlowSource(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService);
+            return new DataFlowSource(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData,
+                schemaLinkedService);
         }
 
         BinaryData IPersistableModel<DataFlowSource>.Write(ModelReaderWriterOptions options)

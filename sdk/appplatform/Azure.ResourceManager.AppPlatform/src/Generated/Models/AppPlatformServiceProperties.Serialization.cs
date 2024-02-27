@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceProperties(
+                Optional.ToNullable(provisioningState),
+                networkProfile.Value,
+                vnetAddons.Value,
+                Optional.ToNullable(version),
+                serviceId.Value,
+                Optional.ToNullable(powerState),
+                Optional.ToNullable(zoneRedundant),
+                fqdn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceProperties>.Write(ModelReaderWriterOptions options)

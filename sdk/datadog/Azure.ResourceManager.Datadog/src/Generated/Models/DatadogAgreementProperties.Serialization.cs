@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new DatadogAgreementProperties(
+                publisher.Value,
+                product.Value,
+                plan.Value,
+                licenseTextLink.Value,
+                privacyPolicyLink.Value,
+                Optional.ToNullable(retrieveDatetime),
+                signature.Value,
+                Optional.ToNullable(accepted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementProperties>.Write(ModelReaderWriterOptions options)

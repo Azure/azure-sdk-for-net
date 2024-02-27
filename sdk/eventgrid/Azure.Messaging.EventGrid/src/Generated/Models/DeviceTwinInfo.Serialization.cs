@@ -103,7 +103,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new DeviceTwinInfo(authenticationType.Value, Optional.ToNullable(cloudToDeviceMessageCount), connectionState.Value, deviceId.Value, etag.Value, lastActivityTime.Value, properties.Value, status.Value, statusUpdateTime.Value, Optional.ToNullable(version), x509Thumbprint.Value);
+            return new DeviceTwinInfo(
+                authenticationType.Value,
+                Optional.ToNullable(cloudToDeviceMessageCount),
+                connectionState.Value,
+                deviceId.Value,
+                etag.Value,
+                lastActivityTime.Value,
+                properties.Value,
+                status.Value,
+                statusUpdateTime.Value,
+                Optional.ToNullable(version),
+                x509Thumbprint.Value);
         }
     }
 }

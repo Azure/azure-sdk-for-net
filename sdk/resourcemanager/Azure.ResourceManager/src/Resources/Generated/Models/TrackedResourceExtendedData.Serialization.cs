@@ -172,7 +172,15 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrackedResourceExtendedData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, serializedAdditionalRawData);
+            return new TrackedResourceExtendedData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrackedResourceExtendedData>.Write(ModelReaderWriterOptions options)

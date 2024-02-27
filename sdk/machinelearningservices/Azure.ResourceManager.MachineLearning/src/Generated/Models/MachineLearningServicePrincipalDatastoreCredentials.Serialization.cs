@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningServicePrincipalDatastoreCredentials(credentialsType, serializedAdditionalRawData, authorityUrl.Value, clientId, resourceUrl.Value, secrets, tenantId);
+            return new MachineLearningServicePrincipalDatastoreCredentials(
+                credentialsType,
+                serializedAdditionalRawData,
+                authorityUrl.Value,
+                clientId,
+                resourceUrl.Value,
+                secrets,
+                tenantId);
         }
 
         BinaryData IPersistableModel<MachineLearningServicePrincipalDatastoreCredentials>.Write(ModelReaderWriterOptions options)

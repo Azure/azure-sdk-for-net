@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiTagDescriptionData(id, name, type, systemData.Value, description.Value, externalDocsUri.Value, externalDocsDescription.Value, tagId.Value, displayName.Value, serializedAdditionalRawData);
+            return new ApiTagDescriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                externalDocsUri.Value,
+                externalDocsDescription.Value,
+                tagId.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiTagDescriptionData>.Write(ModelReaderWriterOptions options)

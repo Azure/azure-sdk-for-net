@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CocoExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData, containerName.Value, snapshotPath.Value);
+            return new CocoExportSummary(
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(exportedRowCount),
+                format,
+                labelingJobId.Value,
+                Optional.ToNullable(startDateTime),
+                serializedAdditionalRawData,
+                containerName.Value,
+                snapshotPath.Value);
         }
 
         BinaryData IPersistableModel<CocoExportSummary>.Write(ModelReaderWriterOptions options)

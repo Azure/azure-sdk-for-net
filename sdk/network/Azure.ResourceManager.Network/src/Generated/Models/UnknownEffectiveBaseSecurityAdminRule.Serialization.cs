@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(), ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(), kind, serializedAdditionalRawData);
+            return new UnknownEffectiveBaseSecurityAdminRule(
+                id.Value,
+                configurationDescription.Value,
+                ruleCollectionDescription.Value,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)

@@ -1048,6 +1048,74 @@ namespace BatchClientIntegrationTests
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedUpgradePolicy()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             NodePlacementConfiguration = new NodePlacementConfiguration(NodePlacementPolicyType.Zonal)
+                         }
+                         );
+                   
+                    pool.UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                    {
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                        {
+                            DisableAutomaticRollback = true,
+                            EnableAutomaticOSUpgrade = true,
+                            UseRollingUpgradePolicy = true,
+                            OsRollingUpgradeDeferral = true
+                        },
+                        RollingUpgradePolicy = new RollingUpgradePolicy()
+                        {
+                            EnableCrossZoneUpgrade = true,
+                            MaxBatchInstancePercent = 20,
+                            MaxUnhealthyInstancePercent = 20,
+                            MaxUnhealthyUpgradedInstancePercent = 20,
+                            PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
+                            PrioritizeUnhealthyInstances = false,
+                            RollbackFailedInstancesOnPolicyBreach = false
+                        }
+                    };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.UpgradePolicy);
+                    Assert.Equal(UpgradeMode.Automatic, pool.UpgradePolicy.Mode);
+                    Assert.NotNull(pool.UpgradePolicy.AutomaticOSUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade);
+                    Assert.NotNull(pool.UpgradePolicy.RollingUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade);
+                    Assert.Equal(20, pool.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task TestPoolCreateResourceTags()
         {
             static async Task test()
@@ -1059,6 +1127,7 @@ namespace BatchClientIntegrationTests
                 try
                 {
                     var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
 
                     CloudPool pool = batchCli.PoolOperations.CreatePool(
                         poolId,
@@ -1072,7 +1141,6 @@ namespace BatchClientIntegrationTests
                         {"TagName1","TagValue1"},
                         {"TagName2","TagValue2"},
                     };
-
 
                     await pool.CommitAsync().ConfigureAwait(false);
                     await pool.RefreshAsync().ConfigureAwait(false);

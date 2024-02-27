@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTableColumn(
+                dataSize.Value,
+                dataType.Value,
+                errorId.Value,
+                Optional.ToNullable(hasError),
+                Optional.ToNullable(isPrimaryKey),
+                name.Value,
+                quotedName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTableColumn>.Write(ModelReaderWriterOptions options)

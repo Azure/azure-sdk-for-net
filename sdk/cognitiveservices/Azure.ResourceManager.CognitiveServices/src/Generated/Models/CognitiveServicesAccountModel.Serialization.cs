@@ -301,7 +301,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(), Optional.ToNullable(maxCapacity), capabilities ?? new ChangeTrackingDictionary<string, string>(), finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
+            return new CognitiveServicesAccountModel(
+                format.Value,
+                name.Value,
+                version.Value,
+                source.Value,
+                callRateLimit.Value,
+                serializedAdditionalRawData,
+                baseModel.Value,
+                Optional.ToNullable(isDefaultVersion),
+                skus ?? new ChangeTrackingList<CognitiveServicesModelSku>(),
+                Optional.ToNullable(maxCapacity),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                finetuneCapabilities ?? new ChangeTrackingDictionary<string, string>(),
+                deprecation.Value,
+                Optional.ToNullable(lifecycleStatus),
+                systemData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)

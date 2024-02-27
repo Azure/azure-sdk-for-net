@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled), serializedAdditionalRawData);
+            return new RestorePointSourceVmDataDisk(
+                Optional.ToNullable(lun),
+                name.Value,
+                Optional.ToNullable(caching),
+                Optional.ToNullable(diskSizeGB),
+                managedDisk.Value,
+                diskRestorePoint.Value,
+                Optional.ToNullable(writeAcceleratorEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorePointSourceVmDataDisk>.Write(ModelReaderWriterOptions options)

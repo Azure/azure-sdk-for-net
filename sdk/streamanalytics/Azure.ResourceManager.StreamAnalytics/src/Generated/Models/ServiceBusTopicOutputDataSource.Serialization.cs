@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusTopicOutputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), topicName.Value, propertyColumns ?? new ChangeTrackingList<string>(), systemPropertyColumns ?? new ChangeTrackingDictionary<string, string>());
+            return new ServiceBusTopicOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                Optional.ToNullable(authenticationMode),
+                topicName.Value,
+                propertyColumns ?? new ChangeTrackingList<string>(),
+                systemPropertyColumns ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<ServiceBusTopicOutputDataSource>.Write(ModelReaderWriterOptions options)

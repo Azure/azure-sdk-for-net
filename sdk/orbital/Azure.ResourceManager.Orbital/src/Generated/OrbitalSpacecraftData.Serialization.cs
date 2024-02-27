@@ -273,7 +273,21 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalSpacecraftData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), noradId.Value, titleLine.Value, tleLine1.Value, tleLine2.Value, links ?? new ChangeTrackingList<OrbitalSpacecraftLink>(), serializedAdditionalRawData);
+            return new OrbitalSpacecraftData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                noradId.Value,
+                titleLine.Value,
+                tleLine1.Value,
+                tleLine2.Value,
+                links ?? new ChangeTrackingList<OrbitalSpacecraftLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalSpacecraftData>.Write(ModelReaderWriterOptions options)

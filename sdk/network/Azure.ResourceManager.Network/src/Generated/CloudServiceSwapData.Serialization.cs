@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceSwapData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CloudServiceSwapData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceSwapData>.Write(ModelReaderWriterOptions options)

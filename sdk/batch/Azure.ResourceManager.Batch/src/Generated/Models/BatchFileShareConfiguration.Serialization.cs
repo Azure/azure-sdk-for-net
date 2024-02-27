@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchFileShareConfiguration(accountName, azureFileUrl, accountKey, relativeMountPath, mountOptions.Value, serializedAdditionalRawData);
+            return new BatchFileShareConfiguration(
+                accountName,
+                azureFileUrl,
+                accountKey,
+                relativeMountPath,
+                mountOptions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchFileShareConfiguration>.Write(ModelReaderWriterOptions options)

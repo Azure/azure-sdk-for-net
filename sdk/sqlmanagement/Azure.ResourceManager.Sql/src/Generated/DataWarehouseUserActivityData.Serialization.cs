@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataWarehouseUserActivityData(id, name, type, systemData.Value, Optional.ToNullable(activeQueriesCount), serializedAdditionalRawData);
+            return new DataWarehouseUserActivityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(activeQueriesCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options)

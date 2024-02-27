@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlowLogInformation(targetResourceId, flowAnalyticsConfiguration.Value, storageId, enabled, retentionPolicy.Value, format.Value, serializedAdditionalRawData);
+            return new FlowLogInformation(
+                targetResourceId,
+                flowAnalyticsConfiguration.Value,
+                storageId,
+                enabled,
+                retentionPolicy.Value,
+                format.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlowLogInformation>.Write(ModelReaderWriterOptions options)

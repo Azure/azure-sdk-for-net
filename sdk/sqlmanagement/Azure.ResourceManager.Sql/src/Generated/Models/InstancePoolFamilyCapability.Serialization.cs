@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolFamilyCapability(name.Value, supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(), supportedVcoresValues ?? new ChangeTrackingList<InstancePoolVcoresCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolFamilyCapability(
+                name.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                supportedVcoresValues ?? new ChangeTrackingList<InstancePoolVcoresCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolFamilyCapability>.Write(ModelReaderWriterOptions options)

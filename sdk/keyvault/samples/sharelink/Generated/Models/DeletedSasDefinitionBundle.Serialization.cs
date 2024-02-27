@@ -108,7 +108,17 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedSasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>(), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedSasDefinitionBundle(
+                id.Value,
+                sid.Value,
+                templateUri.Value,
+                Optional.ToNullable(sasType),
+                validityPeriod.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletedDate));
         }
     }
 }

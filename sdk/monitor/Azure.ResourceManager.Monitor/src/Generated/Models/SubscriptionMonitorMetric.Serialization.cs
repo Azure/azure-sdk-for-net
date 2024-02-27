@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionMonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+            return new SubscriptionMonitorMetric(
+                id,
+                type,
+                name,
+                displayDescription.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                unit,
+                timeseries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionMonitorMetric>.Write(ModelReaderWriterOptions options)

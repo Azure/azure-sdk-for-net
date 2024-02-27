@@ -251,7 +251,21 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyChargeSummary(id, name, type, systemData.Value, kind, Optional.ToNullable(eTag), serializedAdditionalRawData, billingPeriodId.Value, usageStart.Value, usageEnd.Value, Optional.ToNullable(azureCharges), Optional.ToNullable(chargesBilledSeparately), Optional.ToNullable(marketplaceCharges), currency.Value);
+            return new ConsumptionLegacyChargeSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData,
+                billingPeriodId.Value,
+                usageStart.Value,
+                usageEnd.Value,
+                Optional.ToNullable(azureCharges),
+                Optional.ToNullable(chargesBilledSeparately),
+                Optional.ToNullable(marketplaceCharges),
+                currency.Value);
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyChargeSummary>.Write(ModelReaderWriterOptions options)

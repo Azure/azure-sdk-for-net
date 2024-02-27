@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayBackendSettings(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(port), Optional.ToNullable(protocol), Optional.ToNullable(timeout), probe, trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(), hostName.Value, Optional.ToNullable(pickHostNameFromBackendAddress), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayBackendSettings(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(port),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(timeout),
+                probe,
+                trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
+                hostName.Value,
+                Optional.ToNullable(pickHostNameFromBackendAddress),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayBackendSettings>.Write(ModelReaderWriterOptions options)

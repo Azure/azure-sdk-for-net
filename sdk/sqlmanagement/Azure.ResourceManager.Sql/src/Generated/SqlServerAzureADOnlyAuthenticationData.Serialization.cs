@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerAzureADOnlyAuthenticationData(id, name, type, systemData.Value, Optional.ToNullable(azureADOnlyAuthentication), serializedAdditionalRawData);
+            return new SqlServerAzureADOnlyAuthenticationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(azureADOnlyAuthentication),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options)

@@ -198,7 +198,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleCounter(priority, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName, Optional.ToNullable(hitCount), appSeen.Value, Optional.ToNullable(timestamp), Optional.ToNullable(requestTimestamp), Optional.ToNullable(lastUpdatedTimestamp), serializedAdditionalRawData);
+            return new FirewallRuleCounter(
+                priority,
+                ruleStackName.Value,
+                ruleListName.Value,
+                firewallName.Value,
+                ruleName,
+                Optional.ToNullable(hitCount),
+                appSeen.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(requestTimestamp),
+                Optional.ToNullable(lastUpdatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleCounter>.Write(ModelReaderWriterOptions options)

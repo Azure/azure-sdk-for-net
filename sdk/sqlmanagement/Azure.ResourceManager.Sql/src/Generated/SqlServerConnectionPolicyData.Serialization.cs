@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerConnectionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(connectionType), serializedAdditionalRawData);
+            return new SqlServerConnectionPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind.Value,
+                Optional.ToNullable(connectionType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options)

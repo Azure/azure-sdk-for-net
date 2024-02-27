@@ -149,7 +149,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioTranscription(text, Optional.ToNullable(task), language.Value, Optional.ToNullable(duration), segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(), serializedAdditionalRawData);
+            return new AudioTranscription(
+                text,
+                Optional.ToNullable(task),
+                language.Value,
+                Optional.ToNullable(duration),
+                segments ?? new ChangeTrackingList<AudioTranscriptionSegment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioTranscription>.Write(ModelReaderWriterOptions options)

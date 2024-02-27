@@ -297,7 +297,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpServerLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password, encryptedCredential.Value, enableSsl.Value, enableServerCertificateValidation.Value);
+            return new FtpServerLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port.Value,
+                Optional.ToNullable(authenticationType),
+                userName.Value,
+                password,
+                encryptedCredential.Value,
+                enableSsl.Value,
+                enableServerCertificateValidation.Value);
         }
 
         BinaryData IPersistableModel<FtpServerLinkedService>.Write(ModelReaderWriterOptions options)

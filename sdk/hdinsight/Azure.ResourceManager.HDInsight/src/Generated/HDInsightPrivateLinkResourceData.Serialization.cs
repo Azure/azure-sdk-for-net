@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.HDInsight
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HDInsightPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

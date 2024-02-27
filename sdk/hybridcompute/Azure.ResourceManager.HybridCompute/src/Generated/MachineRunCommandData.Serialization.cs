@@ -376,7 +376,27 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineRunCommandData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source.Value,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                Optional.ToNullable(asyncExecution),
+                runAsUser.Value,
+                runAsPassword.Value,
+                Optional.ToNullable(timeoutInSeconds),
+                outputBlobUri.Value,
+                errorBlobUri.Value,
+                outputBlobManagedIdentity.Value,
+                errorBlobManagedIdentity.Value,
+                provisioningState.Value,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options)

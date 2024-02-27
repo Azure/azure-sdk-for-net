@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceAadAdminInfoData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), login.Value, administratorType.Value, sid.Value, serializedAdditionalRawData);
+            return new SynapseWorkspaceAadAdminInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                login.Value,
+                administratorType.Value,
+                sid.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceAadAdminInfoData>.Write(ModelReaderWriterOptions options)

@@ -233,7 +233,20 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RuntimeScriptActionDetail(name, uri, parameters.Value, roles, applicationName.Value, serializedAdditionalRawData, Optional.ToNullable(scriptExecutionId), Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, operation.Value, executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(), debugInformation.Value);
+            return new RuntimeScriptActionDetail(
+                name,
+                uri,
+                parameters.Value,
+                roles,
+                applicationName.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(scriptExecutionId),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                status.Value,
+                operation.Value,
+                executionSummary ?? new ChangeTrackingList<ScriptActionExecutionSummary>(),
+                debugInformation.Value);
         }
 
         BinaryData IPersistableModel<RuntimeScriptActionDetail>.Write(ModelReaderWriterOptions options)

@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new UnknownExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

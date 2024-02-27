@@ -248,7 +248,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterBackupDataSourceSettings(objectType, serializedAdditionalRawData, snapshotVolumes, includeClusterScopeResources, includedNamespaces ?? new ChangeTrackingList<string>(), excludedNamespaces ?? new ChangeTrackingList<string>(), includedResourceTypes ?? new ChangeTrackingList<string>(), excludedResourceTypes ?? new ChangeTrackingList<string>(), labelSelectors ?? new ChangeTrackingList<string>(), backupHookReferences ?? new ChangeTrackingList<NamespacedName>());
+            return new KubernetesClusterBackupDataSourceSettings(
+                objectType,
+                serializedAdditionalRawData,
+                snapshotVolumes,
+                includeClusterScopeResources,
+                includedNamespaces ?? new ChangeTrackingList<string>(),
+                excludedNamespaces ?? new ChangeTrackingList<string>(),
+                includedResourceTypes ?? new ChangeTrackingList<string>(),
+                excludedResourceTypes ?? new ChangeTrackingList<string>(),
+                labelSelectors ?? new ChangeTrackingList<string>(),
+                backupHookReferences ?? new ChangeTrackingList<NamespacedName>());
         }
 
         BinaryData IPersistableModel<KubernetesClusterBackupDataSourceSettings>.Write(ModelReaderWriterOptions options)

@@ -215,7 +215,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusCorrelationFilter(properties ?? new ChangeTrackingDictionary<string, object>(), correlationId.Value, messageId.Value, to.Value, replyTo.Value, label.Value, sessionId.Value, replyToSessionId.Value, contentType.Value, Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
+            return new ServiceBusCorrelationFilter(
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                correlationId.Value,
+                messageId.Value,
+                to.Value,
+                replyTo.Value,
+                label.Value,
+                sessionId.Value,
+                replyToSessionId.Value,
+                contentType.Value,
+                Optional.ToNullable(requiresPreprocessing),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusCorrelationFilter>.Write(ModelReaderWriterOptions options)

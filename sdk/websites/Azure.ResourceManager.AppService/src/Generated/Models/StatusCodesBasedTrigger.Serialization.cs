@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatusCodesBasedTrigger(Optional.ToNullable(status), Optional.ToNullable(subStatus), Optional.ToNullable(win32Status), Optional.ToNullable(count), timeInterval.Value, path.Value, serializedAdditionalRawData);
+            return new StatusCodesBasedTrigger(
+                Optional.ToNullable(status),
+                Optional.ToNullable(subStatus),
+                Optional.ToNullable(win32Status),
+                Optional.ToNullable(count),
+                timeInterval.Value,
+                path.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatusCodesBasedTrigger>.Write(ModelReaderWriterOptions options)

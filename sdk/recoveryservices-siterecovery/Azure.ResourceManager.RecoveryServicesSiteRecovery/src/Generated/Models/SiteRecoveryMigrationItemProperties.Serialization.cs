@@ -368,7 +368,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), allowedOperations ?? new ChangeTrackingList<MigrationItemOperation>(), currentJob.Value, criticalJobHistory ?? new ChangeTrackingList<CriticalJobHistoryDetails>(), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryMigrationItemProperties(
+                machineName.Value,
+                policyId.Value,
+                policyFriendlyName.Value,
+                recoveryServicesProviderId.Value,
+                replicationStatus.Value,
+                Optional.ToNullable(migrationState),
+                migrationStateDescription.Value,
+                Optional.ToNullable(lastTestMigrationTime),
+                lastTestMigrationStatus.Value,
+                Optional.ToNullable(lastMigrationTime),
+                lastMigrationStatus.Value,
+                Optional.ToNullable(testMigrateState),
+                testMigrateStateDescription.Value,
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                allowedOperations ?? new ChangeTrackingList<MigrationItemOperation>(),
+                currentJob.Value,
+                criticalJobHistory ?? new ChangeTrackingList<CriticalJobHistoryDetails>(),
+                eventCorrelationId.Value,
+                providerSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)

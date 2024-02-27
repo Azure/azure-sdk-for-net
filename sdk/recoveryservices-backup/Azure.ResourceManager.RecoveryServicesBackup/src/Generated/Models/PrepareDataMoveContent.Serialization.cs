@@ -150,7 +150,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrepareDataMoveContent(targetResourceId, targetRegion, dataMoveLevel, sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(ignoreMoved), serializedAdditionalRawData);
+            return new PrepareDataMoveContent(
+                targetResourceId,
+                targetRegion,
+                dataMoveLevel,
+                sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(ignoreMoved),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrepareDataMoveContent>.Write(ModelReaderWriterOptions options)

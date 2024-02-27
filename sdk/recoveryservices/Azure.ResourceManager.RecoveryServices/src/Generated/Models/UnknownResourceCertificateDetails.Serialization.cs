@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownResourceCertificateDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData);
+            return new UnknownResourceCertificateDetails(
+                authType,
+                certificate.Value,
+                friendlyName.Value,
+                issuer.Value,
+                Optional.ToNullable(resourceId),
+                subject.Value,
+                thumbprint.Value,
+                Optional.ToNullable(validFrom),
+                Optional.ToNullable(validTo),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceCertificateDetails>.Write(ModelReaderWriterOptions options)

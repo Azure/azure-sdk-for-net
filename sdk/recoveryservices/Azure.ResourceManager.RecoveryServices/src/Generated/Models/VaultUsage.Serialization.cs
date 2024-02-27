@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultUsage(Optional.ToNullable(unit), quotaPeriod.Value, Optional.ToNullable(nextResetTime), Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new VaultUsage(
+                Optional.ToNullable(unit),
+                quotaPeriod.Value,
+                Optional.ToNullable(nextResetTime),
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultUsage>.Write(ModelReaderWriterOptions options)

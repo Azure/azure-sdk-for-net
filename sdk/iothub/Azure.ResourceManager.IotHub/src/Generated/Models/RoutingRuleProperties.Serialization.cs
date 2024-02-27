@@ -127,7 +127,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingRuleProperties(name, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new RoutingRuleProperties(
+                name,
+                source,
+                condition.Value,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingRuleProperties>.Write(ModelReaderWriterOptions options)

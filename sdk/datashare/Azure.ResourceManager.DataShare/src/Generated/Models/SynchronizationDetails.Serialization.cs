@@ -287,7 +287,23 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynchronizationDetails(Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetType), Optional.ToNullable(durationMs), Optional.ToNullable(endTime), Optional.ToNullable(filesRead), Optional.ToNullable(filesWritten), message.Value, name.Value, Optional.ToNullable(rowsCopied), Optional.ToNullable(rowsRead), Optional.ToNullable(sizeRead), Optional.ToNullable(sizeWritten), Optional.ToNullable(startTime), status.Value, Optional.ToNullable(vCore), serializedAdditionalRawData);
+            return new SynchronizationDetails(
+                Optional.ToNullable(dataSetId),
+                Optional.ToNullable(dataSetType),
+                Optional.ToNullable(durationMs),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(filesRead),
+                Optional.ToNullable(filesWritten),
+                message.Value,
+                name.Value,
+                Optional.ToNullable(rowsCopied),
+                Optional.ToNullable(rowsRead),
+                Optional.ToNullable(sizeRead),
+                Optional.ToNullable(sizeWritten),
+                Optional.ToNullable(startTime),
+                status.Value,
+                Optional.ToNullable(vCore),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynchronizationDetails>.Write(ModelReaderWriterOptions options)

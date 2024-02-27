@@ -95,7 +95,14 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new V1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, fsLayers ?? new ChangeTrackingList<FsLayer>(), history ?? new ChangeTrackingList<History>(), signatures ?? new ChangeTrackingList<ImageSignature>());
+            return new V1Manifest(
+                Optional.ToNullable(schemaVersion),
+                architecture.Value,
+                name.Value,
+                tag.Value,
+                fsLayers ?? new ChangeTrackingList<FsLayer>(),
+                history ?? new ChangeTrackingList<History>(),
+                signatures ?? new ChangeTrackingList<ImageSignature>());
         }
     }
 }

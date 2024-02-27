@@ -276,7 +276,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, type, systemData.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), plan.Value, properties.Value, sku.Value, status.Value, error.Value, identity, zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                plan.Value,
+                properties.Value,
+                sku.Value,
+                status.Value,
+                error.Value,
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

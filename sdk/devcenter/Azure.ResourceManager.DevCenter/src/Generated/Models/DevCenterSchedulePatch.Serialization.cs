@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterSchedulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), serializedAdditionalRawData, Optional.ToNullable(type), Optional.ToNullable(frequency), time.Value, timeZone.Value, Optional.ToNullable(state));
+            return new DevCenterSchedulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                Optional.ToNullable(type),
+                Optional.ToNullable(frequency),
+                time.Value,
+                timeZone.Value,
+                Optional.ToNullable(state));
         }
 
         BinaryData IPersistableModel<DevCenterSchedulePatch>.Write(ModelReaderWriterOptions options)

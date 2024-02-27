@@ -447,7 +447,35 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncRegisteredServerData(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, Optional.ToNullable(agentVersionStatus), Optional.ToNullable(agentVersionExpirationDate), serverOSVersion.Value, Optional.ToNullable(serverManagementErrorCode), lastHeartbeat.Value, provisioningState.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), Optional.ToNullable(storageSyncServiceUid), lastWorkflowId.Value, lastOperationName.Value, discoveryEndpointUri.Value, Optional.ToNullable(resourceLocation), Optional.ToNullable(serviceLocation), friendlyName.Value, managementEndpointUri.Value, monitoringEndpointUri.Value, monitoringConfiguration.Value, serverName.Value, serializedAdditionalRawData);
+            return new StorageSyncRegisteredServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverCertificate.Value,
+                agentVersion.Value,
+                Optional.ToNullable(agentVersionStatus),
+                Optional.ToNullable(agentVersionExpirationDate),
+                serverOSVersion.Value,
+                Optional.ToNullable(serverManagementErrorCode),
+                lastHeartbeat.Value,
+                provisioningState.Value,
+                serverRole.Value,
+                Optional.ToNullable(clusterId),
+                clusterName.Value,
+                Optional.ToNullable(serverId),
+                Optional.ToNullable(storageSyncServiceUid),
+                lastWorkflowId.Value,
+                lastOperationName.Value,
+                discoveryEndpointUri.Value,
+                Optional.ToNullable(resourceLocation),
+                Optional.ToNullable(serviceLocation),
+                friendlyName.Value,
+                managementEndpointUri.Value,
+                monitoringEndpointUri.Value,
+                monitoringConfiguration.Value,
+                serverName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncRegisteredServerData>.Write(ModelReaderWriterOptions options)

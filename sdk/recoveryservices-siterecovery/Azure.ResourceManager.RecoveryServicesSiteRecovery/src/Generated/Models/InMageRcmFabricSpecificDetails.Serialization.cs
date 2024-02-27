@@ -394,7 +394,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(), rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(), pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(), replicationAgents ?? new ChangeTrackingList<ReplicationAgentDetails>(), reprotectAgents ?? new ChangeTrackingList<ReprotectAgentDetails>(), marsAgents ?? new ChangeTrackingList<MarsAgentDetails>(), dras ?? new ChangeTrackingList<SiteRecoveryDraDetails>(), agentDetails ?? new ChangeTrackingList<SiteRecoveryAgentDetails>());
+            return new InMageRcmFabricSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareSiteId.Value,
+                physicalSiteId.Value,
+                serviceEndpoint.Value,
+                serviceResourceId.Value,
+                serviceContainerId.Value,
+                dataPlaneUri.Value,
+                controlPlaneUri.Value,
+                sourceAgentIdentityDetails.Value,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>(),
+                rcmProxies ?? new ChangeTrackingList<RcmProxyDetails>(),
+                pushInstallers ?? new ChangeTrackingList<PushInstallerDetails>(),
+                replicationAgents ?? new ChangeTrackingList<ReplicationAgentDetails>(),
+                reprotectAgents ?? new ChangeTrackingList<ReprotectAgentDetails>(),
+                marsAgents ?? new ChangeTrackingList<MarsAgentDetails>(),
+                dras ?? new ChangeTrackingList<SiteRecoveryDraDetails>(),
+                agentDetails ?? new ChangeTrackingList<SiteRecoveryAgentDetails>());
         }
 
         BinaryData IPersistableModel<InMageRcmFabricSpecificDetails>.Write(ModelReaderWriterOptions options)

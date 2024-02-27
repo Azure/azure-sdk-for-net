@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanToPurchaseExchange(savingsPlanOrderId.Value, savingsPlanId.Value, properties.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new SavingsPlanToPurchaseExchange(
+                savingsPlanOrderId.Value,
+                savingsPlanId.Value,
+                properties.Value,
+                billingCurrencyTotal.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanToPurchaseExchange>.Write(ModelReaderWriterOptions options)

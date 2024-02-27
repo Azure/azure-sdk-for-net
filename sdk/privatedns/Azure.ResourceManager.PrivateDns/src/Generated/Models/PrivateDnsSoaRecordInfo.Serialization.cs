@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTtl), serializedAdditionalRawData);
+            return new PrivateDnsSoaRecordInfo(
+                host.Value,
+                email.Value,
+                Optional.ToNullable(serialNumber),
+                Optional.ToNullable(refreshTime),
+                Optional.ToNullable(retryTime),
+                Optional.ToNullable(expireTime),
+                Optional.ToNullable(minimumTtl),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)

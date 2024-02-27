@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineAssessPatchesResult(Optional.ToNullable(status), Optional.ToNullable(assessmentActivityId), Optional.ToNullable(rebootPending), availablePatchCountByClassification.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value, serializedAdditionalRawData);
+            return new MachineAssessPatchesResult(
+                Optional.ToNullable(status),
+                Optional.ToNullable(assessmentActivityId),
+                Optional.ToNullable(rebootPending),
+                availablePatchCountByClassification.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                Optional.ToNullable(startedBy),
+                Optional.ToNullable(patchServiceUsed),
+                Optional.ToNullable(osType),
+                errorDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)

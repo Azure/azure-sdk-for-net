@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPolicyData(id, name, type, systemData.Value, virtualMachines, requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(), provisioningState.Value, kind.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new JitNetworkAccessPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualMachines,
+                requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>(),
+                provisioningState.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPolicyData>.Write(ModelReaderWriterOptions options)

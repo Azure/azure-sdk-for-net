@@ -299,7 +299,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualRouterData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(virtualRouterAsn), virtualRouterIPs ?? new ChangeTrackingList<string>(), hostedSubnet, hostedGateway, peerings ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
+            return new VirtualRouterData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(virtualRouterAsn),
+                virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                hostedSubnet,
+                hostedGateway,
+                peerings ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualRouterData>.Write(ModelReaderWriterOptions options)

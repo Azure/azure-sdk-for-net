@@ -327,7 +327,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(isManagementType), useOptionB, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkToNetworkInterconnectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(nniType),
+                Optional.ToNullable(isManagementType),
+                useOptionB,
+                layer2Configuration.Value,
+                optionBLayer3Configuration.Value,
+                npbStaticRouteConfiguration.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                egressAclId.Value,
+                ingressAclId.Value,
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkToNetworkInterconnectData>.Write(ModelReaderWriterOptions options)

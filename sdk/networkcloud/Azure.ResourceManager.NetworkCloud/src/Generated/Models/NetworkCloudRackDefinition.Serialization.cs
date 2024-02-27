@@ -170,7 +170,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudRackDefinition(availabilityZone.Value, bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(), networkRackId, rackLocation.Value, rackSerialNumber, rackSkuId, storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(), serializedAdditionalRawData);
+            return new NetworkCloudRackDefinition(
+                availabilityZone.Value,
+                bareMetalMachineConfigurationData ?? new ChangeTrackingList<BareMetalMachineConfiguration>(),
+                networkRackId,
+                rackLocation.Value,
+                rackSerialNumber,
+                rackSkuId,
+                storageApplianceConfigurationData ?? new ChangeTrackingList<StorageApplianceConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudRackDefinition>.Write(ModelReaderWriterOptions options)

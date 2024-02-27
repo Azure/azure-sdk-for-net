@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontendData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, fqdn.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FrontendData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                fqdn.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontendData>.Write(ModelReaderWriterOptions options)

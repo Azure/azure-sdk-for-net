@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new ServiceBusAccessKeys(
+                primaryConnectionString.Value,
+                secondaryConnectionString.Value,
+                aliasPrimaryConnectionString.Value,
+                aliasSecondaryConnectionString.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusAccessKeys>.Write(ModelReaderWriterOptions options)

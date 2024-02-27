@@ -115,7 +115,14 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, targets ?? new ChangeTrackingList<SentenceTarget>(), assessments ?? new ChangeTrackingList<SentenceAssessment>());
+            return new SentenceSentimentInternal(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
         }
     }
 }

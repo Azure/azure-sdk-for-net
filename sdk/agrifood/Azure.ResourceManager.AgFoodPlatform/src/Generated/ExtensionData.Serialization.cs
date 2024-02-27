@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionData(id, name, type, systemData.Value, Optional.ToNullable(eTag), extensionId.Value, extensionCategory.Value, installedExtensionVersion.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, serializedAdditionalRawData);
+            return new ExtensionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eTag),
+                extensionId.Value,
+                extensionCategory.Value,
+                installedExtensionVersion.Value,
+                extensionAuthLink.Value,
+                extensionApiDocsLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionData>.Write(ModelReaderWriterOptions options)

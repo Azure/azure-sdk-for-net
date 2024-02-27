@@ -344,7 +344,27 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoEventGridDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, storageAccountResourceId.Value, eventGridResourceId.Value, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToNullable(ignoreFirstRecord), Optional.ToNullable(blobStorageEventType), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(provisioningState));
+            return new KustoEventGridDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                storageAccountResourceId.Value,
+                eventGridResourceId.Value,
+                eventHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                Optional.ToNullable(ignoreFirstRecord),
+                Optional.ToNullable(blobStorageEventType),
+                managedIdentityResourceId.Value,
+                Optional.ToNullable(managedIdentityObjectId),
+                Optional.ToNullable(databaseRouting),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<KustoEventGridDataConnection>.Write(ModelReaderWriterOptions options)

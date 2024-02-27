@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Optional.ToNullable(assignedLicenseImmutableId), esuKeys ?? new ChangeTrackingList<EsuKey>(), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState));
+            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(
+                Optional.ToNullable(assignedLicenseImmutableId),
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(serverType),
+                Optional.ToNullable(esuEligibility),
+                Optional.ToNullable(esuKeyState));
         }
 
         BinaryData IPersistableModel<LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Write(ModelReaderWriterOptions options)

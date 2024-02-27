@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProtectedItemProperties(protectedItemName.Value, vmName.Value, testVmName.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), networkName.Value, subnet.Value, serializedAdditionalRawData);
+            return new FailoverProtectedItemProperties(
+                protectedItemName.Value,
+                vmName.Value,
+                testVmName.Value,
+                recoveryPointId.Value,
+                Optional.ToNullable(recoveryPointTime),
+                networkName.Value,
+                subnet.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProtectedItemProperties>.Write(ModelReaderWriterOptions options)

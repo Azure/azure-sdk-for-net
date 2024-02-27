@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecoverableServerResourceData(id, name, type, systemData.Value, Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value, serializedAdditionalRawData);
+            return new MySqlRecoverableServerResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastAvailableBackupDateTime),
+                serviceLevelObjective.Value,
+                edition.Value,
+                Optional.ToNullable(vCore),
+                hardwareGeneration.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecoverableServerResourceData>.Write(ModelReaderWriterOptions options)

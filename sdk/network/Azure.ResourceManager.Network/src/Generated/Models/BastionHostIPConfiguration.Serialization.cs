@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BastionHostIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), subnet, publicIPAddress, Optional.ToNullable(provisioningState), Optional.ToNullable(privateIPAllocationMethod));
+            return new BastionHostIPConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                subnet,
+                publicIPAddress,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(privateIPAllocationMethod));
         }
 
         BinaryData IPersistableModel<BastionHostIPConfiguration>.Write(ModelReaderWriterOptions options)

@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Relay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new RelayAccessKeys(
+                primaryConnectionString.Value,
+                secondaryConnectionString.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayAccessKeys>.Write(ModelReaderWriterOptions options)

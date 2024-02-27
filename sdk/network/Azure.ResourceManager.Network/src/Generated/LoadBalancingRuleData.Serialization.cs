@@ -353,7 +353,25 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, backendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
+            return new LoadBalancingRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                frontendIPConfiguration,
+                backendAddressPool,
+                backendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                probe,
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(loadDistribution),
+                Optional.ToNullable(frontendPort),
+                Optional.ToNullable(backendPort),
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(enableFloatingIP),
+                Optional.ToNullable(enableTcpReset),
+                Optional.ToNullable(disableOutboundSnat),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options)

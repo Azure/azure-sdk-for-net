@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
+            return new TestFailoverJobDetails(
+                instanceType,
+                affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                testFailoverStatus.Value,
+                comments.Value,
+                networkName.Value,
+                networkFriendlyName.Value,
+                networkType.Value,
+                protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
         }
 
         BinaryData IPersistableModel<TestFailoverJobDetails>.Write(ModelReaderWriterOptions options)

@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerNameAvailabilityResult(name.Value, Optional.ToNullable(type), Optional.ToNullable(nameAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new TrafficManagerNameAvailabilityResult(
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(nameAvailable),
+                reason.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

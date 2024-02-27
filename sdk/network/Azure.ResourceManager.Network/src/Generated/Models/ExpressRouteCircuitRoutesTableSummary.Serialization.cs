@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Optional.ToNullable(v), Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitRoutesTableSummary(
+                neighbor.Value,
+                Optional.ToNullable(v),
+                Optional.ToNullable(@as),
+                upDown.Value,
+                statePfxRcd.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTableSummary>.Write(ModelReaderWriterOptions options)

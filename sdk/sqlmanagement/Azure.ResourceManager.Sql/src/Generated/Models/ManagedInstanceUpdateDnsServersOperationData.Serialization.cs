@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceUpdateDnsServersOperationData(id, name, type, systemData.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ManagedInstanceUpdateDnsServersOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceUpdateDnsServersOperationData>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmIlrRegistrationContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, virtualMachineId.Value, initiatorName.Value, Optional.ToNullable(renewExistingRegistration));
+            return new IaasVmIlrRegistrationContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId.Value,
+                virtualMachineId.Value,
+                initiatorName.Value,
+                Optional.ToNullable(renewExistingRegistration));
         }
 
         BinaryData IPersistableModel<IaasVmIlrRegistrationContent>.Write(ModelReaderWriterOptions options)

@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudNetworkInterface(address.Value, Optional.ToNullable(deviceConnectionType), model.Value, Optional.ToNullable(physicalSlot), Optional.ToNullable(portCount), Optional.ToNullable(portSpeed), vendor.Value, serializedAdditionalRawData);
+            return new NetworkCloudNetworkInterface(
+                address.Value,
+                Optional.ToNullable(deviceConnectionType),
+                model.Value,
+                Optional.ToNullable(physicalSlot),
+                Optional.ToNullable(portCount),
+                Optional.ToNullable(portSpeed),
+                vendor.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudNetworkInterface>.Write(ModelReaderWriterOptions options)

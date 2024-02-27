@@ -235,7 +235,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding), serializedAdditionalRawData);
+            return new RoutingStorageContainerProperties(
+                Optional.ToNullable(id),
+                connectionString.Value,
+                endpointUri.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                name,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                containerName,
+                fileNameFormat.Value,
+                Optional.ToNullable(batchFrequencyInSeconds),
+                Optional.ToNullable(maxChunkSizeInBytes),
+                Optional.ToNullable(encoding),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingStorageContainerProperties>.Write(ModelReaderWriterOptions options)

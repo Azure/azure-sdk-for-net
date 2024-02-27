@@ -97,7 +97,17 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new UnknownOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), error);
+            return new UnknownOperationDetails(
+                operationId,
+                status,
+                Optional.ToNullable(percentCompleted),
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error);
         }
     }
 }

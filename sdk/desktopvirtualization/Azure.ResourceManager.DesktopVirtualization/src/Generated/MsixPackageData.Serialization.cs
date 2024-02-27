@@ -312,7 +312,23 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageData(id, name, type, systemData.Value, imagePath.Value, packageName.Value, packageFamilyName.Value, displayName.Value, packageRelativePath.Value, Optional.ToNullable(isRegularRegistration), Optional.ToNullable(isActive), packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(), version.Value, Optional.ToNullable(lastUpdated), packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(), serializedAdditionalRawData);
+            return new MsixPackageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                imagePath.Value,
+                packageName.Value,
+                packageFamilyName.Value,
+                displayName.Value,
+                packageRelativePath.Value,
+                Optional.ToNullable(isRegularRegistration),
+                Optional.ToNullable(isActive),
+                packageDependencies ?? new ChangeTrackingList<MsixPackageDependencies>(),
+                version.Value,
+                Optional.ToNullable(lastUpdated),
+                packageApplications ?? new ChangeTrackingList<MsixPackageApplications>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageData>.Write(ModelReaderWriterOptions options)

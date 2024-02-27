@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, extensions ?? new ChangeTrackingList<BatchVmExtension>(), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
+            return new BatchVmConfiguration(
+                imageReference,
+                nodeAgentSkuId,
+                windowsConfiguration.Value,
+                dataDisks ?? new ChangeTrackingList<BatchVmDataDisk>(),
+                licenseType.Value,
+                containerConfiguration.Value,
+                diskEncryptionConfiguration.Value,
+                nodePlacementConfiguration.Value,
+                extensions ?? new ChangeTrackingList<BatchVmExtension>(),
+                osDisk.Value,
+                securityProfile.Value,
+                serviceArtifactReference,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)

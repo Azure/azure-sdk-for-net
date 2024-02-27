@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value, serializedAdditionalRawData);
+            return new IntegrationServiceEnvironmentProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                integrationServiceEnvironmentId.Value,
+                endpointsConfiguration.Value,
+                networkConfiguration.Value,
+                encryptionConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)

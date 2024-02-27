@@ -258,7 +258,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryTaskPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(status), platform.Value, agentConfiguration.Value, agentPoolName.Value, Optional.ToNullable(timeout), step.Value, trigger.Value, credentials.Value, logTemplate.Value, serializedAdditionalRawData);
+            return new ContainerRegistryTaskPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(status),
+                platform.Value,
+                agentConfiguration.Value,
+                agentPoolName.Value,
+                Optional.ToNullable(timeout),
+                step.Value,
+                trigger.Value,
+                credentials.Value,
+                logTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskPatch>.Write(ModelReaderWriterOptions options)

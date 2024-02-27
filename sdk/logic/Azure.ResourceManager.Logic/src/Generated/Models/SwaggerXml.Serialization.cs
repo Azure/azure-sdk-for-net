@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerXml(name.Value, @namespace.Value, prefix.Value, Optional.ToNullable(attribute), Optional.ToNullable(wrapped), extensions ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new SwaggerXml(
+                name.Value,
+                @namespace.Value,
+                prefix.Value,
+                Optional.ToNullable(attribute),
+                Optional.ToNullable(wrapped),
+                extensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerXml>.Write(ModelReaderWriterOptions options)

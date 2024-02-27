@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), allowlistValues);
+            return new ProcessNotAllowed(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(valueType),
+                allowlistValues);
         }
 
         BinaryData IPersistableModel<ProcessNotAllowed>.Write(ModelReaderWriterOptions options)

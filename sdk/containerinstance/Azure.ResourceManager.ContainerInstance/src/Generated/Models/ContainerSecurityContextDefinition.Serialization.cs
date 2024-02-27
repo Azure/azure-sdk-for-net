@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerSecurityContextDefinition(Optional.ToNullable(privileged), Optional.ToNullable(allowPrivilegeEscalation), capabilities.Value, Optional.ToNullable(runAsGroup), Optional.ToNullable(runAsUser), seccompProfile.Value, serializedAdditionalRawData);
+            return new ContainerSecurityContextDefinition(
+                Optional.ToNullable(privileged),
+                Optional.ToNullable(allowPrivilegeEscalation),
+                capabilities.Value,
+                Optional.ToNullable(runAsGroup),
+                Optional.ToNullable(runAsUser),
+                seccompProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerSecurityContextDefinition>.Write(ModelReaderWriterOptions options)

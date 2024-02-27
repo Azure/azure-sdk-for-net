@@ -176,7 +176,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaImageBase(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value);
+            return new MediaImageBase(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                start,
+                step.Value,
+                range.Value);
         }
 
         BinaryData IPersistableModel<MediaImageBase>.Write(ModelReaderWriterOptions options)

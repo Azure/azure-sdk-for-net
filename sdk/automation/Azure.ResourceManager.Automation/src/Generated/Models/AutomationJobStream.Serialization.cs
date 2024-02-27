@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobStream(id.Value, jobStreamId.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, summary.Value, value ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new AutomationJobStream(
+                id.Value,
+                jobStreamId.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(streamType),
+                streamText.Value,
+                summary.Value,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobStream>.Write(ModelReaderWriterOptions options)

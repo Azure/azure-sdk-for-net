@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountStatistics(counterProperty.Value, Optional.ToNullable(counterValue), Optional.ToNullable(startTime), Optional.ToNullable(endTime), id.Value, serializedAdditionalRawData);
+            return new AutomationAccountStatistics(
+                counterProperty.Value,
+                Optional.ToNullable(counterValue),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                id.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountStatistics>.Write(ModelReaderWriterOptions options)

@@ -235,7 +235,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLibraryData(id, name, type, systemData.Value, name0.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type0.Value, provisioningStatus.Value, creatorId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseLibraryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                name0.Value,
+                path.Value,
+                containerName.Value,
+                Optional.ToNullable(uploadedTimestamp),
+                type0.Value,
+                provisioningStatus.Value,
+                creatorId.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLibraryData>.Write(ModelReaderWriterOptions options)

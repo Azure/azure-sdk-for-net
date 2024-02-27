@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubApnsCredential(apnsCertificate.Value, certificateKey.Value, endpoint.Value, thumbprint.Value, keyId.Value, appName.Value, appId.Value, token.Value, serializedAdditionalRawData);
+            return new NotificationHubApnsCredential(
+                apnsCertificate.Value,
+                certificateKey.Value,
+                endpoint.Value,
+                thumbprint.Value,
+                keyId.Value,
+                appName.Value,
+                appId.Value,
+                token.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubApnsCredential>.Write(ModelReaderWriterOptions options)

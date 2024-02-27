@@ -221,7 +221,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value, serializedAdditionalRawData);
+            return new ProtectionContainerMappingProperties(
+                targetProtectionContainerId.Value,
+                targetProtectionContainerFriendlyName.Value,
+                providerSpecificDetails.Value,
+                health.Value,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId.Value,
+                state.Value,
+                sourceProtectionContainerFriendlyName.Value,
+                sourceFabricFriendlyName.Value,
+                targetFabricFriendlyName.Value,
+                policyFriendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

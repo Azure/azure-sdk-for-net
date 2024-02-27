@@ -275,7 +275,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MarketoLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, endpoint, clientId, clientSecret, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new MarketoLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                endpoint,
+                clientId,
+                clientSecret,
+                useEncryptedEndpoints.Value,
+                useHostVerification.Value,
+                usePeerVerification.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<MarketoLinkedService>.Write(ModelReaderWriterOptions options)

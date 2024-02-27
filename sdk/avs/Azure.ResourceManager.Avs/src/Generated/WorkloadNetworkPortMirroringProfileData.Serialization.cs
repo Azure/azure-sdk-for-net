@@ -232,7 +232,19 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkPortMirroringProfileData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(direction), source.Value, destination.Value, Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkPortMirroringProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                Optional.ToNullable(direction),
+                source.Value,
+                destination.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options)

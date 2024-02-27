@@ -272,7 +272,20 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSparkConfigurationData(id, name, type, systemData.Value, description.Value, configs, annotations ?? new ChangeTrackingList<string>(), notes.Value, createdBy.Value, Optional.ToNullable(created), configMergeRule ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SynapseSparkConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                configs,
+                annotations ?? new ChangeTrackingList<string>(),
+                notes.Value,
+                createdBy.Value,
+                Optional.ToNullable(created),
+                configMergeRule ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options)

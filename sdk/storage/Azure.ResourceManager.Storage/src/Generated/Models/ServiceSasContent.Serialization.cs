@@ -289,7 +289,26 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceSasContent(canonicalizedResource, Optional.ToNullable(signedResource), Optional.ToNullable(signedPermission), signedIP.Value, Optional.ToNullable(signedProtocol), Optional.ToNullable(signedStart), Optional.ToNullable(signedExpiry), signedIdentifier.Value, startPk.Value, endPk.Value, startRk.Value, endRk.Value, keyToSign.Value, rscc.Value, rscd.Value, rsce.Value, rscl.Value, rsct.Value, serializedAdditionalRawData);
+            return new ServiceSasContent(
+                canonicalizedResource,
+                Optional.ToNullable(signedResource),
+                Optional.ToNullable(signedPermission),
+                signedIP.Value,
+                Optional.ToNullable(signedProtocol),
+                Optional.ToNullable(signedStart),
+                Optional.ToNullable(signedExpiry),
+                signedIdentifier.Value,
+                startPk.Value,
+                endPk.Value,
+                startRk.Value,
+                endRk.Value,
+                keyToSign.Value,
+                rscc.Value,
+                rscd.Value,
+                rsce.Value,
+                rscl.Value,
+                rsct.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSasContent>.Write(ModelReaderWriterOptions options)

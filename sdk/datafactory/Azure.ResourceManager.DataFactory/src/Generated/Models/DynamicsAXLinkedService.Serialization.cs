@@ -239,7 +239,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsAXLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, url, servicePrincipalId, servicePrincipalKey, tenant, aadResourceId, encryptedCredential.Value);
+            return new DynamicsAXLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                aadResourceId,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<DynamicsAXLinkedService>.Write(ModelReaderWriterOptions options)

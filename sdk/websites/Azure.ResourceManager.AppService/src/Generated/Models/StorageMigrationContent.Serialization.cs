@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMigrationContent(id, name, type, systemData.Value, azurefilesConnectionString.Value, azurefilesShare.Value, Optional.ToNullable(switchSiteAfterMigration), Optional.ToNullable(blockWriteAccessToSite), kind.Value, serializedAdditionalRawData);
+            return new StorageMigrationContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                azurefilesConnectionString.Value,
+                azurefilesShare.Value,
+                Optional.ToNullable(switchSiteAfterMigration),
+                Optional.ToNullable(blockWriteAccessToSite),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMigrationContent>.Write(ModelReaderWriterOptions options)

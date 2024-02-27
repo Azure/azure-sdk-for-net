@@ -258,7 +258,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPolicyPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, hourlySchedule.Value, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, Optional.ToNullable(enabled), provisioningState.Value, serializedAdditionalRawData);
+            return new SnapshotPolicyPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hourlySchedule.Value,
+                dailySchedule.Value,
+                weeklySchedule.Value,
+                monthlySchedule.Value,
+                Optional.ToNullable(enabled),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPolicyPatch>.Write(ModelReaderWriterOptions options)

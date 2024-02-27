@@ -129,7 +129,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
+            return new ManagedIntegrationRuntime(
+                type,
+                description.Value,
+                additionalProperties,
+                Optional.ToNullable(state),
+                managedVirtualNetwork.Value,
+                computeProperties.Value,
+                ssisProperties.Value);
         }
 
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>

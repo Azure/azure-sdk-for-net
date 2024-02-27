@@ -52,7 +52,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             userEquipmentAddressPoolPrefix ??= new List<string>();
             userEquipmentStaticAddressPoolPrefix ??= new List<string>();
 
-            return new MobileAttachedDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneDataInterface, dnsAddresses?.ToList(), naptConfiguration, userEquipmentAddressPoolPrefix?.ToList(), userEquipmentStaticAddressPoolPrefix?.ToList(), serializedAdditionalRawData: null);
+            return new MobileAttachedDataNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                userPlaneDataInterface,
+                dnsAddresses?.ToList(),
+                naptConfiguration,
+                userEquipmentAddressPoolPrefix?.ToList(),
+                userEquipmentStaticAddressPoolPrefix?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileDataNetworkData"/>. </summary>
@@ -69,7 +82,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileDataNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, description, serializedAdditionalRawData: null);
+            return new MobileDataNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkDiagnosticsPackageData"/>. </summary>
@@ -83,7 +105,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkDiagnosticsPackageData"/> instance for mocking. </returns>
         public static MobileNetworkDiagnosticsPackageData MobileNetworkDiagnosticsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkDiagnosticsPackageStatus? status = null, string reason = null)
         {
-            return new MobileNetworkDiagnosticsPackageData(id, name, resourceType, systemData, provisioningState, status, reason, serializedAdditionalRawData: null);
+            return new MobileNetworkDiagnosticsPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                status,
+                reason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkData"/>. </summary>
@@ -101,7 +131,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkData(id, name, resourceType, systemData, tags, location, provisioningState, publicLandMobileNetworkIdentifier, serviceKey, serializedAdditionalRawData: null);
+            return new MobileNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                publicLandMobileNetworkIdentifier,
+                serviceKey,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkPacketCaptureData"/>. </summary>
@@ -124,7 +164,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             networkInterfaces ??= new List<string>();
             outputFiles ??= new List<string>();
 
-            return new MobileNetworkPacketCaptureData(id, name, resourceType, systemData, provisioningState, status, reason, captureStartOn, networkInterfaces?.ToList(), bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, outputFiles?.ToList(), serializedAdditionalRawData: null);
+            return new MobileNetworkPacketCaptureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                status,
+                reason,
+                captureStartOn,
+                networkInterfaces?.ToList(),
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                outputFiles?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AsyncOperationStatus"/>. </summary>
@@ -140,7 +194,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <returns> A new <see cref="Models.AsyncOperationStatus"/> instance for mocking. </returns>
         public static AsyncOperationStatus AsyncOperationStatus(string id = null, string name = null, string status = null, string resourceId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, BinaryData properties = null, ResponseError error = null)
         {
-            return new AsyncOperationStatus(id, name, status, resourceId, startOn, endOn, percentComplete, properties, error, serializedAdditionalRawData: null);
+            return new AsyncOperationStatus(
+                id,
+                name,
+                status,
+                resourceId,
+                startOn,
+                endOn,
+                percentComplete,
+                properties,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreControlPlaneData"/>. </summary>
@@ -175,7 +239,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             sites ??= new List<WritableSubResource>();
             controlPlaneAccessVirtualIPv4Addresses ??= new List<string>();
 
-            return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses?.ToList(), sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri, serializedAdditionalRawData: null) : null, eventHub, nasRerouteMacroMmeGroupId.HasValue ? new SignalingConfiguration(new NASRerouteConfiguration(nasRerouteMacroMmeGroupId.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null, interopSettings, serializedAdditionalRawData: null);
+            return new PacketCoreControlPlaneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                userAssignedIdentity,
+                provisioningState,
+                installation,
+                sites?.ToList(),
+                platform,
+                coreNetworkTechnology,
+                version,
+                installedVersion,
+                rollbackVersion,
+                controlPlaneAccessInterface,
+                controlPlaneAccessVirtualIPv4Addresses?.ToList(),
+                sku,
+                ueMtu,
+                localDiagnosticsAccess,
+                diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri, serializedAdditionalRawData: null) : null,
+                eventHub,
+                nasRerouteMacroMmeGroupId.HasValue ? new SignalingConfiguration(new NASRerouteConfiguration(nasRerouteMacroMmeGroupId.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                interopSettings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkInstallation"/>. </summary>
@@ -189,7 +278,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             reasons ??= new List<MobileNetworkInstallationReason>();
 
-            return new MobileNetworkInstallation(desiredState, state, reinstallRequired, reasons?.ToList(), operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null, serializedAdditionalRawData: null);
+            return new MobileNetworkInstallation(
+                desiredState,
+                state,
+                reinstallRequired,
+                reasons?.ToList(),
+                operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkPlatformConfiguration"/>. </summary>
@@ -204,7 +299,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             azureStackEdgeDevices ??= new List<WritableSubResource>();
 
-            return new MobileNetworkPlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null, serializedAdditionalRawData: null);
+            return new MobileNetworkPlatformConfiguration(
+                platformType,
+                azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null,
+                azureStackEdgeDevices?.ToList(),
+                azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null,
+                connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null,
+                customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MobileNetworkHttpsServerCertificate"/>. </summary>
@@ -237,7 +339,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             platforms ??= new List<MobileNetworkPlatform>();
 
-            return new PacketCoreControlPlaneVersionData(id, name, resourceType, systemData, provisioningState, platforms?.ToList(), serializedAdditionalRawData: null);
+            return new PacketCoreControlPlaneVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                platforms?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreDataPlaneData"/>. </summary>
@@ -256,7 +365,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             userPlaneAccessVirtualIPv4Addresses ??= new List<string>();
 
-            return new PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses?.ToList(), serializedAdditionalRawData: null);
+            return new PacketCoreDataPlaneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                userPlaneAccessInterface,
+                userPlaneAccessVirtualIPv4Addresses?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkServiceData"/>. </summary>
@@ -276,7 +395,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             pccRules ??= new List<PccRuleConfiguration>();
 
-            return new MobileNetworkServiceData(id, name, resourceType, systemData, tags, location, provisioningState, servicePrecedence, serviceQosPolicy, pccRules?.ToList(), serializedAdditionalRawData: null);
+            return new MobileNetworkServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                servicePrecedence,
+                serviceQosPolicy,
+                pccRules?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimData"/>. </summary>
@@ -302,7 +432,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
-            return new MobileNetworkSimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode, serializedAdditionalRawData: null);
+            return new MobileNetworkSimData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                simState,
+                siteProvisioningState,
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier,
+                deviceType,
+                simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null,
+                staticIPConfiguration?.ToList(),
+                vendorName,
+                vendorKeyFingerprint,
+                authenticationKey,
+                operatorKeyCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SimNameAndProperties"/>. </summary>
@@ -325,7 +472,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
-            return new SimNameAndProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode, serializedAdditionalRawData: null);
+            return new SimNameAndProperties(
+                name,
+                provisioningState,
+                simState,
+                siteProvisioningState,
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier,
+                deviceType,
+                simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null,
+                staticIPConfiguration?.ToList(),
+                vendorName,
+                vendorKeyFingerprint,
+                authenticationKey,
+                operatorKeyCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SimNameAndEncryptedProperties"/>. </summary>
@@ -347,7 +508,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
-            return new SimNameAndEncryptedProperties(name, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, encryptedCredentials, serializedAdditionalRawData: null);
+            return new SimNameAndEncryptedProperties(
+                name,
+                provisioningState,
+                simState,
+                siteProvisioningState,
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier,
+                deviceType,
+                simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null,
+                staticIPConfiguration?.ToList(),
+                vendorName,
+                vendorKeyFingerprint,
+                encryptedCredentials,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimGroupData"/>. </summary>
@@ -366,7 +540,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkSimGroupData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, keyUri != null ? new KeyVaultKey(keyUri, serializedAdditionalRawData: null) : null, mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null, serializedAdditionalRawData: null);
+            return new MobileNetworkSimGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                userAssignedIdentity,
+                provisioningState,
+                keyUri != null ? new KeyVaultKey(keyUri, serializedAdditionalRawData: null) : null,
+                mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimPolicyData"/>. </summary>
@@ -390,7 +575,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             sliceConfigurations ??= new List<MobileNetworkSliceConfiguration>();
 
-            return new MobileNetworkSimPolicyData(id, name, resourceType, systemData, tags, location, provisioningState, siteProvisioningState, ueAmbr, defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null, rfspIndex, registrationTimer, sliceConfigurations?.ToList(), serializedAdditionalRawData: null);
+            return new MobileNetworkSimPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                siteProvisioningState,
+                ueAmbr,
+                defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null,
+                rfspIndex,
+                registrationTimer,
+                sliceConfigurations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSiteData"/>. </summary>
@@ -408,7 +607,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             tags ??= new Dictionary<string, string>();
             networkFunctions ??= new List<SubResource>();
 
-            return new MobileNetworkSiteData(id, name, resourceType, systemData, tags, location, provisioningState, networkFunctions?.ToList(), serializedAdditionalRawData: null);
+            return new MobileNetworkSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                networkFunctions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSliceData"/>. </summary>
@@ -426,7 +634,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new MobileNetworkSliceData(id, name, resourceType, systemData, tags, location, provisioningState, snssai, description, serializedAdditionalRawData: null);
+            return new MobileNetworkSliceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                snssai,
+                description,
+                serializedAdditionalRawData: null);
         }
     }
 }

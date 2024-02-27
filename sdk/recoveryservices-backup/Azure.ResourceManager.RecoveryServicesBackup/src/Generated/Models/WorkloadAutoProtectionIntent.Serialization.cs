@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadAutoProtectionIntent(protectionIntentItemType, Optional.ToNullable(backupManagementType), sourceResourceId.Value, itemId.Value, policyId.Value, Optional.ToNullable(protectionState), serializedAdditionalRawData);
+            return new WorkloadAutoProtectionIntent(
+                protectionIntentItemType,
+                Optional.ToNullable(backupManagementType),
+                sourceResourceId.Value,
+                itemId.Value,
+                policyId.Value,
+                Optional.ToNullable(protectionState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadAutoProtectionIntent>.Write(ModelReaderWriterOptions options)

@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsRoleAssignmentEntity(id.Value, name.Value, principalId.Value, roleDefinitionId.Value, scope.Value, serializedAdditionalRawData);
+            return new BillingBenefitsRoleAssignmentEntity(
+                id.Value,
+                name.Value,
+                principalId.Value,
+                roleDefinitionId.Value,
+                scope.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsRoleAssignmentEntity>.Write(ModelReaderWriterOptions options)

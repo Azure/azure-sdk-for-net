@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationCredentialData(id, name, type, systemData.Value, userName.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationCredentialData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                userName.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationCredentialData>.Write(ModelReaderWriterOptions options)

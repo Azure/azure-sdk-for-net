@@ -436,7 +436,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService.Value, combiner.Value, commandEnvironment ?? new ChangeTrackingList<object>(), defines ?? new ChangeTrackingDictionary<string, object>());
+            return new HDInsightStreamingActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<object>(),
+                Optional.ToNullable(getDebugInfo),
+                mapper,
+                reducer,
+                input,
+                output,
+                filePaths,
+                fileLinkedService.Value,
+                combiner.Value,
+                commandEnvironment ?? new ChangeTrackingList<object>(),
+                defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightStreamingActivityConverter : JsonConverter<HDInsightStreamingActivity>

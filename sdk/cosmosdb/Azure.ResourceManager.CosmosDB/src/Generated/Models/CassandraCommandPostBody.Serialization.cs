@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraCommandPostBody(command, arguments ?? new ChangeTrackingDictionary<string, string>(), host, Optional.ToNullable(cassandraStopStart), Optional.ToNullable(readwrite), serializedAdditionalRawData);
+            return new CassandraCommandPostBody(
+                command,
+                arguments ?? new ChangeTrackingDictionary<string, string>(),
+                host,
+                Optional.ToNullable(cassandraStopStart),
+                Optional.ToNullable(readwrite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraCommandPostBody>.Write(ModelReaderWriterOptions options)

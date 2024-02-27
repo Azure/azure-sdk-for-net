@@ -378,7 +378,27 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentField(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), Optional.ToNullable(valueSelectionMark), Optional.ToNullable(valueSignature), valueCountryRegion.Value, valueArray ?? new ChangeTrackingList<DocumentField>(), valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(), valueCurrency.Value, valueAddress.Value, Optional.ToNullable(valueBoolean), content.Value, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans ?? new ChangeTrackingList<DocumentSpan>(), Optional.ToNullable(confidence), serializedAdditionalRawData);
+            return new DocumentField(
+                type,
+                valueString.Value,
+                Optional.ToNullable(valueDate),
+                Optional.ToNullable(valueTime),
+                valuePhoneNumber.Value,
+                Optional.ToNullable(valueNumber),
+                Optional.ToNullable(valueInteger),
+                Optional.ToNullable(valueSelectionMark),
+                Optional.ToNullable(valueSignature),
+                valueCountryRegion.Value,
+                valueArray ?? new ChangeTrackingList<DocumentField>(),
+                valueObject ?? new ChangeTrackingDictionary<string, DocumentField>(),
+                valueCurrency.Value,
+                valueAddress.Value,
+                Optional.ToNullable(valueBoolean),
+                content.Value,
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans ?? new ChangeTrackingList<DocumentSpan>(),
+                Optional.ToNullable(confidence),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentField>.Write(ModelReaderWriterOptions options)

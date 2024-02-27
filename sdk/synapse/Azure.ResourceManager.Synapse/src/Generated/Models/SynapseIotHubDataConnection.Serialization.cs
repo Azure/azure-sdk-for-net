@@ -275,7 +275,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIotHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, iotHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), eventSystemProperties ?? new ChangeTrackingList<string>(), sharedAccessPolicyName.Value, Optional.ToNullable(provisioningState));
+            return new SynapseIotHubDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                iotHubResourceId.Value,
+                consumerGroup.Value,
+                tableName.Value,
+                mappingRuleName.Value,
+                Optional.ToNullable(dataFormat),
+                eventSystemProperties ?? new ChangeTrackingList<string>(),
+                sharedAccessPolicyName.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<SynapseIotHubDataConnection>.Write(ModelReaderWriterOptions options)

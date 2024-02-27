@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobProviderError(Optional.ToNullable(errorCode), errorMessage.Value, errorId.Value, possibleCauses.Value, recommendedAction.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobProviderError(
+                Optional.ToNullable(errorCode),
+                errorMessage.Value,
+                errorId.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobProviderError>.Write(ModelReaderWriterOptions options)

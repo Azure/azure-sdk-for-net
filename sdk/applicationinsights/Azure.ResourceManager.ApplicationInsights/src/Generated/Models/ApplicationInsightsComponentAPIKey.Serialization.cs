@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentAPIKey(id.Value, apiKey.Value, createdDate.Value, name.Value, linkedReadProperties ?? new ChangeTrackingList<string>(), linkedWriteProperties ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentAPIKey(
+                id.Value,
+                apiKey.Value,
+                createdDate.Value,
+                name.Value,
+                linkedReadProperties ?? new ChangeTrackingList<string>(),
+                linkedWriteProperties ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAPIKey>.Write(ModelReaderWriterOptions options)

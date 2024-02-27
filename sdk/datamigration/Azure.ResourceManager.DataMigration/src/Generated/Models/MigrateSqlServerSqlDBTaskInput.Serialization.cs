@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, validationOptions.Value, startedOn.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlDBTaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                validationOptions.Value,
+                startedOn.Value,
+                encryptedKeyForSecureFields.Value);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskInput>.Write(ModelReaderWriterOptions options)

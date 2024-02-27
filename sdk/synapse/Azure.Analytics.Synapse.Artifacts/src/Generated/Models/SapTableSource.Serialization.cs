@@ -258,7 +258,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, partitionOption.Value, partitionSettings.Value);
+            return new SapTableSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                rowCount.Value,
+                rowSkips.Value,
+                rfcTableFields.Value,
+                rfcTableOptions.Value,
+                batchSize.Value,
+                customRfcReadTableFunctionModule.Value,
+                sapDataColumnDelimiter.Value,
+                partitionOption.Value,
+                partitionSettings.Value);
         }
 
         internal partial class SapTableSourceConverter : JsonConverter<SapTableSource>

@@ -286,7 +286,21 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingData(id, name, type, systemData.Value, storageAccountId.Value, serviceBusRuleId.Value, eventHubAuthorizationRuleId.Value, eventHubName.Value, metrics ?? new ChangeTrackingList<MetricSettings>(), logs ?? new ChangeTrackingList<LogSettings>(), workspaceId.Value, marketplacePartnerId.Value, logAnalyticsDestinationType.Value, serializedAdditionalRawData);
+            return new DiagnosticSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountId.Value,
+                serviceBusRuleId.Value,
+                eventHubAuthorizationRuleId.Value,
+                eventHubName.Value,
+                metrics ?? new ChangeTrackingList<MetricSettings>(),
+                logs ?? new ChangeTrackingList<LogSettings>(),
+                workspaceId.Value,
+                marketplacePartnerId.Value,
+                logAnalyticsDestinationType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingData>.Write(ModelReaderWriterOptions options)
