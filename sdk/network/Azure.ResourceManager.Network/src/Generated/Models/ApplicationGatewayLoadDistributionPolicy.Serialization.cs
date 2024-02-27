@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
             IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = default;
-            Optional<ApplicationGatewayLoadDistributionAlgorithm> loadDistributionAlgorithm = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ApplicationGatewayLoadDistributionAlgorithm? loadDistributionAlgorithm = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,14 +202,14 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ApplicationGatewayLoadDistributionPolicy(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
+                etag,
                 loadDistributionTargets ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>(),
-                Optional.ToNullable(loadDistributionAlgorithm),
-                Optional.ToNullable(provisioningState));
+                loadDistributionAlgorithm,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionPolicy>.Write(ModelReaderWriterOptions options)

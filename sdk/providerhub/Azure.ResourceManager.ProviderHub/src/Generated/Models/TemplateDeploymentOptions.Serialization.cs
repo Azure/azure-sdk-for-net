@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<bool> preflightSupported = default;
+            bool? preflightSupported = default;
             IList<PreflightOption> preflightOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateDeploymentOptions(Optional.ToNullable(preflightSupported), preflightOptions ?? new ChangeTrackingList<PreflightOption>(), serializedAdditionalRawData);
+            return new TemplateDeploymentOptions(preflightSupported, preflightOptions ?? new ChangeTrackingList<PreflightOption>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateDeploymentOptions>.Write(ModelReaderWriterOptions options)

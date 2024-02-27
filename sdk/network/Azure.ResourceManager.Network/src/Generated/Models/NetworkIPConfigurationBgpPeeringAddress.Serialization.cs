@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> ipconfigurationId = default;
+            string ipconfigurationId = default;
             IReadOnlyList<string> defaultBgpIPAddresses = default;
             IList<string> customBgpIPAddresses = default;
             IReadOnlyList<string> tunnelIPAddresses = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Write(ModelReaderWriterOptions options)

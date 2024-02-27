@@ -36,7 +36,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             float y = default;
             float z = default;
             float w = default;
-            Optional<bool> isIdentity = default;
+            bool isIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("x"u8))

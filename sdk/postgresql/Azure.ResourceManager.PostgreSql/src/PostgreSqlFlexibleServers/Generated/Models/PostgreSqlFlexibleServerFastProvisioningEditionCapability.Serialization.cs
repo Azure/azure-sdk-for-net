@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> supportedTier = default;
-            Optional<string> supportedSku = default;
-            Optional<long> supportedStorageGb = default;
-            Optional<string> supportedServerVersions = default;
-            Optional<int> serverCount = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string supportedTier = default;
+            string supportedSku = default;
+            long? supportedStorageGb = default;
+            string supportedServerVersions = default;
+            int? serverCount = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,14 +164,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
-                Optional.ToNullable(status),
-                reason.Value,
+                status,
+                reason,
                 serializedAdditionalRawData,
-                supportedTier.Value,
-                supportedSku.Value,
-                Optional.ToNullable(supportedStorageGb),
-                supportedServerVersions.Value,
-                Optional.ToNullable(serverCount));
+                supportedTier,
+                supportedSku,
+                supportedStorageGb,
+                supportedServerVersions,
+                serverCount);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(ModelReaderWriterOptions options)

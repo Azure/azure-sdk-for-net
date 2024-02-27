@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
-            Optional<MobileNetworkDiagnosticsPackageStatus> status = default;
-            Optional<string> reason = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
+            MobileNetworkDiagnosticsPackageStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(status),
-                reason.Value,
+                systemData,
+                provisioningState,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<PeeringKind> kind = default;
+            PeeringKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DirectPeeringLocationProperties> direct = default;
-            Optional<PeeringLocationPropertiesExchange> exchange = default;
-            Optional<string> peeringLocation = default;
-            Optional<string> country = default;
-            Optional<AzureLocation> azureRegion = default;
+            SystemData systemData = default;
+            DirectPeeringLocationProperties direct = default;
+            PeeringLocationPropertiesExchange exchange = default;
+            string peeringLocation = default;
+            string country = default;
+            AzureLocation? azureRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,13 +224,13 @@ namespace Azure.ResourceManager.Peering.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(kind),
-                direct.Value,
-                exchange.Value,
-                peeringLocation.Value,
-                country.Value,
-                Optional.ToNullable(azureRegion),
+                systemData,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                country,
+                azureRegion,
                 serializedAdditionalRawData);
         }
 

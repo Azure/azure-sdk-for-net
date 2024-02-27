@@ -157,20 +157,20 @@ namespace Azure.ResourceManager.PolicyInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> policyAssignmentId = default;
-            Optional<string> policyDefinitionReferenceId = default;
-            Optional<ResourceDiscoveryMode> resourceDiscoveryMode = default;
-            Optional<string> provisioningState = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> lastUpdatedOn = default;
-            Optional<RemediationFilters> filters = default;
-            Optional<RemediationDeploymentSummary> deploymentStatus = default;
-            Optional<string> statusMessage = default;
-            Optional<string> correlationId = default;
-            Optional<int> resourceCount = default;
-            Optional<int> parallelDeployments = default;
-            Optional<RemediationPropertiesFailureThreshold> failureThreshold = default;
+            SystemData systemData = default;
+            ResourceIdentifier policyAssignmentId = default;
+            string policyDefinitionReferenceId = default;
+            ResourceDiscoveryMode? resourceDiscoveryMode = default;
+            string provisioningState = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? lastUpdatedOn = default;
+            RemediationFilters filters = default;
+            RemediationDeploymentSummary deploymentStatus = default;
+            string statusMessage = default;
+            string correlationId = default;
+            int? resourceCount = default;
+            int? parallelDeployments = default;
+            RemediationPropertiesFailureThreshold failureThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -322,20 +322,20 @@ namespace Azure.ResourceManager.PolicyInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                policyAssignmentId.Value,
-                policyDefinitionReferenceId.Value,
-                Optional.ToNullable(resourceDiscoveryMode),
-                provisioningState.Value,
-                Optional.ToNullable(createdOn),
-                Optional.ToNullable(lastUpdatedOn),
-                filters.Value,
-                deploymentStatus.Value,
-                statusMessage.Value,
-                correlationId.Value,
-                Optional.ToNullable(resourceCount),
-                Optional.ToNullable(parallelDeployments),
-                failureThreshold.Value,
+                systemData,
+                policyAssignmentId,
+                policyDefinitionReferenceId,
+                resourceDiscoveryMode,
+                provisioningState,
+                createdOn,
+                lastUpdatedOn,
+                filters,
+                deploymentStatus,
+                statusMessage,
+                correlationId,
+                resourceCount,
+                parallelDeployments,
+                failureThreshold,
                 serializedAdditionalRawData);
         }
 

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> numberOfContainers = default;
+            int? numberOfContainers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerValidateBackupResult(Optional.ToNullable(numberOfContainers), serializedAdditionalRawData);
+            return new MySqlFlexibleServerValidateBackupResult(numberOfContainers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerValidateBackupResult>.Write(ModelReaderWriterOptions options)

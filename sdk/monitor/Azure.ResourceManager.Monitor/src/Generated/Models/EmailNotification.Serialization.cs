@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<bool> sendToSubscriptionAdministrator = default;
-            Optional<bool> sendToSubscriptionCoAdministrators = default;
+            bool? sendToSubscriptionAdministrator = default;
+            bool? sendToSubscriptionCoAdministrators = default;
             IList<string> customEmails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmailNotification(Optional.ToNullable(sendToSubscriptionAdministrator), Optional.ToNullable(sendToSubscriptionCoAdministrators), customEmails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EmailNotification(sendToSubscriptionAdministrator, sendToSubscriptionCoAdministrators, customEmails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmailNotification>.Write(ModelReaderWriterOptions options)

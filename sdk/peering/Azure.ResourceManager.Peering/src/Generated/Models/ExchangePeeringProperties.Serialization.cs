@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Peering.Models
                 return null;
             }
             IList<PeeringExchangeConnection> connections = default;
-            Optional<WritableSubResource> peerAsn = default;
+            WritableSubResource peerAsn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

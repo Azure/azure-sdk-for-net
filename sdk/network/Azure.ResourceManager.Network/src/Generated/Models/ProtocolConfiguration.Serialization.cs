@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<NetworkHttpConfiguration> httpConfiguration = default;
+            NetworkHttpConfiguration httpConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtocolConfiguration(httpConfiguration.Value, serializedAdditionalRawData);
+            return new ProtocolConfiguration(httpConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtocolConfiguration>.Write(ModelReaderWriterOptions options)

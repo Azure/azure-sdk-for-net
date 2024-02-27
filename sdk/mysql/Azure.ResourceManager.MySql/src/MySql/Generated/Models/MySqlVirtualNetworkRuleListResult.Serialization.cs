@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MySql.Models
                 return null;
             }
             IReadOnlyList<MySqlVirtualNetworkRuleData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<MySqlVirtualNetworkRuleData>(), nextLink.Value, serializedAdditionalRawData);
+            return new MySqlVirtualNetworkRuleListResult(value ?? new ChangeTrackingList<MySqlVirtualNetworkRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlVirtualNetworkRuleListResult>.Write(ModelReaderWriterOptions options)

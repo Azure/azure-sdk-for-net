@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<NetworkCloudBareMetalMachineKeySetData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineKeySetList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>(), serializedAdditionalRawData);
+            return new BareMetalMachineKeySetList(nextLink, value ?? new ChangeTrackingList<NetworkCloudBareMetalMachineKeySetData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineKeySetList>.Write(ModelReaderWriterOptions options)

@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<string> keyVaultId = default;
+            string keyVaultId = default;
             Uri keyVaultUri = default;
             string keyName = default;
             string keyVaultResourceId = default;
-            Optional<NetAppKeyVaultStatus> status = default;
+            NetAppKeyVaultStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetAppKeyVaultProperties(
-                keyVaultId.Value,
+                keyVaultId,
                 keyVaultUri,
                 keyName,
                 keyVaultResourceId,
-                Optional.ToNullable(status),
+                status,
                 serializedAdditionalRawData);
         }
 

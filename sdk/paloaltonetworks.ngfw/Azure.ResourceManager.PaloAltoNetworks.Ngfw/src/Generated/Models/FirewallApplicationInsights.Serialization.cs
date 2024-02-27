@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> key = default;
+            string id = default;
+            string key = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallApplicationInsights(id.Value, key.Value, serializedAdditionalRawData);
+            return new FirewallApplicationInsights(id, key, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallApplicationInsights>.Write(ModelReaderWriterOptions options)

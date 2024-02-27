@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> ipv4Address = default;
+            string ipv4Address = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimStaticIPPropertiesStaticIP(ipv4Address.Value, serializedAdditionalRawData);
+            return new SimStaticIPPropertiesStaticIP(ipv4Address, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimStaticIPPropertiesStaticIP>.Write(ModelReaderWriterOptions options)

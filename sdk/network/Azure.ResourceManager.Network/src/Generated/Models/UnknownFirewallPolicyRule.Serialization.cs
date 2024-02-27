@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
+            string name = default;
+            string description = default;
             FirewallPolicyRuleType ruleType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFirewallPolicyRule(name.Value, description.Value, ruleType, serializedAdditionalRawData);
+            return new UnknownFirewallPolicyRule(name, description, ruleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyRule>.Write(ModelReaderWriterOptions options)

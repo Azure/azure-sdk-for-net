@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ConsoleEnabled> enabled = default;
-            Optional<DateTimeOffset> expiration = default;
-            Optional<NetworkCloudSshPublicKey> sshPublicKey = default;
+            ConsoleEnabled? enabled = default;
+            DateTimeOffset? expiration = default;
+            NetworkCloudSshPublicKey sshPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVirtualMachineConsolePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(enabled), Optional.ToNullable(expiration), sshPublicKey.Value, serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachineConsolePatch(tags ?? new ChangeTrackingDictionary<string, string>(), enabled, expiration, sshPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineConsolePatch>.Write(ModelReaderWriterOptions options)

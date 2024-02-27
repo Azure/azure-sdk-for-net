@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<DeviceConnectionType> deviceConnectionType = default;
-            Optional<string> model = default;
-            Optional<long> physicalSlot = default;
-            Optional<long> portCount = default;
-            Optional<long> portSpeed = default;
-            Optional<string> vendor = default;
+            string address = default;
+            DeviceConnectionType? deviceConnectionType = default;
+            string model = default;
+            long? physicalSlot = default;
+            long? portCount = default;
+            long? portSpeed = default;
+            string vendor = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkCloudNetworkInterface(
-                address.Value,
-                Optional.ToNullable(deviceConnectionType),
-                model.Value,
-                Optional.ToNullable(physicalSlot),
-                Optional.ToNullable(portCount),
-                Optional.ToNullable(portSpeed),
-                vendor.Value,
+                address,
+                deviceConnectionType,
+                model,
+                physicalSlot,
+                portCount,
+                portSpeed,
+                vendor,
                 serializedAdditionalRawData);
         }
 
