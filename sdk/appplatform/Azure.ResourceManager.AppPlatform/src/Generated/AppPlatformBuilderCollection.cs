@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppPlatformBuilderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string builderName, AppPlatformBuilderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppPlatformBuilderResource> CreateOrUpdate(WaitUntil waitUntil, string builderName, AppPlatformBuilderData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual async Task<Response<AppPlatformBuilderResource>> GetAsync(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual Response<AppPlatformBuilderResource> Get(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual Response<bool> Exists(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppPlatformBuilderResource>> GetIfExistsAsync(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentNullException"> <paramref name="builderName"/> is null. </exception>
         public virtual NullableResponse<AppPlatformBuilderResource> GetIfExists(string builderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(builderName, nameof(builderName));
+            if (builderName == null)
+            {
+                throw new ArgumentNullException(nameof(builderName));
+            }
+            if (builderName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(builderName));
+            }
 
             using var scope = _appPlatformBuilderBuildServiceBuilderClientDiagnostics.CreateScope("AppPlatformBuilderCollection.GetIfExists");
             scope.Start();

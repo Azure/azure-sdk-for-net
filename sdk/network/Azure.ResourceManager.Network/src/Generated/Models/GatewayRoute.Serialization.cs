@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
+            if (options.Format != "W" && LocalAddress != null)
             {
                 writer.WritePropertyName("localAddress"u8);
                 writer.WriteStringValue(LocalAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Network))
+            if (options.Format != "W" && Network != null)
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextHop))
+            if (options.Format != "W" && NextHop != null)
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourcePeer))
+            if (options.Format != "W" && SourcePeer != null)
             {
                 writer.WritePropertyName("sourcePeer"u8);
                 writer.WriteStringValue(SourcePeer);
             }
-            if (options.Format != "W" && Optional.IsDefined(Origin))
+            if (options.Format != "W" && Origin != null)
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (options.Format != "W" && Optional.IsDefined(AsPath))
+            if (options.Format != "W" && AsPath != null)
             {
                 writer.WritePropertyName("asPath"u8);
                 writer.WriteStringValue(AsPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(Weight))
+            if (options.Format != "W" && Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
+            return new GatewayRoute(
+                localAddress.Value,
+                network.Value,
+                nextHop.Value,
+                sourcePeer.Value,
+                origin.Value,
+                asPath.Value,
+                Optional.ToNullable(weight),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)

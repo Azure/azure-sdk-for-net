@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (Optional.IsDefined(PrincipalIdDisplayName))
+            if (PrincipalIdDisplayName != null)
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (Optional.IsCollectionDefined(DelegatedRoleDefinitionIds))
+            if (!(DelegatedRoleDefinitionIds is ChangeTrackingList<Guid> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("delegatedRoleDefinitionIds"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             Guid principalId = default;
             Optional<string> principalIdDisplayName = default;
             string roleDefinitionId = default;
-            Optional<IList<Guid>> delegatedRoleDefinitionIds = default;
+            IList<Guid> delegatedRoleDefinitionIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, Optional.ToList(delegatedRoleDefinitionIds), serializedAdditionalRawData);
+            return new ManagedServicesAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, delegatedRoleDefinitionIds ?? new ChangeTrackingList<Guid>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesAuthorization>.Write(ModelReaderWriterOptions options)

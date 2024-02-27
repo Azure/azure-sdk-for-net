@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereDeviceInsight> array = new List<SphereDeviceInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item));
+                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item, options));
                     }
                     value = array;
                     continue;

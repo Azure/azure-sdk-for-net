@@ -82,7 +82,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryResourceInfo(id.Value, Optional.ToNullable(recordId), state.Value, created.Value, changed.Value, type.Value, name.Value, operationId.Value, artifactId.Value);
+            return new LibraryResourceInfo(
+                id.Value,
+                Optional.ToNullable(recordId),
+                state.Value,
+                created.Value,
+                changed.Value,
+                type.Value,
+                name.Value,
+                operationId.Value,
+                artifactId.Value);
         }
 
         internal partial class LibraryResourceInfoConverter : JsonConverter<LibraryResourceInfo>

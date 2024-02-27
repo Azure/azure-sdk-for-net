@@ -28,10 +28,10 @@ namespace Azure.Monitor.Query.Models
             Optional<MetricClass> metricClass = default;
             Optional<MetricUnit> unit = default;
             Optional<MetricAggregationType> primaryAggregationType = default;
-            Optional<IReadOnlyList<MetricAggregationType>> supportedAggregationTypes = default;
-            Optional<IReadOnlyList<MetricAvailability>> metricAvailabilities = default;
+            IReadOnlyList<MetricAggregationType> supportedAggregationTypes = default;
+            IReadOnlyList<MetricAvailability> metricAvailabilities = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<LocalizableString>> dimensions = default;
+            IReadOnlyList<LocalizableString> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isDimensionRequired"u8))
@@ -147,7 +147,20 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions));
+            return new MetricDefinition(
+                Optional.ToNullable(isDimensionRequired),
+                resourceId.Value,
+                @namespace.Value,
+                name.Value,
+                displayDescription.Value,
+                category.Value,
+                Optional.ToNullable(metricClass),
+                Optional.ToNullable(unit),
+                Optional.ToNullable(primaryAggregationType),
+                supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                id.Value,
+                dimensions ?? new ChangeTrackingList<LocalizableString>());
         }
     }
 }

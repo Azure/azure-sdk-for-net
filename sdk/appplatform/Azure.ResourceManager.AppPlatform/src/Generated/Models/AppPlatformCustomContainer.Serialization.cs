@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (Optional.IsDefined(ContainerImage))
+            if (ContainerImage != null)
             {
                 writer.WritePropertyName("containerImage"u8);
                 writer.WriteStringValue(ContainerImage);
             }
-            if (Optional.IsCollectionDefined(Command))
+            if (!(Command is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("command"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Args))
+            if (!(Args is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImageRegistryCredential))
+            if (ImageRegistryCredential != null)
             {
                 writer.WritePropertyName("imageRegistryCredential"u8);
                 writer.WriteObjectValue(ImageRegistryCredential);
             }
-            if (Optional.IsDefined(LanguageFramework))
+            if (LanguageFramework != null)
             {
                 writer.WritePropertyName("languageFramework"u8);
                 writer.WriteStringValue(LanguageFramework);
@@ -106,8 +106,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<string> server = default;
             Optional<string> containerImage = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
+            IList<string> command = default;
+            IList<string> args = default;
             Optional<AppPlatformImageRegistryCredential> imageRegistryCredential = default;
             Optional<string> languageFramework = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);
+                    imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("languageFramework"u8))
@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, Optional.ToList(command), Optional.ToList(args), imageRegistryCredential.Value, languageFramework.Value, serializedAdditionalRawData);
+            return new AppPlatformCustomContainer(
+                server.Value,
+                containerImage.Value,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                imageRegistryCredential.Value,
+                languageFramework.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainer>.Write(ModelReaderWriterOptions options)

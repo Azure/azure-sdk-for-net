@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            if (options.Format != "W" && !(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ZoneDetails))
+            if (options.Format != "W" && !(ZoneDetails is ChangeTrackingList<ComputeResourceSkuZoneDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("zoneDetails"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ExtendedLocations))
+            if (options.Format != "W" && !(ExtendedLocations is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("extendedLocations"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
+            if (options.Format != "W" && ExtendedLocationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 WriteExtendedLocationType(writer);
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<ComputeResourceSkuZoneDetails>> zoneDetails = default;
-            Optional<IReadOnlyList<string>> extendedLocations = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<ComputeResourceSkuZoneDetails> zoneDetails = default;
+            IReadOnlyList<string> extendedLocations = default;
             Optional<ExtendedLocationType> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSkuZoneDetails> array = new List<ComputeResourceSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item));
+                        array.Add(ComputeResourceSkuZoneDetails.DeserializeComputeResourceSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeResourceSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), Optional.ToList(extendedLocations), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new ComputeResourceSkuLocationInfo(
+                Optional.ToNullable(location),
+                zones ?? new ChangeTrackingList<string>(),
+                zoneDetails ?? new ChangeTrackingList<ComputeResourceSkuZoneDetails>(),
+                extendedLocations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeResourceSkuLocationInfo>.Write(ModelReaderWriterOptions options)

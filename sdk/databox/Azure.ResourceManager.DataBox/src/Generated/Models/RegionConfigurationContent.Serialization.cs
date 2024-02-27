@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScheduleAvailabilityRequest))
+            if (ScheduleAvailabilityRequest != null)
             {
                 writer.WritePropertyName("scheduleAvailabilityRequest"u8);
                 writer.WriteObjectValue(ScheduleAvailabilityRequest);
             }
-            if (Optional.IsDefined(TransportAvailabilityRequest))
+            if (TransportAvailabilityRequest != null)
             {
                 writer.WritePropertyName("transportAvailabilityRequest"u8);
                 writer.WriteObjectValue(TransportAvailabilityRequest);
             }
-            if (Optional.IsDefined(DataCenterAddressRequest))
+            if (DataCenterAddressRequest != null)
             {
                 writer.WritePropertyName("datacenterAddressRequest"u8);
                 writer.WriteObjectValue(DataCenterAddressRequest);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value);
+                    scheduleAvailabilityRequest = ScheduleAvailabilityContent.DeserializeScheduleAvailabilityContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transportAvailabilityRequest"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value);
+                    transportAvailabilityRequest = TransportAvailabilityRequest.DeserializeTransportAvailabilityRequest(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datacenterAddressRequest"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value);
+                    dataCenterAddressRequest = DataCenterAddressContent.DeserializeDataCenterAddressContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RegionalAffinity))
+            if (RegionalAffinity.HasValue)
             {
                 writer.WritePropertyName("regionalAffinity"u8);
                 writer.WriteStringValue(RegionalAffinity.Value.ToString());
             }
-            if (Optional.IsDefined(ScalableExecution))
+            if (ScalableExecution.HasValue)
             {
                 writer.WritePropertyName("scalableExecution"u8);
                 writer.WriteStringValue(ScalableExecution.Value.ToString());
             }
-            if (Optional.IsDefined(Reporting))
+            if (Reporting.HasValue)
             {
                 writer.WritePropertyName("reporting"u8);
                 writer.WriteStringValue(Reporting.Value.ToString());
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<EnablementStatus> regionalAffinity = default;
             Optional<EnablementStatus> scalableExecution = default;
             Optional<EnablementStatus> reporting = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingAccountPatch(Optional.ToDictionary(tags), Optional.ToNullable(regionalAffinity), Optional.ToNullable(scalableExecution), Optional.ToNullable(reporting), serializedAdditionalRawData);
+            return new PlaywrightTestingAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(regionalAffinity), Optional.ToNullable(scalableExecution), Optional.ToNullable(reporting), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingAccountPatch>.Write(ModelReaderWriterOptions options)

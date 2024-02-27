@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Communication.ShortCodes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="currencyCode"/> is null. </exception>
         public ShortCodeCost(double amount, string currencyCode, BillingFrequency billingFrequency)
         {
-            Argument.AssertNotNull(currencyCode, nameof(currencyCode));
+            if (currencyCode == null)
+            {
+                throw new ArgumentNullException(nameof(currencyCode));
+            }
 
             Amount = amount;
             CurrencyCode = currencyCode;

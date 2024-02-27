@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TierToCool))
+            if (TierToCool != null)
             {
                 writer.WritePropertyName("tierToCool"u8);
                 writer.WriteObjectValue(TierToCool);
             }
-            if (Optional.IsDefined(TierToArchive))
+            if (TierToArchive != null)
             {
                 writer.WritePropertyName("tierToArchive"u8);
                 writer.WriteObjectValue(TierToArchive);
             }
-            if (Optional.IsDefined(TierToCold))
+            if (TierToCold != null)
             {
                 writer.WritePropertyName("tierToCold"u8);
                 writer.WriteObjectValue(TierToCold);
             }
-            if (Optional.IsDefined(TierToHot))
+            if (TierToHot != null)
             {
                 writer.WritePropertyName("tierToHot"u8);
                 writer.WriteObjectValue(TierToHot);
             }
-            if (Optional.IsDefined(Delete))
+            if (Delete != null)
             {
                 writer.WritePropertyName("delete"u8);
                 writer.WriteObjectValue(Delete);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
+            return new ManagementPolicySnapShot(
+                tierToCool.Value,
+                tierToArchive.Value,
+                tierToCold.Value,
+                tierToHot.Value,
+                delete.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicySnapShot>.Write(ModelReaderWriterOptions options)

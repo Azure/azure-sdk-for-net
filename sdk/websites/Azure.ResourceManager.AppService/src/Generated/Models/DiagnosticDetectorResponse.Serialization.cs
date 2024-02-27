@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(IssueDetected))
+            if (IssueDetected.HasValue)
             {
                 writer.WritePropertyName("issueDetected"u8);
                 writer.WriteBooleanValue(IssueDetected.Value);
             }
-            if (Optional.IsDefined(DetectorDefinition))
+            if (DetectorDefinition != null)
             {
                 writer.WritePropertyName("detectorDefinition"u8);
                 writer.WriteObjectValue(DetectorDefinition);
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<DiagnosticMetricSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AbnormalTimePeriods))
+            if (!(AbnormalTimePeriods is ChangeTrackingList<DetectorAbnormalTimePeriod> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("abnormalTimePeriods"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResponseMetaData))
+            if (ResponseMetaData != null)
             {
                 writer.WritePropertyName("responseMetaData"u8);
                 writer.WriteObjectValue(ResponseMetaData);
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endTime = default;
             Optional<bool> issueDetected = default;
             Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<DetectorAbnormalTimePeriod>> abnormalTimePeriods = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<DetectorAbnormalTimePeriod> abnormalTimePeriods = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
             Optional<DetectorMetadata> responseMetaData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value);
+                            detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("metrics"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
                             }
                             metrics = array;
                             continue;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
+                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item, options));
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.AppService.Models
                                     List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                     foreach (var item0 in item.EnumerateArray())
                                     {
-                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                                     }
                                     array.Add(array0);
                                 }
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value);
+                            responseMetaData = DetectorMetadata.DeserializeDetectorMetadata(property0.Value, options);
                             continue;
                         }
                     }
@@ -321,7 +321,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(abnormalTimePeriods), Optional.ToList(data), responseMetaData.Value, kind.Value, serializedAdditionalRawData);
+            return new DiagnosticDetectorResponse(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(issueDetected),
+                detectorDefinition.Value,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                responseMetaData.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDetectorResponse>.Write(ModelReaderWriterOptions options)

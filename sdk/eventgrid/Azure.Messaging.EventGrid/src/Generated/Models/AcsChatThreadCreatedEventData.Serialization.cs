@@ -23,8 +23,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<CommunicationIdentifierModel> createdByCommunicationIdentifier = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
-            Optional<IReadOnlyList<AcsChatThreadParticipantProperties>> participants = default;
+            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            IReadOnlyList<AcsChatThreadParticipantProperties> participants = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<long> version = default;
             Optional<string> transactionId = default;
@@ -59,6 +60,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         }
                     }
                     properties = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
                     continue;
                 }
                 if (property.NameEquals("participants"u8))
@@ -104,7 +119,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadCreatedEventData(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), createdByCommunicationIdentifier.Value, Optional.ToDictionary(properties), Optional.ToList(participants));
+            return new AcsChatThreadCreatedEventData(
+                transactionId.Value,
+                threadId.Value,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(version),
+                createdByCommunicationIdentifier.Value,
+                properties ?? new ChangeTrackingDictionary<string, object>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                participants ?? new ChangeTrackingList<AcsChatThreadParticipantProperties>());
         }
 
         internal partial class AcsChatThreadCreatedEventDataConverter : JsonConverter<AcsChatThreadCreatedEventData>

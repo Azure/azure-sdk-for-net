@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MapsCreatorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MapsCreatorResource> CreateOrUpdate(WaitUntil waitUntil, string creatorName, MapsCreatorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<Response<MapsCreatorResource>> GetAsync(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual Response<MapsCreatorResource> Get(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual Response<bool> Exists(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MapsCreatorResource>> GetIfExistsAsync(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
         public virtual NullableResponse<MapsCreatorResource> GetIfExists(string creatorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(creatorName, nameof(creatorName));
+            if (creatorName == null)
+            {
+                throw new ArgumentNullException(nameof(creatorName));
+            }
+            if (creatorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(creatorName));
+            }
 
             using var scope = _mapsCreatorCreatorsClientDiagnostics.CreateScope("MapsCreatorCollection.GetIfExists");
             scope.Start();

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(PrincipalOid))
+            if (PrincipalOid != null)
             {
                 writer.WritePropertyName("principalOid"u8);
                 writer.WriteStringValue(PrincipalOid);
             }
-            if (Optional.IsDefined(PolicyDefinitionAction))
+            if (PolicyDefinitionAction != null)
             {
                 writer.WritePropertyName("policyDefinitionAction"u8);
                 writer.WriteStringValue(PolicyDefinitionAction);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -169,7 +169,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentEventDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), Optional.ToNullable(tenantId), principalOid.Value, policyDefinitionAction.Value, additionalProperties);
+            return new ComponentEventDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(tenantId),
+                principalOid.Value,
+                policyDefinitionAction.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ComponentEventDetails>.Write(ModelReaderWriterOptions options)

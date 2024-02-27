@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrincipalName))
+            if (PrincipalName != null)
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (Optional.IsDefined(PrincipalId))
+            if (PrincipalId != null)
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Optional.ToNullable(tenantId), objectId.Value, appId.Value, serializedAdditionalRawData);
+            return new DevTestLabUserIdentity(
+                principalName.Value,
+                principalId.Value,
+                Optional.ToNullable(tenantId),
+                objectId.Value,
+                appId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabUserIdentity>.Write(ModelReaderWriterOptions options)

@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectName))
+            if (options.Format != "W" && ObjectName != null)
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedOn"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            if (options.Format != "W" && EndedOn.HasValue)
             {
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            if (options.Format != "W" && StatusMessage != null)
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsCount))
+            if (options.Format != "W" && ItemsCount.HasValue)
             {
                 writer.WritePropertyName("itemsCount"u8);
                 writer.WriteNumberValue(ItemsCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ItemsCompletedCount))
+            if (options.Format != "W" && ItemsCompletedCount.HasValue)
             {
                 writer.WritePropertyName("itemsCompletedCount"u8);
                 writer.WriteNumberValue(ItemsCompletedCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorPrefix))
+            if (options.Format != "W" && ErrorPrefix != null)
             {
                 writer.WritePropertyName("errorPrefix"u8);
                 writer.WriteStringValue(ErrorPrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResultPrefix))
+            if (options.Format != "W" && ResultPrefix != null)
             {
                 writer.WritePropertyName("resultPrefix"u8);
                 writer.WriteStringValue(ResultPrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -212,7 +212,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, objectName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(state), statusMessage.Value, Optional.ToNullable(itemsCount), Optional.ToNullable(itemsCompletedCount), errorPrefix.Value, resultPrefix.Value);
+            return new MigrateSqlServerSqlDBTaskOutputTableLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                objectName.Value,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                Optional.ToNullable(state),
+                statusMessage.Value,
+                Optional.ToNullable(itemsCount),
+                Optional.ToNullable(itemsCompletedCount),
+                errorPrefix.Value,
+                resultPrefix.Value);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsCollectionDefined(ManagedByExtended))
+            if (!(ManagedByExtended is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("managedByExtended"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartObject();
             writer.WritePropertyName("aclMode"u8);
             writer.WriteStringValue(AclMode.ToString());
-            if (Optional.IsDefined(TargetIqn))
+            if (TargetIqn != null)
             {
                 writer.WritePropertyName("targetIqn"u8);
                 writer.WriteStringValue(TargetIqn);
             }
-            if (Optional.IsCollectionDefined(StaticAcls))
+            if (!(StaticAcls is ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("staticAcls"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Luns))
+            if (!(Luns is ChangeTrackingList<ManagedDiskIscsiLun> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("luns"u8);
                 writer.WriteStartArray();
@@ -131,15 +131,15 @@ namespace Azure.ResourceManager.StoragePool.Models
                 return null;
             }
             Optional<string> managedBy = default;
-            Optional<IList<string>> managedByExtended = default;
+            IList<string> managedByExtended = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             DiskPoolIscsiTargetAclMode aclMode = default;
             Optional<string> targetIqn = default;
-            Optional<IList<DiskPoolIscsiTargetPortalGroupAcl>> staticAcls = default;
-            Optional<IList<ManagedDiskIscsiLun>> luns = default;
+            IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls = default;
+            IList<ManagedDiskIscsiLun> luns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<DiskPoolIscsiTargetPortalGroupAcl> array = new List<DiskPoolIscsiTargetPortalGroupAcl>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item));
+                                array.Add(DiskPoolIscsiTargetPortalGroupAcl.DeserializeDiskPoolIscsiTargetPortalGroupAcl(item, options));
                             }
                             staticAcls = array;
                             continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                             List<ManagedDiskIscsiLun> array = new List<ManagedDiskIscsiLun>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item));
+                                array.Add(ManagedDiskIscsiLun.DeserializeManagedDiskIscsiLun(item, options));
                             }
                             luns = array;
                             continue;
@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Optional.ToList(staticAcls), Optional.ToList(luns), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedBy.Value,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                aclMode,
+                targetIqn.Value,
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<AutomationSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sourceControlName, AutomationSourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<AutomationSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, string sourceControlName, AutomationSourceControlCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<Response<AutomationSourceControlResource>> GetAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual Response<AutomationSourceControlResource> Get(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual Response<bool> Exists(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomationSourceControlResource>> GetIfExistsAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
         public virtual NullableResponse<AutomationSourceControlResource> GetIfExists(string sourceControlName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+            if (sourceControlName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceControlName));
+            }
+            if (sourceControlName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sourceControlName));
+            }
 
             using var scope = _automationSourceControlSourceControlClientDiagnostics.CreateScope("AutomationSourceControlCollection.GetIfExists");
             scope.Start();

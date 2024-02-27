@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SchemaUri))
+            if (SchemaUri != null)
             {
                 writer.WritePropertyName("schemaUrl"u8);
                 writer.WriteStringValue(SchemaUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsInDefaultSet))
+            if (IsInDefaultSet.HasValue)
             {
                 writer.WritePropertyName("isInDefaultSet"u8);
                 writer.WriteBooleanValue(IsInDefaultSet.Value);
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTypeUnderTopic(id, name, type, systemData.Value, displayName.Value, description.Value, schemaUri.Value, Optional.ToNullable(isInDefaultSet), serializedAdditionalRawData);
+            return new EventTypeUnderTopic(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                schemaUri.Value,
+                Optional.ToNullable(isInDefaultSet),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTypeUnderTopic>.Write(ModelReaderWriterOptions options)

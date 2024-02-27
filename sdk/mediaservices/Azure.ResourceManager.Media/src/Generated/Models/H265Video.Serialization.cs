@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UseSceneChangeDetection))
+            if (UseSceneChangeDetection.HasValue)
             {
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (Optional.IsDefined(Complexity))
+            if (Complexity.HasValue)
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingList<H265Layer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (KeyFrameInterval.HasValue)
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (Optional.IsDefined(StretchMode))
+            if (StretchMode.HasValue)
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (Optional.IsDefined(SyncMode))
+            if (SyncMode.HasValue)
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
             }
             Optional<bool> sceneChangeDetection = default;
             Optional<H265Complexity> complexity = default;
-            Optional<IList<H265Layer>> layers = default;
+            IList<H265Layer> layers = default;
             Optional<TimeSpan> keyFrameInterval = default;
             Optional<InputVideoStretchMode> stretchMode = default;
             Optional<VideoSyncMode> syncMode = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H265Layer> array = new List<H265Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H265Layer.DeserializeH265Layer(item));
+                        array.Add(H265Layer.DeserializeH265Layer(item, options));
                     }
                     layers = array;
                     continue;
@@ -193,7 +193,16 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H265Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers));
+            return new H265Video(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                Optional.ToNullable(sceneChangeDetection),
+                Optional.ToNullable(complexity),
+                layers ?? new ChangeTrackingList<H265Layer>());
         }
 
         BinaryData IPersistableModel<H265Video>.Write(ModelReaderWriterOptions options)

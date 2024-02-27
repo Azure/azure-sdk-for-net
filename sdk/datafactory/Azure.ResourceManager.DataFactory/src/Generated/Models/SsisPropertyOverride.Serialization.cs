@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             JsonSerializer.Serialize(writer, Value);
-            if (Optional.IsDefined(IsSensitive))
+            if (IsSensitive.HasValue)
             {
                 writer.WritePropertyName("isSensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);

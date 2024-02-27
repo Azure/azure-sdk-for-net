@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Analysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AnalysisExistingSku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AnalysisExistingSku>> value = default;
+            IReadOnlyList<AnalysisExistingSku> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisExistingSku> array = new List<AnalysisExistingSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item));
+                        array.Add(AnalysisExistingSku.DeserializeAnalysisExistingSku(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExistingResourceResultSkuEnumeration(Optional.ToList(value), serializedAdditionalRawData);
+            return new ExistingResourceResultSkuEnumeration(value ?? new ChangeTrackingList<AnalysisExistingSku>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExistingResourceResultSkuEnumeration>.Write(ModelReaderWriterOptions options)

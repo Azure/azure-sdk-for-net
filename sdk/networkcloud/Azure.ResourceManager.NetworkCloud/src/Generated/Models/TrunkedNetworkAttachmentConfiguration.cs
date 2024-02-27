@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkId"/> is null. </exception>
         public TrunkedNetworkAttachmentConfiguration(ResourceIdentifier networkId)
         {
-            Argument.AssertNotNull(networkId, nameof(networkId));
+            if (networkId == null)
+            {
+                throw new ArgumentNullException(nameof(networkId));
+            }
 
             NetworkId = networkId;
         }

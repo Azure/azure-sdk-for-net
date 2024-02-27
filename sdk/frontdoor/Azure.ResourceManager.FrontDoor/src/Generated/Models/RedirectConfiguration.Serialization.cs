@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RedirectType))
+            if (RedirectType.HasValue)
             {
                 writer.WritePropertyName("redirectType"u8);
                 writer.WriteStringValue(RedirectType.Value.ToString());
             }
-            if (Optional.IsDefined(RedirectProtocol))
+            if (RedirectProtocol.HasValue)
             {
                 writer.WritePropertyName("redirectProtocol"u8);
                 writer.WriteStringValue(RedirectProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CustomHost))
+            if (CustomHost != null)
             {
                 writer.WritePropertyName("customHost"u8);
                 writer.WriteStringValue(CustomHost);
             }
-            if (Optional.IsDefined(CustomPath))
+            if (CustomPath != null)
             {
                 writer.WritePropertyName("customPath"u8);
                 writer.WriteStringValue(CustomPath);
             }
-            if (Optional.IsDefined(CustomFragment))
+            if (CustomFragment != null)
             {
                 writer.WritePropertyName("customFragment"u8);
                 writer.WriteStringValue(CustomFragment);
             }
-            if (Optional.IsDefined(CustomQueryString))
+            if (CustomQueryString != null)
             {
                 writer.WritePropertyName("customQueryString"u8);
                 writer.WriteStringValue(CustomQueryString);
@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedirectConfiguration(odataType, serializedAdditionalRawData, Optional.ToNullable(redirectType), Optional.ToNullable(redirectProtocol), customHost.Value, customPath.Value, customFragment.Value, customQueryString.Value);
+            return new RedirectConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(redirectType),
+                Optional.ToNullable(redirectProtocol),
+                customHost.Value,
+                customPath.Value,
+                customFragment.Value,
+                customQueryString.Value);
         }
 
         BinaryData IPersistableModel<RedirectConfiguration>.Write(ModelReaderWriterOptions options)

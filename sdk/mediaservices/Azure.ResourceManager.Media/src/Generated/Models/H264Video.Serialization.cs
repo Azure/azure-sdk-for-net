@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Complexity))
+            if (Complexity.HasValue)
             {
                 writer.WritePropertyName("complexity"u8);
                 writer.WriteStringValue(Complexity.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingList<H264Layer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartArray();
@@ -41,34 +41,34 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RateControlMode))
+            if (RateControlMode.HasValue)
             {
                 writer.WritePropertyName("rateControlMode"u8);
                 writer.WriteStringValue(RateControlMode.Value.ToString());
             }
-            if (Optional.IsDefined(UseSceneChangeDetection))
+            if (UseSceneChangeDetection.HasValue)
             {
                 writer.WritePropertyName("sceneChangeDetection"u8);
                 writer.WriteBooleanValue(UseSceneChangeDetection.Value);
             }
-            if (Optional.IsDefined(KeyFrameInterval))
+            if (KeyFrameInterval.HasValue)
             {
                 writer.WritePropertyName("keyFrameInterval"u8);
                 writer.WriteStringValue(KeyFrameInterval.Value, "P");
             }
-            if (Optional.IsDefined(StretchMode))
+            if (StretchMode.HasValue)
             {
                 writer.WritePropertyName("stretchMode"u8);
                 writer.WriteStringValue(StretchMode.Value.ToString());
             }
-            if (Optional.IsDefined(SyncMode))
+            if (SyncMode.HasValue)
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 return null;
             }
             Optional<H264Complexity> complexity = default;
-            Optional<IList<H264Layer>> layers = default;
+            IList<H264Layer> layers = default;
             Optional<H264RateControlMode> rateControlMode = default;
             Optional<bool> sceneChangeDetection = default;
             Optional<TimeSpan> keyFrameInterval = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<H264Layer> array = new List<H264Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H264Layer.DeserializeH264Layer(item));
+                        array.Add(H264Layer.DeserializeH264Layer(item, options));
                     }
                     layers = array;
                     continue;
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new H264Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(complexity), Optional.ToList(layers), Optional.ToNullable(rateControlMode), Optional.ToNullable(sceneChangeDetection));
+            return new H264Video(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                Optional.ToNullable(complexity),
+                layers ?? new ChangeTrackingList<H264Layer>(),
+                Optional.ToNullable(rateControlMode),
+                Optional.ToNullable(sceneChangeDetection));
         }
 
         BinaryData IPersistableModel<H264Video>.Write(ModelReaderWriterOptions options)

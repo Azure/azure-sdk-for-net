@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupStoreDetails(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerBackupStoreDetails(document.RootElement, options);
         }
 
         internal static UnknownBackupStoreDetails DeserializeUnknownBackupStoreDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBackupStoreDetails(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerBackupStoreDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupStoreDetails)} does not support '{options.Format}' format.");

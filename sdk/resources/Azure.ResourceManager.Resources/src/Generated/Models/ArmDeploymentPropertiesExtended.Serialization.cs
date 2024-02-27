@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Duration))
+            if (options.Format != "W" && Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(Outputs))
+            if (options.Format != "W" && Outputs != null)
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Providers))
+            if (options.Format != "W" && !(Providers is ChangeTrackingList<ResourceProviderData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Dependencies))
+            if (options.Format != "W" && !(Dependencies is ChangeTrackingList<ArmDependency> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dependencies"u8);
                 writer.WriteStartArray();
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(TemplateLink))
+            if (options.Format != "W" && TemplateLink != null)
             {
                 writer.WritePropertyName("templateLink"u8);
                 writer.WriteObjectValue(TemplateLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(Parameters))
+            if (options.Format != "W" && Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -97,32 +97,32 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(ParametersLink))
+            if (options.Format != "W" && ParametersLink != null)
             {
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(Mode))
+            if (options.Format != "W" && Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DebugSetting))
+            if (options.Format != "W" && DebugSetting != null)
             {
                 writer.WritePropertyName("debugSetting"u8);
                 writer.WriteObjectValue(DebugSetting);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
+            if (options.Format != "W" && ErrorDeployment != null)
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
                 writer.WriteObjectValue(ErrorDeployment);
             }
-            if (options.Format != "W" && Optional.IsDefined(TemplateHash))
+            if (options.Format != "W" && TemplateHash != null)
             {
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResources))
+            if (options.Format != "W" && !(OutputResources is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("outputResources"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResources))
+            if (options.Format != "W" && !(ValidatedResources is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("validatedResources"u8);
                 writer.WriteStartArray();
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DateTimeOffset> timestamp = default;
             Optional<TimeSpan> duration = default;
             Optional<BinaryData> outputs = default;
-            Optional<IReadOnlyList<ResourceProviderData>> providers = default;
-            Optional<IReadOnlyList<ArmDependency>> dependencies = default;
+            IReadOnlyList<ResourceProviderData> providers = default;
+            IReadOnlyList<ArmDependency> dependencies = default;
             Optional<ArmDeploymentTemplateLink> templateLink = default;
             Optional<BinaryData> parameters = default;
             Optional<ArmDeploymentParametersLink> parametersLink = default;
@@ -199,8 +199,8 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<DebugSetting> debugSetting = default;
             Optional<ErrorDeploymentExtended> onErrorDeployment = default;
             Optional<string> templateHash = default;
-            Optional<IReadOnlyList<SubResource>> outputResources = default;
-            Optional<IReadOnlyList<SubResource>> validatedResources = default;
+            IReadOnlyList<SubResource> outputResources = default;
+            IReadOnlyList<SubResource> validatedResources = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmDependency> array = new List<ArmDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmDependency.DeserializeArmDependency(item));
+                        array.Add(ArmDependency.DeserializeArmDependency(item, options));
                     }
                     dependencies = array;
                     continue;
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value);
+                    templateLink = ArmDeploymentTemplateLink.DeserializeArmDeploymentTemplateLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value);
+                    parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value);
+                    debugSetting = DebugSetting.DeserializeDebugSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("onErrorDeployment"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value);
+                    onErrorDeployment = ErrorDeploymentExtended.DeserializeErrorDeploymentExtended(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("templateHash"u8))
@@ -377,7 +377,25 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, Optional.ToList(providers), Optional.ToList(dependencies), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, Optional.ToList(outputResources), Optional.ToList(validatedResources), error.Value, serializedAdditionalRawData);
+            return new ArmDeploymentPropertiesExtended(
+                Optional.ToNullable(provisioningState),
+                correlationId.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(duration),
+                outputs.Value,
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
+                dependencies ?? new ChangeTrackingList<ArmDependency>(),
+                templateLink.Value,
+                parameters.Value,
+                parametersLink.Value,
+                Optional.ToNullable(mode),
+                debugSetting.Value,
+                onErrorDeployment.Value,
+                templateHash.Value,
+                outputResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<SubResource>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)

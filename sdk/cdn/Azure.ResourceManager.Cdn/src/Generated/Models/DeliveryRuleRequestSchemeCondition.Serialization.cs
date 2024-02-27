@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(property.Value);
+                    parameters = RequestSchemeMatchCondition.DeserializeRequestSchemeMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

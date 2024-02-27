@@ -16,12 +16,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FromDhcp))
+            if (FromDhcp.HasValue)
             {
                 writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
-            if (Optional.IsCollectionDefined(Ipv4Address))
+            if (!(Ipv4Address is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6Address))
+            if (!(Ipv6Address is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();
@@ -51,8 +51,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             Optional<bool> fromDhcp = default;
-            Optional<IList<string>> ipv4Address = default;
-            Optional<IList<string>> ipv6Address = default;
+            IList<string> ipv4Address = default;
+            IList<string> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -93,7 +93,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifDns(Optional.ToNullable(fromDhcp), Optional.ToList(ipv4Address), Optional.ToList(ipv6Address));
+            return new OnvifDns(Optional.ToNullable(fromDhcp), ipv4Address ?? new ChangeTrackingList<string>(), ipv6Address ?? new ChangeTrackingList<string>());
         }
     }
 }

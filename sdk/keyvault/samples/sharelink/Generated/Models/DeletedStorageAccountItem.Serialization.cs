@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<string> id = default;
             Optional<string> resourceId = default;
             Optional<StorageAccountAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -86,7 +86,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageAccountItem(id.Value, resourceId.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageAccountItem(
+                id.Value,
+                resourceId.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletedDate));
         }
     }
 }

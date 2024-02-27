@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetResourceId))
+            if (VnetResourceId != null)
             {
                 writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CertThumbprintString))
+            if (options.Format != "W" && CertThumbprintString != null)
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 writer.WriteStringValue(CertThumbprintString);
             }
-            if (Optional.IsDefined(CertBlob))
+            if (CertBlob != null)
             {
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Routes))
+            if (options.Format != "W" && !(Routes is ChangeTrackingList<AppServiceVirtualNetworkRoute> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
+            if (options.Format != "W" && IsResyncRequired.HasValue)
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (Optional.IsDefined(DnsServers))
+            if (DnsServers != null)
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
-            if (Optional.IsDefined(IsSwift))
+            if (IsSwift.HasValue)
             {
                 writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
-            Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
+            IReadOnlyList<AppServiceVirtualNetworkRoute> routes = default;
             Optional<bool> resyncRequired = default;
             Optional<string> dnsServers = default;
             Optional<bool> isSwift = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item, options));
                     }
                     routes = array;
                     continue;
@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, Optional.ToList(routes), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkProperties(
+                vnetResourceId.Value,
+                certThumbprint.Value,
+                certBlob.Value,
+                routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
+                Optional.ToNullable(resyncRequired),
+                dnsServers.Value,
+                Optional.ToNullable(isSwift),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

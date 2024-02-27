@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BreakOutCategories))
+            if (BreakOutCategories != null)
             {
                 writer.WritePropertyName("breakOutCategories"u8);
                 writer.WriteObjectValue(BreakOutCategories);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    breakOutCategories = O365BreakOutCategoryPolicies.DeserializeO365BreakOutCategoryPolicies(property.Value);
+                    breakOutCategories = O365BreakOutCategoryPolicies.DeserializeO365BreakOutCategoryPolicies(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

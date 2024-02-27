@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -54,10 +53,22 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="nativeName"/>, <paramref name="dir"/> or <paramref name="code"/> is null. </exception>
         internal TargetDictionaryLanguage(string name, string nativeName, string dir, string code)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(dir, nameof(dir));
-            Argument.AssertNotNull(code, nameof(code));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (nativeName == null)
+            {
+                throw new ArgumentNullException(nameof(nativeName));
+            }
+            if (dir == null)
+            {
+                throw new ArgumentNullException(nameof(dir));
+            }
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
 
             Name = name;
             NativeName = nativeName;

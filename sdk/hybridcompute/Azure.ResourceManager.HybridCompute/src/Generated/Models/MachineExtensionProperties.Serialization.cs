@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (ForceUpdateTag != null)
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(MachineExtensionPropertiesType))
+            if (MachineExtensionPropertiesType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MachineExtensionPropertiesType);
             }
-            if (Optional.IsDefined(TypeHandlerVersion))
+            if (TypeHandlerVersion != null)
             {
                 writer.WritePropertyName("typeHandlerVersion"u8);
                 writer.WriteStringValue(TypeHandlerVersion);
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (EnableAutomaticUpgrade.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
             }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            if (AutoUpgradeMinorVersion.HasValue)
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (Optional.IsCollectionDefined(Settings))
+            if (!(Settings is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("settings"u8);
                 writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedSettings))
+            if (!(ProtectedSettings is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedSettings"u8);
                 writer.WriteStartObject();
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(InstanceView))
+            if (InstanceView != null)
             {
                 writer.WritePropertyName("instanceView"u8);
                 writer.WriteObjectValue(InstanceView);
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Optional<string> typeHandlerVersion = default;
             Optional<bool> enableAutomaticUpgrade = default;
             Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<IDictionary<string, BinaryData>> settings = default;
-            Optional<IDictionary<string, BinaryData>> protectedSettings = default;
+            IDictionary<string, BinaryData> settings = default;
+            IDictionary<string, BinaryData> protectedSettings = default;
             Optional<string> provisioningState = default;
             Optional<MachineExtensionInstanceView> instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value);
+                    instanceView = MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToDictionary(settings), Optional.ToDictionary(protectedSettings), provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineExtensionProperties(
+                forceUpdateTag.Value,
+                publisher.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(enableAutomaticUpgrade),
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                provisioningState.Value,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options)

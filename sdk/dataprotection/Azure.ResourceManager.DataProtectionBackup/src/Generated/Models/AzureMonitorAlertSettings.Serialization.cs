@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlertSettingsForAllJobFailures))
+            if (AlertSettingsForAllJobFailures.HasValue)
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());

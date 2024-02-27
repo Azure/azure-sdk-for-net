@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Connection))
+            if (Connection != null)
             {
                 if (Connection != null)
                 {
@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "database": return DatabaseSource.DeserializeDatabaseSource(element);
-                    case "file_system": return FileSystemSource.DeserializeFileSystemSource(element);
+                    case "database": return DatabaseSource.DeserializeDatabaseSource(element, options);
+                    case "file_system": return FileSystemSource.DeserializeFileSystemSource(element, options);
                 }
             }
-            return UnknownDataImportSource.DeserializeUnknownDataImportSource(element);
+            return UnknownDataImportSource.DeserializeUnknownDataImportSource(element, options);
         }
 
         BinaryData IPersistableModel<DataImportSource>.Write(ModelReaderWriterOptions options)

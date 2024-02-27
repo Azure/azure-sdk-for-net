@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Entries))
+            if (options.Format != "W" && !(Entries is ChangeTrackingList<WebAppMSDeployLogEntry> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("entries"u8);
                 writer.WriteStartArray();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<WebAppMSDeployLogEntry>> entries = default;
+            IReadOnlyList<WebAppMSDeployLogEntry> entries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMSDeployLogEntry> array = new List<WebAppMSDeployLogEntry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item));
+                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item, options));
                             }
                             entries = array;
                             continue;
@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeployLog(id, name, type, systemData.Value, Optional.ToList(entries), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeployLog(
+                id,
+                name,
+                type,
+                systemData.Value,
+                entries ?? new ChangeTrackingList<WebAppMSDeployLogEntry>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeployLog>.Write(ModelReaderWriterOptions options)

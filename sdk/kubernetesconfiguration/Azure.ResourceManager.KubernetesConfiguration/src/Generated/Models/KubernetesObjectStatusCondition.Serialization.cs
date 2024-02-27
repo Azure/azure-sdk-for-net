@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastTransitionOn))
+            if (LastTransitionOn.HasValue)
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
                 writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(ObjectStatusConditionDefinitionType))
+            if (ObjectStatusConditionDefinitionType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ObjectStatusConditionDefinitionType);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatusCondition(
+                Optional.ToNullable(lastTransitionTime),
+                message.Value,
+                reason.Value,
+                status.Value,
+                type.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatusCondition>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IsWindowEnabled))
+            if (options.Format != "W" && IsWindowEnabled.HasValue)
             {
                 writer.WritePropertyName("isWindowEnabled"u8);
                 writer.WriteBooleanValue(IsWindowEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRegionReady))
+            if (options.Format != "W" && IsRegionReady.HasValue)
             {
                 writer.WritePropertyName("isRegionReady"u8);
                 writer.WriteBooleanValue(IsRegionReady.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsWindowActive))
+            if (options.Format != "W" && IsWindowActive.HasValue)
             {
                 writer.WritePropertyName("isWindowActive"u8);
                 writer.WriteBooleanValue(IsWindowActive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CanApplyUpdates))
+            if (options.Format != "W" && CanApplyUpdates.HasValue)
             {
                 writer.WritePropertyName("canApplyUpdates"u8);
                 writer.WriteBooleanValue(CanApplyUpdates.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowStatusUpdatedOn))
+            if (options.Format != "W" && LastWindowStatusUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastWindowStatusUpdateAtUTC"u8);
                 writer.WriteStringValue(LastWindowStatusUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowStartOn))
+            if (options.Format != "W" && LastWindowStartOn.HasValue)
             {
                 writer.WritePropertyName("lastWindowStartTimeUTC"u8);
                 writer.WriteStringValue(LastWindowStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastWindowEndOn))
+            if (options.Format != "W" && LastWindowEndOn.HasValue)
             {
                 writer.WritePropertyName("lastWindowEndTimeUTC"u8);
                 writer.WriteStringValue(LastWindowEndOn.Value, "O");
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedMaintenanceWindowStatus(Optional.ToNullable(isWindowEnabled), Optional.ToNullable(isRegionReady), Optional.ToNullable(isWindowActive), Optional.ToNullable(canApplyUpdates), Optional.ToNullable(lastWindowStatusUpdateAtUTC), Optional.ToNullable(lastWindowStartTimeUTC), Optional.ToNullable(lastWindowEndTimeUTC), serializedAdditionalRawData);
+            return new ManagedMaintenanceWindowStatus(
+                Optional.ToNullable(isWindowEnabled),
+                Optional.ToNullable(isRegionReady),
+                Optional.ToNullable(isWindowActive),
+                Optional.ToNullable(canApplyUpdates),
+                Optional.ToNullable(lastWindowStatusUpdateAtUTC),
+                Optional.ToNullable(lastWindowStartTimeUTC),
+                Optional.ToNullable(lastWindowEndTimeUTC),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedMaintenanceWindowStatus>.Write(ModelReaderWriterOptions options)

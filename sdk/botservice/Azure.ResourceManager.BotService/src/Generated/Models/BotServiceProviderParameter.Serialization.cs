@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceProviderParameterType))
+            if (options.Format != "W" && ServiceProviderParameterType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ServiceProviderParameterType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(HelpUri))
+            if (options.Format != "W" && HelpUri != null)
             {
                 writer.WritePropertyName("helpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Default))
+            if (options.Format != "W" && Default != null)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteStringValue(Default);
             }
-            if (options.Format != "W" && Optional.IsDefined(Metadata))
+            if (options.Format != "W" && Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value);
+                    metadata = ServiceProviderParameterMetadata.DeserializeServiceProviderParameterMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderParameter(name.Value, type.Value, displayName.Value, description.Value, helpUrl.Value, @default.Value, metadata.Value, serializedAdditionalRawData);
+            return new BotServiceProviderParameter(
+                name.Value,
+                type.Value,
+                displayName.Value,
+                description.Value,
+                helpUrl.Value,
+                @default.Value,
+                metadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderParameter>.Write(ModelReaderWriterOptions options)

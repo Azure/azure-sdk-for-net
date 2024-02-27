@@ -15,7 +15,7 @@ namespace Azure.Communication.Email
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.Communication.Email
             writer.WriteObjectValue(Content);
             writer.WritePropertyName("recipients"u8);
             writer.WriteObjectValue(Recipients);
-            if (Optional.IsCollectionDefined(Attachments))
+            if (!(Attachments is ChangeTrackingList<EmailAttachment> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReplyTo))
+            if (!(ReplyTo is ChangeTrackingList<EmailAddress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("replyTo"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Communication.Email
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UserEngagementTrackingDisabled))
+            if (UserEngagementTrackingDisabled.HasValue)
             {
                 writer.WritePropertyName("userEngagementTrackingDisabled"u8);
                 writer.WriteBooleanValue(UserEngagementTrackingDisabled.Value);

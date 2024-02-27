@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,8 +22,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endpoint"/> is null. </exception>
         public RtspSource(string name, EndpointBase endpoint) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
 
             Endpoint = endpoint;
             Type = "#Microsoft.VideoAnalyzer.RtspSource";

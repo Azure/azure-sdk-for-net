@@ -21,24 +21,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Structure))
+            if (Structure != null)
             {
                 writer.WritePropertyName("structure"u8);
                 writer.WriteObjectValue(Structure);
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteObjectValue(Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
             writer.WriteObjectValue(LinkedServiceName);
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -64,44 +64,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(Location);
             }
-            if (Optional.IsDefined(SheetName))
+            if (SheetName != null)
             {
                 writer.WritePropertyName("sheetName"u8);
                 writer.WriteObjectValue(SheetName);
             }
-            if (Optional.IsDefined(SheetIndex))
+            if (SheetIndex != null)
             {
                 writer.WritePropertyName("sheetIndex"u8);
                 writer.WriteObjectValue(SheetIndex);
             }
-            if (Optional.IsDefined(Range))
+            if (Range != null)
             {
                 writer.WritePropertyName("range"u8);
                 writer.WriteObjectValue(Range);
             }
-            if (Optional.IsDefined(FirstRowAsHeader))
+            if (FirstRowAsHeader != null)
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
                 writer.WriteObjectValue(FirstRowAsHeader);
             }
-            if (Optional.IsDefined(Compression))
+            if (Compression != null)
             {
                 writer.WritePropertyName("compression"u8);
                 writer.WriteObjectValue(Compression);
             }
-            if (Optional.IsDefined(NullValue))
+            if (NullValue != null)
             {
                 writer.WritePropertyName("nullValue"u8);
                 writer.WriteObjectValue(NullValue);
@@ -126,8 +126,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> structure = default;
             Optional<object> schema = default;
             LinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
             Optional<object> sheetName = default;
@@ -295,7 +295,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExcelDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, sheetName.Value, sheetIndex.Value, range.Value, firstRowAsHeader.Value, compression.Value, nullValue.Value);
+            return new ExcelDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                folder.Value,
+                additionalProperties,
+                location.Value,
+                sheetName.Value,
+                sheetIndex.Value,
+                range.Value,
+                firstRowAsHeader.Value,
+                compression.Value,
+                nullValue.Value);
         }
 
         internal partial class ExcelDatasetConverter : JsonConverter<ExcelDataset>

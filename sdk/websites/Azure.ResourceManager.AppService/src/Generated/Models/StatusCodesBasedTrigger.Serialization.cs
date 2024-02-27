@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteNumberValue(Status.Value);
             }
-            if (Optional.IsDefined(SubStatus))
+            if (SubStatus.HasValue)
             {
                 writer.WritePropertyName("subStatus"u8);
                 writer.WriteNumberValue(SubStatus.Value);
             }
-            if (Optional.IsDefined(Win32Status))
+            if (Win32Status.HasValue)
             {
                 writer.WritePropertyName("win32Status"u8);
                 writer.WriteNumberValue(Win32Status.Value);
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(TimeInterval))
+            if (TimeInterval != null)
             {
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatusCodesBasedTrigger(Optional.ToNullable(status), Optional.ToNullable(subStatus), Optional.ToNullable(win32Status), Optional.ToNullable(count), timeInterval.Value, path.Value, serializedAdditionalRawData);
+            return new StatusCodesBasedTrigger(
+                Optional.ToNullable(status),
+                Optional.ToNullable(subStatus),
+                Optional.ToNullable(win32Status),
+                Optional.ToNullable(count),
+                timeInterval.Value,
+                path.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StatusCodesBasedTrigger>.Write(ModelReaderWriterOptions options)

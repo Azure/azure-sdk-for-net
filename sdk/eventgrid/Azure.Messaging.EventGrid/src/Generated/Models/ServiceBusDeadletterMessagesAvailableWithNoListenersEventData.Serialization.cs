@@ -60,7 +60,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(namespaceName.Value, requestUri.Value, entityType.Value, queueName.Value, topicName.Value, subscriptionName.Value);
+            return new ServiceBusDeadletterMessagesAvailableWithNoListenersEventData(
+                namespaceName.Value,
+                requestUri.Value,
+                entityType.Value,
+                queueName.Value,
+                topicName.Value,
+                subscriptionName.Value);
         }
 
         internal partial class ServiceBusDeadletterMessagesAvailableWithNoListenersEventDataConverter : JsonConverter<ServiceBusDeadletterMessagesAvailableWithNoListenersEventData>

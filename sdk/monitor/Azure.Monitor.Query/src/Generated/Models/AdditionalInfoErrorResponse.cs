@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal AdditionalInfoErrorResponse(AdditionalInfoErrorResponseError error)
         {
-            Argument.AssertNotNull(error, nameof(error));
+            if (error == null)
+            {
+                throw new ArgumentNullException(nameof(error));
+            }
 
             Error = error;
         }

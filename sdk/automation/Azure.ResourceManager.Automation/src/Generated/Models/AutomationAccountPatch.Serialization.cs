@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
+            if (IsPublicNetworkAccessAllowed.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteBooleanValue(IsPublicNetworkAccessAllowed.Value);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AutomationSku> sku = default;
             Optional<AutomationEncryptionProperties> encryption = default;
             Optional<bool> publicNetworkAccess = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value);
+                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAccountPatch(name.Value, Optional.ToNullable(location), identity, Optional.ToDictionary(tags), sku.Value, encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new AutomationAccountPatch(
+                name.Value,
+                Optional.ToNullable(location),
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                encryption.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAccountPatch>.Write(ModelReaderWriterOptions options)

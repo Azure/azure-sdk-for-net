@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            if (!(EligibleAuthorizations is ChangeTrackingList<ManagedServicesEligibleAuthorization> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("eligibleAuthorizations"u8);
                 writer.WriteStartArray();
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OfferDisplayName))
+            if (OfferDisplayName != null)
             {
                 writer.WritePropertyName("offerDisplayName"u8);
                 writer.WriteStringValue(OfferDisplayName);
             }
-            if (Optional.IsDefined(PublisherDisplayName))
+            if (PublisherDisplayName != null)
             {
                 writer.WritePropertyName("publisherDisplayName"u8);
                 writer.WriteStringValue(PublisherDisplayName);
             }
-            if (Optional.IsDefined(PlanDisplayName))
+            if (PlanDisplayName != null)
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             }
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
+            IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
             Optional<string> offerDisplayName = default;
             Optional<string> publisherDisplayName = default;
             Optional<string> planDisplayName = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item));
+                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item));
+                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item, options));
                     }
                     eligibleAuthorizations = array;
                     continue;
@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value, serializedAdditionalRawData);
+            return new ManagedServicesMarketplaceRegistrationProperties(
+                managedByTenantId,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                offerDisplayName.Value,
+                publisherDisplayName.Value,
+                planDisplayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.Write(ModelReaderWriterOptions options)

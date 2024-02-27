@@ -36,7 +36,20 @@ namespace Azure.ResourceManager.Quantum.Models
             tags ??= new Dictionary<string, string>();
             providers ??= new List<Provider>();
 
-            return new QuantumWorkspaceData(id, name, resourceType, systemData, tags, location, identity, providers?.ToList(), usable, provisioningState, storageAccount, endpointUri, serializedAdditionalRawData: null);
+            return new QuantumWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                providers?.ToList(),
+                usable,
+                provisioningState,
+                storageAccount,
+                endpointUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderDescription"/>. </summary>
@@ -68,7 +81,18 @@ namespace Azure.ResourceManager.Quantum.Models
             quotaDimensions ??= new List<QuotaDimension>();
             pricingDimensions ??= new List<PricingDimension>();
 
-            return new ProviderProperties(description, providerType, company, defaultEndpoint, aad, managedApplication, targets?.ToList(), skus?.ToList(), quotaDimensions?.ToList(), pricingDimensions?.ToList(), serializedAdditionalRawData: null);
+            return new ProviderProperties(
+                description,
+                providerType,
+                company,
+                defaultEndpoint,
+                aad,
+                managedApplication,
+                targets?.ToList(),
+                skus?.ToList(),
+                quotaDimensions?.ToList(),
+                pricingDimensions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesAad"/>. </summary>
@@ -101,7 +125,13 @@ namespace Azure.ResourceManager.Quantum.Models
             acceptedDataFormats ??= new List<string>();
             acceptedContentEncodings ??= new List<string>();
 
-            return new TargetDescription(id, name, description, acceptedDataFormats?.ToList(), acceptedContentEncodings?.ToList(), serializedAdditionalRawData: null);
+            return new TargetDescription(
+                id,
+                name,
+                description,
+                acceptedDataFormats?.ToList(),
+                acceptedContentEncodings?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuDescription"/>. </summary>
@@ -121,7 +151,17 @@ namespace Azure.ResourceManager.Quantum.Models
             quotaDimensions ??= new List<QuotaDimension>();
             pricingDetails ??= new List<PricingDetail>();
 
-            return new SkuDescription(id, name, version, description, restrictedAccessUri, autoAdd, targets?.ToList(), quotaDimensions?.ToList(), pricingDetails?.ToList(), serializedAdditionalRawData: null);
+            return new SkuDescription(
+                id,
+                name,
+                version,
+                description,
+                restrictedAccessUri,
+                autoAdd,
+                targets?.ToList(),
+                quotaDimensions?.ToList(),
+                pricingDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaDimension"/>. </summary>
@@ -136,7 +176,16 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.QuotaDimension"/> instance for mocking. </returns>
         public static QuotaDimension QuotaDimension(string id = null, string scope = null, string period = null, float? quota = null, string name = null, string description = null, string unit = null, string unitPlural = null)
         {
-            return new QuotaDimension(id, scope, period, quota, name, description, unit, unitPlural, serializedAdditionalRawData: null);
+            return new QuotaDimension(
+                id,
+                scope,
+                period,
+                quota,
+                name,
+                description,
+                unit,
+                unitPlural,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PricingDetail"/>. </summary>

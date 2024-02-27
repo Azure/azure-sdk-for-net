@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtocolVersion))
+            if (ProtocolVersion != null)
             {
                 writer.WritePropertyName("protocolVersion"u8);
                 writer.WriteStringValue(ProtocolVersion);
             }
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(ReplaceCharacter);
             writer.WritePropertyName("replaceSeparatorsInPayload"u8);
             writer.WriteBooleanValue(ReplaceSeparatorsInPayload);
-            if (Optional.IsDefined(TargetNamespace))
+            if (TargetNamespace != null)
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
@@ -155,7 +155,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12DelimiterOverrides(protocolVersion.Value, messageId.Value, dataElementSeparator, componentSeparator, segmentTerminator, segmentTerminatorSuffix, replaceCharacter, replaceSeparatorsInPayload, targetNamespace.Value, serializedAdditionalRawData);
+            return new X12DelimiterOverrides(
+                protocolVersion.Value,
+                messageId.Value,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                segmentTerminatorSuffix,
+                replaceCharacter,
+                replaceSeparatorsInPayload,
+                targetNamespace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12DelimiterOverrides>.Write(ModelReaderWriterOptions options)

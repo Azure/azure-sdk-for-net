@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Attributes))
+            if (Attributes != null)
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecretUri))
+            if (options.Format != "W" && SecretUri != null)
             {
                 writer.WritePropertyName("secretUri"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecretUriWithVersion))
+            if (options.Format != "W" && SecretUriWithVersion != null)
             {
                 writer.WritePropertyName("secretUriWithVersion"u8);
                 writer.WriteStringValue(SecretUriWithVersion);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
+                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretUri"u8))
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value, serializedAdditionalRawData);
+            return new SecretProperties(
+                value.Value,
+                contentType.Value,
+                attributes.Value,
+                secretUri.Value,
+                secretUriWithVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)

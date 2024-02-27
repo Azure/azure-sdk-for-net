@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;

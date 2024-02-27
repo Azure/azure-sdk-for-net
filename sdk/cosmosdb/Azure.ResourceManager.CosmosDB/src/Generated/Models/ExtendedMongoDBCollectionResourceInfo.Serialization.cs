@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Rid))
+            if (options.Format != "W" && Rid != null)
             {
                 writer.WritePropertyName("_rid"u8);
                 writer.WriteStringValue(Rid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("_ts"u8);
                 writer.WriteNumberValue(Timestamp.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("_etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(CollectionName);
-            if (Optional.IsCollectionDefined(ShardKey))
+            if (!(ShardKey is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Indexes))
+            if (!(Indexes is ChangeTrackingList<MongoDBIndex> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("indexes"u8);
                 writer.WriteStartArray();
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AnalyticalStorageTtl))
+            if (AnalyticalStorageTtl.HasValue)
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
             }
-            if (Optional.IsDefined(RestoreParameters))
+            if (RestoreParameters != null)
             {
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters);
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<float> ts = default;
             Optional<ETag> etag = default;
             string id = default;
-            Optional<IDictionary<string, string>> shardKey = default;
-            Optional<IList<MongoDBIndex>> indexes = default;
+            IDictionary<string, string> shardKey = default;
+            IList<MongoDBIndex> indexes = default;
             Optional<int> analyticalStorageTtl = default;
             Optional<ResourceRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<MongoDBIndex> array = new List<MongoDBIndex>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item));
+                        array.Add(MongoDBIndex.DeserializeMongoDBIndex(item, options));
                     }
                     indexes = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))
@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedMongoDBCollectionResourceInfo(id, Optional.ToDictionary(shardKey), Optional.ToList(indexes), Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedMongoDBCollectionResourceInfo(
+                id,
+                shardKey ?? new ChangeTrackingDictionary<string, string>(),
+                indexes ?? new ChangeTrackingList<MongoDBIndex>(),
+                Optional.ToNullable(analyticalStorageTtl),
+                restoreParameters.Value,
+                Optional.ToNullable(createMode),
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)

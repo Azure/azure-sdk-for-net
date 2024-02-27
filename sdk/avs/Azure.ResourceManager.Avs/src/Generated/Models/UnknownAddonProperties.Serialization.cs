@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartObject();
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddonProperties(document.RootElement, options);
+            return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
         }
 
         internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAddonProperties(document.RootElement, options);
+                        return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AvsPrivateCloudAddonProperties)} does not support '{options.Format}' format.");

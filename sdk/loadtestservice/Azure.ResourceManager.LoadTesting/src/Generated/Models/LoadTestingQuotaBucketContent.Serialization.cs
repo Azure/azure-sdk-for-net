@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentUsage))
+            if (CurrentUsage.HasValue)
             {
                 writer.WritePropertyName("currentUsage"u8);
                 writer.WriteNumberValue(CurrentUsage.Value);
             }
-            if (Optional.IsDefined(CurrentQuota))
+            if (CurrentQuota.HasValue)
             {
                 writer.WritePropertyName("currentQuota"u8);
                 writer.WriteNumberValue(CurrentQuota.Value);
             }
-            if (Optional.IsDefined(NewQuota))
+            if (NewQuota.HasValue)
             {
                 writer.WritePropertyName("newQuota"u8);
                 writer.WriteNumberValue(NewQuota.Value);
             }
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                             {
                                 continue;
                             }
-                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value);
+                            dimensions = LoadTestingQuotaBucketDimensions.DeserializeLoadTestingQuotaBucketDimensions(property0.Value, options);
                             continue;
                         }
                     }
@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaBucketContent(id, name, type, systemData.Value, Optional.ToNullable(currentUsage), Optional.ToNullable(currentQuota), Optional.ToNullable(newQuota), dimensions.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(currentUsage),
+                Optional.ToNullable(currentQuota),
+                Optional.ToNullable(newQuota),
+                dimensions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options)

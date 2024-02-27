@@ -27,39 +27,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteObjectValue(Action);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<AzureFirewallNetworkRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceType> type = default;
             Optional<int> priority = default;
             Optional<AzureFirewallRCAction> action = default;
-            Optional<IList<AzureFirewallNetworkRule>> rules = default;
+            IList<AzureFirewallNetworkRule> rules = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            action = AzureFirewallRCAction.DeserializeAzureFirewallRCAction(property0.Value);
+                            action = AzureFirewallRCAction.DeserializeAzureFirewallRCAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rules"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallNetworkRule> array = new List<AzureFirewallNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNetworkRule.DeserializeAzureFirewallNetworkRule(item));
+                                array.Add(AzureFirewallNetworkRule.DeserializeAzureFirewallNetworkRule(item, options));
                             }
                             rules = array;
                             continue;
@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNetworkRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallNetworkRuleCollectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(priority),
+                action.Value,
+                rules ?? new ChangeTrackingList<AzureFirewallNetworkRule>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<AzureFirewallNetworkRuleCollectionData>.Write(ModelReaderWriterOptions options)

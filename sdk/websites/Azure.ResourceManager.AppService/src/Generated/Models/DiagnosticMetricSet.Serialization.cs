@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(TimeGrain))
+            if (TimeGrain != null)
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<DiagnosticMetricSample> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> timeGrain = default;
-            Optional<IList<DiagnosticMetricSample>> values = default;
+            IList<DiagnosticMetricSample> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSample> array = new List<DiagnosticMetricSample>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item));
+                        array.Add(DiagnosticMetricSample.DeserializeDiagnosticMetricSample(item, options));
                     }
                     values = array;
                     continue;
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticMetricSet(name.Value, unit.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeGrain.Value, Optional.ToList(values), serializedAdditionalRawData);
+            return new DiagnosticMetricSet(
+                name.Value,
+                unit.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeGrain.Value,
+                values ?? new ChangeTrackingList<DiagnosticMetricSample>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticMetricSet>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPublic))
+            if (IsPublic.HasValue)
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UriString))
+            if (options.Format != "W" && UriString != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(UriString);
             }
-            if (Optional.IsCollectionDefined(AddonConfigs))
+            if (!(AddonConfigs is ChangeTrackingDictionary<string, IDictionary<string, BinaryData>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addonConfigs"u8);
                 writer.WriteStartObject();
@@ -70,32 +70,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (IsHttpsOnly.HasValue)
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(TemporaryDisk))
+            if (TemporaryDisk != null)
             {
                 writer.WritePropertyName("temporaryDisk"u8);
                 writer.WriteObjectValue(TemporaryDisk);
             }
-            if (Optional.IsDefined(PersistentDisk))
+            if (PersistentDisk != null)
             {
                 writer.WritePropertyName("persistentDisk"u8);
                 writer.WriteObjectValue(PersistentDisk);
             }
-            if (Optional.IsCollectionDefined(CustomPersistentDisks))
+            if (!(CustomPersistentDisks is ChangeTrackingList<AppCustomPersistentDisk> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customPersistentDisks"u8);
                 writer.WriteStartArray();
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsEndToEndTlsEnabled))
+            if (IsEndToEndTlsEnabled.HasValue)
             {
                 writer.WritePropertyName("enableEndToEndTLS"u8);
                 writer.WriteBooleanValue(IsEndToEndTlsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(LoadedCertificates))
+            if (!(LoadedCertificates is ChangeTrackingList<AppLoadedCertificate> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("loadedCertificates"u8);
                 writer.WriteStartArray();
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VnetAddons))
+            if (VnetAddons != null)
             {
                 writer.WritePropertyName("vnetAddons"u8);
                 writer.WriteObjectValue(VnetAddons);
             }
-            if (Optional.IsDefined(IngressSettings))
+            if (IngressSettings != null)
             {
                 writer.WritePropertyName("ingressSettings"u8);
                 writer.WriteObjectValue(IngressSettings);
@@ -170,15 +170,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<bool> @public = default;
             Optional<string> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
             Optional<AppPlatformAppProvisioningState> provisioningState = default;
             Optional<string> fqdn = default;
             Optional<bool> httpsOnly = default;
             Optional<AppTemporaryDisk> temporaryDisk = default;
             Optional<AppPersistentDisk> persistentDisk = default;
-            Optional<IList<AppCustomPersistentDisk>> customPersistentDisks = default;
+            IList<AppCustomPersistentDisk> customPersistentDisks = default;
             Optional<bool> enableEndToEndTls = default;
-            Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
+            IList<AppLoadedCertificate> loadedCertificates = default;
             Optional<AppVnetAddons> vnetAddons = default;
             Optional<AppIngressSettings> ingressSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value);
+                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("persistentDisk"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value);
+                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customPersistentDisks"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppCustomPersistentDisk> array = new List<AppCustomPersistentDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item, options));
                     }
                     customPersistentDisks = array;
                     continue;
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppLoadedCertificate> array = new List<AppLoadedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item, options));
                     }
                     loadedCertificates = array;
                     continue;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value);
+                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ingressSettings"u8))
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value);
+                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -334,7 +334,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformAppProperties(
+                Optional.ToNullable(@public),
+                uri.Value,
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                Optional.ToNullable(provisioningState),
+                fqdn.Value,
+                Optional.ToNullable(httpsOnly),
+                temporaryDisk.Value,
+                persistentDisk.Value,
+                customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(),
+                Optional.ToNullable(enableEndToEndTls),
+                loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(),
+                vnetAddons.Value,
+                ingressSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)

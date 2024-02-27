@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("azStackHciSiteId"u8);
             writer.WriteStringValue(AzStackHciSiteId);
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApplianceName))
+            if (options.Format != "W" && !(ApplianceName is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStartArray();
@@ -40,19 +40,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("cluster"u8);
             writer.WriteObjectValue(Cluster);
-            if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
+            if (options.Format != "W" && FabricResourceId != null)
             {
                 writer.WritePropertyName("fabricResourceId"u8);
                 writer.WriteStringValue(FabricResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricContainerId))
+            if (options.Format != "W" && FabricContainerId != null)
             {
                 writer.WritePropertyName("fabricContainerId"u8);
                 writer.WriteStringValue(FabricContainerId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
             writer.WriteStringValue(MigrationSolutionId);
-            if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
+            if (options.Format != "W" && MigrationHubUri != null)
             {
                 writer.WritePropertyName("migrationHubUri"u8);
                 writer.WriteStringValue(MigrationHubUri.AbsoluteUri);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             ResourceIdentifier azStackHciSiteId = default;
-            Optional<IReadOnlyList<string>> applianceName = default;
+            IReadOnlyList<string> applianceName = default;
             AzStackHciClusterProperties cluster = default;
             Optional<ResourceIdentifier> fabricResourceId = default;
             Optional<string> fabricContainerId = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("cluster"u8))
                 {
-                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value);
+                    cluster = AzStackHciClusterProperties.DeserializeAzStackHciClusterProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fabricResourceId"u8))
@@ -172,7 +172,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzStackHciFabricModelCustomProperties(instanceType, serializedAdditionalRawData, azStackHciSiteId, Optional.ToList(applianceName), cluster, fabricResourceId.Value, fabricContainerId.Value, migrationSolutionId, migrationHubUri.Value);
+            return new AzStackHciFabricModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                azStackHciSiteId,
+                applianceName ?? new ChangeTrackingList<string>(),
+                cluster,
+                fabricResourceId.Value,
+                fabricContainerId.Value,
+                migrationSolutionId,
+                migrationHubUri.Value);
         }
 
         BinaryData IPersistableModel<AzStackHciFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

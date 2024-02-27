@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressSpace))
+            if (AddressSpace != null)
             {
                 writer.WritePropertyName("addressSpace"u8);
                 writer.WriteStringValue(AddressSpace);
             }
-            if (Optional.IsDefined(PortRange))
+            if (PortRange != null)
             {
                 writer.WritePropertyName("portRange"u8);
                 writer.WriteStringValue(PortRange);

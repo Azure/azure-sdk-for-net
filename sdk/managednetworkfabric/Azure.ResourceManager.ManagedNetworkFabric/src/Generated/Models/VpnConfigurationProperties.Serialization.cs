@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
+            if (NetworkToNetworkInterconnectId != null)
             {
                 writer.WritePropertyName("networkToNetworkInterconnectId"u8);
                 writer.WriteStringValue(NetworkToNetworkInterconnectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
             writer.WritePropertyName("peeringOption"u8);
             writer.WriteStringValue(PeeringOption.ToString());
-            if (Optional.IsDefined(OptionBProperties))
+            if (OptionBProperties != null)
             {
                 writer.WritePropertyName("optionBProperties"u8);
                 writer.WriteObjectValue(OptionBProperties);
             }
-            if (Optional.IsDefined(OptionAProperties))
+            if (OptionAProperties != null)
             {
                 writer.WritePropertyName("optionAProperties"u8);
                 writer.WriteObjectValue(OptionAProperties);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value);
+                    optionBProperties = OptionBProperties.DeserializeOptionBProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("optionAProperties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(property.Value);
+                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConfigurationProperties(networkToNetworkInterconnectId.Value, Optional.ToNullable(administrativeState), peeringOption, optionBProperties.Value, optionAProperties.Value, serializedAdditionalRawData);
+            return new VpnConfigurationProperties(
+                networkToNetworkInterconnectId.Value,
+                Optional.ToNullable(administrativeState),
+                peeringOption,
+                optionBProperties.Value,
+                optionAProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConfigurationProperties>.Write(ModelReaderWriterOptions options)

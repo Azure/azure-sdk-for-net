@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataFlowDebugSessionInfo>> value = default;
+            IReadOnlyList<DataFlowDebugSessionInfo> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new QueryDataFlowDebugSessionsResponse(Optional.ToList(value), nextLink.Value);
+            return new QueryDataFlowDebugSessionsResponse(value ?? new ChangeTrackingList<DataFlowDebugSessionInfo>(), nextLink.Value);
         }
 
         internal partial class QueryDataFlowDebugSessionsResponseConverter : JsonConverter<QueryDataFlowDebugSessionsResponse>

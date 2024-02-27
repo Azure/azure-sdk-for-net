@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Include))
+            if (Include != null)
             {
                 writer.WritePropertyName("include"u8);
                 writer.WriteObjectValue(Include);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    include = TransferAllDetails.DeserializeTransferAllDetails(property.Value);
+                    include = TransferAllDetails.DeserializeTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

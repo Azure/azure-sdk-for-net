@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(AzureFileShareName))
+            if (AzureFileShareName != null)
             {
                 writer.WritePropertyName("azureFileShareName"u8);
                 writer.WriteStringValue(AzureFileShareName);
             }
-            if (Optional.IsDefined(StorageAccountTenantId))
+            if (StorageAccountTenantId.HasValue)
             {
                 writer.WritePropertyName("storageAccountTenantId"u8);
                 writer.WriteStringValue(StorageAccountTenantId.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointCreateOrUpdateContent(id, name, type, systemData.Value, storageAccountResourceId.Value, azureFileShareName.Value, Optional.ToNullable(storageAccountTenantId), friendlyName.Value, serializedAdditionalRawData);
+            return new CloudEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                storageAccountResourceId.Value,
+                azureFileShareName.Value,
+                Optional.ToNullable(storageAccountTenantId),
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

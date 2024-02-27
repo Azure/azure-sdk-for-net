@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 if (Endpoint != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endpoint");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 if (ErrorMessage != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (Optional.IsDefined(JobServiceType))
+            if (JobServiceType != null)
             {
                 if (JobServiceType != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
-            if (Optional.IsDefined(Nodes))
+            if (Nodes != null)
             {
                 if (Nodes != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodes");
                 }
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 if (Port != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("port");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 if (Status != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> jobServiceType = default;
             Optional<JobNodes> nodes = default;
             Optional<int?> port = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             Optional<string> status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         nodes = null;
                         continue;
                     }
-                    nodes = JobNodes.DeserializeJobNodes(property.Value);
+                    nodes = JobNodes.DeserializeJobNodes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("port"u8))
@@ -246,7 +246,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value, serializedAdditionalRawData);
+            return new MachineLearningJobService(
+                endpoint.Value,
+                errorMessage.Value,
+                jobServiceType.Value,
+                nodes.Value,
+                Optional.ToNullable(port),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobService>.Write(ModelReaderWriterOptions options)

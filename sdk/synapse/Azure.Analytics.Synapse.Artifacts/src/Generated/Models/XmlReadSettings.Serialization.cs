@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompressionProperties))
+            if (CompressionProperties != null)
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            if (Optional.IsDefined(ValidationMode))
+            if (ValidationMode != null)
             {
                 writer.WritePropertyName("validationMode"u8);
                 writer.WriteObjectValue(ValidationMode);
             }
-            if (Optional.IsDefined(DetectDataType))
+            if (DetectDataType != null)
             {
                 writer.WritePropertyName("detectDataType"u8);
                 writer.WriteObjectValue(DetectDataType);
             }
-            if (Optional.IsDefined(Namespaces))
+            if (Namespaces != null)
             {
                 writer.WritePropertyName("namespaces"u8);
                 writer.WriteObjectValue(Namespaces);
             }
-            if (Optional.IsDefined(NamespacePrefixes))
+            if (NamespacePrefixes != null)
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
                 writer.WriteObjectValue(NamespacePrefixes);
@@ -123,7 +123,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties.Value,
+                validationMode.Value,
+                detectDataType.Value,
+                namespaces.Value,
+                namespacePrefixes.Value);
         }
 
         internal partial class XmlReadSettingsConverter : JsonConverter<XmlReadSettings>

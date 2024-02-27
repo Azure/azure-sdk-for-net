@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
         }
 
         internal static UnknownThreatIntelligenceInformation DeserializeUnknownThreatIntelligenceInformation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownThreatIntelligenceInformation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownThreatIntelligenceInformation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorBaseData>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+                        return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorBaseData)} does not support '{options.Format}' format.");

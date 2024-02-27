@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<PreconfiguredEndpoint> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<PreconfiguredEndpoint>> value = default;
+            IReadOnlyList<PreconfiguredEndpoint> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<PreconfiguredEndpoint> array = new List<PreconfiguredEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreconfiguredEndpointList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreconfiguredEndpointList>.Write(ModelReaderWriterOptions options)

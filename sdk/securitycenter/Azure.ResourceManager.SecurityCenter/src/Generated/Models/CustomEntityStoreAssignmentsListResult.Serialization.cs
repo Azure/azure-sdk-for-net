@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<CustomEntityStoreAssignmentData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CustomEntityStoreAssignmentData>> value = default;
+            IReadOnlyList<CustomEntityStoreAssignmentData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<CustomEntityStoreAssignmentData> array = new List<CustomEntityStoreAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(item));
+                        array.Add(CustomEntityStoreAssignmentData.DeserializeCustomEntityStoreAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomEntityStoreAssignmentsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new CustomEntityStoreAssignmentsListResult(value ?? new ChangeTrackingList<CustomEntityStoreAssignmentData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomEntityStoreAssignmentsListResult>.Write(ModelReaderWriterOptions options)

@@ -70,7 +70,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -105,7 +112,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
         public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetCascadeDeleteJobDetails");
             scope.Start();
@@ -142,9 +156,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string partyId, string boundaryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateOrUpdate");
             scope.Start();
@@ -181,9 +212,26 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string partyId, string boundaryId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateOrUpdate");
             scope.Start();
@@ -219,8 +267,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundaryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetBoundaryAsync(string partyId, string boundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetBoundary");
             scope.Start();
@@ -256,8 +318,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundary(string,string,RequestContext)']/*" />
         public virtual Response GetBoundary(string partyId, string boundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetBoundary");
             scope.Start();
@@ -293,8 +369,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string partyId, string boundaryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.Delete");
             scope.Start();
@@ -330,8 +420,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
         public virtual Response Delete(string partyId, string boundaryId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.Delete");
             scope.Start();
@@ -369,10 +473,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetOverlapAsync(string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetOverlapAsync(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(otherPartyId, nameof(otherPartyId));
-            Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
+            if (otherPartyId == null)
+            {
+                throw new ArgumentNullException(nameof(otherPartyId));
+            }
+            if (otherBoundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(otherBoundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetOverlap");
             scope.Start();
@@ -410,10 +534,30 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetOverlap(string,string,string,string,RequestContext)']/*" />
         public virtual Response GetOverlap(string partyId, string boundaryId, string otherPartyId, string otherBoundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNullOrEmpty(boundaryId, nameof(boundaryId));
-            Argument.AssertNotNull(otherPartyId, nameof(otherPartyId));
-            Argument.AssertNotNull(otherBoundaryId, nameof(otherBoundaryId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
+            if (boundaryId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(boundaryId));
+            }
+            if (otherPartyId == null)
+            {
+                throw new ArgumentNullException(nameof(otherPartyId));
+            }
+            if (otherBoundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(otherBoundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.GetOverlap");
             scope.Start();
@@ -531,7 +675,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> SearchAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
@@ -556,7 +703,10 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
         public virtual Pageable<BinaryData> Search(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchRequest(content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchNextPageRequest(nextLink, content, context);
@@ -603,7 +753,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundariesByPartyIdAsync(string,string,string,IEnumerable{string},double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetBoundariesByPartyIdAsync(string partyId, string parentType, string type, IEnumerable<string> parentIds, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByPartyIdRequest(partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByPartyIdNextPageRequest(nextLink, partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -650,7 +807,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='GetBoundariesByPartyId(string,string,string,IEnumerable{string},double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetBoundariesByPartyId(string partyId, string parentType, string type, IEnumerable<string> parentIds, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBoundariesByPartyIdRequest(partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBoundariesByPartyIdNextPageRequest(nextLink, partyId, parentType, type, parentIds, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
@@ -677,8 +841,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='SearchByPartyIdAsync(string,RequestContent,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> SearchByPartyIdAsync(string partyId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByPartyIdRequest(partyId, content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByPartyIdNextPageRequest(nextLink, partyId, content, context);
@@ -705,8 +879,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='SearchByPartyId(string,RequestContent,RequestContext)']/*" />
         public virtual Pageable<BinaryData> SearchByPartyId(string partyId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (partyId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(partyId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateSearchByPartyIdRequest(partyId, content, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateSearchByPartyIdNextPageRequest(nextLink, partyId, content, context);
@@ -735,9 +919,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string boundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(partyId, nameof(partyId));
-            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateCascadeDeleteJob");
             scope.Start();
@@ -775,9 +972,22 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/Boundaries.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string boundaryId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-            Argument.AssertNotNull(partyId, nameof(partyId));
-            Argument.AssertNotNull(boundaryId, nameof(boundaryId));
+            if (jobId == null)
+            {
+                throw new ArgumentNullException(nameof(jobId));
+            }
+            if (jobId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(jobId));
+            }
+            if (partyId == null)
+            {
+                throw new ArgumentNullException(nameof(partyId));
+            }
+            if (boundaryId == null)
+            {
+                throw new ArgumentNullException(nameof(boundaryId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("Boundaries.CreateCascadeDeleteJob");
             scope.Start();
@@ -809,7 +1019,7 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("type", type, true);
             }
-            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
+            if (parentIds != null && !(parentIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in parentIds)
                 {
@@ -824,28 +1034,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (boundaryIds != null && Optional.IsCollectionDefined(boundaryIds))
+            if (boundaryIds != null && !(boundaryIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {
@@ -948,7 +1158,7 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("type", type, true);
             }
-            if (parentIds != null && Optional.IsCollectionDefined(parentIds))
+            if (parentIds != null && !(parentIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in parentIds)
                 {
@@ -963,28 +1173,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

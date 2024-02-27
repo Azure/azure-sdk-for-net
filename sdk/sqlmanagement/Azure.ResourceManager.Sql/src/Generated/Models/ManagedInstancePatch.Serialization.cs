@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -51,107 +51,107 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedInstanceCreateMode))
+            if (ManagedInstanceCreateMode.HasValue)
             {
                 writer.WritePropertyName("managedInstanceCreateMode"u8);
                 writer.WriteStringValue(ManagedInstanceCreateMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FullyQualifiedDomainName))
+            if (options.Format != "W" && FullyQualifiedDomainName != null)
             {
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
-            if (Optional.IsDefined(AdministratorLogin))
+            if (AdministratorLogin != null)
             {
                 writer.WritePropertyName("administratorLogin"u8);
                 writer.WriteStringValue(AdministratorLogin);
             }
-            if (Optional.IsDefined(AdministratorLoginPassword))
+            if (AdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("administratorLoginPassword"u8);
                 writer.WriteStringValue(AdministratorLoginPassword);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(VCores))
+            if (VCores.HasValue)
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (Optional.IsDefined(StorageSizeInGB))
+            if (StorageSizeInGB.HasValue)
             {
                 writer.WritePropertyName("storageSizeInGB"u8);
                 writer.WriteNumberValue(StorageSizeInGB.Value);
             }
-            if (Optional.IsDefined(Collation))
+            if (Collation != null)
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (options.Format != "W" && Optional.IsDefined(DnsZone))
+            if (options.Format != "W" && DnsZone != null)
             {
                 writer.WritePropertyName("dnsZone"u8);
                 writer.WriteStringValue(DnsZone);
             }
-            if (Optional.IsDefined(ManagedDnsZonePartner))
+            if (ManagedDnsZonePartner != null)
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
                 writer.WriteStringValue(ManagedDnsZonePartner);
             }
-            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
+            if (IsPublicDataEndpointEnabled.HasValue)
             {
                 writer.WritePropertyName("publicDataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
             }
-            if (Optional.IsDefined(SourceManagedInstanceId))
+            if (SourceManagedInstanceId != null)
             {
                 writer.WritePropertyName("sourceManagedInstanceId"u8);
                 writer.WriteStringValue(SourceManagedInstanceId);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (RestorePointInTime.HasValue)
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(ProxyOverride))
+            if (ProxyOverride.HasValue)
             {
                 writer.WritePropertyName("proxyOverride"u8);
                 writer.WriteStringValue(ProxyOverride.Value.ToString());
             }
-            if (Optional.IsDefined(TimezoneId))
+            if (TimezoneId != null)
             {
                 writer.WritePropertyName("timezoneId"u8);
                 writer.WriteStringValue(TimezoneId);
             }
-            if (Optional.IsDefined(InstancePoolId))
+            if (InstancePoolId != null)
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 writer.WriteStringValue(InstancePoolId);
             }
-            if (Optional.IsDefined(MaintenanceConfigurationId))
+            if (MaintenanceConfigurationId != null)
             {
                 writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<ManagedInstancePecProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -161,42 +161,42 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MinimalTlsVersion))
+            if (MinimalTlsVersion != null)
             {
                 writer.WritePropertyName("minimalTlsVersion"u8);
                 writer.WriteStringValue(MinimalTlsVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
+            if (options.Format != "W" && CurrentBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("currentBackupStorageRedundancy"u8);
                 writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
+            if (RequestedBackupStorageRedundancy.HasValue)
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(IsZoneRedundant))
+            if (IsZoneRedundant.HasValue)
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
-            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            if (PrimaryUserAssignedIdentityId != null)
             {
                 writer.WritePropertyName("primaryUserAssignedIdentityId"u8);
                 writer.WriteStringValue(PrimaryUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(KeyId))
+            if (KeyId != null)
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
-            if (Optional.IsDefined(Administrators))
+            if (Administrators != null)
             {
                 writer.WritePropertyName("administrators"u8);
                 writer.WriteObjectValue(Administrators);
             }
-            if (Optional.IsDefined(ServicePrincipal))
+            if (ServicePrincipal != null)
             {
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Optional<SqlSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedInstancePropertiesProvisioningState> provisioningState = default;
             Optional<ManagedServerCreateMode> managedInstanceCreateMode = default;
             Optional<string> fullyQualifiedDomainName = default;
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> timezoneId = default;
             Optional<ResourceIdentifier> instancePoolId = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
-            Optional<IReadOnlyList<ManagedInstancePecProperty>> privateEndpointConnections = default;
+            IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections = default;
             Optional<string> minimalTlsVersion = default;
             Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
             Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sku = SqlSku.DeserializeSqlSku(property.Value);
+                    sku = SqlSku.DeserializeSqlSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value);
+                            administrators = ManagedInstanceExternalAdministrator.DeserializeManagedInstanceExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value);
+                            servicePrincipal = SqlServicePrincipal.DeserializeSqlServicePrincipal(property0.Value, options);
                             continue;
                         }
                     }
@@ -561,7 +561,40 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePatch(sku.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(managedInstanceCreateMode), fullyQualifiedDomainName.Value, administratorLogin.Value, administratorLoginPassword.Value, subnetId.Value, state.Value, Optional.ToNullable(licenseType), Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), collation.Value, dnsZone.Value, dnsZonePartner.Value, Optional.ToNullable(publicDataEndpointEnabled), sourceManagedInstanceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(proxyOverride), timezoneId.Value, instancePoolId.Value, maintenanceConfigurationId.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(zoneRedundant), primaryUserAssignedIdentityId.Value, keyId.Value, administrators.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new ManagedInstancePatch(
+                sku.Value,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(managedInstanceCreateMode),
+                fullyQualifiedDomainName.Value,
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                subnetId.Value,
+                state.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(storageSizeInGB),
+                collation.Value,
+                dnsZone.Value,
+                dnsZonePartner.Value,
+                Optional.ToNullable(publicDataEndpointEnabled),
+                sourceManagedInstanceId.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(proxyOverride),
+                timezoneId.Value,
+                instancePoolId.Value,
+                maintenanceConfigurationId.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(),
+                minimalTlsVersion.Value,
+                Optional.ToNullable(currentBackupStorageRedundancy),
+                Optional.ToNullable(requestedBackupStorageRedundancy),
+                Optional.ToNullable(zoneRedundant),
+                primaryUserAssignedIdentityId.Value,
+                keyId.Value,
+                administrators.Value,
+                servicePrincipal.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePatch>.Write(ModelReaderWriterOptions options)

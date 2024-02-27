@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled != null)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<SignalRLiveTraceCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 return null;
             }
             Optional<string> enabled = default;
-            Optional<IList<SignalRLiveTraceCategory>> categories = default;
+            IList<SignalRLiveTraceCategory> categories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRLiveTraceCategory> array = new List<SignalRLiveTraceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item));
+                        array.Add(SignalRLiveTraceCategory.DeserializeSignalRLiveTraceCategory(item, options));
                     }
                     categories = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRLiveTraceConfiguration(enabled.Value, Optional.ToList(categories), serializedAdditionalRawData);
+            return new SignalRLiveTraceConfiguration(enabled.Value, categories ?? new ChangeTrackingList<SignalRLiveTraceCategory>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRLiveTraceConfiguration>.Write(ModelReaderWriterOptions options)

@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Op))
+            if (Op.HasValue)
             {
                 writer.WritePropertyName("op"u8);
                 writer.WriteStringValue(Op.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Schema))
+            if (Schema != null)
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStringValue(Schema);
             }
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(Table);
             }
-            if (Optional.IsDefined(Column))
+            if (Column != null)
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteStringValue(Column);
             }
-            if (Optional.IsDefined(SensitivityLabel))
+            if (SensitivityLabel != null)
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
                 writer.WriteObjectValue(SensitivityLabel);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value);
+                            sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value, options);
                             continue;
                         }
                     }
@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, sensitivityLabel.Value, serializedAdditionalRawData);
+            return new SensitivityLabelUpdate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(op),
+                schema.Value,
+                table.Value,
+                column.Value,
+                sensitivityLabel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SensitivityLabelUpdate>.Write(ModelReaderWriterOptions options)

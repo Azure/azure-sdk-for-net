@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public WebLinkedService(WebLinkedServiceTypeProperties typeProperties)
         {
-            Argument.AssertNotNull(typeProperties, nameof(typeProperties));
+            if (typeProperties == null)
+            {
+                throw new ArgumentNullException(nameof(typeProperties));
+            }
 
             TypeProperties = typeProperties;
             LinkedServiceType = "Web";

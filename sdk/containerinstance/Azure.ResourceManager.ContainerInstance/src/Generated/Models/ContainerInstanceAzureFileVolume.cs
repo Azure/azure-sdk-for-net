@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> or <paramref name="storageAccountName"/> is null. </exception>
         public ContainerInstanceAzureFileVolume(string shareName, string storageAccountName)
         {
-            Argument.AssertNotNull(shareName, nameof(shareName));
-            Argument.AssertNotNull(storageAccountName, nameof(storageAccountName));
+            if (shareName == null)
+            {
+                throw new ArgumentNullException(nameof(shareName));
+            }
+            if (storageAccountName == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountName));
+            }
 
             ShareName = shareName;
             StorageAccountName = storageAccountName;

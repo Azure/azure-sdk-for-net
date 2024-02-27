@@ -73,7 +73,13 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new TextAnswer(answer.Value, Optional.ToNullable(confidenceScore), id.Value, answerSpan.Value, Optional.ToNullable(offset), Optional.ToNullable(length));
+            return new TextAnswer(
+                answer.Value,
+                Optional.ToNullable(confidenceScore),
+                id.Value,
+                answerSpan.Value,
+                Optional.ToNullable(offset),
+                Optional.ToNullable(length));
         }
     }
 }

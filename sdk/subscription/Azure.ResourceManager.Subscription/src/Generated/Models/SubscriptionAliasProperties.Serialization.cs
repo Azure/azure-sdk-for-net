@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Subscription.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipUri))
+            if (options.Format != "W" && AcceptOwnershipUri != null)
             {
                 writer.WritePropertyName("acceptOwnershipUrl"u8);
                 writer.WriteStringValue(AcceptOwnershipUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(AcceptOwnershipState))
+            if (options.Format != "W" && AcceptOwnershipState.HasValue)
             {
                 writer.WritePropertyName("acceptOwnershipState"u8);
                 writer.WriteStringValue(AcceptOwnershipState.Value.ToString());
             }
-            if (Optional.IsDefined(BillingScope))
+            if (BillingScope != null)
             {
                 writer.WritePropertyName("billingScope"u8);
                 writer.WriteStringValue(BillingScope);
             }
-            if (Optional.IsDefined(Workload))
+            if (Workload.HasValue)
             {
                 writer.WritePropertyName("workload"u8);
                 writer.WriteStringValue(Workload.Value.ToString());
             }
-            if (Optional.IsDefined(ResellerId))
+            if (ResellerId != null)
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (Optional.IsDefined(SubscriptionOwnerId))
+            if (SubscriptionOwnerId != null)
             {
                 writer.WritePropertyName("subscriptionOwnerId"u8);
                 writer.WriteStringValue(SubscriptionOwnerId);
             }
-            if (Optional.IsDefined(ManagementGroupId))
+            if (ManagementGroupId != null)
             {
                 writer.WritePropertyName("managementGroupId"u8);
                 writer.WriteStringValue(ManagementGroupId);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Subscription.Models
             Optional<string> subscriptionOwnerId = default;
             Optional<string> managementGroupId = default;
             Optional<DateTimeOffset> createdTime = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new SubscriptionAliasProperties(
+                subscriptionId.Value,
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                acceptOwnershipUrl.Value,
+                Optional.ToNullable(acceptOwnershipState),
+                billingScope.Value,
+                Optional.ToNullable(workload),
+                resellerId.Value,
+                subscriptionOwnerId.Value,
+                managementGroupId.Value,
+                Optional.ToNullable(createdTime),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options)

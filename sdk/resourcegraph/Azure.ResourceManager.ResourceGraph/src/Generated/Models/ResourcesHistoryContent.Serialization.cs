@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Optional.IsDefined(Options))
+            if (Options != null)
             {
                 writer.WritePropertyName("options"u8);
                 writer.WriteObjectValue(Options);
             }
-            if (Optional.IsCollectionDefined(ManagementGroups))
+            if (!(ManagementGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 return null;
             }
-            Optional<IList<string>> subscriptions = default;
+            IList<string> subscriptions = default;
             Optional<string> query = default;
             Optional<ResourcesHistoryRequestOptions> options0 = default;
-            Optional<IList<string>> managementGroups = default;
+            IList<string> managementGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     {
                         continue;
                     }
-                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value);
+                    options0 = ResourcesHistoryRequestOptions.DeserializeResourcesHistoryRequestOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managementGroups"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesHistoryContent(Optional.ToList(subscriptions), query.Value, options0.Value, Optional.ToList(managementGroups), serializedAdditionalRawData);
+            return new ResourcesHistoryContent(subscriptions ?? new ChangeTrackingList<string>(), query.Value, options0.Value, managementGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesHistoryContent>.Write(ModelReaderWriterOptions options)

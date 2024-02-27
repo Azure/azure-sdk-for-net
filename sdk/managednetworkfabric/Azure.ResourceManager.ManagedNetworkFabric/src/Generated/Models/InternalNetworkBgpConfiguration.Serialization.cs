@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BfdConfiguration))
+            if (BfdConfiguration != null)
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
                 writer.WriteObjectValue(BfdConfiguration);
             }
-            if (Optional.IsDefined(DefaultRouteOriginate))
+            if (DefaultRouteOriginate.HasValue)
             {
                 writer.WritePropertyName("defaultRouteOriginate"u8);
                 writer.WriteStringValue(DefaultRouteOriginate.Value.ToString());
             }
-            if (Optional.IsDefined(AllowAS))
+            if (AllowAS.HasValue)
             {
                 writer.WritePropertyName("allowAS"u8);
                 writer.WriteNumberValue(AllowAS.Value);
             }
-            if (Optional.IsDefined(AllowASOverride))
+            if (AllowASOverride.HasValue)
             {
                 writer.WritePropertyName("allowASOverride"u8);
                 writer.WriteStringValue(AllowASOverride.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricAsn))
+            if (options.Format != "W" && FabricAsn.HasValue)
             {
                 writer.WritePropertyName("fabricASN"u8);
                 writer.WriteNumberValue(FabricAsn.Value);
             }
-            if (Optional.IsDefined(PeerAsn))
+            if (PeerAsn.HasValue)
             {
                 writer.WritePropertyName("peerASN"u8);
                 writer.WriteNumberValue(PeerAsn.Value);
             }
-            if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
+            if (!(IPv4ListenRangePrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipv4ListenRangePrefixes"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6ListenRangePrefixes))
+            if (!(IPv6ListenRangePrefixes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipv6ListenRangePrefixes"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv4NeighborAddress))
+            if (!(IPv4NeighborAddress is ChangeTrackingList<NeighborAddress> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipv4NeighborAddress"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6NeighborAddress))
+            if (!(IPv6NeighborAddress is ChangeTrackingList<NeighborAddress> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("ipv6NeighborAddress"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<AllowASOverride> allowASOverride = default;
             Optional<long> fabricAsn = default;
             Optional<long> peerAsn = default;
-            Optional<IList<string>> ipv4ListenRangePrefixes = default;
-            Optional<IList<string>> ipv6ListenRangePrefixes = default;
-            Optional<IList<NeighborAddress>> ipv4NeighborAddress = default;
-            Optional<IList<NeighborAddress>> ipv6NeighborAddress = default;
+            IList<string> ipv4ListenRangePrefixes = default;
+            IList<string> ipv6ListenRangePrefixes = default;
+            IList<NeighborAddress> ipv4NeighborAddress = default;
+            IList<NeighborAddress> ipv6NeighborAddress = default;
             Optional<string> annotation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value);
+                    bfdConfiguration = BfdConfiguration.DeserializeBfdConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultRouteOriginate"u8))
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv4NeighborAddress = array;
                     continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        array.Add(NeighborAddress.DeserializeNeighborAddress(item, options));
                     }
                     ipv6NeighborAddress = array;
                     continue;
@@ -275,7 +275,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InternalNetworkBgpConfiguration(annotation.Value, serializedAdditionalRawData, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
+            return new InternalNetworkBgpConfiguration(
+                annotation.Value,
+                serializedAdditionalRawData,
+                bfdConfiguration.Value,
+                Optional.ToNullable(defaultRouteOriginate),
+                Optional.ToNullable(allowAS),
+                Optional.ToNullable(allowASOverride),
+                Optional.ToNullable(fabricAsn),
+                Optional.ToNullable(peerAsn),
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
 
         BinaryData IPersistableModel<InternalNetworkBgpConfiguration>.Write(ModelReaderWriterOptions options)

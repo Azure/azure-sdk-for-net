@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SkuId))
+            if (options.Format != "W" && SkuId != null)
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PlanId))
+            if (options.Format != "W" && PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
+            if (options.Format != "W" && PlanDisplayName != null)
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (Optional.IsDefined(Accessibility))
+            if (Accessibility.HasValue)
             {
                 writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AltStackReference))
+            if (options.Format != "W" && AltStackReference != null)
             {
                 writer.WritePropertyName("altStackReference"u8);
                 writer.WriteStringValue(AltStackReference);
             }
-            if (options.Format != "W" && Optional.IsDefined(StackType))
+            if (options.Format != "W" && StackType != null)
             {
                 writer.WritePropertyName("stackType"u8);
                 writer.WriteStringValue(StackType);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStorePlan(skuId.Value, planId.Value, planDisplayName.Value, Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value, serializedAdditionalRawData);
+            return new PrivateStorePlan(
+                skuId.Value,
+                planId.Value,
+                planDisplayName.Value,
+                Optional.ToNullable(accessibility),
+                altStackReference.Value,
+                stackType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStorePlan>.Write(ModelReaderWriterOptions options)

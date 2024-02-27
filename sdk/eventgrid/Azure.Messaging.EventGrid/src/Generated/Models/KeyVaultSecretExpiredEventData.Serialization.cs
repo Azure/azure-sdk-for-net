@@ -74,7 +74,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new KeyVaultSecretExpiredEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultSecretExpiredEventData(
+                id.Value,
+                vaultName.Value,
+                objectType.Value,
+                objectName.Value,
+                version.Value,
+                Optional.ToNullable(nbf),
+                Optional.ToNullable(exp));
         }
 
         internal partial class KeyVaultSecretExpiredEventDataConverter : JsonConverter<KeyVaultSecretExpiredEventData>

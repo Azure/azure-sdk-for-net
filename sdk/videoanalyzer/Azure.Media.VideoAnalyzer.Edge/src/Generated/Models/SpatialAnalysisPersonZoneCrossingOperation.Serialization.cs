@@ -23,37 +23,37 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Debug))
+            if (Debug != null)
             {
                 writer.WritePropertyName("debug"u8);
                 writer.WriteStringValue(Debug);
             }
-            if (Optional.IsDefined(CalibrationConfiguration))
+            if (CalibrationConfiguration != null)
             {
                 writer.WritePropertyName("calibrationConfiguration"u8);
                 writer.WriteStringValue(CalibrationConfiguration);
             }
-            if (Optional.IsDefined(CameraConfiguration))
+            if (CameraConfiguration != null)
             {
                 writer.WritePropertyName("cameraConfiguration"u8);
                 writer.WriteStringValue(CameraConfiguration);
             }
-            if (Optional.IsDefined(CameraCalibratorNodeConfiguration))
+            if (CameraCalibratorNodeConfiguration != null)
             {
                 writer.WritePropertyName("cameraCalibratorNodeConfiguration"u8);
                 writer.WriteStringValue(CameraCalibratorNodeConfiguration);
             }
-            if (Optional.IsDefined(DetectorNodeConfiguration))
+            if (DetectorNodeConfiguration != null)
             {
                 writer.WritePropertyName("detectorNodeConfiguration"u8);
                 writer.WriteStringValue(DetectorNodeConfiguration);
             }
-            if (Optional.IsDefined(TrackerNodeConfiguration))
+            if (TrackerNodeConfiguration != null)
             {
                 writer.WritePropertyName("trackerNodeConfiguration"u8);
                 writer.WriteStringValue(TrackerNodeConfiguration);
             }
-            if (Optional.IsDefined(EnableFaceMaskClassifier))
+            if (EnableFaceMaskClassifier != null)
             {
                 writer.WritePropertyName("enableFaceMaskClassifier"u8);
                 writer.WriteStringValue(EnableFaceMaskClassifier);
@@ -131,7 +131,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonZoneCrossingOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, zones);
+            return new SpatialAnalysisPersonZoneCrossingOperation(
+                type,
+                debug.Value,
+                calibrationConfiguration.Value,
+                cameraConfiguration.Value,
+                cameraCalibratorNodeConfiguration.Value,
+                detectorNodeConfiguration.Value,
+                trackerNodeConfiguration.Value,
+                enableFaceMaskClassifier.Value,
+                zones);
         }
     }
 }

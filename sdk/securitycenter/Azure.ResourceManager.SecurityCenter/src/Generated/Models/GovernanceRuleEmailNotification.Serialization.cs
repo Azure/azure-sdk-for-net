@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsManagerEmailNotificationDisabled))
+            if (IsManagerEmailNotificationDisabled.HasValue)
             {
                 writer.WritePropertyName("disableManagerEmailNotification"u8);
                 writer.WriteBooleanValue(IsManagerEmailNotificationDisabled.Value);
             }
-            if (Optional.IsDefined(IsOwnerEmailNotificationDisabled))
+            if (IsOwnerEmailNotificationDisabled.HasValue)
             {
                 writer.WritePropertyName("disableOwnerEmailNotification"u8);
                 writer.WriteBooleanValue(IsOwnerEmailNotificationDisabled.Value);

@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DnsResolverInboundEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inboundEndpointName, DnsResolverInboundEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -135,8 +145,18 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DnsResolverInboundEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string inboundEndpointName, DnsResolverInboundEndpointData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.CreateOrUpdate");
             scope.Start();
@@ -182,7 +202,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual async Task<Response<DnsResolverInboundEndpointResource>> GetAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual Response<DnsResolverInboundEndpointResource> Get(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.Get");
             scope.Start();
@@ -334,7 +368,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.Exists");
             scope.Start();
@@ -420,7 +468,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<DnsResolverInboundEndpointResource>> GetIfExistsAsync(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.GetIfExists");
             scope.Start();
@@ -465,7 +520,14 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="inboundEndpointName"/> is null. </exception>
         public virtual NullableResponse<DnsResolverInboundEndpointResource> GetIfExists(string inboundEndpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inboundEndpointName, nameof(inboundEndpointName));
+            if (inboundEndpointName == null)
+            {
+                throw new ArgumentNullException(nameof(inboundEndpointName));
+            }
+            if (inboundEndpointName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(inboundEndpointName));
+            }
 
             using var scope = _dnsResolverInboundEndpointInboundEndpointsClientDiagnostics.CreateScope("DnsResolverInboundEndpointCollection.GetIfExists");
             scope.Start();

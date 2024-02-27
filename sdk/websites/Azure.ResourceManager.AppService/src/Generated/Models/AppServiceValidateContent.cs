@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppServiceValidateContent(string name, ValidateResourceType validateResourceType, AzureLocation location)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             Name = name;
             ValidateResourceType = validateResourceType;

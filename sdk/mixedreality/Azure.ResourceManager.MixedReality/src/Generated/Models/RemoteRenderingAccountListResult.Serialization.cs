@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<RemoteRenderingAccountData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RemoteRenderingAccountData>> value = default;
+            IReadOnlyList<RemoteRenderingAccountData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                     List<RemoteRenderingAccountData> array = new List<RemoteRenderingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item));
+                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemoteRenderingAccountListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RemoteRenderingAccountListResult(value ?? new ChangeTrackingList<RemoteRenderingAccountData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemoteRenderingAccountListResult>.Write(ModelReaderWriterOptions options)

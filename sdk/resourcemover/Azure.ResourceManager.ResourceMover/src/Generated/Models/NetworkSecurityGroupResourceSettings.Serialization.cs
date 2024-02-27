@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SecurityRules))
+            if (!(SecurityRules is ChangeTrackingList<NetworkSecurityGroupSecurityRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("securityRules"u8);
                 writer.WriteStartArray();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (Optional.IsDefined(TargetResourceName))
+            if (TargetResourceName != null)
             {
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
-            if (Optional.IsDefined(TargetResourceGroupName))
+            if (TargetResourceGroupName != null)
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<NetworkSecurityGroupSecurityRule>> securityRules = default;
+            IDictionary<string, string> tags = default;
+            IList<NetworkSecurityGroupSecurityRule> securityRules = default;
             string resourceType = default;
             Optional<string> targetResourceName = default;
             Optional<string> targetResourceGroupName = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<NetworkSecurityGroupSecurityRule> array = new List<NetworkSecurityGroupSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item));
+                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item, options));
                     }
                     securityRules = array;
                     continue;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToList(securityRules));
+            return new NetworkSecurityGroupResourceSettings(
+                resourceType,
+                targetResourceName.Value,
+                targetResourceGroupName.Value,
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                securityRules ?? new ChangeTrackingList<NetworkSecurityGroupSecurityRule>());
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResourceSettings>.Write(ModelReaderWriterOptions options)

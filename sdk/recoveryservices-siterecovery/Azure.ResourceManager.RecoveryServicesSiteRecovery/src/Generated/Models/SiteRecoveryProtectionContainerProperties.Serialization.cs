@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FabricFriendlyName))
+            if (FabricFriendlyName != null)
             {
                 writer.WritePropertyName("fabricFriendlyName"u8);
                 writer.WriteStringValue(FabricFriendlyName);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(FabricType))
+            if (FabricType != null)
             {
                 writer.WritePropertyName("fabricType"u8);
                 writer.WriteStringValue(FabricType);
             }
-            if (Optional.IsDefined(ProtectedItemCount))
+            if (ProtectedItemCount.HasValue)
             {
                 writer.WritePropertyName("protectedItemCount"u8);
                 writer.WriteNumberValue(ProtectedItemCount.Value);
             }
-            if (Optional.IsDefined(PairingStatus))
+            if (PairingStatus != null)
             {
                 writer.WritePropertyName("pairingStatus"u8);
                 writer.WriteStringValue(PairingStatus);
             }
-            if (Optional.IsDefined(Role))
+            if (Role != null)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            if (Optional.IsDefined(FabricSpecificDetails))
+            if (FabricSpecificDetails != null)
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
                 writer.WriteObjectValue(FabricSpecificDetails);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificDetails = ProtectionContainerFabricSpecificDetails.DeserializeProtectionContainerFabricSpecificDetails(property.Value);
+                    fabricSpecificDetails = ProtectionContainerFabricSpecificDetails.DeserializeProtectionContainerFabricSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectionContainerProperties(fabricFriendlyName.Value, friendlyName.Value, fabricType.Value, Optional.ToNullable(protectedItemCount), pairingStatus.Value, role.Value, fabricSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectionContainerProperties(
+                fabricFriendlyName.Value,
+                friendlyName.Value,
+                fabricType.Value,
+                Optional.ToNullable(protectedItemCount),
+                pairingStatus.Value,
+                role.Value,
+                fabricSpecificDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectionContainerProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningVmSize> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningVmSize>> value = default;
+            IReadOnlyList<MachineLearningVmSize> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningVmSize> array = new List<MachineLearningVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningVmSize.DeserializeMachineLearningVmSize(item));
+                        array.Add(MachineLearningVmSize.DeserializeMachineLearningVmSize(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineSizeListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new VirtualMachineSizeListResult(value ?? new ChangeTrackingList<MachineLearningVmSize>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineSizeListResult>.Write(ModelReaderWriterOptions options)

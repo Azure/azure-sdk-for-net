@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(ClientRequestId))
+            if (ClientRequestId != null)
             {
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Optional.IsDefined(ServiceRequestId))
+            if (ServiceRequestId != null)
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value);
+                    error = LogicErrorResponse.DeserializeLogicErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value, serializedAdditionalRawData);
+            return new LogicWorkRetryHistory(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                code.Value,
+                clientRequestId.Value,
+                serviceRequestId.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkRetryHistory>.Write(ModelReaderWriterOptions options)

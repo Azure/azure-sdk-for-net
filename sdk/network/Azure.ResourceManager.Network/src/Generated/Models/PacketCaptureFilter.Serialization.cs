@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(LocalIPAddress))
+            if (LocalIPAddress != null)
             {
                 writer.WritePropertyName("localIPAddress"u8);
                 writer.WriteStringValue(LocalIPAddress);
             }
-            if (Optional.IsDefined(RemoteIPAddress))
+            if (RemoteIPAddress != null)
             {
                 writer.WritePropertyName("remoteIPAddress"u8);
                 writer.WriteStringValue(RemoteIPAddress);
             }
-            if (Optional.IsDefined(LocalPort))
+            if (LocalPort != null)
             {
                 writer.WritePropertyName("localPort"u8);
                 writer.WriteStringValue(LocalPort);
             }
-            if (Optional.IsDefined(RemotePort))
+            if (RemotePort != null)
             {
                 writer.WritePropertyName("remotePort"u8);
                 writer.WriteStringValue(RemotePort);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value, serializedAdditionalRawData);
+            return new PacketCaptureFilter(
+                Optional.ToNullable(protocol),
+                localIPAddress.Value,
+                remoteIPAddress.Value,
+                localPort.Value,
+                remotePort.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureFilter>.Write(ModelReaderWriterOptions options)

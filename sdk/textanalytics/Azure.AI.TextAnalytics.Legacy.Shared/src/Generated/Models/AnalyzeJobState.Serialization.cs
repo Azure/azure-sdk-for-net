@@ -22,7 +22,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 return null;
             }
             TasksStateTasks tasks = default;
-            Optional<IReadOnlyList<TextAnalyticsError>> errors = default;
+            IReadOnlyList<TextAnalyticsError> errors = default;
             Optional<RequestStatistics> statistics = default;
             Optional<string> nextLink = default;
             Optional<string> displayName = default;
@@ -101,7 +101,17 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new AnalyzeJobState(createdDateTime, Optional.ToNullable(expirationDateTime), jobId, lastUpdateDateTime, status, displayName.Value, tasks, Optional.ToList(errors), statistics.Value, nextLink.Value);
+            return new AnalyzeJobState(
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                jobId,
+                lastUpdateDateTime,
+                status,
+                displayName.Value,
+                tasks,
+                errors ?? new ChangeTrackingList<TextAnalyticsError>(),
+                statistics.Value,
+                nextLink.Value);
         }
     }
 }

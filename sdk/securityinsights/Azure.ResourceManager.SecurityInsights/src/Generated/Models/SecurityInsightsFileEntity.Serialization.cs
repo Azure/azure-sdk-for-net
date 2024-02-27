@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Directory))
+            if (options.Format != "W" && Directory != null)
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FileHashEntityIds))
+            if (options.Format != "W" && !(FileHashEntityIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("fileHashEntityIds"u8);
                 writer.WriteStartArray();
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(FileName))
+            if (options.Format != "W" && FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
+            if (options.Format != "W" && HostEntityId != null)
             {
                 writer.WritePropertyName("hostEntityId"u8);
                 writer.WriteStringValue(HostEntityId);
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<string> directory = default;
-            Optional<IReadOnlyList<string>> fileHashEntityIds = default;
+            IReadOnlyList<string> fileHashEntityIds = default;
             Optional<string> fileName = default;
             Optional<string> hostEntityId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsFileEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, directory.Value, Optional.ToList(fileHashEntityIds), fileName.Value, hostEntityId.Value);
+            return new SecurityInsightsFileEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                directory.Value,
+                fileHashEntityIds ?? new ChangeTrackingList<string>(),
+                fileName.Value,
+                hostEntityId.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsFileEntity>.Write(ModelReaderWriterOptions options)

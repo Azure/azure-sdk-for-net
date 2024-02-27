@@ -28,39 +28,39 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskQueueId))
+            if (options.Format != "W" && TaskQueueId.HasValue)
             {
                 writer.WritePropertyName("taskQueueId"u8);
                 writer.WriteStringValue(TaskQueueId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalChannelEncryption))
+            if (options.Format != "W" && InternalChannelEncryption.HasValue)
             {
                 writer.WritePropertyName("internalChannelEncryption"u8);
                 writer.WriteStringValue(InternalChannelEncryption.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Nodes))
+            if (!(Nodes is ChangeTrackingList<SelfHostedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -70,22 +70,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledUpdateOn))
+            if (options.Format != "W" && ScheduledUpdateOn.HasValue)
             {
                 writer.WritePropertyName("scheduledUpdateDate"u8);
                 writer.WriteStringValue(ScheduledUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateDelayOffset))
+            if (options.Format != "W" && UpdateDelayOffset.HasValue)
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalTimeZoneOffset))
+            if (options.Format != "W" && LocalTimeZoneOffset.HasValue)
             {
                 writer.WritePropertyName("localTimeZoneOffset"u8);
                 writer.WriteStringValue(LocalTimeZoneOffset.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceUriStringList))
+            if (options.Format != "W" && !(ServiceUriStringList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceUrls"u8);
                 writer.WriteStartArray();
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoUpdate))
+            if (options.Format != "W" && AutoUpdate.HasValue)
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
+            if (options.Format != "W" && VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(Links))
+            if (!(Links is ChangeTrackingList<LinkedIntegrationRuntime> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -126,22 +126,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PushedVersion))
+            if (options.Format != "W" && PushedVersion != null)
             {
                 writer.WritePropertyName("pushedVersion"u8);
                 writer.WriteStringValue(PushedVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(LatestVersion))
+            if (options.Format != "W" && LatestVersion != null)
             {
                 writer.WritePropertyName("latestVersion"u8);
                 writer.WriteStringValue(LatestVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoUpdateEta))
+            if (options.Format != "W" && AutoUpdateEta.HasValue)
             {
                 writer.WritePropertyName("autoUpdateETA"u8);
                 writer.WriteStringValue(AutoUpdateEta.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
+            if (options.Format != "W" && IsSelfContainedInteractiveAuthoringEnabled.HasValue)
             {
                 writer.WritePropertyName("selfContainedInteractiveAuthoringEnabled"u8);
                 writer.WriteBooleanValue(IsSelfContainedInteractiveAuthoringEnabled.Value);
@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<Guid> taskQueueId = default;
             Optional<IntegrationRuntimeInternalChannelEncryptionMode> internalChannelEncryption = default;
             Optional<string> version = default;
-            Optional<IReadOnlyList<SelfHostedIntegrationRuntimeNode>> nodes = default;
+            IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes = default;
             Optional<DateTimeOffset> scheduledUpdateDate = default;
             Optional<TimeSpan> updateDelayOffset = default;
             Optional<TimeSpan> localTimeZoneOffset = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<string>> serviceUrls = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
+            IReadOnlyList<string> serviceUrls = default;
             Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
+            IReadOnlyList<LinkedIntegrationRuntime> links = default;
             Optional<string> pushedVersion = default;
             Optional<string> latestVersion = default;
             Optional<DateTimeOffset> autoUpdateEta = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SelfHostedIntegrationRuntimeNode> array = new List<SelfHostedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item));
+                                array.Add(SelfHostedIntegrationRuntimeNode.DeserializeSelfHostedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<LinkedIntegrationRuntime> array = new List<LinkedIntegrationRuntime>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item));
+                                array.Add(LinkedIntegrationRuntime.DeserializeLinkedIntegrationRuntime(item, options));
                             }
                             links = array;
                             continue;
@@ -397,7 +397,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
+            return new SelfHostedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                Optional.ToNullable(taskQueueId),
+                Optional.ToNullable(internalChannelEncryption),
+                version.Value,
+                nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>(),
+                Optional.ToNullable(scheduledUpdateDate),
+                Optional.ToNullable(updateDelayOffset),
+                Optional.ToNullable(localTimeZoneOffset),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUrls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(autoUpdate),
+                versionStatus.Value,
+                links ?? new ChangeTrackingList<LinkedIntegrationRuntime>(),
+                pushedVersion.Value,
+                latestVersion.Value,
+                Optional.ToNullable(autoUpdateEta),
+                Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
 
         BinaryData IPersistableModel<SelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

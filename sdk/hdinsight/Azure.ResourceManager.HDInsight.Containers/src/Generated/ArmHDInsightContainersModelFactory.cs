@@ -39,7 +39,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HDInsightClusterPoolData(id, name, resourceType, systemData, tags, location, provisioningState, deploymentId, managedResourceGroupName, aksManagedResourceGroupName, clusterPoolVersion != null ? new ClusterPoolProfile(clusterPoolVersion, serializedAdditionalRawData: null) : null, computeProfile, aksClusterProfile, networkSubnetId != null ? new ClusterPoolNetworkProfile(networkSubnetId, serializedAdditionalRawData: null) : null, logAnalyticsProfile, status, serializedAdditionalRawData: null);
+            return new HDInsightClusterPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                deploymentId,
+                managedResourceGroupName,
+                aksManagedResourceGroupName,
+                clusterPoolVersion != null ? new ClusterPoolProfile(clusterPoolVersion, serializedAdditionalRawData: null) : null,
+                computeProfile,
+                aksClusterProfile,
+                networkSubnetId != null ? new ClusterPoolNetworkProfile(networkSubnetId, serializedAdditionalRawData: null) : null,
+                logAnalyticsProfile,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterPoolComputeProfile"/>. </summary>
@@ -80,7 +97,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             tags ??= new Dictionary<string, string>();
             computeNodes ??= new List<ClusterComputeNodeProfile>();
 
-            return new HDInsightClusterData(id, name, resourceType, systemData, tags, location, provisioningState, clusterType, deploymentId, computeNodes != null ? new ComputeProfile(computeNodes?.ToList(), serializedAdditionalRawData: null) : null, clusterProfile, status, serializedAdditionalRawData: null);
+            return new HDInsightClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                clusterType,
+                deploymentId,
+                computeNodes != null ? new ComputeProfile(computeNodes?.ToList(), serializedAdditionalRawData: null) : null,
+                clusterProfile,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterProfile"/>. </summary>
@@ -113,7 +143,27 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             stubProfile ??= new Dictionary<string, BinaryData>();
             scriptActionProfiles ??= new List<ScriptActionProfile>();
 
-            return new ClusterProfile(clusterVersion, ossVersion, components?.ToList(), identityProfile, authorizationProfile, secretsProfile, serviceConfigsProfiles?.ToList(), connectivityProfile, logAnalyticsProfile, isEnabled.HasValue ? new ClusterPrometheusProfile(isEnabled.Value, serializedAdditionalRawData: null) : null, sshProfile, autoscaleProfile, kafkaProfile, trinoProfile, llapProfile, flinkProfile, sparkProfile, stubProfile, scriptActionProfiles?.ToList(), serializedAdditionalRawData: null);
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components?.ToList(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile,
+                serviceConfigsProfiles?.ToList(),
+                connectivityProfile,
+                logAnalyticsProfile,
+                isEnabled.HasValue ? new ClusterPrometheusProfile(isEnabled.Value, serializedAdditionalRawData: null) : null,
+                sshProfile,
+                autoscaleProfile,
+                kafkaProfile,
+                trinoProfile,
+                llapProfile,
+                flinkProfile,
+                sparkProfile,
+                stubProfile,
+                scriptActionProfiles?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterComponentItem"/>. </summary>
@@ -166,7 +216,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ClusterResizeContent(id, name, resourceType, systemData, tags, location, targetWorkerNodeCount, serializedAdditionalRawData: null);
+            return new ClusterResizeContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                targetWorkerNodeCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterPatch"/>. </summary>
@@ -182,7 +240,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new HDInsightClusterPatch(id, name, resourceType, systemData, tags, location, clusterProfile, serializedAdditionalRawData: null);
+            return new HDInsightClusterPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                clusterProfile,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterJob"/>. </summary>
@@ -198,7 +264,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <returns> A new <see cref="Models.ClusterJob"/> instance for mocking. </returns>
         public static ClusterJob ClusterJob(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ClusterJobProperties properties = null)
         {
-            return new ClusterJob(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new ClusterJob(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterServiceConfigResult"/>. </summary>
@@ -216,7 +288,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             customKeys ??= new Dictionary<string, string>();
             defaultKeys ??= new Dictionary<string, ClusterServiceConfigValueEntity>();
 
-            return new ClusterServiceConfigResult(serviceName, fileName, content, componentName, serviceConfigListResultPropertiesType, path, customKeys, defaultKeys, serializedAdditionalRawData: null);
+            return new ClusterServiceConfigResult(
+                serviceName,
+                fileName,
+                content,
+                componentName,
+                serviceConfigListResultPropertiesType,
+                path,
+                customKeys,
+                defaultKeys,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterServiceConfigValueEntity"/>. </summary>
@@ -281,7 +362,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <returns> A new <see cref="Models.ClusterPoolVersion"/> instance for mocking. </returns>
         public static ClusterPoolVersion ClusterPoolVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterPoolVersionValue = null, string aksVersion = null, bool? isPreview = null)
         {
-            return new ClusterPoolVersion(id, name, resourceType, systemData, clusterPoolVersionValue, aksVersion, isPreview, serializedAdditionalRawData: null);
+            return new ClusterPoolVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterPoolVersionValue,
+                aksVersion,
+                isPreview,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HDInsightClusterVersion"/>. </summary>
@@ -300,7 +389,18 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             components ??= new List<ClusterComponentItem>();
 
-            return new HDInsightClusterVersion(id, name, resourceType, systemData, clusterType, clusterVersion, ossVersion, clusterPoolVersion, isPreview, components?.ToList(), serializedAdditionalRawData: null);
+            return new HDInsightClusterVersion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                clusterType,
+                clusterVersion,
+                ossVersion,
+                clusterPoolVersion,
+                isPreview,
+                components?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FlinkJobProperties"/>. </summary>
@@ -322,7 +422,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         {
             flinkConfiguration ??= new Dictionary<string, string>();
 
-            return new FlinkJobProperties(ClusterJobType.FlinkJob, serializedAdditionalRawData: null, jobName, jobJarDirectory, jarName, entryClass, args, savePointName, action, flinkConfiguration, jobId, status, jobOutput, actionResult, lastSavePoint);
+            return new FlinkJobProperties(
+                ClusterJobType.FlinkJob,
+                serializedAdditionalRawData: null,
+                jobName,
+                jobJarDirectory,
+                jarName,
+                entryClass,
+                args,
+                savePointName,
+                action,
+                flinkConfiguration,
+                jobId,
+                status,
+                jobOutput,
+                actionResult,
+                lastSavePoint);
         }
     }
 }

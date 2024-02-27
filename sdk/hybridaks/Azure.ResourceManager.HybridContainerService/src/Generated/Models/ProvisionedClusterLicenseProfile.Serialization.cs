@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureHybridBenefit))
+            if (AzureHybridBenefit.HasValue)
             {
                 writer.WritePropertyName("azureHybridBenefit"u8);
                 writer.WriteStringValue(AzureHybridBenefit.Value.ToString());

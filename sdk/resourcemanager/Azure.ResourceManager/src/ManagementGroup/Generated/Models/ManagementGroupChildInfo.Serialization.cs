@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ChildType))
+            if (ChildType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ChildType.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<ManagementGroupChildInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> displayName = default;
-            Optional<IReadOnlyList<ManagementGroupChildInfo>> children = default;
+            IReadOnlyList<ManagementGroupChildInfo> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeManagementGroupChildInfo(item));
+                        array.Add(DeserializeManagementGroupChildInfo(item, options));
                     }
                     children = array;
                     continue;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupChildInfo(Optional.ToNullable(type), id.Value, name.Value, displayName.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupChildInfo(
+                Optional.ToNullable(type),
+                id.Value,
+                name.Value,
+                displayName.Value,
+                children ?? new ChangeTrackingList<ManagementGroupChildInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupChildInfo>.Write(ModelReaderWriterOptions options)

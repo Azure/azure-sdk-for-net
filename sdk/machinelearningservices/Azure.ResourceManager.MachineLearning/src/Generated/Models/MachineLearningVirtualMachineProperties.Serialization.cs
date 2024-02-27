@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualMachineSize))
+            if (VirtualMachineSize != null)
             {
                 writer.WritePropertyName("virtualMachineSize"u8);
                 writer.WriteStringValue(VirtualMachineSize);
             }
-            if (Optional.IsDefined(SshPort))
+            if (SshPort.HasValue)
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Optional.IsDefined(NotebookServerPort))
+            if (NotebookServerPort.HasValue)
             {
                 writer.WritePropertyName("notebookServerPort"u8);
                 writer.WriteNumberValue(NotebookServerPort.Value);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (Optional.IsDefined(AdministratorAccount))
+            if (AdministratorAccount != null)
             {
                 if (AdministratorAccount != null)
                 {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("administratorAccount");
                 }
             }
-            if (Optional.IsDefined(IsNotebookInstanceCompute))
+            if (IsNotebookInstanceCompute.HasValue)
             {
                 writer.WritePropertyName("isNotebookInstanceCompute"u8);
                 writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         administratorAccount = null;
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isNotebookInstanceCompute"u8))
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute), serializedAdditionalRawData);
+            return new MachineLearningVirtualMachineProperties(
+                virtualMachineSize.Value,
+                Optional.ToNullable(sshPort),
+                Optional.ToNullable(notebookServerPort),
+                address.Value,
+                administratorAccount.Value,
+                Optional.ToNullable(isNotebookInstanceCompute),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVirtualMachineProperties>.Write(ModelReaderWriterOptions options)

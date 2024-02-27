@@ -19,49 +19,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
+            if (AzureTableDefaultPartitionKeyValue != null)
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
                 writer.WriteObjectValue(AzureTableDefaultPartitionKeyValue);
             }
-            if (Optional.IsDefined(AzureTablePartitionKeyName))
+            if (AzureTablePartitionKeyName != null)
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
                 writer.WriteObjectValue(AzureTablePartitionKeyName);
             }
-            if (Optional.IsDefined(AzureTableRowKeyName))
+            if (AzureTableRowKeyName != null)
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
                 writer.WriteObjectValue(AzureTableRowKeyName);
             }
-            if (Optional.IsDefined(AzureTableInsertType))
+            if (AzureTableInsertType != null)
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
                 writer.WriteObjectValue(AzureTableInsertType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, azureTableDefaultPartitionKeyValue.Value, azureTablePartitionKeyName.Value, azureTableRowKeyName.Value, azureTableInsertType.Value);
+            return new AzureTableSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                azureTableDefaultPartitionKeyValue.Value,
+                azureTablePartitionKeyName.Value,
+                azureTableRowKeyName.Value,
+                azureTableInsertType.Value);
         }
 
         internal partial class AzureTableSinkConverter : JsonConverter<AzureTableSink>

@@ -82,10 +82,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<LatencyScorecard>> GetLatencyScorecardsAsync(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var message = CreateGetLatencyScorecardsRequest(subscriptionId, resourceGroupName, profileName, experimentName, aggregationInterval, endOn, country);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -116,10 +144,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<LatencyScorecard> GetLatencyScorecards(string subscriptionId, string resourceGroupName, string profileName, string experimentName, LatencyScorecardAggregationInterval aggregationInterval, DateTimeOffset? endOn = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var message = CreateGetLatencyScorecardsRequest(subscriptionId, resourceGroupName, profileName, experimentName, aggregationInterval, endOn, country);
             _pipeline.Send(message, cancellationToken);
@@ -188,10 +244,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FrontDoorTimeSeriesInfo>> GetTimeSeriesAsync(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var message = CreateGetTimeSeriesRequest(subscriptionId, resourceGroupName, profileName, experimentName, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -225,10 +309,38 @@ namespace Azure.ResourceManager.FrontDoor
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FrontDoorTimeSeriesInfo> GetTimeSeries(string subscriptionId, string resourceGroupName, string profileName, string experimentName, DateTimeOffset startOn, DateTimeOffset endOn, FrontDoorTimeSeriesAggregationInterval aggregationInterval, FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (profileName == null)
+            {
+                throw new ArgumentNullException(nameof(profileName));
+            }
+            if (profileName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(profileName));
+            }
+            if (experimentName == null)
+            {
+                throw new ArgumentNullException(nameof(experimentName));
+            }
+            if (experimentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(experimentName));
+            }
 
             using var message = CreateGetTimeSeriesRequest(subscriptionId, resourceGroupName, profileName, experimentName, startOn, endOn, aggregationInterval, timeSeriesType, endpoint, country);
             _pipeline.Send(message, cancellationToken);

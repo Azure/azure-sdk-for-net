@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -55,47 +55,47 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(DscNodeReportType))
+            if (DscNodeReportType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscNodeReportType);
             }
-            if (Optional.IsDefined(ReportId))
+            if (ReportId != null)
             {
                 writer.WritePropertyName("reportId"u8);
                 writer.WriteStringValue(ReportId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(RefreshMode))
+            if (RefreshMode != null)
             {
                 writer.WritePropertyName("refreshMode"u8);
                 writer.WriteStringValue(RefreshMode);
             }
-            if (Optional.IsDefined(RebootRequested))
+            if (RebootRequested != null)
             {
                 writer.WritePropertyName("rebootRequested"u8);
                 writer.WriteStringValue(RebootRequested);
             }
-            if (Optional.IsDefined(ReportFormatVersion))
+            if (ReportFormatVersion != null)
             {
                 writer.WritePropertyName("reportFormatVersion"u8);
                 writer.WriteStringValue(ReportFormatVersion);
             }
-            if (Optional.IsDefined(ConfigurationVersion))
+            if (ConfigurationVersion != null)
             {
                 writer.WritePropertyName("configurationVersion"u8);
                 writer.WriteStringValue(ConfigurationVersion);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsCollectionDefined(Errors))
+            if (!(Errors is ChangeTrackingList<DscReportError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<DscReportResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -115,17 +115,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MetaConfiguration))
+            if (MetaConfiguration != null)
             {
                 writer.WritePropertyName("metaConfiguration"u8);
                 writer.WriteObjectValue(MetaConfiguration);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsCollectionDefined(IPV4Addresses))
+            if (!(IPV4Addresses is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("iPV4Addresses"u8);
                 writer.WriteStartArray();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPV6Addresses))
+            if (!(IPV6Addresses is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("iPV6Addresses"u8);
                 writer.WriteStartArray();
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NumberOfResources))
+            if (NumberOfResources.HasValue)
             {
                 writer.WritePropertyName("numberOfResources"u8);
                 writer.WriteNumberValue(NumberOfResources.Value);
             }
-            if (Optional.IsDefined(RawErrors))
+            if (RawErrors != null)
             {
                 writer.WritePropertyName("rawErrors"u8);
                 writer.WriteStringValue(RawErrors);
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> reportFormatVersion = default;
             Optional<string> configurationVersion = default;
             Optional<string> id = default;
-            Optional<IReadOnlyList<DscReportError>> errors = default;
-            Optional<IReadOnlyList<DscReportResource>> resources = default;
+            IReadOnlyList<DscReportError> errors = default;
+            IReadOnlyList<DscReportResource> resources = default;
             Optional<DscMetaConfiguration> metaConfiguration = default;
             Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> ipV4Addresses = default;
-            Optional<IReadOnlyList<string>> ipV6Addresses = default;
+            IReadOnlyList<string> ipV4Addresses = default;
+            IReadOnlyList<string> ipV6Addresses = default;
             Optional<int> numberOfResources = default;
             Optional<string> rawErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportError> array = new List<DscReportError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportError.DeserializeDscReportError(item));
+                        array.Add(DscReportError.DeserializeDscReportError(item, options));
                     }
                     errors = array;
                     continue;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResource> array = new List<DscReportResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResource.DeserializeDscReportResource(item));
+                        array.Add(DscReportResource.DeserializeDscReportResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value);
+                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hostName"u8))
@@ -375,7 +375,27 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Optional.ToList(errors), Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Optional.ToList(ipV4Addresses), Optional.ToList(ipV6Addresses), Optional.ToNullable(numberOfResources), rawErrors.Value, serializedAdditionalRawData);
+            return new DscNodeReport(
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(startTime),
+                type.Value,
+                reportId.Value,
+                status.Value,
+                refreshMode.Value,
+                rebootRequested.Value,
+                reportFormatVersion.Value,
+                configurationVersion.Value,
+                id.Value,
+                errors ?? new ChangeTrackingList<DscReportError>(),
+                resources ?? new ChangeTrackingList<DscReportResource>(),
+                metaConfiguration.Value,
+                hostName.Value,
+                ipV4Addresses ?? new ChangeTrackingList<string>(),
+                ipV6Addresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(numberOfResources),
+                rawErrors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)

@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Optional.IsDefined(Product))
+            if (Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 writer.WriteStringValue(Plan);
             }
-            if (Optional.IsDefined(LicenseTextLink))
+            if (LicenseTextLink != null)
             {
                 writer.WritePropertyName("licenseTextLink"u8);
                 writer.WriteStringValue(LicenseTextLink);
             }
-            if (Optional.IsDefined(PrivacyPolicyLink))
+            if (PrivacyPolicyLink != null)
             {
                 writer.WritePropertyName("privacyPolicyLink"u8);
                 writer.WriteStringValue(PrivacyPolicyLink);
             }
-            if (Optional.IsDefined(RetrieveDatetime))
+            if (RetrieveDatetime.HasValue)
             {
                 writer.WritePropertyName("retrieveDatetime"u8);
                 writer.WriteStringValue(RetrieveDatetime.Value, "O");
             }
-            if (Optional.IsDefined(Signature))
+            if (Signature != null)
             {
                 writer.WritePropertyName("signature"u8);
                 writer.WriteStringValue(Signature);
             }
-            if (Optional.IsDefined(Accepted))
+            if (Accepted.HasValue)
             {
                 writer.WritePropertyName("accepted"u8);
                 writer.WriteBooleanValue(Accepted.Value);
@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogAgreementProperties(publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new DatadogAgreementProperties(
+                publisher.Value,
+                product.Value,
+                plan.Value,
+                licenseTextLink.Value,
+                privacyPolicyLink.Value,
+                Optional.ToNullable(retrieveDatetime),
+                signature.Value,
+                Optional.ToNullable(accepted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogAgreementProperties>.Write(ModelReaderWriterOptions options)

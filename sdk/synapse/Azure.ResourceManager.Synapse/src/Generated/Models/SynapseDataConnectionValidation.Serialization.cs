@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataConnectionName))
+            if (DataConnectionName != null)
             {
                 writer.WritePropertyName("dataConnectionName"u8);
                 writer.WriteStringValue(DataConnectionName);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    properties = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(property.Value);
+                    properties = SynapseDataConnectionData.DeserializeSynapseDataConnectionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

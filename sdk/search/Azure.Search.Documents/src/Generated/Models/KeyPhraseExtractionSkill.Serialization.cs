@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (DefaultLanguageCode.HasValue)
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,7 +28,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(MaxKeyPhraseCount))
+            if (MaxKeyPhraseCount.HasValue)
             {
                 if (MaxKeyPhraseCount != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxKeyPhraseCount");
                 }
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (ModelVersion != null)
             {
                 if (ModelVersion != null)
                 {
@@ -54,17 +54,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -174,7 +174,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeyPhraseExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(maxKeyPhraseCount), modelVersion.Value);
+            return new KeyPhraseExtractionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(defaultLanguageCode),
+                Optional.ToNullable(maxKeyPhraseCount),
+                modelVersion.Value);
         }
     }
 }

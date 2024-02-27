@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeletedSiteId))
+            if (DeletedSiteId != null)
             {
                 writer.WritePropertyName("deletedSiteId"u8);
                 writer.WriteStringValue(DeletedSiteId);
             }
-            if (Optional.IsDefined(RecoverConfiguration))
+            if (RecoverConfiguration.HasValue)
             {
                 writer.WritePropertyName("recoverConfiguration"u8);
                 writer.WriteBooleanValue(RecoverConfiguration.Value);
             }
-            if (Optional.IsDefined(SnapshotTime))
+            if (SnapshotTime != null)
             {
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotTime);
             }
-            if (Optional.IsDefined(UseDRSecondary))
+            if (UseDRSecondary.HasValue)
             {
                 writer.WritePropertyName("useDRSecondary"u8);
                 writer.WriteBooleanValue(UseDRSecondary.Value);
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAppRestoreContent(id, name, type, systemData.Value, deletedSiteId.Value, Optional.ToNullable(recoverConfiguration), snapshotTime.Value, Optional.ToNullable(useDRSecondary), kind.Value, serializedAdditionalRawData);
+            return new DeletedAppRestoreContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deletedSiteId.Value,
+                Optional.ToNullable(recoverConfiguration),
+                snapshotTime.Value,
+                Optional.ToNullable(useDRSecondary),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAppRestoreContent>.Write(ModelReaderWriterOptions options)

@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Address))
+            if (options.Format != "W" && Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteObjectValue(Location);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatIntelligence))
+            if (options.Format != "W" && !(ThreatIntelligence is ChangeTrackingList<SecurityInsightsThreatIntelligence> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threatIntelligence"u8);
                 writer.WriteStartArray();
@@ -144,11 +144,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<IPAddress> address = default;
             Optional<SecurityInsightsIPEntityGeoLocation> location = default;
-            Optional<IReadOnlyList<SecurityInsightsThreatIntelligence>> threatIntelligence = default;
+            IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            location = SecurityInsightsIPEntityGeoLocation.DeserializeSecurityInsightsIPEntityGeoLocation(property0.Value);
+                            location = SecurityInsightsIPEntityGeoLocation.DeserializeSecurityInsightsIPEntityGeoLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("threatIntelligence"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
                             }
                             threatIntelligence = array;
                             continue;
@@ -258,7 +258,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIPEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, address.Value, location.Value, Optional.ToList(threatIntelligence));
+            return new SecurityInsightsIPEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                address.Value,
+                location.Value,
+                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>());
         }
 
         BinaryData IPersistableModel<SecurityInsightsIPEntity>.Write(ModelReaderWriterOptions options)

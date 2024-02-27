@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DurationInSeconds))
+            if (DurationInSeconds.HasValue)
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (Optional.IsDefined(NumberOfPacketsToCapture))
+            if (NumberOfPacketsToCapture.HasValue)
             {
                 writer.WritePropertyName("numberOfPacketsToCapture"u8);
                 writer.WriteNumberValue(NumberOfPacketsToCapture.Value);
             }
-            if (Optional.IsDefined(SasUri))
+            if (SasUri != null)
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(FileName))
+            if (FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Flags))
+            if (!(Flags is ChangeTrackingList<AzureFirewallPacketCaptureFlags> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("flags"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<AzureFirewallPacketCaptureRule> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -123,8 +123,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<Uri> sasUrl = default;
             Optional<string> fileName = default;
             Optional<AzureFirewallNetworkRuleProtocol> protocol = default;
-            Optional<IList<AzureFirewallPacketCaptureFlags>> flags = default;
-            Optional<IList<AzureFirewallPacketCaptureRule>> filters = default;
+            IList<AzureFirewallPacketCaptureFlags> flags = default;
+            IList<AzureFirewallPacketCaptureRule> filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallPacketCaptureFlags> array = new List<AzureFirewallPacketCaptureFlags>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item));
+                                array.Add(AzureFirewallPacketCaptureFlags.DeserializeAzureFirewallPacketCaptureFlags(item, options));
                             }
                             flags = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallPacketCaptureRule> array = new List<AzureFirewallPacketCaptureRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item));
+                                array.Add(AzureFirewallPacketCaptureRule.DeserializeAzureFirewallPacketCaptureRule(item, options));
                             }
                             filters = array;
                             continue;
@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPacketCaptureContent(id.Value, serializedAdditionalRawData, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), Optional.ToList(flags), Optional.ToList(filters));
+            return new FirewallPacketCaptureContent(
+                id.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(durationInSeconds),
+                Optional.ToNullable(numberOfPacketsToCapture),
+                sasUrl.Value,
+                fileName.Value,
+                Optional.ToNullable(protocol),
+                flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
+                filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
         }
 
         BinaryData IPersistableModel<FirewallPacketCaptureContent>.Write(ModelReaderWriterOptions options)

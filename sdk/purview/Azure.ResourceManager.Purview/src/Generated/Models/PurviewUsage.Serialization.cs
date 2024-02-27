@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            if (options.Format != "W" && CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value);
+                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewUsage(Optional.ToNullable(currentValue), id.Value, Optional.ToNullable(limit), name.Value, unit.Value, serializedAdditionalRawData);
+            return new PurviewUsage(
+                Optional.ToNullable(currentValue),
+                id.Value,
+                Optional.ToNullable(limit),
+                name.Value,
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewUsage>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsPushEnabled))
+            if (IsPushEnabled.HasValue)
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Optional.IsDefined(TagWhitelistJson))
+            if (TagWhitelistJson != null)
             {
                 writer.WritePropertyName("tagWhitelistJson"u8);
                 writer.WriteStringValue(TagWhitelistJson);
             }
-            if (Optional.IsDefined(TagsRequiringAuth))
+            if (TagsRequiringAuth != null)
             {
                 writer.WritePropertyName("tagsRequiringAuth"u8);
                 writer.WriteStringValue(TagsRequiringAuth);
             }
-            if (Optional.IsDefined(DynamicTagsJson))
+            if (DynamicTagsJson != null)
             {
                 writer.WritePropertyName("dynamicTagsJson"u8);
                 writer.WriteStringValue(DynamicTagsJson);
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppPushSettings(id, name, type, systemData.Value, Optional.ToNullable(isPushEnabled), tagWhitelistJson.Value, tagsRequiringAuth.Value, dynamicTagsJson.Value, kind.Value, serializedAdditionalRawData);
+            return new WebAppPushSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isPushEnabled),
+                tagWhitelistJson.Value,
+                tagsRequiringAuth.Value,
+                dynamicTagsJson.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppPushSettings>.Write(ModelReaderWriterOptions options)

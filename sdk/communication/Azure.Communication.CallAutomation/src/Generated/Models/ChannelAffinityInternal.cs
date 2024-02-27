@@ -7,7 +7,6 @@
 
 using System;
 using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -22,7 +21,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="participant"/> is null. </exception>
         public ChannelAffinityInternal(CommunicationIdentifierModel participant)
         {
-            Argument.AssertNotNull(participant, nameof(participant));
+            if (participant == null)
+            {
+                throw new ArgumentNullException(nameof(participant));
+            }
 
             Participant = participant;
         }

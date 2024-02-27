@@ -27,54 +27,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowedGroups))
+            if (AllowedGroups != null)
             {
                 writer.WritePropertyName("allowedGroups"u8);
                 JsonSerializer.Serialize(writer, AllowedGroups);
             }
-            if (Optional.IsDefined(UserScopeFilterUri))
+            if (UserScopeFilterUri != null)
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
                 JsonSerializer.Serialize(writer, UserScopeFilterUri);
             }
-            if (Optional.IsDefined(DateFilterColumn))
+            if (DateFilterColumn != null)
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
                 JsonSerializer.Serialize(writer, DateFilterColumn);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 JsonSerializer.Serialize(writer, StartOn);
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 JsonSerializer.Serialize(writer, EndOn);
             }
-            if (Optional.IsDefined(OutputColumns))
+            if (OutputColumns != null)
             {
                 writer.WritePropertyName("outputColumns"u8);
                 JsonSerializer.Serialize(writer, OutputColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                allowedGroups.Value,
+                userScopeFilterUri.Value,
+                dateFilterColumn.Value,
+                startTime.Value,
+                endTime.Value,
+                outputColumns.Value);
         }
 
         BinaryData IPersistableModel<Office365Source>.Write(ModelReaderWriterOptions options)

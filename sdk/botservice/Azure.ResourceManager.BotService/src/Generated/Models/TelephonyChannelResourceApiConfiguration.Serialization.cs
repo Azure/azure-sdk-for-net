@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ProviderName))
+            if (ProviderName != null)
             {
                 if (ProviderName != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("providerName");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (CognitiveServiceSubscriptionKey != null)
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (CognitiveServiceRegion != null)
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceResourceId))
+            if (CognitiveServiceResourceId != null)
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (DefaultLocale != null)
             {
                 if (DefaultLocale != null)
                 {
@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyChannelResourceApiConfiguration(id.Value, providerName.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, serializedAdditionalRawData);
+            return new TelephonyChannelResourceApiConfiguration(
+                id.Value,
+                providerName.Value,
+                cognitiveServiceSubscriptionKey.Value,
+                cognitiveServiceRegion.Value,
+                cognitiveServiceResourceId.Value,
+                defaultLocale.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyChannelResourceApiConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType != null)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubRequestId))
+            if (options.Format != "W" && SubRequestId.HasValue)
             {
                 writer.WritePropertyName("subRequestId"u8);
                 writer.WriteStringValue(SubRequestId.Value);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubContent(Optional.ToNullable(limit), name.Value, resourceType.Value, unit.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(subRequestId), serializedAdditionalRawData);
+            return new SubContent(
+                Optional.ToNullable(limit),
+                name.Value,
+                resourceType.Value,
+                unit.Value,
+                Optional.ToNullable(provisioningState),
+                message.Value,
+                Optional.ToNullable(subRequestId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubContent>.Write(ModelReaderWriterOptions options)

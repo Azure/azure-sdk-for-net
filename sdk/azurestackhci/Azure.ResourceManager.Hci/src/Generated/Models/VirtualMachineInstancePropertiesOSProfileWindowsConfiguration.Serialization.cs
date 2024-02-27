@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableAutomaticUpdates))
+            if (EnableAutomaticUpdates.HasValue)
             {
                 writer.WritePropertyName("enableAutomaticUpdates"u8);
                 writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
             }
-            if (Optional.IsDefined(Ssh))
+            if (Ssh != null)
             {
                 writer.WritePropertyName("ssh"u8);
                 writer.WriteObjectValue(Ssh);
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ProvisionVmAgent))
+            if (ProvisionVmAgent.HasValue)
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(ProvisionVmConfigAgent))
+            if (ProvisionVmConfigAgent.HasValue)
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
+                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("timeZone"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(Optional.ToNullable(enableAutomaticUpdates), ssh.Value, timeZone.Value, Optional.ToNullable(provisionVmAgent), Optional.ToNullable(provisionVmConfigAgent), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesOSProfileWindowsConfiguration(
+                Optional.ToNullable(enableAutomaticUpdates),
+                ssh.Value,
+                timeZone.Value,
+                Optional.ToNullable(provisionVmAgent),
+                Optional.ToNullable(provisionVmConfigAgent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>.Write(ModelReaderWriterOptions options)

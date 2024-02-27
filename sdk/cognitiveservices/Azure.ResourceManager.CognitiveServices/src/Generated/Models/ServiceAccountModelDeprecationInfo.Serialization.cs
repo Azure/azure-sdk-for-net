@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FineTuneOn))
+            if (FineTuneOn.HasValue)
             {
                 writer.WritePropertyName("fineTune"u8);
                 writer.WriteStringValue(FineTuneOn.Value, "O");
             }
-            if (Optional.IsDefined(InferenceOn))
+            if (InferenceOn.HasValue)
             {
                 writer.WritePropertyName("inference"u8);
                 writer.WriteStringValue(InferenceOn.Value, "O");

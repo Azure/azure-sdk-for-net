@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OverrideSettings))
+            if (OverrideSettings != null)
             {
                 writer.WritePropertyName("overrideSettings"u8);
                 writer.WriteObjectValue(OverrideSettings);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(property.Value);
+                    overrideSettings = UpgradeOverrideSettings.DeserializeUpgradeOverrideSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

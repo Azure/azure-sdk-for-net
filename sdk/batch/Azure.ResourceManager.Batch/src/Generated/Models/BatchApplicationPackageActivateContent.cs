@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         public BatchApplicationPackageActivateContent(string format)
         {
-            Argument.AssertNotNull(format, nameof(format));
+            if (format == null)
+            {
+                throw new ArgumentNullException(nameof(format));
+            }
 
             Format = format;
         }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaximumMemoryMB))
+            if (MaximumMemoryMB.HasValue)
             {
                 writer.WritePropertyName("maximumMemoryMB"u8);
                 writer.WriteNumberValue(MaximumMemoryMB.Value);
             }
-            if (Optional.IsDefined(MinimumMemoryMB))
+            if (MinimumMemoryMB.HasValue)
             {
                 writer.WritePropertyName("minimumMemoryMB"u8);
                 writer.WriteNumberValue(MinimumMemoryMB.Value);
             }
-            if (Optional.IsDefined(TargetMemoryBuffer))
+            if (TargetMemoryBuffer.HasValue)
             {
                 writer.WritePropertyName("targetMemoryBuffer"u8);
                 writer.WriteNumberValue(TargetMemoryBuffer.Value);

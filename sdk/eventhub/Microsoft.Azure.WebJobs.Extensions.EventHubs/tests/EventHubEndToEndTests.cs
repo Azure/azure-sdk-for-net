@@ -886,7 +886,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         EventHubConsumerClient.DefaultConsumerGroupName,
                         partition,
                         producer.Identifier,
-                        new CheckpointPosition(-1, -1),
+                        new CheckpointPosition(-1),
                         CancellationToken.None);
                 }
             }

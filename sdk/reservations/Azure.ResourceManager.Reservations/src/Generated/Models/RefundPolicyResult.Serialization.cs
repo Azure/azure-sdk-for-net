@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationRefundPolicyResultProperty.DeserializeReservationRefundPolicyResultProperty(property.Value);
+                    properties = ReservationRefundPolicyResultProperty.DeserializeReservationRefundPolicyResultProperty(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<WorkItemConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<WorkItemConfiguration>> value = default;
+            IReadOnlyList<WorkItemConfiguration> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkItemConfiguration> array = new List<WorkItemConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkItemConfiguration.DeserializeWorkItemConfiguration(item));
+                        array.Add(WorkItemConfiguration.DeserializeWorkItemConfiguration(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkItemConfigurationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new WorkItemConfigurationsListResult(value ?? new ChangeTrackingList<WorkItemConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkItemConfigurationsListResult>.Write(ModelReaderWriterOptions options)

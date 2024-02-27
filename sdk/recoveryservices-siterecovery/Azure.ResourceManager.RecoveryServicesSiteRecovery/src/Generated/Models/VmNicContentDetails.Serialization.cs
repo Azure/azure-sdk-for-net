@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NicId))
+            if (NicId != null)
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (Optional.IsCollectionDefined(IPConfigs))
+            if (!(IPConfigs is ChangeTrackingList<HyperVFailoverIPConfigDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigs"u8);
                 writer.WriteStartArray();
@@ -41,62 +41,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SelectionType))
+            if (SelectionType != null)
             {
                 writer.WritePropertyName("selectionType"u8);
                 writer.WriteStringValue(SelectionType);
             }
-            if (Optional.IsDefined(RecoveryNetworkSecurityGroupId))
+            if (RecoveryNetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("recoveryNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(RecoveryNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(IsAcceleratedNetworkingOnRecoveryEnabled))
+            if (IsAcceleratedNetworkingOnRecoveryEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnRecovery"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnRecoveryEnabled.Value);
             }
-            if (Optional.IsDefined(TfoNetworkSecurityGroupId))
+            if (TfoNetworkSecurityGroupId != null)
             {
                 writer.WritePropertyName("tfoNetworkSecurityGroupId"u8);
                 writer.WriteStringValue(TfoNetworkSecurityGroupId);
             }
-            if (Optional.IsDefined(IsAcceleratedNetworkingOnTfoEnabled))
+            if (IsAcceleratedNetworkingOnTfoEnabled.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworkingOnTfo"u8);
                 writer.WriteBooleanValue(IsAcceleratedNetworkingOnTfoEnabled.Value);
             }
-            if (Optional.IsDefined(RecoveryNicName))
+            if (RecoveryNicName != null)
             {
                 writer.WritePropertyName("recoveryNicName"u8);
                 writer.WriteStringValue(RecoveryNicName);
             }
-            if (Optional.IsDefined(RecoveryNicResourceGroupName))
+            if (RecoveryNicResourceGroupName != null)
             {
                 writer.WritePropertyName("recoveryNicResourceGroupName"u8);
                 writer.WriteStringValue(RecoveryNicResourceGroupName);
             }
-            if (Optional.IsDefined(IsReuseExistingNicAllowed))
+            if (IsReuseExistingNicAllowed.HasValue)
             {
                 writer.WritePropertyName("reuseExistingNic"u8);
                 writer.WriteBooleanValue(IsReuseExistingNicAllowed.Value);
             }
-            if (Optional.IsDefined(TfoNicName))
+            if (TfoNicName != null)
             {
                 writer.WritePropertyName("tfoNicName"u8);
                 writer.WriteStringValue(TfoNicName);
             }
-            if (Optional.IsDefined(TfoNicResourceGroupName))
+            if (TfoNicResourceGroupName != null)
             {
                 writer.WritePropertyName("tfoNicResourceGroupName"u8);
                 writer.WriteStringValue(TfoNicResourceGroupName);
             }
-            if (Optional.IsDefined(IsTfoReuseExistingNicAllowed))
+            if (IsTfoReuseExistingNicAllowed.HasValue)
             {
                 writer.WritePropertyName("tfoReuseExistingNic"u8);
                 writer.WriteBooleanValue(IsTfoReuseExistingNicAllowed.Value);
             }
-            if (Optional.IsDefined(TargetNicName))
+            if (TargetNicName != null)
             {
                 writer.WritePropertyName("targetNicName"u8);
                 writer.WriteStringValue(TargetNicName);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             Optional<string> nicId = default;
-            Optional<IList<HyperVFailoverIPConfigDetails>> ipConfigs = default;
+            IList<HyperVFailoverIPConfigDetails> ipConfigs = default;
             Optional<string> selectionType = default;
             Optional<string> recoveryNetworkSecurityGroupId = default;
             Optional<bool> enableAcceleratedNetworkingOnRecovery = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVFailoverIPConfigDetails> array = new List<HyperVFailoverIPConfigDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVFailoverIPConfigDetails.DeserializeHyperVFailoverIPConfigDetails(item));
+                        array.Add(HyperVFailoverIPConfigDetails.DeserializeHyperVFailoverIPConfigDetails(item, options));
                     }
                     ipConfigs = array;
                     continue;
@@ -258,7 +258,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmNicContentDetails(nicId.Value, Optional.ToList(ipConfigs), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoNicName.Value, tfoNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value, serializedAdditionalRawData);
+            return new VmNicContentDetails(
+                nicId.Value,
+                ipConfigs ?? new ChangeTrackingList<HyperVFailoverIPConfigDetails>(),
+                selectionType.Value,
+                recoveryNetworkSecurityGroupId.Value,
+                Optional.ToNullable(enableAcceleratedNetworkingOnRecovery),
+                tfoNetworkSecurityGroupId.Value,
+                Optional.ToNullable(enableAcceleratedNetworkingOnTfo),
+                recoveryNicName.Value,
+                recoveryNicResourceGroupName.Value,
+                Optional.ToNullable(reuseExistingNic),
+                tfoNicName.Value,
+                tfoNicResourceGroupName.Value,
+                Optional.ToNullable(tfoReuseExistingNic),
+                targetNicName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmNicContentDetails>.Write(ModelReaderWriterOptions options)

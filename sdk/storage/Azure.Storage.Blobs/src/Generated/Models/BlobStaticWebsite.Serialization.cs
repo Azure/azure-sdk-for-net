@@ -19,19 +19,19 @@ namespace Azure.Storage.Blobs.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IndexDocument))
+            if (IndexDocument != null)
             {
                 writer.WriteStartElement("IndexDocument");
                 writer.WriteValue(IndexDocument);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(ErrorDocument404Path))
+            if (ErrorDocument404Path != null)
             {
                 writer.WriteStartElement("ErrorDocument404Path");
                 writer.WriteValue(ErrorDocument404Path);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DefaultIndexDocumentPath))
+            if (DefaultIndexDocumentPath != null)
             {
                 writer.WriteStartElement("DefaultIndexDocumentPath");
                 writer.WriteValue(DefaultIndexDocumentPath);

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BmcCredentials))
+            if (BmcCredentials != null)
             {
                 writer.WritePropertyName("bmcCredentials"u8);
                 writer.WriteObjectValue(BmcCredentials);
             }
-            if (Optional.IsDefined(BmcMacAddress))
+            if (BmcMacAddress != null)
             {
                 writer.WritePropertyName("bmcMacAddress"u8);
                 writer.WriteStringValue(BmcMacAddress);
             }
-            if (Optional.IsDefined(BootMacAddress))
+            if (BootMacAddress != null)
             {
                 writer.WritePropertyName("bootMacAddress"u8);
                 writer.WriteStringValue(BootMacAddress);
             }
-            if (Optional.IsDefined(MachineName))
+            if (MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value);
+                    bmcCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("bmcMacAddress"u8))
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineReplaceContent(bmcCredentials.Value, bmcMacAddress.Value, bootMacAddress.Value, machineName.Value, serialNumber.Value, serializedAdditionalRawData);
+            return new BareMetalMachineReplaceContent(
+                bmcCredentials.Value,
+                bmcMacAddress.Value,
+                bootMacAddress.Value,
+                machineName.Value,
+                serialNumber.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineReplaceContent>.Write(ModelReaderWriterOptions options)

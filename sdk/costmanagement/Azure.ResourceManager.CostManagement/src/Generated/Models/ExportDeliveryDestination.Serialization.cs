@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (Optional.IsDefined(RootFolderPath))
+            if (RootFolderPath != null)
             {
                 writer.WritePropertyName("rootFolderPath"u8);
                 writer.WriteStringValue(RootFolderPath);
             }
-            if (Optional.IsDefined(SasToken))
+            if (SasToken != null)
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportDeliveryDestination(resourceId.Value, container, rootFolderPath.Value, sasToken.Value, storageAccount.Value, serializedAdditionalRawData);
+            return new ExportDeliveryDestination(
+                resourceId.Value,
+                container,
+                rootFolderPath.Value,
+                sasToken.Value,
+                storageAccount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDeliveryDestination>.Write(ModelReaderWriterOptions options)

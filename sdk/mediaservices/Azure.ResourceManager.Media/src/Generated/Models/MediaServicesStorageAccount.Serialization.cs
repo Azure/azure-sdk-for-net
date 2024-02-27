@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value);
+                    identity = ResourceIdentity.DeserializeResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))

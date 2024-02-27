@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RunId))
+            if (options.Format != "W" && RunId.HasValue)
             {
                 writer.WritePropertyName("runId"u8);
                 writer.WriteStringValue(RunId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RunGroupId))
+            if (options.Format != "W" && RunGroupId != null)
             {
                 writer.WritePropertyName("runGroupId"u8);
                 writer.WriteStringValue(RunGroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsLatest))
+            if (options.Format != "W" && IsLatest.HasValue)
             {
                 writer.WritePropertyName("isLatest"u8);
                 writer.WriteBooleanValue(IsLatest.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineName))
+            if (options.Format != "W" && PipelineName != null)
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Parameters))
+            if (options.Format != "W" && !(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RunDimensions))
+            if (options.Format != "W" && !(RunDimensions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -68,37 +68,37 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(InvokedBy))
+            if (options.Format != "W" && InvokedBy != null)
             {
                 writer.WritePropertyName("invokedBy"u8);
                 writer.WriteObjectValue(InvokedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunStartOn))
+            if (options.Format != "W" && RunStartOn.HasValue)
             {
                 writer.WritePropertyName("runStart"u8);
                 writer.WriteStringValue(RunStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RunEndOn))
+            if (options.Format != "W" && RunEndOn.HasValue)
             {
                 writer.WritePropertyName("runEnd"u8);
                 writer.WriteStringValue(RunEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DurationInMs))
+            if (options.Format != "W" && DurationInMs.HasValue)
             {
                 writer.WritePropertyName("durationInMs"u8);
                 writer.WriteNumberValue(DurationInMs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
             Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
-            Optional<IReadOnlyDictionary<string, string>> runDimensions = default;
+            IReadOnlyDictionary<string, string> parameters = default;
+            IReadOnlyDictionary<string, string> runDimensions = default;
             Optional<DataFactoryPipelineRunEntityInfo> invokedBy = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> runStart = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value);
+                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"u8))
@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunInfo(Optional.ToNullable(runId), runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), Optional.ToDictionary(runDimensions), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new DataFactoryPipelineRunInfo(
+                Optional.ToNullable(runId),
+                runGroupId.Value,
+                Optional.ToNullable(isLatest),
+                pipelineName.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, string>(),
+                invokedBy.Value,
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(runStart),
+                Optional.ToNullable(runEnd),
+                Optional.ToNullable(durationInMs),
+                status.Value,
+                message.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunInfo>.Write(ModelReaderWriterOptions options)

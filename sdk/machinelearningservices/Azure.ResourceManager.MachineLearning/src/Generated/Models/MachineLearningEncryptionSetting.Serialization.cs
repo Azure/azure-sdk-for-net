@@ -26,26 +26,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CosmosDBResourceId))
+            if (CosmosDBResourceId != null)
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
                 writer.WriteStringValue(CosmosDBResourceId);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties);
-            if (Optional.IsDefined(SearchAccountResourceId))
+            if (SearchAccountResourceId != null)
             {
                 writer.WritePropertyName("searchAccountResourceId"u8);
                 writer.WriteStringValue(SearchAccountResourceId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value);
+                    identity = MachineLearningCmkIdentity.DeserializeMachineLearningCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"u8))
                 {
-                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
+                    keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchAccountResourceId"u8))
@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningEncryptionSetting(cosmosDbResourceId.Value, identity.Value, keyVaultProperties, searchAccountResourceId.Value, status, storageAccountResourceId.Value, serializedAdditionalRawData);
+            return new MachineLearningEncryptionSetting(
+                cosmosDbResourceId.Value,
+                identity.Value,
+                keyVaultProperties,
+                searchAccountResourceId.Value,
+                status,
+                storageAccountResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningEncryptionSetting>.Write(ModelReaderWriterOptions options)

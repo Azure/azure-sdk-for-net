@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Hops))
+            if (options.Format != "W" && !(Hops is ChangeTrackingList<ConnectivityHop> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hops"u8);
                 writer.WriteStartArray();
@@ -36,32 +36,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            if (options.Format != "W" && ConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AvgLatencyInMs))
+            if (options.Format != "W" && AvgLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("avgLatencyInMs"u8);
                 writer.WriteNumberValue(AvgLatencyInMs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinLatencyInMs))
+            if (options.Format != "W" && MinLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("minLatencyInMs"u8);
                 writer.WriteNumberValue(MinLatencyInMs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxLatencyInMs))
+            if (options.Format != "W" && MaxLatencyInMs.HasValue)
             {
                 writer.WritePropertyName("maxLatencyInMs"u8);
                 writer.WriteNumberValue(MaxLatencyInMs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProbesSent))
+            if (options.Format != "W" && ProbesSent.HasValue)
             {
                 writer.WritePropertyName("probesSent"u8);
                 writer.WriteNumberValue(ProbesSent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProbesFailed))
+            if (options.Format != "W" && ProbesFailed.HasValue)
             {
                 writer.WritePropertyName("probesFailed"u8);
                 writer.WriteNumberValue(ProbesFailed.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
+            IReadOnlyList<ConnectivityHop> hops = default;
             Optional<ConnectionStatus> connectionStatus = default;
             Optional<long> avgLatencyInMs = default;
             Optional<long> minLatencyInMs = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityHop> array = new List<ConnectivityHop>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
+                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item, options));
                     }
                     hops = array;
                     continue;
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckResult(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
+            return new ConnectivityCheckResult(
+                hops ?? new ChangeTrackingList<ConnectivityHop>(),
+                Optional.ToNullable(connectionStatus),
+                Optional.ToNullable(avgLatencyInMs),
+                Optional.ToNullable(minLatencyInMs),
+                Optional.ToNullable(maxLatencyInMs),
+                Optional.ToNullable(probesSent),
+                Optional.ToNullable(probesFailed),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckResult>.Write(ModelReaderWriterOptions options)

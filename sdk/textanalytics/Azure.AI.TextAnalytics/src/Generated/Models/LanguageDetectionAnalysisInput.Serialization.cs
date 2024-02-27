@@ -15,7 +15,7 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Documents))
+            if (!(Documents is ChangeTrackingList<LanguageInput> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("documents"u8);
                 writer.WriteStartArray();

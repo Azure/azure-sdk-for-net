@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CorrelationId))
+            if (CorrelationId.HasValue)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(CanOverwrite))
+            if (CanOverwrite.HasValue)
             {
                 writer.WritePropertyName("overwrite"u8);
                 writer.WriteBooleanValue(CanOverwrite.Value);
             }
-            if (Optional.IsDefined(CloneCustomHostNames))
+            if (CloneCustomHostNames.HasValue)
             {
                 writer.WritePropertyName("cloneCustomHostNames"u8);
                 writer.WriteBooleanValue(CloneCustomHostNames.Value);
             }
-            if (Optional.IsDefined(CloneSourceControl))
+            if (CloneSourceControl.HasValue)
             {
                 writer.WritePropertyName("cloneSourceControl"u8);
                 writer.WriteBooleanValue(CloneSourceControl.Value);
             }
             writer.WritePropertyName("sourceWebAppId"u8);
             writer.WriteStringValue(SourceWebAppId);
-            if (Optional.IsDefined(SourceWebAppLocation))
+            if (SourceWebAppLocation.HasValue)
             {
                 writer.WritePropertyName("sourceWebAppLocation"u8);
                 writer.WriteStringValue(SourceWebAppLocation.Value);
             }
-            if (Optional.IsDefined(HostingEnvironment))
+            if (HostingEnvironment != null)
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (Optional.IsCollectionDefined(AppSettingsOverrides))
+            if (!(AppSettingsOverrides is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("appSettingsOverrides"u8);
                 writer.WriteStartObject();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ConfigureLoadBalancing))
+            if (ConfigureLoadBalancing.HasValue)
             {
                 writer.WritePropertyName("configureLoadBalancing"u8);
                 writer.WriteBooleanValue(ConfigureLoadBalancing.Value);
             }
-            if (Optional.IsDefined(TrafficManagerProfileId))
+            if (TrafficManagerProfileId != null)
             {
                 writer.WritePropertyName("trafficManagerProfileId"u8);
                 writer.WriteStringValue(TrafficManagerProfileId);
             }
-            if (Optional.IsDefined(TrafficManagerProfileName))
+            if (TrafficManagerProfileName != null)
             {
                 writer.WritePropertyName("trafficManagerProfileName"u8);
                 writer.WriteStringValue(TrafficManagerProfileName);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceIdentifier sourceWebAppId = default;
             Optional<AzureLocation> sourceWebAppLocation = default;
             Optional<string> hostingEnvironment = default;
-            Optional<IDictionary<string, string>> appSettingsOverrides = default;
+            IDictionary<string, string> appSettingsOverrides = default;
             Optional<bool> configureLoadBalancing = default;
             Optional<ResourceIdentifier> trafficManagerProfileId = default;
             Optional<string> trafficManagerProfileName = default;
@@ -235,7 +235,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value, serializedAdditionalRawData);
+            return new CloningInfo(
+                Optional.ToNullable(correlationId),
+                Optional.ToNullable(overwrite),
+                Optional.ToNullable(cloneCustomHostNames),
+                Optional.ToNullable(cloneSourceControl),
+                sourceWebAppId,
+                Optional.ToNullable(sourceWebAppLocation),
+                hostingEnvironment.Value,
+                appSettingsOverrides ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(configureLoadBalancing),
+                trafficManagerProfileId.Value,
+                trafficManagerProfileName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloningInfo>.Write(ModelReaderWriterOptions options)

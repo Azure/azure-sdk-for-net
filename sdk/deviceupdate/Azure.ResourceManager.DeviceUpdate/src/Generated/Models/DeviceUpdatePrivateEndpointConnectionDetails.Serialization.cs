@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
+            if (options.Format != "W" && LinkIdentifier != null)
             {
                 writer.WritePropertyName("linkIdentifier"u8);
                 writer.WriteStringValue(LinkIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            if (options.Format != "W" && GroupId != null)
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MemberName))
+            if (options.Format != "W" && MemberName != null)
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateEndpointConnectionDetails(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateEndpointConnectionDetails(
+                id.Value,
+                privateIPAddress.Value,
+                linkIdentifier.Value,
+                groupId.Value,
+                memberName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>.Write(ModelReaderWriterOptions options)

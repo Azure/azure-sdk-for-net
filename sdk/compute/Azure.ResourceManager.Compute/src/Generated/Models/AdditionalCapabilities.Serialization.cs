@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UltraSsdEnabled))
+            if (UltraSsdEnabled.HasValue)
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
-            if (Optional.IsDefined(HibernationEnabled))
+            if (HibernationEnabled.HasValue)
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);

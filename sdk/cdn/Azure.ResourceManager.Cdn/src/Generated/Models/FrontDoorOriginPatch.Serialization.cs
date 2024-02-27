@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OriginGroupName))
+            if (options.Format != "W" && OriginGroupName != null)
             {
                 writer.WritePropertyName("originGroupName"u8);
                 writer.WriteStringValue(OriginGroupName);
             }
-            if (Optional.IsDefined(Origin))
+            if (Origin != null)
             {
                 writer.WritePropertyName("azureOrigin"u8);
                 JsonSerializer.Serialize(writer, Origin);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (HttpPort.HasValue)
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (HttpsPort.HasValue)
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (Optional.IsDefined(OriginHostHeader))
+            if (OriginHostHeader != null)
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 if (Priority != null)
                 {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("priority");
                 }
             }
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 if (Weight != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("weight");
                 }
             }
-            if (Optional.IsDefined(SharedPrivateLinkResource))
+            if (SharedPrivateLinkResource != null)
             {
                 if (SharedPrivateLinkResource != null)
                 {
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("sharedPrivateLinkResource");
                 }
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            if (EnforceCertificateNameCheck.HasValue)
             {
                 writer.WritePropertyName("enforceCertificateNameCheck"u8);
                 writer.WriteBooleanValue(EnforceCertificateNameCheck.Value);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Cdn.Models
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))
@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginPatch(originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), serializedAdditionalRawData);
+            return new FrontDoorOriginPatch(
+                originGroupName.Value,
+                azureOrigin,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                sharedPrivateLinkResource.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(enforceCertificateNameCheck),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginPatch>.Write(ModelReaderWriterOptions options)

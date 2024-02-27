@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointHistory))
+            if (RecoveryPointHistory.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (CrashConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (AppConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2APolicyCreationContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus);
+            return new A2APolicyCreationContent(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointHistory),
+                Optional.ToNullable(crashConsistentFrequencyInMinutes),
+                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                multiVmSyncStatus);
         }
 
         BinaryData IPersistableModel<A2APolicyCreationContent>.Write(ModelReaderWriterOptions options)

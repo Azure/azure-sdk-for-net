@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextAnswer>> answers = default;
+            IReadOnlyList<TextAnswer> answers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answers"u8))
@@ -37,7 +37,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new AnswersFromTextResult(Optional.ToList(answers));
+            return new AnswersFromTextResult(answers ?? new ChangeTrackingList<TextAnswer>());
         }
     }
 }

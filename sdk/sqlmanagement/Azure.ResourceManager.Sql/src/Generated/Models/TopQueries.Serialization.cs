@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NumberOfQueries))
+            if (options.Format != "W" && NumberOfQueries.HasValue)
             {
                 writer.WritePropertyName("numberOfQueries"u8);
                 writer.WriteNumberValue(NumberOfQueries.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AggregationFunction))
+            if (options.Format != "W" && AggregationFunction != null)
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObservationMetric))
+            if (options.Format != "W" && ObservationMetric != null)
             {
                 writer.WritePropertyName("observationMetric"u8);
                 writer.WriteStringValue(ObservationMetric);
             }
-            if (options.Format != "W" && Optional.IsDefined(IntervalType))
+            if (options.Format != "W" && IntervalType.HasValue)
             {
                 writer.WritePropertyName("intervalType"u8);
                 writer.WriteStringValue(IntervalType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTime))
+            if (options.Format != "W" && StartTime != null)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndTime))
+            if (options.Format != "W" && EndTime != null)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
-            if (Optional.IsCollectionDefined(Queries))
+            if (!(Queries is ChangeTrackingList<QueryStatisticsProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("queries"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<QueryTimeGrainType> intervalType = default;
             Optional<string> startTime = default;
             Optional<string> endTime = default;
-            Optional<IReadOnlyList<QueryStatisticsProperties>> queries = default;
+            IReadOnlyList<QueryStatisticsProperties> queries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatisticsProperties> array = new List<QueryStatisticsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item, options));
                     }
                     queries = array;
                     continue;
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, Optional.ToList(queries), serializedAdditionalRawData);
+            return new TopQueries(
+                Optional.ToNullable(numberOfQueries),
+                aggregationFunction.Value,
+                observationMetric.Value,
+                Optional.ToNullable(intervalType),
+                startTime.Value,
+                endTime.Value,
+                queries ?? new ChangeTrackingList<QueryStatisticsProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopQueries>.Write(ModelReaderWriterOptions options)

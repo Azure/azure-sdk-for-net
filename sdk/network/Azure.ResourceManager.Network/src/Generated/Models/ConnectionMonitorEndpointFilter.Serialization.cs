@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilterType))
+            if (FilterType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(FilterType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Items))
+            if (!(Items is ChangeTrackingList<ConnectionMonitorEndpointFilterItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             Optional<ConnectionMonitorEndpointFilterType> type = default;
-            Optional<IList<ConnectionMonitorEndpointFilterItem>> items = default;
+            IList<ConnectionMonitorEndpointFilterItem> items = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectionMonitorEndpointFilterItem> array = new List<ConnectionMonitorEndpointFilterItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item));
+                        array.Add(ConnectionMonitorEndpointFilterItem.DeserializeConnectionMonitorEndpointFilterItem(item, options));
                     }
                     items = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), Optional.ToList(items), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpointFilter(Optional.ToNullable(type), items ?? new ChangeTrackingList<ConnectionMonitorEndpointFilterItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpointFilter>.Write(ModelReaderWriterOptions options)

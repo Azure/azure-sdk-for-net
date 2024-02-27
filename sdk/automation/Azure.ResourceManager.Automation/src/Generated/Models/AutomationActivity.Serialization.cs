@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (Optional.IsCollectionDefined(ParameterSets))
+            if (!(ParameterSets is ChangeTrackingList<AutomationActivityParameterSet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameterSets"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutputTypes))
+            if (!(OutputTypes is ChangeTrackingList<AutomationActivityOutputType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<string> definition = default;
-            Optional<IReadOnlyList<AutomationActivityParameterSet>> parameterSets = default;
-            Optional<IReadOnlyList<AutomationActivityOutputType>> outputTypes = default;
+            IReadOnlyList<AutomationActivityParameterSet> parameterSets = default;
+            IReadOnlyList<AutomationActivityOutputType> outputTypes = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<string> description = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityParameterSet> array = new List<AutomationActivityParameterSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item));
+                                array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item, options));
                             }
                             parameterSets = array;
                             continue;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityOutputType> array = new List<AutomationActivityOutputType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item));
+                                array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item, options));
                             }
                             outputTypes = array;
                             continue;
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationActivity(id.Value, name.Value, definition.Value, Optional.ToList(parameterSets), Optional.ToList(outputTypes), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new AutomationActivity(
+                id.Value,
+                name.Value,
+                definition.Value,
+                parameterSets ?? new ChangeTrackingList<AutomationActivityParameterSet>(),
+                outputTypes ?? new ChangeTrackingList<AutomationActivityOutputType>(),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationActivity>.Write(ModelReaderWriterOptions options)

@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuAvailabilityValidationContent(validationType, serializedAdditionalRawData, deviceType, transferType, country, location);
+            return new SkuAvailabilityValidationContent(
+                validationType,
+                serializedAdditionalRawData,
+                deviceType,
+                transferType,
+                country,
+                location);
         }
 
         BinaryData IPersistableModel<SkuAvailabilityValidationContent>.Write(ModelReaderWriterOptions options)

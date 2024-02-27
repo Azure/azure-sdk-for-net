@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FileName))
+            if (options.Format != "W" && FileName != null)
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSize))
+            if (options.Format != "W" && TotalSize.HasValue)
             {
                 writer.WritePropertyName("totalSize"u8);
                 writer.WriteNumberValue(TotalSize.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataRead))
+            if (options.Format != "W" && DataRead.HasValue)
             {
                 writer.WritePropertyName("dataRead"u8);
                 writer.WriteNumberValue(DataRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataWritten))
+            if (options.Format != "W" && DataWritten.HasValue)
             {
                 writer.WritePropertyName("dataWritten"u8);
                 writer.WriteNumberValue(DataWritten.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
+            if (options.Format != "W" && CopyThroughput.HasValue)
             {
                 writer.WritePropertyName("copyThroughput"u8);
                 writer.WriteNumberValue(CopyThroughput.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
+            if (options.Format != "W" && CopyDuration.HasValue)
             {
                 writer.WritePropertyName("copyDuration"u8);
                 writer.WriteNumberValue(CopyDuration.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilySequenceNumber))
+            if (options.Format != "W" && FamilySequenceNumber.HasValue)
             {
                 writer.WritePropertyName("familySequenceNumber"u8);
                 writer.WriteNumberValue(FamilySequenceNumber.Value);
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber), serializedAdditionalRawData);
+            return new SqlBackupFileInfo(
+                fileName.Value,
+                status.Value,
+                Optional.ToNullable(totalSize),
+                Optional.ToNullable(dataRead),
+                Optional.ToNullable(dataWritten),
+                Optional.ToNullable(copyThroughput),
+                Optional.ToNullable(copyDuration),
+                Optional.ToNullable(familySequenceNumber),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)

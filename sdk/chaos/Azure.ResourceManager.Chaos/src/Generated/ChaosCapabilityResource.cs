@@ -285,7 +285,10 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ChaosCapabilityResource>> UpdateAsync(WaitUntil waitUntil, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
             scope.Start();
@@ -331,7 +334,10 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ChaosCapabilityResource> Update(WaitUntil waitUntil, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _chaosCapabilityCapabilitiesClientDiagnostics.CreateScope("ChaosCapabilityResource.Update");
             scope.Start();

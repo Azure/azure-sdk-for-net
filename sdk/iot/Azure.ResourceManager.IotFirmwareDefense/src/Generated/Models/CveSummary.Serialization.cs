@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Critical))
+            if (Critical.HasValue)
             {
                 if (Critical != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("critical");
                 }
             }
-            if (Optional.IsDefined(High))
+            if (High.HasValue)
             {
                 if (High != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("high");
                 }
             }
-            if (Optional.IsDefined(Medium))
+            if (Medium.HasValue)
             {
                 if (Medium != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("medium");
                 }
             }
-            if (Optional.IsDefined(Low))
+            if (Low.HasValue)
             {
                 if (Low != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("low");
                 }
             }
-            if (Optional.IsDefined(Unknown))
+            if (Unknown.HasValue)
             {
                 if (Unknown != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("unknown");
                 }
             }
-            if (Optional.IsDefined(Undefined))
+            if (Undefined.HasValue)
             {
                 if (Undefined != null)
                 {
@@ -212,7 +212,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveSummary(Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown), Optional.ToNullable(undefined), serializedAdditionalRawData);
+            return new CveSummary(
+                Optional.ToNullable(critical),
+                Optional.ToNullable(high),
+                Optional.ToNullable(medium),
+                Optional.ToNullable(low),
+                Optional.ToNullable(unknown),
+                Optional.ToNullable(undefined),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)

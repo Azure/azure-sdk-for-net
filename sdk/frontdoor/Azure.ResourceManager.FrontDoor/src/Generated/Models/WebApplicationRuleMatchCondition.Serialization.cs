@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("matchVariable"u8);
             writer.WriteStringValue(MatchVariable.ToString());
-            if (Optional.IsDefined(Selector))
+            if (Selector != null)
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToString());
-            if (Optional.IsDefined(IsNegateCondition))
+            if (IsNegateCondition.HasValue)
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<WebApplicationRuleMatchTransformType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             WebApplicationRuleMatchOperator @operator = default;
             Optional<bool> negateCondition = default;
             IList<string> matchValue = default;
-            Optional<IList<WebApplicationRuleMatchTransformType>> transforms = default;
+            IList<WebApplicationRuleMatchTransformType> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector.Value,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValue,
+                transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)

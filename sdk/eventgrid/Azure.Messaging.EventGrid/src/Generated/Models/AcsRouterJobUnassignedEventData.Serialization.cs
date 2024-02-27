@@ -25,8 +25,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> assignmentId = default;
             Optional<string> workerId = default;
             Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
@@ -91,7 +91,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobUnassignedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags), assignmentId.Value, workerId.Value);
+            return new AcsRouterJobUnassignedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                assignmentId.Value,
+                workerId.Value);
         }
 
         internal partial class AcsRouterJobUnassignedEventDataConverter : JsonConverter<AcsRouterJobUnassignedEventData>

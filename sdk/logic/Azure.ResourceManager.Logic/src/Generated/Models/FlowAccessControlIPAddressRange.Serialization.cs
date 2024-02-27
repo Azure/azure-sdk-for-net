@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AddressRange))
+            if (AddressRange != null)
             {
                 writer.WritePropertyName("addressRange"u8);
                 writer.WriteStringValue(AddressRange);

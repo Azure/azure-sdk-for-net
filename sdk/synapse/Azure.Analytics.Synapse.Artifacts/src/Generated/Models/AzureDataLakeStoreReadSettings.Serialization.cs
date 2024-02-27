@@ -19,64 +19,64 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Recursive))
+            if (Recursive != null)
             {
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteObjectValue(Recursive);
             }
-            if (Optional.IsDefined(WildcardFolderPath))
+            if (WildcardFolderPath != null)
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
                 writer.WriteObjectValue(WildcardFolderPath);
             }
-            if (Optional.IsDefined(WildcardFileName))
+            if (WildcardFileName != null)
             {
                 writer.WritePropertyName("wildcardFileName"u8);
                 writer.WriteObjectValue(WildcardFileName);
             }
-            if (Optional.IsDefined(FileListPath))
+            if (FileListPath != null)
             {
                 writer.WritePropertyName("fileListPath"u8);
                 writer.WriteObjectValue(FileListPath);
             }
-            if (Optional.IsDefined(ListAfter))
+            if (ListAfter != null)
             {
                 writer.WritePropertyName("listAfter"u8);
                 writer.WriteObjectValue(ListAfter);
             }
-            if (Optional.IsDefined(ListBefore))
+            if (ListBefore != null)
             {
                 writer.WritePropertyName("listBefore"u8);
                 writer.WriteObjectValue(ListBefore);
             }
-            if (Optional.IsDefined(EnablePartitionDiscovery))
+            if (EnablePartitionDiscovery != null)
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
                 writer.WriteObjectValue(EnablePartitionDiscovery);
             }
-            if (Optional.IsDefined(PartitionRootPath))
+            if (PartitionRootPath != null)
             {
                 writer.WritePropertyName("partitionRootPath"u8);
                 writer.WriteObjectValue(PartitionRootPath);
             }
-            if (Optional.IsDefined(DeleteFilesAfterCompletion))
+            if (DeleteFilesAfterCompletion != null)
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
                 writer.WriteObjectValue(DeleteFilesAfterCompletion);
             }
-            if (Optional.IsDefined(ModifiedDatetimeStart))
+            if (ModifiedDatetimeStart != null)
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
                 writer.WriteObjectValue(ModifiedDatetimeStart);
             }
-            if (Optional.IsDefined(ModifiedDatetimeEnd))
+            if (ModifiedDatetimeEnd != null)
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
                 writer.WriteObjectValue(ModifiedDatetimeEnd);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -228,7 +228,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, listAfter.Value, listBefore.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureDataLakeStoreReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                fileListPath.Value,
+                listAfter.Value,
+                listBefore.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value);
         }
 
         internal partial class AzureDataLakeStoreReadSettingsConverter : JsonConverter<AzureDataLakeStoreReadSettings>

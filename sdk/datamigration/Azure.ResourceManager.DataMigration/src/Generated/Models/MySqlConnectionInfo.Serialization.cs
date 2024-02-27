@@ -28,36 +28,36 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartObject();
             writer.WritePropertyName("serverName"u8);
             writer.WriteStringValue(ServerName);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteStringValue(DataSource);
             }
             writer.WritePropertyName("port"u8);
             writer.WriteNumberValue(Port);
-            if (Optional.IsDefined(EncryptConnection))
+            if (EncryptConnection.HasValue)
             {
                 writer.WritePropertyName("encryptConnection"u8);
                 writer.WriteBooleanValue(EncryptConnection.Value);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication.HasValue)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteStringValue(Authentication.Value.ToString());
             }
-            if (Optional.IsDefined(AdditionalSettings))
+            if (AdditionalSettings != null)
             {
                 writer.WritePropertyName("additionalSettings"u8);
                 writer.WriteStringValue(AdditionalSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ConnectionInfoType);
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -172,7 +172,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, serverName, dataSource.Value, port, Optional.ToNullable(encryptConnection), Optional.ToNullable(authentication), additionalSettings.Value);
+            return new MySqlConnectionInfo(
+                type,
+                userName.Value,
+                password.Value,
+                serializedAdditionalRawData,
+                serverName,
+                dataSource.Value,
+                port,
+                Optional.ToNullable(encryptConnection),
+                Optional.ToNullable(authentication),
+                additionalSettings.Value);
         }
 
         BinaryData IPersistableModel<MySqlConnectionInfo>.Write(ModelReaderWriterOptions options)

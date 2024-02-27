@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeStamp))
+            if (TimeStamp.HasValue)
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(TimeStamp.Value, "O");
             }
-            if (Optional.IsDefined(ClusterStorageCapacityInfo))
+            if (ClusterStorageCapacityInfo != null)
             {
                 writer.WritePropertyName("clusterStorageCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterStorageCapacityInfo);
             }
-            if (Optional.IsDefined(ClusterComputeCapacityInfo))
+            if (ClusterComputeCapacityInfo != null)
             {
                 writer.WritePropertyName("clusterComputeCapacityInfo"u8);
                 writer.WriteObjectValue(ClusterComputeCapacityInfo);
             }
-            if (Optional.IsCollectionDefined(NodeCapacityInfos))
+            if (!(NodeCapacityInfos is ChangeTrackingDictionary<string, HostCapacity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodeCapacityInfos"u8);
                 writer.WriteStartObject();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DateTimeOffset> timeStamp = default;
             Optional<EdgeClusterStorageViewInfo> clusterStorageCapacityInfo = default;
             Optional<EdgeClusterCapacityViewInfo> clusterComputeCapacityInfo = default;
-            Optional<IDictionary<string, HostCapacity>> nodeCapacityInfos = default;
+            IDictionary<string, HostCapacity> nodeCapacityInfos = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value);
+                            clusterStorageCapacityInfo = EdgeClusterStorageViewInfo.DeserializeEdgeClusterStorageViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterComputeCapacityInfo"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value);
+                            clusterComputeCapacityInfo = EdgeClusterCapacityViewInfo.DeserializeEdgeClusterCapacityViewInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nodeCapacityInfos"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             Dictionary<string, HostCapacity> dictionary = new Dictionary<string, HostCapacity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value));
+                                dictionary.Add(property1.Name, HostCapacity.DeserializeHostCapacity(property1.Value, options));
                             }
                             nodeCapacityInfos = dictionary;
                             continue;
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceCapacityInfo(id, name, type, systemData.Value, Optional.ToNullable(timeStamp), clusterStorageCapacityInfo.Value, clusterComputeCapacityInfo.Value, Optional.ToDictionary(nodeCapacityInfos), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceCapacityInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(timeStamp),
+                clusterStorageCapacityInfo.Value,
+                clusterComputeCapacityInfo.Value,
+                nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceCapacityInfo>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Entities))
+            if (!(Entities is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 if (Entities != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entities");
                 }
             }
-            if (Optional.IsDefined(MaterializationSettings))
+            if (MaterializationSettings != null)
             {
                 if (MaterializationSettings != null)
                 {
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("materializationSettings");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Specification))
+            if (Specification != null)
             {
                 if (Specification != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("specification");
                 }
             }
-            if (Optional.IsDefined(Stage))
+            if (Stage != null)
             {
                 if (Stage != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
-            if (Optional.IsDefined(AutoDeleteSetting))
+            if (AutoDeleteSetting != null)
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Optional.IsDefined(IsAnonymous))
+            if (IsAnonymous.HasValue)
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IList<string>> entities = default;
+            IList<string> entities = default;
             Optional<MaterializationSettings> materializationSettings = default;
             Optional<RegistryAssetProvisioningState> provisioningState = default;
             Optional<FeaturesetSpecification> specification = default;
@@ -201,8 +201,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         materializationSettings = null;
                         continue;
                     }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value);
+                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         specification = null;
                         continue;
                     }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value);
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -335,7 +335,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), serializedAdditionalRawData, autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToList(entities), materializationSettings.Value, Optional.ToNullable(provisioningState), specification.Value, stage.Value);
+            return new MachineLearningFeatureSetVersionProperties(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(isAnonymous),
+                Optional.ToNullable(isArchived),
+                entities ?? new ChangeTrackingList<string>(),
+                materializationSettings.Value,
+                Optional.ToNullable(provisioningState),
+                specification.Value,
+                stage.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionProperties>.Write(ModelReaderWriterOptions options)

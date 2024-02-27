@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Attachments))
+            if (Attachments != null)
             {
                 if (Attachments != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("attachments");
                 }
             }
-            if (Optional.IsCollectionDefined(Outputs))
+            if (!(Outputs is ChangeTrackingList<NotebookCellOutputItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object metadata = default;
             IList<string> source = default;
             Optional<object> attachments = default;
-            Optional<IList<NotebookCellOutputItem>> outputs = default;
+            IList<NotebookCellOutputItem> outputs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookCell(cellType, metadata, source, attachments.Value, Optional.ToList(outputs), additionalProperties);
+            return new NotebookCell(
+                cellType,
+                metadata,
+                source,
+                attachments.Value,
+                outputs ?? new ChangeTrackingList<NotebookCellOutputItem>(),
+                additionalProperties);
         }
 
         internal partial class NotebookCellConverter : JsonConverter<NotebookCell>

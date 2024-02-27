@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId != null)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId);
             }
-            if (Optional.IsDefined(DataFlowName))
+            if (DataFlowName != null)
             {
                 writer.WritePropertyName("dataFlowName"u8);
                 writer.WriteStringValue(DataFlowName);
             }
-            if (Optional.IsDefined(StreamName))
+            if (StreamName != null)
             {
                 writer.WritePropertyName("streamName"u8);
                 writer.WriteStringValue(StreamName);
             }
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> sessionId = default;
             Optional<string> dataFlowName = default;
             Optional<string> streamName = default;
-            Optional<IList<string>> columns = default;
+            IList<string> columns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugStatisticsRequest(sessionId.Value, dataFlowName.Value, streamName.Value, Optional.ToList(columns));
+            return new DataFlowDebugStatisticsRequest(sessionId.Value, dataFlowName.Value, streamName.Value, columns ?? new ChangeTrackingList<string>());
         }
 
         internal partial class DataFlowDebugStatisticsRequestConverter : JsonConverter<DataFlowDebugStatisticsRequest>

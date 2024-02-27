@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientSecretStoreId))
+            if (ClientSecretStoreId != null)
             {
                 writer.WritePropertyName("clientSecretStoreId"u8);
                 writer.WriteStringValue(ClientSecretStoreId);
             }
-            if (Optional.IsDefined(ClientSecretStoreUri))
+            if (ClientSecretStoreUri != null)
             {
                 writer.WritePropertyName("clientSecretStoreUrl"u8);
                 writer.WriteStringValue(ClientSecretStoreUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ChannelIntegrityKeyName))
+            if (ChannelIntegrityKeyName != null)
             {
                 writer.WritePropertyName("channelIntegrityKeyName"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyName);
             }
-            if (Optional.IsDefined(ChannelIntegrityKeyVersion))
+            if (ChannelIntegrityKeyVersion != null)
             {
                 writer.WritePropertyName("channelIntegrityKeyVersion"u8);
                 writer.WriteStringValue(ChannelIntegrityKeyVersion);
             }
-            if (Optional.IsDefined(SyncStatus))
+            if (SyncStatus.HasValue)
             {
                 writer.WritePropertyName("syncStatus"u8);
                 writer.WriteStringValue(SyncStatus.Value.ToString());
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceExtendedInfoPatch(clientSecretStoreId.Value, clientSecretStoreUrl.Value, channelIntegrityKeyName.Value, channelIntegrityKeyVersion.Value, Optional.ToNullable(syncStatus), serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceExtendedInfoPatch(
+                clientSecretStoreId.Value,
+                clientSecretStoreUrl.Value,
+                channelIntegrityKeyName.Value,
+                channelIntegrityKeyVersion.Value,
+                Optional.ToNullable(syncStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceExtendedInfoPatch>.Write(ModelReaderWriterOptions options)

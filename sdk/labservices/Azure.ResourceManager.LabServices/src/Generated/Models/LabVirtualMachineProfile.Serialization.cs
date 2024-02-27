@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStringValue(CreateOption.ToSerialString());
             writer.WritePropertyName("imageReference"u8);
             writer.WriteObjectValue(ImageReference);
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
-            if (Optional.IsDefined(AdditionalCapabilities))
+            if (AdditionalCapabilities != null)
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
                 writer.WriteObjectValue(AdditionalCapabilities);
             }
             writer.WritePropertyName("usageQuota"u8);
             writer.WriteStringValue(UsageQuota, "P");
-            if (Optional.IsDefined(UseSharedPassword))
+            if (UseSharedPassword.HasValue)
             {
                 writer.WritePropertyName("useSharedPassword"u8);
                 writer.WriteStringValue(UseSharedPassword.Value.ToSerialString());
             }
             writer.WritePropertyName("adminUser"u8);
             writer.WriteObjectValue(AdminUser);
-            if (Optional.IsDefined(NonAdminUser))
+            if (NonAdminUser != null)
             {
                 writer.WritePropertyName("nonAdminUser"u8);
                 writer.WriteObjectValue(NonAdminUser);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value);
+                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value);
+                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalCapabilities"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value);
+                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usageQuota"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("adminUser"u8))
                 {
-                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonAdminUser"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineProfile(
+                createOption,
+                imageReference,
+                Optional.ToNullable(osType),
+                sku,
+                additionalCapabilities.Value,
+                usageQuota,
+                Optional.ToNullable(useSharedPassword),
+                adminUser,
+                nonAdminUser.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineProfile>.Write(ModelReaderWriterOptions options)

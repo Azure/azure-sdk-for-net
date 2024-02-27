@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VirtualNetworkId))
+            if (VirtualNetworkId != null)
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
                 writer.WriteStringValue(VirtualNetworkId);
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(PublicIPAddressId))
+            if (PublicIPAddressId != null)
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (Optional.IsDefined(PublicIPAddress))
+            if (PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(DnsName))
+            if (DnsName != null)
             {
                 writer.WritePropertyName("dnsName"u8);
                 writer.WriteStringValue(DnsName);
             }
-            if (Optional.IsDefined(RdpAuthority))
+            if (RdpAuthority != null)
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (Optional.IsDefined(SshAuthority))
+            if (SshAuthority != null)
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
+            if (SharedPublicIPAddressConfiguration != null)
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
                 writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    sharedPublicIPAddressConfiguration = SharedPublicIPAddressConfiguration.DeserializeSharedPublicIPAddressConfiguration(property.Value);
+                    sharedPublicIPAddressConfiguration = SharedPublicIPAddressConfiguration.DeserializeSharedPublicIPAddressConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNetworkInterface(virtualNetworkId.Value, subnetId.Value, publicIPAddressId.Value, publicIPAddress.Value, privateIPAddress.Value, dnsName.Value, rdpAuthority.Value, sshAuthority.Value, sharedPublicIPAddressConfiguration.Value, serializedAdditionalRawData);
+            return new DevTestLabNetworkInterface(
+                virtualNetworkId.Value,
+                subnetId.Value,
+                publicIPAddressId.Value,
+                publicIPAddress.Value,
+                privateIPAddress.Value,
+                dnsName.Value,
+                rdpAuthority.Value,
+                sshAuthority.Value,
+                sharedPublicIPAddressConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNetworkInterface>.Write(ModelReaderWriterOptions options)

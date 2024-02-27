@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Annotation))
+            if (Annotation != null)
             {
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            if (Optional.IsDefined(Mtu))
+            if (Mtu.HasValue)
             {
                 writer.WritePropertyName("mtu"u8);
                 writer.WriteNumberValue(Mtu.Value);
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
+            if (!(ConnectedIPv4Subnets is ChangeTrackingList<ConnectedSubnet> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectedIPv4Subnets"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
+            if (!(ConnectedIPv6Subnets is ChangeTrackingList<ConnectedSubnet> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectedIPv6Subnets"u8);
                 writer.WriteStartArray();
@@ -58,47 +58,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ImportRoutePolicyId))
+            if (ImportRoutePolicyId != null)
             {
                 writer.WritePropertyName("importRoutePolicyId"u8);
                 writer.WriteStringValue(ImportRoutePolicyId);
             }
-            if (Optional.IsDefined(ExportRoutePolicyId))
+            if (ExportRoutePolicyId != null)
             {
                 writer.WritePropertyName("exportRoutePolicyId"u8);
                 writer.WriteStringValue(ExportRoutePolicyId);
             }
-            if (Optional.IsDefined(ImportRoutePolicy))
+            if (ImportRoutePolicy != null)
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
                 writer.WriteObjectValue(ImportRoutePolicy);
             }
-            if (Optional.IsDefined(ExportRoutePolicy))
+            if (ExportRoutePolicy != null)
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
                 writer.WriteObjectValue(ExportRoutePolicy);
             }
-            if (Optional.IsDefined(IngressAclId))
+            if (IngressAclId != null)
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
             }
-            if (Optional.IsDefined(EgressAclId))
+            if (EgressAclId != null)
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (Optional.IsDefined(IsMonitoringEnabled))
+            if (IsMonitoringEnabled.HasValue)
             {
                 writer.WritePropertyName("isMonitoringEnabled"u8);
                 writer.WriteStringValue(IsMonitoringEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(BgpConfiguration))
+            if (BgpConfiguration != null)
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
                 writer.WriteObjectValue(BgpConfiguration);
             }
-            if (Optional.IsDefined(StaticRouteConfiguration))
+            if (StaticRouteConfiguration != null)
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
                 writer.WriteObjectValue(StaticRouteConfiguration);
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<string> annotation = default;
             Optional<int> mtu = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv4Subnets = default;
-            Optional<IList<ConnectedSubnet>> connectedIPv6Subnets = default;
+            IList<ConnectedSubnet> connectedIPv4Subnets = default;
+            IList<ConnectedSubnet> connectedIPv6Subnets = default;
             Optional<ResourceIdentifier> importRoutePolicyId = default;
             Optional<ResourceIdentifier> exportRoutePolicyId = default;
             Optional<ImportRoutePolicy> importRoutePolicy = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv4Subnets = array;
                             continue;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item, options));
                             }
                             connectedIPv6Subnets = array;
                             continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value);
+                            importRoutePolicy = ImportRoutePolicy.DeserializeImportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("exportRoutePolicy"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value);
+                            exportRoutePolicy = ExportRoutePolicy.DeserializeExportRoutePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ingressAclId"u8))
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value);
+                            bgpConfiguration = BgpConfiguration.DeserializeBgpConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("staticRouteConfiguration"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             {
                                 continue;
                             }
-                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value);
+                            staticRouteConfiguration = StaticRouteConfiguration.DeserializeStaticRouteConfiguration(property0.Value, options);
                             continue;
                         }
                     }
@@ -300,7 +300,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternalNetworkPatch(annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), bgpConfiguration.Value, staticRouteConfiguration.Value, serializedAdditionalRawData);
+            return new NetworkFabricInternalNetworkPatch(
+                annotation.Value,
+                Optional.ToNullable(mtu),
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                ingressAclId.Value,
+                egressAclId.Value,
+                Optional.ToNullable(isMonitoringEnabled),
+                bgpConfiguration.Value,
+                staticRouteConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkPatch>.Write(ModelReaderWriterOptions options)

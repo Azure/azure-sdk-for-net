@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<AllSavingsBenefitDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AllSavingsBenefitDetails>> value = default;
+            IReadOnlyList<AllSavingsBenefitDetails> value = default;
             Optional<Uri> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<AllSavingsBenefitDetails> array = new List<AllSavingsBenefitDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item));
+                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllSavingsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AllSavingsList(value ?? new ChangeTrackingList<AllSavingsBenefitDetails>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllSavingsList>.Write(ModelReaderWriterOptions options)

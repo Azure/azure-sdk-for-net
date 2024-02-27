@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointHistoryInMinutes))
+            if (RecoveryPointHistoryInMinutes.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistoryInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointHistoryInMinutes.Value);
             }
-            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (CrashConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
             }
-            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (AppConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            if (Optional.IsDefined(EnableMultiVmSync))
+            if (EnableMultiVmSync != null)
             {
                 writer.WritePropertyName("enableMultiVmSync"u8);
                 writer.WriteStringValue(EnableMultiVmSync);
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmPolicyCreationContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointHistoryInMinutes), Optional.ToNullable(crashConsistentFrequencyInMinutes), Optional.ToNullable(appConsistentFrequencyInMinutes), enableMultiVmSync.Value);
+            return new InMageRcmPolicyCreationContent(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointHistoryInMinutes),
+                Optional.ToNullable(crashConsistentFrequencyInMinutes),
+                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                enableMultiVmSync.Value);
         }
 
         BinaryData IPersistableModel<InMageRcmPolicyCreationContent>.Write(ModelReaderWriterOptions options)

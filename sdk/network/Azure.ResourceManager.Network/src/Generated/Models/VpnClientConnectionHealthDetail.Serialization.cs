@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionId))
+            if (options.Format != "W" && VpnConnectionId != null)
             {
                 writer.WritePropertyName("vpnConnectionId"u8);
                 writer.WriteStringValue(VpnConnectionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionDurationInSeconds))
+            if (options.Format != "W" && VpnConnectionDurationInSeconds.HasValue)
             {
                 writer.WritePropertyName("vpnConnectionDuration"u8);
                 writer.WriteNumberValue(VpnConnectionDurationInSeconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnConnectionOn))
+            if (options.Format != "W" && VpnConnectionOn.HasValue)
             {
                 writer.WritePropertyName("vpnConnectionTime"u8);
                 writer.WriteStringValue(VpnConnectionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIPAddress))
+            if (options.Format != "W" && PublicIPAddress != null)
             {
                 writer.WritePropertyName("publicIpAddress"u8);
                 writer.WriteStringValue(PublicIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            if (options.Format != "W" && PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(VpnUserName))
+            if (options.Format != "W" && VpnUserName != null)
             {
                 writer.WritePropertyName("vpnUserName"u8);
                 writer.WriteStringValue(VpnUserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxBandwidth))
+            if (options.Format != "W" && MaxBandwidth.HasValue)
             {
                 writer.WritePropertyName("maxBandwidth"u8);
                 writer.WriteNumberValue(MaxBandwidth.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressPacketsTransferred))
+            if (options.Format != "W" && EgressPacketsTransferred.HasValue)
             {
                 writer.WritePropertyName("egressPacketsTransferred"u8);
                 writer.WriteNumberValue(EgressPacketsTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            if (options.Format != "W" && EgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngressPacketsTransferred))
+            if (options.Format != "W" && IngressPacketsTransferred.HasValue)
             {
                 writer.WritePropertyName("ingressPacketsTransferred"u8);
                 writer.WriteNumberValue(IngressPacketsTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            if (options.Format != "W" && IngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxPacketsPerSecond))
+            if (options.Format != "W" && MaxPacketsPerSecond.HasValue)
             {
                 writer.WritePropertyName("maxPacketsPerSecond"u8);
                 writer.WriteNumberValue(MaxPacketsPerSecond.Value);
@@ -238,7 +238,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
+            return new VpnClientConnectionHealthDetail(
+                vpnConnectionId.Value,
+                Optional.ToNullable(vpnConnectionDuration),
+                Optional.ToNullable(vpnConnectionTime),
+                publicIPAddress.Value,
+                privateIPAddress.Value,
+                vpnUserName.Value,
+                Optional.ToNullable(maxBandwidth),
+                Optional.ToNullable(egressPacketsTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                Optional.ToNullable(ingressPacketsTransferred),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(maxPacketsPerSecond),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)

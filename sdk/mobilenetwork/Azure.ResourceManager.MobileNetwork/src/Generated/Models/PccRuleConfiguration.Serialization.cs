@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStringValue(RuleName);
             writer.WritePropertyName("rulePrecedence"u8);
             writer.WriteNumberValue(RulePrecedence);
-            if (Optional.IsDefined(RuleQosPolicy))
+            if (RuleQosPolicy != null)
             {
                 writer.WritePropertyName("ruleQosPolicy"u8);
                 writer.WriteObjectValue(RuleQosPolicy);
             }
-            if (Optional.IsDefined(TrafficControl))
+            if (TrafficControl.HasValue)
             {
                 writer.WritePropertyName("trafficControl"u8);
                 writer.WriteStringValue(TrafficControl.Value.ToString());
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
+                    ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trafficControl"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<MobileNetworkServiceDataFlowTemplate> array = new List<MobileNetworkServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
+                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item, options));
                     }
                     serviceDataFlowTemplates = array;
                     continue;
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates, serializedAdditionalRawData);
+            return new PccRuleConfiguration(
+                ruleName,
+                rulePrecedence,
+                ruleQosPolicy.Value,
+                Optional.ToNullable(trafficControl),
+                serviceDataFlowTemplates,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)

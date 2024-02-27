@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Classes))
+            if (!(Classes is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
             {
                 if (Classes != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("classes");
                 }
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(MultiSelect))
+            if (MultiSelect.HasValue)
             {
                 writer.WritePropertyName("multiSelect"u8);
                 writer.WriteStringValue(MultiSelect.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, LabelClass>> classes = default;
+            IDictionary<string, LabelClass> classes = default;
             Optional<string> displayName = default;
             Optional<LabelCategoryMultiSelect> multiSelect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelClass> dictionary = new Dictionary<string, LabelClass>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LabelClass.DeserializeLabelClass(property0.Value));
+                        dictionary.Add(property0.Name, LabelClass.DeserializeLabelClass(property0.Value, options));
                     }
                     classes = dictionary;
                     continue;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabelCategory(Optional.ToDictionary(classes), displayName.Value, Optional.ToNullable(multiSelect), serializedAdditionalRawData);
+            return new LabelCategory(classes ?? new ChangeTrackingDictionary<string, LabelClass>(), displayName.Value, Optional.ToNullable(multiSelect), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabelCategory>.Write(ModelReaderWriterOptions options)

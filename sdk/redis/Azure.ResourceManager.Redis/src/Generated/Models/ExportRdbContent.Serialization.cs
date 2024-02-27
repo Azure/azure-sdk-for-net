@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(Prefix);
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            if (PreferredDataArchiveAuthMethod != null)
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (Optional.IsDefined(StorageSubscriptionId))
+            if (StorageSubscriptionId != null)
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
@@ -123,7 +123,13 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRdbContent(format.Value, prefix, container, preferredDataArchiveAuthMethod.Value, storageSubscriptionId.Value, serializedAdditionalRawData);
+            return new ExportRdbContent(
+                format.Value,
+                prefix,
+                container,
+                preferredDataArchiveAuthMethod.Value,
+                storageSubscriptionId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRdbContent>.Write(ModelReaderWriterOptions options)

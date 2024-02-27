@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(External))
+            if (External.HasValue)
             {
                 writer.WritePropertyName("external"u8);
                 writer.WriteBooleanValue(External.Value);
             }
-            if (Optional.IsDefined(TargetPort))
+            if (TargetPort.HasValue)
             {
                 writer.WritePropertyName("targetPort"u8);
                 writer.WriteNumberValue(TargetPort.Value);
             }
-            if (Optional.IsDefined(ExposedPort))
+            if (ExposedPort.HasValue)
             {
                 writer.WritePropertyName("exposedPort"u8);
                 writer.WriteNumberValue(ExposedPort.Value);
             }
-            if (Optional.IsDefined(Transport))
+            if (Transport.HasValue)
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Traffic))
+            if (!(Traffic is ChangeTrackingList<ContainerAppRevisionTrafficWeight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("traffic"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (!(CustomDomains is ChangeTrackingList<ContainerAppCustomDomain> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowInsecure))
+            if (AllowInsecure.HasValue)
             {
                 writer.WritePropertyName("allowInsecure"u8);
                 writer.WriteBooleanValue(AllowInsecure.Value);
             }
-            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            if (!(IPSecurityRestrictions is ChangeTrackingList<ContainerAppIPSecurityRestrictionRule> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ipSecurityRestrictions"u8);
                 writer.WriteStartArray();
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StickySessions))
+            if (StickySessions != null)
             {
                 writer.WritePropertyName("stickySessions"u8);
                 writer.WriteObjectValue(StickySessions);
             }
-            if (Optional.IsDefined(ClientCertificateMode))
+            if (ClientCertificateMode.HasValue)
             {
                 writer.WritePropertyName("clientCertificateMode"u8);
                 writer.WriteStringValue(ClientCertificateMode.Value.ToString());
             }
-            if (Optional.IsDefined(CorsPolicy))
+            if (CorsPolicy != null)
             {
                 writer.WritePropertyName("corsPolicy"u8);
                 writer.WriteObjectValue(CorsPolicy);
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> targetPort = default;
             Optional<int> exposedPort = default;
             Optional<ContainerAppIngressTransportMethod> transport = default;
-            Optional<IList<ContainerAppRevisionTrafficWeight>> traffic = default;
-            Optional<IList<ContainerAppCustomDomain>> customDomains = default;
+            IList<ContainerAppRevisionTrafficWeight> traffic = default;
+            IList<ContainerAppCustomDomain> customDomains = default;
             Optional<bool> allowInsecure = default;
-            Optional<IList<ContainerAppIPSecurityRestrictionRule>> ipSecurityRestrictions = default;
+            IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default;
             Optional<IngressStickySessions> stickySessions = default;
             Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
             Optional<ContainerAppCorsPolicy> corsPolicy = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRevisionTrafficWeight> array = new List<ContainerAppRevisionTrafficWeight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item));
+                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item, options));
                     }
                     traffic = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCustomDomain> array = new List<ContainerAppCustomDomain>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item));
+                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppIPSecurityRestrictionRule> array = new List<ContainerAppIPSecurityRestrictionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item));
+                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item, options));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value);
+                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clientCertificateMode"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value);
+                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppIngressConfiguration(
+                fqdn.Value,
+                Optional.ToNullable(external),
+                Optional.ToNullable(targetPort),
+                Optional.ToNullable(exposedPort),
+                Optional.ToNullable(transport),
+                traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(),
+                customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(),
+                Optional.ToNullable(allowInsecure),
+                ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(),
+                stickySessions.Value,
+                Optional.ToNullable(clientCertificateMode),
+                corsPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)

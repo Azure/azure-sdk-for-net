@@ -17,12 +17,12 @@ namespace Azure.Communication.Sms.Models
             writer.WriteStartObject();
             writer.WritePropertyName("to"u8);
             writer.WriteStringValue(To);
-            if (Optional.IsDefined(RepeatabilityRequestId))
+            if (RepeatabilityRequestId != null)
             {
                 writer.WritePropertyName("repeatabilityRequestId"u8);
                 writer.WriteStringValue(RepeatabilityRequestId);
             }
-            if (Optional.IsDefined(RepeatabilityFirstSent))
+            if (RepeatabilityFirstSent != null)
             {
                 writer.WritePropertyName("repeatabilityFirstSent"u8);
                 writer.WriteStringValue(RepeatabilityFirstSent);

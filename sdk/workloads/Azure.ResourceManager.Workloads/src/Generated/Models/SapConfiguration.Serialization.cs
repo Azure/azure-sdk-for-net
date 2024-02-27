@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Deployment": return DeploymentConfiguration.DeserializeDeploymentConfiguration(element);
-                    case "DeploymentWithOSConfig": return DeploymentWithOSConfiguration.DeserializeDeploymentWithOSConfiguration(element);
-                    case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element);
+                    case "Deployment": return DeploymentConfiguration.DeserializeDeploymentConfiguration(element, options);
+                    case "DeploymentWithOSConfig": return DeploymentWithOSConfiguration.DeserializeDeploymentWithOSConfiguration(element, options);
+                    case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
                 }
             }
-            return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element);
+            return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element, options);
         }
 
         BinaryData IPersistableModel<SapConfiguration>.Write(ModelReaderWriterOptions options)

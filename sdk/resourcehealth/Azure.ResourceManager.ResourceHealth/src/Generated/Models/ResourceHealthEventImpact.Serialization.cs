@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ImpactedService))
+            if (ImpactedService != null)
             {
                 writer.WritePropertyName("impactedService"u8);
                 writer.WriteStringValue(ImpactedService);
             }
-            if (Optional.IsCollectionDefined(ImpactedRegions))
+            if (!(ImpactedRegions is ChangeTrackingList<ResourceHealthEventImpactedServiceRegion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impactedRegions"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 return null;
             }
             Optional<string> impactedService = default;
-            Optional<IReadOnlyList<ResourceHealthEventImpactedServiceRegion>> impactedRegions = default;
+            IReadOnlyList<ResourceHealthEventImpactedServiceRegion> impactedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item, options));
                     }
                     impactedRegions = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventImpact(impactedService.Value, Optional.ToList(impactedRegions), serializedAdditionalRawData);
+            return new ResourceHealthEventImpact(impactedService.Value, impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventImpact>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(CommitOn))
+            if (CommitOn.HasValue)
             {
                 writer.WritePropertyName("commitTime"u8);
                 writer.WriteStringValue(CommitOn.Value, "O");
             }
-            if (Optional.IsDefined(Region))
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(ConfigurationDescription))
+            if (ConfigurationDescription != null)
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (Optional.IsDefined(RuleCollectionDescription))
+            if (RuleCollectionDescription != null)
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<AddressPrefixItem> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Destinations))
+            if (!(Destinations is ChangeTrackingList<AddressPrefixItem> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinations"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -125,27 +125,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Access))
+            if (Access.HasValue)
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Direction))
+            if (Direction.HasValue)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            if (options.Format != "W" && ResourceGuid.HasValue)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> region = default;
             Optional<string> configurationDescription = default;
             Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
+            IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = default;
             Optional<string> description = default;
             Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Optional<IReadOnlyList<AddressPrefixItem>> sources = default;
-            Optional<IReadOnlyList<AddressPrefixItem>> destinations = default;
-            Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            IReadOnlyList<AddressPrefixItem> sources = default;
+            IReadOnlyList<AddressPrefixItem> destinations = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
             Optional<SecurityConfigurationRuleAccess> access = default;
             Optional<int> priority = default;
             Optional<SecurityConfigurationRuleDirection> direction = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             sources = array;
                             continue;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             destinations = array;
                             continue;
@@ -407,7 +407,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData, description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new ActiveSecurityAdminRule(
+                id.Value,
+                Optional.ToNullable(commitTime),
+                region.Value,
+                configurationDescription.Value,
+                ruleCollectionDescription.Value,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData,
+                description.Value,
+                Optional.ToNullable(protocol),
+                sources ?? new ChangeTrackingList<AddressPrefixItem>(),
+                destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRule>.Write(ModelReaderWriterOptions options)

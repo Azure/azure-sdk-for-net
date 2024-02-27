@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(ProcessServerId))
+            if (ProcessServerId.HasValue)
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (Optional.IsDefined(Port))
+            if (Port != null)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
             }
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryUpdateVCenterProperties(friendlyName.Value, ipAddress.Value, Optional.ToNullable(processServerId), port.Value, runAsAccountId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryUpdateVCenterProperties(
+                friendlyName.Value,
+                ipAddress.Value,
+                Optional.ToNullable(processServerId),
+                port.Value,
+                runAsAccountId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryUpdateVCenterProperties>.Write(ModelReaderWriterOptions options)

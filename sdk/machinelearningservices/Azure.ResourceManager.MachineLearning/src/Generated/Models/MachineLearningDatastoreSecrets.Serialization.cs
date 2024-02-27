@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Certificate": return MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(element);
-                    case "KerberosKeytab": return KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(element);
-                    case "KerberosPassword": return KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(element);
-                    case "Sas": return MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(element);
-                    case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(element);
-                    case "AccountKey": return MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(element);
+                    case "Certificate": return MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(element, options);
+                    case "KerberosKeytab": return KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(element, options);
+                    case "KerberosPassword": return KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(element, options);
+                    case "Sas": return MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(element, options);
+                    case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(element, options);
+                    case "AccountKey": return MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(element, options);
                 }
             }
-            return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element);
+            return UnknownDatastoreSecrets.DeserializeUnknownDatastoreSecrets(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDatastoreSecrets>.Write(ModelReaderWriterOptions options)

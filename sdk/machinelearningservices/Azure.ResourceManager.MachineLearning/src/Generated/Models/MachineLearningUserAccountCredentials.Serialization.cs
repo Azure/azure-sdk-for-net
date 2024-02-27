@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("adminUserName"u8);
             writer.WriteStringValue(AdminUserName);
-            if (Optional.IsDefined(AdminUserSshPublicKey))
+            if (AdminUserSshPublicKey != null)
             {
                 writer.WritePropertyName("adminUserSshPublicKey"u8);
                 writer.WriteStringValue(AdminUserSshPublicKey);
             }
-            if (Optional.IsDefined(AdminUserPassword))
+            if (AdminUserPassword != null)
             {
                 writer.WritePropertyName("adminUserPassword"u8);
                 writer.WriteStringValue(AdminUserPassword);

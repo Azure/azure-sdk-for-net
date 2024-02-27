@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            if (options.Format != "W" && MigrationId != null)
             {
                 writer.WritePropertyName("migrationId"u8);
                 writer.WriteStringValue(MigrationId);
             }
-            if (Optional.IsCollectionDefined(SummaryResults))
+            if (!(SummaryResults is ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summaryResults"u8);
                 writer.WriteStartObject();
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> migrationId = default;
-            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
+            IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
             Optional<ValidationStatus> status = default;
             Optional<string> id = default;
             string resultType = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MigrationValidationDatabaseSummaryResult> dictionary = new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MigrationValidationDatabaseSummaryResult.DeserializeMigrationValidationDatabaseSummaryResult(property0.Value));
+                        dictionary.Add(property0.Name, MigrationValidationDatabaseSummaryResult.DeserializeMigrationValidationDatabaseSummaryResult(property0.Value, options));
                     }
                     summaryResults = dictionary;
                     continue;
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, Optional.ToDictionary(summaryResults), Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                migrationId.Value,
+                summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(),
+                Optional.ToNullable(status));
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>.Write(ModelReaderWriterOptions options)

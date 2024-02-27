@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterId))
+            if (options.Format != "W" && ClusterId.HasValue)
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityAllocated))
+            if (options.Format != "W" && CapacityAllocated.HasValue)
             {
                 writer.WritePropertyName("capacityAllocated"u8);
                 writer.WriteNumberValue(CapacityAllocated.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CapacityAssigned))
+            if (options.Format != "W" && CapacityAssigned.HasValue)
             {
                 writer.WritePropertyName("capacityAssigned"u8);
                 writer.WriteNumberValue(CapacityAssigned.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsClusterProperties(Optional.ToNullable(createdDate), Optional.ToNullable(clusterId), Optional.ToNullable(provisioningState), Optional.ToNullable(capacityAllocated), Optional.ToNullable(capacityAssigned), serializedAdditionalRawData);
+            return new StreamAnalyticsClusterProperties(
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(clusterId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(capacityAllocated),
+                Optional.ToNullable(capacityAssigned),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsClusterProperties>.Write(ModelReaderWriterOptions options)

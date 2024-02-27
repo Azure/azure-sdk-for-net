@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,19 +50,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(TipLookbackOn))
+            if (TipLookbackOn.HasValue)
             {
                 if (TipLookbackOn != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("tipLookbackPeriod");
                 }
             }
-            if (Optional.IsDefined(DataTypes))
+            if (DataTypes != null)
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteObjectValue(DataTypes);
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             {
                                 continue;
                             }
-                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value);
+                            dataTypes = TIDataConnectorDataTypes.DeserializeTIDataConnectorDataTypes(property0.Value, options);
                             continue;
                         }
                     }
@@ -215,7 +215,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsTIDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToNullable(tenantId), Optional.ToNullable(tipLookbackPeriod), dataTypes.Value);
+            return new SecurityInsightsTIDataConnector(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(tipLookbackPeriod),
+                dataTypes.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsTIDataConnector>.Write(ModelReaderWriterOptions options)

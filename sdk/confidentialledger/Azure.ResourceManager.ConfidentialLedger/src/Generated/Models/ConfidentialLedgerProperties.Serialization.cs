@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LedgerName))
+            if (options.Format != "W" && LedgerName != null)
             {
                 writer.WritePropertyName("ledgerName"u8);
                 writer.WriteStringValue(LedgerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(LedgerUri))
+            if (options.Format != "W" && LedgerUri != null)
             {
                 writer.WritePropertyName("ledgerUri"u8);
                 writer.WriteStringValue(LedgerUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IdentityServiceUri))
+            if (options.Format != "W" && IdentityServiceUri != null)
             {
                 writer.WritePropertyName("identityServiceUri"u8);
                 writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(LedgerInternalNamespace))
+            if (options.Format != "W" && LedgerInternalNamespace != null)
             {
                 writer.WritePropertyName("ledgerInternalNamespace"u8);
                 writer.WriteStringValue(LedgerInternalNamespace);
             }
-            if (Optional.IsDefined(RunningState))
+            if (RunningState.HasValue)
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (Optional.IsDefined(LedgerType))
+            if (LedgerType.HasValue)
             {
                 writer.WritePropertyName("ledgerType"u8);
                 writer.WriteStringValue(LedgerType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
+            if (!(AadBasedSecurityPrincipals is ChangeTrackingList<AadBasedSecurityPrincipal> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aadBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CertBasedSecurityPrincipals))
+            if (!(CertBasedSecurityPrincipals is ChangeTrackingList<CertBasedSecurityPrincipal> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("certBasedSecurityPrincipals"u8);
                 writer.WriteStartArray();
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerRunningState> runningState = default;
             Optional<ConfidentialLedgerType> ledgerType = default;
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
-            Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
-            Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
+            IList<AadBasedSecurityPrincipal> aadBasedSecurityPrincipals = default;
+            IList<CertBasedSecurityPrincipal> certBasedSecurityPrincipals = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<AadBasedSecurityPrincipal> array = new List<AadBasedSecurityPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item));
+                        array.Add(AadBasedSecurityPrincipal.DeserializeAadBasedSecurityPrincipal(item, options));
                     }
                     aadBasedSecurityPrincipals = array;
                     continue;
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<CertBasedSecurityPrincipal> array = new List<CertBasedSecurityPrincipal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CertBasedSecurityPrincipal.DeserializeCertBasedSecurityPrincipal(item));
+                        array.Add(CertBasedSecurityPrincipal.DeserializeCertBasedSecurityPrincipal(item, options));
                     }
                     certBasedSecurityPrincipals = array;
                     continue;
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals), serializedAdditionalRawData);
+            return new ConfidentialLedgerProperties(
+                ledgerName.Value,
+                ledgerUri.Value,
+                identityServiceUri.Value,
+                ledgerInternalNamespace.Value,
+                Optional.ToNullable(runningState),
+                Optional.ToNullable(ledgerType),
+                Optional.ToNullable(provisioningState),
+                aadBasedSecurityPrincipals ?? new ChangeTrackingList<AadBasedSecurityPrincipal>(),
+                certBasedSecurityPrincipals ?? new ChangeTrackingList<CertBasedSecurityPrincipal>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)

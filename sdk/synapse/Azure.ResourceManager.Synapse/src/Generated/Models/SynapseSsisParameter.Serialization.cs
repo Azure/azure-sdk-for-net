@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DataType))
+            if (DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (Optional.IsDefined(IsRequired))
+            if (IsRequired.HasValue)
             {
                 writer.WritePropertyName("required"u8);
                 writer.WriteBooleanValue(IsRequired.Value);
             }
-            if (Optional.IsDefined(IsSensitive))
+            if (IsSensitive.HasValue)
             {
                 writer.WritePropertyName("sensitive"u8);
                 writer.WriteBooleanValue(IsSensitive.Value);
             }
-            if (Optional.IsDefined(DesignDefaultValue))
+            if (DesignDefaultValue != null)
             {
                 writer.WritePropertyName("designDefaultValue"u8);
                 writer.WriteStringValue(DesignDefaultValue);
             }
-            if (Optional.IsDefined(DefaultValue))
+            if (DefaultValue != null)
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
             }
-            if (Optional.IsDefined(SensitiveDefaultValue))
+            if (SensitiveDefaultValue != null)
             {
                 writer.WritePropertyName("sensitiveDefaultValue"u8);
                 writer.WriteStringValue(SensitiveDefaultValue);
             }
-            if (Optional.IsDefined(ValueType))
+            if (ValueType != null)
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType);
             }
-            if (Optional.IsDefined(ValueSet))
+            if (ValueSet.HasValue)
             {
                 writer.WritePropertyName("valueSet"u8);
                 writer.WriteBooleanValue(ValueSet.Value);
             }
-            if (Optional.IsDefined(Variable))
+            if (Variable != null)
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
@@ -222,7 +222,20 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSsisParameter(Optional.ToNullable(id), name.Value, description.Value, dataType.Value, Optional.ToNullable(required), Optional.ToNullable(sensitive), designDefaultValue.Value, defaultValue.Value, sensitiveDefaultValue.Value, valueType.Value, Optional.ToNullable(valueSet), variable.Value, serializedAdditionalRawData);
+            return new SynapseSsisParameter(
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                dataType.Value,
+                Optional.ToNullable(required),
+                Optional.ToNullable(sensitive),
+                designDefaultValue.Value,
+                defaultValue.Value,
+                sensitiveDefaultValue.Value,
+                valueType.Value,
+                Optional.ToNullable(valueSet),
+                variable.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSsisParameter>.Write(ModelReaderWriterOptions options)

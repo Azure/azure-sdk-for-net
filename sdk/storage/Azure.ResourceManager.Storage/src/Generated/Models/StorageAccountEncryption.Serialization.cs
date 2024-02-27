@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Services))
+            if (Services != null)
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteObjectValue(Services);
             }
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToString());
             }
-            if (Optional.IsDefined(RequireInfrastructureEncryption))
+            if (RequireInfrastructureEncryption.HasValue)
             {
                 writer.WritePropertyName("requireInfrastructureEncryption"u8);
                 writer.WriteBooleanValue(RequireInfrastructureEncryption.Value);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyvaultproperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(EncryptionIdentity))
+            if (EncryptionIdentity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(EncryptionIdentity);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value);
+                    services = StorageAccountEncryptionServices.DeserializeStorageAccountEncryptionServices(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value);
+                    keyvaultproperties = StorageAccountKeyVaultProperties.DeserializeStorageAccountKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value);
+                    identity = StorageAccountEncryptionIdentity.DeserializeStorageAccountEncryptionIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountEncryption(services.Value, Optional.ToNullable(keySource), Optional.ToNullable(requireInfrastructureEncryption), keyvaultproperties.Value, identity.Value, serializedAdditionalRawData);
+            return new StorageAccountEncryption(
+                services.Value,
+                Optional.ToNullable(keySource),
+                Optional.ToNullable(requireInfrastructureEncryption),
+                keyvaultproperties.Value,
+                identity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountEncryption>.Write(ModelReaderWriterOptions options)

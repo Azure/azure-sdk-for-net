@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FilePattern))
+            if (FilePattern != null)
             {
                 writer.WritePropertyName("filePattern"u8);
 #if NET6_0_OR_GREATER
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(NestingSeparator))
+            if (NestingSeparator != null)
             {
                 writer.WritePropertyName("nestingSeparator"u8);
                 JsonSerializer.Serialize(writer, NestingSeparator);
             }
-            if (Optional.IsDefined(EncodingName))
+            if (EncodingName != null)
             {
                 writer.WritePropertyName("encodingName"u8);
                 JsonSerializer.Serialize(writer, EncodingName);
             }
-            if (Optional.IsDefined(JsonNodeReference))
+            if (JsonNodeReference != null)
             {
                 writer.WritePropertyName("jsonNodeReference"u8);
                 JsonSerializer.Serialize(writer, JsonNodeReference);
             }
-            if (Optional.IsDefined(JsonPathDefinition))
+            if (JsonPathDefinition != null)
             {
                 writer.WritePropertyName("jsonPathDefinition"u8);
 #if NET6_0_OR_GREATER
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetJsonFormat(type, serializer.Value, deserializer.Value, additionalProperties, filePattern.Value, nestingSeparator.Value, encodingName.Value, jsonNodeReference.Value, jsonPathDefinition.Value);
+            return new DatasetJsonFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                filePattern.Value,
+                nestingSeparator.Value,
+                encodingName.Value,
+                jsonNodeReference.Value,
+                jsonPathDefinition.Value);
         }
 
         BinaryData IPersistableModel<DatasetJsonFormat>.Write(ModelReaderWriterOptions options)

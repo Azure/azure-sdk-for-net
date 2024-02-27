@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(AllowedMethods))
+            if (!(AllowedMethods is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedMethods"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AllowedHeaders))
+            if (!(AllowedHeaders is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedHeaders"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExposeHeaders))
+            if (!(ExposeHeaders is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("exposeHeaders"u8);
                 writer.WriteStartArray();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MaxAge))
+            if (MaxAge.HasValue)
             {
                 writer.WritePropertyName("maxAge"u8);
                 writer.WriteNumberValue(MaxAge.Value);
             }
-            if (Optional.IsDefined(AllowCredentials))
+            if (AllowCredentials.HasValue)
             {
                 writer.WritePropertyName("allowCredentials"u8);
                 writer.WriteBooleanValue(AllowCredentials.Value);
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             IList<string> allowedOrigins = default;
-            Optional<IList<string>> allowedMethods = default;
-            Optional<IList<string>> allowedHeaders = default;
-            Optional<IList<string>> exposeHeaders = default;
+            IList<string> allowedMethods = default;
+            IList<string> allowedHeaders = default;
+            IList<string> exposeHeaders = default;
             Optional<int> maxAge = default;
             Optional<bool> allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -197,7 +197,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCorsPolicy(allowedOrigins, Optional.ToList(allowedMethods), Optional.ToList(allowedHeaders), Optional.ToList(exposeHeaders), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new ContainerAppCorsPolicy(
+                allowedOrigins,
+                allowedMethods ?? new ChangeTrackingList<string>(),
+                allowedHeaders ?? new ChangeTrackingList<string>(),
+                exposeHeaders ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxAge),
+                Optional.ToNullable(allowCredentials),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCorsPolicy>.Write(ModelReaderWriterOptions options)

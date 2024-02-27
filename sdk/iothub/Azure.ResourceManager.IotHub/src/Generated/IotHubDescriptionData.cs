@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.IotHub
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public IotHubDescriptionData(AzureLocation location, IotHubSkuInfo sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
         }

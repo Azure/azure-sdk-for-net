@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateSsisTaskOutput(document.RootElement, options);
+            return DeserializeMigrateSsisTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateSsisTaskOutput DeserializeUnknownMigrateSsisTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMigrateSsisTaskOutput(document.RootElement, options);
+                        return DeserializeMigrateSsisTaskOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MigrateSsisTaskOutput)} does not support '{options.Format}' format.");

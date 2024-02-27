@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FlowName))
+            if (FlowName != null)
             {
                 writer.WritePropertyName("flowName"u8);
                 writer.WriteStringValue(FlowName);
             }
-            if (Optional.IsDefined(TriggerName))
+            if (TriggerName != null)
             {
                 writer.WritePropertyName("triggerName"u8);
                 writer.WriteStringValue(TriggerName);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerReference(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, flowName.Value, triggerName.Value);
+            return new LogicWorkflowTriggerReference(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                flowName.Value,
+                triggerName.Value);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerReference>.Write(ModelReaderWriterOptions options)

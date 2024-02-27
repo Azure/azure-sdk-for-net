@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Streams))
+            if (!(Streams is ChangeTrackingList<ExtensionDataSourceStream> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("extensionName"u8);
             writer.WriteStringValue(ExtensionName);
-            if (Optional.IsDefined(ExtensionSettings))
+            if (ExtensionSettings != null)
             {
                 writer.WritePropertyName("extensionSettings"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(InputDataSources))
+            if (!(InputDataSources is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("inputDataSources"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<ExtensionDataSourceStream>> streams = default;
+            IList<ExtensionDataSourceStream> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;
-            Optional<IList<string>> inputDataSources = default;
+            IList<string> inputDataSources = default;
             Optional<string> name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionDataSource(Optional.ToList(streams), extensionName, extensionSettings.Value, Optional.ToList(inputDataSources), name.Value, serializedAdditionalRawData);
+            return new ExtensionDataSource(
+                streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(),
+                extensionName,
+                extensionSettings.Value,
+                inputDataSources ?? new ChangeTrackingList<string>(),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionDataSource>.Write(ModelReaderWriterOptions options)

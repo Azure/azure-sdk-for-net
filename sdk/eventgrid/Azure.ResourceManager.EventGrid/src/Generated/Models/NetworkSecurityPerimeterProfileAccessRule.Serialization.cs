@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FullyQualifiedArmId))
+            if (FullyQualifiedArmId != null)
             {
                 writer.WritePropertyName("fullyQualifiedArmId"u8);
                 writer.WriteStringValue(FullyQualifiedArmId);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NetworkSecurityPerimeterProfileAccessRuleType))
+            if (NetworkSecurityPerimeterProfileAccessRuleType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(NetworkSecurityPerimeterProfileAccessRuleType);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Direction))
+            if (Direction.HasValue)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AddressPrefixes))
+            if (!(AddressPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Subscriptions))
+            if (!(Subscriptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            if (!(NetworkSecurityPerimeters is ChangeTrackingList<NetworkSecurityPerimeterInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("networkSecurityPerimeters"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
+            if (!(FullyQualifiedDomainNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("fullyQualifiedDomainNames"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EmailAddresses))
+            if (!(EmailAddresses is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("emailAddresses"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PhoneNumbers))
+            if (!(PhoneNumbers is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("phoneNumbers"u8);
                 writer.WriteStartArray();
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<NetworkSecurityPerimeterProfileAccessRuleDirection> direction = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<IList<string>> subscriptions = default;
-            Optional<IList<NetworkSecurityPerimeterInfo>> networkSecurityPerimeters = default;
-            Optional<IList<string>> fullyQualifiedDomainNames = default;
-            Optional<IList<string>> emailAddresses = default;
-            Optional<IList<string>> phoneNumbers = default;
+            IList<string> addressPrefixes = default;
+            IList<string> subscriptions = default;
+            IList<NetworkSecurityPerimeterInfo> networkSecurityPerimeters = default;
+            IList<string> fullyQualifiedDomainNames = default;
+            IList<string> emailAddresses = default;
+            IList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<NetworkSecurityPerimeterInfo> array = new List<NetworkSecurityPerimeterInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item));
+                                array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item, options));
                             }
                             networkSecurityPerimeters = array;
                             continue;
@@ -287,7 +287,18 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterProfileAccessRule(fullyQualifiedArmId.Value, name.Value, type.Value, Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames), Optional.ToList(emailAddresses), Optional.ToList(phoneNumbers), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterProfileAccessRule(
+                fullyQualifiedArmId.Value,
+                name.Value,
+                type.Value,
+                Optional.ToNullable(direction),
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                subscriptions ?? new ChangeTrackingList<string>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeterInfo>(),
+                fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumbers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterProfileAccessRule>.Write(ModelReaderWriterOptions options)

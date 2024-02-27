@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operatingSystem"u8);
             writer.WriteStringValue(OperatingSystem.ToSerialString());
-            if (Optional.IsDefined(Windows))
+            if (Windows != null)
             {
                 writer.WritePropertyName("windows"u8);
                 writer.WriteObjectValue(Windows);
             }
-            if (Optional.IsDefined(Linux))
+            if (Linux != null)
             {
                 writer.WritePropertyName("linux"u8);
                 writer.WriteObjectValue(Linux);
             }
-            if (Optional.IsDefined(Duration))
+            if (Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (Optional.IsCollectionDefined(AzureVirtualMachines))
+            if (!(AzureVirtualMachines is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("azureVirtualMachines"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NonAzureComputerNames))
+            if (!(NonAzureComputerNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("nonAzureComputerNames"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Targets))
+            if (Targets != null)
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteObjectValue(Targets);
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<WindowsUpdateConfigurationProperties> windows = default;
             Optional<LinuxUpdateConfigurationProperties> linux = default;
             Optional<TimeSpan> duration = default;
-            Optional<IList<string>> azureVirtualMachines = default;
-            Optional<IList<string>> nonAzureComputerNames = default;
+            IList<string> azureVirtualMachines = default;
+            IList<string> nonAzureComputerNames = default;
             Optional<SoftwareUpdateConfigurationTargetProperties> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value);
+                    windows = WindowsUpdateConfigurationProperties.DeserializeWindowsUpdateConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linux"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value);
+                    linux = LinuxUpdateConfigurationProperties.DeserializeLinuxUpdateConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value);
+                    targets = SoftwareUpdateConfigurationTargetProperties.DeserializeSoftwareUpdateConfigurationTargetProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,7 +192,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationSpecificProperties(
+                operatingSystem,
+                windows.Value,
+                linux.Value,
+                Optional.ToNullable(duration),
+                azureVirtualMachines ?? new ChangeTrackingList<string>(),
+                nonAzureComputerNames ?? new ChangeTrackingList<string>(),
+                targets.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>.Write(ModelReaderWriterOptions options)

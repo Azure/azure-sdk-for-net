@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningOperation))
+            if (options.Format != "W" && ProvisioningOperation.HasValue)
             {
                 writer.WritePropertyName("provisioningOperation"u8);
                 writer.WriteStringValue(ProvisioningOperation.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Duration))
+            if (options.Format != "W" && Duration.HasValue)
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceRequestId))
+            if (options.Format != "W" && ServiceRequestId != null)
             {
                 writer.WritePropertyName("serviceRequestId"u8);
                 writer.WriteStringValue(ServiceRequestId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusCode))
+            if (options.Format != "W" && StatusCode != null)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            if (options.Format != "W" && StatusMessage != null)
             {
                 if (StatusMessage != null)
                 {
@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Resources.Models
                     writer.WriteNull("statusMessage");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetResource))
+            if (options.Format != "W" && TargetResource != null)
             {
                 writer.WritePropertyName("targetResource"u8);
                 writer.WriteObjectValue(TargetResource);
             }
-            if (options.Format != "W" && Optional.IsDefined(Request))
+            if (options.Format != "W" && Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (options.Format != "W" && Optional.IsDefined(Response))
+            if (options.Format != "W" && Response != null)
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteObjectValue(Response);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Resources.Models
                         statusMessage = null;
                         continue;
                     }
-                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value);
+                    statusMessage = StatusMessage.DeserializeStatusMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetResource"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    targetResource = TargetResource.DeserializeTargetResource(property.Value);
+                    targetResource = TargetResource.DeserializeTargetResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    request = HttpMessage.DeserializeHttpMessage(property.Value);
+                    request = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("response"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    response = HttpMessage.DeserializeHttpMessage(property.Value);
+                    response = HttpMessage.DeserializeHttpMessage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentOperationProperties(Optional.ToNullable(provisioningOperation), provisioningState.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), serviceRequestId.Value, statusCode.Value, statusMessage.Value, targetResource.Value, request.Value, response.Value, serializedAdditionalRawData);
+            return new ArmDeploymentOperationProperties(
+                Optional.ToNullable(provisioningOperation),
+                provisioningState.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(duration),
+                serviceRequestId.Value,
+                statusCode.Value,
+                statusMessage.Value,
+                targetResource.Value,
+                request.Value,
+                response.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentOperationProperties>.Write(ModelReaderWriterOptions options)

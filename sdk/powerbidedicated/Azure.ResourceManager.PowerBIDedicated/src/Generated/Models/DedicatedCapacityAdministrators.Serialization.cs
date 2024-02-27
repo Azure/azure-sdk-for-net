@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Members))
+            if (!(Members is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("members"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IList<string>> members = default;
+            IList<string> members = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedCapacityAdministrators(Optional.ToList(members), serializedAdditionalRawData);
+            return new DedicatedCapacityAdministrators(members ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DedicatedCapacityAdministrators>.Write(ModelReaderWriterOptions options)

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     List<ApiCenterServiceData> array = new List<ApiCenterServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiCenterServiceData.DeserializeApiCenterServiceData(item));
+                        array.Add(ApiCenterServiceData.DeserializeApiCenterServiceData(item, options));
                     }
                     value = array;
                     continue;

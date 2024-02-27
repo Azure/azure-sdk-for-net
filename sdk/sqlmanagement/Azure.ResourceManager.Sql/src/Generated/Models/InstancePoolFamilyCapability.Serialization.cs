@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
+            if (options.Format != "W" && !(SupportedLicenseTypes is ChangeTrackingList<LicenseTypeCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedLicenseTypes"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVcoresValues))
+            if (options.Format != "W" && !(SupportedVcoresValues is ChangeTrackingList<InstancePoolVcoresCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedVcoresValues"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<LicenseTypeCapability>> supportedLicenseTypes = default;
-            Optional<IReadOnlyList<InstancePoolVcoresCapability>> supportedVcoresValues = default;
+            IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
+            IReadOnlyList<InstancePoolVcoresCapability> supportedVcoresValues = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<LicenseTypeCapability> array = new List<LicenseTypeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item));
+                        array.Add(LicenseTypeCapability.DeserializeLicenseTypeCapability(item, options));
                     }
                     supportedLicenseTypes = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolVcoresCapability> array = new List<InstancePoolVcoresCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolVcoresCapability.DeserializeInstancePoolVcoresCapability(item));
+                        array.Add(InstancePoolVcoresCapability.DeserializeInstancePoolVcoresCapability(item, options));
                     }
                     supportedVcoresValues = array;
                     continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolFamilyCapability(name.Value, Optional.ToList(supportedLicenseTypes), Optional.ToList(supportedVcoresValues), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new InstancePoolFamilyCapability(
+                name.Value,
+                supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
+                supportedVcoresValues ?? new ChangeTrackingList<InstancePoolVcoresCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolFamilyCapability>.Write(ModelReaderWriterOptions options)

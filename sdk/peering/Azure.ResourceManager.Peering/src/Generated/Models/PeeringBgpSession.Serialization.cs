@@ -27,57 +27,57 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionPrefixV4))
+            if (SessionPrefixV4 != null)
             {
                 writer.WritePropertyName("sessionPrefixV4"u8);
                 writer.WriteStringValue(SessionPrefixV4);
             }
-            if (Optional.IsDefined(SessionPrefixV6))
+            if (SessionPrefixV6 != null)
             {
                 writer.WritePropertyName("sessionPrefixV6"u8);
                 writer.WriteStringValue(SessionPrefixV6);
             }
-            if (Optional.IsDefined(MicrosoftSessionIPv4Address))
+            if (MicrosoftSessionIPv4Address != null)
             {
                 writer.WritePropertyName("microsoftSessionIPv4Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv4Address.ToString());
             }
-            if (Optional.IsDefined(MicrosoftSessionIPv6Address))
+            if (MicrosoftSessionIPv6Address != null)
             {
                 writer.WritePropertyName("microsoftSessionIPv6Address"u8);
                 writer.WriteStringValue(MicrosoftSessionIPv6Address.ToString());
             }
-            if (Optional.IsDefined(PeerSessionIPv4Address))
+            if (PeerSessionIPv4Address != null)
             {
                 writer.WritePropertyName("peerSessionIPv4Address"u8);
                 writer.WriteStringValue(PeerSessionIPv4Address.ToString());
             }
-            if (Optional.IsDefined(PeerSessionIPv6Address))
+            if (PeerSessionIPv6Address != null)
             {
                 writer.WritePropertyName("peerSessionIPv6Address"u8);
                 writer.WriteStringValue(PeerSessionIPv6Address.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionStateV4))
+            if (options.Format != "W" && SessionStateV4.HasValue)
             {
                 writer.WritePropertyName("sessionStateV4"u8);
                 writer.WriteStringValue(SessionStateV4.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionStateV6))
+            if (options.Format != "W" && SessionStateV6.HasValue)
             {
                 writer.WritePropertyName("sessionStateV6"u8);
                 writer.WriteStringValue(SessionStateV6.Value.ToString());
             }
-            if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
+            if (MaxPrefixesAdvertisedV4.HasValue)
             {
                 writer.WritePropertyName("maxPrefixesAdvertisedV4"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV4.Value);
             }
-            if (Optional.IsDefined(MaxPrefixesAdvertisedV6))
+            if (MaxPrefixesAdvertisedV6.HasValue)
             {
                 writer.WritePropertyName("maxPrefixesAdvertisedV6"u8);
                 writer.WriteNumberValue(MaxPrefixesAdvertisedV6.Value);
             }
-            if (Optional.IsDefined(Md5AuthenticationKey))
+            if (Md5AuthenticationKey != null)
             {
                 writer.WritePropertyName("md5AuthenticationKey"u8);
                 writer.WriteStringValue(Md5AuthenticationKey);
@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Optional.ToNullable(sessionStateV4), Optional.ToNullable(sessionStateV6), Optional.ToNullable(maxPrefixesAdvertisedV4), Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value, serializedAdditionalRawData);
+            return new PeeringBgpSession(
+                sessionPrefixV4.Value,
+                sessionPrefixV6.Value,
+                microsoftSessionIPv4Address.Value,
+                microsoftSessionIPv6Address.Value,
+                peerSessionIPv4Address.Value,
+                peerSessionIPv6Address.Value,
+                Optional.ToNullable(sessionStateV4),
+                Optional.ToNullable(sessionStateV6),
+                Optional.ToNullable(maxPrefixesAdvertisedV4),
+                Optional.ToNullable(maxPrefixesAdvertisedV6),
+                md5AuthenticationKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options)

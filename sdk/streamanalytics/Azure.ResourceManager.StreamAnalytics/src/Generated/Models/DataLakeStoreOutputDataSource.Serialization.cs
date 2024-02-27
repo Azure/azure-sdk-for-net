@@ -30,47 +30,47 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RefreshToken))
+            if (RefreshToken != null)
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(TokenUserPrincipalName))
+            if (TokenUserPrincipalName != null)
             {
                 writer.WritePropertyName("tokenUserPrincipalName"u8);
                 writer.WriteStringValue(TokenUserPrincipalName);
             }
-            if (Optional.IsDefined(TokenUserDisplayName))
+            if (TokenUserDisplayName != null)
             {
                 writer.WritePropertyName("tokenUserDisplayName"u8);
                 writer.WriteStringValue(TokenUserDisplayName);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(FilePathPrefix))
+            if (FilePathPrefix != null)
             {
                 writer.WritePropertyName("filePathPrefix"u8);
                 writer.WriteStringValue(FilePathPrefix);
             }
-            if (Optional.IsDefined(DateFormat))
+            if (DateFormat != null)
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (Optional.IsDefined(TimeFormat))
+            if (TimeFormat != null)
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            return new DataLakeStoreOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken.Value,
+                tokenUserPrincipalName.Value,
+                tokenUserDisplayName.Value,
+                accountName.Value,
+                Optional.ToNullable(tenantId),
+                filePathPrefix.Value,
+                dateFormat.Value,
+                timeFormat.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)

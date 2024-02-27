@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SignalR.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(Allow))
+            if (!(Allow is ChangeTrackingList<SignalRRequestType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (!(Deny is ChangeTrackingList<SignalRRequestType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.SignalR.Models
                 return null;
             }
             string name = default;
-            Optional<IList<SignalRRequestType>> allow = default;
-            Optional<IList<SignalRRequestType>> deny = default;
+            IList<SignalRRequestType> allow = default;
+            IList<SignalRRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRPrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData, name);
+            return new SignalRPrivateEndpointAcl(allow ?? new ChangeTrackingList<SignalRRequestType>(), deny ?? new ChangeTrackingList<SignalRRequestType>(), serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<SignalRPrivateEndpointAcl>.Write(ModelReaderWriterOptions options)

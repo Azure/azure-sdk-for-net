@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(RenewalPeriod))
+            if (RenewalPeriod.HasValue)
             {
                 writer.WritePropertyName("renewalPeriod"u8);
                 writer.WriteNumberValue(RenewalPeriod.Value);
             }
-            if (Optional.IsCollectionDefined(Rules))
+            if (!(Rules is ChangeTrackingList<ServiceAccountThrottlingRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             Optional<float> count = default;
             Optional<float> renewalPeriod = default;
-            Optional<IReadOnlyList<ServiceAccountThrottlingRule>> rules = default;
+            IReadOnlyList<ServiceAccountThrottlingRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), Optional.ToList(rules), serializedAdditionalRawData);
+            return new ServiceAccountCallRateLimit(Optional.ToNullable(count), Optional.ToNullable(renewalPeriod), rules ?? new ChangeTrackingList<ServiceAccountThrottlingRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountCallRateLimit>.Write(ModelReaderWriterOptions options)

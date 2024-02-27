@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Trend))
+            if (options.Format != "W" && Trend != null)
             {
                 writer.WritePropertyName("trend"u8);
                 writer.WriteStringValue(Trend);
             }
-            if (Optional.IsCollectionDefined(Aggregates))
+            if (!(Aggregates is ChangeTrackingList<ReservationUtilizationAggregates> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("aggregates"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 return null;
             }
             Optional<string> trend = default;
-            Optional<IReadOnlyList<ReservationUtilizationAggregates>> aggregates = default;
+            IReadOnlyList<ReservationUtilizationAggregates> aggregates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationUtilizationAggregates> array = new List<ReservationUtilizationAggregates>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item));
+                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item, options));
                     }
                     aggregates = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationPropertiesUtilization(trend.Value, Optional.ToList(aggregates), serializedAdditionalRawData);
+            return new ReservationPropertiesUtilization(trend.Value, aggregates ?? new ChangeTrackingList<ReservationUtilizationAggregates>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationPropertiesUtilization>.Write(ModelReaderWriterOptions options)

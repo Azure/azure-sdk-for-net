@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Optional.IsDefined(Key))
+            if (Key != null)
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -75,28 +75,28 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "BoolEquals": return BoolEqualsFilter.DeserializeBoolEqualsFilter(element);
-                    case "IsNotNull": return IsNotNullFilter.DeserializeIsNotNullFilter(element);
-                    case "IsNullOrUndefined": return IsNullOrUndefinedFilter.DeserializeIsNullOrUndefinedFilter(element);
-                    case "NumberGreaterThan": return NumberGreaterThanFilter.DeserializeNumberGreaterThanFilter(element);
-                    case "NumberGreaterThanOrEquals": return NumberGreaterThanOrEqualsFilter.DeserializeNumberGreaterThanOrEqualsFilter(element);
-                    case "NumberIn": return NumberInFilter.DeserializeNumberInFilter(element);
-                    case "NumberInRange": return NumberInRangeFilter.DeserializeNumberInRangeFilter(element);
-                    case "NumberLessThan": return NumberLessThanFilter.DeserializeNumberLessThanFilter(element);
-                    case "NumberLessThanOrEquals": return NumberLessThanOrEqualsFilter.DeserializeNumberLessThanOrEqualsFilter(element);
-                    case "NumberNotIn": return NumberNotInFilter.DeserializeNumberNotInFilter(element);
-                    case "NumberNotInRange": return NumberNotInRangeFilter.DeserializeNumberNotInRangeFilter(element);
-                    case "StringBeginsWith": return StringBeginsWithFilter.DeserializeStringBeginsWithFilter(element);
-                    case "StringContains": return StringContainsFilter.DeserializeStringContainsFilter(element);
-                    case "StringEndsWith": return StringEndsWithFilter.DeserializeStringEndsWithFilter(element);
-                    case "StringIn": return StringInFilter.DeserializeStringInFilter(element);
-                    case "StringNotBeginsWith": return StringNotBeginsWithFilter.DeserializeStringNotBeginsWithFilter(element);
-                    case "StringNotContains": return StringNotContainsFilter.DeserializeStringNotContainsFilter(element);
-                    case "StringNotEndsWith": return StringNotEndsWithFilter.DeserializeStringNotEndsWithFilter(element);
-                    case "StringNotIn": return StringNotInFilter.DeserializeStringNotInFilter(element);
+                    case "BoolEquals": return BoolEqualsFilter.DeserializeBoolEqualsFilter(element, options);
+                    case "IsNotNull": return IsNotNullFilter.DeserializeIsNotNullFilter(element, options);
+                    case "IsNullOrUndefined": return IsNullOrUndefinedFilter.DeserializeIsNullOrUndefinedFilter(element, options);
+                    case "NumberGreaterThan": return NumberGreaterThanFilter.DeserializeNumberGreaterThanFilter(element, options);
+                    case "NumberGreaterThanOrEquals": return NumberGreaterThanOrEqualsFilter.DeserializeNumberGreaterThanOrEqualsFilter(element, options);
+                    case "NumberIn": return NumberInFilter.DeserializeNumberInFilter(element, options);
+                    case "NumberInRange": return NumberInRangeFilter.DeserializeNumberInRangeFilter(element, options);
+                    case "NumberLessThan": return NumberLessThanFilter.DeserializeNumberLessThanFilter(element, options);
+                    case "NumberLessThanOrEquals": return NumberLessThanOrEqualsFilter.DeserializeNumberLessThanOrEqualsFilter(element, options);
+                    case "NumberNotIn": return NumberNotInFilter.DeserializeNumberNotInFilter(element, options);
+                    case "NumberNotInRange": return NumberNotInRangeFilter.DeserializeNumberNotInRangeFilter(element, options);
+                    case "StringBeginsWith": return StringBeginsWithFilter.DeserializeStringBeginsWithFilter(element, options);
+                    case "StringContains": return StringContainsFilter.DeserializeStringContainsFilter(element, options);
+                    case "StringEndsWith": return StringEndsWithFilter.DeserializeStringEndsWithFilter(element, options);
+                    case "StringIn": return StringInFilter.DeserializeStringInFilter(element, options);
+                    case "StringNotBeginsWith": return StringNotBeginsWithFilter.DeserializeStringNotBeginsWithFilter(element, options);
+                    case "StringNotContains": return StringNotContainsFilter.DeserializeStringNotContainsFilter(element, options);
+                    case "StringNotEndsWith": return StringNotEndsWithFilter.DeserializeStringNotEndsWithFilter(element, options);
+                    case "StringNotIn": return StringNotInFilter.DeserializeStringNotInFilter(element, options);
                 }
             }
-            return UnknownFilter.DeserializeUnknownFilter(element);
+            return UnknownFilter.DeserializeUnknownFilter(element, options);
         }
 
         BinaryData IPersistableModel<EventGridFilter>.Write(ModelReaderWriterOptions options)

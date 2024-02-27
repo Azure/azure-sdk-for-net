@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<StorageMoverEndpointData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StorageMoverEndpointData>> value = default;
+            IReadOnlyList<StorageMoverEndpointData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     List<StorageMoverEndpointData> array = new List<StorageMoverEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageMoverEndpointData.DeserializeStorageMoverEndpointData(item));
+                        array.Add(StorageMoverEndpointData.DeserializeStorageMoverEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EndpointList(value ?? new ChangeTrackingList<StorageMoverEndpointData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointList>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DimensionName))
+            if (options.Format != "W" && DimensionName != null)
             {
                 writer.WritePropertyName("dimensionName"u8);
                 writer.WriteStringValue(DimensionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && Optional.IsDefined(AbsoluteValue))
+            if (options.Format != "W" && AbsoluteValue.HasValue)
             {
                 writer.WritePropertyName("absoluteValue"u8);
                 writer.WriteNumberValue(AbsoluteValue.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChangeValueAbsolute))
+            if (options.Format != "W" && ChangeValueAbsolute.HasValue)
             {
                 writer.WritePropertyName("changeValueAbsolute"u8);
                 writer.WriteNumberValue(ChangeValueAbsolute.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChangeValueRelative))
+            if (options.Format != "W" && ChangeValueRelative.HasValue)
             {
                 writer.WritePropertyName("changeValueRelative"u8);
                 writer.WriteNumberValue(ChangeValueRelative.Value);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Optional.ToNullable(absoluteValue), Optional.ToNullable(changeValueAbsolute), Optional.ToNullable(changeValueRelative), serializedAdditionalRawData);
+            return new RecommendedActionImpactRecord(
+                dimensionName.Value,
+                unit.Value,
+                Optional.ToNullable(absoluteValue),
+                Optional.ToNullable(changeValueAbsolute),
+                Optional.ToNullable(changeValueRelative),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionImpactRecord>.Write(ModelReaderWriterOptions options)

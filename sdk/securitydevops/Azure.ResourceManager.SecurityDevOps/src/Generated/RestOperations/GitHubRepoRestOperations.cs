@@ -67,9 +67,30 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitHubRepoListResponse>> ListByConnectorAsync(string subscriptionId, string resourceGroupName, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
 
             using var message = CreateListByConnectorRequest(subscriptionId, resourceGroupName, gitHubConnectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,9 +117,30 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitHubRepoListResponse> ListByConnector(string subscriptionId, string resourceGroupName, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
 
             using var message = CreateListByConnectorRequest(subscriptionId, resourceGroupName, gitHubConnectorName);
             _pipeline.Send(message, cancellationToken);
@@ -149,10 +191,38 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/> or <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitHubRepoListResponse>> ListAsync(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -180,10 +250,38 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/> or <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitHubRepoListResponse> List(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName);
             _pipeline.Send(message, cancellationToken);
@@ -236,11 +334,46 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitHubRepoData>> GetAsync(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -271,11 +404,46 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitHubRepoData> Get(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName);
             _pipeline.Send(message, cancellationToken);
@@ -335,12 +503,50 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -366,12 +572,50 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName, data);
             _pipeline.Send(message, cancellationToken);
@@ -425,12 +669,50 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -455,12 +737,50 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/>, <paramref name="gitHubOwnerName"/> or <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName, GitHubRepoData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
-            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
+            if (gitHubRepoName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubRepoName));
+            }
+            if (gitHubRepoName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubRepoName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName, gitHubRepoName, data);
             _pipeline.Send(message, cancellationToken);
@@ -497,10 +817,34 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitHubRepoListResponse>> ListByConnectorNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
 
             using var message = CreateListByConnectorNextPageRequest(nextLink, subscriptionId, resourceGroupName, gitHubConnectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -528,10 +872,34 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitHubRepoListResponse> ListByConnectorNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
 
             using var message = CreateListByConnectorNextPageRequest(nextLink, subscriptionId, resourceGroupName, gitHubConnectorName);
             _pipeline.Send(message, cancellationToken);
@@ -574,11 +942,42 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/> or <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GitHubRepoListResponse>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -607,11 +1006,42 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="gitHubConnectorName"/> or <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GitHubRepoListResponse> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
-            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (gitHubConnectorName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubConnectorName));
+            }
+            if (gitHubConnectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubConnectorName));
+            }
+            if (gitHubOwnerName == null)
+            {
+                throw new ArgumentNullException(nameof(gitHubOwnerName));
+            }
+            if (gitHubOwnerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gitHubOwnerName));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, gitHubConnectorName, gitHubOwnerName);
             _pipeline.Send(message, cancellationToken);

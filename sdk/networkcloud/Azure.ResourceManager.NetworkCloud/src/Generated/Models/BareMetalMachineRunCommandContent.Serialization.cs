@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IList<string>> arguments = default;
+            IList<string> arguments = default;
             long limitTimeSeconds = default;
             string script = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineRunCommandContent(Optional.ToList(arguments), limitTimeSeconds, script, serializedAdditionalRawData);
+            return new BareMetalMachineRunCommandContent(arguments ?? new ChangeTrackingList<string>(), limitTimeSeconds, script, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineRunCommandContent>.Write(ModelReaderWriterOptions options)

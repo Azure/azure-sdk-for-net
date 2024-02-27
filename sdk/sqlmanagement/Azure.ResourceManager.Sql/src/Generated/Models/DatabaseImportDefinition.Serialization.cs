@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(Edition))
+            if (Edition != null)
             {
                 writer.WritePropertyName("edition"u8);
                 writer.WriteStringValue(Edition);
             }
-            if (Optional.IsDefined(ServiceObjectiveName))
+            if (ServiceObjectiveName != null)
             {
                 writer.WritePropertyName("serviceObjectiveName"u8);
                 writer.WriteStringValue(ServiceObjectiveName);
             }
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes != null)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteStringValue(MaxSizeBytes);
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType != null)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (Optional.IsDefined(NetworkIsolation))
+            if (NetworkIsolation != null)
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseImportDefinition(databaseName.Value, edition.Value, serviceObjectiveName.Value, maxSizeBytes.Value, storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, serializedAdditionalRawData);
+            return new DatabaseImportDefinition(
+                databaseName.Value,
+                edition.Value,
+                serviceObjectiveName.Value,
+                maxSizeBytes.Value,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType.Value,
+                networkIsolation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseImportDefinition>.Write(ModelReaderWriterOptions options)

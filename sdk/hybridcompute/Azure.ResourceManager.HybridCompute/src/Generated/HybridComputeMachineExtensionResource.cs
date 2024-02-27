@@ -283,7 +283,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridComputeMachineExtensionResource>> UpdateAsync(WaitUntil waitUntil, HybridComputeMachineExtensionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Update");
             scope.Start();
@@ -329,7 +332,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<HybridComputeMachineExtensionResource> Update(WaitUntil waitUntil, HybridComputeMachineExtensionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.Update");
             scope.Start();
@@ -375,8 +381,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.AddTag");
             scope.Start();
@@ -437,8 +449,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<HybridComputeMachineExtensionResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.AddTag");
             scope.Start();
@@ -498,7 +516,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.SetTags");
             scope.Start();
@@ -555,7 +576,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HybridComputeMachineExtensionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.SetTags");
             scope.Start();
@@ -612,7 +636,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.RemoveTag");
             scope.Start();
@@ -672,7 +699,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<HybridComputeMachineExtensionResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _hybridComputeMachineExtensionMachineExtensionsClientDiagnostics.CreateScope("HybridComputeMachineExtensionResource.RemoveTag");
             scope.Start();

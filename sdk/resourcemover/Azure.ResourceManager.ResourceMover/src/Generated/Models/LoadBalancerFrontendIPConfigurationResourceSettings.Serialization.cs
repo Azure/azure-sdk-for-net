@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,27 +26,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddressStringValue != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress.ToString());
+                writer.WriteStringValue(PrivateIPAddressStringValue);
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod != null)
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteObjectValue(Subnet);
             }
-            if (Optional.IsDefined(Zones))
+            if (Zones != null)
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStringValue(Zones);
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> privateIPAddress = default;
             Optional<string> privateIPAllocationMethod = default;
             Optional<SubnetReferenceInfo> subnet = default;
             Optional<string> zones = default;
@@ -106,11 +105,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 if (property.NameEquals("privateIpAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"u8))
@@ -124,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     {
                         continue;
                     }
-                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value);
+                    subnet = SubnetReferenceInfo.DeserializeSubnetReferenceInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -138,7 +133,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerFrontendIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, zones.Value, serializedAdditionalRawData);
+            return new LoadBalancerFrontendIPConfigurationResourceSettings(
+                name.Value,
+                privateIPAddress.Value,
+                privateIPAllocationMethod.Value,
+                subnet.Value,
+                zones.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)

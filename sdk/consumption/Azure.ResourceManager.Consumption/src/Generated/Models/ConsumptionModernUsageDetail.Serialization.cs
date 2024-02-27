@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Consumption.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,369 +61,369 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
+            if (options.Format != "W" && BillingAccountId != null)
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectivePrice))
+            if (options.Format != "W" && EffectivePrice.HasValue)
             {
                 writer.WritePropertyName("effectivePrice"u8);
                 writer.WriteNumberValue(EffectivePrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PricingModel))
+            if (options.Format != "W" && PricingModel.HasValue)
             {
                 writer.WritePropertyName("pricingModel"u8);
                 writer.WriteStringValue(PricingModel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingAccountName))
+            if (options.Format != "W" && BillingAccountName != null)
             {
                 writer.WritePropertyName("billingAccountName"u8);
                 writer.WriteStringValue(BillingAccountName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodStartOn))
+            if (options.Format != "W" && BillingPeriodStartOn.HasValue)
             {
                 writer.WritePropertyName("billingPeriodStartDate"u8);
                 writer.WriteStringValue(BillingPeriodStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingPeriodEndOn))
+            if (options.Format != "W" && BillingPeriodEndOn.HasValue)
             {
                 writer.WritePropertyName("billingPeriodEndDate"u8);
                 writer.WriteStringValue(BillingPeriodEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            if (options.Format != "W" && BillingProfileId != null)
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProfileName))
+            if (options.Format != "W" && BillingProfileName != null)
             {
                 writer.WritePropertyName("billingProfileName"u8);
                 writer.WriteStringValue(BillingProfileName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionGuid))
+            if (options.Format != "W" && SubscriptionGuid != null)
             {
                 writer.WritePropertyName("subscriptionGuid"u8);
                 writer.WriteStringValue(SubscriptionGuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionName))
+            if (options.Format != "W" && SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(On))
+            if (options.Format != "W" && On.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(On.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Product))
+            if (options.Format != "W" && Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId.HasValue)
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterName))
+            if (options.Format != "W" && MeterName != null)
             {
                 writer.WritePropertyName("meterName"u8);
                 writer.WriteStringValue(MeterName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterRegion))
+            if (options.Format != "W" && MeterRegion != null)
             {
                 writer.WritePropertyName("meterRegion"u8);
                 writer.WriteStringValue(MeterRegion);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterCategory))
+            if (options.Format != "W" && MeterCategory != null)
             {
                 writer.WritePropertyName("meterCategory"u8);
                 writer.WriteStringValue(MeterCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(MeterSubCategory))
+            if (options.Format != "W" && MeterSubCategory != null)
             {
                 writer.WritePropertyName("meterSubCategory"u8);
                 writer.WriteStringValue(MeterSubCategory);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceFamily))
+            if (options.Format != "W" && ServiceFamily != null)
             {
                 writer.WritePropertyName("serviceFamily"u8);
                 writer.WriteStringValue(ServiceFamily);
             }
-            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            if (options.Format != "W" && Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            if (options.Format != "W" && UnitOfMeasure != null)
             {
                 writer.WritePropertyName("unitOfMeasure"u8);
                 writer.WriteStringValue(UnitOfMeasure);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceName))
+            if (options.Format != "W" && InstanceName != null)
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostInUSD))
+            if (options.Format != "W" && CostInUSD.HasValue)
             {
                 writer.WritePropertyName("costInUSD"u8);
                 writer.WriteNumberValue(CostInUSD.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnitPrice))
+            if (options.Format != "W" && UnitPrice.HasValue)
             {
                 writer.WritePropertyName("unitPrice"u8);
                 writer.WriteNumberValue(UnitPrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingCurrencyCode))
+            if (options.Format != "W" && BillingCurrencyCode != null)
             {
                 writer.WritePropertyName("billingCurrencyCode"u8);
                 writer.WriteStringValue(BillingCurrencyCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
+            if (options.Format != "W" && ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConsumedService))
+            if (options.Format != "W" && ConsumedService != null)
             {
                 writer.WritePropertyName("consumedService"u8);
                 writer.WriteStringValue(ConsumedService);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceInfo1))
+            if (options.Format != "W" && ServiceInfo1 != null)
             {
                 writer.WritePropertyName("serviceInfo1"u8);
                 writer.WriteStringValue(ServiceInfo1);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceInfo2))
+            if (options.Format != "W" && ServiceInfo2 != null)
             {
                 writer.WritePropertyName("serviceInfo2"u8);
                 writer.WriteStringValue(ServiceInfo2);
             }
-            if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
+            if (options.Format != "W" && AdditionalInfo != null)
             {
                 writer.WritePropertyName("additionalInfo"u8);
                 writer.WriteStringValue(AdditionalInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
+            if (options.Format != "W" && InvoiceSectionId != null)
             {
                 writer.WritePropertyName("invoiceSectionId"u8);
                 writer.WriteStringValue(InvoiceSectionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionName))
+            if (options.Format != "W" && InvoiceSectionName != null)
             {
                 writer.WritePropertyName("invoiceSectionName"u8);
                 writer.WriteStringValue(InvoiceSectionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostCenter))
+            if (options.Format != "W" && CostCenter != null)
             {
                 writer.WritePropertyName("costCenter"u8);
                 writer.WriteStringValue(CostCenter);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationId))
+            if (options.Format != "W" && ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReservationName))
+            if (options.Format != "W" && ReservationName != null)
             {
                 writer.WritePropertyName("reservationName"u8);
                 writer.WriteStringValue(ReservationName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductOrderId))
+            if (options.Format != "W" && ProductOrderId != null)
             {
                 writer.WritePropertyName("productOrderId"u8);
                 writer.WriteStringValue(ProductOrderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductOrderName))
+            if (options.Format != "W" && ProductOrderName != null)
             {
                 writer.WritePropertyName("productOrderName"u8);
                 writer.WriteStringValue(ProductOrderName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAzureCreditEligible))
+            if (options.Format != "W" && IsAzureCreditEligible.HasValue)
             {
                 writer.WritePropertyName("isAzureCreditEligible"u8);
                 writer.WriteBooleanValue(IsAzureCreditEligible.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Term))
+            if (options.Format != "W" && Term != null)
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherType))
+            if (options.Format != "W" && PublisherType != null)
             {
                 writer.WritePropertyName("publisherType"u8);
                 writer.WriteStringValue(PublisherType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargeType))
+            if (options.Format != "W" && ChargeType != null)
             {
                 writer.WritePropertyName("chargeType"u8);
                 writer.WriteStringValue(ChargeType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Frequency))
+            if (options.Format != "W" && Frequency != null)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostInBillingCurrency))
+            if (options.Format != "W" && CostInBillingCurrency.HasValue)
             {
                 writer.WritePropertyName("costInBillingCurrency"u8);
                 writer.WriteNumberValue(CostInBillingCurrency.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostInPricingCurrency))
+            if (options.Format != "W" && CostInPricingCurrency.HasValue)
             {
                 writer.WritePropertyName("costInPricingCurrency"u8);
                 writer.WriteNumberValue(CostInPricingCurrency.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExchangeRate))
+            if (options.Format != "W" && ExchangeRate != null)
             {
                 writer.WritePropertyName("exchangeRate"u8);
                 writer.WriteStringValue(ExchangeRate);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExchangeRateOn))
+            if (options.Format != "W" && ExchangeRateOn.HasValue)
             {
                 writer.WritePropertyName("exchangeRateDate"u8);
                 writer.WriteStringValue(ExchangeRateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(InvoiceId))
+            if (options.Format != "W" && InvoiceId != null)
             {
                 writer.WritePropertyName("invoiceId"u8);
                 writer.WriteStringValue(InvoiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PreviousInvoiceId))
+            if (options.Format != "W" && PreviousInvoiceId != null)
             {
                 writer.WritePropertyName("previousInvoiceId"u8);
                 writer.WriteStringValue(PreviousInvoiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PricingCurrencyCode))
+            if (options.Format != "W" && PricingCurrencyCode != null)
             {
                 writer.WritePropertyName("pricingCurrencyCode"u8);
                 writer.WriteStringValue(PricingCurrencyCode);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductIdentifier))
+            if (options.Format != "W" && ProductIdentifier != null)
             {
                 writer.WritePropertyName("productIdentifier"u8);
                 writer.WriteStringValue(ProductIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceLocationNormalized))
+            if (options.Format != "W" && ResourceLocationNormalized != null)
             {
                 writer.WritePropertyName("resourceLocationNormalized"u8);
                 writer.WriteStringValue(ResourceLocationNormalized);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePeriodStartOn))
+            if (options.Format != "W" && ServicePeriodStartOn.HasValue)
             {
                 writer.WritePropertyName("servicePeriodStartDate"u8);
                 writer.WriteStringValue(ServicePeriodStartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePeriodEndOn))
+            if (options.Format != "W" && ServicePeriodEndOn.HasValue)
             {
                 writer.WritePropertyName("servicePeriodEndDate"u8);
                 writer.WriteStringValue(ServicePeriodEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerTenantId))
+            if (options.Format != "W" && CustomerTenantId != null)
             {
                 writer.WritePropertyName("customerTenantId"u8);
                 writer.WriteStringValue(CustomerTenantId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerName))
+            if (options.Format != "W" && CustomerName != null)
             {
                 writer.WritePropertyName("customerName"u8);
                 writer.WriteStringValue(CustomerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerTenantId))
+            if (options.Format != "W" && PartnerTenantId != null)
             {
                 writer.WritePropertyName("partnerTenantId"u8);
                 writer.WriteStringValue(PartnerTenantId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerName))
+            if (options.Format != "W" && PartnerName != null)
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResellerMpnId))
+            if (options.Format != "W" && ResellerMpnId != null)
             {
                 writer.WritePropertyName("resellerMpnId"u8);
                 writer.WriteStringValue(ResellerMpnId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResellerName))
+            if (options.Format != "W" && ResellerName != null)
             {
                 writer.WritePropertyName("resellerName"u8);
                 writer.WriteStringValue(ResellerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherId))
+            if (options.Format != "W" && PublisherId != null)
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarketPrice))
+            if (options.Format != "W" && MarketPrice.HasValue)
             {
                 writer.WritePropertyName("marketPrice"u8);
                 writer.WriteNumberValue(MarketPrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExchangeRatePricingToBilling))
+            if (options.Format != "W" && ExchangeRatePricingToBilling.HasValue)
             {
                 writer.WritePropertyName("exchangeRatePricingToBilling"u8);
                 writer.WriteNumberValue(ExchangeRatePricingToBilling.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PaygCostInBillingCurrency))
+            if (options.Format != "W" && PaygCostInBillingCurrency.HasValue)
             {
                 writer.WritePropertyName("paygCostInBillingCurrency"u8);
                 writer.WriteNumberValue(PaygCostInBillingCurrency.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PaygCostInUSD))
+            if (options.Format != "W" && PaygCostInUSD.HasValue)
             {
                 writer.WritePropertyName("paygCostInUSD"u8);
                 writer.WriteNumberValue(PaygCostInUSD.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerEarnedCreditRate))
+            if (options.Format != "W" && PartnerEarnedCreditRate.HasValue)
             {
                 writer.WritePropertyName("partnerEarnedCreditRate"u8);
                 writer.WriteNumberValue(PartnerEarnedCreditRate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerEarnedCreditApplied))
+            if (options.Format != "W" && PartnerEarnedCreditApplied != null)
             {
                 writer.WritePropertyName("partnerEarnedCreditApplied"u8);
                 writer.WriteStringValue(PartnerEarnedCreditApplied);
             }
-            if (options.Format != "W" && Optional.IsDefined(PayGPrice))
+            if (options.Format != "W" && PayGPrice.HasValue)
             {
                 writer.WritePropertyName("payGPrice"u8);
                 writer.WriteNumberValue(PayGPrice.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitId))
+            if (options.Format != "W" && BenefitId != null)
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitName))
+            if (options.Format != "W" && BenefitName != null)
             {
                 writer.WritePropertyName("benefitName"u8);
                 writer.WriteStringValue(BenefitName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Provider))
+            if (options.Format != "W" && Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (options.Format != "W" && Optional.IsDefined(CostAllocationRuleName))
+            if (options.Format != "W" && CostAllocationRuleName != null)
             {
                 writer.WritePropertyName("costAllocationRuleName"u8);
                 writer.WriteStringValue(CostAllocationRuleName);
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             UsageDetailsKind kind = default;
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -1064,7 +1064,87 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionModernUsageDetail(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData, billingAccountId.Value, Optional.ToNullable(effectivePrice), Optional.ToNullable(pricingModel), billingAccountName.Value, Optional.ToNullable(billingPeriodStartDate), Optional.ToNullable(billingPeriodEndDate), billingProfileId.Value, billingProfileName.Value, subscriptionGuid.Value, subscriptionName.Value, Optional.ToNullable(date), product.Value, Optional.ToNullable(meterId), meterName.Value, meterRegion.Value, meterCategory.Value, meterSubCategory.Value, serviceFamily.Value, Optional.ToNullable(quantity), unitOfMeasure.Value, instanceName.Value, Optional.ToNullable(costInUSD), Optional.ToNullable(unitPrice), billingCurrencyCode.Value, resourceLocation.Value, consumedService.Value, serviceInfo1.Value, serviceInfo2.Value, additionalInfo.Value, invoiceSectionId.Value, invoiceSectionName.Value, costCenter.Value, resourceGroup.Value, reservationId.Value, reservationName.Value, productOrderId.Value, productOrderName.Value, Optional.ToNullable(isAzureCreditEligible), term.Value, publisherName.Value, publisherType.Value, chargeType.Value, frequency.Value, Optional.ToNullable(costInBillingCurrency), Optional.ToNullable(costInPricingCurrency), exchangeRate.Value, Optional.ToNullable(exchangeRateDate), invoiceId.Value, previousInvoiceId.Value, pricingCurrencyCode.Value, productIdentifier.Value, resourceLocationNormalized.Value, Optional.ToNullable(servicePeriodStartDate), Optional.ToNullable(servicePeriodEndDate), customerTenantId.Value, customerName.Value, partnerTenantId.Value, partnerName.Value, resellerMpnId.Value, resellerName.Value, publisherId.Value, Optional.ToNullable(marketPrice), Optional.ToNullable(exchangeRatePricingToBilling), Optional.ToNullable(paygCostInBillingCurrency), Optional.ToNullable(paygCostInUSD), Optional.ToNullable(partnerEarnedCreditRate), partnerEarnedCreditApplied.Value, Optional.ToNullable(payGPrice), benefitId.Value, benefitName.Value, provider.Value, costAllocationRuleName.Value);
+            return new ConsumptionModernUsageDetail(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                billingAccountId.Value,
+                Optional.ToNullable(effectivePrice),
+                Optional.ToNullable(pricingModel),
+                billingAccountName.Value,
+                Optional.ToNullable(billingPeriodStartDate),
+                Optional.ToNullable(billingPeriodEndDate),
+                billingProfileId.Value,
+                billingProfileName.Value,
+                subscriptionGuid.Value,
+                subscriptionName.Value,
+                Optional.ToNullable(date),
+                product.Value,
+                Optional.ToNullable(meterId),
+                meterName.Value,
+                meterRegion.Value,
+                meterCategory.Value,
+                meterSubCategory.Value,
+                serviceFamily.Value,
+                Optional.ToNullable(quantity),
+                unitOfMeasure.Value,
+                instanceName.Value,
+                Optional.ToNullable(costInUSD),
+                Optional.ToNullable(unitPrice),
+                billingCurrencyCode.Value,
+                resourceLocation.Value,
+                consumedService.Value,
+                serviceInfo1.Value,
+                serviceInfo2.Value,
+                additionalInfo.Value,
+                invoiceSectionId.Value,
+                invoiceSectionName.Value,
+                costCenter.Value,
+                resourceGroup.Value,
+                reservationId.Value,
+                reservationName.Value,
+                productOrderId.Value,
+                productOrderName.Value,
+                Optional.ToNullable(isAzureCreditEligible),
+                term.Value,
+                publisherName.Value,
+                publisherType.Value,
+                chargeType.Value,
+                frequency.Value,
+                Optional.ToNullable(costInBillingCurrency),
+                Optional.ToNullable(costInPricingCurrency),
+                exchangeRate.Value,
+                Optional.ToNullable(exchangeRateDate),
+                invoiceId.Value,
+                previousInvoiceId.Value,
+                pricingCurrencyCode.Value,
+                productIdentifier.Value,
+                resourceLocationNormalized.Value,
+                Optional.ToNullable(servicePeriodStartDate),
+                Optional.ToNullable(servicePeriodEndDate),
+                customerTenantId.Value,
+                customerName.Value,
+                partnerTenantId.Value,
+                partnerName.Value,
+                resellerMpnId.Value,
+                resellerName.Value,
+                publisherId.Value,
+                Optional.ToNullable(marketPrice),
+                Optional.ToNullable(exchangeRatePricingToBilling),
+                Optional.ToNullable(paygCostInBillingCurrency),
+                Optional.ToNullable(paygCostInUSD),
+                Optional.ToNullable(partnerEarnedCreditRate),
+                partnerEarnedCreditApplied.Value,
+                Optional.ToNullable(payGPrice),
+                benefitId.Value,
+                benefitName.Value,
+                provider.Value,
+                costAllocationRuleName.Value);
         }
 
         BinaryData IPersistableModel<ConsumptionModernUsageDetail>.Write(ModelReaderWriterOptions options)

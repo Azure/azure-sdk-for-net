@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultMaximumExpirationTimeInDays))
+            if (DefaultMaximumExpirationTimeInDays.HasValue)
             {
                 writer.WritePropertyName("defaultMaximumExpirationTimeInDays"u8);
                 writer.WriteNumberValue(DefaultMaximumExpirationTimeInDays.Value);
             }
-            if (Optional.IsCollectionDefined(AuthorizedPartnersList))
+            if (!(AuthorizedPartnersList is ChangeTrackingList<EventGridPartnerContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizedPartnersList"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             Optional<int> defaultMaximumExpirationTimeInDays = default;
-            Optional<IList<EventGridPartnerContent>> authorizedPartnersList = default;
+            IList<EventGridPartnerContent> authorizedPartnersList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridPartnerContent> array = new List<EventGridPartnerContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item));
+                        array.Add(EventGridPartnerContent.DeserializeEventGridPartnerContent(item, options));
                     }
                     authorizedPartnersList = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), Optional.ToList(authorizedPartnersList), serializedAdditionalRawData);
+            return new PartnerAuthorization(Optional.ToNullable(defaultMaximumExpirationTimeInDays), authorizedPartnersList ?? new ChangeTrackingList<EventGridPartnerContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerAuthorization>.Write(ModelReaderWriterOptions options)

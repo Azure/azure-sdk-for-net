@@ -32,7 +32,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Models
         /// <returns> A new <see cref="MarketplaceOrdering.MarketplaceAgreementTermData"/> instance for mocking. </returns>
         public static MarketplaceAgreementTermData MarketplaceAgreementTermData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string product = null, string plan = null, Uri licenseTextLink = null, Uri privacyPolicyLink = null, Uri marketplaceTermsLink = null, DateTimeOffset? retrievedOn = null, string signature = null, bool? isAccepted = null)
         {
-            return new MarketplaceAgreementTermData(id, name, resourceType, systemData, publisher, product, plan, licenseTextLink, privacyPolicyLink, marketplaceTermsLink, retrievedOn, signature, isAccepted, serializedAdditionalRawData: null);
+            return new MarketplaceAgreementTermData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                marketplaceTermsLink,
+                retrievedOn,
+                signature,
+                isAccepted,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RepositoryToken))
+            if (RepositoryToken != null)
             {
                 writer.WritePropertyName("repositoryToken"u8);
                 writer.WriteStringValue(RepositoryToken);
             }
-            if (Optional.IsDefined(ShouldUpdateRepository))
+            if (ShouldUpdateRepository.HasValue)
             {
                 writer.WritePropertyName("shouldUpdateRepository"u8);
                 writer.WriteBooleanValue(ShouldUpdateRepository.Value);
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteResetContent(id, name, type, systemData.Value, repositoryToken.Value, Optional.ToNullable(shouldUpdateRepository), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteResetContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                repositoryToken.Value,
+                Optional.ToNullable(shouldUpdateRepository),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteResetContent>.Write(ModelReaderWriterOptions options)

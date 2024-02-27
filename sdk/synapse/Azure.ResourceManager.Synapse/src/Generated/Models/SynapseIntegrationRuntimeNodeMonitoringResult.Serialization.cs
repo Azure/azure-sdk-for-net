@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NodeName))
+            if (options.Format != "W" && NodeName != null)
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInMB))
+            if (options.Format != "W" && AvailableMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("availableMemoryInMB"u8);
                 writer.WriteNumberValue(AvailableMemoryInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuUtilization))
+            if (options.Format != "W" && CpuUtilization.HasValue)
             {
                 writer.WritePropertyName("cpuUtilization"u8);
                 writer.WriteNumberValue(CpuUtilization.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
+            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsRunning))
+            if (options.Format != "W" && ConcurrentJobsRunning.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsRunning"u8);
                 writer.WriteNumberValue(ConcurrentJobsRunning.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
+            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SentBytes))
+            if (options.Format != "W" && SentBytes.HasValue)
             {
                 writer.WritePropertyName("sentBytes"u8);
                 writer.WriteNumberValue(SentBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReceivedBytes))
+            if (options.Format != "W" && ReceivedBytes.HasValue)
             {
                 writer.WritePropertyName("receivedBytes"u8);
                 writer.WriteNumberValue(ReceivedBytes.Value);
@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeNodeMonitoringResult(nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), additionalProperties);
+            return new SynapseIntegrationRuntimeNodeMonitoringResult(
+                nodeName.Value,
+                Optional.ToNullable(availableMemoryInMB),
+                Optional.ToNullable(cpuUtilization),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(concurrentJobsRunning),
+                Optional.ToNullable(maxConcurrentJobs),
+                Optional.ToNullable(sentBytes),
+                Optional.ToNullable(receivedBytes),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeNodeMonitoringResult>.Write(ModelReaderWriterOptions options)

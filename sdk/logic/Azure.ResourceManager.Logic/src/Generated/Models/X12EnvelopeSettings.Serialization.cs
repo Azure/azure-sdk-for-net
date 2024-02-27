@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(RolloverInterchangeControlNumber);
             writer.WritePropertyName("enableDefaultGroupHeaders"u8);
             writer.WriteBooleanValue(EnableDefaultGroupHeaders);
-            if (Optional.IsDefined(FunctionalGroupId))
+            if (FunctionalGroupId != null)
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(TransactionSetControlNumberUpperBound);
             writer.WritePropertyName("rolloverTransactionSetControlNumber"u8);
             writer.WriteBooleanValue(RolloverTransactionSetControlNumber);
-            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
+            if (TransactionSetControlNumberPrefix != null)
             {
                 writer.WritePropertyName("transactionSetControlNumberPrefix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberPrefix);
             }
-            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
+            if (TransactionSetControlNumberSuffix != null)
             {
                 writer.WritePropertyName("transactionSetControlNumberSuffix"u8);
                 writer.WriteStringValue(TransactionSetControlNumberSuffix);
@@ -275,7 +275,32 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator, serializedAdditionalRawData);
+            return new X12EnvelopeSettings(
+                controlStandardsId,
+                useControlStandardsIdAsRepetitionCharacter,
+                senderApplicationId,
+                receiverApplicationId,
+                controlVersionNumber,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                enableDefaultGroupHeaders,
+                functionalGroupId.Value,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupHeaderAgencyCode,
+                groupHeaderVersion,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                transactionSetControlNumberPrefix.Value,
+                transactionSetControlNumberSuffix.Value,
+                overwriteExistingTransactionSetControlNumber,
+                groupHeaderDateFormat,
+                groupHeaderTimeFormat,
+                usageIndicator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12EnvelopeSettings>.Write(ModelReaderWriterOptions options)

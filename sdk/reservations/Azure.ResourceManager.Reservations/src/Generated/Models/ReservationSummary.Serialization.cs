@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SucceededCount))
+            if (options.Format != "W" && SucceededCount.HasValue)
             {
                 writer.WritePropertyName("succeededCount"u8);
                 writer.WriteNumberValue(SucceededCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedCount))
+            if (options.Format != "W" && FailedCount.HasValue)
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiringCount))
+            if (options.Format != "W" && ExpiringCount.HasValue)
             {
                 writer.WritePropertyName("expiringCount"u8);
                 writer.WriteNumberValue(ExpiringCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiredCount))
+            if (options.Format != "W" && ExpiredCount.HasValue)
             {
                 writer.WritePropertyName("expiredCount"u8);
                 writer.WriteNumberValue(ExpiredCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingCount))
+            if (options.Format != "W" && PendingCount.HasValue)
             {
                 writer.WritePropertyName("pendingCount"u8);
                 writer.WriteNumberValue(PendingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CancelledCount))
+            if (options.Format != "W" && CancelledCount.HasValue)
             {
                 writer.WritePropertyName("cancelledCount"u8);
                 writer.WriteNumberValue(CancelledCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessingCount))
+            if (options.Format != "W" && ProcessingCount.HasValue)
             {
                 writer.WritePropertyName("processingCount"u8);
                 writer.WriteNumberValue(ProcessingCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(WarningCount))
+            if (options.Format != "W" && WarningCount.HasValue)
             {
                 writer.WritePropertyName("warningCount"u8);
                 writer.WriteNumberValue(WarningCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NoBenefitCount))
+            if (options.Format != "W" && NoBenefitCount.HasValue)
             {
                 writer.WritePropertyName("noBenefitCount"u8);
                 writer.WriteNumberValue(NoBenefitCount.Value);
@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSummary(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(warningCount), Optional.ToNullable(noBenefitCount), serializedAdditionalRawData);
+            return new ReservationSummary(
+                Optional.ToNullable(succeededCount),
+                Optional.ToNullable(failedCount),
+                Optional.ToNullable(expiringCount),
+                Optional.ToNullable(expiredCount),
+                Optional.ToNullable(pendingCount),
+                Optional.ToNullable(cancelledCount),
+                Optional.ToNullable(processingCount),
+                Optional.ToNullable(warningCount),
+                Optional.ToNullable(noBenefitCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSummary>.Write(ModelReaderWriterOptions options)

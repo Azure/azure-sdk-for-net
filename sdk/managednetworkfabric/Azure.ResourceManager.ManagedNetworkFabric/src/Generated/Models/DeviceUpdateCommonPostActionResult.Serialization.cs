@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            if (options.Format != "W" && ConfigurationState.HasValue)
             {
                 writer.WritePropertyName("configurationState"u8);
                 writer.WriteStringValue(ConfigurationState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(SuccessfulDevices))
+            if (!(SuccessfulDevices is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("successfulDevices"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailedDevices))
+            if (!(FailedDevices is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failedDevices"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<NetworkFabricConfigurationState> configurationState = default;
-            Optional<IReadOnlyList<string>> successfulDevices = default;
-            Optional<IReadOnlyList<string>> failedDevices = default;
+            IReadOnlyList<string> successfulDevices = default;
+            IReadOnlyList<string> failedDevices = default;
             Optional<ResponseError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), Optional.ToList(successfulDevices), Optional.ToList(failedDevices));
+            return new DeviceUpdateCommonPostActionResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), successfulDevices ?? new ChangeTrackingList<string>(), failedDevices ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DeviceUpdateCommonPostActionResult>.Write(ModelReaderWriterOptions options)

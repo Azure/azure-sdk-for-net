@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubjectName))
+            if (options.Format != "W" && SubjectName != null)
             {
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (options.Format != "W" && !(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -51,37 +51,37 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            if (options.Format != "W" && Issuer != null)
             {
                 writer.WritePropertyName("issuer"u8);
                 writer.WriteStringValue(Issuer);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueOn))
+            if (options.Format != "W" && IssueOn.HasValue)
             {
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsValid))
+            if (options.Format != "W" && IsValid.HasValue)
             {
                 writer.WritePropertyName("valid"u8);
                 writer.WriteBooleanValue(IsValid.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicKeyHash))
+            if (options.Format != "W" && PublicKeyHash != null)
             {
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppCertificateProvisioningState> provisioningState = default;
             Optional<string> password = default;
             Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
+            IReadOnlyList<string> subjectAlternativeNames = default;
             Optional<byte[]> value = default;
             Optional<string> issuer = default;
             Optional<DateTimeOffset> issueDate = default;
@@ -229,7 +229,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, serializedAdditionalRawData);
+            return new ContainerAppCertificateProperties(
+                Optional.ToNullable(provisioningState),
+                password.Value,
+                subjectName.Value,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                value.Value,
+                issuer.Value,
+                Optional.ToNullable(issueDate),
+                Optional.ToNullable(expirationDate),
+                thumbprint.Value,
+                Optional.ToNullable(valid),
+                publicKeyHash.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCertificateProperties>.Write(ModelReaderWriterOptions options)

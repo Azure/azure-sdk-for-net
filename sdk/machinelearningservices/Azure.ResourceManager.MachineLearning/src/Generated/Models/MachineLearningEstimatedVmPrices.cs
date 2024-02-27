@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -54,7 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         internal MachineLearningEstimatedVmPrices(MachineLearningBillingCurrency billingCurrency, MachineLearningUnitOfMeasure unitOfMeasure, IEnumerable<MachineLearningEstimatedVmPrice> values)
         {
-            Argument.AssertNotNull(values, nameof(values));
+            if (values == null)
+            {
+                throw new ArgumentNullException(nameof(values));
+            }
 
             BillingCurrency = billingCurrency;
             UnitOfMeasure = unitOfMeasure;

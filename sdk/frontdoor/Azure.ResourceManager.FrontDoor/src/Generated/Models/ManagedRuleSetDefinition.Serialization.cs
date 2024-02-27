@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,34 +55,34 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleSetId))
+            if (options.Format != "W" && RuleSetId != null)
             {
                 writer.WritePropertyName("ruleSetId"u8);
                 writer.WriteStringValue(RuleSetId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleSetType))
+            if (options.Format != "W" && RuleSetType != null)
             {
                 writer.WritePropertyName("ruleSetType"u8);
                 writer.WriteStringValue(RuleSetType);
             }
-            if (options.Format != "W" && Optional.IsDefined(RuleSetVersion))
+            if (options.Format != "W" && RuleSetVersion != null)
             {
                 writer.WritePropertyName("ruleSetVersion"u8);
                 writer.WriteStringValue(RuleSetVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RuleGroups))
+            if (options.Format != "W" && !(RuleGroups is ChangeTrackingList<ManagedRuleGroupDefinition> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> ruleSetId = default;
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
-            Optional<IReadOnlyList<ManagedRuleGroupDefinition>> ruleGroups = default;
+            IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item, options));
                             }
                             ruleGroups = array;
                             continue;
@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinition(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, ruleSetId.Value, ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), serializedAdditionalRawData);
+            return new ManagedRuleSetDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                ruleSetId.Value,
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinition>.Write(ModelReaderWriterOptions options)

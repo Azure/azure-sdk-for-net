@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
+            if (options.Format != "W" && LocalAddress != null)
             {
                 writer.WritePropertyName("localAddress"u8);
                 writer.WriteStringValue(LocalAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Neighbor))
+            if (options.Format != "W" && Neighbor != null)
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (options.Format != "W" && Optional.IsDefined(Asn))
+            if (options.Format != "W" && Asn.HasValue)
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectedDuration))
+            if (options.Format != "W" && ConnectedDuration.HasValue)
             {
                 writer.WritePropertyName("connectedDuration"u8);
                 writer.WriteStringValue(ConnectedDuration.Value, "c");
             }
-            if (options.Format != "W" && Optional.IsDefined(RoutesReceived))
+            if (options.Format != "W" && RoutesReceived.HasValue)
             {
                 writer.WritePropertyName("routesReceived"u8);
                 writer.WriteNumberValue(RoutesReceived.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MessagesSent))
+            if (options.Format != "W" && MessagesSent.HasValue)
             {
                 writer.WritePropertyName("messagesSent"u8);
                 writer.WriteNumberValue(MessagesSent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MessagesReceived))
+            if (options.Format != "W" && MessagesReceived.HasValue)
             {
                 writer.WritePropertyName("messagesReceived"u8);
                 writer.WriteNumberValue(MessagesReceived.Value);
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
+            return new BgpPeerStatus(
+                localAddress.Value,
+                neighbor.Value,
+                Optional.ToNullable(asn),
+                Optional.ToNullable(state),
+                Optional.ToNullable(connectedDuration),
+                Optional.ToNullable(routesReceived),
+                Optional.ToNullable(messagesSent),
+                Optional.ToNullable(messagesReceived),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatus>.Write(ModelReaderWriterOptions options)

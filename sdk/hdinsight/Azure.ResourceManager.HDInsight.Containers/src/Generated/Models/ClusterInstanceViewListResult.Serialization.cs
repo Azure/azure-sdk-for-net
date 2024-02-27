@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ClusterInstanceViewResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ClusterInstanceViewResult>> value = default;
+            IReadOnlyList<ClusterInstanceViewResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterInstanceViewResult> array = new List<ClusterInstanceViewResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(item));
+                        array.Add(ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterInstanceViewListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ClusterInstanceViewListResult(value ?? new ChangeTrackingList<ClusterInstanceViewResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterInstanceViewListResult>.Write(ModelReaderWriterOptions options)

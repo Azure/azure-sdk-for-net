@@ -69,7 +69,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new LinkedEntity(name, matches, language, id.Value, url, dataSource, bingId.Value);
+            return new LinkedEntity(
+                name,
+                matches,
+                language,
+                id.Value,
+                url,
+                dataSource,
+                bingId.Value);
         }
     }
 }

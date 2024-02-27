@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MdeOnboarding> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MdeOnboarding>> value = default;
+            IReadOnlyList<MdeOnboarding> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MdeOnboarding> array = new List<MdeOnboarding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
+                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MdeOnboardingDataList(Optional.ToList(value), serializedAdditionalRawData);
+            return new MdeOnboardingDataList(value ?? new ChangeTrackingList<MdeOnboarding>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MdeOnboardingDataList>.Write(ModelReaderWriterOptions options)

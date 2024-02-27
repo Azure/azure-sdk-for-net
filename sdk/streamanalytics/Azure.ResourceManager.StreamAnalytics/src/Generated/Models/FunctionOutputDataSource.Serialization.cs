@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAppName))
+            if (FunctionAppName != null)
             {
                 writer.WritePropertyName("functionAppName"u8);
                 writer.WriteStringValue(FunctionAppName);
             }
-            if (Optional.IsDefined(FunctionName))
+            if (FunctionName != null)
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(MaxBatchSize))
+            if (MaxBatchSize.HasValue)
             {
                 writer.WritePropertyName("maxBatchSize"u8);
                 writer.WriteNumberValue(MaxBatchSize.Value);
             }
-            if (Optional.IsDefined(MaxBatchCount))
+            if (MaxBatchCount.HasValue)
             {
                 writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionOutputDataSource(type, serializedAdditionalRawData, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                functionAppName.Value,
+                functionName.Value,
+                apiKey.Value,
+                Optional.ToNullable(maxBatchSize),
+                Optional.ToNullable(maxBatchCount));
         }
 
         BinaryData IPersistableModel<FunctionOutputDataSource>.Write(ModelReaderWriterOptions options)

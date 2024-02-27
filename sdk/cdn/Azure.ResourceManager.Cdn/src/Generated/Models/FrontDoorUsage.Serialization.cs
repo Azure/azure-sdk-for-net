@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value);
+                    name = FrontDoorUsageResourceName.DeserializeFrontDoorUsageResourceName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorUsage(id.Value, unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new FrontDoorUsage(
+                id.Value,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorUsage>.Write(ModelReaderWriterOptions options)

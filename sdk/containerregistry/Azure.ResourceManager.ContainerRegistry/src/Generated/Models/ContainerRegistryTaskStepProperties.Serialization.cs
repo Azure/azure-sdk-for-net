@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
+            if (options.Format != "W" && !(BaseImageDependencies is ChangeTrackingList<ContainerRegistryBaseImageDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (ContextAccessToken != null)
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Docker": return ContainerRegistryDockerBuildStep.DeserializeContainerRegistryDockerBuildStep(element);
-                    case "EncodedTask": return ContainerRegistryEncodedTaskStep.DeserializeContainerRegistryEncodedTaskStep(element);
-                    case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element);
+                    case "Docker": return ContainerRegistryDockerBuildStep.DeserializeContainerRegistryDockerBuildStep(element, options);
+                    case "EncodedTask": return ContainerRegistryEncodedTaskStep.DeserializeContainerRegistryEncodedTaskStep(element, options);
+                    case "FileTask": return ContainerRegistryFileTaskStep.DeserializeContainerRegistryFileTaskStep(element, options);
                 }
             }
-            return UnknownTaskStepProperties.DeserializeUnknownTaskStepProperties(element);
+            return UnknownTaskStepProperties.DeserializeUnknownTaskStepProperties(element, options);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)

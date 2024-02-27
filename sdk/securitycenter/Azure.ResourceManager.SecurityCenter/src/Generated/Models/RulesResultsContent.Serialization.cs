@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LatestScan))
+            if (LatestScan.HasValue)
             {
                 writer.WritePropertyName("latestScan"u8);
                 writer.WriteBooleanValue(LatestScan.Value);
             }
-            if (Optional.IsCollectionDefined(Results))
+            if (!(Results is ChangeTrackingDictionary<string, IList<IList<string>>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             Optional<bool> latestScan = default;
-            Optional<IDictionary<string, IList<IList<string>>>> results = default;
+            IDictionary<string, IList<IList<string>>> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RulesResultsContent(Optional.ToNullable(latestScan), Optional.ToDictionary(results), serializedAdditionalRawData);
+            return new RulesResultsContent(Optional.ToNullable(latestScan), results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RulesResultsContent>.Write(ModelReaderWriterOptions options)

@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (options.Format != "W" && Optional.IsDefined(KeyType))
+            if (options.Format != "W" && KeyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (Optional.IsDefined(LabelReferenceInStreamingPolicy))
+            if (LabelReferenceInStreamingPolicy != null)
             {
                 writer.WritePropertyName("labelReferenceInStreamingPolicy"u8);
                 writer.WriteStringValue(LabelReferenceInStreamingPolicy);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyName))
+            if (options.Format != "W" && PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tracks))
+            if (options.Format != "W" && !(Tracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tracks"u8);
                 writer.WriteStartArray();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<string> labelReferenceInStreamingPolicy = default;
             Optional<string> value = default;
             Optional<string> policyName = default;
-            Optional<IReadOnlyList<MediaTrackSelection>> tracks = default;
+            IReadOnlyList<MediaTrackSelection> tracks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item, options));
                     }
                     tracks = array;
                     continue;
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingLocatorContentKey(id, Optional.ToNullable(type), labelReferenceInStreamingPolicy.Value, value.Value, policyName.Value, Optional.ToList(tracks), serializedAdditionalRawData);
+            return new StreamingLocatorContentKey(
+                id,
+                Optional.ToNullable(type),
+                labelReferenceInStreamingPolicy.Value,
+                value.Value,
+                policyName.Value,
+                tracks ?? new ChangeTrackingList<MediaTrackSelection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingLocatorContentKey>.Write(ModelReaderWriterOptions options)

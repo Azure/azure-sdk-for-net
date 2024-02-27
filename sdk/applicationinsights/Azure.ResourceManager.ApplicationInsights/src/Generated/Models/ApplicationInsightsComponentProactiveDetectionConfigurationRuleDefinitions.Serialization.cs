@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("DisplayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("Description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(HelpUri))
+            if (HelpUri != null)
             {
                 writer.WritePropertyName("HelpUrl"u8);
                 writer.WriteStringValue(HelpUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(IsHidden))
+            if (IsHidden.HasValue)
             {
                 writer.WritePropertyName("IsHidden"u8);
                 writer.WriteBooleanValue(IsHidden.Value);
             }
-            if (Optional.IsDefined(IsEnabledByDefault))
+            if (IsEnabledByDefault.HasValue)
             {
                 writer.WritePropertyName("IsEnabledByDefault"u8);
                 writer.WriteBooleanValue(IsEnabledByDefault.Value);
             }
-            if (Optional.IsDefined(IsInPreview))
+            if (IsInPreview.HasValue)
             {
                 writer.WritePropertyName("IsInPreview"u8);
                 writer.WriteBooleanValue(IsInPreview.Value);
             }
-            if (Optional.IsDefined(SupportsEmailNotifications))
+            if (SupportsEmailNotifications.HasValue)
             {
                 writer.WritePropertyName("SupportsEmailNotifications"u8);
                 writer.WriteBooleanValue(SupportsEmailNotifications.Value);
@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(name.Value, displayName.Value, description.Value, helpUrl.Value, Optional.ToNullable(isHidden), Optional.ToNullable(isEnabledByDefault), Optional.ToNullable(isInPreview), Optional.ToNullable(supportsEmailNotifications), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(
+                name.Value,
+                displayName.Value,
+                description.Value,
+                helpUrl.Value,
+                Optional.ToNullable(isHidden),
+                Optional.ToNullable(isEnabledByDefault),
+                Optional.ToNullable(isInPreview),
+                Optional.ToNullable(supportsEmailNotifications),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(ModelReaderWriterOptions options)

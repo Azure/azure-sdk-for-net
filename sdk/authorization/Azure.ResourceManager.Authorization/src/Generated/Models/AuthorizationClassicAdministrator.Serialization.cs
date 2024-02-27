@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EmailAddress))
+            if (EmailAddress != null)
             {
                 writer.WritePropertyName("emailAddress"u8);
                 writer.WriteStringValue(EmailAddress);
             }
-            if (Optional.IsDefined(Role))
+            if (Role != null)
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationClassicAdministrator(id, name, type, systemData.Value, emailAddress.Value, role.Value, serializedAdditionalRawData);
+            return new AuthorizationClassicAdministrator(
+                id,
+                name,
+                type,
+                systemData.Value,
+                emailAddress.Value,
+                role.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationClassicAdministrator>.Write(ModelReaderWriterOptions options)

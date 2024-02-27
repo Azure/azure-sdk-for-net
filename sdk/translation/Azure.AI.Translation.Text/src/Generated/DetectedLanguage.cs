@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -55,7 +54,10 @@ namespace Azure.AI.Translation.Text
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         internal DetectedLanguage(string language, float score)
         {
-            Argument.AssertNotNull(language, nameof(language));
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
 
             Language = language;
             Score = score;

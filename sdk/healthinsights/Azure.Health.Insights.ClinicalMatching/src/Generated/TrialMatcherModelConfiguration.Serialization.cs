@@ -27,12 +27,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Verbose))
+            if (Verbose.HasValue)
             {
                 writer.WritePropertyName("verbose"u8);
                 writer.WriteBooleanValue(Verbose.Value);
             }
-            if (Optional.IsDefined(IncludeEvidence))
+            if (IncludeEvidence.HasValue)
             {
                 writer.WritePropertyName("includeEvidence"u8);
                 writer.WriteBooleanValue(IncludeEvidence.Value);
@@ -104,7 +104,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (property.NameEquals("clinicalTrials"u8))
                 {
-                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value);
+                    clinicalTrials = ClinicalTrials.DeserializeClinicalTrials(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

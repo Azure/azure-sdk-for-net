@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ProblemClassificationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProblemClassificationData>> value = default;
+            IReadOnlyList<ProblemClassificationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<ProblemClassificationData> array = new List<ProblemClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item));
+                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationsListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ProblemClassificationsListResult(value ?? new ChangeTrackingList<ProblemClassificationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationsListResult>.Write(ModelReaderWriterOptions options)

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -57,7 +56,10 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public UnivariateDetectionOptions(IEnumerable<TimeSeriesPoint> series)
         {
-            Argument.AssertNotNull(series, nameof(series));
+            if (series == null)
+            {
+                throw new ArgumentNullException(nameof(series));
+            }
 
             Series = series.ToList();
         }

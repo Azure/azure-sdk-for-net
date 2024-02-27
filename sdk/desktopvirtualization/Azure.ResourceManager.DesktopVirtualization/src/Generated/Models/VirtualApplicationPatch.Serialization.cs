@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(CommandLineSetting))
+            if (CommandLineSetting.HasValue)
             {
                 writer.WritePropertyName("commandLineSetting"u8);
                 writer.WriteStringValue(CommandLineSetting.Value.ToString());
             }
-            if (Optional.IsDefined(CommandLineArguments))
+            if (CommandLineArguments != null)
             {
                 writer.WritePropertyName("commandLineArguments"u8);
                 writer.WriteStringValue(CommandLineArguments);
             }
-            if (Optional.IsDefined(ShowInPortal))
+            if (ShowInPortal.HasValue)
             {
                 writer.WritePropertyName("showInPortal"u8);
                 writer.WriteBooleanValue(ShowInPortal.Value);
             }
-            if (Optional.IsDefined(IconPath))
+            if (IconPath != null)
             {
                 writer.WritePropertyName("iconPath"u8);
                 writer.WriteStringValue(IconPath);
             }
-            if (Optional.IsDefined(IconIndex))
+            if (IconIndex.HasValue)
             {
                 writer.WritePropertyName("iconIndex"u8);
                 writer.WriteNumberValue(IconIndex.Value);
             }
-            if (Optional.IsDefined(MsixPackageFamilyName))
+            if (MsixPackageFamilyName != null)
             {
                 if (MsixPackageFamilyName != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteNull("msixPackageFamilyName");
                 }
             }
-            if (Optional.IsDefined(MsixPackageApplicationId))
+            if (MsixPackageApplicationId != null)
             {
                 if (MsixPackageApplicationId != null)
                 {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteNull("msixPackageApplicationId");
                 }
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<string> filePath = default;
@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, filePath.Value, Optional.ToNullable(commandLineSetting), commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), serializedAdditionalRawData);
+            return new VirtualApplicationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                friendlyName.Value,
+                filePath.Value,
+                Optional.ToNullable(commandLineSetting),
+                commandLineArguments.Value,
+                Optional.ToNullable(showInPortal),
+                iconPath.Value,
+                Optional.ToNullable(iconIndex),
+                msixPackageFamilyName.Value,
+                msixPackageApplicationId.Value,
+                Optional.ToNullable(applicationType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationPatch>.Write(ModelReaderWriterOptions options)

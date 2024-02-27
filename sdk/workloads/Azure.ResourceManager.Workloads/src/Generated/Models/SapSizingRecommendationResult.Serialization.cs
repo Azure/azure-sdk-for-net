@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SingleServer": return SingleServerRecommendationResult.DeserializeSingleServerRecommendationResult(element);
-                    case "ThreeTier": return ThreeTierRecommendationResult.DeserializeThreeTierRecommendationResult(element);
+                    case "SingleServer": return SingleServerRecommendationResult.DeserializeSingleServerRecommendationResult(element, options);
+                    case "ThreeTier": return ThreeTierRecommendationResult.DeserializeThreeTierRecommendationResult(element, options);
                 }
             }
-            return UnknownSapSizingRecommendationResult.DeserializeUnknownSapSizingRecommendationResult(element);
+            return UnknownSapSizingRecommendationResult.DeserializeUnknownSapSizingRecommendationResult(element, options);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationResult>.Write(ModelReaderWriterOptions options)

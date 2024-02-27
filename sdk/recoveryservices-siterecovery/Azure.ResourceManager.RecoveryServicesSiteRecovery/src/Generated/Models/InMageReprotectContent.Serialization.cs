@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(ProcessServerId);
             writer.WritePropertyName("retentionDrive"u8);
             writer.WriteStringValue(RetentionDrive);
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Optional.IsDefined(DatastoreName))
+            if (DatastoreName != null)
             {
                 writer.WritePropertyName("datastoreName"u8);
                 writer.WriteStringValue(DatastoreName);
             }
-            if (Optional.IsDefined(DiskExclusionContent))
+            if (DiskExclusionContent != null)
             {
                 writer.WritePropertyName("diskExclusionInput"u8);
                 writer.WriteObjectValue(DiskExclusionContent);
             }
             writer.WritePropertyName("profileId"u8);
             writer.WriteStringValue(ProfileId);
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> datastoreName = default;
             Optional<InMageDiskExclusionContent> diskExclusionContent = default;
             string profileId = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value);
+                    diskExclusionContent = InMageDiskExclusionContent.DeserializeInMageDiskExclusionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profileId"u8))
@@ -176,7 +176,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, datastoreName.Value, diskExclusionContent.Value, profileId, Optional.ToList(disksToInclude));
+            return new InMageReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId.Value,
+                datastoreName.Value,
+                diskExclusionContent.Value,
+                profileId,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageReprotectContent>.Write(ModelReaderWriterOptions options)

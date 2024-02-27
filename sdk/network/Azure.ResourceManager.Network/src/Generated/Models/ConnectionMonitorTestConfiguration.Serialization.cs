@@ -28,34 +28,34 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(TestFrequencySec))
+            if (TestFrequencySec.HasValue)
             {
                 writer.WritePropertyName("testFrequencySec"u8);
                 writer.WriteNumberValue(TestFrequencySec.Value);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Optional.IsDefined(PreferredIPVersion))
+            if (PreferredIPVersion.HasValue)
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
             }
-            if (Optional.IsDefined(HttpConfiguration))
+            if (HttpConfiguration != null)
             {
                 writer.WritePropertyName("httpConfiguration"u8);
                 writer.WriteObjectValue(HttpConfiguration);
             }
-            if (Optional.IsDefined(TcpConfiguration))
+            if (TcpConfiguration != null)
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
                 writer.WriteObjectValue(TcpConfiguration);
             }
-            if (Optional.IsDefined(IcmpConfiguration))
+            if (IcmpConfiguration != null)
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
                 writer.WriteObjectValue(IcmpConfiguration);
             }
-            if (Optional.IsDefined(SuccessThreshold))
+            if (SuccessThreshold != null)
             {
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteObjectValue(SuccessThreshold);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
+                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
+                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
+                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);
+                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestConfiguration(name, Optional.ToNullable(testFrequencySec), protocol, Optional.ToNullable(preferredIPVersion), httpConfiguration.Value, tcpConfiguration.Value, icmpConfiguration.Value, successThreshold.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorTestConfiguration(
+                name,
+                Optional.ToNullable(testFrequencySec),
+                protocol,
+                Optional.ToNullable(preferredIPVersion),
+                httpConfiguration.Value,
+                tcpConfiguration.Value,
+                icmpConfiguration.Value,
+                successThreshold.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Columns != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
+            if (DataContext != null)
             {
                 if (DataContext != null)
                 {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> columns = default;
+            IDictionary<string, string> columns = default;
             Optional<string> dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FixedInputData(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData);
+            return new FixedInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FixedInputData>.Write(ModelReaderWriterOptions options)

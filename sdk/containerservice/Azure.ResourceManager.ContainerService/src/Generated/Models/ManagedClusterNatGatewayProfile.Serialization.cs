@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedOutboundIPProfile))
+            if (ManagedOutboundIPProfile != null)
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
                 writer.WriteObjectValue(ManagedOutboundIPProfile);
             }
-            if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
+            if (!(EffectiveOutboundIPs is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("effectiveOutboundIPs"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            if (IdleTimeoutInMinutes.HasValue)
             {
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             Optional<ManagedClusterManagedOutboundIPProfile> managedOutboundIPProfile = default;
-            Optional<IList<WritableSubResource>> effectiveOutboundIPs = default;
+            IList<WritableSubResource> effectiveOutboundIPs = default;
             Optional<int> idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value);
+                    managedOutboundIPProfile = ManagedClusterManagedOutboundIPProfile.DeserializeManagedClusterManagedOutboundIPProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("effectiveOutboundIPs"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, Optional.ToList(effectiveOutboundIPs), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
+            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile.Value, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(idleTimeoutInMinutes), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterNatGatewayProfile>.Write(ModelReaderWriterOptions options)

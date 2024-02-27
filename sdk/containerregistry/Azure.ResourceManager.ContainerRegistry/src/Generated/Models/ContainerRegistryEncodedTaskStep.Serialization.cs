@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             writer.WriteStartObject();
             writer.WritePropertyName("encodedTaskContent"u8);
             writer.WriteStringValue(EncodedTaskContent);
-            if (Optional.IsDefined(EncodedValuesContent))
+            if (EncodedValuesContent != null)
             {
                 writer.WritePropertyName("encodedValuesContent"u8);
                 writer.WriteStringValue(EncodedValuesContent);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<ContainerRegistryTaskOverridableValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerRegistryTaskStepType.ToString());
-            if (options.Format != "W" && Optional.IsCollectionDefined(BaseImageDependencies))
+            if (options.Format != "W" && !(BaseImageDependencies is ChangeTrackingList<ContainerRegistryBaseImageDependency> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("baseImageDependencies"u8);
                 writer.WriteStartArray();
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (ContextAccessToken != null)
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             string encodedTaskContent = default;
             Optional<string> encodedValuesContent = default;
-            Optional<IList<ContainerRegistryTaskOverridableValue>> values = default;
+            IList<ContainerRegistryTaskOverridableValue> values = default;
             ContainerRegistryTaskStepType type = default;
-            Optional<IReadOnlyList<ContainerRegistryBaseImageDependency>> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
             Optional<string> contextPath = default;
             Optional<string> contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTaskOverridableValue> array = new List<ContainerRegistryTaskOverridableValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item));
+                        array.Add(ContainerRegistryTaskOverridableValue.DeserializeContainerRegistryTaskOverridableValue(item, options));
                     }
                     values = array;
                     continue;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryEncodedTaskStep(type, Optional.ToList(baseImageDependencies), contextPath.Value, contextAccessToken.Value, serializedAdditionalRawData, encodedTaskContent, encodedValuesContent.Value, Optional.ToList(values));
+            return new ContainerRegistryEncodedTaskStep(
+                type,
+                baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryBaseImageDependency>(),
+                contextPath.Value,
+                contextAccessToken.Value,
+                serializedAdditionalRawData,
+                encodedTaskContent,
+                encodedValuesContent.Value,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryEncodedTaskStep>.Write(ModelReaderWriterOptions options)

@@ -29,24 +29,24 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartObject();
             writer.WritePropertyName("modelId"u8);
             writer.WriteStringValue(ModelId);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("buildMode"u8);
             writer.WriteStringValue(BuildMode.ToString());
-            if (Optional.IsDefined(AzureBlobSource))
+            if (AzureBlobSource != null)
             {
                 writer.WritePropertyName("azureBlobSource"u8);
                 writer.WriteObjectValue(AzureBlobSource);
             }
-            if (Optional.IsDefined(AzureBlobFileListSource))
+            if (AzureBlobFileListSource != null)
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
                 writer.WriteObjectValue(AzureBlobFileListSource);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentBuildMode buildMode = default;
             Optional<AzureBlobContentSource> azureBlobSource = default;
             Optional<AzureBlobFileListContentSource> azureBlobFileListSource = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value);
+                    azureBlobSource = AzureBlobContentSource.DeserializeAzureBlobContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureBlobFileListSource"u8))
@@ -135,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value);
+                    azureBlobFileListSource = AzureBlobFileListContentSource.DeserializeAzureBlobFileListContentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -158,7 +158,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentModelContent(modelId, description.Value, buildMode, azureBlobSource.Value, azureBlobFileListSource.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new BuildDocumentModelContent(
+                modelId,
+                description.Value,
+                buildMode,
+                azureBlobSource.Value,
+                azureBlobFileListSource.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentModelContent>.Write(ModelReaderWriterOptions options)

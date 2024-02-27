@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="SubscriptionAliasResource"/> object. </returns>
         public static SubscriptionAliasResource GetSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSubscriptionArmClient(client).GetSubscriptionAliasResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public static TenantPolicyResource GetTenantPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSubscriptionArmClient(client).GetTenantPolicyResource(id);
         }
@@ -87,7 +93,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableSubscriptionArmClient(client).GetBillingAccountPolicyResource(id);
         }
@@ -118,7 +127,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -149,7 +161,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<CanceledSubscriptionId> CancelSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscription(cancellationToken);
         }
@@ -181,7 +196,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
         public static async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
         }
@@ -213,7 +231,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
         public static Response<RenamedSubscriptionId> RenameSubscription(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscription(body, cancellationToken);
         }
@@ -244,7 +265,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -275,7 +299,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<EnabledSubscriptionId> EnableSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscription(cancellationToken);
         }
@@ -292,7 +319,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
         public static SubscriptionAliasCollection GetSubscriptionAliases(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAliases();
         }
@@ -330,7 +360,10 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAliasAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
@@ -368,7 +401,10 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<SubscriptionAliasResource> GetSubscriptionAlias(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAlias(aliasName, cancellationToken);
         }
@@ -385,7 +421,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetTenantPolicy();
         }
@@ -402,7 +441,10 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
         public static BillingAccountPolicyCollection GetBillingAccountPolicies(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicies();
         }
@@ -440,7 +482,10 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicyAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
         }
@@ -478,7 +523,10 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<BillingAccountPolicyResource> GetBillingAccountPolicy(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicy(billingAccountId, cancellationToken);
         }
@@ -513,7 +561,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -548,7 +599,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation AcceptSubscriptionOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
@@ -581,7 +635,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="subscriptionId"/> is null. </exception>
         public static async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
@@ -614,7 +671,10 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="subscriptionId"/> is null. </exception>
         public static Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }

@@ -26,67 +26,67 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationState))
+            if (options.Format != "W" && OperationState.HasValue)
             {
                 writer.WritePropertyName("operationState"u8);
                 writer.WriteStringValue(OperationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusCode))
+            if (options.Format != "W" && StatusCode.HasValue)
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteNumberValue(StatusCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && StartedOn.HasValue)
             {
                 writer.WritePropertyName("startedTimestamp"u8);
                 writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessedFilesCount))
+            if (options.Format != "W" && ProcessedFilesCount.HasValue)
             {
                 writer.WritePropertyName("processedFilesCount"u8);
                 writer.WriteNumberValue(ProcessedFilesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessedDirectoriesCount))
+            if (options.Format != "W" && ProcessedDirectoriesCount.HasValue)
             {
                 writer.WritePropertyName("processedDirectoriesCount"u8);
                 writer.WriteNumberValue(ProcessedDirectoriesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalFilesCount))
+            if (options.Format != "W" && TotalFilesCount.HasValue)
             {
                 writer.WritePropertyName("totalFilesCount"u8);
                 writer.WriteNumberValue(TotalFilesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalDirectoriesCount))
+            if (options.Format != "W" && TotalDirectoriesCount.HasValue)
             {
                 writer.WritePropertyName("totalDirectoriesCount"u8);
                 writer.WriteNumberValue(TotalDirectoriesCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSizeInBytes))
+            if (options.Format != "W" && TotalSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("totalSizeBytes"u8);
                 writer.WriteNumberValue(TotalSizeInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProgressPercent))
+            if (options.Format != "W" && ProgressPercent.HasValue)
             {
                 writer.WritePropertyName("progressPercent"u8);
                 writer.WriteNumberValue(ProgressPercent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinutesRemaining))
+            if (options.Format != "W" && MinutesRemaining.HasValue)
             {
                 writer.WritePropertyName("minutesRemaining"u8);
                 writer.WriteNumberValue(MinutesRemaining.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCountsState))
+            if (options.Format != "W" && TotalCountsState.HasValue)
             {
                 writer.WritePropertyName("totalCountsState"u8);
                 writer.WriteStringValue(TotalCountsState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletesProgressPercent))
+            if (options.Format != "W" && DeletesProgressPercent.HasValue)
             {
                 writer.WritePropertyName("deletesProgressPercent"u8);
                 writer.WriteNumberValue(DeletesProgressPercent.Value);
@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent), serializedAdditionalRawData);
+            return new CloudEndpointChangeEnumerationActivity(
+                Optional.ToNullable(lastUpdatedTimestamp),
+                Optional.ToNullable(operationState),
+                Optional.ToNullable(statusCode),
+                Optional.ToNullable(startedTimestamp),
+                Optional.ToNullable(processedFilesCount),
+                Optional.ToNullable(processedDirectoriesCount),
+                Optional.ToNullable(totalFilesCount),
+                Optional.ToNullable(totalDirectoriesCount),
+                Optional.ToNullable(totalSizeBytes),
+                Optional.ToNullable(progressPercent),
+                Optional.ToNullable(minutesRemaining),
+                Optional.ToNullable(totalCountsState),
+                Optional.ToNullable(deletesProgressPercent),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudEndpointChangeEnumerationActivity>.Write(ModelReaderWriterOptions options)

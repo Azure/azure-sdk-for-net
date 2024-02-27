@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Plan))
+            if (Plan != null)
             {
                 writer.WritePropertyName("plan"u8);
                 JsonSerializer.Serialize(writer, Plan);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,24 +80,24 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ManagedResourceGroupId))
+            if (ManagedResourceGroupId != null)
             {
                 writer.WritePropertyName("managedResourceGroupId"u8);
                 writer.WriteStringValue(ManagedResourceGroupId);
             }
-            if (Optional.IsDefined(ApplicationDefinitionId))
+            if (ApplicationDefinitionId != null)
             {
                 writer.WritePropertyName("applicationDefinitionId"u8);
                 writer.WriteStringValue(ApplicationDefinitionId);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(Outputs))
+            if (options.Format != "W" && Outputs != null)
             {
                 writer.WritePropertyName("outputs"u8);
 #if NET6_0_OR_GREATER
@@ -121,27 +121,27 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingDetails))
+            if (options.Format != "W" && BillingDetails != null)
             {
                 writer.WritePropertyName("billingDetails"u8);
                 writer.WriteObjectValue(BillingDetails);
             }
-            if (Optional.IsDefined(JitAccessPolicy))
+            if (JitAccessPolicy != null)
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
                 writer.WriteObjectValue(JitAccessPolicy);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
+            if (options.Format != "W" && PublisherTenantId.HasValue)
             {
                 writer.WritePropertyName("publisherTenantId"u8);
                 writer.WriteStringValue(PublisherTenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Authorizations))
+            if (options.Format != "W" && !(Authorizations is ChangeTrackingList<ArmApplicationAuthorization> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("authorizations"u8);
                 writer.WriteStartArray();
@@ -151,22 +151,22 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagementMode))
+            if (options.Format != "W" && ManagementMode.HasValue)
             {
                 writer.WritePropertyName("managementMode"u8);
                 writer.WriteStringValue(ManagementMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CustomerSupport))
+            if (options.Format != "W" && CustomerSupport != null)
             {
                 writer.WritePropertyName("customerSupport"u8);
                 writer.WriteObjectValue(CustomerSupport);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportUris))
+            if (options.Format != "W" && SupportUris != null)
             {
                 writer.WritePropertyName("supportUrls"u8);
                 writer.WriteObjectValue(SupportUris);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Artifacts))
+            if (options.Format != "W" && !(Artifacts is ChangeTrackingList<ArmApplicationArtifact> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (options.Format != "W" && CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteObjectValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            if (options.Format != "W" && UpdatedBy != null)
             {
                 writer.WritePropertyName("updatedBy"u8);
                 writer.WriteObjectValue(UpdatedBy);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ArmApplicationBillingDetails> billingDetails = default;
             Optional<ArmApplicationJitAccessPolicy> jitAccessPolicy = default;
             Optional<Guid> publisherTenantId = default;
-            Optional<IReadOnlyList<ArmApplicationAuthorization>> authorizations = default;
+            IReadOnlyList<ArmApplicationAuthorization> authorizations = default;
             Optional<ArmApplicationManagementMode> managementMode = default;
             Optional<ArmApplicationPackageContact> customerSupport = default;
             Optional<ArmApplicationPackageSupportUris> supportUris = default;
-            Optional<IReadOnlyList<ArmApplicationArtifact>> artifacts = default;
+            IReadOnlyList<ArmApplicationArtifact> artifacts = default;
             Optional<ArmApplicationDetails> createdBy = default;
             Optional<ArmApplicationDetails> updatedBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value);
+                    identity = ArmApplicationManagedIdentity.DeserializeArmApplicationManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedBy"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value);
+                    sku = ArmApplicationSku.DeserializeArmApplicationSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value);
+                            billingDetails = ArmApplicationBillingDetails.DeserializeArmApplicationBillingDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("jitAccessPolicy"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value);
+                            jitAccessPolicy = ArmApplicationJitAccessPolicy.DeserializeArmApplicationJitAccessPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publisherTenantId"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item, options));
                             }
                             authorizations = array;
                             continue;
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value);
+                            customerSupport = ArmApplicationPackageContact.DeserializeArmApplicationPackageContact(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportUrls"u8))
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value);
+                            supportUris = ArmApplicationPackageSupportUris.DeserializeArmApplicationPackageSupportUris(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("artifacts"u8))
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationArtifact> array = new List<ArmApplicationArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
+                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item, options));
                             }
                             artifacts = array;
                             continue;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("updatedBy"u8))
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
+                            updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value, options);
                             continue;
                         }
                     }
@@ -498,7 +498,34 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                sku.Value,
+                serializedAdditionalRawData,
+                plan,
+                kind.Value,
+                identity.Value,
+                managedResourceGroupId.Value,
+                applicationDefinitionId.Value,
+                parameters.Value,
+                outputs.Value,
+                Optional.ToNullable(provisioningState),
+                billingDetails.Value,
+                jitAccessPolicy.Value,
+                Optional.ToNullable(publisherTenantId),
+                authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
+                Optional.ToNullable(managementMode),
+                customerSupport.Value,
+                supportUris.Value,
+                artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(),
+                createdBy.Value,
+                updatedBy.Value);
         }
 
         BinaryData IPersistableModel<ArmApplicationPatch>.Write(ModelReaderWriterOptions options)

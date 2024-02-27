@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("formatType"u8);
             writer.WriteStringValue(FormatType.ToString());
-            if (Optional.IsDefined(ColumnDelimiter))
+            if (ColumnDelimiter != null)
             {
                 writer.WritePropertyName("columnDelimiter"u8);
                 writer.WriteStringValue(ColumnDelimiter);
             }
-            if (Optional.IsDefined(AcceptLanguage))
+            if (AcceptLanguage != null)
             {
                 writer.WritePropertyName("acceptLanguage"u8);
                 writer.WriteStringValue(AcceptLanguage);
             }
-            if (Optional.IsDefined(QuoteCharacter))
+            if (QuoteCharacter != null)
             {
                 writer.WritePropertyName("quoteCharacter"u8);
                 writer.WriteStringValue(QuoteCharacter);
             }
-            if (Optional.IsDefined(QuoteEscapeCharacter))
+            if (QuoteEscapeCharacter != null)
             {
                 writer.WritePropertyName("quoteEscapeCharacter"u8);
                 writer.WriteStringValue(QuoteEscapeCharacter);
             }
-            if (Optional.IsDefined(ArraySeparator))
+            if (ArraySeparator != null)
             {
                 writer.WritePropertyName("arraySeparator"u8);
                 writer.WriteStringValue(ArraySeparator);
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingFormat(formatType, columnDelimiter.Value, acceptLanguage.Value, quoteCharacter.Value, quoteEscapeCharacter.Value, arraySeparator.Value, serializedAdditionalRawData);
+            return new ConnectorMappingFormat(
+                formatType,
+                columnDelimiter.Value,
+                acceptLanguage.Value,
+                quoteCharacter.Value,
+                quoteEscapeCharacter.Value,
+                arraySeparator.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingFormat>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmAgent))
+            if (VmAgent != null)
             {
                 writer.WritePropertyName("vmAgent"u8);
                 writer.WriteObjectValue(VmAgent);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineConfigAgentInstanceView.DeserializeVirtualMachineConfigAgentInstanceView(property.Value);
+                    vmAgent = VirtualMachineConfigAgentInstanceView.DeserializeVirtualMachineConfigAgentInstanceView(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ConfluentAgreement> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfluentAgreement>> value = default;
+            IReadOnlyList<ConfluentAgreement> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentAgreement> array = new List<ConfluentAgreement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item));
+                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreementListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreementListResult>.Write(ModelReaderWriterOptions options)

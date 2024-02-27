@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NicId))
+            if (options.Format != "W" && NicId != null)
             {
                 writer.WritePropertyName("nicId"u8);
                 writer.WriteStringValue(NicId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Label))
+            if (options.Format != "W" && Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (Optional.IsDefined(IsPrimaryNic))
+            if (IsPrimaryNic.HasValue)
             {
                 writer.WritePropertyName("isPrimaryNic"u8);
                 writer.WriteBooleanValue(IsPrimaryNic.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkName))
+            if (options.Format != "W" && NetworkName != null)
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetNetworkId))
+            if (options.Format != "W" && TargetNetworkId != null)
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestNetworkId))
+            if (options.Format != "W" && TestNetworkId != null)
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SelectionTypeForFailover))
+            if (options.Format != "W" && SelectionTypeForFailover.HasValue)
             {
                 writer.WritePropertyName("selectionTypeForFailover"u8);
                 writer.WriteStringValue(SelectionTypeForFailover.Value.ToString());
@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedNicProperties(nicId.Value, macAddress.Value, label.Value, Optional.ToNullable(isPrimaryNic), networkName.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(selectionTypeForFailover), serializedAdditionalRawData);
+            return new VMwareToAzStackHciProtectedNicProperties(
+                nicId.Value,
+                macAddress.Value,
+                label.Value,
+                Optional.ToNullable(isPrimaryNic),
+                networkName.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                Optional.ToNullable(selectionTypeForFailover),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)

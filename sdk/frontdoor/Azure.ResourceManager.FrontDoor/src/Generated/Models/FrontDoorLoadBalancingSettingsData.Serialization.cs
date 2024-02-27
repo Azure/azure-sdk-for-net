@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SampleSize))
+            if (SampleSize.HasValue)
             {
                 writer.WritePropertyName("sampleSize"u8);
                 writer.WriteNumberValue(SampleSize.Value);
             }
-            if (Optional.IsDefined(SuccessfulSamplesRequired))
+            if (SuccessfulSamplesRequired.HasValue)
             {
                 writer.WritePropertyName("successfulSamplesRequired"u8);
                 writer.WriteNumberValue(SuccessfulSamplesRequired.Value);
             }
-            if (Optional.IsDefined(AdditionalLatencyMilliseconds))
+            if (AdditionalLatencyMilliseconds.HasValue)
             {
                 writer.WritePropertyName("additionalLatencyMilliseconds"u8);
                 writer.WriteNumberValue(AdditionalLatencyMilliseconds.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorLoadBalancingSettingsData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(sampleSize), Optional.ToNullable(successfulSamplesRequired), Optional.ToNullable(additionalLatencyMilliseconds), Optional.ToNullable(resourceState));
+            return new FrontDoorLoadBalancingSettingsData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(sampleSize),
+                Optional.ToNullable(successfulSamplesRequired),
+                Optional.ToNullable(additionalLatencyMilliseconds),
+                Optional.ToNullable(resourceState));
         }
 
         BinaryData IPersistableModel<FrontDoorLoadBalancingSettingsData>.Write(ModelReaderWriterOptions options)

@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ValidationKey))
+            if (ValidationKey != null)
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Optional.IsDefined(IsSubscriptions))
+            if (IsSubscriptions != null)
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteObjectValue(IsSubscriptions);
             }
-            if (Optional.IsDefined(IsUserRegistration))
+            if (IsUserRegistration != null)
             {
                 writer.WritePropertyName("userRegistration"u8);
                 writer.WriteObjectValue(IsUserRegistration);
             }
-            if (Optional.IsDefined(IsRedirectEnabled))
+            if (IsRedirectEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsRedirectEnabled.Value);
             }
-            if (Optional.IsDefined(TermsOfService))
+            if (TermsOfService != null)
             {
                 writer.WritePropertyName("termsOfService"u8);
                 writer.WriteObjectValue(TermsOfService);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
+                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
+                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value, serializedAdditionalRawData);
+            return new PortalSettingsContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                uri.Value,
+                validationKey.Value,
+                subscriptions.Value,
+                userRegistration.Value,
+                Optional.ToNullable(enabled),
+                termsOfService.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalSettingsContractData>.Write(ModelReaderWriterOptions options)

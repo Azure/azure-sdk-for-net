@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Order))
+            if (Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(SolutionType))
+            if (SolutionType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SolutionType.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(Data))
+            if (!(Data is ChangeTrackingList<IList<AppServiceNameValuePair>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingList<IList<AppServiceNameValuePair>> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartArray();
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<double> order = default;
             Optional<string> description = default;
             Optional<DiagnosticSolutionType> type = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> metadata = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            IList<IList<AppServiceNameValuePair>> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSolution(Optional.ToNullable(id), displayName.Value, Optional.ToNullable(order), description.Value, Optional.ToNullable(type), Optional.ToList(data), Optional.ToList(metadata), serializedAdditionalRawData);
+            return new DiagnosticSolution(
+                Optional.ToNullable(id),
+                displayName.Value,
+                Optional.ToNullable(order),
+                description.Value,
+                Optional.ToNullable(type),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSolution>.Write(ModelReaderWriterOptions options)

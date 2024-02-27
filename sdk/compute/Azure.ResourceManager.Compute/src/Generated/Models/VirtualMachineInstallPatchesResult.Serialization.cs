@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
+            if (options.Format != "W" && InstallationActivityId != null)
             {
                 writer.WritePropertyName("installationActivityId"u8);
                 writer.WriteStringValue(InstallationActivityId);
             }
-            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
+            if (options.Format != "W" && RebootStatus.HasValue)
             {
                 writer.WritePropertyName("rebootStatus"u8);
                 writer.WriteStringValue(RebootStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
+            if (options.Format != "W" && MaintenanceWindowExceeded.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindowExceeded"u8);
                 writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
+            if (options.Format != "W" && ExcludedPatchCount.HasValue)
             {
                 writer.WritePropertyName("excludedPatchCount"u8);
                 writer.WriteNumberValue(ExcludedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
+            if (options.Format != "W" && NotSelectedPatchCount.HasValue)
             {
                 writer.WritePropertyName("notSelectedPatchCount"u8);
                 writer.WriteNumberValue(NotSelectedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
+            if (options.Format != "W" && PendingPatchCount.HasValue)
             {
                 writer.WritePropertyName("pendingPatchCount"u8);
                 writer.WriteNumberValue(PendingPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
+            if (options.Format != "W" && InstalledPatchCount.HasValue)
             {
                 writer.WritePropertyName("installedPatchCount"u8);
                 writer.WriteNumberValue(InstalledPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
+            if (options.Format != "W" && FailedPatchCount.HasValue)
             {
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Patches))
+            if (options.Format != "W" && !(Patches is ChangeTrackingList<PatchInstallationDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("patches"u8);
                 writer.WriteStartArray();
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> pendingPatchCount = default;
             Optional<int> installedPatchCount = default;
             Optional<int> failedPatchCount = default;
-            Optional<IReadOnlyList<PatchInstallationDetail>> patches = default;
+            IReadOnlyList<PatchInstallationDetail> patches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<ComputeApiError> error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<PatchInstallationDetail> array = new List<PatchInstallationDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item));
+                        array.Add(PatchInstallationDetail.DeserializePatchInstallationDetail(item, options));
                     }
                     patches = array;
                     continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToList(patches), Optional.ToNullable(startDateTime), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstallPatchesResult(
+                Optional.ToNullable(status),
+                installationActivityId.Value,
+                Optional.ToNullable(rebootStatus),
+                Optional.ToNullable(maintenanceWindowExceeded),
+                Optional.ToNullable(excludedPatchCount),
+                Optional.ToNullable(notSelectedPatchCount),
+                Optional.ToNullable(pendingPatchCount),
+                Optional.ToNullable(installedPatchCount),
+                Optional.ToNullable(failedPatchCount),
+                patches ?? new ChangeTrackingList<PatchInstallationDetail>(),
+                Optional.ToNullable(startDateTime),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)

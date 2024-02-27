@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputerNamePrefix))
+            if (ComputerNamePrefix != null)
             {
                 writer.WritePropertyName("computerNamePrefix"u8);
                 writer.WriteStringValue(ComputerNamePrefix);
             }
-            if (Optional.IsDefined(AdminUsername))
+            if (AdminUsername != null)
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (AdminPassword != null)
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(CustomData))
+            if (CustomData != null)
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsDefined(WindowsConfiguration))
+            if (WindowsConfiguration != null)
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
-            if (Optional.IsDefined(LinuxConfiguration))
+            if (LinuxConfiguration != null)
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
-            if (Optional.IsCollectionDefined(Secrets))
+            if (!(Secrets is ChangeTrackingList<VaultSecretGroup> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AllowExtensionOperations))
+            if (AllowExtensionOperations.HasValue)
             {
                 writer.WritePropertyName("allowExtensionOperations"u8);
                 writer.WriteBooleanValue(AllowExtensionOperations.Value);
             }
-            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            if (RequireGuestProvisionSignal.HasValue)
             {
                 writer.WritePropertyName("requireGuestProvisionSignal"u8);
                 writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> customData = default;
             Optional<WindowsConfiguration> windowsConfiguration = default;
             Optional<LinuxConfiguration> linuxConfiguration = default;
-            Optional<IList<VaultSecretGroup>> secrets = default;
+            IList<VaultSecretGroup> secrets = default;
             Optional<bool> allowExtensionOperations = default;
             Optional<bool> requireGuestProvisionSignal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxConfiguration"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secrets"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item));
+                        array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
                     }
                     secrets = array;
                     continue;
@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetOSProfile(
+                computerNamePrefix.Value,
+                adminUsername.Value,
+                adminPassword.Value,
+                customData.Value,
+                windowsConfiguration.Value,
+                linuxConfiguration.Value,
+                secrets ?? new ChangeTrackingList<VaultSecretGroup>(),
+                Optional.ToNullable(allowExtensionOperations),
+                Optional.ToNullable(requireGuestProvisionSignal),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetOSProfile>.Write(ModelReaderWriterOptions options)

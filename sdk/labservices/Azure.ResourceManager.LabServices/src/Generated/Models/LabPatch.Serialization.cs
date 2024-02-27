@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -38,42 +38,42 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoShutdownProfile))
+            if (AutoShutdownProfile != null)
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
                 writer.WriteObjectValue(AutoShutdownProfile);
             }
-            if (Optional.IsDefined(ConnectionProfile))
+            if (ConnectionProfile != null)
             {
                 writer.WritePropertyName("connectionProfile"u8);
                 writer.WriteObjectValue(ConnectionProfile);
             }
-            if (Optional.IsDefined(VirtualMachineProfile))
+            if (VirtualMachineProfile != null)
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
                 writer.WriteObjectValue(VirtualMachineProfile);
             }
-            if (Optional.IsDefined(SecurityProfile))
+            if (SecurityProfile != null)
             {
                 writer.WritePropertyName("securityProfile"u8);
                 writer.WriteObjectValue(SecurityProfile);
             }
-            if (Optional.IsDefined(RosterProfile))
+            if (RosterProfile != null)
             {
                 writer.WritePropertyName("rosterProfile"u8);
                 writer.WriteObjectValue(RosterProfile);
             }
-            if (Optional.IsDefined(LabPlanId))
+            if (LabPlanId != null)
             {
                 writer.WritePropertyName("labPlanId"u8);
                 writer.WriteStringValue(LabPlanId);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
             Optional<LabConnectionProfile> connectionProfile = default;
             Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"u8))
@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPatch(Optional.ToList(tags), serializedAdditionalRawData, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value);
+            return new LabPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                autoShutdownProfile.Value,
+                connectionProfile.Value,
+                virtualMachineProfile.Value,
+                securityProfile.Value,
+                rosterProfile.Value,
+                labPlanId.Value,
+                title.Value,
+                description.Value);
         }
 
         BinaryData IPersistableModel<LabPatch>.Write(ModelReaderWriterOptions options)

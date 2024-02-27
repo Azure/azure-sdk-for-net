@@ -76,7 +76,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<AppPlatformNameAvailabilityResult>> CheckAppPlatformNameAvailabilityAsync(AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = AppPlatformServiceServicesClientDiagnostics.CreateScope("MockableAppPlatformSubscriptionResource.CheckAppPlatformNameAvailability");
             scope.Start();
@@ -119,7 +122,10 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<AppPlatformNameAvailabilityResult> CheckAppPlatformNameAvailability(AzureLocation location, AppPlatformNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = AppPlatformServiceServicesClientDiagnostics.CreateScope("MockableAppPlatformSubscriptionResource.CheckAppPlatformNameAvailability");
             scope.Start();

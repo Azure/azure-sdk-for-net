@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GroupDescription))
+            if (GroupDescription != null)
             {
                 writer.WritePropertyName("groupDescription"u8);
                 writer.WriteStringValue(GroupDescription);
             }
-            if (Optional.IsDefined(ApplicationType))
+            if (ApplicationType.HasValue)
             {
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
-            if (Optional.IsDefined(ApplicationIdentifier))
+            if (ApplicationIdentifier != null)
             {
                 writer.WritePropertyName("applicationIdentifier"u8);
                 writer.WriteStringValue(ApplicationIdentifier);
             }
-            if (Optional.IsCollectionDefined(GlobalPlacementRules))
+            if (!(GlobalPlacementRules is ChangeTrackingList<NetAppVolumePlacementRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("globalPlacementRules"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentSpecId))
+            if (DeploymentSpecId != null)
             {
                 writer.WritePropertyName("deploymentSpecId"u8);
                 writer.WriteStringValue(DeploymentSpecId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VolumesCount))
+            if (options.Format != "W" && VolumesCount.HasValue)
             {
                 writer.WritePropertyName("volumesCount"u8);
                 writer.WriteNumberValue(VolumesCount.Value);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> groupDescription = default;
             Optional<NetAppApplicationType> applicationType = default;
             Optional<string> applicationIdentifier = default;
-            Optional<IList<NetAppVolumePlacementRule>> globalPlacementRules = default;
+            IList<NetAppVolumePlacementRule> globalPlacementRules = default;
             Optional<string> deploymentSpecId = default;
             Optional<long> volumesCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                     }
                     globalPlacementRules = array;
                     continue;
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount), serializedAdditionalRawData);
+            return new NetAppVolumeGroupMetadata(
+                groupDescription.Value,
+                Optional.ToNullable(applicationType),
+                applicationIdentifier.Value,
+                globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
+                deploymentSpecId.Value,
+                Optional.ToNullable(volumesCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupMetadata>.Write(ModelReaderWriterOptions options)

@@ -26,77 +26,77 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MessageId))
+            if (MessageId != null)
             {
                 writer.WritePropertyName("messageId"u8);
                 writer.WriteStringValue(MessageId);
             }
-            if (Optional.IsDefined(MessageVersion))
+            if (MessageVersion != null)
             {
                 writer.WritePropertyName("messageVersion"u8);
                 writer.WriteStringValue(MessageVersion);
             }
-            if (Optional.IsDefined(MessageRelease))
+            if (MessageRelease != null)
             {
                 writer.WritePropertyName("messageRelease"u8);
                 writer.WriteStringValue(MessageRelease);
             }
-            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            if (MessageAssociationAssignedCode != null)
             {
                 writer.WritePropertyName("messageAssociationAssignedCode"u8);
                 writer.WriteStringValue(MessageAssociationAssignedCode);
             }
-            if (Optional.IsDefined(TargetNamespace))
+            if (TargetNamespace != null)
             {
                 writer.WritePropertyName("targetNamespace"u8);
                 writer.WriteStringValue(TargetNamespace);
             }
-            if (Optional.IsDefined(FunctionalGroupId))
+            if (FunctionalGroupId != null)
             {
                 writer.WritePropertyName("functionalGroupId"u8);
                 writer.WriteStringValue(FunctionalGroupId);
             }
-            if (Optional.IsDefined(SenderApplicationQualifier))
+            if (SenderApplicationQualifier != null)
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (Optional.IsDefined(SenderApplicationId))
+            if (SenderApplicationId != null)
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (Optional.IsDefined(ReceiverApplicationQualifier))
+            if (ReceiverApplicationQualifier != null)
             {
                 writer.WritePropertyName("receiverApplicationQualifier"u8);
                 writer.WriteStringValue(ReceiverApplicationQualifier);
             }
-            if (Optional.IsDefined(ReceiverApplicationId))
+            if (ReceiverApplicationId != null)
             {
                 writer.WritePropertyName("receiverApplicationId"u8);
                 writer.WriteStringValue(ReceiverApplicationId);
             }
-            if (Optional.IsDefined(ControllingAgencyCode))
+            if (ControllingAgencyCode != null)
             {
                 writer.WritePropertyName("controllingAgencyCode"u8);
                 writer.WriteStringValue(ControllingAgencyCode);
             }
-            if (Optional.IsDefined(GroupHeaderMessageVersion))
+            if (GroupHeaderMessageVersion != null)
             {
                 writer.WritePropertyName("groupHeaderMessageVersion"u8);
                 writer.WriteStringValue(GroupHeaderMessageVersion);
             }
-            if (Optional.IsDefined(GroupHeaderMessageRelease))
+            if (GroupHeaderMessageRelease != null)
             {
                 writer.WritePropertyName("groupHeaderMessageRelease"u8);
                 writer.WriteStringValue(GroupHeaderMessageRelease);
             }
-            if (Optional.IsDefined(AssociationAssignedCode))
+            if (AssociationAssignedCode != null)
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
             }
-            if (Optional.IsDefined(ApplicationPassword))
+            if (ApplicationPassword != null)
             {
                 writer.WritePropertyName("applicationPassword"u8);
                 writer.WriteStringValue(ApplicationPassword);
@@ -239,7 +239,23 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactEnvelopeOverride(messageId.Value, messageVersion.Value, messageRelease.Value, messageAssociationAssignedCode.Value, targetNamespace.Value, functionalGroupId.Value, senderApplicationQualifier.Value, senderApplicationId.Value, receiverApplicationQualifier.Value, receiverApplicationId.Value, controllingAgencyCode.Value, groupHeaderMessageVersion.Value, groupHeaderMessageRelease.Value, associationAssignedCode.Value, applicationPassword.Value, serializedAdditionalRawData);
+            return new EdifactEnvelopeOverride(
+                messageId.Value,
+                messageVersion.Value,
+                messageRelease.Value,
+                messageAssociationAssignedCode.Value,
+                targetNamespace.Value,
+                functionalGroupId.Value,
+                senderApplicationQualifier.Value,
+                senderApplicationId.Value,
+                receiverApplicationQualifier.Value,
+                receiverApplicationId.Value,
+                controllingAgencyCode.Value,
+                groupHeaderMessageVersion.Value,
+                groupHeaderMessageRelease.Value,
+                associationAssignedCode.Value,
+                applicationPassword.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactEnvelopeOverride>.Write(ModelReaderWriterOptions options)

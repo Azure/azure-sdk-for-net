@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LinkedServiceName))
+            if (LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteObjectValue(LinkedServiceName);
             }
-            if (Optional.IsDefined(Policy))
+            if (Policy != null)
             {
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy);
@@ -33,22 +33,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(OnInactiveMarkAs))
+            if (OnInactiveMarkAs.HasValue)
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<ActivityDependency> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(UserProperties))
+            if (!(UserProperties is ChangeTrackingList<UserProperty> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            if (!(StorageLinkedServices is ChangeTrackingList<LinkedServiceReference> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("storageLinkedServices"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (!(Arguments is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -95,22 +95,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GetDebugInfo))
+            if (GetDebugInfo.HasValue)
             {
                 writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
-            if (Optional.IsDefined(ScriptPath))
+            if (ScriptPath != null)
             {
                 writer.WritePropertyName("scriptPath"u8);
                 writer.WriteObjectValue(ScriptPath);
             }
-            if (Optional.IsDefined(ScriptLinkedService))
+            if (ScriptLinkedService != null)
             {
                 writer.WritePropertyName("scriptLinkedService"u8);
                 writer.WriteObjectValue(ScriptLinkedService);
             }
-            if (Optional.IsCollectionDefined(Defines))
+            if (!(Defines is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("defines"u8);
                 writer.WriteStartObject();
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (!(Variables is ChangeTrackingList<object> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartArray();
@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout.HasValue)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteNumberValue(QueryTimeout.Value);
@@ -168,15 +168,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> description = default;
             Optional<ActivityState> state = default;
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<object>> arguments = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
+            IList<LinkedServiceReference> storageLinkedServices = default;
+            IList<object> arguments = default;
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<object> scriptPath = default;
             Optional<LinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, object>> defines = default;
-            Optional<IList<object>> variables = default;
+            IDictionary<string, object> defines = default;
+            IList<object> variables = default;
             Optional<int> queryTimeout = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -389,7 +389,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightHiveActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines), Optional.ToList(variables), Optional.ToNullable(queryTimeout));
+            return new HDInsightHiveActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<object>(),
+                Optional.ToNullable(getDebugInfo),
+                scriptPath.Value,
+                scriptLinkedService.Value,
+                defines ?? new ChangeTrackingDictionary<string, object>(),
+                variables ?? new ChangeTrackingList<object>(),
+                Optional.ToNullable(queryTimeout));
         }
 
         internal partial class HDInsightHiveActivityConverter : JsonConverter<HDInsightHiveActivity>

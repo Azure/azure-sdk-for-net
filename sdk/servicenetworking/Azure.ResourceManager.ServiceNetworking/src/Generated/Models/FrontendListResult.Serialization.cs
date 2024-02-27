@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     List<FrontendData> array = new List<FrontendData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontendData.DeserializeFrontendData(item));
+                        array.Add(FrontendData.DeserializeFrontendData(item, options));
                     }
                     value = array;
                     continue;

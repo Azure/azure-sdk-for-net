@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PlatformUpdateDomain))
+            if (options.Format != "W" && PlatformUpdateDomain.HasValue)
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
                 writer.WriteNumberValue(PlatformUpdateDomain.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PlatformFaultDomain))
+            if (options.Format != "W" && PlatformFaultDomain.HasValue)
             {
                 writer.WritePropertyName("platformFaultDomain"u8);
                 writer.WriteNumberValue(PlatformFaultDomain.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateId))
+            if (options.Format != "W" && PrivateId != null)
             {
                 writer.WritePropertyName("privateId"u8);
                 writer.WriteStringValue(PrivateId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            if (options.Format != "W" && !(Statuses is ChangeTrackingList<ResourceInstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> platformUpdateDomain = default;
             Optional<int> platformFaultDomain = default;
             Optional<string> privateId = default;
-            Optional<IReadOnlyList<ResourceInstanceViewStatus>> statuses = default;
+            IReadOnlyList<ResourceInstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, Optional.ToList(statuses), serializedAdditionalRawData);
+            return new RoleInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), privateId.Value, statuses ?? new ChangeTrackingList<ResourceInstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleInstanceView>.Write(ModelReaderWriterOptions options)

@@ -43,54 +43,54 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(EventOn))
+            if (options.Format != "W" && EventOn.HasValue)
             {
                 writer.WritePropertyName("eventTime"u8);
                 writer.WriteStringValue(EventOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityEventType))
+            if (options.Format != "W" && SecurityEventType.HasValue)
             {
                 writer.WritePropertyName("securityEventType"u8);
                 writer.WriteStringValue(SecurityEventType.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            if (options.Format != "W" && Subscription != null)
             {
                 writer.WritePropertyName("subscription"u8);
                 writer.WriteStringValue(Subscription);
             }
-            if (options.Format != "W" && Optional.IsDefined(Server))
+            if (options.Format != "W" && Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 writer.WriteStringValue(Server);
             }
-            if (options.Format != "W" && Optional.IsDefined(Database))
+            if (options.Format != "W" && Database != null)
             {
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClientIP))
+            if (options.Format != "W" && ClientIP != null)
             {
                 writer.WritePropertyName("clientIp"u8);
                 writer.WriteStringValue(ClientIP.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
+            if (options.Format != "W" && ApplicationName != null)
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
+            if (options.Format != "W" && PrincipalName != null)
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
+            if (options.Format != "W" && SecurityEventSqlInjectionAdditionalProperties != null)
             {
                 writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
                 writer.WriteObjectValue(SecurityEventSqlInjectionAdditionalProperties);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value);
+                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value, serializedAdditionalRawData);
+            return new SecurityEvent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eventTime),
+                Optional.ToNullable(securityEventType),
+                subscription.Value,
+                server.Value,
+                database.Value,
+                clientIP.Value,
+                applicationName.Value,
+                principalName.Value,
+                securityEventSqlInjectionAdditionalProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)

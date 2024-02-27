@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Href))
+            if (Href != null)
             {
                 if (Href != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("href");
                 }
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 if (Label != null)
                 {

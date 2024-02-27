@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HyperVHostVmId))
+            if (HyperVHostVmId != null)
             {
                 writer.WritePropertyName("hvHostVmId"u8);
                 writer.WriteStringValue(HyperVHostVmId);
             }
-            if (Optional.IsDefined(VmName))
+            if (VmName != null)
             {
                 writer.WritePropertyName("vmName"u8);
                 writer.WriteStringValue(VmName);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(VhdId))
+            if (VhdId != null)
             {
                 writer.WritePropertyName("vHDId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(LogStorageAccountId))
+            if (LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureReprotectContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, storageAccountId.Value, logStorageAccountId.Value);
+            return new HyperVReplicaAzureReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId.Value,
+                vmName.Value,
+                osType.Value,
+                vhdId.Value,
+                storageAccountId.Value,
+                logStorageAccountId.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReprotectContent>.Write(ModelReaderWriterOptions options)

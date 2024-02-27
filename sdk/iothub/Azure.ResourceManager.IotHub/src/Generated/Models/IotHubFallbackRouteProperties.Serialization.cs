@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Optional.IsDefined(Condition))
+            if (Condition != null)
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new IotHubFallbackRouteProperties(
+                name.Value,
+                source,
+                condition.Value,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubFallbackRouteProperties>.Write(ModelReaderWriterOptions options)

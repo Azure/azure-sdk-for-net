@@ -202,7 +202,10 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ReservationQuotaResource>> UpdateAsync(WaitUntil waitUntil, ReservationQuotaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();
@@ -252,7 +255,10 @@ namespace Azure.ResourceManager.Reservations
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ReservationQuotaResource> Update(WaitUntil waitUntil, ReservationQuotaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _reservationQuotaQuotaClientDiagnostics.CreateScope("ReservationQuotaResource.Update");
             scope.Start();

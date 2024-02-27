@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServiceIdentitiesArmClient(client).GetSystemAssignedIdentity(scope);
         }
@@ -71,7 +74,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServiceIdentitiesArmClient(client).GetSystemAssignedIdentityResource(id);
         }
@@ -90,7 +96,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="UserAssignedIdentityResource"/> object. </returns>
         public static UserAssignedIdentityResource GetUserAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServiceIdentitiesArmClient(client).GetUserAssignedIdentityResource(id);
         }
@@ -109,7 +118,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="FederatedIdentityCredentialResource"/> object. </returns>
         public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableManagedServiceIdentitiesArmClient(client).GetFederatedIdentityCredentialResource(id);
         }
@@ -126,7 +138,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
-            Argument.AssertNotNull(armResource, nameof(armResource));
+            if (armResource == null)
+            {
+                throw new ArgumentNullException(nameof(armResource));
+            }
 
             return GetMockableManagedServiceIdentitiesArmResource(armResource).GetSystemAssignedIdentity();
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentities();
         }
@@ -181,7 +199,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         [ForwardsClientCalls]
         public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentityAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -219,7 +240,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         [ForwardsClientCalls]
         public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentity(resourceName, cancellationToken);
         }
@@ -255,7 +279,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An async collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableManagedServiceIdentitiesSubscriptionResource(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
         }
@@ -291,7 +318,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableManagedServiceIdentitiesSubscriptionResource(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
         }

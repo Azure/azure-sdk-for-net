@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomEntityStoreAssignmentResource>> UpdateAsync(WaitUntil waitUntil, CustomEntityStoreAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CustomEntityStoreAssignmentResource> Update(WaitUntil waitUntil, CustomEntityStoreAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentResource.Update");
             scope.Start();

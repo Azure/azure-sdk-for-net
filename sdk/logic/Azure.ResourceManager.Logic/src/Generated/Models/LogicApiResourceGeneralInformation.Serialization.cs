@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(TermsOfUseUri))
+            if (TermsOfUseUri != null)
             {
                 writer.WritePropertyName("termsOfUseUrl"u8);
                 writer.WriteStringValue(TermsOfUseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ReleaseTag))
+            if (ReleaseTag != null)
             {
                 writer.WritePropertyName("releaseTag"u8);
                 writer.WriteStringValue(ReleaseTag);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceGeneralInformation(iconUrl.Value, displayName.Value, description.Value, termsOfUseUrl.Value, releaseTag.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new LogicApiResourceGeneralInformation(
+                iconUrl.Value,
+                displayName.Value,
+                description.Value,
+                termsOfUseUrl.Value,
+                releaseTag.Value,
+                Optional.ToNullable(tier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceGeneralInformation>.Write(ModelReaderWriterOptions options)

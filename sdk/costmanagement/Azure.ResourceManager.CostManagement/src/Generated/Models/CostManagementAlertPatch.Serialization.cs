@@ -28,57 +28,57 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (Optional.IsDefined(CostEntityId))
+            if (CostEntityId != null)
             {
                 writer.WritePropertyName("costEntityId"u8);
                 writer.WriteStringValue(CostEntityId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CloseOn))
+            if (CloseOn.HasValue)
             {
                 writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseOn.Value, "O");
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modificationTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(StatusModificationUserName))
+            if (StatusModificationUserName != null)
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModifiedOn))
+            if (StatusModifiedOn.HasValue)
             {
                 writer.WritePropertyName("statusModificationTime"u8);
                 writer.WriteStringValue(StatusModifiedOn.Value, "O");
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertPatch(definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), serializedAdditionalRawData);
+            return new CostManagementAlertPatch(
+                definition.Value,
+                description.Value,
+                Optional.ToNullable(source),
+                details.Value,
+                costEntityId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(closeTime),
+                Optional.ToNullable(modificationTime),
+                statusModificationUserName.Value,
+                Optional.ToNullable(statusModificationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)

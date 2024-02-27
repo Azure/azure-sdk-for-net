@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,32 +39,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultDataLakeStorage))
+            if (DefaultDataLakeStorage != null)
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
                 writer.WriteObjectValue(DefaultDataLakeStorage);
             }
-            if (Optional.IsDefined(SqlAdministratorLoginPassword))
+            if (SqlAdministratorLoginPassword != null)
             {
                 writer.WritePropertyName("sqlAdministratorLoginPassword"u8);
                 writer.WriteStringValue(SqlAdministratorLoginPassword);
             }
-            if (Optional.IsDefined(ManagedResourceGroupName))
+            if (ManagedResourceGroupName != null)
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (Optional.IsDefined(SqlAdministratorLogin))
+            if (SqlAdministratorLogin != null)
             {
                 writer.WritePropertyName("sqlAdministratorLogin"u8);
                 writer.WriteStringValue(SqlAdministratorLogin);
             }
-            if (Optional.IsDefined(VirtualNetworkProfile))
+            if (VirtualNetworkProfile != null)
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
                 writer.WriteObjectValue(VirtualNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(ConnectivityEndpoints))
+            if (!(ConnectivityEndpoints is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("connectivityEndpoints"u8);
                 writer.WriteStartObject();
@@ -75,12 +75,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ManagedVirtualNetwork))
+            if (ManagedVirtualNetwork != null)
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
                 writer.WriteStringValue(ManagedVirtualNetwork);
             }
-            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (!(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnection> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -90,22 +90,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(ManagedVirtualNetworkSettings))
+            if (ManagedVirtualNetworkSettings != null)
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
                 writer.WriteObjectValue(ManagedVirtualNetworkSettings);
             }
-            if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
+            if (WorkspaceRepositoryConfiguration != null)
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
                 writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
             }
-            if (Optional.IsDefined(PurviewConfiguration))
+            if (PurviewConfiguration != null)
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
                 writer.WriteObjectValue(PurviewConfiguration);
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<ManagedIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             string location = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -132,12 +132,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> provisioningState = default;
             Optional<string> sqlAdministratorLogin = default;
             Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IDictionary<string, string>> connectivityEndpoints = default;
+            IDictionary<string, string> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
-            Optional<IList<PrivateEndpointConnection>> privateEndpointConnections = default;
+            IList<PrivateEndpointConnection> privateEndpointConnections = default;
             Optional<EncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
-            Optional<IReadOnlyDictionary<string, object>> extraProperties = default;
+            IReadOnlyDictionary<string, object> extraProperties = default;
             Optional<ManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<WorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
@@ -342,7 +342,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, Optional.ToDictionary(tags), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, Optional.ToList(privateEndpointConnections), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+            return new Workspace(
+                id.Value,
+                name.Value,
+                type.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                defaultDataLakeStorage.Value,
+                sqlAdministratorLoginPassword.Value,
+                managedResourceGroupName.Value,
+                provisioningState.Value,
+                sqlAdministratorLogin.Value,
+                virtualNetworkProfile.Value,
+                connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
+                managedVirtualNetwork.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(),
+                encryption.Value,
+                Optional.ToNullable(workspaceUID),
+                extraProperties ?? new ChangeTrackingDictionary<string, object>(),
+                managedVirtualNetworkSettings.Value,
+                workspaceRepositoryConfiguration.Value,
+                purviewConfiguration.Value,
+                adlaResourceId.Value);
         }
 
         internal partial class WorkspaceConverter : JsonConverter<Workspace>

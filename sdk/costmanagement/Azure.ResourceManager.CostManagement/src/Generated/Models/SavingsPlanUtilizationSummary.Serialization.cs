@@ -44,49 +44,49 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            if (options.Format != "W" && ArmSkuName != null)
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitId))
+            if (options.Format != "W" && BenefitId != null)
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
             }
-            if (options.Format != "W" && Optional.IsDefined(BenefitOrderId))
+            if (options.Format != "W" && BenefitOrderId != null)
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (Optional.IsDefined(BenefitType))
+            if (BenefitType.HasValue)
             {
                 writer.WritePropertyName("benefitType"u8);
                 writer.WriteStringValue(BenefitType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageOn))
+            if (options.Format != "W" && UsageOn.HasValue)
             {
                 writer.WritePropertyName("usageDate"u8);
                 writer.WriteStringValue(UsageOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AvgUtilizationPercentage))
+            if (options.Format != "W" && AvgUtilizationPercentage.HasValue)
             {
                 writer.WritePropertyName("avgUtilizationPercentage"u8);
                 writer.WriteNumberValue(AvgUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MinUtilizationPercentage))
+            if (options.Format != "W" && MinUtilizationPercentage.HasValue)
             {
                 writer.WritePropertyName("minUtilizationPercentage"u8);
                 writer.WriteNumberValue(MinUtilizationPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxUtilizationPercentage))
+            if (options.Format != "W" && MaxUtilizationPercentage.HasValue)
             {
                 writer.WritePropertyName("maxUtilizationPercentage"u8);
                 writer.WriteNumberValue(MaxUtilizationPercentage.Value);
@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName.Value,
+                benefitId.Value,
+                benefitOrderId.Value,
+                Optional.ToNullable(benefitType),
+                Optional.ToNullable(usageDate),
+                Optional.ToNullable(avgUtilizationPercentage),
+                Optional.ToNullable(minUtilizationPercentage),
+                Optional.ToNullable(maxUtilizationPercentage));
         }
 
         BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)

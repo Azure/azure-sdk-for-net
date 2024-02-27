@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupId))
+            if (BackupId != null)
             {
                 writer.WritePropertyName("backupId"u8);
                 writer.WriteStringValue(BackupId);
             }
-            if (Optional.IsDefined(BackupState))
+            if (BackupState.HasValue)
             {
                 writer.WritePropertyName("backupState"u8);
                 writer.WriteStringValue(BackupState.Value.ToString());
             }
-            if (Optional.IsDefined(BackupStartTimestamp))
+            if (BackupStartTimestamp.HasValue)
             {
                 writer.WritePropertyName("backupStartTimestamp"u8);
                 writer.WriteStringValue(BackupStartTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(BackupStopTimestamp))
+            if (BackupStopTimestamp.HasValue)
             {
                 writer.WritePropertyName("backupStopTimestamp"u8);
                 writer.WriteStringValue(BackupStopTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(BackupExpiryTimestamp))
+            if (BackupExpiryTimestamp.HasValue)
             {
                 writer.WritePropertyName("backupExpiryTimestamp"u8);
                 writer.WriteStringValue(BackupExpiryTimestamp.Value, "O");
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterBackupResourceInfo(backupId.Value, Optional.ToNullable(backupState), Optional.ToNullable(backupStartTimestamp), Optional.ToNullable(backupStopTimestamp), Optional.ToNullable(backupExpiryTimestamp), serializedAdditionalRawData);
+            return new CassandraClusterBackupResourceInfo(
+                backupId.Value,
+                Optional.ToNullable(backupState),
+                Optional.ToNullable(backupStartTimestamp),
+                Optional.ToNullable(backupStopTimestamp),
+                Optional.ToNullable(backupExpiryTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterBackupResourceInfo>.Write(ModelReaderWriterOptions options)

@@ -27,32 +27,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExcludeLastRequest))
+            if (ExcludeLastRequest != null)
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
                 JsonSerializer.Serialize(writer, ExcludeLastRequest);
             }
-            if (Optional.IsDefined(BaseRequestId))
+            if (BaseRequestId != null)
             {
                 writer.WritePropertyName("baseRequestId"u8);
                 JsonSerializer.Serialize(writer, BaseRequestId);
             }
-            if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
+            if (CustomRfcReadTableFunctionModule != null)
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
                 JsonSerializer.Serialize(writer, CustomRfcReadTableFunctionModule);
             }
-            if (Optional.IsDefined(SapDataColumnDelimiter))
+            if (SapDataColumnDelimiter != null)
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
                 JsonSerializer.Serialize(writer, SapDataColumnDelimiter);
             }
-            if (Optional.IsDefined(QueryTimeout))
+            if (QueryTimeout != null)
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 JsonSerializer.Serialize(writer, QueryTimeout);
             }
-            if (Optional.IsDefined(AdditionalColumns))
+            if (AdditionalColumns != null)
             {
                 writer.WritePropertyName("additionalColumns"u8);
 #if NET6_0_OR_GREATER
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -234,7 +234,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, excludeLastRequest.Value, baseRequestId.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value);
+            return new SapOpenHubSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                excludeLastRequest.Value,
+                baseRequestId.Value,
+                customRfcReadTableFunctionModule.Value,
+                sapDataColumnDelimiter.Value);
         }
 
         BinaryData IPersistableModel<SapOpenHubSource>.Write(ModelReaderWriterOptions options)

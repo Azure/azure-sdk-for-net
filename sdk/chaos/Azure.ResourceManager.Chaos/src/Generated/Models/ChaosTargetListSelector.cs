@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="targets"/> is null. </exception>
         public ChaosTargetListSelector(string id, IEnumerable<ChaosTargetReference> targets) : base(id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(targets, nameof(targets));
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (targets == null)
+            {
+                throw new ArgumentNullException(nameof(targets));
+            }
 
             Targets = targets.ToList();
             SelectorType = SelectorType.List;

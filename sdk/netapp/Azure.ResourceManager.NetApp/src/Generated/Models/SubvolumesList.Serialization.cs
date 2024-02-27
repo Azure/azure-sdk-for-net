@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetAppSubvolumeInfoData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetAppSubvolumeInfoData>> value = default;
+            IReadOnlyList<NetAppSubvolumeInfoData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubvolumeInfoData> array = new List<NetAppSubvolumeInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item));
+                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubvolumesList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SubvolumesList(value ?? new ChangeTrackingList<NetAppSubvolumeInfoData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubvolumesList>.Write(ModelReaderWriterOptions options)

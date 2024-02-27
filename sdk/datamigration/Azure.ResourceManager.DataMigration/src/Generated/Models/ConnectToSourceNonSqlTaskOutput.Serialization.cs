@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
+            if (options.Format != "W" && SourceServerBrandVersion != null)
             {
                 writer.WritePropertyName("sourceServerBrandVersion"u8);
                 writer.WriteStringValue(SourceServerBrandVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerProperties))
+            if (options.Format != "W" && ServerProperties != null)
             {
                 writer.WritePropertyName("serverProperties"u8);
                 writer.WriteObjectValue(ServerProperties);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
+            if (options.Format != "W" && !(Databases is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> id = default;
             Optional<string> sourceServerBrandVersion = default;
             Optional<ServerProperties> serverProperties = default;
-            Optional<IReadOnlyList<string>> databases = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IReadOnlyList<string> databases = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    serverProperties = ServerProperties.DeserializeServerProperties(property.Value);
+                    serverProperties = ServerProperties.DeserializeServerProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databases"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceNonSqlTaskOutput(id.Value, sourceServerBrandVersion.Value, serverProperties.Value, Optional.ToList(databases), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new ConnectToSourceNonSqlTaskOutput(
+                id.Value,
+                sourceServerBrandVersion.Value,
+                serverProperties.Value,
+                databases ?? new ChangeTrackingList<string>(),
+                validationErrors ?? new ChangeTrackingList<ReportableException>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceNonSqlTaskOutput>.Write(ModelReaderWriterOptions options)

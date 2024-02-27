@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(TargetDatabaseName))
+            if (TargetDatabaseName != null)
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsCollectionDefined(MigrationSetting))
+            if (!(MigrationSetting is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("migrationSetting"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SourceSetting))
+            if (!(SourceSetting is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sourceSetting"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetSetting))
+            if (!(TargetSetting is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("targetSetting"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SelectedTables))
+            if (!(SelectedTables is ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("selectedTables"u8);
                 writer.WriteStartArray();
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> targetDatabaseName = default;
-            Optional<IDictionary<string, BinaryData>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
-            Optional<IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>> selectedTables = default;
+            IDictionary<string, BinaryData> migrationSetting = default;
+            IDictionary<string, string> sourceSetting = default;
+            IDictionary<string, string> targetSetting = default;
+            IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> selectedTables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> array = new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(item));
+                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(item, options));
                     }
                     selectedTables = array;
                     continue;
@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name.Value, id.Value, targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), Optional.ToList(selectedTables), serializedAdditionalRawData);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(
+                name.Value,
+                id.Value,
+                targetDatabaseName.Value,
+                migrationSetting ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                selectedTables ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(AcsEndpoint))
+            if (AcsEndpoint != null)
             {
                 if (AcsEndpoint != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsEndpoint");
                 }
             }
-            if (Optional.IsDefined(AcsSecret))
+            if (AcsSecret != null)
             {
                 if (AcsSecret != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsSecret");
                 }
             }
-            if (Optional.IsDefined(AcsResourceId))
+            if (AcsResourceId != null)
             {
                 if (AcsResourceId != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("acsResourceId");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceSubscriptionKey))
+            if (CognitiveServiceSubscriptionKey != null)
             {
                 if (CognitiveServiceSubscriptionKey != null)
                 {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceSubscriptionKey");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceRegion))
+            if (CognitiveServiceRegion != null)
             {
                 if (CognitiveServiceRegion != null)
                 {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceRegion");
                 }
             }
-            if (Optional.IsDefined(CognitiveServiceResourceId))
+            if (CognitiveServiceResourceId != null)
             {
                 if (CognitiveServiceResourceId != null)
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("cognitiveServiceResourceId");
                 }
             }
-            if (Optional.IsDefined(DefaultLocale))
+            if (DefaultLocale != null)
             {
                 if (DefaultLocale != null)
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("defaultLocale");
                 }
             }
-            if (Optional.IsDefined(OfferType))
+            if (OfferType != null)
             {
                 if (OfferType != null)
                 {
@@ -280,7 +280,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelephonyPhoneNumbers(id.Value, phoneNumber.Value, acsEndpoint.Value, acsSecret.Value, acsResourceId.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, offerType.Value, serializedAdditionalRawData);
+            return new TelephonyPhoneNumbers(
+                id.Value,
+                phoneNumber.Value,
+                acsEndpoint.Value,
+                acsSecret.Value,
+                acsResourceId.Value,
+                cognitiveServiceSubscriptionKey.Value,
+                cognitiveServiceRegion.Value,
+                cognitiveServiceResourceId.Value,
+                defaultLocale.Value,
+                offerType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options)

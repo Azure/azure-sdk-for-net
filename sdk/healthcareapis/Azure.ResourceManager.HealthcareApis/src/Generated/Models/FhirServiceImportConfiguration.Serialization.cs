@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IntegrationDataStore))
+            if (IntegrationDataStore != null)
             {
                 writer.WritePropertyName("integrationDataStore"u8);
                 writer.WriteStringValue(IntegrationDataStore);
             }
-            if (Optional.IsDefined(IsInitialImportMode))
+            if (IsInitialImportMode.HasValue)
             {
                 writer.WritePropertyName("initialImportMode"u8);
                 writer.WriteBooleanValue(IsInitialImportMode.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

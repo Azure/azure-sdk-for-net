@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Add))
+            if (Add != null)
             {
                 writer.WritePropertyName("add"u8);
                 writer.WriteObjectValue(Add);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value);
+                    @add = IPCommunityIdList.DeserializeIPCommunityIdList(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MetricLabelsAllowlist))
+            if (MetricLabelsAllowlist != null)
             {
                 writer.WritePropertyName("metricLabelsAllowlist"u8);
                 writer.WriteStringValue(MetricLabelsAllowlist);
             }
-            if (Optional.IsDefined(MetricAnnotationsAllowList))
+            if (MetricAnnotationsAllowList != null)
             {
                 writer.WritePropertyName("metricAnnotationsAllowList"u8);
                 writer.WriteStringValue(MetricAnnotationsAllowList);

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(IsDefault))
+            if (IsDefault.HasValue)
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Optional.IsCollectionDefined(ComponentVersions))
+            if (!(ComponentVersions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("componentVersions"u8);
                 writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> friendlyName = default;
             Optional<string> displayName = default;
             Optional<bool> isDefault = default;
-            Optional<IReadOnlyDictionary<string, string>> componentVersions = default;
+            IReadOnlyDictionary<string, string> componentVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightVersionSpec(friendlyName.Value, displayName.Value, Optional.ToNullable(isDefault), Optional.ToDictionary(componentVersions), serializedAdditionalRawData);
+            return new HDInsightVersionSpec(friendlyName.Value, displayName.Value, Optional.ToNullable(isDefault), componentVersions ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightVersionSpec>.Write(ModelReaderWriterOptions options)

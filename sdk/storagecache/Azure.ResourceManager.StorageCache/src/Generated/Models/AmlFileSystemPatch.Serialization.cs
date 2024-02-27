@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionSettings))
+            if (EncryptionSettings != null)
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteObjectValue(EncryptionSettings);
             }
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow != null)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteObjectValue(MaintenanceWindow);
             }
-            if (Optional.IsDefined(RootSquashSettings))
+            if (RootSquashSettings != null)
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
                 writer.WriteObjectValue(RootSquashSettings);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AmlFileSystemEncryptionSettings> encryptionSettings = default;
             Optional<AmlFileSystemUpdatePropertiesMaintenanceWindow> maintenanceWindow = default;
             Optional<AmlFileSystemRootSquashSettings> rootSquashSettings = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value);
+                            encryptionSettings = AmlFileSystemEncryptionSettings.DeserializeAmlFileSystemEncryptionSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            maintenanceWindow = AmlFileSystemUpdatePropertiesMaintenanceWindow.DeserializeAmlFileSystemUpdatePropertiesMaintenanceWindow(property0.Value);
+                            maintenanceWindow = AmlFileSystemUpdatePropertiesMaintenanceWindow.DeserializeAmlFileSystemUpdatePropertiesMaintenanceWindow(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rootSquashSettings"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                             {
                                 continue;
                             }
-                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value);
+                            rootSquashSettings = AmlFileSystemRootSquashSettings.DeserializeAmlFileSystemRootSquashSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemPatch(Optional.ToDictionary(tags), encryptionSettings.Value, maintenanceWindow.Value, rootSquashSettings.Value, serializedAdditionalRawData);
+            return new AmlFileSystemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), encryptionSettings.Value, maintenanceWindow.Value, rootSquashSettings.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemPatch>.Write(ModelReaderWriterOptions options)

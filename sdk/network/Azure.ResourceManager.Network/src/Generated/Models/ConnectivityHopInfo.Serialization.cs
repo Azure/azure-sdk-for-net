@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ConnectivityHopType))
+            if (options.Format != "W" && ConnectivityHopType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectivityHopType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(Address))
+            if (options.Format != "W" && Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            if (options.Format != "W" && ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NextHopIds))
+            if (options.Format != "W" && !(NextHopIds is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nextHopIds"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousHopIds))
+            if (options.Format != "W" && !(PreviousHopIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("previousHopIds"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            if (options.Format != "W" && !(Links is ChangeTrackingList<HopLink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousLinks))
+            if (options.Format != "W" && !(PreviousLinks is ChangeTrackingList<HopLink> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("previousLinks"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            if (options.Format != "W" && !(Issues is ChangeTrackingList<ConnectivityIssueInfo> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> id = default;
             Optional<string> address = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<string>> previousHopIds = default;
-            Optional<IReadOnlyList<HopLink>> links = default;
-            Optional<IReadOnlyList<HopLink>> previousLinks = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<string> previousHopIds = default;
+            IReadOnlyList<HopLink> links = default;
+            IReadOnlyList<HopLink> previousLinks = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     links = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     previousLinks = array;
                     continue;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
@@ -247,7 +247,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues), serializedAdditionalRawData);
+            return new ConnectivityHopInfo(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                previousHopIds ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<HopLink>(),
+                previousLinks ?? new ChangeTrackingList<HopLink>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)

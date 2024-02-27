@@ -26,107 +26,107 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VMwareMachineId))
+            if (options.Format != "W" && VMwareMachineId != null)
             {
                 writer.WritePropertyName("vmwareMachineId"u8);
                 writer.WriteStringValue(VMwareMachineId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            if (options.Format != "W" && FirmwareType != null)
             {
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetGeneration))
+            if (options.Format != "W" && TargetGeneration != null)
             {
                 writer.WritePropertyName("targetGeneration"u8);
                 writer.WriteStringValue(TargetGeneration);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType != null)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType);
             }
-            if (Optional.IsDefined(SqlServerLicenseType))
+            if (SqlServerLicenseType != null)
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataMoverRunAsAccountId))
+            if (options.Format != "W" && DataMoverRunAsAccountId != null)
             {
                 writer.WritePropertyName("dataMoverRunAsAccountId"u8);
                 writer.WriteStringValue(DataMoverRunAsAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotRunAsAccountId))
+            if (options.Format != "W" && SnapshotRunAsAccountId != null)
             {
                 writer.WritePropertyName("snapshotRunAsAccountId"u8);
                 writer.WriteStringValue(SnapshotRunAsAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
+            if (options.Format != "W" && StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(TargetVmName))
+            if (TargetVmName != null)
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (Optional.IsDefined(TargetVmSize))
+            if (TargetVmSize != null)
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetLocation))
+            if (options.Format != "W" && TargetLocation != null)
             {
                 writer.WritePropertyName("targetLocation"u8);
                 writer.WriteStringValue(TargetLocation);
             }
-            if (Optional.IsDefined(TargetResourceGroupId))
+            if (TargetResourceGroupId != null)
             {
                 writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
-            if (Optional.IsDefined(TargetAvailabilitySetId))
+            if (TargetAvailabilitySetId != null)
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (Optional.IsDefined(TargetAvailabilityZone))
+            if (TargetAvailabilityZone != null)
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            if (TargetProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (Optional.IsDefined(ConfidentialVmKeyVaultId))
+            if (ConfidentialVmKeyVaultId != null)
             {
                 writer.WritePropertyName("confidentialVmKeyVaultId"u8);
                 writer.WriteStringValue(ConfidentialVmKeyVaultId);
             }
-            if (Optional.IsDefined(TargetVmSecurityProfile))
+            if (TargetVmSecurityProfile != null)
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
                 writer.WriteObjectValue(TargetVmSecurityProfile);
             }
-            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            if (TargetBootDiagnosticsStorageAccountId != null)
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(ProtectedDisks))
+            if (!(ProtectedDisks is ChangeTrackingList<VMwareCbtProtectedDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
@@ -147,17 +147,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetNetworkId))
+            if (TargetNetworkId != null)
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (Optional.IsDefined(TestNetworkId))
+            if (TestNetworkId != null)
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (Optional.IsCollectionDefined(VmNics))
+            if (!(VmNics is ChangeTrackingList<VMwareCbtNicDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -178,87 +178,87 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationRecoveryPointId))
+            if (options.Format != "W" && MigrationRecoveryPointId != null)
             {
                 writer.WritePropertyName("migrationRecoveryPointId"u8);
                 writer.WriteStringValue(MigrationRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            if (options.Format != "W" && LastRecoveryPointReceived.HasValue)
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
                 writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
+            if (options.Format != "W" && LastRecoveryPointId != null)
             {
                 writer.WritePropertyName("lastRecoveryPointId"u8);
                 writer.WriteStringValue(LastRecoveryPointId);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitialSeedingProgressPercentage))
+            if (options.Format != "W" && InitialSeedingProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("initialSeedingProgressPercentage"u8);
                 writer.WriteNumberValue(InitialSeedingProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationProgressPercentage))
+            if (options.Format != "W" && MigrationProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("migrationProgressPercentage"u8);
                 writer.WriteNumberValue(MigrationProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
+            if (options.Format != "W" && ResyncProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResumeProgressPercentage))
+            if (options.Format != "W" && ResumeProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("resumeProgressPercentage"u8);
                 writer.WriteNumberValue(ResumeProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeltaSyncProgressPercentage))
+            if (options.Format != "W" && DeltaSyncProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("deltaSyncProgressPercentage"u8);
                 writer.WriteNumberValue(DeltaSyncProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCheckSumResyncCycle))
+            if (options.Format != "W" && IsCheckSumResyncCycle != null)
             {
                 writer.WritePropertyName("isCheckSumResyncCycle"u8);
                 writer.WriteStringValue(IsCheckSumResyncCycle);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitialSeedingRetryCount))
+            if (options.Format != "W" && InitialSeedingRetryCount.HasValue)
             {
                 writer.WritePropertyName("initialSeedingRetryCount"u8);
                 writer.WriteNumberValue(InitialSeedingRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncRetryCount))
+            if (options.Format != "W" && ResyncRetryCount.HasValue)
             {
                 writer.WritePropertyName("resyncRetryCount"u8);
                 writer.WriteNumberValue(ResyncRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResumeRetryCount))
+            if (options.Format != "W" && ResumeRetryCount.HasValue)
             {
                 writer.WritePropertyName("resumeRetryCount"u8);
                 writer.WriteNumberValue(ResumeRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeltaSyncRetryCount))
+            if (options.Format != "W" && DeltaSyncRetryCount.HasValue)
             {
                 writer.WritePropertyName("deltaSyncRetryCount"u8);
                 writer.WriteNumberValue(DeltaSyncRetryCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
+            if (options.Format != "W" && ResyncRequired != null)
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteStringValue(ResyncRequired);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResyncState))
+            if (options.Format != "W" && ResyncState.HasValue)
             {
                 writer.WritePropertyName("resyncState"u8);
                 writer.WriteStringValue(ResyncState.Value.ToString());
             }
-            if (Optional.IsDefined(PerformAutoResync))
+            if (PerformAutoResync != null)
             {
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteStringValue(PerformAutoResync);
             }
-            if (Optional.IsCollectionDefined(SeedDiskTags))
+            if (!(SeedDiskTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("seedDiskTags"u8);
                 writer.WriteStartObject();
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetDiskTags))
+            if (!(TargetDiskTags is ChangeTrackingDictionary<string, string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("targetDiskTags"u8);
                 writer.WriteStartObject();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SupportedOSVersions))
+            if (!(SupportedOSVersions is ChangeTrackingList<string> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("supportedOSVersions"u8);
                 writer.WriteStartArray();
@@ -290,17 +290,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplianceMonitoringDetails))
+            if (options.Format != "W" && ApplianceMonitoringDetails != null)
             {
                 writer.WritePropertyName("applianceMonitoringDetails"u8);
                 writer.WriteObjectValue(ApplianceMonitoringDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
+            if (options.Format != "W" && GatewayOperationDetails != null)
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
                 writer.WriteObjectValue(GatewayOperationDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperationName))
+            if (options.Format != "W" && OperationName != null)
             {
                 writer.WritePropertyName("operationName"u8);
                 writer.WriteStringValue(OperationName);
@@ -365,12 +365,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> confidentialVmKeyVaultId = default;
             Optional<VMwareCbtSecurityProfileProperties> targetVmSecurityProfile = default;
             Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
-            Optional<IReadOnlyDictionary<string, string>> targetVmTags = default;
-            Optional<IReadOnlyList<VMwareCbtProtectedDiskDetails>> protectedDisks = default;
+            IReadOnlyDictionary<string, string> targetVmTags = default;
+            IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks = default;
             Optional<ResourceIdentifier> targetNetworkId = default;
             Optional<ResourceIdentifier> testNetworkId = default;
-            Optional<IReadOnlyList<VMwareCbtNicDetails>> vmNics = default;
-            Optional<IReadOnlyDictionary<string, string>> targetNicTags = default;
+            IReadOnlyList<VMwareCbtNicDetails> vmNics = default;
+            IReadOnlyDictionary<string, string> targetNicTags = default;
             Optional<ResourceIdentifier> migrationRecoveryPointId = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
             Optional<ResourceIdentifier> lastRecoveryPointId = default;
@@ -387,9 +387,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> resyncRequired = default;
             Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<string> performAutoResync = default;
-            Optional<IReadOnlyDictionary<string, string>> seedDiskTags = default;
-            Optional<IReadOnlyDictionary<string, string>> targetDiskTags = default;
-            Optional<IReadOnlyList<string>> supportedOSVersions = default;
+            IReadOnlyDictionary<string, string> seedDiskTags = default;
+            IReadOnlyDictionary<string, string> targetDiskTags = default;
+            IReadOnlyList<string> supportedOSVersions = default;
             Optional<ApplianceMonitoringDetails> applianceMonitoringDetails = default;
             Optional<GatewayOperationDetails> gatewayOperationDetails = default;
             Optional<string> operationName = default;
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value);
+                    targetVmSecurityProfile = VMwareCbtSecurityProfileProperties.DeserializeVMwareCbtSecurityProfileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtProtectedDiskDetails> array = new List<VMwareCbtProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item));
+                        array.Add(VMwareCbtProtectedDiskDetails.DeserializeVMwareCbtProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtNicDetails> array = new List<VMwareCbtNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item));
+                        array.Add(VMwareCbtNicDetails.DeserializeVMwareCbtNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value);
+                    applianceMonitoringDetails = ApplianceMonitoringDetails.DeserializeApplianceMonitoringDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gatewayOperationDetails"u8))
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value);
+                    gatewayOperationDetails = GatewayOperationDetails.DeserializeGatewayOperationDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationName"u8))
@@ -820,7 +820,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtMigrationDetails(instanceType, serializedAdditionalRawData, vmwareMachineId.Value, osType.Value, osName.Value, firmwareType.Value, targetGeneration.Value, licenseType.Value, sqlServerLicenseType.Value, dataMoverRunAsAccountId.Value, snapshotRunAsAccountId.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetLocation.Value, targetResourceGroupId.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, confidentialVmKeyVaultId.Value, targetVmSecurityProfile.Value, targetBootDiagnosticsStorageAccountId.Value, Optional.ToDictionary(targetVmTags), Optional.ToList(protectedDisks), targetNetworkId.Value, testNetworkId.Value, Optional.ToList(vmNics), Optional.ToDictionary(targetNicTags), migrationRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), lastRecoveryPointId.Value, Optional.ToNullable(initialSeedingProgressPercentage), Optional.ToNullable(migrationProgressPercentage), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resumeProgressPercentage), Optional.ToNullable(deltaSyncProgressPercentage), isCheckSumResyncCycle.Value, Optional.ToNullable(initialSeedingRetryCount), Optional.ToNullable(resyncRetryCount), Optional.ToNullable(resumeRetryCount), Optional.ToNullable(deltaSyncRetryCount), resyncRequired.Value, Optional.ToNullable(resyncState), performAutoResync.Value, Optional.ToDictionary(seedDiskTags), Optional.ToDictionary(targetDiskTags), Optional.ToList(supportedOSVersions), applianceMonitoringDetails.Value, gatewayOperationDetails.Value, operationName.Value);
+            return new VMwareCbtMigrationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareMachineId.Value,
+                osType.Value,
+                osName.Value,
+                firmwareType.Value,
+                targetGeneration.Value,
+                licenseType.Value,
+                sqlServerLicenseType.Value,
+                dataMoverRunAsAccountId.Value,
+                snapshotRunAsAccountId.Value,
+                storageAccountId.Value,
+                targetVmName.Value,
+                targetVmSize.Value,
+                targetLocation.Value,
+                targetResourceGroupId.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                confidentialVmKeyVaultId.Value,
+                targetVmSecurityProfile.Value,
+                targetBootDiagnosticsStorageAccountId.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                protectedDisks ?? new ChangeTrackingList<VMwareCbtProtectedDiskDetails>(),
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicDetails>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                migrationRecoveryPointId.Value,
+                Optional.ToNullable(lastRecoveryPointReceived),
+                lastRecoveryPointId.Value,
+                Optional.ToNullable(initialSeedingProgressPercentage),
+                Optional.ToNullable(migrationProgressPercentage),
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resumeProgressPercentage),
+                Optional.ToNullable(deltaSyncProgressPercentage),
+                isCheckSumResyncCycle.Value,
+                Optional.ToNullable(initialSeedingRetryCount),
+                Optional.ToNullable(resyncRetryCount),
+                Optional.ToNullable(resumeRetryCount),
+                Optional.ToNullable(deltaSyncRetryCount),
+                resyncRequired.Value,
+                Optional.ToNullable(resyncState),
+                performAutoResync.Value,
+                seedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                supportedOSVersions ?? new ChangeTrackingList<string>(),
+                applianceMonitoringDetails.Value,
+                gatewayOperationDetails.Value,
+                operationName.Value);
         }
 
         BinaryData IPersistableModel<VMwareCbtMigrationDetails>.Write(ModelReaderWriterOptions options)

@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 if (Error != null)
                 {
@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopeOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopeOperationStatus(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                status.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopeOperationStatus>.Write(ModelReaderWriterOptions options)

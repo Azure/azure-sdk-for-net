@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Markdown))
+            if (Markdown != null)
             {
                 writer.WritePropertyName("markdown"u8);
                 writer.WriteStringValue(Markdown);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(IsExpired))
+            if (IsExpired.HasValue)
             {
                 writer.WritePropertyName("expired"u8);
                 writer.WriteBooleanValue(IsExpired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            if (options.Format != "W" && UniqueIdentifier.HasValue)
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabAnnouncement(
+                title.Value,
+                markdown.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(expired),
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabAnnouncement>.Write(ModelReaderWriterOptions options)

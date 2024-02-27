@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryMetric))
+            if (PrimaryMetric.HasValue)
             {
                 writer.WritePropertyName("primaryMetric"u8);
                 writer.WriteStringValue(PrimaryMetric.Value.ToString());
             }
-            if (Optional.IsDefined(ModelSettings))
+            if (ModelSettings != null)
             {
                 if (ModelSettings != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelSettings");
                 }
             }
-            if (Optional.IsCollectionDefined(SearchSpace))
+            if (!(SearchSpace is ChangeTrackingList<ImageModelDistributionSettingsClassification> collection && collection.IsUndefined))
             {
                 if (SearchSpace != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("limitSettings"u8);
             writer.WriteObjectValue(LimitSettings);
-            if (Optional.IsDefined(SweepSettings))
+            if (SweepSettings != null)
             {
                 if (SweepSettings != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sweepSettings");
                 }
             }
-            if (Optional.IsDefined(ValidationData))
+            if (ValidationData != null)
             {
                 if (ValidationData != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationData");
                 }
             }
-            if (Optional.IsDefined(ValidationDataSize))
+            if (ValidationDataSize.HasValue)
             {
                 if (ValidationDataSize != null)
                 {
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationDataSize");
                 }
             }
-            if (Optional.IsDefined(LogVerbosity))
+            if (LogVerbosity.HasValue)
             {
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (Optional.IsDefined(TargetColumnName))
+            if (TargetColumnName != null)
             {
                 if (TargetColumnName != null)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<ClassificationMultilabelPrimaryMetric> primaryMetric = default;
             Optional<ImageModelSettingsClassification> modelSettings = default;
-            Optional<IList<ImageModelDistributionSettingsClassification>> searchSpace = default;
+            IList<ImageModelDistributionSettingsClassification> searchSpace = default;
             ImageLimitSettings limitSettings = default;
             Optional<ImageSweepSettings> sweepSettings = default;
             Optional<MachineLearningTableJobInput> validationData = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelSettings = null;
                         continue;
                     }
-                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value);
+                    modelSettings = ImageModelSettingsClassification.DeserializeImageModelSettingsClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("searchSpace"u8))
@@ -201,14 +201,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ImageModelDistributionSettingsClassification> array = new List<ImageModelDistributionSettingsClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageModelDistributionSettingsClassification.DeserializeImageModelDistributionSettingsClassification(item));
+                        array.Add(ImageModelDistributionSettingsClassification.DeserializeImageModelDistributionSettingsClassification(item, options));
                     }
                     searchSpace = array;
                     continue;
                 }
                 if (property.NameEquals("limitSettings"u8))
                 {
-                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value);
+                    limitSettings = ImageLimitSettings.DeserializeImageLimitSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sweepSettings"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sweepSettings = null;
                         continue;
                     }
-                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value);
+                    sweepSettings = ImageSweepSettings.DeserializeImageSweepSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationData"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         validationData = null;
                         continue;
                     }
-                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    validationData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationDataSize"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("trainingData"u8))
                 {
-                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value);
+                    trainingData = MachineLearningTableJobInput.DeserializeMachineLearningTableJobInput(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -276,7 +276,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageClassificationMultilabel(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData, Optional.ToNullable(primaryMetric), modelSettings.Value, Optional.ToList(searchSpace), limitSettings, sweepSettings.Value, validationData.Value, Optional.ToNullable(validationDataSize));
+            return new ImageClassificationMultilabel(
+                Optional.ToNullable(logVerbosity),
+                targetColumnName.Value,
+                taskType,
+                trainingData,
+                serializedAdditionalRawData,
+                Optional.ToNullable(primaryMetric),
+                modelSettings.Value,
+                searchSpace ?? new ChangeTrackingList<ImageModelDistributionSettingsClassification>(),
+                limitSettings,
+                sweepSettings.Value,
+                validationData.Value,
+                Optional.ToNullable(validationDataSize));
         }
 
         BinaryData IPersistableModel<ImageClassificationMultilabel>.Write(ModelReaderWriterOptions options)

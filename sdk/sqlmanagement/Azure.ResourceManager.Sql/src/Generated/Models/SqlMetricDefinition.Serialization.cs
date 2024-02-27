@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
+            if (options.Format != "W" && PrimaryAggregationType.HasValue)
             {
                 writer.WritePropertyName("primaryAggregationType"u8);
                 writer.WriteStringValue(PrimaryAggregationType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceUriString))
+            if (options.Format != "W" && ResourceUriString != null)
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUriString);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MetricAvailabilities))
+            if (options.Format != "W" && !(MetricAvailabilities is ChangeTrackingList<SqlMetricAvailability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<string> resourceUri = default;
             Optional<SqlMetricDefinitionUnitType> unit = default;
-            Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
+            IReadOnlyList<SqlMetricAvailability> metricAvailabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    name = SqlMetricName.DeserializeSqlMetricName(property.Value);
+                    name = SqlMetricName.DeserializeSqlMetricName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryAggregationType"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
+                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMetricDefinition(name.Value, Optional.ToNullable(primaryAggregationType), resourceUri.Value, Optional.ToNullable(unit), Optional.ToList(metricAvailabilities), serializedAdditionalRawData);
+            return new SqlMetricDefinition(
+                name.Value,
+                Optional.ToNullable(primaryAggregationType),
+                resourceUri.Value,
+                Optional.ToNullable(unit),
+                metricAvailabilities ?? new ChangeTrackingList<SqlMetricAvailability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMetricDefinition>.Write(ModelReaderWriterOptions options)

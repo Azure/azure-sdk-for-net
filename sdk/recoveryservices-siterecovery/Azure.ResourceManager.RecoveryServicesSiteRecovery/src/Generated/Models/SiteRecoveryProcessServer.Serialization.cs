@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IPAddress))
+            if (IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(AgentVersion))
+            if (AgentVersion != null)
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (LastHeartbeatReceivedOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (Optional.IsDefined(VersionStatus))
+            if (VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
+            if (!(MobilityServiceUpdates is ChangeTrackingList<MobilityServiceUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("mobilityServiceUpdates"u8);
                 writer.WriteStartArray();
@@ -72,92 +72,92 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HostId))
+            if (HostId != null)
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (Optional.IsDefined(MachineCount))
+            if (MachineCount != null)
             {
                 writer.WritePropertyName("machineCount"u8);
                 writer.WriteStringValue(MachineCount);
             }
-            if (Optional.IsDefined(ReplicationPairCount))
+            if (ReplicationPairCount != null)
             {
                 writer.WritePropertyName("replicationPairCount"u8);
                 writer.WriteStringValue(ReplicationPairCount);
             }
-            if (Optional.IsDefined(SystemLoad))
+            if (SystemLoad != null)
             {
                 writer.WritePropertyName("systemLoad"u8);
                 writer.WriteStringValue(SystemLoad);
             }
-            if (Optional.IsDefined(SystemLoadStatus))
+            if (SystemLoadStatus != null)
             {
                 writer.WritePropertyName("systemLoadStatus"u8);
                 writer.WriteStringValue(SystemLoadStatus);
             }
-            if (Optional.IsDefined(CpuLoad))
+            if (CpuLoad != null)
             {
                 writer.WritePropertyName("cpuLoad"u8);
                 writer.WriteStringValue(CpuLoad);
             }
-            if (Optional.IsDefined(CpuLoadStatus))
+            if (CpuLoadStatus != null)
             {
                 writer.WritePropertyName("cpuLoadStatus"u8);
                 writer.WriteStringValue(CpuLoadStatus);
             }
-            if (Optional.IsDefined(TotalMemoryInBytes))
+            if (TotalMemoryInBytes.HasValue)
             {
                 writer.WritePropertyName("totalMemoryInBytes"u8);
                 writer.WriteNumberValue(TotalMemoryInBytes.Value);
             }
-            if (Optional.IsDefined(AvailableMemoryInBytes))
+            if (AvailableMemoryInBytes.HasValue)
             {
                 writer.WritePropertyName("availableMemoryInBytes"u8);
                 writer.WriteNumberValue(AvailableMemoryInBytes.Value);
             }
-            if (Optional.IsDefined(MemoryUsageStatus))
+            if (MemoryUsageStatus != null)
             {
                 writer.WritePropertyName("memoryUsageStatus"u8);
                 writer.WriteStringValue(MemoryUsageStatus);
             }
-            if (Optional.IsDefined(TotalSpaceInBytes))
+            if (TotalSpaceInBytes.HasValue)
             {
                 writer.WritePropertyName("totalSpaceInBytes"u8);
                 writer.WriteNumberValue(TotalSpaceInBytes.Value);
             }
-            if (Optional.IsDefined(AvailableSpaceInBytes))
+            if (AvailableSpaceInBytes.HasValue)
             {
                 writer.WritePropertyName("availableSpaceInBytes"u8);
                 writer.WriteNumberValue(AvailableSpaceInBytes.Value);
             }
-            if (Optional.IsDefined(SpaceUsageStatus))
+            if (SpaceUsageStatus != null)
             {
                 writer.WritePropertyName("spaceUsageStatus"u8);
                 writer.WriteStringValue(SpaceUsageStatus);
             }
-            if (Optional.IsDefined(PsServiceStatus))
+            if (PsServiceStatus != null)
             {
                 writer.WritePropertyName("psServiceStatus"u8);
                 writer.WriteStringValue(PsServiceStatus);
             }
-            if (Optional.IsDefined(SslCertExpireOn))
+            if (SslCertExpireOn.HasValue)
             {
                 writer.WritePropertyName("sslCertExpiryDate"u8);
                 writer.WriteStringValue(SslCertExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            if (SslCertExpiryRemainingDays.HasValue)
             {
                 writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
                 writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (Optional.IsCollectionDefined(HealthErrors))
+            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -167,52 +167,52 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AgentExpireOn))
+            if (AgentExpireOn.HasValue)
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(AgentVersionDetails))
+            if (AgentVersionDetails != null)
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
                 writer.WriteObjectValue(AgentVersionDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PsStatsRefreshOn))
+            if (options.Format != "W" && PsStatsRefreshOn.HasValue)
             {
                 writer.WritePropertyName("psStatsRefreshTime"u8);
                 writer.WriteStringValue(PsStatsRefreshOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ThroughputUploadPendingDataInBytes))
+            if (options.Format != "W" && ThroughputUploadPendingDataInBytes.HasValue)
             {
                 writer.WritePropertyName("throughputUploadPendingDataInBytes"u8);
                 writer.WriteNumberValue(ThroughputUploadPendingDataInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThroughputInMBps))
+            if (options.Format != "W" && ThroughputInMBps.HasValue)
             {
                 writer.WritePropertyName("throughputInMBps"u8);
                 writer.WriteNumberValue(ThroughputInMBps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThroughputInBytes))
+            if (options.Format != "W" && ThroughputInBytes.HasValue)
             {
                 writer.WritePropertyName("throughputInBytes"u8);
                 writer.WriteNumberValue(ThroughputInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ThroughputStatus))
+            if (options.Format != "W" && ThroughputStatus != null)
             {
                 writer.WritePropertyName("throughputStatus"u8);
                 writer.WriteStringValue(ThroughputStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarsCommunicationStatus))
+            if (options.Format != "W" && MarsCommunicationStatus != null)
             {
                 writer.WritePropertyName("marsCommunicationStatus"u8);
                 writer.WriteStringValue(MarsCommunicationStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(MarsRegistrationStatus))
+            if (options.Format != "W" && MarsRegistrationStatus != null)
             {
                 writer.WritePropertyName("marsRegistrationStatus"u8);
                 writer.WriteStringValue(MarsRegistrationStatus);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> agentVersion = default;
             Optional<DateTimeOffset> lastHeartbeat = default;
             Optional<string> versionStatus = default;
-            Optional<IReadOnlyList<MobilityServiceUpdate>> mobilityServiceUpdates = default;
+            IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates = default;
             Optional<string> hostId = default;
             Optional<string> machineCount = default;
             Optional<string> replicationPairCount = default;
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<DateTimeOffset> sslCertExpireOn = default;
             Optional<int> sslCertExpiryRemainingDays = default;
             Optional<string> osVersion = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
             Optional<DateTimeOffset> agentExpireOn = default;
             Optional<SiteRecoveryVersionDetails> agentVersionDetails = default;
             Optional<SiteRecoveryProtectionHealth> health = default;
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MobilityServiceUpdate> array = new List<MobilityServiceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item));
+                        array.Add(MobilityServiceUpdate.DeserializeMobilityServiceUpdate(item, options));
                     }
                     mobilityServiceUpdates = array;
                     continue;
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value);
+                    agentVersionDetails = SiteRecoveryVersionDetails.DeserializeSiteRecoveryVersionDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))
@@ -559,7 +559,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProcessServer(
+                friendlyName.Value,
+                id.Value,
+                ipAddress.Value,
+                osType.Value,
+                agentVersion.Value,
+                Optional.ToNullable(lastHeartbeat),
+                versionStatus.Value,
+                mobilityServiceUpdates ?? new ChangeTrackingList<MobilityServiceUpdate>(),
+                hostId.Value,
+                machineCount.Value,
+                replicationPairCount.Value,
+                systemLoad.Value,
+                systemLoadStatus.Value,
+                cpuLoad.Value,
+                cpuLoadStatus.Value,
+                Optional.ToNullable(totalMemoryInBytes),
+                Optional.ToNullable(availableMemoryInBytes),
+                memoryUsageStatus.Value,
+                Optional.ToNullable(totalSpaceInBytes),
+                Optional.ToNullable(availableSpaceInBytes),
+                spaceUsageStatus.Value,
+                psServiceStatus.Value,
+                Optional.ToNullable(sslCertExpireOn),
+                Optional.ToNullable(sslCertExpiryRemainingDays),
+                osVersion.Value,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(agentExpireOn),
+                agentVersionDetails.Value,
+                Optional.ToNullable(health),
+                Optional.ToNullable(psStatsRefreshTime),
+                Optional.ToNullable(throughputUploadPendingDataInBytes),
+                Optional.ToNullable(throughputInMBps),
+                Optional.ToNullable(throughputInBytes),
+                throughputStatus.Value,
+                marsCommunicationStatus.Value,
+                marsRegistrationStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)

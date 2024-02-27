@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BackupName))
+            if (BackupName != null)
             {
                 writer.WritePropertyName("backupName"u8);
                 writer.WriteStringValue(BackupName);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(StorageAccountUri))
+            if (StorageAccountUri != null)
             {
                 writer.WritePropertyName("storageAccountUrl"u8);
                 writer.WriteStringValue(StorageAccountUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(BackupSchedule))
+            if (BackupSchedule != null)
             {
                 writer.WritePropertyName("backupSchedule"u8);
                 writer.WriteObjectValue(BackupSchedule);
             }
-            if (Optional.IsCollectionDefined(Databases))
+            if (!(Databases is ChangeTrackingList<AppServiceDatabaseBackupSetting> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> enabled = default;
             Optional<Uri> storageAccountUrl = default;
             Optional<WebAppBackupSchedule> backupSchedule = default;
-            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
+            IList<AppServiceDatabaseBackupSetting> databases = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(property0.Value);
+                            backupSchedule = WebAppBackupSchedule.DeserializeWebAppBackupSchedule(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("databases"u8))
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item, options));
                             }
                             databases = array;
                             continue;
@@ -230,7 +230,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupInfo(id, name, type, systemData.Value, backupName.Value, Optional.ToNullable(enabled), storageAccountUrl.Value, backupSchedule.Value, Optional.ToList(databases), kind.Value, serializedAdditionalRawData);
+            return new WebAppBackupInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                backupName.Value,
+                Optional.ToNullable(enabled),
+                storageAccountUrl.Value,
+                backupSchedule.Value,
+                databases ?? new ChangeTrackingList<AppServiceDatabaseBackupSetting>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupInfo>.Write(ModelReaderWriterOptions options)

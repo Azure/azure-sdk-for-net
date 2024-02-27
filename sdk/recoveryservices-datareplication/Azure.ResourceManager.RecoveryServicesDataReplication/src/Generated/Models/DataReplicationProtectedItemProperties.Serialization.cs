@@ -30,107 +30,107 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(PolicyName);
             writer.WritePropertyName("replicationExtensionName"u8);
             writer.WriteStringValue(ReplicationExtensionName);
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectionState))
+            if (options.Format != "W" && ProtectionState.HasValue)
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProtectionStateDescription))
+            if (options.Format != "W" && ProtectionStateDescription != null)
             {
                 writer.WritePropertyName("protectionStateDescription"u8);
                 writer.WriteStringValue(ProtectionStateDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestFailoverState))
+            if (options.Format != "W" && TestFailoverState.HasValue)
             {
                 writer.WritePropertyName("testFailoverState"u8);
                 writer.WriteStringValue(TestFailoverState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TestFailoverStateDescription))
+            if (options.Format != "W" && TestFailoverStateDescription != null)
             {
                 writer.WritePropertyName("testFailoverStateDescription"u8);
                 writer.WriteStringValue(TestFailoverStateDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResynchronizationState))
+            if (options.Format != "W" && ResynchronizationState.HasValue)
             {
                 writer.WritePropertyName("resynchronizationState"u8);
                 writer.WriteStringValue(ResynchronizationState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricObjectId))
+            if (options.Format != "W" && FabricObjectId != null)
             {
                 writer.WritePropertyName("fabricObjectId"u8);
                 writer.WriteStringValue(FabricObjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricObjectName))
+            if (options.Format != "W" && FabricObjectName != null)
             {
                 writer.WritePropertyName("fabricObjectName"u8);
                 writer.WriteStringValue(FabricObjectName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceFabricProviderId))
+            if (options.Format != "W" && SourceFabricProviderId != null)
             {
                 writer.WritePropertyName("sourceFabricProviderId"u8);
                 writer.WriteStringValue(SourceFabricProviderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetFabricProviderId))
+            if (options.Format != "W" && TargetFabricProviderId != null)
             {
                 writer.WritePropertyName("targetFabricProviderId"u8);
                 writer.WriteStringValue(TargetFabricProviderId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FabricId))
+            if (options.Format != "W" && FabricId != null)
             {
                 writer.WritePropertyName("fabricId"u8);
                 writer.WriteStringValue(FabricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetFabricId))
+            if (options.Format != "W" && TargetFabricId != null)
             {
                 writer.WritePropertyName("targetFabricId"u8);
                 writer.WriteStringValue(TargetFabricId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DraId))
+            if (options.Format != "W" && DraId != null)
             {
                 writer.WritePropertyName("draId"u8);
                 writer.WriteStringValue(DraId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetDraId))
+            if (options.Format != "W" && TargetDraId != null)
             {
                 writer.WritePropertyName("targetDraId"u8);
                 writer.WriteStringValue(TargetDraId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
+            if (options.Format != "W" && IsResyncRequired.HasValue)
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulPlannedFailoverOn))
+            if (options.Format != "W" && LastSuccessfulPlannedFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastSuccessfulPlannedFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulPlannedFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulUnplannedFailoverOn))
+            if (options.Format != "W" && LastSuccessfulUnplannedFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastSuccessfulUnplannedFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulUnplannedFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulTestFailoverOn))
+            if (options.Format != "W" && LastSuccessfulTestFailoverOn.HasValue)
             {
                 writer.WritePropertyName("lastSuccessfulTestFailoverTime"u8);
                 writer.WriteStringValue(LastSuccessfulTestFailoverOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentJob))
+            if (options.Format != "W" && CurrentJob != null)
             {
                 writer.WritePropertyName("currentJob"u8);
                 writer.WriteObjectValue(CurrentJob);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedJobs))
+            if (options.Format != "W" && !(AllowedJobs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedJobs"u8);
                 writer.WriteStartArray();
@@ -140,27 +140,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastFailedEnableProtectionJob))
+            if (options.Format != "W" && LastFailedEnableProtectionJob != null)
             {
                 writer.WritePropertyName("lastFailedEnableProtectionJob"u8);
                 writer.WriteObjectValue(LastFailedEnableProtectionJob);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastFailedPlannedFailoverJob))
+            if (options.Format != "W" && LastFailedPlannedFailoverJob != null)
             {
                 writer.WritePropertyName("lastFailedPlannedFailoverJob"u8);
                 writer.WriteObjectValue(LastFailedPlannedFailoverJob);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastTestFailoverJob))
+            if (options.Format != "W" && LastTestFailoverJob != null)
             {
                 writer.WritePropertyName("lastTestFailoverJob"u8);
                 writer.WriteObjectValue(LastTestFailoverJob);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationHealth))
+            if (options.Format != "W" && ReplicationHealth.HasValue)
             {
                 writer.WritePropertyName("replicationHealth"u8);
                 writer.WriteStringValue(ReplicationHealth.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -232,12 +232,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<DateTimeOffset> lastSuccessfulUnplannedFailoverTime = default;
             Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
             Optional<ProtectedItemJobProperties> currentJob = default;
-            Optional<IReadOnlyList<string>> allowedJobs = default;
+            IReadOnlyList<string> allowedJobs = default;
             Optional<ProtectedItemJobProperties> lastFailedEnableProtectionJob = default;
             Optional<ProtectedItemJobProperties> lastFailedPlannedFailoverJob = default;
             Optional<ProtectedItemJobProperties> lastTestFailoverJob = default;
             Optional<DataReplicationHealthStatus> replicationHealth = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             ProtectedItemModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    currentJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value);
+                    currentJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedJobs"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastFailedEnableProtectionJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value);
+                    lastFailedEnableProtectionJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastFailedPlannedFailoverJob"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastFailedPlannedFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value);
+                    lastFailedPlannedFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastTestFailoverJob"u8))
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    lastTestFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value);
+                    lastTestFailoverJob = ProtectedItemJobProperties.DeserializeProtectedItemJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replicationHealth"u8))
@@ -448,14 +448,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = ProtectedItemModelCustomProperties.DeserializeProtectedItemModelCustomProperties(property.Value);
+                    customProperties = ProtectedItemModelCustomProperties.DeserializeProtectedItemModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -464,7 +464,37 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationProtectedItemProperties(policyName, replicationExtensionName, correlationId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protectionState), protectionStateDescription.Value, Optional.ToNullable(testFailoverState), testFailoverStateDescription.Value, Optional.ToNullable(resynchronizationState), fabricObjectId.Value, fabricObjectName.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, fabricId.Value, targetFabricId.Value, draId.Value, targetDraId.Value, Optional.ToNullable(resyncRequired), Optional.ToNullable(lastSuccessfulPlannedFailoverTime), Optional.ToNullable(lastSuccessfulUnplannedFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentJob.Value, Optional.ToList(allowedJobs), lastFailedEnableProtectionJob.Value, lastFailedPlannedFailoverJob.Value, lastTestFailoverJob.Value, Optional.ToNullable(replicationHealth), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationProtectedItemProperties(
+                policyName,
+                replicationExtensionName,
+                correlationId.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(protectionState),
+                protectionStateDescription.Value,
+                Optional.ToNullable(testFailoverState),
+                testFailoverStateDescription.Value,
+                Optional.ToNullable(resynchronizationState),
+                fabricObjectId.Value,
+                fabricObjectName.Value,
+                sourceFabricProviderId.Value,
+                targetFabricProviderId.Value,
+                fabricId.Value,
+                targetFabricId.Value,
+                draId.Value,
+                targetDraId.Value,
+                Optional.ToNullable(resyncRequired),
+                Optional.ToNullable(lastSuccessfulPlannedFailoverTime),
+                Optional.ToNullable(lastSuccessfulUnplannedFailoverTime),
+                Optional.ToNullable(lastSuccessfulTestFailoverTime),
+                currentJob.Value,
+                allowedJobs ?? new ChangeTrackingList<string>(),
+                lastFailedEnableProtectionJob.Value,
+                lastFailedPlannedFailoverJob.Value,
+                lastTestFailoverJob.Value,
+                Optional.ToNullable(replicationHealth),
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)

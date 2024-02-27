@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ContainerServicePrivateEndpointConnectionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<ContainerServicePrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateEndpointConnectionData> array = new List<ContainerServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(item));
+                        array.Add(ContainerServicePrivateEndpointConnectionData.DeserializeContainerServicePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateEndpointConnectionListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ContainerServicePrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<ContainerServicePrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)

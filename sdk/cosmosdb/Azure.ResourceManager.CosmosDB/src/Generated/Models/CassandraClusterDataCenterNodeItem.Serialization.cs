@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(CassandraProcessStatus))
+            if (CassandraProcessStatus != null)
             {
                 writer.WritePropertyName("cassandraProcessStatus"u8);
                 writer.WriteStringValue(CassandraProcessStatus);
             }
-            if (Optional.IsDefined(Load))
+            if (Load != null)
             {
                 writer.WritePropertyName("load"u8);
                 writer.WriteStringValue(Load);
             }
-            if (Optional.IsCollectionDefined(Tokens))
+            if (!(Tokens is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokens"u8);
                 writer.WriteStartArray();
@@ -61,62 +61,62 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(HostId))
+            if (HostId.HasValue)
             {
                 writer.WritePropertyName("hostID"u8);
                 writer.WriteStringValue(HostId.Value);
             }
-            if (Optional.IsDefined(Rack))
+            if (Rack != null)
             {
                 writer.WritePropertyName("rack"u8);
                 writer.WriteStringValue(Rack);
             }
-            if (Optional.IsDefined(Timestamp))
+            if (Timestamp != null)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp);
             }
-            if (Optional.IsDefined(DiskUsedKB))
+            if (DiskUsedKB.HasValue)
             {
                 writer.WritePropertyName("diskUsedKB"u8);
                 writer.WriteNumberValue(DiskUsedKB.Value);
             }
-            if (Optional.IsDefined(DiskFreeKB))
+            if (DiskFreeKB.HasValue)
             {
                 writer.WritePropertyName("diskFreeKB"u8);
                 writer.WriteNumberValue(DiskFreeKB.Value);
             }
-            if (Optional.IsDefined(MemoryUsedKB))
+            if (MemoryUsedKB.HasValue)
             {
                 writer.WritePropertyName("memoryUsedKB"u8);
                 writer.WriteNumberValue(MemoryUsedKB.Value);
             }
-            if (Optional.IsDefined(MemoryBuffersAndCachedKB))
+            if (MemoryBuffersAndCachedKB.HasValue)
             {
                 writer.WritePropertyName("memoryBuffersAndCachedKB"u8);
                 writer.WriteNumberValue(MemoryBuffersAndCachedKB.Value);
             }
-            if (Optional.IsDefined(MemoryFreeKB))
+            if (MemoryFreeKB.HasValue)
             {
                 writer.WritePropertyName("memoryFreeKB"u8);
                 writer.WriteNumberValue(MemoryFreeKB.Value);
             }
-            if (Optional.IsDefined(MemoryTotalKB))
+            if (MemoryTotalKB.HasValue)
             {
                 writer.WritePropertyName("memoryTotalKB"u8);
                 writer.WriteNumberValue(MemoryTotalKB.Value);
             }
-            if (Optional.IsDefined(CpuUsage))
+            if (CpuUsage.HasValue)
             {
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteNumberValue(CpuUsage.Value);
             }
-            if (Optional.IsDefined(IsLatestModel))
+            if (IsLatestModel.HasValue)
             {
                 writer.WritePropertyName("isLatestModel"u8);
                 writer.WriteBooleanValue(IsLatestModel.Value);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> status = default;
             Optional<string> cassandraProcessStatus = default;
             Optional<string> load = default;
-            Optional<IReadOnlyList<string>> tokens = default;
+            IReadOnlyList<string> tokens = default;
             Optional<int> size = default;
             Optional<Guid> hostId = default;
             Optional<string> rack = default;
@@ -330,7 +330,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage), Optional.ToNullable(isLatestModel), serializedAdditionalRawData);
+            return new CassandraClusterDataCenterNodeItem(
+                address.Value,
+                Optional.ToNullable(state),
+                status.Value,
+                cassandraProcessStatus.Value,
+                load.Value,
+                tokens ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(size),
+                Optional.ToNullable(hostId),
+                rack.Value,
+                timestamp.Value,
+                Optional.ToNullable(diskUsedKB),
+                Optional.ToNullable(diskFreeKB),
+                Optional.ToNullable(memoryUsedKB),
+                Optional.ToNullable(memoryBuffersAndCachedKB),
+                Optional.ToNullable(memoryFreeKB),
+                Optional.ToNullable(memoryTotalKB),
+                Optional.ToNullable(cpuUsage),
+                Optional.ToNullable(isLatestModel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)

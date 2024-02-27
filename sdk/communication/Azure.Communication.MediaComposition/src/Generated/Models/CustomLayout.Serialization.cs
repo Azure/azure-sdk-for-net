@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Layers))
+            if (!(Layers is ChangeTrackingDictionary<string, LayoutLayer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("layers"u8);
                 writer.WriteStartObject();
@@ -38,17 +38,17 @@ namespace Azure.Communication.MediaComposition
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
+            if (Resolution != null)
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(PlaceholderImageUri))
+            if (PlaceholderImageUri != null)
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (Optional.IsDefined(ScalingMode))
+            if (ScalingMode.HasValue)
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());
@@ -62,7 +62,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<IDictionary<string, LayoutLayer>> layers = default;
+            IDictionary<string, LayoutLayer> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
             Optional<LayoutResolution> resolution = default;
@@ -123,7 +123,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), Optional.ToDictionary(layers), inputGroups);
+            return new CustomLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
+                inputGroups);
         }
     }
 }

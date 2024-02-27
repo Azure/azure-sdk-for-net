@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MembershipType))
+            if (MembershipType.HasValue)
             {
                 writer.WritePropertyName("membershipType"u8);
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TargetType.ToString());
-            if (Optional.IsDefined(ServerName))
+            if (ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(ElasticPoolName))
+            if (ElasticPoolName != null)
             {
                 writer.WritePropertyName("elasticPoolName"u8);
                 writer.WriteStringValue(ElasticPoolName);
             }
-            if (Optional.IsDefined(ShardMapName))
+            if (ShardMapName != null)
             {
                 writer.WritePropertyName("shardMapName"u8);
                 writer.WriteStringValue(ShardMapName);
             }
-            if (Optional.IsDefined(RefreshCredential))
+            if (RefreshCredential != null)
             {
                 writer.WritePropertyName("refreshCredential"u8);
                 writer.WriteStringValue(RefreshCredential);
@@ -152,7 +152,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value, serializedAdditionalRawData);
+            return new JobTarget(
+                Optional.ToNullable(membershipType),
+                type,
+                serverName.Value,
+                databaseName.Value,
+                elasticPoolName.Value,
+                shardMapName.Value,
+                refreshCredential.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)

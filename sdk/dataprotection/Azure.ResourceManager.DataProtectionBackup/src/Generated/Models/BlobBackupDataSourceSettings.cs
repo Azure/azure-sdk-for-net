@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containersList"/> is null. </exception>
         public BlobBackupDataSourceSettings(IEnumerable<string> containersList)
         {
-            Argument.AssertNotNull(containersList, nameof(containersList));
+            if (containersList == null)
+            {
+                throw new ArgumentNullException(nameof(containersList));
+            }
 
             ContainersList = containersList.ToList();
             ObjectType = "BlobBackupDatasourceParameters";

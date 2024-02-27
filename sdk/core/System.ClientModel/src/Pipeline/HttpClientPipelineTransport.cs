@@ -9,22 +9,37 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// An implementation of <see cref="PipelineTransport"/> that uses a
+/// <see cref="HttpClient"/> to send and receive HTTP requests and responses.
+/// </summary>
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
-    private static readonly HttpClient SharedDefaultClient = CreateDefaultClient();
-    private static readonly HttpClientPipelineTransport _shared = new();
+    private static readonly HttpClient _sharedDefaultClient = CreateDefaultClient();
 
     /// <summary>
-    /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
+    /// A default instance of <see cref="HttpClientPipelineTransport"/> that can
+    /// be shared across pipelines and clients.
     /// </summary>
-    public static HttpClientPipelineTransport Shared => _shared;
+    public static HttpClientPipelineTransport Shared { get; } = new();
 
     private readonly HttpClient _httpClient;
 
-    public HttpClientPipelineTransport() : this(SharedDefaultClient)
+    /// <summary>
+    /// Create a new instance of <see cref="HttpClientPipelineTransport"/> that
+    /// uses a shared default instance of <see cref="HttpClient"/>.
+    /// </summary>
+    public HttpClientPipelineTransport() : this(_sharedDefaultClient)
     {
     }
 
+    /// <summary>
+    /// Create a new instance of <see cref="HttpClientPipelineTransport"/> that
+    /// uses the provided <see cref="HttpClient"/>.
+    /// </summary>
+    /// <param name="client">The <see cref="HttpClient"/> that this transport
+    /// instance will use to send and receive HTTP requests and responses.
+    /// </param>
     public HttpClientPipelineTransport(HttpClient client)
     {
         Argument.AssertNotNull(client, nameof(client));
@@ -54,6 +69,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         };
     }
 
+    /// <inheritdoc/>
     protected override PipelineMessage CreateMessageCore()
     {
         PipelineRequest request = new HttpPipelineRequest();
@@ -62,6 +78,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         return message;
     }
 
+    /// <inheritdoc/>
     protected sealed override void ProcessCore(PipelineMessage message)
     {
 #if NET6_0_OR_GREATER
@@ -81,6 +98,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 #endif
     }
 
+    /// <inheritdoc/>
     protected sealed override async ValueTask ProcessCoreAsync(PipelineMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
@@ -147,7 +165,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
             throw new ClientResultException(e.Message, response: default, e);
         }
 
-        message.Response = new HttpPipelineResponse(responseMessage);
+        message.Response = new HttpClientTransportResponse(responseMessage);
 
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
@@ -164,27 +182,52 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     }
 
     /// <summary>
-    /// TBD. Needed for inheritdoc.
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="HttpClientPipelineTransport"/> logic.  It is called from
+    /// <see cref="ProcessCore(PipelineMessage)"/> prior to sending the HTTP
+    /// request.
     /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpRequest"></param>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineRequest"/> resulting from the processing of the
+    /// policies in the <see cref="ClientPipeline"/> containing this transport.
+    /// </param>
+    /// <param name="httpRequest">The <see cref="HttpRequestMessage"/> created
+    /// by the transport that will be sent to the service using this transport's
+    /// <see cref="HttpClient"/> instance.</param>
     protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
 
     /// <summary>
-    /// TBD.  Needed for inheritdoc.
+    /// A method that can be overridden by derived types to extend the default
+    /// <see cref="HttpClientPipelineTransport"/> logic.  It is called from
+    /// <see cref="ProcessCore(PipelineMessage)"/> after the transport has
+    /// created the <see cref="PipelineResponse"/> and set it on
+    /// <see cref="PipelineMessage.Response"/>.
     /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpResponse"></param>
+    /// <param name="message">The <see cref="PipelineMessage"/> containing the
+    /// <see cref="PipelineResponse"/> created by the transport.</param>
+    /// <param name="httpResponse">The <see cref="HttpResponseMessage"/>
+    /// returned by from the call to Send on <see cref="HttpClient"/> that the
+    /// transport used to create <see cref="PipelineMessage.Response"/>.
+    /// </param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
 
     #region IDisposable
 
+    /// <inheritdoc/>
     public void Dispose()
     {
         Dispose(true);
         GC.SuppressFinalize(this);
     }
 
+    /// <summary>
+    /// Releases the unmanaged resources used by the
+    /// <see cref="HttpClientPipelineTransport"/> and optionally disposes of
+    /// the managed resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and
+    /// unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         // We don't dispose the Shared static transport instance, and if the

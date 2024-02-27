@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HealthBot.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(BotManagementPortalLink))
+            if (options.Format != "W" && BotManagementPortalLink != null)
             {
                 writer.WritePropertyName("botManagementPortalLink"u8);
                 writer.WriteStringValue(BotManagementPortalLink.AbsoluteUri);
             }
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HealthBot.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value);
+                    keyVaultProperties = HealthBotKeyVaultProperties.DeserializeHealthBotKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

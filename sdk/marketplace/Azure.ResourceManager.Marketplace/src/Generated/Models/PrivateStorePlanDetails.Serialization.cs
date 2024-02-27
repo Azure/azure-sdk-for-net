@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
+            if (PlanId != null)
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestDate))
+            if (options.Format != "W" && RequestDate != null)
             {
                 writer.WritePropertyName("requestDate"u8);
 #if NET6_0_OR_GREATER
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Justification))
+            if (Justification != null)
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(SubscriptionName))
+            if (SubscriptionName != null)
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value, serializedAdditionalRawData);
+            return new PrivateStorePlanDetails(
+                planId.Value,
+                Optional.ToNullable(status),
+                requestDate.Value,
+                justification.Value,
+                subscriptionId.Value,
+                subscriptionName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStorePlanDetails>.Write(ModelReaderWriterOptions options)

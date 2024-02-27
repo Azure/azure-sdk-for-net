@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         public ManagedClusterServicePrincipalProfile(string clientId)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
+            if (clientId == null)
+            {
+                throw new ArgumentNullException(nameof(clientId));
+            }
 
             ClientId = clientId;
         }

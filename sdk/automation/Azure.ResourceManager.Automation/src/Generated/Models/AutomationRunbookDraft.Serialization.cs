@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsInEditMode))
+            if (IsInEditMode.HasValue)
             {
                 writer.WritePropertyName("inEdit"u8);
                 writer.WriteBooleanValue(IsInEditMode.Value);
             }
-            if (Optional.IsDefined(DraftContentLink))
+            if (DraftContentLink != null)
             {
                 writer.WritePropertyName("draftContentLink"u8);
                 writer.WriteObjectValue(DraftContentLink);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, RunbookParameterDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(OutputTypes))
+            if (!(OutputTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<AutomationContentLink> draftContentLink = default;
             Optional<DateTimeOffset> creationTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Optional<IList<string>> outputTypes = default;
+            IDictionary<string, RunbookParameterDefinition> parameters = default;
+            IList<string> outputTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value);
+                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Automation.Models
                     Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value));
+                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookDraft(Optional.ToNullable(inEdit), draftContentLink.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(parameters), Optional.ToList(outputTypes), serializedAdditionalRawData);
+            return new AutomationRunbookDraft(
+                Optional.ToNullable(inEdit),
+                draftContentLink.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
+                outputTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRunbookDraft>.Write(ModelReaderWriterOptions options)

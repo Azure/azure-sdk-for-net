@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Rights))
+            if (!(Rights is ChangeTrackingList<AuthorizationRuleAccessRight> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rights"u8);
                 writer.WriteStartArray();
@@ -36,42 +36,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            if (options.Format != "W" && KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClaimType))
+            if (options.Format != "W" && ClaimType != null)
             {
                 writer.WritePropertyName("claimType"u8);
                 writer.WriteStringValue(ClaimType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClaimValue))
+            if (options.Format != "W" && ClaimValue != null)
             {
                 writer.WritePropertyName("claimValue"u8);
                 writer.WriteStringValue(ClaimValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Revision))
+            if (options.Format != "W" && Revision.HasValue)
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteNumberValue(Revision.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             {
                 return null;
             }
-            Optional<IList<AuthorizationRuleAccessRight>> rights = default;
+            IList<AuthorizationRuleAccessRight> rights = default;
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> keyName = default;
@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessAuthorizationRuleProperties(Optional.ToList(rights), primaryKey.Value, secondaryKey.Value, keyName.Value, claimType.Value, claimValue.Value, Optional.ToNullable(modifiedTime), Optional.ToNullable(createdTime), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new SharedAccessAuthorizationRuleProperties(
+                rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                claimType.Value,
+                claimValue.Value,
+                Optional.ToNullable(modifiedTime),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessAuthorizationRuleProperties>.Write(ModelReaderWriterOptions options)

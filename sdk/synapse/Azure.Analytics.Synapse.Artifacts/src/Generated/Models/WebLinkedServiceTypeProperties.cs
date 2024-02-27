@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,7 +21,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public WebLinkedServiceTypeProperties(object url)
         {
-            Argument.AssertNotNull(url, nameof(url));
+            if (url == null)
+            {
+                throw new ArgumentNullException(nameof(url));
+            }
 
             Url = url;
         }

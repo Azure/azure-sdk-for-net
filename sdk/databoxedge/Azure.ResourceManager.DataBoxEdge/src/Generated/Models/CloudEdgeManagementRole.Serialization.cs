@@ -44,24 +44,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LocalManagementStatus))
+            if (options.Format != "W" && LocalManagementStatus.HasValue)
             {
                 writer.WritePropertyName("localManagementStatus"u8);
                 writer.WriteStringValue(LocalManagementStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
+            if (options.Format != "W" && EdgeProfile != null)
             {
                 writer.WritePropertyName("edgeProfile"u8);
                 writer.WriteObjectValue(EdgeProfile);
             }
-            if (Optional.IsDefined(RoleStatus))
+            if (RoleStatus.HasValue)
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value);
+                            edgeProfile = EdgeProfile.DeserializeEdgeProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))
@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(localManagementStatus), edgeProfile.Value, Optional.ToNullable(roleStatus));
+            return new CloudEdgeManagementRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(localManagementStatus),
+                edgeProfile.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<CloudEdgeManagementRole>.Write(ModelReaderWriterOptions options)

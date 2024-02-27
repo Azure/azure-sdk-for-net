@@ -28,47 +28,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (ResourceUri != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Credentials != null)
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials);
             }
-            if (Optional.IsDefined(Proxy))
+            if (Proxy != null)
             {
                 writer.WritePropertyName("proxy"u8);
                 writer.WriteObjectValue(Proxy);
             }
-            if (Optional.IsDefined(Tls))
+            if (Tls != null)
             {
                 writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            properties = BackendProperties.DeserializeBackendProperties(property0.Value);
+                            properties = BackendProperties.DeserializeBackendProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value);
+                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("proxy"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value);
+                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tls"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value);
+                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("url"u8))
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementBackendPatch(title.Value, description.Value, resourceId.Value, properties.Value, credentials.Value, proxy.Value, tls.Value, uri.Value, Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new ApiManagementBackendPatch(
+                title.Value,
+                description.Value,
+                resourceId.Value,
+                properties.Value,
+                credentials.Value,
+                proxy.Value,
+                tls.Value,
+                uri.Value,
+                Optional.ToNullable(protocol),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementBackendPatch>.Write(ModelReaderWriterOptions options)

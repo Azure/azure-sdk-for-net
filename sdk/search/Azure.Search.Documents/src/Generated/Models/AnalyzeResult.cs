@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tokens"/> is null. </exception>
         internal AnalyzeResult(IEnumerable<AnalyzedTokenInfo> tokens)
         {
-            Argument.AssertNotNull(tokens, nameof(tokens));
+            if (tokens == null)
+            {
+                throw new ArgumentNullException(nameof(tokens));
+            }
 
             Tokens = tokens.ToList();
         }

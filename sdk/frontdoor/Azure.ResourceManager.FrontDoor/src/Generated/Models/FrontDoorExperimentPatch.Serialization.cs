@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<FrontDoorExperimentState> enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentPatch(Optional.ToDictionary(tags), description.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorExperimentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentPatch>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Caller))
+            if (Caller != null)
             {
                 writer.WritePropertyName("caller"u8);
                 writer.WriteStringValue(Caller);
             }
-            if (Optional.IsCollectionDefined(Operations))
+            if (!(Operations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetObjects))
+            if (!(TargetObjects is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetObjects"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(InheritableSettings))
+            if (!(InheritableSettings is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("inheritableSettings"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(EnforcedSettings))
+            if (!(EnforcedSettings is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("enforcedSettings"u8);
                 writer.WriteStartArray();
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             Optional<string> caller = default;
-            Optional<IList<string>> operations = default;
+            IList<string> operations = default;
             Optional<RoleManagementAssignmentLevel> level = default;
-            Optional<IList<string>> targetObjects = default;
-            Optional<IList<string>> inheritableSettings = default;
-            Optional<IList<string>> enforcedSettings = default;
+            IList<string> targetObjects = default;
+            IList<string> inheritableSettings = default;
+            IList<string> enforcedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings), serializedAdditionalRawData);
+            return new RoleManagementPolicyRuleTarget(
+                caller.Value,
+                operations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(level),
+                targetObjects ?? new ChangeTrackingList<string>(),
+                inheritableSettings ?? new ChangeTrackingList<string>(),
+                enforcedSettings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRuleTarget>.Write(ModelReaderWriterOptions options)

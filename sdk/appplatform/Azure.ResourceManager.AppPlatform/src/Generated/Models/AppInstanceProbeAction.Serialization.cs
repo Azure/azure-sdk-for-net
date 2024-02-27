@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element);
-                    case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element);
-                    case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element);
+                    case "ExecAction": return AppInstanceExecAction.DeserializeAppInstanceExecAction(element, options);
+                    case "HTTPGetAction": return AppInstanceHttpGetAction.DeserializeAppInstanceHttpGetAction(element, options);
+                    case "TCPSocketAction": return AppInstanceTcpSocketAction.DeserializeAppInstanceTcpSocketAction(element, options);
                 }
             }
-            return UnknownProbeAction.DeserializeUnknownProbeAction(element);
+            return UnknownProbeAction.DeserializeUnknownProbeAction(element, options);
         }
 
         BinaryData IPersistableModel<AppInstanceProbeAction>.Write(ModelReaderWriterOptions options)

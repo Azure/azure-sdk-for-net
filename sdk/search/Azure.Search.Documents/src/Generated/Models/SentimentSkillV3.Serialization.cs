@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultLanguageCode))
+            if (DefaultLanguageCode != null)
             {
                 if (DefaultLanguageCode != null)
                 {
@@ -28,12 +28,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("defaultLanguageCode");
                 }
             }
-            if (Optional.IsDefined(IncludeOpinionMining))
+            if (IncludeOpinionMining.HasValue)
             {
                 writer.WritePropertyName("includeOpinionMining"u8);
                 writer.WriteBooleanValue(IncludeOpinionMining.Value);
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (ModelVersion != null)
             {
                 if (ModelVersion != null)
                 {
@@ -47,17 +47,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -166,7 +166,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SentimentSkillV3(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultLanguageCode.Value, Optional.ToNullable(includeOpinionMining), modelVersion.Value);
+            return new SentimentSkillV3(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultLanguageCode.Value,
+                Optional.ToNullable(includeOpinionMining),
+                modelVersion.Value);
         }
     }
 }

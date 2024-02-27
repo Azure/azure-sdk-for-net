@@ -14,6 +14,8 @@ on:
     - cron: '30 4,10,16,22 * * *'
     # Lock closed issues, every 6 hours at 05:30 AM, 11:30 AM, 05:30 PM and 11:30 PM - LockClosedIssues
     - cron: '30 5,11,17,23 * * *'
+    # Enforce max life of issues, every Monday at 10:00 AM - EnforceMaxLifeOfIssues
+    - cron: '0 10 * * MON'
 # This removes all unnecessary permissions, the ones needed will be set below.
 # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
 permissions: {}
@@ -34,7 +36,7 @@ jobs:
         run: >
           dotnet tool install
           Azure.Sdk.Tools.GitHubEventProcessor
-          --version 1.0.0-dev.20231114.3
+          --version 1.0.0-dev.20240227.2
           --add-source https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json
           --global
         shell: bash
@@ -123,6 +125,15 @@ jobs:
           ${{ toJson(github.event) }}
           EOF
           github-event-processor ${{ github.event_name }} payload.json LockClosedIssues
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enforce Max Life of Issues Scheduled Event
+        if: github.event.schedule == '0 10 * * MON'
+        run: |
+          echo $GITHUB_PAYLOAD > payload.json
+          github-event-processor ${{ github.event_name }} payload.json EnforceMaxLifeOfIssues
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

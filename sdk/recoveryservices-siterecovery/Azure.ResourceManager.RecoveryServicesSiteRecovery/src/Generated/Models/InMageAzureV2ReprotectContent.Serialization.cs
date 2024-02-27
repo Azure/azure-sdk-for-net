@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MasterTargetId))
+            if (MasterTargetId != null)
             {
                 writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
-            if (Optional.IsDefined(ProcessServerId))
+            if (ProcessServerId.HasValue)
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LogStorageAccountId))
+            if (LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> runAsAccountId = default;
             Optional<ResourceIdentifier> policyId = default;
             Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<IList<string>> disksToInclude = default;
+            IList<string> disksToInclude = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ReprotectContent(instanceType, serializedAdditionalRawData, masterTargetId.Value, Optional.ToNullable(processServerId), storageAccountId.Value, runAsAccountId.Value, policyId.Value, logStorageAccountId.Value, Optional.ToList(disksToInclude));
+            return new InMageAzureV2ReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId.Value,
+                Optional.ToNullable(processServerId),
+                storageAccountId.Value,
+                runAsAccountId.Value,
+                policyId.Value,
+                logStorageAccountId.Value,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2ReprotectContent>.Write(ModelReaderWriterOptions options)

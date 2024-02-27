@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsExpirationRequired))
+            if (IsExpirationRequired.HasValue)
             {
                 writer.WritePropertyName("isExpirationRequired"u8);
                 writer.WriteBooleanValue(IsExpirationRequired.Value);
             }
-            if (Optional.IsDefined(MaximumDuration))
+            if (MaximumDuration.HasValue)
             {
                 writer.WritePropertyName("maximumDuration"u8);
                 writer.WriteStringValue(MaximumDuration.Value, "P");
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("ruleType"u8);
             writer.WriteStringValue(RuleType.ToString());
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteObjectValue(Target);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyExpirationRule(id.Value, ruleType, target.Value, serializedAdditionalRawData, Optional.ToNullable(isExpirationRequired), Optional.ToNullable(maximumDuration));
+            return new RoleManagementPolicyExpirationRule(
+                id.Value,
+                ruleType,
+                target.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(isExpirationRequired),
+                Optional.ToNullable(maximumDuration));
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyExpirationRule>.Write(ModelReaderWriterOptions options)

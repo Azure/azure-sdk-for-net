@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtocolType))
+            if (ProtocolType.HasValue)
             {
                 writer.WritePropertyName("protocolType"u8);
                 writer.WriteStringValue(ProtocolType.Value.ToString());
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption.HasValue)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
             }
-            if (Optional.IsDefined(EncryptionProperties))
+            if (EncryptionProperties != null)
             {
                 writer.WritePropertyName("encryptionProperties"u8);
                 writer.WriteObjectValue(EncryptionProperties);
             }
-            if (Optional.IsDefined(NetworkAcls))
+            if (NetworkAcls != null)
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value);
+                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value);
+                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                     }
@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeGroupPatch(identity, Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, serializedAdditionalRawData);
+            return new ElasticSanVolumeGroupPatch(
+                identity,
+                Optional.ToNullable(protocolType),
+                Optional.ToNullable(encryption),
+                encryptionProperties.Value,
+                networkAcls.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeGroupPatch>.Write(ModelReaderWriterOptions options)

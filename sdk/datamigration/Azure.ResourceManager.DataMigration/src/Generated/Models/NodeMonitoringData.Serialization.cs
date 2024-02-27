@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalProperties))
+            if (options.Format != "W" && !(AdditionalProperties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalProperties"u8);
                 writer.WriteStartObject();
@@ -49,42 +49,42 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(NodeName))
+            if (options.Format != "W" && NodeName != null)
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableMemoryInMB))
+            if (options.Format != "W" && AvailableMemoryInMB.HasValue)
             {
                 writer.WritePropertyName("availableMemoryInMB"u8);
                 writer.WriteNumberValue(AvailableMemoryInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuUtilization))
+            if (options.Format != "W" && CpuUtilization.HasValue)
             {
                 writer.WritePropertyName("cpuUtilization"u8);
                 writer.WriteNumberValue(CpuUtilization.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
+            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsRunning))
+            if (options.Format != "W" && ConcurrentJobsRunning.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsRunning"u8);
                 writer.WriteNumberValue(ConcurrentJobsRunning.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
+            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SentBytes))
+            if (options.Format != "W" && SentBytes.HasValue)
             {
                 writer.WritePropertyName("sentBytes"u8);
                 writer.WriteNumberValue(SentBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReceivedBytes))
+            if (options.Format != "W" && ReceivedBytes.HasValue)
             {
                 writer.WritePropertyName("receivedBytes"u8);
                 writer.WriteNumberValue(ReceivedBytes.Value);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalProperties = default;
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Optional<string> nodeName = default;
             Optional<int> availableMemoryInMB = default;
             Optional<int> cpuUtilization = default;
@@ -235,7 +235,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NodeMonitoringData(Optional.ToDictionary(additionalProperties), nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), serializedAdditionalRawData);
+            return new NodeMonitoringData(
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nodeName.Value,
+                Optional.ToNullable(availableMemoryInMB),
+                Optional.ToNullable(cpuUtilization),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(concurrentJobsRunning),
+                Optional.ToNullable(maxConcurrentJobs),
+                Optional.ToNullable(sentBytes),
+                Optional.ToNullable(receivedBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NodeMonitoringData>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LinkableEnvironmentResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LinkableEnvironmentResult>> value = default;
+            IReadOnlyList<LinkableEnvironmentResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<LinkableEnvironmentResult> array = new List<LinkableEnvironmentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item));
+                        array.Add(LinkableEnvironmentResult.DeserializeLinkableEnvironmentResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkableEnvironmentListResponse(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LinkableEnvironmentListResponse(value ?? new ChangeTrackingList<LinkableEnvironmentResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkableEnvironmentListResponse>.Write(ModelReaderWriterOptions options)

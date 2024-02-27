@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -57,13 +56,34 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageConnectionSettings"/>, <paramref name="acknowledgementConnectionSettings"/>, <paramref name="mdnSettings"/>, <paramref name="securitySettings"/>, <paramref name="validationSettings"/>, <paramref name="envelopeSettings"/> or <paramref name="errorSettings"/> is null. </exception>
         public AS2ProtocolSettings(AS2MessageConnectionSettings messageConnectionSettings, AS2AcknowledgementConnectionSettings acknowledgementConnectionSettings, AS2MdnSettings mdnSettings, AS2SecuritySettings securitySettings, AS2ValidationSettings validationSettings, AS2EnvelopeSettings envelopeSettings, AS2ErrorSettings errorSettings)
         {
-            Argument.AssertNotNull(messageConnectionSettings, nameof(messageConnectionSettings));
-            Argument.AssertNotNull(acknowledgementConnectionSettings, nameof(acknowledgementConnectionSettings));
-            Argument.AssertNotNull(mdnSettings, nameof(mdnSettings));
-            Argument.AssertNotNull(securitySettings, nameof(securitySettings));
-            Argument.AssertNotNull(validationSettings, nameof(validationSettings));
-            Argument.AssertNotNull(envelopeSettings, nameof(envelopeSettings));
-            Argument.AssertNotNull(errorSettings, nameof(errorSettings));
+            if (messageConnectionSettings == null)
+            {
+                throw new ArgumentNullException(nameof(messageConnectionSettings));
+            }
+            if (acknowledgementConnectionSettings == null)
+            {
+                throw new ArgumentNullException(nameof(acknowledgementConnectionSettings));
+            }
+            if (mdnSettings == null)
+            {
+                throw new ArgumentNullException(nameof(mdnSettings));
+            }
+            if (securitySettings == null)
+            {
+                throw new ArgumentNullException(nameof(securitySettings));
+            }
+            if (validationSettings == null)
+            {
+                throw new ArgumentNullException(nameof(validationSettings));
+            }
+            if (envelopeSettings == null)
+            {
+                throw new ArgumentNullException(nameof(envelopeSettings));
+            }
+            if (errorSettings == null)
+            {
+                throw new ArgumentNullException(nameof(errorSettings));
+            }
 
             MessageConnectionSettings = messageConnectionSettings;
             AcknowledgementConnectionSettings = acknowledgementConnectionSettings;

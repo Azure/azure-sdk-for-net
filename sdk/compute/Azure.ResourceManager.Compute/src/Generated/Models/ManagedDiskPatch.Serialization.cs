@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,109 +37,109 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(EncryptionSettingsGroup))
+            if (EncryptionSettingsGroup != null)
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
             }
-            if (Optional.IsDefined(DiskIopsReadWrite))
+            if (DiskIopsReadWrite.HasValue)
             {
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadWrite))
+            if (DiskMBpsReadWrite.HasValue)
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
                 writer.WriteNumberValue(DiskMBpsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskIopsReadOnly))
+            if (DiskIopsReadOnly.HasValue)
             {
                 writer.WritePropertyName("diskIOPSReadOnly"u8);
                 writer.WriteNumberValue(DiskIopsReadOnly.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadOnly))
+            if (DiskMBpsReadOnly.HasValue)
             {
                 writer.WritePropertyName("diskMBpsReadOnly"u8);
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
-            if (Optional.IsDefined(MaxShares))
+            if (MaxShares.HasValue)
             {
                 writer.WritePropertyName("maxShares"u8);
                 writer.WriteNumberValue(MaxShares.Value);
             }
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(NetworkAccessPolicy))
+            if (NetworkAccessPolicy.HasValue)
             {
                 writer.WritePropertyName("networkAccessPolicy"u8);
                 writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(DiskAccessId))
+            if (DiskAccessId != null)
             {
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(BurstingEnabled))
+            if (BurstingEnabled.HasValue)
             {
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
             }
-            if (Optional.IsDefined(PurchasePlan))
+            if (PurchasePlan != null)
             {
                 writer.WritePropertyName("purchasePlan"u8);
                 writer.WriteObjectValue(PurchasePlan);
             }
-            if (Optional.IsDefined(SupportedCapabilities))
+            if (SupportedCapabilities != null)
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
                 writer.WriteObjectValue(SupportedCapabilities);
             }
-            if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
+            if (options.Format != "W" && PropertyUpdatesInProgress != null)
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
                 writer.WriteObjectValue(PropertyUpdatesInProgress);
             }
-            if (Optional.IsDefined(SupportsHibernation))
+            if (SupportsHibernation.HasValue)
             {
                 writer.WritePropertyName("supportsHibernation"u8);
                 writer.WriteBooleanValue(SupportsHibernation.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(DataAccessAuthMode))
+            if (DataAccessAuthMode.HasValue)
             {
                 writer.WritePropertyName("dataAccessAuthMode"u8);
                 writer.WriteStringValue(DataAccessAuthMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
+            if (IsOptimizedForFrequentAttach.HasValue)
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<DiskSku> sku = default;
             Optional<SupportedOperatingSystemType> osType = default;
             Optional<int> diskSizeGB = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = DiskSku.DeserializeDiskSku(property.Value);
+                    sku = DiskSku.DeserializeDiskSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value);
+                            encryptionSettingsGroup = EncryptionSettingsGroup.DeserializeEncryptionSettingsGroup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("diskIOPSReadWrite"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkAccessPolicy"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
+                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportedCapabilities"u8))
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
+                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("propertyUpdatesInProgress"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value);
+                            propertyUpdatesInProgress = PropertyUpdatesInProgress.DeserializePropertyUpdatesInProgress(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportsHibernation"u8))
@@ -426,7 +426,30 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDiskPatch(Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(maxShares), encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, tier.Value, Optional.ToNullable(burstingEnabled), purchasePlan.Value, supportedCapabilities.Value, propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), serializedAdditionalRawData);
+            return new ManagedDiskPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(diskSizeGB),
+                encryptionSettingsGroup.Value,
+                Optional.ToNullable(diskIOPSReadWrite),
+                Optional.ToNullable(diskMBpsReadWrite),
+                Optional.ToNullable(diskIOPSReadOnly),
+                Optional.ToNullable(diskMBpsReadOnly),
+                Optional.ToNullable(maxShares),
+                encryption.Value,
+                Optional.ToNullable(networkAccessPolicy),
+                diskAccessId.Value,
+                tier.Value,
+                Optional.ToNullable(burstingEnabled),
+                purchasePlan.Value,
+                supportedCapabilities.Value,
+                propertyUpdatesInProgress.Value,
+                Optional.ToNullable(supportsHibernation),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(dataAccessAuthMode),
+                Optional.ToNullable(optimizedForFrequentAttach),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDiskPatch>.Write(ModelReaderWriterOptions options)

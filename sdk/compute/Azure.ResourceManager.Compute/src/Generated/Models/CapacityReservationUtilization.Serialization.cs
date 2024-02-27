@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CurrentCapacity))
+            if (options.Format != "W" && CurrentCapacity.HasValue)
             {
                 writer.WritePropertyName("currentCapacity"u8);
                 writer.WriteNumberValue(CurrentCapacity.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAllocated))
+            if (options.Format != "W" && !(VirtualMachinesAllocated is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<int> currentCapacity = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAllocated = default;
+            IReadOnlyList<SubResource> virtualMachinesAllocated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), Optional.ToList(virtualMachinesAllocated), serializedAdditionalRawData);
+            return new CapacityReservationUtilization(Optional.ToNullable(currentCapacity), virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapacityReservationUtilization>.Write(ModelReaderWriterOptions options)

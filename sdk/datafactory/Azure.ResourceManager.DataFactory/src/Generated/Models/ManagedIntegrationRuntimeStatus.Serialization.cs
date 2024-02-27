@@ -28,24 +28,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
+            if (options.Format != "W" && !(Nodes is ChangeTrackingList<ManagedIntegrationRuntimeNode> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OtherErrors))
+            if (options.Format != "W" && !(OtherErrors is ChangeTrackingList<ManagedIntegrationRuntimeError> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("otherErrors"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastOperation))
+            if (options.Format != "W" && LastOperation != null)
             {
                 writer.WritePropertyName("lastOperation"u8);
                 writer.WriteObjectValue(LastOperation);
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
             Optional<DateTimeOffset> createTime = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeNode>> nodes = default;
-            Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> otherErrors = default;
+            IReadOnlyList<ManagedIntegrationRuntimeNode> nodes = default;
+            IReadOnlyList<ManagedIntegrationRuntimeError> otherErrors = default;
             Optional<ManagedIntegrationRuntimeOperationResult> lastOperation = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeNode> array = new List<ManagedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item));
+                                array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item, options));
                             }
                             nodes = array;
                             continue;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                                array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item, options));
                             }
                             otherErrors = array;
                             continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            lastOperation = ManagedIntegrationRuntimeOperationResult.DeserializeManagedIntegrationRuntimeOperationResult(property0.Value);
+                            lastOperation = ManagedIntegrationRuntimeOperationResult.DeserializeManagedIntegrationRuntimeOperationResult(property0.Value, options);
                             continue;
                         }
                     }
@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToList(nodes), Optional.ToList(otherErrors), lastOperation.Value);
+            return new ManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(),
+                lastOperation.Value);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

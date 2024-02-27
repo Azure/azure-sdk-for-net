@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataTransferJobProperties.DeserializeDataTransferJobProperties(property.Value);
+                    properties = DataTransferJobProperties.DeserializeDataTransferJobProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobGetResultCreateOrUpdateContent(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DataTransferJobGetResultCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobGetResultCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

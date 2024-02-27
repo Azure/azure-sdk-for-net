@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifact(document.RootElement, options);
+            return DeserializeArtifactData(document.RootElement, options);
         }
 
         internal static UnknownArtifact DeserializeUnknownArtifact(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArtifact(document.RootElement, options);
+                        return DeserializeArtifactData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArtifactData)} does not support '{options.Format}' format.");

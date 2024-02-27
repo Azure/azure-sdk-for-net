@@ -44,39 +44,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostPlatform))
+            if (HostPlatform.HasValue)
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            if (options.Format != "W" && HostPlatformType.HasValue)
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (Optional.IsDefined(KubernetesClusterInfo))
+            if (KubernetesClusterInfo != null)
             {
                 writer.WritePropertyName("kubernetesClusterInfo"u8);
                 writer.WriteObjectValue(KubernetesClusterInfo);
             }
-            if (Optional.IsDefined(KubernetesRoleResources))
+            if (KubernetesRoleResources != null)
             {
                 writer.WritePropertyName("kubernetesRoleResources"u8);
                 writer.WriteObjectValue(KubernetesRoleResources);
             }
-            if (Optional.IsDefined(RoleStatus))
+            if (RoleStatus.HasValue)
             {
                 writer.WritePropertyName("roleStatus"u8);
                 writer.WriteStringValue(RoleStatus.Value.ToString());
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value);
+                            kubernetesClusterInfo = EdgeKubernetesClusterInfo.DeserializeEdgeKubernetesClusterInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kubernetesRoleResources"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value);
+                            kubernetesRoleResources = EdgeKubernetesRoleResources.DeserializeEdgeKubernetesRoleResources(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("roleStatus"u8))
@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
+            return new EdgeKubernetesRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(hostPlatform),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(hostPlatformType),
+                kubernetesClusterInfo.Value,
+                kubernetesRoleResources.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRole>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanonicalProfileId))
+            if (CanonicalProfileId.HasValue)
             {
                 writer.WritePropertyName("canonicalProfileId"u8);
                 writer.WriteNumberValue(CanonicalProfileId.Value);
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<int> canonicalProfileId = default;
-            Optional<IReadOnlyList<CanonicalProfileDefinitionPropertiesItem>> properties = default;
+            IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<CanonicalProfileDefinitionPropertiesItem> array = new List<CanonicalProfileDefinitionPropertiesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CanonicalProfileDefinitionPropertiesItem.DeserializeCanonicalProfileDefinitionPropertiesItem(item));
+                        array.Add(CanonicalProfileDefinitionPropertiesItem.DeserializeCanonicalProfileDefinitionPropertiesItem(item, options));
                     }
                     properties = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CanonicalProfileDefinition(Optional.ToNullable(canonicalProfileId), Optional.ToList(properties), serializedAdditionalRawData);
+            return new CanonicalProfileDefinition(Optional.ToNullable(canonicalProfileId), properties ?? new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CanonicalProfileDefinition>.Write(ModelReaderWriterOptions options)

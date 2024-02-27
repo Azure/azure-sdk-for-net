@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceResourceId"/> is null. </exception>
         public MISqlConnectionInfo(string managedInstanceResourceId)
         {
-            Argument.AssertNotNull(managedInstanceResourceId, nameof(managedInstanceResourceId));
+            if (managedInstanceResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(managedInstanceResourceId));
+            }
 
             ManagedInstanceResourceId = managedInstanceResourceId;
             ConnectionInfoType = "MiSqlConnectionInfo";

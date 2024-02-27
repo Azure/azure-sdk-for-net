@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<KustoManagedPrivateEndpointData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KustoManagedPrivateEndpointData>> value = default;
+            IReadOnlyList<KustoManagedPrivateEndpointData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoManagedPrivateEndpointData> array = new List<KustoManagedPrivateEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(item));
+                        array.Add(KustoManagedPrivateEndpointData.DeserializeKustoManagedPrivateEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedPrivateEndpointListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ManagedPrivateEndpointListResult(value ?? new ChangeTrackingList<KustoManagedPrivateEndpointData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedPrivateEndpointListResult>.Write(ModelReaderWriterOptions options)

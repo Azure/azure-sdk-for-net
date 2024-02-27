@@ -16,52 +16,52 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GenerateWordParts))
+            if (GenerateWordParts.HasValue)
             {
                 writer.WritePropertyName("generateWordParts"u8);
                 writer.WriteBooleanValue(GenerateWordParts.Value);
             }
-            if (Optional.IsDefined(GenerateNumberParts))
+            if (GenerateNumberParts.HasValue)
             {
                 writer.WritePropertyName("generateNumberParts"u8);
                 writer.WriteBooleanValue(GenerateNumberParts.Value);
             }
-            if (Optional.IsDefined(CatenateWords))
+            if (CatenateWords.HasValue)
             {
                 writer.WritePropertyName("catenateWords"u8);
                 writer.WriteBooleanValue(CatenateWords.Value);
             }
-            if (Optional.IsDefined(CatenateNumbers))
+            if (CatenateNumbers.HasValue)
             {
                 writer.WritePropertyName("catenateNumbers"u8);
                 writer.WriteBooleanValue(CatenateNumbers.Value);
             }
-            if (Optional.IsDefined(CatenateAll))
+            if (CatenateAll.HasValue)
             {
                 writer.WritePropertyName("catenateAll"u8);
                 writer.WriteBooleanValue(CatenateAll.Value);
             }
-            if (Optional.IsDefined(SplitOnCaseChange))
+            if (SplitOnCaseChange.HasValue)
             {
                 writer.WritePropertyName("splitOnCaseChange"u8);
                 writer.WriteBooleanValue(SplitOnCaseChange.Value);
             }
-            if (Optional.IsDefined(PreserveOriginal))
+            if (PreserveOriginal.HasValue)
             {
                 writer.WritePropertyName("preserveOriginal"u8);
                 writer.WriteBooleanValue(PreserveOriginal.Value);
             }
-            if (Optional.IsDefined(SplitOnNumerics))
+            if (SplitOnNumerics.HasValue)
             {
                 writer.WritePropertyName("splitOnNumerics"u8);
                 writer.WriteBooleanValue(SplitOnNumerics.Value);
             }
-            if (Optional.IsDefined(StemEnglishPossessive))
+            if (StemEnglishPossessive.HasValue)
             {
                 writer.WritePropertyName("stemEnglishPossessive"u8);
                 writer.WriteBooleanValue(StemEnglishPossessive.Value);
             }
-            if (Optional.IsCollectionDefined(ProtectedWords))
+            if (!(ProtectedWords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectedWords"u8);
                 writer.WriteStartArray();
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<bool> preserveOriginal = default;
             Optional<bool> splitOnNumerics = default;
             Optional<bool> stemEnglishPossessive = default;
-            Optional<IList<string>> protectedWords = default;
+            IList<string> protectedWords = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -204,7 +204,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WordDelimiterTokenFilter(odataType, name, Optional.ToNullable(generateWordParts), Optional.ToNullable(generateNumberParts), Optional.ToNullable(catenateWords), Optional.ToNullable(catenateNumbers), Optional.ToNullable(catenateAll), Optional.ToNullable(splitOnCaseChange), Optional.ToNullable(preserveOriginal), Optional.ToNullable(splitOnNumerics), Optional.ToNullable(stemEnglishPossessive), Optional.ToList(protectedWords));
+            return new WordDelimiterTokenFilter(
+                odataType,
+                name,
+                Optional.ToNullable(generateWordParts),
+                Optional.ToNullable(generateNumberParts),
+                Optional.ToNullable(catenateWords),
+                Optional.ToNullable(catenateNumbers),
+                Optional.ToNullable(catenateAll),
+                Optional.ToNullable(splitOnCaseChange),
+                Optional.ToNullable(preserveOriginal),
+                Optional.ToNullable(splitOnNumerics),
+                Optional.ToNullable(stemEnglishPossessive),
+                protectedWords ?? new ChangeTrackingList<string>());
         }
     }
 }

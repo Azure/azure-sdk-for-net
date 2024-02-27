@@ -15,12 +15,12 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryThumbprint))
+            if (PrimaryThumbprint != null)
             {
                 writer.WritePropertyName("primaryThumbprint"u8);
                 writer.WriteStringValue(PrimaryThumbprint);
             }
-            if (Optional.IsDefined(SecondaryThumbprint))
+            if (SecondaryThumbprint != null)
             {
                 writer.WritePropertyName("secondaryThumbprint"u8);
                 writer.WriteStringValue(SecondaryThumbprint);

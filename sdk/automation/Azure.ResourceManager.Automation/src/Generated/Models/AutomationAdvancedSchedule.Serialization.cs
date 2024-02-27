@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(WeekDays))
+            if (!(WeekDays is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("weekDays"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthDays))
+            if (!(MonthDays is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("monthDays"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            if (!(MonthlyOccurrences is ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("monthlyOccurrences"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IList<string>> weekDays = default;
-            Optional<IList<int>> monthDays = default;
-            Optional<IList<AutomationAdvancedScheduleMonthlyOccurrence>> monthlyOccurrences = default;
+            IList<string> weekDays = default;
+            IList<int> monthDays = default;
+            IList<AutomationAdvancedScheduleMonthlyOccurrence> monthlyOccurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationAdvancedScheduleMonthlyOccurrence> array = new List<AutomationAdvancedScheduleMonthlyOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAdvancedScheduleMonthlyOccurrence.DeserializeAutomationAdvancedScheduleMonthlyOccurrence(item));
+                        array.Add(AutomationAdvancedScheduleMonthlyOccurrence.DeserializeAutomationAdvancedScheduleMonthlyOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationAdvancedSchedule(Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), serializedAdditionalRawData);
+            return new AutomationAdvancedSchedule(weekDays ?? new ChangeTrackingList<string>(), monthDays ?? new ChangeTrackingList<int>(), monthlyOccurrences ?? new ChangeTrackingList<AutomationAdvancedScheduleMonthlyOccurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationAdvancedSchedule>.Write(ModelReaderWriterOptions options)

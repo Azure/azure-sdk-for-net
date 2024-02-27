@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
@@ -55,7 +54,10 @@ namespace Azure.AI.AnomalyDetector
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
         public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables)
         {
-            Argument.AssertNotNull(variables, nameof(variables));
+            if (variables == null)
+            {
+                throw new ArgumentNullException(nameof(variables));
+            }
 
             Variables = variables.ToList();
         }

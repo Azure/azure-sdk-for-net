@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (Optional.IsDefined(AccessType))
+            if (AccessType.HasValue)
             {
                 writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
-            if (Optional.IsDefined(AccessKey))
+            if (AccessKey != null)
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServiceBackupRestoreContent(storageAccount, containerName, backupName, Optional.ToNullable(accessType), accessKey.Value, clientId.Value, serializedAdditionalRawData);
+            return new ApiManagementServiceBackupRestoreContent(
+                storageAccount,
+                containerName,
+                backupName,
+                Optional.ToNullable(accessType),
+                accessKey.Value,
+                clientId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServiceBackupRestoreContent>.Write(ModelReaderWriterOptions options)

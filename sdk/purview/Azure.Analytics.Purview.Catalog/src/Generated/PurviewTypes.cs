@@ -68,7 +68,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetBusinessMetadataDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
             scope.Start();
@@ -103,7 +110,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetBusinessMetadataDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByGuid");
             scope.Start();
@@ -138,7 +152,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetBusinessMetadataDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
             scope.Start();
@@ -173,7 +194,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetBusinessMetadataDefByName(string,RequestContext)']/*" />
         public virtual Response GetBusinessMetadataDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetBusinessMetadataDefByName");
             scope.Start();
@@ -208,7 +236,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
@@ -243,7 +278,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetClassificationDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByGuid");
             scope.Start();
@@ -278,7 +320,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetClassificationDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
@@ -313,7 +362,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetClassificationDefByName(string,RequestContext)']/*" />
         public virtual Response GetClassificationDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetClassificationDefByName");
             scope.Start();
@@ -348,7 +404,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityDefinitionByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
@@ -383,7 +446,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByGuid(string,RequestContext)']/*" />
         public virtual Response GetEntityDefinitionByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByGuid");
             scope.Start();
@@ -418,7 +488,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEntityDefinitionByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
@@ -453,7 +530,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEntityDefinitionByName(string,RequestContext)']/*" />
         public virtual Response GetEntityDefinitionByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEntityDefinitionByName");
             scope.Start();
@@ -488,7 +572,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
@@ -523,7 +614,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetEnumDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByGuid");
             scope.Start();
@@ -558,7 +656,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetEnumDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
@@ -593,7 +698,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetEnumDefByName(string,RequestContext)']/*" />
         public virtual Response GetEnumDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetEnumDefByName");
             scope.Start();
@@ -628,7 +740,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
@@ -663,7 +782,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetRelationshipDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByGuid");
             scope.Start();
@@ -698,7 +824,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetRelationshipDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
@@ -733,7 +866,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetRelationshipDefByName(string,RequestContext)']/*" />
         public virtual Response GetRelationshipDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetRelationshipDefByName");
             scope.Start();
@@ -768,7 +908,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetStructDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
@@ -803,7 +950,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetStructDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByGuid");
             scope.Start();
@@ -838,7 +992,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetStructDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
@@ -873,7 +1034,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetStructDefByName(string,RequestContext)']/*" />
         public virtual Response GetStructDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetStructDefByName");
             scope.Start();
@@ -908,7 +1076,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTypeDefinitionByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
@@ -943,7 +1118,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByGuid(string,RequestContext)']/*" />
         public virtual Response GetTypeDefinitionByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByGuid");
             scope.Start();
@@ -978,7 +1160,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTypeDefinitionByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
@@ -1013,7 +1202,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTypeDefinitionByName(string,RequestContext)']/*" />
         public virtual Response GetTypeDefinitionByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTypeDefinitionByName");
             scope.Start();
@@ -1048,7 +1244,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTypeByNameAsync(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
@@ -1083,7 +1286,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeByName(string,RequestContext)']/*" />
         public virtual Response DeleteTypeByName(string name, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeByName");
             scope.Start();
@@ -1188,7 +1398,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='CreateTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
@@ -1223,7 +1436,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='CreateTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response CreateTypeDefinitions(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.CreateTypeDefinitions");
             scope.Start();
@@ -1257,7 +1473,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='UpdateAtlasTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAtlasTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
@@ -1291,7 +1510,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='UpdateAtlasTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response UpdateAtlasTypeDefinitions(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.UpdateAtlasTypeDefinitions");
             scope.Start();
@@ -1325,7 +1547,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeDefinitionsAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTypeDefinitionsAsync(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
@@ -1359,7 +1584,10 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='DeleteTypeDefinitions(RequestContent,RequestContext)']/*" />
         public virtual Response DeleteTypeDefinitions(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.DeleteTypeDefinitions");
             scope.Start();
@@ -1464,7 +1692,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuidAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateDefByGuidAsync(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
@@ -1499,7 +1734,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByGuid(string,RequestContext)']/*" />
         public virtual Response GetTermTemplateDefByGuid(string guid, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(guid, nameof(guid));
+            if (guid == null)
+            {
+                throw new ArgumentNullException(nameof(guid));
+            }
+            if (guid.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(guid));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByGuid");
             scope.Start();
@@ -1534,7 +1776,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByNameAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetTermTemplateDefByNameAsync(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();
@@ -1569,7 +1818,14 @@ namespace Azure.Analytics.Purview.Catalog
         /// <include file="Docs/PurviewTypes.xml" path="doc/members/member[@name='GetTermTemplateDefByName(string,RequestContext)']/*" />
         public virtual Response GetTermTemplateDefByName(string name, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (name.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("PurviewTypes.GetTermTemplateDefByName");
             scope.Start();

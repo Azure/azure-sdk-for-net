@@ -27,49 +27,49 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Primary))
+            if (Primary.HasValue)
             {
                 writer.WritePropertyName("primary"u8);
                 writer.WriteBooleanValue(Primary.Value);
             }
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (EnableAcceleratedNetworking.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
+            if (IsTcpStateTrackingDisabled.HasValue)
             {
                 writer.WritePropertyName("disableTcpStateTracking"u8);
                 writer.WriteBooleanValue(IsTcpStateTrackingDisabled.Value);
             }
-            if (Optional.IsDefined(EnableFpga))
+            if (EnableFpga.HasValue)
             {
                 writer.WritePropertyName("enableFpga"u8);
                 writer.WriteBooleanValue(EnableFpga.Value);
             }
-            if (Optional.IsDefined(NetworkSecurityGroup))
+            if (NetworkSecurityGroup != null)
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (Optional.IsDefined(DnsSettings))
+            if (DnsSettings != null)
             {
                 writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
             }
-            if (Optional.IsCollectionDefined(IPConfigurations))
+            if (!(IPConfigurations is ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
@@ -79,22 +79,22 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableIPForwarding))
+            if (EnableIPForwarding.HasValue)
             {
                 writer.WritePropertyName("enableIPForwarding"u8);
                 writer.WriteBooleanValue(EnableIPForwarding.Value);
             }
-            if (Optional.IsDefined(DeleteOption))
+            if (DeleteOption.HasValue)
             {
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
-            if (Optional.IsDefined(AuxiliaryMode))
+            if (AuxiliaryMode.HasValue)
             {
                 writer.WritePropertyName("auxiliaryMode"u8);
                 writer.WriteStringValue(AuxiliaryMode.Value.ToString());
             }
-            if (Optional.IsDefined(AuxiliarySku))
+            if (AuxiliarySku.HasValue)
             {
                 writer.WritePropertyName("auxiliarySku"u8);
                 writer.WriteStringValue(AuxiliarySku.Value.ToString());
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<bool> enableFpga = default;
             Optional<WritableSubResource> networkSecurityGroup = default;
             Optional<VirtualMachineScaleSetNetworkConfigurationDnsSettings> dnsSettings = default;
-            Optional<IList<VirtualMachineScaleSetUpdateIPConfiguration>> ipConfigurations = default;
+            IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
             Optional<ComputeDeleteOption> deleteOption = default;
             Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value);
+                            dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineScaleSetUpdateIPConfiguration> array = new List<VirtualMachineScaleSetUpdateIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineScaleSetUpdateIPConfiguration.DeserializeVirtualMachineScaleSetUpdateIPConfiguration(item));
+                                array.Add(VirtualMachineScaleSetUpdateIPConfiguration.DeserializeVirtualMachineScaleSetUpdateIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -291,7 +291,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetUpdateNetworkConfiguration(id.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new VirtualMachineScaleSetUpdateNetworkConfiguration(
+                id.Value,
+                serializedAdditionalRawData,
+                name.Value,
+                Optional.ToNullable(primary),
+                Optional.ToNullable(enableAcceleratedNetworking),
+                Optional.ToNullable(disableTcpStateTracking),
+                Optional.ToNullable(enableFpga),
+                networkSecurityGroup,
+                dnsSettings.Value,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>(),
+                Optional.ToNullable(enableIPForwarding),
+                Optional.ToNullable(deleteOption),
+                Optional.ToNullable(auxiliaryMode),
+                Optional.ToNullable(auxiliarySku));
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetUpdateNetworkConfiguration>.Write(ModelReaderWriterOptions options)

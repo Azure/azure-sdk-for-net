@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiIssueAttachmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiIssueAttachmentResource> CreateOrUpdate(WaitUntil waitUntil, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual async Task<Response<ApiIssueAttachmentResource>> GetAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual Response<ApiIssueAttachmentResource> Get(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual Response<bool> Exists(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiIssueAttachmentResource>> GetIfExistsAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
         public virtual NullableResponse<ApiIssueAttachmentResource> GetIfExists(string attachmentId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
+            if (attachmentId == null)
+            {
+                throw new ArgumentNullException(nameof(attachmentId));
+            }
+            if (attachmentId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(attachmentId));
+            }
 
             using var scope = _apiIssueAttachmentClientDiagnostics.CreateScope("ApiIssueAttachmentCollection.GetIfExists");
             scope.Start();

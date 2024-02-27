@@ -50,8 +50,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public SentSharesClient(Uri endpoint, TokenCredential credential, PurviewShareClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewShareClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -80,7 +86,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareAsync(string sentShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShare");
             scope.Start();
@@ -115,7 +128,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShare(string,RequestContext)']/*" />
         public virtual Response GetSentShare(string sentShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShare");
             scope.Start();
@@ -151,8 +171,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShareInvitation");
             scope.Start();
@@ -188,8 +222,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
         public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.GetSentShareInvitation");
             scope.Start();
@@ -226,9 +274,26 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShareInvitationAsync(string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShareInvitation");
             scope.Start();
@@ -265,9 +330,26 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateSentShareInvitation(string,string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateSentShareInvitation");
             scope.Start();
@@ -303,8 +385,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
@@ -340,8 +436,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(string,string,RequestContext)']/*" />
         public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.NotifyUserSentShareInvitation");
             scope.Start();
@@ -377,7 +487,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentSharesAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
@@ -404,7 +517,10 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShares(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
+            if (referenceName == null)
+            {
+                throw new ArgumentNullException(nameof(referenceName));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
@@ -432,7 +548,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitationsAsync(string,string,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
@@ -460,7 +583,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitations(string,string,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string filter, string orderby, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
@@ -488,8 +618,18 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceSentShareAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> CreateOrReplaceSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplaceSentShare");
             scope.Start();
@@ -526,8 +666,18 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='CreateOrReplaceSentShare(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> CreateOrReplaceSentShare(WaitUntil waitUntil, string sentShareId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.CreateOrReplaceSentShare");
             scope.Start();
@@ -563,7 +713,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShare");
             scope.Start();
@@ -599,7 +756,14 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShare(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShare");
             scope.Start();
@@ -636,8 +800,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitationAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();
@@ -674,8 +852,22 @@ namespace Azure.Analytics.Purview.Sharing
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitation(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
-            Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
+            if (sentShareId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareId));
+            }
+            if (sentShareId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareId));
+            }
+            if (sentShareInvitationId == null)
+            {
+                throw new ArgumentNullException(nameof(sentShareInvitationId));
+            }
+            if (sentShareInvitationId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sentShareInvitationId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SentSharesClient.DeleteSentShareInvitation");
             scope.Start();

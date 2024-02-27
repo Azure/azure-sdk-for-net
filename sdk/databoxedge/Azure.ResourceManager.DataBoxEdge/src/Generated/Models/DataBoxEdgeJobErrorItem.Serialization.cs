@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Recommendations))
+            if (options.Format != "W" && !(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> recommendations = default;
+            IReadOnlyList<string> recommendations = default;
             Optional<string> code = default;
             Optional<string> message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeJobErrorItem(Optional.ToList(recommendations), code.Value, message.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeJobErrorItem(recommendations ?? new ChangeTrackingList<string>(), code.Value, message.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeJobErrorItem>.Write(ModelReaderWriterOptions options)
