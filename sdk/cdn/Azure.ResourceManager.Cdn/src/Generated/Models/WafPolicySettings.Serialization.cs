@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUri.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value, serializedAdditionalRawData);
+            return new WafPolicySettings(
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(mode),
+                defaultRedirectUri.Value,
+                Optional.ToNullable(defaultCustomBlockResponseStatusCode),
+                defaultCustomBlockResponseBody.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WafPolicySettings>.Write(ModelReaderWriterOptions options)

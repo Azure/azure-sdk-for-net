@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSecurityRule(name.Value, Optional.ToNullable(direction), Optional.ToNullable(destinationPort), protocols ?? new ChangeTrackingList<SecurityTransportProtocol>(), ipAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RecommendedSecurityRule(
+                name.Value,
+                Optional.ToNullable(direction),
+                Optional.ToNullable(destinationPort),
+                protocols ?? new ChangeTrackingList<SecurityTransportProtocol>(),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSecurityRule>.Write(ModelReaderWriterOptions options)

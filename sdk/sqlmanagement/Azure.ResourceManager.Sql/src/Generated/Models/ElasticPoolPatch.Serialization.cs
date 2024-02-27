@@ -265,7 +265,19 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone), serializedAdditionalRawData);
+            return new ElasticPoolPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(maxSizeBytes),
+                Optional.ToNullable(minCapacity),
+                perDatabaseSettings.Value,
+                Optional.ToNullable(zoneRedundant),
+                Optional.ToNullable(licenseType),
+                maintenanceConfigurationId.Value,
+                Optional.ToNullable(highAvailabilityReplicaCount),
+                Optional.ToNullable(preferredEnclaveType),
+                Optional.ToNullable(availabilityZone),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolPatch>.Write(ModelReaderWriterOptions options)

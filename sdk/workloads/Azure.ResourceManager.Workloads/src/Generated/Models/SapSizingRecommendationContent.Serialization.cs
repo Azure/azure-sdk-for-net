@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSizingRecommendationContent(appLocation, environment, sapProduct, deploymentType, saps, dbMemory, databaseType, Optional.ToNullable(dbScaleMethod), Optional.ToNullable(highAvailabilityType), serializedAdditionalRawData);
+            return new SapSizingRecommendationContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                saps,
+                dbMemory,
+                databaseType,
+                Optional.ToNullable(dbScaleMethod),
+                Optional.ToNullable(highAvailabilityType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationContent>.Write(ModelReaderWriterOptions options)

@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

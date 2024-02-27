@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleProperties(scopes, conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(), schedule.Value, actions, description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AlertProcessingRuleProperties(
+                scopes,
+                conditions ?? new ChangeTrackingList<AlertProcessingRuleCondition>(),
+                schedule.Value,
+                actions,
+                description.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleProperties>.Write(ModelReaderWriterOptions options)

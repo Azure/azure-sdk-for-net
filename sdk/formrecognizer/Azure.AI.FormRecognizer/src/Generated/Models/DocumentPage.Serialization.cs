@@ -154,7 +154,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, words ?? new ChangeTrackingList<DocumentWord>(), selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(), lines ?? new ChangeTrackingList<DocumentLine>(), barcodes ?? new ChangeTrackingList<DocumentBarcode>(), formulas ?? new ChangeTrackingList<DocumentFormula>());
+            return new DocumentPage(
+                pageNumber,
+                Optional.ToNullable(angle),
+                Optional.ToNullable(width),
+                Optional.ToNullable(height),
+                Optional.ToNullable(unit),
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>());
         }
     }
 }

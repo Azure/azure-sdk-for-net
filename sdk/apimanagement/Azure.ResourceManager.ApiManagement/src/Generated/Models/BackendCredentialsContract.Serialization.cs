@@ -235,7 +235,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendCredentialsContract(certificateIds ?? new ChangeTrackingList<string>(), certificate ?? new ChangeTrackingList<string>(), query ?? new ChangeTrackingDictionary<string, IList<string>>(), header ?? new ChangeTrackingDictionary<string, IList<string>>(), authorization.Value, serializedAdditionalRawData);
+            return new BackendCredentialsContract(
+                certificateIds ?? new ChangeTrackingList<string>(),
+                certificate ?? new ChangeTrackingList<string>(),
+                query ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                header ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                authorization.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackendCredentialsContract>.Write(ModelReaderWriterOptions options)

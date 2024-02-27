@@ -258,7 +258,17 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type), userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), serializedAdditionalRawData);
+            return new HciClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                cloudManagementEndpoint.Value,
+                Optional.ToNullable(aadClientId),
+                Optional.ToNullable(aadTenantId),
+                desiredProperties.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(type),
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterPatch>.Write(ModelReaderWriterOptions options)

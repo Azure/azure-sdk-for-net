@@ -211,7 +211,15 @@ namespace Azure.ResourceManager.TrafficManager
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(), trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
+            return new TrafficManagerHeatMapData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                endpoints ?? new ChangeTrackingList<TrafficManagerHeatMapEndpoint>(),
+                trafficFlows ?? new ChangeTrackingList<TrafficManagerHeatMapTrafficFlow>());
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options)

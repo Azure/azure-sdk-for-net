@@ -422,7 +422,31 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
+            return new PurviewAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                accountStatus.Value,
+                cloudConnectors.Value,
+                Optional.ToNullable(createdAt),
+                createdBy.Value,
+                createdByObjectId.Value,
+                endpoints.Value,
+                friendlyName.Value,
+                ingestionStorage.Value,
+                Optional.ToNullable(managedEventHubState),
+                managedResourceGroupName.Value,
+                managedResources.Value,
+                Optional.ToNullable(managedResourcesPublicNetworkAccess),
+                privateEndpointConnections ?? new ChangeTrackingList<PurviewPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(publicNetworkAccess),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options)

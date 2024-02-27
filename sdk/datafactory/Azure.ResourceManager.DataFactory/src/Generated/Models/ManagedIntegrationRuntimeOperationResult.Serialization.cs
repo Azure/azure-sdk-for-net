@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeOperationResult(type.Value, Optional.ToNullable(startTime), result.Value, errorCode.Value, parameters ?? new ChangeTrackingList<string>(), activityId.Value, additionalProperties);
+            return new ManagedIntegrationRuntimeOperationResult(
+                type.Value,
+                Optional.ToNullable(startTime),
+                result.Value,
+                errorCode.Value,
+                parameters ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeOperationResult>.Write(ModelReaderWriterOptions options)

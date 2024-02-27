@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTrigger(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownTrigger(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeTriggerData>.Write(ModelReaderWriterOptions options)

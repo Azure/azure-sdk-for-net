@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityContent(source, destination, Optional.ToNullable(protocol), protocolConfiguration.Value, Optional.ToNullable(preferredIPVersion), serializedAdditionalRawData);
+            return new ConnectivityContent(
+                source,
+                destination,
+                Optional.ToNullable(protocol),
+                protocolConfiguration.Value,
+                Optional.ToNullable(preferredIPVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityContent>.Write(ModelReaderWriterOptions options)

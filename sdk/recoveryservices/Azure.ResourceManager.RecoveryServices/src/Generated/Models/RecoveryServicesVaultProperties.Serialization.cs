@@ -305,7 +305,23 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>(), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore), serializedAdditionalRawData);
+            return new RecoveryServicesVaultProperties(
+                provisioningState.Value,
+                upgradeDetails.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>(),
+                Optional.ToNullable(privateEndpointStateForBackup),
+                Optional.ToNullable(privateEndpointStateForSiteRecovery),
+                encryption.Value,
+                moveDetails.Value,
+                Optional.ToNullable(moveState),
+                Optional.ToNullable(backupStorageVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                monitoringSettings.Value,
+                restoreSettings.Value,
+                redundancySettings.Value,
+                securitySettings.Value,
+                Optional.ToNullable(secureScore),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultProperties>.Write(ModelReaderWriterOptions options)

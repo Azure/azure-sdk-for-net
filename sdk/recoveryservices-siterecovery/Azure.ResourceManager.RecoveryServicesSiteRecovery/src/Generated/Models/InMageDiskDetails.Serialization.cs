@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageDiskDetails(diskId.Value, diskName.Value, diskSizeInMB.Value, diskType.Value, diskConfiguration.Value, volumeList ?? new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>(), serializedAdditionalRawData);
+            return new InMageDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                diskSizeInMB.Value,
+                diskType.Value,
+                diskConfiguration.Value,
+                volumeList ?? new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageDiskDetails>.Write(ModelReaderWriterOptions options)

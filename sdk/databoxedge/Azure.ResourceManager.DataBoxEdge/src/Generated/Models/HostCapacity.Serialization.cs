@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), vmUsedMemory ?? new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>(), gpuType.Value, numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(), serializedAdditionalRawData);
+            return new HostCapacity(
+                hostName.Value,
+                Optional.ToNullable(effectiveAvailableMemoryMbOnHost),
+                Optional.ToNullable(availableGpuCount),
+                vmUsedMemory ?? new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>(),
+                gpuType.Value,
+                numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostCapacity>.Write(ModelReaderWriterOptions options)

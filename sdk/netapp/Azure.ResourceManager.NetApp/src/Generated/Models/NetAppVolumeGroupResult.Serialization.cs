@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeGroupResult(id, name, type, systemData.Value, Optional.ToNullable(location), provisioningState.Value, groupMetaData.Value, serializedAdditionalRawData);
+            return new NetAppVolumeGroupResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                provisioningState.Value,
+                groupMetaData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeGroupResult>.Write(ModelReaderWriterOptions options)

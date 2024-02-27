@@ -548,7 +548,40 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, managedBy.Value, sku.Value, extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), Optional.ToNullable(diskState), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(incremental), incrementalSnapshotFamilyId.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, securityProfile.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(completionPercent), copyCompletionError.Value, Optional.ToNullable(dataAccessAuthMode), serializedAdditionalRawData);
+            return new SnapshotData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                sku.Value,
+                extendedLocation,
+                Optional.ToNullable(timeCreated),
+                Optional.ToNullable(osType),
+                Optional.ToNullable(hyperVGeneration),
+                purchasePlan.Value,
+                supportedCapabilities.Value,
+                creationData.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(diskSizeBytes),
+                Optional.ToNullable(diskState),
+                uniqueId.Value,
+                encryptionSettingsGroup.Value,
+                provisioningState.Value,
+                Optional.ToNullable(incremental),
+                incrementalSnapshotFamilyId.Value,
+                encryption.Value,
+                Optional.ToNullable(networkAccessPolicy),
+                diskAccessId.Value,
+                securityProfile.Value,
+                Optional.ToNullable(supportsHibernation),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(completionPercent),
+                copyCompletionError.Value,
+                Optional.ToNullable(dataAccessAuthMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotData>.Write(ModelReaderWriterOptions options)

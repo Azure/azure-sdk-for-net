@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(), additionalProperties, blockSizeInMB.Value);
+            return new AzureBlobFSWriteSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                copyBehavior.Value,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties,
+                blockSizeInMB.Value);
         }
 
         BinaryData IPersistableModel<AzureBlobFSWriteSettings>.Write(ModelReaderWriterOptions options)

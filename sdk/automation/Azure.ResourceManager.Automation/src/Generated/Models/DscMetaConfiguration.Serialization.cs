@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite), serializedAdditionalRawData);
+            return new DscMetaConfiguration(
+                Optional.ToNullable(configurationModeFrequencyMins),
+                Optional.ToNullable(rebootNodeIfNeeded),
+                configurationMode.Value,
+                actionAfterReboot.Value,
+                certificateId.Value,
+                Optional.ToNullable(refreshFrequencyMins),
+                Optional.ToNullable(allowModuleOverwrite),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)

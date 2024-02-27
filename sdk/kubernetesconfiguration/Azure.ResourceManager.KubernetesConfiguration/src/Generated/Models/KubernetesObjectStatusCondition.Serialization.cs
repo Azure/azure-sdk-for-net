@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatusCondition(Optional.ToNullable(lastTransitionTime), message.Value, reason.Value, status.Value, type.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatusCondition(
+                Optional.ToNullable(lastTransitionTime),
+                message.Value,
+                reason.Value,
+                status.Value,
+                type.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatusCondition>.Write(ModelReaderWriterOptions options)

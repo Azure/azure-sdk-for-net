@@ -609,7 +609,43 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, allSettings ?? new ChangeTrackingDictionary<string, string>(), parameters ?? new ChangeTrackingDictionary<string, string>(), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, configuredChannels ?? new ChangeTrackingList<string>(), enabledChannels ?? new ChangeTrackingList<string>(), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, luisAppIds ?? new ChangeTrackingList<string>(), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value, serializedAdditionalRawData);
+            return new BotProperties(
+                displayName,
+                description.Value,
+                iconUrl.Value,
+                endpoint,
+                endpointVersion.Value,
+                allSettings ?? new ChangeTrackingDictionary<string, string>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                manifestUrl.Value,
+                Optional.ToNullable(msaAppType),
+                msaAppId,
+                msaAppTenantId.Value,
+                msaAppMSIResourceId.Value,
+                configuredChannels ?? new ChangeTrackingList<string>(),
+                enabledChannels ?? new ChangeTrackingList<string>(),
+                developerAppInsightKey.Value,
+                developerAppInsightsApiKey.Value,
+                developerAppInsightsApplicationId.Value,
+                luisAppIds ?? new ChangeTrackingList<string>(),
+                luisKey.Value,
+                Optional.ToNullable(isCmekEnabled),
+                cmekKeyVaultUrl.Value,
+                cmekEncryptionStatus.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(isStreamingSupported),
+                Optional.ToNullable(isDeveloperAppInsightsApiKeySet),
+                migrationToken.Value,
+                Optional.ToNullable(disableLocalAuth),
+                schemaTransformationVersion.Value,
+                storageResourceId.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
+                openWithHint.Value,
+                appPasswordHint.Value,
+                provisioningState.Value,
+                publishingCredentials.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotProperties>.Write(ModelReaderWriterOptions options)

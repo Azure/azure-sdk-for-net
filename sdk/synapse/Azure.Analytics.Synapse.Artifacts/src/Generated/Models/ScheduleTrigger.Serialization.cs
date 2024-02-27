@@ -154,7 +154,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), recurrence);
+            return new ScheduleTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                recurrence);
         }
 
         internal partial class ScheduleTriggerConverter : JsonConverter<ScheduleTrigger>

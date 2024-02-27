@@ -564,7 +564,37 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), identity, redisConfiguration.Value, redisVersion.Value, Optional.ToNullable(enableNonSslPort), Optional.ToNullable(replicasPerMaster), Optional.ToNullable(replicasPerPrimary), tenantSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(shardCount), Optional.ToNullable(minimumTlsVersion), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(updateChannel), sku, subnetId.Value, staticIP.Value, Optional.ToNullable(provisioningState), hostName.Value, Optional.ToNullable(port), Optional.ToNullable(sslPort), accessKeys.Value, linkedServers ?? new ChangeTrackingList<SubResource>(), instances ?? new ChangeTrackingList<RedisInstanceDetails>(), privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new RedisData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                redisConfiguration.Value,
+                redisVersion.Value,
+                Optional.ToNullable(enableNonSslPort),
+                Optional.ToNullable(replicasPerMaster),
+                Optional.ToNullable(replicasPerPrimary),
+                tenantSettings ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(shardCount),
+                Optional.ToNullable(minimumTlsVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(updateChannel),
+                sku,
+                subnetId.Value,
+                staticIP.Value,
+                Optional.ToNullable(provisioningState),
+                hostName.Value,
+                Optional.ToNullable(port),
+                Optional.ToNullable(sslPort),
+                accessKeys.Value,
+                linkedServers ?? new ChangeTrackingList<SubResource>(),
+                instances ?? new ChangeTrackingList<RedisInstanceDetails>(),
+                privateEndpointConnections ?? new ChangeTrackingList<RedisPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisData>.Write(ModelReaderWriterOptions options)

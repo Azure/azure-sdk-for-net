@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new LabServicesSku(
+                name,
+                Optional.ToNullable(tier),
+                size.Value,
+                family.Value,
+                Optional.ToNullable(capacity),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesSku>.Write(ModelReaderWriterOptions options)

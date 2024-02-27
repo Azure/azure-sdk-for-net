@@ -287,7 +287,20 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlueprintData(id, name, type, systemData.Value, displayName.Value, description.Value, status.Value, Optional.ToNullable(targetScope), parameters ?? new ChangeTrackingDictionary<string, ParameterDefinition>(), resourceGroups ?? new ChangeTrackingDictionary<string, ResourceGroupDefinition>(), versions.Value, layout.Value, serializedAdditionalRawData);
+            return new BlueprintData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                status.Value,
+                Optional.ToNullable(targetScope),
+                parameters ?? new ChangeTrackingDictionary<string, ParameterDefinition>(),
+                resourceGroups ?? new ChangeTrackingDictionary<string, ResourceGroupDefinition>(),
+                versions.Value,
+                layout.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlueprintData>.Write(ModelReaderWriterOptions options)

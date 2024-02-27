@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value, serializedAdditionalRawData);
+            return new PortalSettingsContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                uri.Value,
+                validationKey.Value,
+                subscriptions.Value,
+                userRegistration.Value,
+                Optional.ToNullable(enabled),
+                termsOfService.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PortalSettingsContractData>.Write(ModelReaderWriterOptions options)

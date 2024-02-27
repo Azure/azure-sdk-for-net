@@ -204,7 +204,18 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreadMessage(id, @object, createdAt, threadId, role, content, assistantId.Value, runId.Value, fileIds, metadata, serializedAdditionalRawData);
+            return new ThreadMessage(
+                id,
+                @object,
+                createdAt,
+                threadId,
+                role,
+                content,
+                assistantId.Value,
+                runId.Value,
+                fileIds,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreadMessage>.Write(ModelReaderWriterOptions options)

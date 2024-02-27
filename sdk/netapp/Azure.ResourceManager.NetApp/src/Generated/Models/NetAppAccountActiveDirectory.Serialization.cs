@@ -414,7 +414,31 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountActiveDirectory(activeDirectoryId.Value, username.Value, password.Value, domain.Value, dns.Value, Optional.ToNullable(status), statusDetails.Value, smbServerName.Value, organizationalUnit.Value, site.Value, backupOperators ?? new ChangeTrackingList<string>(), administrators ?? new ChangeTrackingList<string>(), kdcIP.Value, adName.Value, serverRootCACertificate.Value, Optional.ToNullable(aesEncryption), Optional.ToNullable(ldapSigning), securityOperators ?? new ChangeTrackingList<string>(), Optional.ToNullable(ldapOverTls), Optional.ToNullable(allowLocalNfsUsersWithLdap), Optional.ToNullable(encryptDCConnections), ldapSearchScope.Value, preferredServersForLdapClient.Value, serializedAdditionalRawData);
+            return new NetAppAccountActiveDirectory(
+                activeDirectoryId.Value,
+                username.Value,
+                password.Value,
+                domain.Value,
+                dns.Value,
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                smbServerName.Value,
+                organizationalUnit.Value,
+                site.Value,
+                backupOperators ?? new ChangeTrackingList<string>(),
+                administrators ?? new ChangeTrackingList<string>(),
+                kdcIP.Value,
+                adName.Value,
+                serverRootCACertificate.Value,
+                Optional.ToNullable(aesEncryption),
+                Optional.ToNullable(ldapSigning),
+                securityOperators ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(ldapOverTls),
+                Optional.ToNullable(allowLocalNfsUsersWithLdap),
+                Optional.ToNullable(encryptDCConnections),
+                ldapSearchScope.Value,
+                preferredServersForLdapClient.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountActiveDirectory>.Write(ModelReaderWriterOptions options)

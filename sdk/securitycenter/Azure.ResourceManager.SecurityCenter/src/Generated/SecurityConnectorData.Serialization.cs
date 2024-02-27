@@ -281,7 +281,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(), environmentData.Value, kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityConnectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hierarchyIdentifier.Value,
+                Optional.ToNullable(hierarchyIdentifierTrialEndDate),
+                Optional.ToNullable(environmentName),
+                offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(),
+                environmentData.Value,
+                kind.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options)

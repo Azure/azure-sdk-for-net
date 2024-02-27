@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHop(type.Value, id.Value, address.Value, resourceId.Value, nextHopIds ?? new ChangeTrackingList<string>(), issues ?? new ChangeTrackingList<ConnectivityIssue>(), serializedAdditionalRawData);
+            return new ConnectivityHop(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHop>.Write(ModelReaderWriterOptions options)

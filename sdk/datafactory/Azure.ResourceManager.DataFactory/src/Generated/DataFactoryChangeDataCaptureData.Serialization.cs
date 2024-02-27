@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryChangeDataCaptureData(id, name, type, systemData.Value, folder.Value, description.Value, sourceConnectionsInfo, targetConnectionsInfo, policy, Optional.ToNullable(allowVnetOverride), status.Value, Optional.ToNullable(etag), additionalProperties);
+            return new DataFactoryChangeDataCaptureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                folder.Value,
+                description.Value,
+                sourceConnectionsInfo,
+                targetConnectionsInfo,
+                policy,
+                Optional.ToNullable(allowVnetOverride),
+                status.Value,
+                Optional.ToNullable(etag),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options)

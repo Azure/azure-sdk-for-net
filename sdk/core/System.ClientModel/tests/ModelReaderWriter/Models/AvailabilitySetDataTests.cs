@@ -34,11 +34,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             Dictionary<string, string> expectedTags = new Dictionary<string, string>() { { "key", "value" } };
 
-            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375", model.Id.ToString());
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375", model.Id!.ToString());
             CollectionAssert.AreEquivalent(expectedTags, model.Tags);
             Assert.AreEqual("eastus", model.Location);
             Assert.AreEqual("testAS-3375", model.Name);
-            Assert.AreEqual("Microsoft.Compute/availabilitySets", model.ResourceType.ToString());
+            Assert.AreEqual("Microsoft.Compute/availabilitySets", model.ResourceType!.ToString());
             Assert.AreEqual(5, model.PlatformUpdateDomainCount);
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);

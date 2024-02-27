@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubFallbackRouteProperties(name.Value, source, condition.Value, endpointNames, isEnabled, serializedAdditionalRawData);
+            return new IotHubFallbackRouteProperties(
+                name.Value,
+                source,
+                condition.Value,
+                endpointNames,
+                isEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubFallbackRouteProperties>.Write(ModelReaderWriterOptions options)

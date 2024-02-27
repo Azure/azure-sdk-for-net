@@ -158,7 +158,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GroupConnectivityInformation(groupId.Value, memberName.Value, customerVisibleFqdns ?? new ChangeTrackingList<string>(), internalFqdn.Value, redirectMapId.Value, Optional.ToNullable(privateLinkServiceArmRegion), serializedAdditionalRawData);
+            return new GroupConnectivityInformation(
+                groupId.Value,
+                memberName.Value,
+                customerVisibleFqdns ?? new ChangeTrackingList<string>(),
+                internalFqdn.Value,
+                redirectMapId.Value,
+                Optional.ToNullable(privateLinkServiceArmRegion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupConnectivityInformation>.Write(ModelReaderWriterOptions options)

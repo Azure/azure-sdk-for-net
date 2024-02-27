@@ -280,7 +280,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                tableName.Value,
+                databaseName.Value,
+                Optional.ToNullable(cdcInsertCounter),
+                Optional.ToNullable(cdcUpdateCounter),
+                Optional.ToNullable(cdcDeleteCounter),
+                Optional.ToNullable(fullLoadEstFinishTime),
+                Optional.ToNullable(fullLoadStartedOn),
+                Optional.ToNullable(fullLoadEndedOn),
+                Optional.ToNullable(fullLoadTotalRows),
+                Optional.ToNullable(state),
+                Optional.ToNullable(totalChangesApplied),
+                Optional.ToNullable(dataErrorsCounter),
+                Optional.ToNullable(lastModifiedTime));
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)

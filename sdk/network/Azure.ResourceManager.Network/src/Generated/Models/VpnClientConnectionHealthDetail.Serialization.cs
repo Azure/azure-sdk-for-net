@@ -238,7 +238,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealthDetail(vpnConnectionId.Value, Optional.ToNullable(vpnConnectionDuration), Optional.ToNullable(vpnConnectionTime), publicIPAddress.Value, privateIPAddress.Value, vpnUserName.Value, Optional.ToNullable(maxBandwidth), Optional.ToNullable(egressPacketsTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(ingressPacketsTransferred), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(maxPacketsPerSecond), serializedAdditionalRawData);
+            return new VpnClientConnectionHealthDetail(
+                vpnConnectionId.Value,
+                Optional.ToNullable(vpnConnectionDuration),
+                Optional.ToNullable(vpnConnectionTime),
+                publicIPAddress.Value,
+                privateIPAddress.Value,
+                vpnUserName.Value,
+                Optional.ToNullable(maxBandwidth),
+                Optional.ToNullable(egressPacketsTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                Optional.ToNullable(ingressPacketsTransferred),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(maxPacketsPerSecond),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealthDetail>.Write(ModelReaderWriterOptions options)

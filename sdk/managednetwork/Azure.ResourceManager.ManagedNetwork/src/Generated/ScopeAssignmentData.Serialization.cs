@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.ManagedNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScopeAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(etag), assignedManagedNetwork.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ScopeAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(etag),
+                assignedManagedNetwork.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScopeAssignmentData>.Write(ModelReaderWriterOptions options)

@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceDetails(marketplaceSubscriptionId.Value, planId, offerId, publisherId, Optional.ToNullable(marketplaceSubscriptionStatus), serializedAdditionalRawData);
+            return new MarketplaceDetails(
+                marketplaceSubscriptionId.Value,
+                planId,
+                offerId,
+                publisherId,
+                Optional.ToNullable(marketplaceSubscriptionStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceDetails>.Write(ModelReaderWriterOptions options)

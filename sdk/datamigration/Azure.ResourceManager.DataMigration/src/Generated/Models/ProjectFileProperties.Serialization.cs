@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProjectFileProperties(extension.Value, filePath.Value, Optional.ToNullable(lastModified), mediaType.Value, Optional.ToNullable(size), serializedAdditionalRawData);
+            return new ProjectFileProperties(
+                extension.Value,
+                filePath.Value,
+                Optional.ToNullable(lastModified),
+                mediaType.Value,
+                Optional.ToNullable(size),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProjectFileProperties>.Write(ModelReaderWriterOptions options)

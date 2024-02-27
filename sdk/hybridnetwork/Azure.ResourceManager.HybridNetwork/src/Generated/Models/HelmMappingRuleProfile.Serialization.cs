@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmMappingRuleProfile(releaseNamespace.Value, releaseName.Value, helmPackageVersion.Value, values.Value, options0.Value, serializedAdditionalRawData);
+            return new HelmMappingRuleProfile(
+                releaseNamespace.Value,
+                releaseName.Value,
+                helmPackageVersion.Value,
+                values.Value,
+                options0.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmMappingRuleProfile>.Write(ModelReaderWriterOptions options)

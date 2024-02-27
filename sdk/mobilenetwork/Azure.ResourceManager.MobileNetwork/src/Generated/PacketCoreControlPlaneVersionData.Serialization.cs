@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCoreControlPlaneVersionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), platforms ?? new ChangeTrackingList<MobileNetworkPlatform>(), serializedAdditionalRawData);
+            return new PacketCoreControlPlaneVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                platforms ?? new ChangeTrackingList<MobileNetworkPlatform>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCoreControlPlaneVersionData>.Write(ModelReaderWriterOptions options)

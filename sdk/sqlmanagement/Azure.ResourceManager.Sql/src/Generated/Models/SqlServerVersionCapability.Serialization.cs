@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerVersionCapability(name.Value, supportedEditions ?? new ChangeTrackingList<EditionCapability>(), supportedElasticPoolEditions ?? new ChangeTrackingList<ElasticPoolEditionCapability>(), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new SqlServerVersionCapability(
+                name.Value,
+                supportedEditions ?? new ChangeTrackingList<EditionCapability>(),
+                supportedElasticPoolEditions ?? new ChangeTrackingList<ElasticPoolEditionCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerVersionCapability>.Write(ModelReaderWriterOptions options)

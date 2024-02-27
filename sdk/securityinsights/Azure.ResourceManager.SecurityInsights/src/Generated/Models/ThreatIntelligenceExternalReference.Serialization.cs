@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceExternalReference(description.Value, externalId.Value, sourceName.Value, url.Value, hashes ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ThreatIntelligenceExternalReference(
+                description.Value,
+                externalId.Value,
+                sourceName.Value,
+                url.Value,
+                hashes ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceExternalReference>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationPolicyResourceFormatData(id, name, type, systemData.Value, policyName.Value, permissions ?? new ChangeTrackingList<PermissionType>(), primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new AuthorizationPolicyResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                policyName.Value,
+                permissions ?? new ChangeTrackingList<PermissionType>(),
+                primaryKey.Value,
+                secondaryKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationPolicyResourceFormatData>.Write(ModelReaderWriterOptions options)

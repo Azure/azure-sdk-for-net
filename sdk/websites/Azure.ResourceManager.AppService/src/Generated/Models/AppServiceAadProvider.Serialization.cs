@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceAadProvider(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned), serializedAdditionalRawData);
+            return new AppServiceAadProvider(
+                Optional.ToNullable(enabled),
+                registration.Value,
+                login.Value,
+                validation.Value,
+                Optional.ToNullable(isAutoProvisioned),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceAadProvider>.Write(ModelReaderWriterOptions options)

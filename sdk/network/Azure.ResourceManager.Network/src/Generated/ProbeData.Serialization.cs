@@ -274,7 +274,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProbeData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(protocol), Optional.ToNullable(port), Optional.ToNullable(intervalInSeconds), Optional.ToNullable(numberOfProbes), Optional.ToNullable(probeThreshold), requestPath.Value, Optional.ToNullable(provisioningState));
+            return new ProbeData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(port),
+                Optional.ToNullable(intervalInSeconds),
+                Optional.ToNullable(numberOfProbes),
+                Optional.ToNullable(probeThreshold),
+                requestPath.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options)

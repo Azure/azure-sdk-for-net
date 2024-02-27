@@ -264,7 +264,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineExtensionProperties(forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(enableAutomaticUpgrade), Optional.ToNullable(autoUpgradeMinorVersion), settings ?? new ChangeTrackingDictionary<string, BinaryData>(), protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(), provisioningState.Value, instanceView.Value, serializedAdditionalRawData);
+            return new MachineExtensionProperties(
+                forceUpdateTag.Value,
+                publisher.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(enableAutomaticUpgrade),
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                provisioningState.Value,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineExtensionProperties>.Write(ModelReaderWriterOptions options)

@@ -90,7 +90,16 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareEntity(text, category, subcategory.Value, offset, length, confidenceScore, assertion.Value, name.Value, links ?? new ChangeTrackingList<HealthcareEntityLink>());
+            return new HealthcareEntity(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore,
+                assertion.Value,
+                name.Value,
+                links ?? new ChangeTrackingList<HealthcareEntityLink>());
         }
     }
 }

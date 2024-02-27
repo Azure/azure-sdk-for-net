@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.ManagementPartner
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PartnerResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Optional.ToNullable(tenantId), objectId.Value, Optional.ToNullable(version), Optional.ToNullable(updatedTime), Optional.ToNullable(createdTime), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new PartnerResponseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                partnerId.Value,
+                partnerName.Value,
+                Optional.ToNullable(tenantId),
+                objectId.Value,
+                Optional.ToNullable(version),
+                Optional.ToNullable(updatedTime),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options)

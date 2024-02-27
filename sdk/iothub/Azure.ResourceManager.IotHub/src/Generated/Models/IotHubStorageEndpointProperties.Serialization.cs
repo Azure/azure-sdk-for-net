@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubStorageEndpointProperties(Optional.ToNullable(sasTtlAsIso8601), connectionString, containerName, Optional.ToNullable(authenticationType), identity.Value, serializedAdditionalRawData);
+            return new IotHubStorageEndpointProperties(
+                Optional.ToNullable(sasTtlAsIso8601),
+                connectionString,
+                containerName,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubStorageEndpointProperties>.Write(ModelReaderWriterOptions options)

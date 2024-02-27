@@ -146,7 +146,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Choice(text, index, contentFilterResults.Value, logprobs, finishReason, serializedAdditionalRawData);
+            return new Choice(
+                text,
+                index,
+                contentFilterResults.Value,
+                logprobs,
+                finishReason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Choice>.Write(ModelReaderWriterOptions options)

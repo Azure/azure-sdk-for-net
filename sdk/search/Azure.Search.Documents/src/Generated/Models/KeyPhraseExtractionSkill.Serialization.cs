@@ -174,7 +174,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KeyPhraseExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(maxKeyPhraseCount), modelVersion.Value);
+            return new KeyPhraseExtractionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(defaultLanguageCode),
+                Optional.ToNullable(maxKeyPhraseCount),
+                modelVersion.Value);
         }
     }
 }

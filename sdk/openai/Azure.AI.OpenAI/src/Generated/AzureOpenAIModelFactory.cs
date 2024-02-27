@@ -37,7 +37,18 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranscriptionSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
+            return new AudioTranscriptionSegment(
+                id,
+                start,
+                end,
+                text,
+                temperature,
+                averageLogProbability,
+                compressionRatio,
+                noSpeechProbability,
+                tokens?.ToList(),
+                seek,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationSegment"/>. </summary>
@@ -62,7 +73,18 @@ namespace Azure.AI.OpenAI
         {
             tokens ??= new List<int>();
 
-            return new AudioTranslationSegment(id, start, end, text, temperature, averageLogProbability, compressionRatio, noSpeechProbability, tokens?.ToList(), seek, serializedAdditionalRawData: null);
+            return new AudioTranslationSegment(
+                id,
+                start,
+                end,
+                text,
+                temperature,
+                averageLogProbability,
+                compressionRatio,
+                noSpeechProbability,
+                tokens?.ToList(),
+                seek,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Completions"/>. </summary>
@@ -87,7 +109,13 @@ namespace Azure.AI.OpenAI
             promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
             choices ??= new List<Choice>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage, serializedAdditionalRawData: null);
+            return new Completions(
+                id,
+                created,
+                promptFilterResults?.ToList(),
+                choices?.ToList(),
+                usage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForPrompt"/>. </summary>
@@ -133,7 +161,16 @@ namespace Azure.AI.OpenAI
         {
             customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
 
-            return new ContentFilterResultDetailsForPrompt(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, jailbreak, serializedAdditionalRawData: null);
+            return new ContentFilterResultDetailsForPrompt(
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
+                customBlocklists?.ToList(),
+                error,
+                jailbreak,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResult"/>. </summary>
@@ -176,7 +213,13 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
         public static Choice Choice(string text = null, int index = default, ContentFilterResultsForChoice contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason, serializedAdditionalRawData: null);
+            return new Choice(
+                text,
+                index,
+                contentFilterResults,
+                logProbabilityModel,
+                finishReason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterResultsForChoice"/>. </summary>
@@ -214,7 +257,17 @@ namespace Azure.AI.OpenAI
         {
             customBlocklists ??= new List<ContentFilterBlocklistIdResult>();
 
-            return new ContentFilterResultsForChoice(sexual, violence, hate, selfHarm, profanity, customBlocklists?.ToList(), error, protectedMaterialText, protectedMaterialCode, serializedAdditionalRawData: null);
+            return new ContentFilterResultsForChoice(
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
+                customBlocklists?.ToList(),
+                error,
+                protectedMaterialText,
+                protectedMaterialCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ContentFilterCitedDetectionResult"/>. </summary>
@@ -280,7 +333,14 @@ namespace Azure.AI.OpenAI
             choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<ContentFilterResultsForPrompt>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), systemFingerprint, usage, serializedAdditionalRawData: null);
+            return new ChatCompletions(
+                id,
+                created,
+                choices?.ToList(),
+                promptFilterResults?.ToList(),
+                systemFingerprint,
+                usage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatResponseMessage"/>. </summary>
@@ -303,7 +363,13 @@ namespace Azure.AI.OpenAI
         {
             toolCalls ??= new List<ChatCompletionsToolCall>();
 
-            return new ChatResponseMessage(role, content, toolCalls?.ToList(), functionCall, azureExtensionsContext, serializedAdditionalRawData: null);
+            return new ChatResponseMessage(
+                role,
+                content,
+                toolCalls?.ToList(),
+                functionCall,
+                azureExtensionsContext,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.AzureChatExtensionsMessageContext"/>. </summary>
@@ -331,7 +397,13 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.AzureChatExtensionDataSourceResponseCitation"/> instance for mocking. </returns>
         public static AzureChatExtensionDataSourceResponseCitation AzureChatExtensionDataSourceResponseCitation(string content = null, string title = null, string url = null, string filepath = null, string chunkId = null)
         {
-            return new AzureChatExtensionDataSourceResponseCitation(content, title, url, filepath, chunkId, serializedAdditionalRawData: null);
+            return new AzureChatExtensionDataSourceResponseCitation(
+                content,
+                title,
+                url,
+                filepath,
+                chunkId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatChoiceLogProbabilityInfo"/>. </summary>
@@ -443,7 +515,13 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ImageGenerationData"/> instance for mocking. </returns>
         public static ImageGenerationData ImageGenerationData(Uri url = null, string base64Data = null, ImageGenerationContentFilterResults contentFilterResults = null, string revisedPrompt = null, ImageGenerationPromptFilterResults promptFilterResults = null)
         {
-            return new ImageGenerationData(url, base64Data, contentFilterResults, revisedPrompt, promptFilterResults, serializedAdditionalRawData: null);
+            return new ImageGenerationData(
+                url,
+                base64Data,
+                contentFilterResults,
+                revisedPrompt,
+                promptFilterResults,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ImageGenerationContentFilterResults"/>. </summary>
@@ -501,7 +579,14 @@ namespace Azure.AI.OpenAI
         /// <returns> A new <see cref="OpenAI.ImageGenerationPromptFilterResults"/> instance for mocking. </returns>
         public static ImageGenerationPromptFilterResults ImageGenerationPromptFilterResults(ContentFilterResult sexual = null, ContentFilterResult violence = null, ContentFilterResult hate = null, ContentFilterResult selfHarm = null, ContentFilterDetectionResult profanity = null, ContentFilterDetectionResult jailbreak = null)
         {
-            return new ImageGenerationPromptFilterResults(sexual, violence, hate, selfHarm, profanity, jailbreak, serializedAdditionalRawData: null);
+            return new ImageGenerationPromptFilterResults(
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
+                jailbreak,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
@@ -597,7 +682,13 @@ namespace Azure.AI.OpenAI
         {
             toolCalls ??= new List<ChatCompletionsToolCall>();
 
-            return new ChatRequestAssistantMessage(ChatRole.Assistant, serializedAdditionalRawData: null, content, name, toolCalls?.ToList(), functionCall);
+            return new ChatRequestAssistantMessage(
+                ChatRole.Assistant,
+                serializedAdditionalRawData: null,
+                content,
+                name,
+                toolCalls?.ToList(),
+                functionCall);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestToolMessage"/>. </summary>

@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointPatch(Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), Optional.ToNullable(offlineDataTransfer), offlineDataTransferShareName.Value, Optional.ToNullable(localCacheMode), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointPatch(
+                Optional.ToNullable(cloudTiering),
+                Optional.ToNullable(volumeFreeSpacePercent),
+                Optional.ToNullable(tierFilesOlderThanDays),
+                Optional.ToNullable(offlineDataTransfer),
+                offlineDataTransferShareName.Value,
+                Optional.ToNullable(localCacheMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointPatch>.Write(ModelReaderWriterOptions options)

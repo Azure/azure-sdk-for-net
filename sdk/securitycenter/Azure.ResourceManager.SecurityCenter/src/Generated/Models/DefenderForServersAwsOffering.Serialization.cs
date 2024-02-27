@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, vmScanners.Value);
+            return new DefenderForServersAwsOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                defenderForServers.Value,
+                arcAutoProvisioning.Value,
+                vaAutoProvisioning.Value,
+                mdeAutoProvisioning.Value,
+                subPlan.Value,
+                vmScanners.Value);
         }
 
         BinaryData IPersistableModel<DefenderForServersAwsOffering>.Write(ModelReaderWriterOptions options)

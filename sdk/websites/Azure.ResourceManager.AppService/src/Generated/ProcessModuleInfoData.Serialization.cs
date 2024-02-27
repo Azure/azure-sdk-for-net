@@ -278,7 +278,24 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessModuleInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                baseAddress.Value,
+                fileName.Value,
+                href.Value,
+                filePath.Value,
+                Optional.ToNullable(moduleMemorySize),
+                fileVersion.Value,
+                fileDescription.Value,
+                product.Value,
+                productVersion.Value,
+                Optional.ToNullable(isDebug),
+                language.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options)

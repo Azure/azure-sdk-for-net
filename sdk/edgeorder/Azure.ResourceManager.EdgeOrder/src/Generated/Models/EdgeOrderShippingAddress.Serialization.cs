@@ -182,7 +182,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode.Value, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), serializedAdditionalRawData);
+            return new EdgeOrderShippingAddress(
+                streetAddress1,
+                streetAddress2.Value,
+                streetAddress3.Value,
+                city.Value,
+                stateOrProvince.Value,
+                country,
+                postalCode.Value,
+                zipExtendedCode.Value,
+                companyName.Value,
+                Optional.ToNullable(addressType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderShippingAddress>.Write(ModelReaderWriterOptions options)

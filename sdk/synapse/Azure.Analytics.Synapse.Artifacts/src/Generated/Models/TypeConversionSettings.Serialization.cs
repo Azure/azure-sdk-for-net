@@ -120,7 +120,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TypeConversionSettings(allowDataTruncation.Value, treatBooleanAsNumber.Value, dateTimeFormat.Value, dateTimeOffsetFormat.Value, timeSpanFormat.Value, culture.Value);
+            return new TypeConversionSettings(
+                allowDataTruncation.Value,
+                treatBooleanAsNumber.Value,
+                dateTimeFormat.Value,
+                dateTimeOffsetFormat.Value,
+                timeSpanFormat.Value,
+                culture.Value);
         }
 
         internal partial class TypeConversionSettingsConverter : JsonConverter<TypeConversionSettings>

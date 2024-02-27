@@ -532,7 +532,38 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), Optional.ToNullable(supportExpiryDate), workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                aggregatorOrSingleRackDefinition,
+                analyticsWorkspaceId.Value,
+                availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(),
+                clusterCapacity.Value,
+                Optional.ToNullable(clusterConnectionStatus),
+                clusterExtendedLocation.Value,
+                clusterLocation.Value,
+                Optional.ToNullable(clusterManagerConnectionStatus),
+                clusterManagerId.Value,
+                clusterServicePrincipal.Value,
+                clusterType,
+                clusterVersion,
+                computeDeploymentThreshold.Value,
+                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                hybridAksExtendedLocation.Value,
+                managedResourceGroupConfiguration.Value,
+                Optional.ToNullable(manualActionCount),
+                networkFabricId,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(supportExpiryDate),
+                workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options)

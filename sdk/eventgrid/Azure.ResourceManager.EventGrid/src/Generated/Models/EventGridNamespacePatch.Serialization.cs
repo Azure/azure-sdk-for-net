@@ -201,7 +201,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku.Value, topicSpacesConfiguration.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), serializedAdditionalRawData);
+            return new EventGridNamespacePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sku.Value,
+                topicSpacesConfiguration.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespacePatch>.Write(ModelReaderWriterOptions options)

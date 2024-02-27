@@ -39,7 +39,23 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmServerData(id, name, resourceType, systemData, tags, location, extendedLocation, credentials, fqdn, port, connectionStatus, errorMessage, uuid, version, provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                credentials,
+                fqdn,
+                port,
+                connectionStatus,
+                errorMessage,
+                uuid,
+                version,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmCloudData"/>. </summary>
@@ -63,7 +79,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             tags ??= new Dictionary<string, string>();
             storageQoSPolicies ??= new List<StorageQoSPolicy>();
 
-            return new ScVmmCloudData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, cloudName, cloudCapacity, storageQoSPolicies?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmCloudData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                cloudName,
+                cloudCapacity,
+                storageQoSPolicies?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudCapacity"/>. </summary>
@@ -86,7 +117,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.StorageQoSPolicy"/> instance for mocking. </returns>
         public static StorageQoSPolicy StorageQoSPolicy(string name = null, string id = null, long? iopsMaximum = null, long? iopsMinimum = null, long? bandwidthLimit = null, string policyId = null)
         {
-            return new StorageQoSPolicy(name, id, iopsMaximum, iopsMinimum, bandwidthLimit, policyId, serializedAdditionalRawData: null);
+            return new StorageQoSPolicy(
+                name,
+                id,
+                iopsMaximum,
+                iopsMinimum,
+                bandwidthLimit,
+                policyId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmVirtualNetworkData"/>. </summary>
@@ -107,7 +145,20 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmVirtualNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, networkName, provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                networkName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmVirtualMachineData"/>. </summary>
@@ -143,7 +194,31 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             networkInterfaces ??= new List<NetworkInterfaces>();
             storageDisks ??= new List<VirtualDisk>();
 
-            return new ScVmmVirtualMachineData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, vmmServerId, cloudId, templateId, checkpointType, checkpoints?.ToList(), availabilitySets?.ToList(), osProfile, hardwareProfile, networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null, storageDisks != null ? new StorageProfile(storageDisks?.ToList(), serializedAdditionalRawData: null) : null, vmName, uuid, generation, powerState, provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmVirtualMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                vmmServerId,
+                cloudId,
+                templateId,
+                checkpointType,
+                checkpoints?.ToList(),
+                availabilitySets?.ToList(),
+                osProfile,
+                hardwareProfile,
+                networkInterfaces != null ? new NetworkProfile(networkInterfaces?.ToList(), serializedAdditionalRawData: null) : null,
+                storageDisks != null ? new StorageProfile(storageDisks?.ToList(), serializedAdditionalRawData: null) : null,
+                vmName,
+                uuid,
+                generation,
+                powerState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OSProfile"/>. </summary>
@@ -175,7 +250,19 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             ipv4Addresses ??= new List<string>();
             ipv6Addresses ??= new List<string>();
 
-            return new NetworkInterfaces(name, displayName, ipv4Addresses?.ToList(), ipv6Addresses?.ToList(), macAddress, virtualNetworkId, networkName, ipv4AddressType, ipv6AddressType, macAddressType, nicId, serializedAdditionalRawData: null);
+            return new NetworkInterfaces(
+                name,
+                displayName,
+                ipv4Addresses?.ToList(),
+                ipv6Addresses?.ToList(),
+                macAddress,
+                virtualNetworkId,
+                networkName,
+                ipv4AddressType,
+                ipv6AddressType,
+                macAddressType,
+                nicId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualDisk"/>. </summary>
@@ -196,7 +283,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.VirtualDisk"/> instance for mocking. </returns>
         public static VirtualDisk VirtualDisk(string name = null, string displayName = null, string diskId = null, int? diskSizeGB = null, int? maxDiskSizeGB = null, int? bus = null, int? lun = null, string busType = null, string vhdType = null, string volumeType = null, string vhdFormatType = null, string templateDiskId = null, StorageQoSPolicyDetails storageQoSPolicy = null, CreateDiffDisk? createDiffDisk = null)
         {
-            return new VirtualDisk(name, displayName, diskId, diskSizeGB, maxDiskSizeGB, bus, lun, busType, vhdType, volumeType, vhdFormatType, templateDiskId, storageQoSPolicy, createDiffDisk, serializedAdditionalRawData: null);
+            return new VirtualDisk(
+                name,
+                displayName,
+                diskId,
+                diskSizeGB,
+                maxDiskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                volumeType,
+                vhdFormatType,
+                templateDiskId,
+                storageQoSPolicy,
+                createDiffDisk,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmVirtualMachineTemplateData"/>. </summary>
@@ -232,7 +334,33 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             networkInterfaces ??= new List<NetworkInterfaces>();
             disks ??= new List<VirtualDisk>();
 
-            return new ScVmmVirtualMachineTemplateData(id, name, resourceType, systemData, tags, location, extendedLocation, inventoryItemId, uuid, vmmServerId, osType, osName, computerName, memoryMB, cpuCount, limitCpuForMigration, dynamicMemoryEnabled, isCustomizable, dynamicMemoryMaxMB, dynamicMemoryMinMB, isHighlyAvailable, generation, networkInterfaces?.ToList(), disks?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmVirtualMachineTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                inventoryItemId,
+                uuid,
+                vmmServerId,
+                osType,
+                osName,
+                computerName,
+                memoryMB,
+                cpuCount,
+                limitCpuForMigration,
+                dynamicMemoryEnabled,
+                isCustomizable,
+                dynamicMemoryMaxMB,
+                dynamicMemoryMinMB,
+                isHighlyAvailable,
+                generation,
+                networkInterfaces?.ToList(),
+                disks?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.ScVmmAvailabilitySetData"/>. </summary>
@@ -251,7 +379,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ScVmmAvailabilitySetData(id, name, resourceType, systemData, tags, location, extendedLocation, availabilitySetName, vmmServerId, provisioningState, serializedAdditionalRawData: null);
+            return new ScVmmAvailabilitySetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                availabilitySetName,
+                vmmServerId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ArcScVmm.InventoryItemData"/>. </summary>
@@ -268,7 +407,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="ArcScVmm.InventoryItemData"/> instance for mocking. </returns>
         public static InventoryItemData InventoryItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, InventoryItemProperties properties = null, string kind = null)
         {
-            return new InventoryItemData(id, name, resourceType, systemData, properties, kind, serializedAdditionalRawData: null);
+            return new InventoryItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InventoryItemProperties"/>. </summary>
@@ -280,7 +426,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.InventoryItemProperties"/> instance for mocking. </returns>
         public static InventoryItemProperties InventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
         {
-            return new UnknownInventoryItemProperties(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData: null);
+            return new UnknownInventoryItemProperties(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CloudInventoryItem"/>. </summary>
@@ -291,7 +443,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.CloudInventoryItem"/> instance for mocking. </returns>
         public static CloudInventoryItem CloudInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
         {
-            return new CloudInventoryItem(InventoryType.Cloud, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData: null);
+            return new CloudInventoryItem(
+                InventoryType.Cloud,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkInventoryItem"/>. </summary>
@@ -302,7 +460,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.VirtualNetworkInventoryItem"/> instance for mocking. </returns>
         public static VirtualNetworkInventoryItem VirtualNetworkInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
         {
-            return new VirtualNetworkInventoryItem(InventoryType.VirtualNetwork, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData: null);
+            return new VirtualNetworkInventoryItem(
+                InventoryType.VirtualNetwork,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineTemplateInventoryItem"/>. </summary>
@@ -317,7 +481,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <returns> A new <see cref="Models.VirtualMachineTemplateInventoryItem"/> instance for mocking. </returns>
         public static VirtualMachineTemplateInventoryItem VirtualMachineTemplateInventoryItem(string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null, int? cpuCount = null, int? memoryMB = null, OSType? osType = null, string osName = null)
         {
-            return new VirtualMachineTemplateInventoryItem(InventoryType.VirtualMachineTemplate, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData: null, cpuCount, memoryMB, osType, osName);
+            return new VirtualMachineTemplateInventoryItem(
+                InventoryType.VirtualMachineTemplate,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                cpuCount,
+                memoryMB,
+                osType,
+                osName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineInventoryItem"/>. </summary>
@@ -335,7 +509,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         {
             ipAddresses ??= new List<string>();
 
-            return new VirtualMachineInventoryItem(InventoryType.VirtualMachine, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData: null, osType, osName, powerState, ipAddresses?.ToList(), cloud);
+            return new VirtualMachineInventoryItem(
+                InventoryType.VirtualMachine,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                osType,
+                osName,
+                powerState,
+                ipAddresses?.ToList(),
+                cloud);
         }
     }
 }

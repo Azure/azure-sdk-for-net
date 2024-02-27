@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceOSVersionData(id, name, type, systemData.Value, Optional.ToNullable(location), family.Value, familyLabel.Value, version.Value, label.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isActive), serializedAdditionalRawData);
+            return new CloudServiceOSVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                family.Value,
+                familyLabel.Value,
+                version.Value,
+                label.Value,
+                Optional.ToNullable(isDefault),
+                Optional.ToNullable(isActive),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceOSVersionData>.Write(ModelReaderWriterOptions options)

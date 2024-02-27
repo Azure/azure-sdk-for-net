@@ -51,7 +51,31 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DataBoxJobData(id, name, resourceType, systemData, tags, location, transferType, isCancellable, isDeletable, isShippingAddressEditable, reverseShippingDetailsUpdate, reverseTransportPreferenceUpdate, isPrepareToShipEnabled, status, startOn, error, details, cancellationReason, deliveryType, deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn, serializedAdditionalRawData: null) : null, isCancellableWithoutFee, sku, identity, serializedAdditionalRawData: null);
+            return new DataBoxJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                transferType,
+                isCancellable,
+                isDeletable,
+                isShippingAddressEditable,
+                reverseShippingDetailsUpdate,
+                reverseTransportPreferenceUpdate,
+                isPrepareToShipEnabled,
+                status,
+                startOn,
+                error,
+                details,
+                cancellationReason,
+                deliveryType,
+                deliveryInfoScheduledOn != null ? new JobDeliveryInfo(deliveryInfoScheduledOn, serializedAdditionalRawData: null) : null,
+                isCancellableWithoutFee,
+                sku,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxBasicJobDetails"/>. </summary>
@@ -91,7 +115,28 @@ namespace Azure.ResourceManager.DataBox.Models
             copyLogDetails ??= new List<CopyLogDetails>();
             actions ??= new List<CustomerResolutionCode>();
 
-            return new UnknownJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), default, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData: null);
+            return new UnknownJobDetails(
+                jobStages?.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails?.ToList(),
+                dataExportDetails?.ToList(),
+                default,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails?.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions?.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
@@ -103,7 +148,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.DataBoxJobStage"/> instance for mocking. </returns>
         public static DataBoxJobStage DataBoxJobStage(DataBoxStageName? stageName = null, string displayName = null, DataBoxStageStatus? stageStatus = null, DateTimeOffset? stageTime = null, BinaryData jobStageDetails = null)
         {
-            return new DataBoxJobStage(stageName, displayName, stageStatus, stageTime, jobStageDetails, serializedAdditionalRawData: null);
+            return new DataBoxJobStage(
+                stageName,
+                displayName,
+                stageStatus,
+                stageTime,
+                jobStageDetails,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PackageShippingDetails"/>. </summary>
@@ -214,7 +265,18 @@ namespace Azure.ResourceManager.DataBox.Models
             apiVersions ??= new List<string>();
             countriesWithinCommerceBoundary ??= new List<string>();
 
-            return new DataBoxSkuInformation(sku, isEnabled, dataLocationToServiceLocationMap?.ToList(), capacity, costs?.ToList(), apiVersions?.ToList(), disabledReason, disabledReasonMessage, requiredFeature, countriesWithinCommerceBoundary?.ToList(), serializedAdditionalRawData: null);
+            return new DataBoxSkuInformation(
+                sku,
+                isEnabled,
+                dataLocationToServiceLocationMap?.ToList(),
+                capacity,
+                costs?.ToList(),
+                apiVersions?.ToList(),
+                disabledReason,
+                disabledReasonMessage,
+                requiredFeature,
+                countriesWithinCommerceBoundary?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataLocationToServiceLocationMap"/>. </summary>
@@ -388,7 +450,13 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             supportedAccessProtocols ??= new List<DataBoxAccessProtocol>();
 
-            return new ShareCredentialDetails(shareName, shareType, userName, password, supportedAccessProtocols?.ToList(), serializedAdditionalRawData: null);
+            return new ShareCredentialDetails(
+                shareName,
+                shareType,
+                userName,
+                password,
+                supportedAccessProtocols?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplianceNetworkConfiguration"/>. </summary>
@@ -428,7 +496,27 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             actions ??= new List<CustomerResolutionCode>();
 
-            return new DataBoxCustomerDiskCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData: null, serialNumber, copyStatus);
+            return new DataBoxCustomerDiskCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions?.ToList(),
+                serializedAdditionalRawData: null,
+                serialNumber,
+                copyStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxCopyProgress"/>. </summary>
@@ -457,7 +545,25 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             actions ??= new List<CustomerResolutionCode>();
 
-            return new DataBoxCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData: null);
+            return new DataBoxCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GranularCopyProgress"/>. </summary>
@@ -486,7 +592,25 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             actions ??= new List<CustomerResolutionCode>();
 
-            return new GranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData: null);
+            return new GranularCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>. </summary>
@@ -552,7 +676,34 @@ namespace Azure.ResourceManager.DataBox.Models
             exportDiskDetails ??= new Dictionary<string, ExportDiskDetails>();
             copyProgress ??= new List<DataBoxCustomerDiskCopyProgress>();
 
-            return new DataBoxCustomerDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxCustomerDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData: null, importDiskDetails, exportDiskDetails, copyProgress?.ToList(), deliverToDataCenterPackageDetails, returnToCustomerPackageDetails, enableManifestBackup);
+            return new DataBoxCustomerDiskJobDetails(
+                jobStages?.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails?.ToList(),
+                dataExportDetails?.ToList(),
+                DataBoxOrderType.DataBoxCustomerDisk,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails?.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions?.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData: null,
+                importDiskDetails,
+                exportDiskDetails,
+                copyProgress?.ToList(),
+                deliverToDataCenterPackageDetails,
+                returnToCustomerPackageDetails,
+                enableManifestBackup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ImportDiskDetails"/>. </summary>
@@ -586,7 +737,13 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             diskSecrets ??= new List<DataBoxDiskSecret>();
 
-            return new CustomerDiskJobSecrets(DataBoxOrderType.DataBoxCustomerDisk, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, diskSecrets?.ToList(), carrierAccountNumber);
+            return new CustomerDiskJobSecrets(
+                DataBoxOrderType.DataBoxCustomerDisk,
+                dataCenterAccessSecurityCode,
+                error,
+                serializedAdditionalRawData: null,
+                diskSecrets?.ToList(),
+                carrierAccountNumber);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskSecret"/>. </summary>
@@ -631,7 +788,24 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             supportedCarriersForReturnShipment ??= new List<string>();
 
-            return new DataCenterAddressLocationResult(DataCenterAddressType.DataCenterAddressLocation, supportedCarriersForReturnShipment?.ToList(), dataCenterAzureLocation, serializedAdditionalRawData: null, contactPersonName, company, street1, street2, street3, city, state, zip, country, phone, phoneExtension, addressType, additionalShippingInformation);
+            return new DataCenterAddressLocationResult(
+                DataCenterAddressType.DataCenterAddressLocation,
+                supportedCarriersForReturnShipment?.ToList(),
+                dataCenterAzureLocation,
+                serializedAdditionalRawData: null,
+                contactPersonName,
+                company,
+                street1,
+                street2,
+                street3,
+                city,
+                state,
+                zip,
+                country,
+                phone,
+                phoneExtension,
+                addressType,
+                additionalShippingInformation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxAccountCopyLogDetails"/>. </summary>
@@ -672,7 +846,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.DataBoxDiskGranularCopyLogDetails"/> instance for mocking. </returns>
         public static DataBoxDiskGranularCopyLogDetails DataBoxDiskGranularCopyLogDetails(string serialNumber = null, ResourceIdentifier accountId = null, string errorLogLink = null, string verboseLogLink = null)
         {
-            return new DataBoxDiskGranularCopyLogDetails(DataBoxOrderType.DataBoxCustomerDisk, serializedAdditionalRawData: null, serialNumber, accountId, errorLogLink, verboseLogLink);
+            return new DataBoxDiskGranularCopyLogDetails(
+                DataBoxOrderType.DataBoxCustomerDisk,
+                serializedAdditionalRawData: null,
+                serialNumber,
+                accountId,
+                errorLogLink,
+                verboseLogLink);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskCopyProgress"/>. </summary>
@@ -687,7 +867,14 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             actions ??= new List<CustomerResolutionCode>();
 
-            return new DataBoxDiskCopyProgress(serialNumber, bytesCopied, percentComplete, status, error, actions?.ToList(), serializedAdditionalRawData: null);
+            return new DataBoxDiskCopyProgress(
+                serialNumber,
+                bytesCopied,
+                percentComplete,
+                status,
+                error,
+                actions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskGranularCopyProgress"/>. </summary>
@@ -718,7 +905,27 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             actions ??= new List<CustomerResolutionCode>();
 
-            return new DataBoxDiskGranularCopyProgress(storageAccountName, transferType, dataAccountType, accountId, bytesProcessed, totalBytesToProcess, filesProcessed, totalFilesToProcess, invalidFilesProcessed, invalidFileBytesUploaded, renamedContainerCount, filesErroredOut, directoriesErroredOut, invalidDirectoriesProcessed, isEnumerationInProgress, error, actions?.ToList(), serializedAdditionalRawData: null, serialNumber, copyStatus);
+            return new DataBoxDiskGranularCopyProgress(
+                storageAccountName,
+                transferType,
+                dataAccountType,
+                accountId,
+                bytesProcessed,
+                totalBytesToProcess,
+                filesProcessed,
+                totalFilesToProcess,
+                invalidFilesProcessed,
+                invalidFileBytesUploaded,
+                renamedContainerCount,
+                filesErroredOut,
+                directoriesErroredOut,
+                invalidDirectoriesProcessed,
+                isEnumerationInProgress,
+                error,
+                actions?.ToList(),
+                serializedAdditionalRawData: null,
+                serialNumber,
+                copyStatus);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobDetails"/>. </summary>
@@ -769,7 +976,34 @@ namespace Azure.ResourceManager.DataBox.Models
             granularCopyLogDetails ??= new List<DataBoxDiskGranularCopyLogDetails>();
             disksAndSizeDetails ??= new Dictionary<string, int>();
 
-            return new DataBoxDiskJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxDisk, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData: null, preferredDisks, copyProgress?.ToList(), granularCopyProgress?.ToList(), granularCopyLogDetails?.ToList(), disksAndSizeDetails, passkey);
+            return new DataBoxDiskJobDetails(
+                jobStages?.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails?.ToList(),
+                dataExportDetails?.ToList(),
+                DataBoxOrderType.DataBoxDisk,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails?.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions?.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData: null,
+                preferredDisks,
+                copyProgress?.ToList(),
+                granularCopyProgress?.ToList(),
+                granularCopyLogDetails?.ToList(),
+                disksAndSizeDetails,
+                passkey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxDiskJobSecrets"/>. </summary>
@@ -783,7 +1017,14 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             diskSecrets ??= new List<DataBoxDiskSecret>();
 
-            return new DataBoxDiskJobSecrets(DataBoxOrderType.DataBoxDisk, dataCenterAccessSecurityCode, error, serializedAdditionalRawData: null, diskSecrets?.ToList(), passkey, isPasskeyUserDefined);
+            return new DataBoxDiskJobSecrets(
+                DataBoxOrderType.DataBoxDisk,
+                dataCenterAccessSecurityCode,
+                error,
+                serializedAdditionalRawData: null,
+                diskSecrets?.ToList(),
+                passkey,
+                isPasskeyUserDefined);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>. </summary>
@@ -839,7 +1080,30 @@ namespace Azure.ResourceManager.DataBox.Models
             actions ??= new List<CustomerResolutionCode>();
             copyProgress ??= new List<DataBoxCopyProgress>();
 
-            return new DataBoxHeavyJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBoxHeavy, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData: null, copyProgress?.ToList(), devicePassword);
+            return new DataBoxHeavyJobDetails(
+                jobStages?.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails?.ToList(),
+                dataExportDetails?.ToList(),
+                DataBoxOrderType.DataBoxHeavy,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails?.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions?.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData: null,
+                copyProgress?.ToList(),
+                devicePassword);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxHeavyJobSecrets"/>. </summary>
@@ -866,7 +1130,13 @@ namespace Azure.ResourceManager.DataBox.Models
             networkConfigurations ??= new List<ApplianceNetworkConfiguration>();
             accountCredentialDetails ??= new List<DataBoxAccountCredentialDetails>();
 
-            return new DataBoxHeavySecret(deviceSerialNumber, devicePassword, networkConfigurations?.ToList(), encodedValidationCertPubKey, accountCredentialDetails?.ToList(), serializedAdditionalRawData: null);
+            return new DataBoxHeavySecret(
+                deviceSerialNumber,
+                devicePassword,
+                networkConfigurations?.ToList(),
+                encodedValidationCertPubKey,
+                accountCredentialDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobDetails"/>. </summary>
@@ -909,7 +1179,30 @@ namespace Azure.ResourceManager.DataBox.Models
             actions ??= new List<CustomerResolutionCode>();
             copyProgress ??= new List<DataBoxCopyProgress>();
 
-            return new DataBoxJobDetails(jobStages?.ToList(), contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails?.ToList(), dataExportDetails?.ToList(), DataBoxOrderType.DataBox, preferences, reverseShippingDetails, copyLogDetails?.ToList(), reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions?.ToList(), lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData: null, copyProgress?.ToList(), devicePassword);
+            return new DataBoxJobDetails(
+                jobStages?.ToList(),
+                contactDetails,
+                shippingAddress,
+                deliveryPackage,
+                returnPackage,
+                dataImportDetails?.ToList(),
+                dataExportDetails?.ToList(),
+                DataBoxOrderType.DataBox,
+                preferences,
+                reverseShippingDetails,
+                copyLogDetails?.ToList(),
+                reverseShipmentLabelSasKey,
+                chainOfCustodySasKey,
+                deviceErasureDetails,
+                keyEncryptionKey,
+                expectedDataSizeInTerabytes,
+                actions?.ToList(),
+                lastMitigationActionOnJob,
+                dataCenterAddress,
+                dataCenterCode,
+                serializedAdditionalRawData: null,
+                copyProgress?.ToList(),
+                devicePassword);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataboxJobSecrets"/>. </summary>
@@ -936,7 +1229,13 @@ namespace Azure.ResourceManager.DataBox.Models
             networkConfigurations ??= new List<ApplianceNetworkConfiguration>();
             accountCredentialDetails ??= new List<DataBoxAccountCredentialDetails>();
 
-            return new DataBoxSecret(deviceSerialNumber, devicePassword, networkConfigurations?.ToList(), encodedValidationCertPubKey, accountCredentialDetails?.ToList(), serializedAdditionalRawData: null);
+            return new DataBoxSecret(
+                deviceSerialNumber,
+                devicePassword,
+                networkConfigurations?.ToList(),
+                encodedValidationCertPubKey,
+                accountCredentialDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataBoxScheduleAvailabilityContent"/>. </summary>
@@ -959,7 +1258,13 @@ namespace Azure.ResourceManager.DataBox.Models
             dataExportDetails ??= new List<DataExportDetails>();
             dataImportDetails ??= new List<DataImportDetails>();
 
-            return new DataTransferDetailsValidationContent(DataBoxValidationInputDiscriminator.ValidateDataTransferDetails, serializedAdditionalRawData: null, dataExportDetails?.ToList(), dataImportDetails?.ToList(), deviceType, transferType);
+            return new DataTransferDetailsValidationContent(
+                DataBoxValidationInputDiscriminator.ValidateDataTransferDetails,
+                serializedAdditionalRawData: null,
+                dataExportDetails?.ToList(),
+                dataImportDetails?.ToList(),
+                deviceType,
+                transferType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataTransferDetailsValidationResult"/>. </summary>
@@ -1016,7 +1321,13 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationContent"/> instance for mocking. </returns>
         public static SkuAvailabilityValidationContent SkuAvailabilityValidationContent(DataBoxSkuName deviceType = default, DataBoxJobTransferType transferType = default, string country = null, AzureLocation location = default)
         {
-            return new SkuAvailabilityValidationContent(DataBoxValidationInputDiscriminator.ValidateSkuAvailability, serializedAdditionalRawData: null, deviceType, transferType, country, location);
+            return new SkuAvailabilityValidationContent(
+                DataBoxValidationInputDiscriminator.ValidateSkuAvailability,
+                serializedAdditionalRawData: null,
+                deviceType,
+                transferType,
+                country,
+                location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuAvailabilityValidationResult"/>. </summary>

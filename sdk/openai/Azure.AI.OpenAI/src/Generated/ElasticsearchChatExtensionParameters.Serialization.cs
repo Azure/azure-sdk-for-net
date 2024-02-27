@@ -207,7 +207,18 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticsearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, fieldsMapping.Value, Optional.ToNullable(queryType), embeddingDependency.Value, serializedAdditionalRawData);
+            return new ElasticsearchChatExtensionParameters(
+                authentication.Value,
+                Optional.ToNullable(topNDocuments),
+                Optional.ToNullable(inScope),
+                Optional.ToNullable(strictness),
+                roleInformation.Value,
+                endpoint,
+                indexName,
+                fieldsMapping.Value,
+                Optional.ToNullable(queryType),
+                embeddingDependency.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticsearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)

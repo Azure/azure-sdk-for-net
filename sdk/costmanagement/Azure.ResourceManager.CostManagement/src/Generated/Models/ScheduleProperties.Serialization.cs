@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduleProperties(frequency, Optional.ToNullable(hourOfDay), daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(), weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(), Optional.ToNullable(dayOfMonth), startDate, endDate, serializedAdditionalRawData);
+            return new ScheduleProperties(
+                frequency,
+                Optional.ToNullable(hourOfDay),
+                daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(),
+                weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(),
+                Optional.ToNullable(dayOfMonth),
+                startDate,
+                endDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScheduleProperties>.Write(ModelReaderWriterOptions options)

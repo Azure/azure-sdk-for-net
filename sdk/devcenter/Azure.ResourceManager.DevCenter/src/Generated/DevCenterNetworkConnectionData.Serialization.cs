@@ -288,7 +288,23 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterNetworkConnectionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, subnetId.Value, domainName.Value, organizationUnit.Value, domainUsername.Value, domainPassword.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(healthCheckStatus), networkingResourceGroupName.Value, Optional.ToNullable(domainJoinType), serializedAdditionalRawData);
+            return new DevCenterNetworkConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnetId.Value,
+                domainName.Value,
+                organizationUnit.Value,
+                domainUsername.Value,
+                domainPassword.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(healthCheckStatus),
+                networkingResourceGroupName.Value,
+                Optional.ToNullable(domainJoinType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterNetworkConnectionData>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForServersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, vmScanners.Value);
+            return new DefenderForServersGcpOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                defenderForServers.Value,
+                arcAutoProvisioning.Value,
+                vaAutoProvisioning.Value,
+                mdeAutoProvisioning.Value,
+                subPlan.Value,
+                vmScanners.Value);
         }
 
         BinaryData IPersistableModel<DefenderForServersGcpOffering>.Write(ModelReaderWriterOptions options)

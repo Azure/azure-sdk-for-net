@@ -265,7 +265,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalLocation(location, sku, zones ?? new ChangeTrackingList<string>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
+            return new AdditionalLocation(
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId.Value,
+                virtualNetworkConfiguration.Value,
+                gatewayRegionalUri.Value,
+                Optional.ToNullable(disableGateway),
+                Optional.ToNullable(platformVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalLocation>.Write(ModelReaderWriterOptions options)

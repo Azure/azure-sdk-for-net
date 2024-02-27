@@ -127,7 +127,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatExtensionDataSourceResponseCitation(content, title.Value, url.Value, filepath.Value, chunkId.Value, serializedAdditionalRawData);
+            return new AzureChatExtensionDataSourceResponseCitation(
+                content,
+                title.Value,
+                url.Value,
+                filepath.Value,
+                chunkId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionDataSourceResponseCitation>.Write(ModelReaderWriterOptions options)

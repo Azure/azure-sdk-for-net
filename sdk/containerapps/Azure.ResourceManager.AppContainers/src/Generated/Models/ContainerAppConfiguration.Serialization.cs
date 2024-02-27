@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppConfiguration(secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(), Optional.ToNullable(activeRevisionsMode), ingress.Value, registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value, serializedAdditionalRawData);
+            return new ContainerAppConfiguration(
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                Optional.ToNullable(activeRevisionsMode),
+                ingress.Value,
+                registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                dapr.Value,
+                Optional.ToNullable(maxInactiveRevisions),
+                service.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppConfiguration>.Write(ModelReaderWriterOptions options)

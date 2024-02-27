@@ -104,7 +104,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentDocumentResult(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences);
+            return new SentimentDocumentResult(
+                id,
+                warnings,
+                Optional.ToNullable(statistics),
+                sentiment,
+                confidenceScores,
+                sentences);
         }
     }
 }

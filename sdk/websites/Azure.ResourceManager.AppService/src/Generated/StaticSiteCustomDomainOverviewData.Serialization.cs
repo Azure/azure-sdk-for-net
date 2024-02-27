@@ -213,7 +213,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteCustomDomainOverviewData(id, name, type, systemData.Value, domainName.Value, Optional.ToNullable(createdOn), Optional.ToNullable(status), validationToken.Value, errorMessage.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteCustomDomainOverviewData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                domainName.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(status),
+                validationToken.Value,
+                errorMessage.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteCustomDomainOverviewData>.Write(ModelReaderWriterOptions options)

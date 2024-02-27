@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlUserDefinedFunctionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, resource.Value, identity, serializedAdditionalRawData);
+            return new CosmosDBSqlUserDefinedFunctionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlUserDefinedFunctionData>.Write(ModelReaderWriterOptions options)

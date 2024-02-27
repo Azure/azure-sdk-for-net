@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceUsage(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new ContainerInstanceUsage(
+                id.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceUsage>.Write(ModelReaderWriterOptions options)

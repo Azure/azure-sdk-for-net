@@ -463,7 +463,35 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServicePlanPatch(id, name, type, systemData.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value, serializedAdditionalRawData);
+            return new AppServicePlanPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                workerTierName.Value,
+                Optional.ToNullable(status),
+                subscription.Value,
+                hostingEnvironmentProfile.Value,
+                Optional.ToNullable(maximumNumberOfWorkers),
+                geoRegion.Value,
+                Optional.ToNullable(perSiteScaling),
+                Optional.ToNullable(elasticScaleEnabled),
+                Optional.ToNullable(maximumElasticWorkerCount),
+                Optional.ToNullable(numberOfSites),
+                Optional.ToNullable(isSpot),
+                Optional.ToNullable(spotExpirationTime),
+                Optional.ToNullable(freeOfferExpirationTime),
+                resourceGroup.Value,
+                Optional.ToNullable(reserved),
+                Optional.ToNullable(isXenon),
+                Optional.ToNullable(hyperV),
+                Optional.ToNullable(targetWorkerCount),
+                Optional.ToNullable(targetWorkerSizeId),
+                Optional.ToNullable(provisioningState),
+                kubeEnvironmentProfile.Value,
+                Optional.ToNullable(zoneRedundant),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServicePlanPatch>.Write(ModelReaderWriterOptions options)

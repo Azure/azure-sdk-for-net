@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new PostgreSqlServerAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(administratorType),
+                login.Value,
+                Optional.ToNullable(sid),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerAdministratorData>.Write(ModelReaderWriterOptions options)

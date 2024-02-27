@@ -214,7 +214,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryArtifactPublishingProfileBase(targetRegions ?? new ChangeTrackingList<TargetRegion>(), Optional.ToNullable(replicaCount), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(replicationMode), targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(), serializedAdditionalRawData);
+            return new GalleryArtifactPublishingProfileBase(
+                targetRegions ?? new ChangeTrackingList<TargetRegion>(),
+                Optional.ToNullable(replicaCount),
+                Optional.ToNullable(excludeFromLatest),
+                Optional.ToNullable(publishedDate),
+                Optional.ToNullable(endOfLifeDate),
+                Optional.ToNullable(storageAccountType),
+                Optional.ToNullable(replicationMode),
+                targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryArtifactPublishingProfileBase>.Write(ModelReaderWriterOptions options)

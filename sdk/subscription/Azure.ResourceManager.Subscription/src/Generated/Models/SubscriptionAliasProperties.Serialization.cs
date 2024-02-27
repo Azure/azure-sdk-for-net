@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionAliasProperties(subscriptionId.Value, displayName.Value, Optional.ToNullable(provisioningState), acceptOwnershipUrl.Value, Optional.ToNullable(acceptOwnershipState), billingScope.Value, Optional.ToNullable(workload), resellerId.Value, subscriptionOwnerId.Value, managementGroupId.Value, Optional.ToNullable(createdTime), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new SubscriptionAliasProperties(
+                subscriptionId.Value,
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                acceptOwnershipUrl.Value,
+                Optional.ToNullable(acceptOwnershipState),
+                billingScope.Value,
+                Optional.ToNullable(workload),
+                resellerId.Value,
+                subscriptionOwnerId.Value,
+                managementGroupId.Value,
+                Optional.ToNullable(createdTime),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionAliasProperties>.Write(ModelReaderWriterOptions options)

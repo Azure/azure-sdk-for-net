@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesObjectStatus(name.Value, @namespace.Value, kind.Value, Optional.ToNullable(complianceState), appliedBy.Value, statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(), helmReleaseProperties.Value, serializedAdditionalRawData);
+            return new KubernetesObjectStatus(
+                name.Value,
+                @namespace.Value,
+                kind.Value,
+                Optional.ToNullable(complianceState),
+                appliedBy.Value,
+                statusConditions ?? new ChangeTrackingList<KubernetesObjectStatusCondition>(),
+                helmReleaseProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesObjectStatus>.Write(ModelReaderWriterOptions options)

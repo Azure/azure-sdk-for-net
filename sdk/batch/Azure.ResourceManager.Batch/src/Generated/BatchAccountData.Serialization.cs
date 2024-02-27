@@ -528,7 +528,32 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new BatchAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                accountEndpoint.Value,
+                nodeManagementEndpoint.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(poolAllocationMode),
+                keyVaultReference.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                networkProfile.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>(),
+                autoStorage.Value,
+                encryption.Value,
+                Optional.ToNullable(dedicatedCoreQuota),
+                Optional.ToNullable(lowPriorityCoreQuota),
+                dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>(),
+                Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced),
+                Optional.ToNullable(poolQuota),
+                Optional.ToNullable(activeJobAndJobScheduleQuota),
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options)

@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), Optional.ToNullable(databaseId), description.Value, serverName.Value, databaseName.Value, userName.Value, serializedAdditionalRawData);
+            return new SyncAgentLinkedDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(databaseType),
+                Optional.ToNullable(databaseId),
+                description.Value,
+                serverName.Value,
+                databaseName.Value,
+                userName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentLinkedDatabase>.Write(ModelReaderWriterOptions options)

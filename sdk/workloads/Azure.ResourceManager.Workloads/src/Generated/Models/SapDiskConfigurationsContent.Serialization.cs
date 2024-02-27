@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiskConfigurationsContent(appLocation, environment, sapProduct, databaseType, deploymentType, dbVmSku, serializedAdditionalRawData);
+            return new SapDiskConfigurationsContent(
+                appLocation,
+                environment,
+                sapProduct,
+                databaseType,
+                deploymentType,
+                dbVmSku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfigurationsContent>.Write(ModelReaderWriterOptions options)

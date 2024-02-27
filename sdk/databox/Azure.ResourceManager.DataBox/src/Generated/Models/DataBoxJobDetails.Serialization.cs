@@ -438,7 +438,30 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobDetails(jobStages ?? new ChangeTrackingList<DataBoxJobStage>(), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(), dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(), jobDetailsType, preferences.Value, reverseShippingDetails.Value, copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), actions ?? new ChangeTrackingList<CustomerResolutionCode>(), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData, copyProgress ?? new ChangeTrackingList<DataBoxCopyProgress>(), devicePassword.Value);
+            return new DataBoxJobDetails(
+                jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
+                contactDetails,
+                shippingAddress.Value,
+                deliveryPackage.Value,
+                returnPackage.Value,
+                dataImportDetails ?? new ChangeTrackingList<DataImportDetails>(),
+                dataExportDetails ?? new ChangeTrackingList<DataExportDetails>(),
+                jobDetailsType,
+                preferences.Value,
+                reverseShippingDetails.Value,
+                copyLogDetails ?? new ChangeTrackingList<CopyLogDetails>(),
+                reverseShipmentLabelSasKey.Value,
+                chainOfCustodySasKey.Value,
+                deviceErasureDetails.Value,
+                keyEncryptionKey.Value,
+                Optional.ToNullable(expectedDataSizeInTerabytes),
+                actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
+                lastMitigationActionOnJob.Value,
+                dataCenterAddress.Value,
+                Optional.ToNullable(dataCenterCode),
+                serializedAdditionalRawData,
+                copyProgress ?? new ChangeTrackingList<DataBoxCopyProgress>(),
+                devicePassword.Value);
         }
 
         BinaryData IPersistableModel<DataBoxJobDetails>.Write(ModelReaderWriterOptions options)

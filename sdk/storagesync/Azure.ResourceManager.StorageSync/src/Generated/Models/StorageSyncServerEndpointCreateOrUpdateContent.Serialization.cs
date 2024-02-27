@@ -291,7 +291,23 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointCreateOrUpdateContent(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferShareName.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverLocalPath.Value,
+                Optional.ToNullable(cloudTiering),
+                Optional.ToNullable(volumeFreeSpacePercent),
+                Optional.ToNullable(tierFilesOlderThanDays),
+                friendlyName.Value,
+                serverResourceId.Value,
+                Optional.ToNullable(offlineDataTransfer),
+                offlineDataTransferShareName.Value,
+                Optional.ToNullable(initialDownloadPolicy),
+                Optional.ToNullable(localCacheMode),
+                Optional.ToNullable(initialUploadPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

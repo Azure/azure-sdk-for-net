@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, azureTableSourceQuery.Value, azureTableSourceIgnoreTableNotFound.Value);
+            return new AzureTableSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                azureTableSourceQuery.Value,
+                azureTableSourceIgnoreTableNotFound.Value);
         }
 
         BinaryData IPersistableModel<AzureTableSource>.Write(ModelReaderWriterOptions options)

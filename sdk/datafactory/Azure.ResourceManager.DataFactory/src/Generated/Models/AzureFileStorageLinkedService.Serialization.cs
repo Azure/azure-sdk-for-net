@@ -334,7 +334,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFileStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host.Value, userId.Value, password, connectionString.Value, accountKey, sasUri.Value, sasToken, fileShare.Value, snapshot.Value, encryptedCredential.Value);
+            return new AzureFileStorageLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host.Value,
+                userId.Value,
+                password,
+                connectionString.Value,
+                accountKey,
+                sasUri.Value,
+                sasToken,
+                fileShare.Value,
+                snapshot.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AzureFileStorageLinkedService>.Write(ModelReaderWriterOptions options)

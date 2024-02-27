@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaReplicationDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(lastReplicatedTime), vmNics ?? new ChangeTrackingList<VmNicDetails>(), vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, initialReplicationDetails.Value, vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
+            return new HyperVReplicaReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(lastReplicatedTime),
+                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                vmId.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                initialReplicationDetails.Value,
+                vmDiskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaReplicationDetails>.Write(ModelReaderWriterOptions options)

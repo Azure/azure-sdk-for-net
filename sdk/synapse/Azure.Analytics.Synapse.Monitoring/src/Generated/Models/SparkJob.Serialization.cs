@@ -146,7 +146,22 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJob(state.Value, name.Value, submitter.Value, compute.Value, sparkApplicationId.Value, livyId.Value, timing ?? new ChangeTrackingList<string>(), sparkJobDefinition.Value, pipeline ?? new ChangeTrackingList<SparkJob>(), jobType.Value, Optional.ToNullable(submitTime), Optional.ToNullable(endTime), queuedDuration.Value, runningDuration.Value, totalDuration.Value);
+            return new SparkJob(
+                state.Value,
+                name.Value,
+                submitter.Value,
+                compute.Value,
+                sparkApplicationId.Value,
+                livyId.Value,
+                timing ?? new ChangeTrackingList<string>(),
+                sparkJobDefinition.Value,
+                pipeline ?? new ChangeTrackingList<SparkJob>(),
+                jobType.Value,
+                Optional.ToNullable(submitTime),
+                Optional.ToNullable(endTime),
+                queuedDuration.Value,
+                runningDuration.Value,
+                totalDuration.Value);
         }
     }
 }

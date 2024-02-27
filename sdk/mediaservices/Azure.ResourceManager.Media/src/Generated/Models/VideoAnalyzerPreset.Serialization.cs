@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage.Value, Optional.ToNullable(mode), experimentalOptions ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(insightsToExtract));
+            return new VideoAnalyzerPreset(
+                odataType,
+                serializedAdditionalRawData,
+                audioLanguage.Value,
+                Optional.ToNullable(mode),
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(insightsToExtract));
         }
 
         BinaryData IPersistableModel<VideoAnalyzerPreset>.Write(ModelReaderWriterOptions options)

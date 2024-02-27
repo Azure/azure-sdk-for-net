@@ -218,7 +218,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeIotAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            return new EdgeIotAddon(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                iotDeviceDetails,
+                iotEdgeDeviceDetails,
+                version.Value,
+                Optional.ToNullable(hostPlatform),
+                Optional.ToNullable(hostPlatformType),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<EdgeIotAddon>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteAnalysisDefinitionData(id, name, type, systemData.Value, description.Value, kind.Value, serializedAdditionalRawData);
+            return new WebSiteAnalysisDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteAnalysisDefinitionData>.Write(ModelReaderWriterOptions options)

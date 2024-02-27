@@ -137,7 +137,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PineconeFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields, contentFieldsSeparator.Value, serializedAdditionalRawData);
+            return new PineconeFieldMappingOptions(
+                titleField.Value,
+                urlField.Value,
+                filepathField.Value,
+                contentFields,
+                contentFieldsSeparator.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PineconeFieldMappingOptions>.Write(ModelReaderWriterOptions options)

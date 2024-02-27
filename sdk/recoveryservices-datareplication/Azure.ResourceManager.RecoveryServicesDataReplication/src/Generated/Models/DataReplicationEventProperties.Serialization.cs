@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEventProperties(Optional.ToNullable(resourceType), resourceName.Value, eventType.Value, eventName.Value, Optional.ToNullable(timeOfOccurrence), severity.Value, description.Value, correlationId.Value, healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(), customProperties, serializedAdditionalRawData);
+            return new DataReplicationEventProperties(
+                Optional.ToNullable(resourceType),
+                resourceName.Value,
+                eventType.Value,
+                eventName.Value,
+                Optional.ToNullable(timeOfOccurrence),
+                severity.Value,
+                description.Value,
+                correlationId.Value,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEventProperties>.Write(ModelReaderWriterOptions options)

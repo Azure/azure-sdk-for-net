@@ -125,7 +125,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(
+                dbServerHost,
+                dbName,
+                dbUserName,
+                dbPasswordSecretName,
+                keyVaultId,
+                thriftUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)

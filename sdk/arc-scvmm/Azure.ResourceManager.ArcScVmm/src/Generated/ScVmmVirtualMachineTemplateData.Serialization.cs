@@ -444,7 +444,33 @@ namespace Azure.ResourceManager.ArcScVmm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(), disks ?? new ChangeTrackingList<VirtualDisk>(), provisioningState.Value, serializedAdditionalRawData);
+            return new ScVmmVirtualMachineTemplateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                inventoryItemId.Value,
+                uuid.Value,
+                vmmServerId.Value,
+                Optional.ToNullable(osType),
+                osName.Value,
+                computerName.Value,
+                Optional.ToNullable(memoryMB),
+                Optional.ToNullable(cpuCount),
+                Optional.ToNullable(limitCpuForMigration),
+                Optional.ToNullable(dynamicMemoryEnabled),
+                Optional.ToNullable(isCustomizable),
+                Optional.ToNullable(dynamicMemoryMaxMB),
+                Optional.ToNullable(dynamicMemoryMinMB),
+                isHighlyAvailable.Value,
+                Optional.ToNullable(generation),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaces>(),
+                disks ?? new ChangeTrackingList<VirtualDisk>(),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScVmmVirtualMachineTemplateData>.Write(ModelReaderWriterOptions options)

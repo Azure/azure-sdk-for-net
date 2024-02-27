@@ -275,7 +275,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpConfiguration(annotation.Value, serializedAdditionalRawData, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(), ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(), ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(), ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
+            return new BgpConfiguration(
+                annotation.Value,
+                serializedAdditionalRawData,
+                bfdConfiguration.Value,
+                Optional.ToNullable(defaultRouteOriginate),
+                Optional.ToNullable(allowAS),
+                Optional.ToNullable(allowASOverride),
+                Optional.ToNullable(fabricAsn),
+                Optional.ToNullable(peerAsn),
+                ipv4ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv6ListenRangePrefixes ?? new ChangeTrackingList<string>(),
+                ipv4NeighborAddress ?? new ChangeTrackingList<NeighborAddress>(),
+                ipv6NeighborAddress ?? new ChangeTrackingList<NeighborAddress>());
         }
 
         BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)

@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceArmPlan(name.Value, publisher.Value, product.Value, promotionCode.Value, version.Value, serializedAdditionalRawData);
+            return new AppServiceArmPlan(
+                name.Value,
+                publisher.Value,
+                product.Value,
+                promotionCode.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceArmPlan>.Write(ModelReaderWriterOptions options)

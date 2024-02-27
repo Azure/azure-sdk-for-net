@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisWorkspaceData>.Write(ModelReaderWriterOptions options)

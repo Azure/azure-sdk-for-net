@@ -76,7 +76,13 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new Platform(architecture.Value, os.Value, osVersion.Value, osFeatures ?? new ChangeTrackingList<string>(), variant.Value, features ?? new ChangeTrackingList<string>());
+            return new Platform(
+                architecture.Value,
+                os.Value,
+                osVersion.Value,
+                osFeatures ?? new ChangeTrackingList<string>(),
+                variant.Value,
+                features ?? new ChangeTrackingList<string>());
         }
     }
 }

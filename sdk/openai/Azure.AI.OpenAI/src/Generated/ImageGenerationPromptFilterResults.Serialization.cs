@@ -165,7 +165,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationPromptFilterResults(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, jailbreak.Value, serializedAdditionalRawData);
+            return new ImageGenerationPromptFilterResults(
+                sexual.Value,
+                violence.Value,
+                hate.Value,
+                selfHarm.Value,
+                profanity.Value,
+                jailbreak.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationPromptFilterResults>.Write(ModelReaderWriterOptions options)

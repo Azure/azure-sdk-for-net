@@ -100,7 +100,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobClassificationFailedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), classificationPolicyId.Value, errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
+            return new AcsRouterJobClassificationFailedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                classificationPolicyId.Value,
+                errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
 
         internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>

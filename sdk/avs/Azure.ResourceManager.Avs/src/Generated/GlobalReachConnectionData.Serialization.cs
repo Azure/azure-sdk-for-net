@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalReachConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), addressPrefix.Value, authorizationKey.Value, Optional.ToNullable(circuitConnectionStatus), peerExpressRouteCircuit.Value, expressRouteId.Value, serializedAdditionalRawData);
+            return new GlobalReachConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                addressPrefix.Value,
+                authorizationKey.Value,
+                Optional.ToNullable(circuitConnectionStatus),
+                peerExpressRouteCircuit.Value,
+                expressRouteId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalReachConnectionData>.Write(ModelReaderWriterOptions options)

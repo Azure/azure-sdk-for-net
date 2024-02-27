@@ -199,7 +199,17 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(etag), sku.Value, properties.Value, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new ReservationDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(etag),
+                sku.Value,
+                properties.Value,
+                Optional.ToNullable(kind),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailData>.Write(ModelReaderWriterOptions options)

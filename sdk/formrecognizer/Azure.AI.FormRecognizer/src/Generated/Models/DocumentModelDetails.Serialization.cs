@@ -87,7 +87,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>());
+            return new DocumentModelDetails(
+                modelId,
+                description.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>());
         }
     }
 }

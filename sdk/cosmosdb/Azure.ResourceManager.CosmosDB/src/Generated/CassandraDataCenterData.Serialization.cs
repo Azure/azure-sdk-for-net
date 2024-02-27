@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraDataCenterData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CassandraDataCenterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraDataCenterData>.Write(ModelReaderWriterOptions options)

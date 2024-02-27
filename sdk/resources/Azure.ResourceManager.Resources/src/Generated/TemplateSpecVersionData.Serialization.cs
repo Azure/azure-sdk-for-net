@@ -275,7 +275,19 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemplateSpecVersionData(id, name, type, systemData.Value, location, tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(), metadata.Value, mainTemplate.Value, uiFormDefinition.Value, serializedAdditionalRawData);
+            return new TemplateSpecVersionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                linkedTemplates ?? new ChangeTrackingList<LinkedTemplateArtifact>(),
+                metadata.Value,
+                mainTemplate.Value,
+                uiFormDefinition.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TemplateSpecVersionData>.Write(ModelReaderWriterOptions options)

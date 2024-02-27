@@ -285,7 +285,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, annotation.Value, networkPacketBrokerId, sourceTapRuleId.Value, destinations, Optional.ToNullable(pollingType), Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkTapData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                networkPacketBrokerId,
+                sourceTapRuleId.Value,
+                destinations,
+                Optional.ToNullable(pollingType),
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkTapData>.Write(ModelReaderWriterOptions options)

@@ -117,7 +117,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
+            return new SparkBatchJobState(
+                Optional.ToNullable(notStartedAt),
+                Optional.ToNullable(startingAt),
+                Optional.ToNullable(runningAt),
+                Optional.ToNullable(deadAt),
+                Optional.ToNullable(successAt),
+                Optional.ToNullable(killedAt),
+                Optional.ToNullable(recoveringAt),
+                currentState.Value,
+                jobCreationRequest.Value);
         }
 
         internal partial class SparkBatchJobStateConverter : JsonConverter<SparkBatchJobState>

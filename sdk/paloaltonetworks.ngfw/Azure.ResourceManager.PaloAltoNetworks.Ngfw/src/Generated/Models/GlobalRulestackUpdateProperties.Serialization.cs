@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GlobalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), associatedSubscriptions ?? new ChangeTrackingList<string>(), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
+            return new GlobalRulestackUpdateProperties(
+                Optional.ToNullable(panETag),
+                Optional.ToNullable(panLocation),
+                Optional.ToNullable(scope),
+                associatedSubscriptions ?? new ChangeTrackingList<string>(),
+                description.Value,
+                Optional.ToNullable(defaultMode),
+                minAppIdVersion.Value,
+                securityServices.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GlobalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)

@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseManagedIdentitySqlControlSettingData(id, name, type, systemData.Value, grantSqlControlToManagedIdentity.Value, serializedAdditionalRawData);
+            return new SynapseManagedIdentitySqlControlSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                grantSqlControlToManagedIdentity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseManagedIdentitySqlControlSettingData>.Write(ModelReaderWriterOptions options)

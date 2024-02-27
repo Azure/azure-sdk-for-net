@@ -382,7 +382,29 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value, serializedAdditionalRawData);
+            return new RoleAssignmentScheduleInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                roleDefinitionId.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(principalType),
+                roleAssignmentScheduleId.Value,
+                originRoleAssignmentId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(endDateTime),
+                linkedRoleEligibilityScheduleId.Value,
+                linkedRoleEligibilityScheduleInstanceId.Value,
+                Optional.ToNullable(assignmentType),
+                Optional.ToNullable(memberType),
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                expandedProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleInstanceData>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationValueWithSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, serializedAdditionalRawData, secretConfigurationValue.Value);
+            return new ConfigurationValueWithSecrets(
+                Optional.ToNullable(provisioningState),
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                configurationGroupSchemaName.Value,
+                configurationGroupSchemaOfferingLocation.Value,
+                configurationGroupSchemaResourceReference.Value,
+                configurationType,
+                serializedAdditionalRawData,
+                secretConfigurationValue.Value);
         }
 
         BinaryData IPersistableModel<ConfigurationValueWithSecrets>.Write(ModelReaderWriterOptions options)

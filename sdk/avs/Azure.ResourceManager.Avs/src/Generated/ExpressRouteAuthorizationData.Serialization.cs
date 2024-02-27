@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value, serializedAdditionalRawData);
+            return new ExpressRouteAuthorizationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                expressRouteAuthorizationId.Value,
+                expressRouteAuthorizationKey.Value,
+                expressRouteId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options)

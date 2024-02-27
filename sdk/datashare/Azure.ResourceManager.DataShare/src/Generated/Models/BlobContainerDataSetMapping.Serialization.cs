@@ -216,7 +216,20 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobContainerDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, dataSetId, Optional.ToNullable(dataSetMappingStatus), Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                Optional.ToNullable(provisioningState),
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobContainerDataSetMapping>.Write(ModelReaderWriterOptions options)

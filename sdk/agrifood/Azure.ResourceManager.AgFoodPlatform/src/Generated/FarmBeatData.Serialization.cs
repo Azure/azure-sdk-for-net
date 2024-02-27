@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, instanceUri.Value, Optional.ToNullable(provisioningState), sensorIntegration.Value, Optional.ToNullable(publicNetworkAccess), privateEndpointConnections.Value, serializedAdditionalRawData);
+            return new FarmBeatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                instanceUri.Value,
+                Optional.ToNullable(provisioningState),
+                sensorIntegration.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                privateEndpointConnections.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatData>.Write(ModelReaderWriterOptions options)

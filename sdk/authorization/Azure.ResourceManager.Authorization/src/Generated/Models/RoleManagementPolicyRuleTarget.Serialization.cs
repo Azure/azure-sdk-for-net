@@ -200,7 +200,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyRuleTarget(caller.Value, operations ?? new ChangeTrackingList<string>(), Optional.ToNullable(level), targetObjects ?? new ChangeTrackingList<string>(), inheritableSettings ?? new ChangeTrackingList<string>(), enforcedSettings ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new RoleManagementPolicyRuleTarget(
+                caller.Value,
+                operations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(level),
+                targetObjects ?? new ChangeTrackingList<string>(),
+                inheritableSettings ?? new ChangeTrackingList<string>(),
+                enforcedSettings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRuleTarget>.Write(ModelReaderWriterOptions options)

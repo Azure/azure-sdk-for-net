@@ -275,7 +275,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, serializedAdditionalRawData);
+            return new InMageRcmProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                logStorageAccountId.Value,
+                diskEncryptionSetId.Value,
+                seedManagedDiskId.Value,
+                seedBlobUri.Value,
+                targetManagedDiskId.Value,
+                Optional.ToNullable(diskType),
+                Optional.ToNullable(dataPendingInLogDataStoreInMB),
+                Optional.ToNullable(dataPendingAtSourceAgentInMB),
+                isInitialReplicationComplete.Value,
+                irDetails.Value,
+                resyncDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

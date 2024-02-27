@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(sweepConcurrentTrials), Optional.ToNullable(sweepTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout), serializedAdditionalRawData);
+            return new TableVerticalLimitSettings(
+                Optional.ToNullable(enableEarlyTermination),
+                Optional.ToNullable(exitScore),
+                Optional.ToNullable(maxConcurrentTrials),
+                Optional.ToNullable(maxCoresPerTrial),
+                Optional.ToNullable(maxNodes),
+                Optional.ToNullable(maxTrials),
+                Optional.ToNullable(sweepConcurrentTrials),
+                Optional.ToNullable(sweepTrials),
+                Optional.ToNullable(timeout),
+                Optional.ToNullable(trialTimeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableVerticalLimitSettings>.Write(ModelReaderWriterOptions options)

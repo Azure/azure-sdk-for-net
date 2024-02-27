@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownBaseAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownBaseAdminRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BaseAdminRuleData>.Write(ModelReaderWriterOptions options)

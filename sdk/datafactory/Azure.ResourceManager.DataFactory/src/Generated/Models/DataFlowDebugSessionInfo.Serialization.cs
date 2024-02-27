@@ -191,7 +191,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(startTime), Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName.Value,
+                computeType.Value,
+                Optional.ToNullable(coreCount),
+                Optional.ToNullable(nodeCount),
+                integrationRuntimeName.Value,
+                Optional.ToNullable(sessionId),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(timeToLiveInMinutes),
+                Optional.ToNullable(lastActivityTime),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFlowDebugSessionInfo>.Write(ModelReaderWriterOptions options)

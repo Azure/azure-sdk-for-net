@@ -285,7 +285,20 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), systemData, description.Value, networkManagerScopes.Value, networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new NetworkManagerData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                systemData,
+                description.Value,
+                networkManagerScopes.Value,
+                networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<NetworkManagerData>.Write(ModelReaderWriterOptions options)

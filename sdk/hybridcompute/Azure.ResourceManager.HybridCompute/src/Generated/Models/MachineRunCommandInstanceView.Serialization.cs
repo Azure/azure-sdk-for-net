@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(), serializedAdditionalRawData);
+            return new MachineRunCommandInstanceView(
+                Optional.ToNullable(executionState),
+                executionMessage.Value,
+                Optional.ToNullable(exitCode),
+                output.Value,
+                error.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)

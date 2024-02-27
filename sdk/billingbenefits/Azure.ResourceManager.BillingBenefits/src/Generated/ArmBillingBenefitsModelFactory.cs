@@ -36,7 +36,23 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderAliasData"/> instance for mocking. </returns>
         public static BillingBenefitsSavingsPlanOrderAliasData BillingBenefitsSavingsPlanOrderAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string skuName = null, string kind = null, string displayName = null, ResourceIdentifier savingsPlanOrderId = null, BillingBenefitsProvisioningState? provisioningState = null, ResourceIdentifier billingScopeId = null, BillingBenefitsTerm? term = null, BillingBenefitsBillingPlan? billingPlan = null, BillingBenefitsAppliedScopeType? appliedScopeType = null, BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, BillingBenefitsCommitment commitment = null)
         {
-            return new BillingBenefitsSavingsPlanOrderAliasData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, kind, displayName, savingsPlanOrderId, provisioningState, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, commitment, serializedAdditionalRawData: null);
+            return new BillingBenefitsSavingsPlanOrderAliasData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                kind,
+                displayName,
+                savingsPlanOrderId,
+                provisioningState,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                commitment,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderData"/>. </summary>
@@ -63,7 +79,26 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         {
             savingsPlans ??= new List<string>();
 
-            return new BillingBenefitsSavingsPlanOrderData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, displayName, provisioningState, billingScopeId, billingProfileId, customerId, billingAccountId, term, billingPlan, expireOn, benefitStartOn, planInformation, savingsPlans?.ToList(), extendedStatusInfo, serializedAdditionalRawData: null);
+            return new BillingBenefitsSavingsPlanOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                displayName,
+                provisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                expireOn,
+                benefitStartOn,
+                planInformation,
+                savingsPlans?.ToList(),
+                extendedStatusInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanOrderPaymentDetail"/>. </summary>
@@ -77,7 +112,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.SavingsPlanOrderPaymentDetail"/> instance for mocking. </returns>
         public static SavingsPlanOrderPaymentDetail SavingsPlanOrderPaymentDetail(DateTimeOffset? dueOn = null, DateTimeOffset? payOn = null, BillingBenefitsPrice pricingCurrencyTotal = null, BillingBenefitsPrice billingCurrencyTotal = null, BillingBenefitsPaymentStatus? status = null, BillingBenefitsExtendedStatusInfo extendedStatusInfo = null, string billingAccount = null)
         {
-            return new SavingsPlanOrderPaymentDetail(dueOn, payOn, pricingCurrencyTotal, billingCurrencyTotal, status, extendedStatusInfo, billingAccount, serializedAdditionalRawData: null);
+            return new SavingsPlanOrderPaymentDetail(
+                dueOn,
+                payOn,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                status,
+                extendedStatusInfo,
+                billingAccount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsExtendedStatusInfo"/>. </summary>
@@ -98,7 +141,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.BillingBenefitsRoleAssignmentEntity"/> instance for mocking. </returns>
         public static BillingBenefitsRoleAssignmentEntity BillingBenefitsRoleAssignmentEntity(ResourceIdentifier id = null, string name = null, string principalId = null, ResourceIdentifier roleDefinitionId = null, ResourceIdentifier scope = null)
         {
-            return new BillingBenefitsRoleAssignmentEntity(id, name, principalId, roleDefinitionId, scope, serializedAdditionalRawData: null);
+            return new BillingBenefitsRoleAssignmentEntity(
+                id,
+                name,
+                principalId,
+                roleDefinitionId,
+                scope,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsSavingsPlanData"/>. </summary>
@@ -133,7 +182,36 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanData"/> instance for mocking. </returns>
         public static BillingBenefitsSavingsPlanData BillingBenefitsSavingsPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string skuName = null, string displayName = null, BillingBenefitsProvisioningState? provisioningState = null, string displayProvisioningState = null, ResourceIdentifier billingScopeId = null, ResourceIdentifier billingProfileId = null, string customerId = null, ResourceIdentifier billingAccountId = null, BillingBenefitsTerm? term = null, BillingBenefitsBillingPlan? billingPlan = null, BillingBenefitsAppliedScopeType? appliedScopeType = null, string userFriendlyAppliedScopeType = null, BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, BillingBenefitsCommitment commitment = null, DateTimeOffset? effectOn = null, DateTimeOffset? expireOn = null, DateTimeOffset? purchaseOn = null, DateTimeOffset? benefitStartOn = null, BillingBenefitsExtendedStatusInfo extendedStatusInfo = null, bool? isRenewed = null, BillingBenefitsSavingsPlanUtilization utilization = null, string renewSource = null, string renewDestination = null, BillingBenefitsPurchaseContent renewPurchaseProperties = null)
         {
-            return new BillingBenefitsSavingsPlanData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, displayName, provisioningState, displayProvisioningState, billingScopeId, billingProfileId, customerId, billingAccountId, term, billingPlan, appliedScopeType, userFriendlyAppliedScopeType, appliedScopeProperties, commitment, effectOn, expireOn, purchaseOn, benefitStartOn, extendedStatusInfo, isRenewed, utilization, renewSource, renewDestination, renewPurchaseProperties != null ? new RenewProperties(renewPurchaseProperties, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new BillingBenefitsSavingsPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                displayName,
+                provisioningState,
+                displayProvisioningState,
+                billingScopeId,
+                billingProfileId,
+                customerId,
+                billingAccountId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                userFriendlyAppliedScopeType,
+                appliedScopeProperties,
+                commitment,
+                effectOn,
+                expireOn,
+                purchaseOn,
+                benefitStartOn,
+                extendedStatusInfo,
+                isRenewed,
+                utilization,
+                renewSource,
+                renewDestination,
+                renewPurchaseProperties != null ? new RenewProperties(renewPurchaseProperties, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BillingBenefitsSavingsPlanUtilization"/>. </summary>
@@ -172,7 +250,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.BillingBenefitsPurchaseContent"/> instance for mocking. </returns>
         public static BillingBenefitsPurchaseContent BillingBenefitsPurchaseContent(string skuName = null, string displayName = null, ResourceIdentifier billingScopeId = null, BillingBenefitsTerm? term = null, BillingBenefitsBillingPlan? billingPlan = null, BillingBenefitsAppliedScopeType? appliedScopeType = null, BillingBenefitsCommitment commitment = null, DateTimeOffset? effectOn = null, bool? isRenewed = null, BillingBenefitsAppliedScopeProperties appliedScopeProperties = null)
         {
-            return new BillingBenefitsPurchaseContent(skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, displayName, billingScopeId, term, billingPlan, appliedScopeType, commitment, effectOn, isRenewed, appliedScopeProperties, serializedAdditionalRawData: null);
+            return new BillingBenefitsPurchaseContent(
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                displayName,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                commitment,
+                effectOn,
+                isRenewed,
+                appliedScopeProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanValidateResult"/>. </summary>
@@ -206,7 +295,25 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="Models.BillingBenefitsReservationOrderAliasCreateOrUpdateContent"/> instance for mocking. </returns>
         public static BillingBenefitsReservationOrderAliasCreateOrUpdateContent BillingBenefitsReservationOrderAliasCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string skuName = null, AzureLocation? location = null, string displayName = null, ResourceIdentifier billingScopeId = null, BillingBenefitsTerm? term = null, BillingBenefitsBillingPlan? billingPlan = null, BillingBenefitsAppliedScopeType? appliedScopeType = null, BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, int? quantity = null, bool? isRenewed = null, BillingBenefitsReservedResourceType? reservedResourceType = null, DateTimeOffset? reviewOn = null, BillingBenefitsInstanceFlexibility? reservedResourceInstanceFlexibility = null)
         {
-            return new BillingBenefitsReservationOrderAliasCreateOrUpdateContent(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, location, displayName, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, quantity, isRenewed, reservedResourceType, reviewOn, reservedResourceInstanceFlexibility != null ? new ReservationOrderAliasRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new BillingBenefitsReservationOrderAliasCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                location,
+                displayName,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                quantity,
+                isRenewed,
+                reservedResourceType,
+                reviewOn,
+                reservedResourceInstanceFlexibility != null ? new ReservationOrderAliasRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefits.BillingBenefitsReservationOrderAliasData"/>. </summary>
@@ -232,7 +339,27 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <returns> A new <see cref="BillingBenefits.BillingBenefitsReservationOrderAliasData"/> instance for mocking. </returns>
         public static BillingBenefitsReservationOrderAliasData BillingBenefitsReservationOrderAliasData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string skuName = null, AzureLocation? location = null, string displayName = null, ResourceIdentifier reservationOrderId = null, BillingBenefitsProvisioningState? provisioningState = null, ResourceIdentifier billingScopeId = null, BillingBenefitsTerm? term = null, BillingBenefitsBillingPlan? billingPlan = null, BillingBenefitsAppliedScopeType? appliedScopeType = null, BillingBenefitsAppliedScopeProperties appliedScopeProperties = null, int? quantity = null, bool? isRenewed = null, BillingBenefitsReservedResourceType? reservedResourceType = null, DateTimeOffset? reviewOn = null, BillingBenefitsInstanceFlexibility? reservedResourceInstanceFlexibility = null)
         {
-            return new BillingBenefitsReservationOrderAliasData(id, name, resourceType, systemData, skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null, location, displayName, reservationOrderId, provisioningState, billingScopeId, term, billingPlan, appliedScopeType, appliedScopeProperties, quantity, isRenewed, reservedResourceType, reviewOn, reservedResourceInstanceFlexibility != null ? new ReservationOrderAliasResponsePropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new BillingBenefitsReservationOrderAliasData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuName != null ? new BillingBenefitsSku(skuName, serializedAdditionalRawData: null) : null,
+                location,
+                displayName,
+                reservationOrderId,
+                provisioningState,
+                billingScopeId,
+                term,
+                billingPlan,
+                appliedScopeType,
+                appliedScopeProperties,
+                quantity,
+                isRenewed,
+                reservedResourceType,
+                reviewOn,
+                reservedResourceInstanceFlexibility != null ? new ReservationOrderAliasResponsePropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
     }
 }

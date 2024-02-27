@@ -124,7 +124,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value, rejectedDataLinkedService.Value);
+            return new DataFlowSink(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService.Value,
+                flowlet.Value,
+                schemaLinkedService.Value,
+                rejectedDataLinkedService.Value);
         }
 
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>

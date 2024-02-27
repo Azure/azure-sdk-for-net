@@ -136,7 +136,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MqttD2CMessagesNotInAllowedRange(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, minThreshold, maxThreshold, timeWindowSize);
+            return new MqttD2CMessagesNotInAllowedRange(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                minThreshold,
+                maxThreshold,
+                timeWindowSize);
         }
 
         BinaryData IPersistableModel<MqttD2CMessagesNotInAllowedRange>.Write(ModelReaderWriterOptions options)

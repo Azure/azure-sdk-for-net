@@ -142,7 +142,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationData(url.Value, b64Json.Value, contentFilterResults.Value, revisedPrompt.Value, promptFilterResults.Value, serializedAdditionalRawData);
+            return new ImageGenerationData(
+                url.Value,
+                b64Json.Value,
+                contentFilterResults.Value,
+                revisedPrompt.Value,
+                promptFilterResults.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationData>.Write(ModelReaderWriterOptions options)

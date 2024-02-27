@@ -272,7 +272,15 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesFluxConfigurationPatch(Optional.ToNullable(sourceKind), Optional.ToNullable(suspend), gitRepository.Value, bucket.Value, azureBlob.Value, kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(), configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new KubernetesFluxConfigurationPatch(
+                Optional.ToNullable(sourceKind),
+                Optional.ToNullable(suspend),
+                gitRepository.Value,
+                bucket.Value,
+                azureBlob.Value,
+                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationUpdateContent>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesFluxConfigurationPatch>.Write(ModelReaderWriterOptions options)

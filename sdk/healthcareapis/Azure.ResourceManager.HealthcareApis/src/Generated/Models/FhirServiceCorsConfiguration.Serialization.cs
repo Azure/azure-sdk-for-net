@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceCorsConfiguration(origins ?? new ChangeTrackingList<string>(), headers ?? new ChangeTrackingList<string>(), methods ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxAge), Optional.ToNullable(allowCredentials), serializedAdditionalRawData);
+            return new FhirServiceCorsConfiguration(
+                origins ?? new ChangeTrackingList<string>(),
+                headers ?? new ChangeTrackingList<string>(),
+                methods ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxAge),
+                Optional.ToNullable(allowCredentials),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceCorsConfiguration>.Write(ModelReaderWriterOptions options)

@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostNameSslState(name.Value, Optional.ToNullable(sslState), virtualIP.Value, thumbprint.Value, Optional.ToNullable(toUpdate), Optional.ToNullable(hostType), serializedAdditionalRawData);
+            return new HostNameSslState(
+                name.Value,
+                Optional.ToNullable(sslState),
+                virtualIP.Value,
+                thumbprint.Value,
+                Optional.ToNullable(toUpdate),
+                Optional.ToNullable(hostType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostNameSslState>.Write(ModelReaderWriterOptions options)

@@ -316,7 +316,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, allowedActions ?? new ChangeTrackingList<string>(), activityId.Value, tasks ?? new ChangeTrackingList<DataReplicationTask>(), errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(), customProperties, serializedAdditionalRawData);
+            return new DataReplicationWorkflowProperties(
+                displayName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                objectId.Value,
+                objectName.Value,
+                objectInternalId.Value,
+                objectInternalName.Value,
+                Optional.ToNullable(objectType),
+                replicationProviderId.Value,
+                sourceFabricProviderId.Value,
+                targetFabricProviderId.Value,
+                allowedActions ?? new ChangeTrackingList<string>(),
+                activityId.Value,
+                tasks ?? new ChangeTrackingList<DataReplicationTask>(),
+                errors ?? new ChangeTrackingList<DataReplicationErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)

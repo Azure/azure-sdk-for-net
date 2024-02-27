@@ -249,7 +249,18 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(trustedServiceAccessEnabled), Optional.ToNullable(defaultAction), virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(), ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(trustedServiceAccessEnabled),
+                Optional.ToNullable(defaultAction),
+                virtualNetworkRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetVirtualNetworkRules>(),
+                ipRules ?? new ChangeTrackingList<EventHubsNetworkRuleSetIPRules>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

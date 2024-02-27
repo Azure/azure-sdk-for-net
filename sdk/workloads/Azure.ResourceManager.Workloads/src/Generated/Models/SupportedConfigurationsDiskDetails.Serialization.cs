@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportedConfigurationsDiskDetails(sku.Value, Optional.ToNullable(sizeGB), Optional.ToNullable(minimumSupportedDiskCount), Optional.ToNullable(maximumSupportedDiskCount), Optional.ToNullable(iopsReadWrite), Optional.ToNullable(mbpsReadWrite), diskTier.Value, serializedAdditionalRawData);
+            return new SupportedConfigurationsDiskDetails(
+                sku.Value,
+                Optional.ToNullable(sizeGB),
+                Optional.ToNullable(minimumSupportedDiskCount),
+                Optional.ToNullable(maximumSupportedDiskCount),
+                Optional.ToNullable(iopsReadWrite),
+                Optional.ToNullable(mbpsReadWrite),
+                diskTier.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportedConfigurationsDiskDetails>.Write(ModelReaderWriterOptions options)

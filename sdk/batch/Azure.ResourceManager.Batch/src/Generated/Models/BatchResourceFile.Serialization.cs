@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchResourceFile(autoStorageContainerName.Value, storageContainerUrl.Value, httpUrl.Value, blobPrefix.Value, filePath.Value, fileMode.Value, identityReference.Value, serializedAdditionalRawData);
+            return new BatchResourceFile(
+                autoStorageContainerName.Value,
+                storageContainerUrl.Value,
+                httpUrl.Value,
+                blobPrefix.Value,
+                filePath.Value,
+                fileMode.Value,
+                identityReference.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
+            return new TunnelConnectionHealth(
+                tunnel.Value,
+                Optional.ToNullable(connectionStatus),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                lastConnectionEstablishedUtcTime.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)

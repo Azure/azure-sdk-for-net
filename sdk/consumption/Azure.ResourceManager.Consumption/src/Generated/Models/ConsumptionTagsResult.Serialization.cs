@@ -201,7 +201,16 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionTagsResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingList<ConsumptionTag>(), nextLink.Value, previousLink.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionTagsResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingList<ConsumptionTag>(),
+                nextLink.Value,
+                previousLink.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionTagsResult>.Write(ModelReaderWriterOptions options)

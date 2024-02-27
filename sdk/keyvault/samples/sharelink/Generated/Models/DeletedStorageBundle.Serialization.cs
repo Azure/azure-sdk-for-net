@@ -108,7 +108,17 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedStorageBundle(id.Value, resourceId.Value, activeKeyName.Value, Optional.ToNullable(autoRegenerateKey), regenerationPeriod.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>(), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedStorageBundle(
+                id.Value,
+                resourceId.Value,
+                activeKeyName.Value,
+                Optional.ToNullable(autoRegenerateKey),
+                regenerationPeriod.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId.Value,
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(deletedDate));
         }
     }
 }

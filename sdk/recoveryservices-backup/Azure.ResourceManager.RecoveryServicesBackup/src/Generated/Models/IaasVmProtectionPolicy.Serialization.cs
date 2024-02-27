@@ -234,7 +234,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmProtectionPolicy(Optional.ToNullable(protectedItemsCount), backupManagementType, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, instantRPDetails.Value, schedulePolicy.Value, retentionPolicy.Value, tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(), Optional.ToNullable(instantRpRetentionRangeInDays), timeZone.Value, Optional.ToNullable(policyType));
+            return new IaasVmProtectionPolicy(
+                Optional.ToNullable(protectedItemsCount),
+                backupManagementType,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                instantRPDetails.Value,
+                schedulePolicy.Value,
+                retentionPolicy.Value,
+                tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
+                Optional.ToNullable(instantRpRetentionRangeInDays),
+                timeZone.Value,
+                Optional.ToNullable(policyType));
         }
 
         BinaryData IPersistableModel<IaasVmProtectionPolicy>.Write(ModelReaderWriterOptions options)

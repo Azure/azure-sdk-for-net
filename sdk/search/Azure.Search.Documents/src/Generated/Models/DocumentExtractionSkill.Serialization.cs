@@ -197,7 +197,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new DocumentExtractionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(parsingMode), Optional.ToNullable(dataToExtract), configuration ?? new ChangeTrackingDictionary<string, object>());
+            return new DocumentExtractionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                Optional.ToNullable(parsingMode),
+                Optional.ToNullable(dataToExtract),
+                configuration ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

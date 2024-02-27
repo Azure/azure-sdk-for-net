@@ -184,7 +184,15 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClassificationPolicy(etag, id, name.Value, fallbackQueueId.Value, queueSelectorAttachments ?? new ChangeTrackingList<QueueSelectorAttachment>(), prioritizationRule.Value, workerSelectorAttachments ?? new ChangeTrackingList<WorkerSelectorAttachment>(), serializedAdditionalRawData);
+            return new ClassificationPolicy(
+                etag,
+                id,
+                name.Value,
+                fallbackQueueId.Value,
+                queueSelectorAttachments ?? new ChangeTrackingList<QueueSelectorAttachment>(),
+                prioritizationRule.Value,
+                workerSelectorAttachments ?? new ChangeTrackingList<WorkerSelectorAttachment>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClassificationPolicy>.Write(ModelReaderWriterOptions options)

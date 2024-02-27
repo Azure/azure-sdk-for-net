@@ -427,7 +427,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, compute.Value, deploymentConfiguration.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
+            return new MachineLearningBatchDeploymentProperties(
+                codeConfiguration.Value,
+                description.Value,
+                environmentId.Value,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                compute.Value,
+                deploymentConfiguration.Value,
+                Optional.ToNullable(errorThreshold),
+                Optional.ToNullable(loggingLevel),
+                Optional.ToNullable(maxConcurrencyPerInstance),
+                Optional.ToNullable(miniBatchSize),
+                model.Value,
+                Optional.ToNullable(outputAction),
+                outputFileName.Value,
+                Optional.ToNullable(provisioningState),
+                resources.Value,
+                retrySettings.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningBatchDeploymentProperties>.Write(ModelReaderWriterOptions options)

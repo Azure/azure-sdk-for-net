@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtensionInstanceViewStatus(code.Value, Optional.ToNullable(level), displayStatus.Value, message.Value, Optional.ToNullable(time), serializedAdditionalRawData);
+            return new ExtensionInstanceViewStatus(
+                code.Value,
+                Optional.ToNullable(level),
+                displayStatus.Value,
+                message.Value,
+                Optional.ToNullable(time),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtensionInstanceViewStatus>.Write(ModelReaderWriterOptions options)

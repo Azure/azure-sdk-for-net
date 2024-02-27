@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableLevelSharingProperties(externalTablesToExclude ?? new ChangeTrackingList<string>(), externalTablesToInclude ?? new ChangeTrackingList<string>(), materializedViewsToExclude ?? new ChangeTrackingList<string>(), materializedViewsToInclude ?? new ChangeTrackingList<string>(), tablesToExclude ?? new ChangeTrackingList<string>(), tablesToInclude ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new TableLevelSharingProperties(
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableLevelSharingProperties>.Write(ModelReaderWriterOptions options)

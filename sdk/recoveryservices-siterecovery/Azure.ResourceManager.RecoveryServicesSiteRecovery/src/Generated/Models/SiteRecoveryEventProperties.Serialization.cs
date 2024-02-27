@@ -225,7 +225,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryEventProperties(eventCode.Value, description.Value, eventType.Value, affectedObjectFriendlyName.Value, affectedObjectCorrelationId.Value, severity.Value, Optional.ToNullable(timeOfOccurrence), fabricId.Value, providerSpecificDetails.Value, eventSpecificDetails.Value, healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new SiteRecoveryEventProperties(
+                eventCode.Value,
+                description.Value,
+                eventType.Value,
+                affectedObjectFriendlyName.Value,
+                affectedObjectCorrelationId.Value,
+                severity.Value,
+                Optional.ToNullable(timeOfOccurrence),
+                fabricId.Value,
+                providerSpecificDetails.Value,
+                eventSpecificDetails.Value,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryEventProperties>.Write(ModelReaderWriterOptions options)

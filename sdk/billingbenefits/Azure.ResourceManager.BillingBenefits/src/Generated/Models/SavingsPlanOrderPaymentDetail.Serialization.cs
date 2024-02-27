@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value, serializedAdditionalRawData);
+            return new SavingsPlanOrderPaymentDetail(
+                Optional.ToNullable(dueDate),
+                Optional.ToNullable(paymentDate),
+                pricingCurrencyTotal.Value,
+                billingCurrencyTotal.Value,
+                Optional.ToNullable(status),
+                extendedStatusInfo.Value,
+                billingAccount.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanOrderPaymentDetail>.Write(ModelReaderWriterOptions options)

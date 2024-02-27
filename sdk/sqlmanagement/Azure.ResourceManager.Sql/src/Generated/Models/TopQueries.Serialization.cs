@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopQueries(Optional.ToNullable(numberOfQueries), aggregationFunction.Value, observationMetric.Value, Optional.ToNullable(intervalType), startTime.Value, endTime.Value, queries ?? new ChangeTrackingList<QueryStatisticsProperties>(), serializedAdditionalRawData);
+            return new TopQueries(
+                Optional.ToNullable(numberOfQueries),
+                aggregationFunction.Value,
+                observationMetric.Value,
+                Optional.ToNullable(intervalType),
+                startTime.Value,
+                endTime.Value,
+                queries ?? new ChangeTrackingList<QueryStatisticsProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopQueries>.Write(ModelReaderWriterOptions options)

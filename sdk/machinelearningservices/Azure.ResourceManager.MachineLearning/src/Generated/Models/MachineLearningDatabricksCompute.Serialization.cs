@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDatabricksCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData, properties.Value);
+            return new MachineLearningDatabricksCompute(
+                computeType,
+                computeLocation.Value,
+                Optional.ToNullable(provisioningState),
+                description.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                resourceId.Value,
+                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(isAttachedCompute),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningDatabricksCompute>.Write(ModelReaderWriterOptions options)

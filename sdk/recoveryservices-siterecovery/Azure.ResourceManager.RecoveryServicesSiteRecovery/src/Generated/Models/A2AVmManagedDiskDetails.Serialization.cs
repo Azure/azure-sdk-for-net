@@ -150,7 +150,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AVmManagedDiskDetails(diskId, primaryStagingAzureStorageAccountId, recoveryResourceGroupId, recoveryReplicaDiskAccountType.Value, recoveryTargetDiskAccountType.Value, recoveryDiskEncryptionSetId.Value, diskEncryptionInfo.Value, serializedAdditionalRawData);
+            return new A2AVmManagedDiskDetails(
+                diskId,
+                primaryStagingAzureStorageAccountId,
+                recoveryResourceGroupId,
+                recoveryReplicaDiskAccountType.Value,
+                recoveryTargetDiskAccountType.Value,
+                recoveryDiskEncryptionSetId.Value,
+                diskEncryptionInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<A2AVmManagedDiskDetails>.Write(ModelReaderWriterOptions options)

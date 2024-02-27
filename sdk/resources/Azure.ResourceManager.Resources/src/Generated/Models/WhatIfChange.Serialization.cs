@@ -170,7 +170,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, delta ?? new ChangeTrackingList<WhatIfPropertyChange>(), serializedAdditionalRawData);
+            return new WhatIfChange(
+                resourceId,
+                changeType,
+                unsupportedReason.Value,
+                before.Value,
+                after.Value,
+                delta ?? new ChangeTrackingList<WhatIfPropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)

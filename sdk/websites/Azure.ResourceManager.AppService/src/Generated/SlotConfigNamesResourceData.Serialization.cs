@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotConfigNamesResourceData(id, name, type, systemData.Value, connectionStringNames ?? new ChangeTrackingList<string>(), appSettingNames ?? new ChangeTrackingList<string>(), azureStorageConfigNames ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
+            return new SlotConfigNamesResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                connectionStringNames ?? new ChangeTrackingList<string>(),
+                appSettingNames ?? new ChangeTrackingList<string>(),
+                azureStorageConfigNames ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotConfigNamesResourceData>.Write(ModelReaderWriterOptions options)

@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerCommunicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, state.Value, partnerServer.Value, serializedAdditionalRawData);
+            return new SqlServerCommunicationLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind.Value,
+                state.Value,
+                partnerServer.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerCommunicationLinkData>.Write(ModelReaderWriterOptions options)

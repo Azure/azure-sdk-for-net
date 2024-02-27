@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Subscription
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantPolicyData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new TenantPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantPolicyData>.Write(ModelReaderWriterOptions options)

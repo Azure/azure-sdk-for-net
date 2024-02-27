@@ -256,7 +256,19 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupListenerData(id, name, type, systemData.Value, provisioningState.Value, availabilityGroupName.Value, loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>(), multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>(), Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist), Optional.ToNullable(port), availabilityGroupConfiguration.Value, serializedAdditionalRawData);
+            return new AvailabilityGroupListenerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                availabilityGroupName.Value,
+                loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>(),
+                multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>(),
+                Optional.ToNullable(createDefaultAvailabilityGroupIfNotExist),
+                Optional.ToNullable(port),
+                availabilityGroupConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupListenerData>.Write(ModelReaderWriterOptions options)

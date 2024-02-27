@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, table.Value, user.Value, password.Value, Optional.ToNullable(authenticationMode));
+            return new SynapseOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server.Value,
+                database.Value,
+                table.Value,
+                user.Value,
+                password.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<SynapseOutputDataSource>.Write(ModelReaderWriterOptions options)

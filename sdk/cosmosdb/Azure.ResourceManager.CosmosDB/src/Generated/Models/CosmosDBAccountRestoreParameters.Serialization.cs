@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountRestoreParameters(restoreSource.Value, Optional.ToNullable(restoreTimestampInUtc), serializedAdditionalRawData, Optional.ToNullable(restoreMode), databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(), gremlinDatabasesToRestore ?? new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>(), tablesToRestore ?? new ChangeTrackingList<string>(), sourceBackupLocation.Value);
+            return new CosmosDBAccountRestoreParameters(
+                restoreSource.Value,
+                Optional.ToNullable(restoreTimestampInUtc),
+                serializedAdditionalRawData,
+                Optional.ToNullable(restoreMode),
+                databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(),
+                gremlinDatabasesToRestore ?? new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>(),
+                tablesToRestore ?? new ChangeTrackingList<string>(),
+                sourceBackupLocation.Value);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountRestoreParameters>.Write(ModelReaderWriterOptions options)

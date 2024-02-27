@@ -277,7 +277,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), administratorLoginPassword.Value, Optional.ToNullable(version), storage.Value, backup.Value, highAvailability.Value, maintenanceWindow.Value, Optional.ToNullable(replicationRole), dataEncryption.Value, network.Value, serializedAdditionalRawData);
+            return new MySqlFlexibleServerPatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                administratorLoginPassword.Value,
+                Optional.ToNullable(version),
+                storage.Value,
+                backup.Value,
+                highAvailability.Value,
+                maintenanceWindow.Value,
+                Optional.ToNullable(replicationRole),
+                dataEncryption.Value,
+                network.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerPatch>.Write(ModelReaderWriterOptions options)

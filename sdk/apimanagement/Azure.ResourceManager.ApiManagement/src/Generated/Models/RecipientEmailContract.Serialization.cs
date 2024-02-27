@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecipientEmailContract(id, name, type, systemData.Value, email.Value, serializedAdditionalRawData);
+            return new RecipientEmailContract(
+                id,
+                name,
+                type,
+                systemData.Value,
+                email.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecipientEmailContract>.Write(ModelReaderWriterOptions options)

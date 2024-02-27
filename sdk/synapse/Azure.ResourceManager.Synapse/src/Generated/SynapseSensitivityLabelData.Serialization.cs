@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
+            return new SynapseSensitivityLabelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedBy.Value,
+                schemaName.Value,
+                tableName.Value,
+                columnName.Value,
+                labelName.Value,
+                Optional.ToNullable(labelId),
+                informationType.Value,
+                Optional.ToNullable(informationTypeId),
+                Optional.ToNullable(isDisabled),
+                Optional.ToNullable(rank),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options)

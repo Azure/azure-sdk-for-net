@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlRecoverableServerResourceData(id, name, type, systemData.Value, Optional.ToNullable(lastAvailableBackupDateTime), serviceLevelObjective.Value, edition.Value, Optional.ToNullable(vCore), hardwareGeneration.Value, version.Value, serializedAdditionalRawData);
+            return new PostgreSqlRecoverableServerResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastAvailableBackupDateTime),
+                serviceLevelObjective.Value,
+                edition.Value,
+                Optional.ToNullable(vCore),
+                hardwareGeneration.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlRecoverableServerResourceData>.Write(ModelReaderWriterOptions options)

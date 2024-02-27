@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataShareEmailRegistration(activationCode.Value, Optional.ToNullable(activationExpirationDate), email.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new DataShareEmailRegistration(
+                activationCode.Value,
+                Optional.ToNullable(activationExpirationDate),
+                email.Value,
+                Optional.ToNullable(registrationStatus),
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareEmailRegistration>.Write(ModelReaderWriterOptions options)

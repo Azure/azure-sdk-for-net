@@ -417,7 +417,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupJobProperties(activityId, backupInstanceFriendlyName, backupInstanceId.Value, dataSourceId, dataSourceLocation, dataSourceName, dataSourceSetName.Value, dataSourceType, Optional.ToNullable(duration), Optional.ToNullable(endTime), errorDetails ?? new ChangeTrackingList<ResponseError>(), extendedInfo.Value, isUserTriggered, operation, operationCategory, policyId.Value, policyName.Value, progressEnabled, progressUrl.Value, rehydrationPriority.Value, restoreType.Value, sourceResourceGroup, sourceSubscriptionId, startTime, status, subscriptionId, supportedActions, vaultName, Optional.ToNullable(etag), sourceDataStoreName.Value, destinationDataStoreName.Value, serializedAdditionalRawData);
+            return new DataProtectionBackupJobProperties(
+                activityId,
+                backupInstanceFriendlyName,
+                backupInstanceId.Value,
+                dataSourceId,
+                dataSourceLocation,
+                dataSourceName,
+                dataSourceSetName.Value,
+                dataSourceType,
+                Optional.ToNullable(duration),
+                Optional.ToNullable(endTime),
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                extendedInfo.Value,
+                isUserTriggered,
+                operation,
+                operationCategory,
+                policyId.Value,
+                policyName.Value,
+                progressEnabled,
+                progressUrl.Value,
+                rehydrationPriority.Value,
+                restoreType.Value,
+                sourceResourceGroup,
+                sourceSubscriptionId,
+                startTime,
+                status,
+                subscriptionId,
+                supportedActions,
+                vaultName,
+                Optional.ToNullable(etag),
+                sourceDataStoreName.Value,
+                destinationDataStoreName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupJobProperties>.Write(ModelReaderWriterOptions options)

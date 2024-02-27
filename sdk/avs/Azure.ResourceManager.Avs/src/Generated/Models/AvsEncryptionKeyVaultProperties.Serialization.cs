@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType), serializedAdditionalRawData);
+            return new AvsEncryptionKeyVaultProperties(
+                keyName.Value,
+                keyVersion.Value,
+                autoDetectedKeyVersion.Value,
+                keyVaultUrl.Value,
+                Optional.ToNullable(keyState),
+                Optional.ToNullable(versionType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)

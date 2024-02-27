@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Communication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SenderUsernameResourceData(id, name, type, systemData.Value, dataLocation.Value, username.Value, displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SenderUsernameResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                dataLocation.Value,
+                username.Value,
+                displayName.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SenderUsernameResourceData>.Write(ModelReaderWriterOptions options)

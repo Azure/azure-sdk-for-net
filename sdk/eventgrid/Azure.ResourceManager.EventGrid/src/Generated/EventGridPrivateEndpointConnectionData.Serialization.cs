@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, groupIds ?? new ChangeTrackingList<string>(), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

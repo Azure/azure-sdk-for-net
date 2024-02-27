@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SnapshotPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(osType), Optional.ToNullable(diskSizeGB), encryptionSettingsGroup.Value, encryption.Value, Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), supportedCapabilities.Value, serializedAdditionalRawData);
+            return new SnapshotPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(diskSizeGB),
+                encryptionSettingsGroup.Value,
+                encryption.Value,
+                Optional.ToNullable(networkAccessPolicy),
+                diskAccessId.Value,
+                Optional.ToNullable(supportsHibernation),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(dataAccessAuthMode),
+                supportedCapabilities.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SnapshotPatch>.Write(ModelReaderWriterOptions options)

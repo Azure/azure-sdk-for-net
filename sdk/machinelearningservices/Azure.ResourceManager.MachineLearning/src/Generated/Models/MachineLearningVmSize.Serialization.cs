@@ -241,7 +241,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVmSize(name.Value, family.Value, Optional.ToNullable(vCpus), Optional.ToNullable(gpus), Optional.ToNullable(osVhdSizeMB), Optional.ToNullable(maxResourceVolumeMB), Optional.ToNullable(memoryGB), Optional.ToNullable(lowPriorityCapable), Optional.ToNullable(premiumIO), estimatedVmPrices.Value, supportedComputeTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MachineLearningVmSize(
+                name.Value,
+                family.Value,
+                Optional.ToNullable(vCpus),
+                Optional.ToNullable(gpus),
+                Optional.ToNullable(osVhdSizeMB),
+                Optional.ToNullable(maxResourceVolumeMB),
+                Optional.ToNullable(memoryGB),
+                Optional.ToNullable(lowPriorityCapable),
+                Optional.ToNullable(premiumIO),
+                estimatedVmPrices.Value,
+                supportedComputeTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVmSize>.Write(ModelReaderWriterOptions options)

@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainPropertiesVerificationRecords(domain.Value, spf.Value, dkim.Value, dkiM2.Value, dmarc.Value, serializedAdditionalRawData);
+            return new DomainPropertiesVerificationRecords(
+                domain.Value,
+                spf.Value,
+                dkim.Value,
+                dkiM2.Value,
+                dmarc.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainPropertiesVerificationRecords>.Write(ModelReaderWriterOptions options)

@@ -172,7 +172,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountNetworkRuleSet(Optional.ToNullable(bypass), resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(), virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(), ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(), defaultAction, serializedAdditionalRawData);
+            return new StorageAccountNetworkRuleSet(
+                Optional.ToNullable(bypass),
+                resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
+                virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
+                ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),
+                defaultAction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountNetworkRuleSet>.Write(ModelReaderWriterOptions options)

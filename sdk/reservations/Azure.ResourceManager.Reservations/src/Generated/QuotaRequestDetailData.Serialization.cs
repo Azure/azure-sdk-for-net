@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Reservations
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaRequestDetailData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), message.Value, Optional.ToNullable(requestSubmitTime), value ?? new ChangeTrackingList<SubContent>(), serializedAdditionalRawData);
+            return new QuotaRequestDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                message.Value,
+                Optional.ToNullable(requestSubmitTime),
+                value ?? new ChangeTrackingList<SubContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaRequestDetailData>.Write(ModelReaderWriterOptions options)

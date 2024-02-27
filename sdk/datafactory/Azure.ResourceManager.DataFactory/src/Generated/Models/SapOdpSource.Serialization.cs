@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, extractionMode.Value, subscriberProcess.Value, selection.Value, projection.Value);
+            return new SapOdpSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                extractionMode.Value,
+                subscriberProcess.Value,
+                selection.Value,
+                projection.Value);
         }
 
         BinaryData IPersistableModel<SapOdpSource>.Write(ModelReaderWriterOptions options)

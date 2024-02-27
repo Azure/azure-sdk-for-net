@@ -270,7 +270,22 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportExportOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, lastModifiedTime.Value, blobUri.Value, serverName.Value, databaseName.Value, status.Value, errorMessage.Value, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>(), serializedAdditionalRawData);
+            return new ImportExportOperationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(requestId),
+                requestType.Value,
+                queuedTime.Value,
+                lastModifiedTime.Value,
+                blobUri.Value,
+                serverName.Value,
+                databaseName.Value,
+                status.Value,
+                errorMessage.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportExportOperationResult>.Write(ModelReaderWriterOptions options)

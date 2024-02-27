@@ -331,7 +331,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FileShareDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, folderPath.Value, fileName.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, format.Value, fileFilter.Value, compression.Value);
+            return new FileShareDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                additionalProperties,
+                folderPath.Value,
+                fileName.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value,
+                format.Value,
+                fileFilter.Value,
+                compression.Value);
         }
 
         BinaryData IPersistableModel<FileShareDataset>.Write(ModelReaderWriterOptions options)

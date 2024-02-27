@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Optional.ToNullable(tenantId), displayName ?? new ChangeTrackingDictionary<string, string>(), definition.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new ViewResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                viewName.Value,
+                userId.Value,
+                Optional.ToNullable(tenantId),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                definition.Value,
+                Optional.ToNullable(changed),
+                Optional.ToNullable(created),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options)

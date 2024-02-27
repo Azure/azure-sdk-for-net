@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureOperatorNexusNetworkFunctionImageApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType, artifactProfile.Value, deployParametersMappingRuleProfile.Value);
+            return new AzureOperatorNexusNetworkFunctionImageApplication(
+                name.Value,
+                dependsOnProfile.Value,
+                serializedAdditionalRawData,
+                artifactType,
+                artifactProfile.Value,
+                deployParametersMappingRuleProfile.Value);
         }
 
         BinaryData IPersistableModel<AzureOperatorNexusNetworkFunctionImageApplication>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDetails(displayInfo.Value, hierarchyInformation, Optional.ToNullable(count), Optional.ToNullable(productDoubleEncryptionStatus), deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(), serializedAdditionalRawData);
+            return new ProductDetails(
+                displayInfo.Value,
+                hierarchyInformation,
+                Optional.ToNullable(count),
+                Optional.ToNullable(productDoubleEncryptionStatus),
+                deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDetails>.Write(ModelReaderWriterOptions options)

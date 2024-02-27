@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentJobCreatedResult(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AssignmentJobCreatedResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentJobCreatedResult>.Write(ModelReaderWriterOptions options)

@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceExtension(name.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, protectedSettingsFromKeyVault.Value, forceUpdateTag.Value, provisioningState.Value, rolesAppliedTo ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CloudServiceExtension(
+                name.Value,
+                publisher.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                settings.Value,
+                protectedSettings.Value,
+                protectedSettingsFromKeyVault.Value,
+                forceUpdateTag.Value,
+                provisioningState.Value,
+                rolesAppliedTo ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceExtension>.Write(ModelReaderWriterOptions options)

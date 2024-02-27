@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification), serializedAdditionalRawData);
+            return new LogicApiOperationProperties(
+                summary.Value,
+                description.Value,
+                visibility.Value,
+                trigger.Value,
+                triggerHint.Value,
+                Optional.ToNullable(pageable),
+                annotation.Value,
+                api.Value,
+                inputsDefinition.Value,
+                responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
+                Optional.ToNullable(isWebhook),
+                Optional.ToNullable(isNotification),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiOperationProperties>.Write(ModelReaderWriterOptions options)

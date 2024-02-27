@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityPerimeterConfigurationProfile(name.Value, accessRulesVersion.Value, accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(), diagnosticSettingsVersion.Value, enabledLogCategories ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationProfile(
+                name.Value,
+                accessRulesVersion.Value,
+                accessRules ?? new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>(),
+                diagnosticSettingsVersion.Value,
+                enabledLogCategories ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>.Write(ModelReaderWriterOptions options)

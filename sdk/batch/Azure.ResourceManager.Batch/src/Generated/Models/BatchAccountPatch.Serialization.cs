@@ -224,7 +224,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, autoStorage.Value, encryption.Value, allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(), Optional.ToNullable(publicNetworkAccess), networkProfile.Value, serializedAdditionalRawData);
+            return new BatchAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                autoStorage.Value,
+                encryption.Value,
+                allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>(),
+                Optional.ToNullable(publicNetworkAccess),
+                networkProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPatch>.Write(ModelReaderWriterOptions options)

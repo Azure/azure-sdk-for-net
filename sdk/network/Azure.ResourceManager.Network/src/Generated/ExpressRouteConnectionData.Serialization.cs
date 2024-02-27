@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(provisioningState), expressRouteCircuitPeering, authorizationKey.Value, Optional.ToNullable(routingWeight), Optional.ToNullable(enableInternetSecurity), Optional.ToNullable(expressRouteGatewayBypass), Optional.ToNullable(enablePrivateLinkFastPath), routingConfiguration.Value);
+            return new ExpressRouteConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                expressRouteCircuitPeering,
+                authorizationKey.Value,
+                Optional.ToNullable(routingWeight),
+                Optional.ToNullable(enableInternetSecurity),
+                Optional.ToNullable(expressRouteGatewayBypass),
+                Optional.ToNullable(enablePrivateLinkFastPath),
+                routingConfiguration.Value);
         }
 
         BinaryData IPersistableModel<ExpressRouteConnectionData>.Write(ModelReaderWriterOptions options)

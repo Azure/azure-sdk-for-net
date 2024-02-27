@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, startIPv6Address.Value, endIPv6Address.Value);
+            return new IPv6FirewallRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                startIPv6Address.Value,
+                endIPv6Address.Value);
         }
 
         BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options)

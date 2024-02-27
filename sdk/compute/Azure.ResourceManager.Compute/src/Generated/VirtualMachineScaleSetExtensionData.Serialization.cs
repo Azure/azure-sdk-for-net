@@ -194,7 +194,24 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetExtensionData(id, name, type, systemData.Value, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, provisionAfterExtensions ?? new ChangeTrackingList<string>(), Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, serializedAdditionalRawData);
+            return new VirtualMachineScaleSetExtensionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                forceUpdateTag.Value,
+                publisher.Value,
+                type0.Value,
+                typeHandlerVersion.Value,
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                settings.Value,
+                protectedSettings.Value,
+                provisioningState.Value,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(suppressFailures),
+                protectedSettingsFromKeyVault.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetExtensionData>.Write(ModelReaderWriterOptions options)

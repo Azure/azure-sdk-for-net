@@ -462,7 +462,32 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudKubernetesClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, aadConfiguration.Value, administratorConfiguration.Value, attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(), availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>(), clusterId.Value, connectedClusterId.Value, controlPlaneKubernetesVersion.Value, controlPlaneNodeConfiguration, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, featureStatuses ?? new ChangeTrackingList<FeatureStatus>(), initialAgentPoolConfigurations, kubernetesVersion, managedResourceGroupConfiguration.Value, networkConfiguration, nodes ?? new ChangeTrackingList<KubernetesClusterNode>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                aadConfiguration.Value,
+                administratorConfiguration.Value,
+                attachedNetworkIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                availableUpgrades ?? new ChangeTrackingList<AvailableUpgrade>(),
+                clusterId.Value,
+                connectedClusterId.Value,
+                controlPlaneKubernetesVersion.Value,
+                controlPlaneNodeConfiguration,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                featureStatuses ?? new ChangeTrackingList<FeatureStatus>(),
+                initialAgentPoolConfigurations,
+                kubernetesVersion,
+                managedResourceGroupConfiguration.Value,
+                networkConfiguration,
+                nodes ?? new ChangeTrackingList<KubernetesClusterNode>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterData>.Write(ModelReaderWriterOptions options)

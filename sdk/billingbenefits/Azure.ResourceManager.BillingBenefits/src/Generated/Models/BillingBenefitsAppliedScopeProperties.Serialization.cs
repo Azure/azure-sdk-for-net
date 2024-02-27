@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingBenefitsAppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value, serializedAdditionalRawData);
+            return new BillingBenefitsAppliedScopeProperties(
+                Optional.ToNullable(tenantId),
+                managementGroupId.Value,
+                subscriptionId.Value,
+                resourceGroupId.Value,
+                displayName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingBenefitsAppliedScopeProperties>.Write(ModelReaderWriterOptions options)

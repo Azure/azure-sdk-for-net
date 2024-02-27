@@ -32,6 +32,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
             }
+            if (Oversampling.HasValue)
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
+            }
             writer.WriteEndObject();
         }
 

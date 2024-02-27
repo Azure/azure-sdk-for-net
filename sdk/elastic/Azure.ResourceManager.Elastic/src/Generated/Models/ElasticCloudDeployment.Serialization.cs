@@ -163,7 +163,15 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticCloudDeployment(name.Value, deploymentId.Value, azureSubscriptionId.Value, elasticsearchRegion.Value, elasticsearchServiceUrl.Value, kibanaServiceUrl.Value, kibanaSsoUrl.Value, serializedAdditionalRawData);
+            return new ElasticCloudDeployment(
+                name.Value,
+                deploymentId.Value,
+                azureSubscriptionId.Value,
+                elasticsearchRegion.Value,
+                elasticsearchServiceUrl.Value,
+                kibanaServiceUrl.Value,
+                kibanaSsoUrl.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticCloudDeployment>.Write(ModelReaderWriterOptions options)

@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabServiceRunnerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, serializedAdditionalRawData);
+            return new DevTestLabServiceRunnerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabServiceRunnerData>.Write(ModelReaderWriterOptions options)

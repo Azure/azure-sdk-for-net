@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), fqdnTagName.Value);
+            return new AzureFirewallFqdnTag(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                fqdnTagName.Value);
         }
 
         BinaryData IPersistableModel<AzureFirewallFqdnTag>.Write(ModelReaderWriterOptions options)

@@ -204,7 +204,15 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProductPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), owners ?? new ChangeTrackingList<string>(), purviewAccount.Value, purviewCollection.Value, Optional.ToNullable(privateLinksEnabled), currentMinorVersion.Value, serializedAdditionalRawData);
+            return new DataProductPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                owners ?? new ChangeTrackingList<string>(),
+                purviewAccount.Value,
+                purviewCollection.Value,
+                Optional.ToNullable(privateLinksEnabled),
+                currentMinorVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProductPatch>.Write(ModelReaderWriterOptions options)

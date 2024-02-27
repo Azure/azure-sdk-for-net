@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.Marketplace
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), approvedPlans ?? new ChangeTrackingList<string>(), comment.Value, administrator.Value, plans ?? new ChangeTrackingList<PlanRequesterDetails>(), collectionIds ?? new ChangeTrackingList<Guid>(), icon.Value, serializedAdditionalRawData);
+            return new MarketplaceAdminApprovalRequestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                offerId.Value,
+                displayName.Value,
+                publisherId.Value,
+                Optional.ToNullable(adminAction),
+                approvedPlans ?? new ChangeTrackingList<string>(),
+                comment.Value,
+                administrator.Value,
+                plans ?? new ChangeTrackingList<PlanRequesterDetails>(),
+                collectionIds ?? new ChangeTrackingList<Guid>(),
+                icon.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options)

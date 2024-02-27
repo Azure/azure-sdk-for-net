@@ -130,7 +130,13 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpeechGenerationOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), model.Value, serializedAdditionalRawData);
+            return new SpeechGenerationOptions(
+                input,
+                voice,
+                Optional.ToNullable(responseFormat),
+                Optional.ToNullable(speed),
+                model.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpeechGenerationOptions>.Write(ModelReaderWriterOptions options)

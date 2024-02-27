@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPacketCaptureContent(id.Value, serializedAdditionalRawData, Optional.ToNullable(durationInSeconds), Optional.ToNullable(numberOfPacketsToCapture), sasUrl.Value, fileName.Value, Optional.ToNullable(protocol), flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(), filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
+            return new FirewallPacketCaptureContent(
+                id.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(durationInSeconds),
+                Optional.ToNullable(numberOfPacketsToCapture),
+                sasUrl.Value,
+                fileName.Value,
+                Optional.ToNullable(protocol),
+                flags ?? new ChangeTrackingList<AzureFirewallPacketCaptureFlags>(),
+                filters ?? new ChangeTrackingList<AzureFirewallPacketCaptureRule>());
         }
 
         BinaryData IPersistableModel<FirewallPacketCaptureContent>.Write(ModelReaderWriterOptions options)

@@ -181,7 +181,17 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureMachineLearningIndexChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, projectResourceId, name, version, filter.Value, serializedAdditionalRawData);
+            return new AzureMachineLearningIndexChatExtensionParameters(
+                authentication.Value,
+                Optional.ToNullable(topNDocuments),
+                Optional.ToNullable(inScope),
+                Optional.ToNullable(strictness),
+                roleInformation.Value,
+                projectResourceId,
+                name,
+                version,
+                filter.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureMachineLearningIndexChatExtensionParameters>.Write(ModelReaderWriterOptions options)

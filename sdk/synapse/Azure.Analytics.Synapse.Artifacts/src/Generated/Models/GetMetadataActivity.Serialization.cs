@@ -267,7 +267,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GetMetadataActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, dataset, fieldList ?? new ChangeTrackingList<object>(), storeSettings.Value, formatSettings.Value);
+            return new GetMetadataActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                dataset,
+                fieldList ?? new ChangeTrackingList<object>(),
+                storeSettings.Value,
+                formatSettings.Value);
         }
 
         internal partial class GetMetadataActivityConverter : JsonConverter<GetMetadataActivity>

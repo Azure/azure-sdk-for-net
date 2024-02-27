@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PngImage(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, layers ?? new ChangeTrackingList<PngLayer>());
+            return new PngImage(
+                odataType,
+                label.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(keyFrameInterval),
+                Optional.ToNullable(stretchMode),
+                Optional.ToNullable(syncMode),
+                start,
+                step.Value,
+                range.Value,
+                layers ?? new ChangeTrackingList<PngLayer>());
         }
 
         BinaryData IPersistableModel<PngImage>.Write(ModelReaderWriterOptions options)

@@ -35,7 +35,19 @@ namespace Azure.ResourceManager.Attestation.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AttestationPrivateEndpointConnectionData>();
 
-            return new AttestationProviderData(id, name, resourceType, systemData, tags, location, trustModel, status, attestUri, publicNetworkAccess, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new AttestationProviderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                trustModel,
+                status,
+                attestUri,
+                publicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Attestation.AttestationPrivateEndpointConnectionData"/>. </summary>
@@ -49,7 +61,15 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string privateEndpointStringId = null, AttestationPrivateLinkServiceConnectionState connectionState = null, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new AttestationPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointStringId != null ? new PrivateEndpoint(privateEndpointStringId, serializedAdditionalRawData: null) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new AttestationPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointStringId != null ? new PrivateEndpoint(privateEndpointStringId, serializedAdditionalRawData: null) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AttestationProviderCreateOrUpdateContent"/>. </summary>
@@ -122,7 +142,25 @@ namespace Azure.ResourceManager.Attestation.Models
         {
             x5C ??= new List<string>();
 
-            return new JsonWebKey(alg, crv, d, dp, dq, e, k, kid, kty, n, p, q, qi, use, x, x5C?.ToList(), y, serializedAdditionalRawData: null);
+            return new JsonWebKey(
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
+                kty,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
+                x5C?.ToList(),
+                y,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AttestationPrivateLinkResource"/>. </summary>
@@ -139,7 +177,15 @@ namespace Azure.ResourceManager.Attestation.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new AttestationPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new AttestationPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

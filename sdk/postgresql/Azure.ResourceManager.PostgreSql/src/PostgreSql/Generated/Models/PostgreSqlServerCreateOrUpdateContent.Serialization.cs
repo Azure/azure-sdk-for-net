@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerCreateOrUpdateContent(identity, sku.Value, properties, location, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new PostgreSqlServerCreateOrUpdateContent(
+                identity,
+                sku.Value,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DocumentDbCollectionSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, nestingSeparator.Value, queryTimeout.Value, additionalColumns.Value);
+            return new DocumentDbCollectionSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                query.Value,
+                nestingSeparator.Value,
+                queryTimeout.Value,
+                additionalColumns.Value);
         }
 
         internal partial class DocumentDbCollectionSourceConverter : JsonConverter<DocumentDbCollectionSource>

@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseLinkedIntegrationRuntime(name.Value, subscriptionId.Value, dataFactoryName.Value, dataFactoryLocation.Value, Optional.ToNullable(createTime), serializedAdditionalRawData);
+            return new SynapseLinkedIntegrationRuntime(
+                name.Value,
+                subscriptionId.Value,
+                dataFactoryName.Value,
+                dataFactoryLocation.Value,
+                Optional.ToNullable(createTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseLinkedIntegrationRuntime>.Write(ModelReaderWriterOptions options)

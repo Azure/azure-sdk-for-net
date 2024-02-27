@@ -293,7 +293,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(instanceType, serializedAdditionalRawData, recoveryAzureV1ResourceGroupId.Value, recoveryAzureV2ResourceGroupId.Value, useManagedDisks.Value, diskIdToDiskEncryptionMap ?? new ChangeTrackingDictionary<string, string>(), targetProximityPlacementGroupId.Value, targetAvailabilityZone.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(sqlServerLicenseType), vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
+            return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryAzureV1ResourceGroupId.Value,
+                recoveryAzureV2ResourceGroupId.Value,
+                useManagedDisks.Value,
+                diskIdToDiskEncryptionMap ?? new ChangeTrackingDictionary<string, string>(),
+                targetProximityPlacementGroupId.Value,
+                targetAvailabilityZone.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(sqlServerLicenseType),
+                vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)

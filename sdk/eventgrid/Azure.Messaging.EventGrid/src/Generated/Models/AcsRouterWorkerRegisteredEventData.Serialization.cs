@@ -101,7 +101,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerRegisteredEventData(workerId.Value, queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(), channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(), Optional.ToNullable(totalCapacity), labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>());
+            return new AcsRouterWorkerRegisteredEventData(
+                workerId.Value,
+                queueAssignments ?? new ChangeTrackingList<AcsRouterQueueDetails>(),
+                channelConfigurations ?? new ChangeTrackingList<AcsRouterChannelConfiguration>(),
+                Optional.ToNullable(totalCapacity),
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterWorkerRegisteredEventDataConverter : JsonConverter<AcsRouterWorkerRegisteredEventData>

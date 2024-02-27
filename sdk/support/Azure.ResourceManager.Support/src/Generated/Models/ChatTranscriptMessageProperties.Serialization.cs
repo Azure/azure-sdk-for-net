@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
+            return new ChatTranscriptMessageProperties(
+                Optional.ToNullable(contentType),
+                Optional.ToNullable(communicationDirection),
+                sender.Value,
+                body,
+                Optional.ToNullable(createdDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)

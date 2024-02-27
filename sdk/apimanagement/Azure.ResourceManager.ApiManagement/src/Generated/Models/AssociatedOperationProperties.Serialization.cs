@@ -162,7 +162,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedOperationProperties(id.Value, name.Value, apiName.Value, apiRevision.Value, apiVersion.Value, description.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new AssociatedOperationProperties(
+                id.Value,
+                name.Value,
+                apiName.Value,
+                apiRevision.Value,
+                apiVersion.Value,
+                description.Value,
+                method.Value,
+                uriTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssociatedOperationProperties>.Write(ModelReaderWriterOptions options)

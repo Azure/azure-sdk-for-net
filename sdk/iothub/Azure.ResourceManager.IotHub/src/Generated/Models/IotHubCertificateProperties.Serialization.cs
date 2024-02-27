@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), certificate.Value, serializedAdditionalRawData);
+            return new IotHubCertificateProperties(
+                subject.Value,
+                Optional.ToNullable(expiry),
+                thumbprint.Value,
+                Optional.ToNullable(isVerified),
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                certificate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubCertificateProperties>.Write(ModelReaderWriterOptions options)

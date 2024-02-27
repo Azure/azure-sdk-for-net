@@ -253,7 +253,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(), subjectBeginsWith.Value, subjectEndsWith.Value, events, scope);
+            return new CustomEventsTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                subjectBeginsWith.Value,
+                subjectEndsWith.Value,
+                events,
+                scope);
         }
 
         BinaryData IPersistableModel<CustomEventsTrigger>.Write(ModelReaderWriterOptions options)

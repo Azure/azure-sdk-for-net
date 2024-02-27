@@ -217,7 +217,17 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkScopeData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState.Value, privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(), accessModeSettings, serializedAdditionalRawData);
+            return new MonitorPrivateLinkScopeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(),
+                accessModeSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkScopeData>.Write(ModelReaderWriterOptions options)

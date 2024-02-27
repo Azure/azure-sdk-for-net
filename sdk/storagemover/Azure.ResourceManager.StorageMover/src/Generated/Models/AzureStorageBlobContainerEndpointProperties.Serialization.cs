@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageBlobContainerEndpointProperties(endpointType, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(
+                endpointType,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                storageAccountResourceId,
+                blobContainerName);
         }
 
         BinaryData IPersistableModel<AzureStorageBlobContainerEndpointProperties>.Write(ModelReaderWriterOptions options)

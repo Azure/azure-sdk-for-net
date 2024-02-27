@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownConfigurationGroupValuePropertiesFormat(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, serializedAdditionalRawData);
+            return new UnknownConfigurationGroupValuePropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                configurationGroupSchemaName.Value,
+                configurationGroupSchemaOfferingLocation.Value,
+                configurationGroupSchemaResourceReference.Value,
+                configurationType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationGroupValuePropertiesFormat>.Write(ModelReaderWriterOptions options)

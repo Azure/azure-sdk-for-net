@@ -59,7 +59,13 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new TranslationStatusResult(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error, summary);
+            return new TranslationStatusResult(
+                id,
+                createdDateTimeUtc,
+                lastActionDateTimeUtc,
+                status,
+                error,
+                summary);
         }
     }
 }

@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsageResult(id.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new QuotaUsageResult(
+                id.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsageResult>.Write(ModelReaderWriterOptions options)

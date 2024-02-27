@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseGeoBackupPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), state, storageType.Value, serializedAdditionalRawData);
+            return new SynapseGeoBackupPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                state,
+                storageType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseGeoBackupPolicyData>.Write(ModelReaderWriterOptions options)

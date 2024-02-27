@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineGalleryApplication(tags.Value, Optional.ToNullable(order), packageReferenceId, configurationReference.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), Optional.ToNullable(enableAutomaticUpgrade), serializedAdditionalRawData);
+            return new VirtualMachineGalleryApplication(
+                tags.Value,
+                Optional.ToNullable(order),
+                packageReferenceId,
+                configurationReference.Value,
+                Optional.ToNullable(treatFailureAsDeploymentFailure),
+                Optional.ToNullable(enableAutomaticUpgrade),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineGalleryApplication>.Write(ModelReaderWriterOptions options)

@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationProperties(to, language.Value, message.Value, regionalFormat.Value, subject, serializedAdditionalRawData);
+            return new NotificationProperties(
+                to,
+                language.Value,
+                message.Value,
+                regionalFormat.Value,
+                subject,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationProperties>.Write(ModelReaderWriterOptions options)

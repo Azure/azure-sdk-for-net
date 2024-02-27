@@ -150,7 +150,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActivityParameter(name.Value, Optional.ToNullable(type), value.Value, Optional.ToNullable(direction), Optional.ToNullable(size), serializedAdditionalRawData);
+            return new ScriptActivityParameter(
+                name.Value,
+                Optional.ToNullable(type),
+                value.Value,
+                Optional.ToNullable(direction),
+                Optional.ToNullable(size),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptActivityParameter>.Write(ModelReaderWriterOptions options)

@@ -123,7 +123,14 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DictionaryExample(sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix, serializedAdditionalRawData);
+            return new DictionaryExample(
+                sourcePrefix,
+                sourceTerm,
+                sourceSuffix,
+                targetPrefix,
+                targetTerm,
+                targetSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DictionaryExample>.Write(ModelReaderWriterOptions options)

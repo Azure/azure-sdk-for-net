@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                addressPrefix.Value,
+                Optional.ToNullable(nextHopType),
+                nextHopIPAddress.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(hasBgpOverride));
         }
 
         BinaryData IPersistableModel<RouteData>.Write(ModelReaderWriterOptions options)

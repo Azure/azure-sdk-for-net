@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds), serializedAdditionalRawData);
+            return new ContainerProbe(
+                exec.Value,
+                httpGet.Value,
+                Optional.ToNullable(initialDelaySeconds),
+                Optional.ToNullable(periodSeconds),
+                Optional.ToNullable(failureThreshold),
+                Optional.ToNullable(successThreshold),
+                Optional.ToNullable(timeoutSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerProbe>.Write(ModelReaderWriterOptions options)

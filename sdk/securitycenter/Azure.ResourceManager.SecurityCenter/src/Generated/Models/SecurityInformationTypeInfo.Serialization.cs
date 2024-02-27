@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Optional.ToNullable(order), Optional.ToNullable(recommendedLabelId), Optional.ToNullable(enabled), Optional.ToNullable(custom), keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(), serializedAdditionalRawData);
+            return new SecurityInformationTypeInfo(
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(order),
+                Optional.ToNullable(recommendedLabelId),
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(custom),
+                keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options)

@@ -150,7 +150,16 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileLinkChannel(name, centerFrequencyMHz, bandwidthMHz, endPoint, modulationConfiguration.Value, demodulationConfiguration.Value, encodingConfiguration.Value, decodingConfiguration.Value, serializedAdditionalRawData);
+            return new OrbitalContactProfileLinkChannel(
+                name,
+                centerFrequencyMHz,
+                bandwidthMHz,
+                endPoint,
+                modulationConfiguration.Value,
+                demodulationConfiguration.Value,
+                encodingConfiguration.Value,
+                decodingConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileLinkChannel>.Write(ModelReaderWriterOptions options)

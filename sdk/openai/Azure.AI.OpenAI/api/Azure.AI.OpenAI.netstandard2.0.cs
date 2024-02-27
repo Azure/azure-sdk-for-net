@@ -1379,7 +1379,7 @@ namespace Azure.AI.OpenAI
         public string RoleInformation { get { throw null; } set { } }
         public bool? ShouldRestrictResultScope { get { throw null; } set { } }
         public int? Strictness { get { throw null; } set { } }
-        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } set { } }
+        public Azure.AI.OpenAI.OnYourDataVectorizationSource VectorizationSource { get { throw null; } }
         Azure.AI.OpenAI.PineconeChatExtensionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.PineconeChatExtensionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

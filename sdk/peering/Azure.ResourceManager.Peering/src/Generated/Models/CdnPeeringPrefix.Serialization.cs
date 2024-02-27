@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnPeeringPrefix(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(azureRegion), azureService.Value, Optional.ToNullable(isPrimaryRegion), bgpCommunity.Value, serializedAdditionalRawData);
+            return new CdnPeeringPrefix(
+                id,
+                name,
+                type,
+                systemData.Value,
+                prefix.Value,
+                Optional.ToNullable(azureRegion),
+                azureService.Value,
+                Optional.ToNullable(isPrimaryRegion),
+                bgpCommunity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnPeeringPrefix>.Write(ModelReaderWriterOptions options)

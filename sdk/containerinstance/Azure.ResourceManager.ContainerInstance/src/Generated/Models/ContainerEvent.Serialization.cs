@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value, serializedAdditionalRawData);
+            return new ContainerEvent(
+                Optional.ToNullable(count),
+                Optional.ToNullable(firstTimestamp),
+                Optional.ToNullable(lastTimestamp),
+                name.Value,
+                message.Value,
+                type.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerEvent>.Write(ModelReaderWriterOptions options)

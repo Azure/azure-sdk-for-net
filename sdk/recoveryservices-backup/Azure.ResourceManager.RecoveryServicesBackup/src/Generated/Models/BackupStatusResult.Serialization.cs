@@ -215,7 +215,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupStatusResult(Optional.ToNullable(protectionStatus), vaultId.Value, Optional.ToNullable(fabricName), containerName.Value, protectedItemName.Value, errorCode.Value, errorMessage.Value, policyName.Value, registrationStatus.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(acquireStorageAccountLock), serializedAdditionalRawData);
+            return new BackupStatusResult(
+                Optional.ToNullable(protectionStatus),
+                vaultId.Value,
+                Optional.ToNullable(fabricName),
+                containerName.Value,
+                protectedItemName.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                policyName.Value,
+                registrationStatus.Value,
+                Optional.ToNullable(protectedItemsCount),
+                Optional.ToNullable(acquireStorageAccountLock),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupStatusResult>.Write(ModelReaderWriterOptions options)

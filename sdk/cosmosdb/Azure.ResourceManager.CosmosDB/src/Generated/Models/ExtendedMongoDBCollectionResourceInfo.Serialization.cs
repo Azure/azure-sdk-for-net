@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedMongoDBCollectionResourceInfo(id, shardKey ?? new ChangeTrackingDictionary<string, string>(), indexes ?? new ChangeTrackingList<MongoDBIndex>(), Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedMongoDBCollectionResourceInfo(
+                id,
+                shardKey ?? new ChangeTrackingDictionary<string, string>(),
+                indexes ?? new ChangeTrackingList<MongoDBIndex>(),
+                Optional.ToNullable(analyticalStorageTtl),
+                restoreParameters.Value,
+                Optional.ToNullable(createMode),
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)

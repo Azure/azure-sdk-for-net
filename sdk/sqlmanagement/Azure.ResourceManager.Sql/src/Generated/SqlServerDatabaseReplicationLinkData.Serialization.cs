@@ -292,7 +292,23 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerDatabaseReplicationLinkData(id, name, type, systemData.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), replicationMode.Value, Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), Optional.ToNullable(isTerminationAllowed), Optional.ToNullable(linkType), serializedAdditionalRawData);
+            return new SqlServerDatabaseReplicationLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                partnerServer.Value,
+                partnerDatabase.Value,
+                Optional.ToNullable(partnerLocation),
+                Optional.ToNullable(role),
+                Optional.ToNullable(partnerRole),
+                replicationMode.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(percentComplete),
+                Optional.ToNullable(replicationState),
+                Optional.ToNullable(isTerminationAllowed),
+                Optional.ToNullable(linkType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options)

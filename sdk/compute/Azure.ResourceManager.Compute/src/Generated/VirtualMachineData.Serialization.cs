@@ -661,7 +661,47 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, plan.Value, resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(), identity, zones ?? new ChangeTrackingList<string>(), extendedLocation, managedBy.Value, etag.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, availabilitySet, virtualMachineScaleSet, proximityPlacementGroup, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, host, hostGroup, provisioningState.Value, instanceView.Value, licenseType.Value, vmId.Value, extensionsTimeBudget.Value, Optional.ToNullable(platformFaultDomain), scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new VirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                plan.Value,
+                resources ?? new ChangeTrackingList<VirtualMachineExtensionData>(),
+                identity,
+                zones ?? new ChangeTrackingList<string>(),
+                extendedLocation,
+                managedBy.Value,
+                etag.Value,
+                hardwareProfile.Value,
+                storageProfile.Value,
+                additionalCapabilities.Value,
+                osProfile.Value,
+                networkProfile.Value,
+                securityProfile.Value,
+                diagnosticsProfile.Value,
+                availabilitySet,
+                virtualMachineScaleSet,
+                proximityPlacementGroup,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(evictionPolicy),
+                billingProfile.Value,
+                host,
+                hostGroup,
+                provisioningState.Value,
+                instanceView.Value,
+                licenseType.Value,
+                vmId.Value,
+                extensionsTimeBudget.Value,
+                Optional.ToNullable(platformFaultDomain),
+                scheduledEventsProfile.Value,
+                userData.Value,
+                capacityReservation.Value,
+                applicationProfile.Value,
+                Optional.ToNullable(timeCreated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineData>.Write(ModelReaderWriterOptions options)

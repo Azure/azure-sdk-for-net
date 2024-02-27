@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlRecommendationActionData(id, name, type, systemData.Value, advisorName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(actionId), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), reason.Value, recommendationType.Value, details ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MySqlRecommendationActionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                advisorName.Value,
+                Optional.ToNullable(sessionId),
+                Optional.ToNullable(actionId),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(expirationTime),
+                reason.Value,
+                recommendationType.Value,
+                details ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlRecommendationActionData>.Write(ModelReaderWriterOptions options)

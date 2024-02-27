@@ -139,7 +139,15 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactSchemaReference(messageId, messageVersion, messageRelease, senderApplicationId.Value, senderApplicationQualifier.Value, associationAssignedCode.Value, schemaName, serializedAdditionalRawData);
+            return new EdifactSchemaReference(
+                messageId,
+                messageVersion,
+                messageRelease,
+                senderApplicationId.Value,
+                senderApplicationQualifier.Value,
+                associationAssignedCode.Value,
+                schemaName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactSchemaReference>.Write(ModelReaderWriterOptions options)

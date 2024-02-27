@@ -182,7 +182,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightApplicationHttpsEndpoint(accessModes ?? new ChangeTrackingList<string>(), location.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(publicPort), privateIPAddress.Value, subDomainSuffix.Value, Optional.ToNullable(disableGatewayAuth), serializedAdditionalRawData);
+            return new HDInsightApplicationHttpsEndpoint(
+                accessModes ?? new ChangeTrackingList<string>(),
+                location.Value,
+                Optional.ToNullable(destinationPort),
+                Optional.ToNullable(publicPort),
+                privateIPAddress.Value,
+                subDomainSuffix.Value,
+                Optional.ToNullable(disableGatewayAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightApplicationHttpsEndpoint>.Write(ModelReaderWriterOptions options)

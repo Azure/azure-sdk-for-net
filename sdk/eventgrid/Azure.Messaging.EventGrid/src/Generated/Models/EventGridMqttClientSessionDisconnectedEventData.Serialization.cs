@@ -68,7 +68,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientSessionDisconnectedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, clientSessionName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(disconnectionReason));
+            return new EventGridMqttClientSessionDisconnectedEventData(
+                clientAuthenticationName.Value,
+                clientName.Value,
+                namespaceName.Value,
+                clientSessionName.Value,
+                Optional.ToNullable(sequenceNumber),
+                Optional.ToNullable(disconnectionReason));
         }
 
         internal partial class EventGridMqttClientSessionDisconnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionDisconnectedEventData>

@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAppConfigurationStoreData(id, name, type, systemData.Value, configurationStoreId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(purgeProtectionEnabled), serializedAdditionalRawData);
+            return new DeletedAppConfigurationStoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                configurationStoreId.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(scheduledPurgeDate),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(purgeProtectionEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

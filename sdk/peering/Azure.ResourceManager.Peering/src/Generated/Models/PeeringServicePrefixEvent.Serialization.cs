@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringServicePrefixEvent(Optional.ToNullable(eventTimestamp), eventType.Value, eventSummary.Value, eventLevel.Value, eventDescription.Value, serializedAdditionalRawData);
+            return new PeeringServicePrefixEvent(
+                Optional.ToNullable(eventTimestamp),
+                eventType.Value,
+                eventSummary.Value,
+                eventLevel.Value,
+                eventDescription.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringServicePrefixEvent>.Write(ModelReaderWriterOptions options)

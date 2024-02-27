@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProvisionedClusterUpgradeProfileData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), controlPlaneProfile, serializedAdditionalRawData);
+            return new ProvisionedClusterUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                controlPlaneProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProvisionedClusterUpgradeProfileData>.Write(ModelReaderWriterOptions options)

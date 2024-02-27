@@ -128,7 +128,13 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData, content.Value, mediaUri);
+            return new MediaNotificationContent(
+                channelRegistrationId,
+                to,
+                kind,
+                serializedAdditionalRawData,
+                content.Value,
+                mediaUri);
         }
 
         BinaryData IPersistableModel<MediaNotificationContent>.Write(ModelReaderWriterOptions options)

@@ -198,7 +198,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);
+            return new RestSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders.Value,
+                paginationRules.Value,
+                httpRequestTimeout.Value,
+                requestInterval.Value,
+                additionalColumns.Value);
         }
 
         internal partial class RestSourceConverter : JsonConverter<RestSource>

@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorOriginPatch(originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), serializedAdditionalRawData);
+            return new FrontDoorOriginPatch(
+                originGroupName.Value,
+                azureOrigin,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                sharedPrivateLinkResource.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(enforceCertificateNameCheck),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorOriginPatch>.Write(ModelReaderWriterOptions options)

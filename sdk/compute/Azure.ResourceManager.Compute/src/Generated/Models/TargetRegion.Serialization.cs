@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetRegion(name, Optional.ToNullable(regionalReplicaCount), Optional.ToNullable(storageAccountType), encryption.Value, Optional.ToNullable(excludeFromLatest), serializedAdditionalRawData);
+            return new TargetRegion(
+                name,
+                Optional.ToNullable(regionalReplicaCount),
+                Optional.ToNullable(storageAccountType),
+                encryption.Value,
+                Optional.ToNullable(excludeFromLatest),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetRegion>.Write(ModelReaderWriterOptions options)

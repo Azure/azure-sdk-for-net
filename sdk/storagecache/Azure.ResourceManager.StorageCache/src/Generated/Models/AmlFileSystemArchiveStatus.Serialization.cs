@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemArchiveStatus(Optional.ToNullable(state), Optional.ToNullable(lastCompletionTime), Optional.ToNullable(lastStartedTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new AmlFileSystemArchiveStatus(
+                Optional.ToNullable(state),
+                Optional.ToNullable(lastCompletionTime),
+                Optional.ToNullable(lastStartedTime),
+                Optional.ToNullable(percentComplete),
+                errorCode.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemArchiveStatus>.Write(ModelReaderWriterOptions options)

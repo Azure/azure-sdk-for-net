@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobRefreshConfiguration(pathPattern.Value, dateFormat.Value, timeFormat.Value, refreshInterval.Value, Optional.ToNullable(refreshType), serializedAdditionalRawData);
+            return new StreamingJobRefreshConfiguration(
+                pathPattern.Value,
+                dateFormat.Value,
+                timeFormat.Value,
+                refreshInterval.Value,
+                Optional.ToNullable(refreshType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingJobRefreshConfiguration>.Write(ModelReaderWriterOptions options)

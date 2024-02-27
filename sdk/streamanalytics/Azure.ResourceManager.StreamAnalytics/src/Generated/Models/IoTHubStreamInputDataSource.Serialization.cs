@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IoTHubStreamInputDataSource(type, serializedAdditionalRawData, iotHubNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, consumerGroupName.Value, endpoint.Value);
+            return new IoTHubStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                iotHubNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                consumerGroupName.Value,
+                endpoint.Value);
         }
 
         BinaryData IPersistableModel<IoTHubStreamInputDataSource>.Write(ModelReaderWriterOptions options)

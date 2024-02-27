@@ -457,7 +457,30 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChatCompletionsOptions(messages, functions ?? new ChangeTrackingList<FunctionDefinition>(), functionCall.Value, Optional.ToNullable(maxTokens), Optional.ToNullable(temperature), Optional.ToNullable(topP), logitBias ?? new ChangeTrackingDictionary<int, int>(), user.Value, Optional.ToNullable(n), stop ?? new ChangeTrackingList<string>(), Optional.ToNullable(presencePenalty), Optional.ToNullable(frequencyPenalty), Optional.ToNullable(stream), model.Value, dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(), enhancements.Value, Optional.ToNullable(seed), Optional.ToNullable(logprobs), Optional.ToNullable(topLogprobs), responseFormat.Value, tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(), toolChoice.Value, serializedAdditionalRawData);
+            return new ChatCompletionsOptions(
+                messages,
+                functions ?? new ChangeTrackingList<FunctionDefinition>(),
+                functionCall.Value,
+                Optional.ToNullable(maxTokens),
+                Optional.ToNullable(temperature),
+                Optional.ToNullable(topP),
+                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                user.Value,
+                Optional.ToNullable(n),
+                stop ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(presencePenalty),
+                Optional.ToNullable(frequencyPenalty),
+                Optional.ToNullable(stream),
+                model.Value,
+                dataSources ?? new ChangeTrackingList<AzureChatExtensionConfiguration>(),
+                enhancements.Value,
+                Optional.ToNullable(seed),
+                Optional.ToNullable(logprobs),
+                Optional.ToNullable(topLogprobs),
+                responseFormat.Value,
+                tools ?? new ChangeTrackingList<ChatCompletionsToolDefinition>(),
+                toolChoice.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsOptions>.Write(ModelReaderWriterOptions options)

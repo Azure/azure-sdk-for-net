@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxDiskGranularCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, serialNumber.Value, accountId.Value, errorLogLink.Value, verboseLogLink.Value);
+            return new DataBoxDiskGranularCopyLogDetails(
+                copyLogDetailsType,
+                serializedAdditionalRawData,
+                serialNumber.Value,
+                accountId.Value,
+                errorLogLink.Value,
+                verboseLogLink.Value);
         }
 
         BinaryData IPersistableModel<DataBoxDiskGranularCopyLogDetails>.Write(ModelReaderWriterOptions options)

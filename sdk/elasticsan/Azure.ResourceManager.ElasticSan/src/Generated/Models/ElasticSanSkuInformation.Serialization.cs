@@ -183,7 +183,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, locations ?? new ChangeTrackingList<string>(), locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>(), capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>(), serializedAdditionalRawData);
+            return new ElasticSanSkuInformation(
+                name,
+                Optional.ToNullable(tier),
+                resourceType.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>(),
+                capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuInformation>.Write(ModelReaderWriterOptions options)

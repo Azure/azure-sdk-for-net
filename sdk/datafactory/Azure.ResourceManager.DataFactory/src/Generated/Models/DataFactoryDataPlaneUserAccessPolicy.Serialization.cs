@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Optional.ToNullable(startTime), Optional.ToNullable(expireTime), serializedAdditionalRawData);
+            return new DataFactoryDataPlaneUserAccessPolicy(
+                permissions.Value,
+                accessResourcePath.Value,
+                profileName.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(expireTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataPlaneUserAccessPolicy>.Write(ModelReaderWriterOptions options)

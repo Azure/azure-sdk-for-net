@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubConnectorStats(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new GitHubConnectorStats(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubConnectorStats>.Write(ModelReaderWriterOptions options)

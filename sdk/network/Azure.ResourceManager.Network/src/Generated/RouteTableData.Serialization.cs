@@ -283,7 +283,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteTableData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), routes ?? new ChangeTrackingList<RouteData>(), subnets ?? new ChangeTrackingList<SubnetData>(), Optional.ToNullable(disableBgpRoutePropagation), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new RouteTableData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routes ?? new ChangeTrackingList<RouteData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                Optional.ToNullable(disableBgpRoutePropagation),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<RouteTableData>.Write(ModelReaderWriterOptions options)

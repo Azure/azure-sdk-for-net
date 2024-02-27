@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayWafDynamicManifestData(id, name, type, systemData.Value, availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>(), ruleSetType.Value, ruleSetVersion.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayWafDynamicManifestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>(),
+                ruleSetType.Value,
+                ruleSetVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayWafDynamicManifestData>.Write(ModelReaderWriterOptions options)

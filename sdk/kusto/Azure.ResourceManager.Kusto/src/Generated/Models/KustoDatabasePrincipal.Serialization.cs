@@ -142,7 +142,15 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoDatabasePrincipal(role, name, type, fqn.Value, email.Value, appId.Value, tenantName.Value, serializedAdditionalRawData);
+            return new KustoDatabasePrincipal(
+                role,
+                name,
+                type,
+                fqn.Value,
+                email.Value,
+                appId.Value,
+                tenantName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoDatabasePrincipal>.Write(ModelReaderWriterOptions options)
