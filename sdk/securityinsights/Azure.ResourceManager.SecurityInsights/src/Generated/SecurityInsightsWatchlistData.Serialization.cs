@@ -200,31 +200,31 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> watchlistId = default;
-            Optional<string> displayName = default;
-            Optional<string> provider = default;
-            Optional<Source> source = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<SecurityInsightsUserInfo> createdBy = default;
-            Optional<SecurityInsightsUserInfo> updatedBy = default;
-            Optional<string> description = default;
-            Optional<string> watchlistType = default;
-            Optional<string> watchlistAlias = default;
-            Optional<bool> isDeleted = default;
+            SystemData systemData = default;
+            Guid? watchlistId = default;
+            string displayName = default;
+            string provider = default;
+            Source? source = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            SecurityInsightsUserInfo createdBy = default;
+            SecurityInsightsUserInfo updatedBy = default;
+            string description = default;
+            string watchlistType = default;
+            string watchlistAlias = default;
+            bool? isDeleted = default;
             IList<string> labels = default;
-            Optional<TimeSpan> defaultDuration = default;
-            Optional<Guid> tenantId = default;
-            Optional<int> numberOfLinesToSkip = default;
-            Optional<string> rawContent = default;
-            Optional<string> itemsSearchKey = default;
-            Optional<string> contentType = default;
-            Optional<string> uploadStatus = default;
+            TimeSpan? defaultDuration = default;
+            Guid? tenantId = default;
+            int? numberOfLinesToSkip = default;
+            string rawContent = default;
+            string itemsSearchKey = default;
+            string contentType = default;
+            string uploadStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -433,28 +433,28 @@ namespace Azure.ResourceManager.SecurityInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(watchlistId),
-                displayName.Value,
-                provider.Value,
-                Optional.ToNullable(source),
-                Optional.ToNullable(created),
-                Optional.ToNullable(updated),
-                createdBy.Value,
-                updatedBy.Value,
-                description.Value,
-                watchlistType.Value,
-                watchlistAlias.Value,
-                Optional.ToNullable(isDeleted),
+                systemData,
+                watchlistId,
+                displayName,
+                provider,
+                source,
+                created,
+                updated,
+                createdBy,
+                updatedBy,
+                description,
+                watchlistType,
+                watchlistAlias,
+                isDeleted,
                 labels ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(defaultDuration),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(numberOfLinesToSkip),
-                rawContent.Value,
-                itemsSearchKey.Value,
-                contentType.Value,
-                uploadStatus.Value,
-                Optional.ToNullable(etag),
+                defaultDuration,
+                tenantId,
+                numberOfLinesToSkip,
+                rawContent,
+                itemsSearchKey,
+                contentType,
+                uploadStatus,
+                etag,
                 serializedAdditionalRawData);
         }
 

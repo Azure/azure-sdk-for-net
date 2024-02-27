@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Optional<string> scenarioName = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> state = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string scenarioName = default;
+            string id = default;
+            string name = default;
+            string displayName = default;
+            string state = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProtectedItemJobProperties(
-                scenarioName.Value,
-                id.Value,
-                name.Value,
-                displayName.Value,
-                state.Value,
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
+                scenarioName,
+                id,
+                name,
+                displayName,
+                state,
+                startTime,
+                endTime,
                 serializedAdditionalRawData);
         }
 

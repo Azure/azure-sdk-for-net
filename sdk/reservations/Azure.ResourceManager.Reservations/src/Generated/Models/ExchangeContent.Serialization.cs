@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<ExchangeRequestProperties> properties = default;
+            ExchangeRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExchangeContent(properties.Value, serializedAdditionalRawData);
+            return new ExchangeContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExchangeContent>.Write(ModelReaderWriterOptions options)

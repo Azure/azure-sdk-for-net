@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> deviceId = default;
-            Optional<string> osPlatform = default;
-            Optional<string> vendor = default;
-            Optional<string> softwareName = default;
-            Optional<string> version = default;
-            Optional<EndOfSupportStatus> endOfSupportStatus = default;
-            Optional<string> endOfSupportDate = default;
-            Optional<int> numberOfKnownVulnerabilities = default;
-            Optional<DateTimeOffset> firstSeenAt = default;
+            SystemData systemData = default;
+            string deviceId = default;
+            string osPlatform = default;
+            string vendor = default;
+            string softwareName = default;
+            string version = default;
+            EndOfSupportStatus? endOfSupportStatus = default;
+            string endOfSupportDate = default;
+            int? numberOfKnownVulnerabilities = default;
+            DateTimeOffset? firstSeenAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,16 +254,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                deviceId.Value,
-                osPlatform.Value,
-                vendor.Value,
-                softwareName.Value,
-                version.Value,
-                Optional.ToNullable(endOfSupportStatus),
-                endOfSupportDate.Value,
-                Optional.ToNullable(numberOfKnownVulnerabilities),
-                Optional.ToNullable(firstSeenAt),
+                systemData,
+                deviceId,
+                osPlatform,
+                vendor,
+                softwareName,
+                version,
+                endOfSupportStatus,
+                endOfSupportDate,
+                numberOfKnownVulnerabilities,
+                firstSeenAt,
                 serializedAdditionalRawData);
         }
 

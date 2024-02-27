@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             IList<string> requiredZoneNames = default;
-            Optional<VaultSubResourceType> subResource = default;
+            VaultSubResourceType? subResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsZoneResult(Optional.ToNullable(subResource), serializedAdditionalRawData, requiredZoneNames ?? new ChangeTrackingList<string>());
+            return new DnsZoneResult(subResource, serializedAdditionalRawData, requiredZoneNames ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<DnsZoneResult>.Write(ModelReaderWriterOptions options)

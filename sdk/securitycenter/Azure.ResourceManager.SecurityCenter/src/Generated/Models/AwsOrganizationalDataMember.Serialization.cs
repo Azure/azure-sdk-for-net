@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> parentHierarchyId = default;
+            string parentHierarchyId = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsOrganizationalDataMember(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId.Value);
+            return new AwsOrganizationalDataMember(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId);
         }
 
         BinaryData IPersistableModel<AwsOrganizationalDataMember>.Write(ModelReaderWriterOptions options)

@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     case "ProcessNotAllowed": return ProcessNotAllowed.DeserializeProcessNotAllowed(element, options);
                 }
             }
-            Optional<SecurityValueType> valueType = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            SecurityValueType? valueType = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = "ListCustomAlertRule";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ListCustomAlertRule(
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 isEnabled,
                 ruleType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(valueType));
+                valueType);
         }
 
         BinaryData IPersistableModel<ListCustomAlertRule>.Write(ModelReaderWriterOptions options)

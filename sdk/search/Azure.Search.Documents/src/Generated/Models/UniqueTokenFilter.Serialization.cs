@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<bool> onlyOnSamePosition = default;
+            bool? onlyOnSamePosition = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new UniqueTokenFilter(odataType, name, Optional.ToNullable(onlyOnSamePosition));
+            return new UniqueTokenFilter(odataType, name, onlyOnSamePosition);
         }
     }
 }

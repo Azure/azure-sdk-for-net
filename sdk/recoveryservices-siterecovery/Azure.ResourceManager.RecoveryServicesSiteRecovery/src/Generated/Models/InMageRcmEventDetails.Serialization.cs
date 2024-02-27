@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> protectedItemName = default;
-            Optional<string> vmName = default;
-            Optional<string> latestAgentVersion = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> fabricName = default;
-            Optional<string> applianceName = default;
-            Optional<string> serverType = default;
-            Optional<string> componentDisplayName = default;
+            string protectedItemName = default;
+            string vmName = default;
+            string latestAgentVersion = default;
+            ResourceIdentifier jobId = default;
+            string fabricName = default;
+            string applianceName = default;
+            string serverType = default;
+            string componentDisplayName = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmEventDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                protectedItemName.Value,
-                vmName.Value,
-                latestAgentVersion.Value,
-                jobId.Value,
-                fabricName.Value,
-                applianceName.Value,
-                serverType.Value,
-                componentDisplayName.Value);
+                protectedItemName,
+                vmName,
+                latestAgentVersion,
+                jobId,
+                fabricName,
+                applianceName,
+                serverType,
+                componentDisplayName);
         }
 
         BinaryData IPersistableModel<InMageRcmEventDetails>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             IReadOnlyList<ArmDeploymentScriptData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentScriptListResult(value ?? new ChangeTrackingList<ArmDeploymentScriptData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ArmDeploymentScriptListResult(value ?? new ChangeTrackingList<ArmDeploymentScriptData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptListResult>.Write(ModelReaderWriterOptions options)

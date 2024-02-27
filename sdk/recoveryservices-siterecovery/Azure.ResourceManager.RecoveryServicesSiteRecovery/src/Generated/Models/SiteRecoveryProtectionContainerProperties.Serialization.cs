@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> fabricFriendlyName = default;
-            Optional<string> friendlyName = default;
-            Optional<string> fabricType = default;
-            Optional<int> protectedItemCount = default;
-            Optional<string> pairingStatus = default;
-            Optional<string> role = default;
-            Optional<ProtectionContainerFabricSpecificDetails> fabricSpecificDetails = default;
+            string fabricFriendlyName = default;
+            string friendlyName = default;
+            string fabricType = default;
+            int? protectedItemCount = default;
+            string pairingStatus = default;
+            string role = default;
+            ProtectionContainerFabricSpecificDetails fabricSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,13 +160,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SiteRecoveryProtectionContainerProperties(
-                fabricFriendlyName.Value,
-                friendlyName.Value,
-                fabricType.Value,
-                Optional.ToNullable(protectedItemCount),
-                pairingStatus.Value,
-                role.Value,
-                fabricSpecificDetails.Value,
+                fabricFriendlyName,
+                friendlyName,
+                fabricType,
+                protectedItemCount,
+                pairingStatus,
+                role,
+                fabricSpecificDetails,
                 serializedAdditionalRawData);
         }
 

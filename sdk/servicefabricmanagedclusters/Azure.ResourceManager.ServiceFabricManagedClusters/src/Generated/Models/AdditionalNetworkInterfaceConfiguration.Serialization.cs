@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
+            bool? enableAcceleratedNetworking = default;
+            WritableSubResource dscpConfiguration = default;
             IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalNetworkInterfaceConfiguration(name, Optional.ToNullable(enableAcceleratedNetworking), dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
+            return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)

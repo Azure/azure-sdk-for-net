@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> title = default;
-            Optional<string> content = default;
-            Optional<ReplacementMaps> replacementMaps = default;
+            string title = default;
+            string content = default;
+            ReplacementMaps replacementMaps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSection(title.Value, content.Value, replacementMaps.Value, serializedAdditionalRawData);
+            return new SelfHelpSection(title, content, replacementMaps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSection>.Write(ModelReaderWriterOptions options)

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IList<ServerTrustGroupServerInfo> groupMembers = default;
             IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Sql
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 groupMembers ?? new ChangeTrackingList<ServerTrustGroupServerInfo>(),
                 trustScopes ?? new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>(),
                 serializedAdditionalRawData);

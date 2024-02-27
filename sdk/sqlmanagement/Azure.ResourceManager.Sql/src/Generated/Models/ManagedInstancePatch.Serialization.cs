@@ -240,38 +240,38 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlSku> sku = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            SqlSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            Optional<ManagedInstancePropertiesProvisioningState> provisioningState = default;
-            Optional<ManagedServerCreateMode> managedInstanceCreateMode = default;
-            Optional<string> fullyQualifiedDomainName = default;
-            Optional<string> administratorLogin = default;
-            Optional<string> administratorLoginPassword = default;
-            Optional<ResourceIdentifier> subnetId = default;
-            Optional<string> state = default;
-            Optional<ManagedInstanceLicenseType> licenseType = default;
-            Optional<int> vCores = default;
-            Optional<int> storageSizeInGB = default;
-            Optional<string> collation = default;
-            Optional<string> dnsZone = default;
-            Optional<ResourceIdentifier> dnsZonePartner = default;
-            Optional<bool> publicDataEndpointEnabled = default;
-            Optional<ResourceIdentifier> sourceManagedInstanceId = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<ManagedInstanceProxyOverride> proxyOverride = default;
-            Optional<string> timezoneId = default;
-            Optional<ResourceIdentifier> instancePoolId = default;
-            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
+            ManagedInstancePropertiesProvisioningState? provisioningState = default;
+            ManagedServerCreateMode? managedInstanceCreateMode = default;
+            string fullyQualifiedDomainName = default;
+            string administratorLogin = default;
+            string administratorLoginPassword = default;
+            ResourceIdentifier subnetId = default;
+            string state = default;
+            ManagedInstanceLicenseType? licenseType = default;
+            int? vCores = default;
+            int? storageSizeInGB = default;
+            string collation = default;
+            string dnsZone = default;
+            ResourceIdentifier dnsZonePartner = default;
+            bool? publicDataEndpointEnabled = default;
+            ResourceIdentifier sourceManagedInstanceId = default;
+            DateTimeOffset? restorePointInTime = default;
+            ManagedInstanceProxyOverride? proxyOverride = default;
+            string timezoneId = default;
+            ResourceIdentifier instancePoolId = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections = default;
-            Optional<string> minimalTlsVersion = default;
-            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> keyId = default;
-            Optional<ManagedInstanceExternalAdministrator> administrators = default;
-            Optional<SqlServicePrincipal> servicePrincipal = default;
+            string minimalTlsVersion = default;
+            SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default;
+            SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
+            bool? zoneRedundant = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri keyId = default;
+            ManagedInstanceExternalAdministrator administrators = default;
+            SqlServicePrincipal servicePrincipal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -562,38 +562,38 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ManagedInstancePatch(
-                sku.Value,
+                sku,
                 identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(managedInstanceCreateMode),
-                fullyQualifiedDomainName.Value,
-                administratorLogin.Value,
-                administratorLoginPassword.Value,
-                subnetId.Value,
-                state.Value,
-                Optional.ToNullable(licenseType),
-                Optional.ToNullable(vCores),
-                Optional.ToNullable(storageSizeInGB),
-                collation.Value,
-                dnsZone.Value,
-                dnsZonePartner.Value,
-                Optional.ToNullable(publicDataEndpointEnabled),
-                sourceManagedInstanceId.Value,
-                Optional.ToNullable(restorePointInTime),
-                Optional.ToNullable(proxyOverride),
-                timezoneId.Value,
-                instancePoolId.Value,
-                maintenanceConfigurationId.Value,
+                provisioningState,
+                managedInstanceCreateMode,
+                fullyQualifiedDomainName,
+                administratorLogin,
+                administratorLoginPassword,
+                subnetId,
+                state,
+                licenseType,
+                vCores,
+                storageSizeInGB,
+                collation,
+                dnsZone,
+                dnsZonePartner,
+                publicDataEndpointEnabled,
+                sourceManagedInstanceId,
+                restorePointInTime,
+                proxyOverride,
+                timezoneId,
+                instancePoolId,
+                maintenanceConfigurationId,
                 privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(),
-                minimalTlsVersion.Value,
-                Optional.ToNullable(currentBackupStorageRedundancy),
-                Optional.ToNullable(requestedBackupStorageRedundancy),
-                Optional.ToNullable(zoneRedundant),
-                primaryUserAssignedIdentityId.Value,
-                keyId.Value,
-                administrators.Value,
-                servicePrincipal.Value,
+                minimalTlsVersion,
+                currentBackupStorageRedundancy,
+                requestedBackupStorageRedundancy,
+                zoneRedundant,
+                primaryUserAssignedIdentityId,
+                keyId,
+                administrators,
+                servicePrincipal,
                 serializedAdditionalRawData);
         }
 

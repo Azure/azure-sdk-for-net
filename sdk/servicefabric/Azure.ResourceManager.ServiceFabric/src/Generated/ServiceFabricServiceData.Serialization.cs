@@ -178,24 +178,24 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> placementConstraints = default;
+            SystemData systemData = default;
+            string placementConstraints = default;
             IList<ServiceCorrelationDescription> correlationScheme = default;
             IList<ServiceLoadMetricDescription> serviceLoadMetrics = default;
             IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default;
-            Optional<ApplicationMoveCost> defaultMoveCost = default;
-            Optional<string> provisioningState = default;
-            Optional<ApplicationServiceKind> serviceKind = default;
-            Optional<string> serviceTypeName = default;
-            Optional<PartitionSchemeDescription> partitionDescription = default;
-            Optional<ArmServicePackageActivationMode> servicePackageActivationMode = default;
-            Optional<string> serviceDnsName = default;
+            ApplicationMoveCost? defaultMoveCost = default;
+            string provisioningState = default;
+            ApplicationServiceKind? serviceKind = default;
+            string serviceTypeName = default;
+            PartitionSchemeDescription partitionDescription = default;
+            ArmServicePackageActivationMode? servicePackageActivationMode = default;
+            string serviceDnsName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -372,21 +372,21 @@ namespace Azure.ResourceManager.ServiceFabric
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                placementConstraints.Value,
+                placementConstraints,
                 correlationScheme ?? new ChangeTrackingList<ServiceCorrelationDescription>(),
                 serviceLoadMetrics ?? new ChangeTrackingList<ServiceLoadMetricDescription>(),
                 servicePlacementPolicies ?? new ChangeTrackingList<ServicePlacementPolicyDescription>(),
-                Optional.ToNullable(defaultMoveCost),
-                provisioningState.Value,
-                Optional.ToNullable(serviceKind),
-                serviceTypeName.Value,
-                partitionDescription.Value,
-                Optional.ToNullable(servicePackageActivationMode),
-                serviceDnsName.Value,
-                Optional.ToNullable(etag),
+                defaultMoveCost,
+                provisioningState,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                servicePackageActivationMode,
+                serviceDnsName,
+                etag,
                 serializedAdditionalRawData);
         }
 

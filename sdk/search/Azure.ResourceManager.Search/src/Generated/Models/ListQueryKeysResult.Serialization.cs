@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             IReadOnlyList<SearchServiceQueryKey> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListQueryKeysResult(value ?? new ChangeTrackingList<SearchServiceQueryKey>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListQueryKeysResult(value ?? new ChangeTrackingList<SearchServiceQueryKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListQueryKeysResult>.Write(ModelReaderWriterOptions options)

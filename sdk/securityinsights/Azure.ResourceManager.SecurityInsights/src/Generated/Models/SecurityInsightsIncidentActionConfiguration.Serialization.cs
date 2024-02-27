@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            SecurityInsightsIncidentStatus? status = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
             IList<SecurityInsightsIncidentLabel> labels = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SecurityInsightsIncidentActionConfiguration(
-                Optional.ToNullable(severity),
-                Optional.ToNullable(status),
-                Optional.ToNullable(classification),
-                Optional.ToNullable(classificationReason),
-                classificationComment.Value,
-                owner.Value,
+                severity,
+                status,
+                classification,
+                classificationReason,
+                classificationComment,
+                owner,
                 labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
                 serializedAdditionalRawData);
         }

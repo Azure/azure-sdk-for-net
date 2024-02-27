@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<StorageMappingProperties> properties = default;
+            StorageMappingProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageClassificationMappingCreateOrUpdateContent(properties.Value, serializedAdditionalRawData);
+            return new StorageClassificationMappingCreateOrUpdateContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageClassificationMappingCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

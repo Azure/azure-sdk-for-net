@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<ProviderProperties> properties = default;
+            string id = default;
+            string name = default;
+            ProviderProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderDescription(id.Value, name.Value, properties.Value, serializedAdditionalRawData);
+            return new ProviderDescription(id, name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderDescription>.Write(ModelReaderWriterOptions options)

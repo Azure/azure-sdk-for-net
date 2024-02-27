@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Guid> id = default;
-            Optional<string> type = default;
+            string name = default;
+            Guid? id = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuiltInInfoType(name.Value, Optional.ToNullable(id), type.Value, serializedAdditionalRawData);
+            return new BuiltInInfoType(name, id, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuiltInInfoType>.Write(ModelReaderWriterOptions options)

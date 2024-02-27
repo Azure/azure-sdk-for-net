@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryPointId = default;
+            ResourceIdentifier recoveryPointId = default;
             SiteRecoveryApplyRecoveryPointProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryApplyRecoveryPointProperties(recoveryPointId.Value, providerSpecificDetails, serializedAdditionalRawData);
+            return new SiteRecoveryApplyRecoveryPointProperties(recoveryPointId, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryApplyRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

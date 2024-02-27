@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<QuotaUsageResultName> name = default;
+            ResourceIdentifier id = default;
+            string unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            QuotaUsageResultName name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.Search.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new QuotaUsageResult(
-                id.Value,
-                unit.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                name.Value,
+                id,
+                unit,
+                currentValue,
+                limit,
+                name,
                 serializedAdditionalRawData);
         }
 

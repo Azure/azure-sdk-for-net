@@ -109,15 +109,15 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<SplitSkillLanguage?> defaultLanguageCode = default;
-            Optional<TextSplitMode> textSplitMode = default;
-            Optional<int?> maximumPageLength = default;
-            Optional<int?> pageOverlapLength = default;
-            Optional<int?> maximumPagesToTake = default;
+            SplitSkillLanguage? defaultLanguageCode = default;
+            TextSplitMode? textSplitMode = default;
+            int? maximumPageLength = default;
+            int? pageOverlapLength = default;
+            int? maximumPagesToTake = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -214,16 +214,16 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SplitSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
-                Optional.ToNullable(defaultLanguageCode),
-                Optional.ToNullable(textSplitMode),
-                Optional.ToNullable(maximumPageLength),
-                Optional.ToNullable(pageOverlapLength),
-                Optional.ToNullable(maximumPagesToTake));
+                defaultLanguageCode,
+                textSplitMode,
+                maximumPageLength,
+                pageOverlapLength,
+                maximumPagesToTake);
         }
     }
 }

@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 return null;
             }
-            Optional<long> id = default;
-            Optional<string> code = default;
-            Optional<string> summaryMessage = default;
-            Optional<string> runAsAccountId = default;
-            Optional<string> message = default;
-            Optional<string> possibleCauses = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> updatedTimeStamp = default;
+            long? id = default;
+            string code = default;
+            string summaryMessage = default;
+            string runAsAccountId = default;
+            string message = default;
+            string possibleCauses = default;
+            string recommendedAction = default;
+            string severity = default;
+            DateTimeOffset? updatedTimeStamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,15 +182,15 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SpringBootSiteError(
-                Optional.ToNullable(id),
-                code.Value,
-                summaryMessage.Value,
-                runAsAccountId.Value,
-                message.Value,
-                possibleCauses.Value,
-                recommendedAction.Value,
-                severity.Value,
-                Optional.ToNullable(updatedTimeStamp),
+                id,
+                code,
+                summaryMessage,
+                runAsAccountId,
+                message,
+                possibleCauses,
+                recommendedAction,
+                severity,
+                updatedTimeStamp,
                 serializedAdditionalRawData);
         }
 
