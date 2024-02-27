@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Recommendation))
+            if (options.Format != "W" && Recommendation != null)
             {
                 writer.WritePropertyName("recommendation"u8);
                 writer.WriteStringValue(Recommendation);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
+            if (options.Format != "W" && !(Details is ChangeTrackingList<SapDiscoveryErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> recommendation = default;
-            Optional<IReadOnlyList<SapDiscoveryErrorDetail>> details = default;
+            IReadOnlyList<SapDiscoveryErrorDetail> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     List<SapDiscoveryErrorDetail> array = new List<SapDiscoveryErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSapDiscoveryErrorDetail(item));
+                        array.Add(DeserializeSapDiscoveryErrorDetail(item, options));
                     }
                     details = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDiscoveryErrorDetail(code.Value, message.Value, recommendation.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SapDiscoveryErrorDetail(code.Value, message.Value, recommendation.Value, details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiscoveryErrorDetail>.Write(ModelReaderWriterOptions options)

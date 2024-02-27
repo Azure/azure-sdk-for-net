@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         }
 
         /// <summary>
-        /// Creates a discovery site for SAP Migration.
+        /// Creates a discovery site resource for SAP Migration. This resource will be used to run system discovery and assessment with Azure Migrate.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SAPDiscoverySiteResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapDiscoverySiteName, SAPDiscoverySiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.CreateOrUpdate");
             scope.Start();
@@ -104,7 +114,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         }
 
         /// <summary>
-        /// Creates a discovery site for SAP Migration.
+        /// Creates a discovery site resource for SAP Migration. This resource will be used to run system discovery and assessment with Azure Migrate.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SAPDiscoverySiteResource> CreateOrUpdate(WaitUntil waitUntil, string sapDiscoverySiteName, SAPDiscoverySiteData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual async Task<Response<SAPDiscoverySiteResource>> GetAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual Response<SAPDiscoverySiteResource> Get(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual Response<bool> Exists(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual async Task<NullableResponse<SAPDiscoverySiteResource>> GetIfExistsAsync(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="sapDiscoverySiteName"/> is null. </exception>
         public virtual NullableResponse<SAPDiscoverySiteResource> GetIfExists(string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sapDiscoverySiteName, nameof(sapDiscoverySiteName));
+            if (sapDiscoverySiteName == null)
+            {
+                throw new ArgumentNullException(nameof(sapDiscoverySiteName));
+            }
+            if (sapDiscoverySiteName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sapDiscoverySiteName));
+            }
 
             using var scope = _sapDiscoverySiteSapDiscoverySitesClientDiagnostics.CreateScope("SAPDiscoverySiteCollection.GetIfExists");
             scope.Start();

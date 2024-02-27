@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MaxCpuLoad))
+            if (options.Format != "W" && MaxCpuLoad.HasValue)
             {
                 writer.WritePropertyName("maxCpuLoad"u8);
                 writer.WriteNumberValue(MaxCpuLoad.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSourceDbSizeGB))
+            if (options.Format != "W" && TotalSourceDbSizeGB.HasValue)
             {
                 writer.WritePropertyName("totalSourceDbSizeGB"u8);
                 writer.WriteNumberValue(TotalSourceDbSizeGB.Value);

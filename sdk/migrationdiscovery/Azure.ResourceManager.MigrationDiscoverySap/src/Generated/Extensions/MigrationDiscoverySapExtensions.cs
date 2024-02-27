@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> Returns a <see cref="SAPDiscoverySiteResource"/> object. </returns>
         public static SAPDiscoverySiteResource GetSAPDiscoverySiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrationDiscoverySapArmClient(client).GetSAPDiscoverySiteResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> Returns a <see cref="SAPInstanceResource"/> object. </returns>
         public static SAPInstanceResource GetSAPInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrationDiscoverySapArmClient(client).GetSAPInstanceResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> Returns a <see cref="ServerInstanceResource"/> object. </returns>
         public static ServerInstanceResource GetServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrationDiscoverySapArmClient(client).GetServerInstanceResource(id);
         }
@@ -103,7 +112,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> An object representing collection of SAPDiscoverySiteResources and their operations over a SAPDiscoverySiteResource. </returns>
         public static SAPDiscoverySiteCollection GetSAPDiscoverySites(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySites();
         }
@@ -141,7 +153,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         [ForwardsClientCalls]
         public static async Task<Response<SAPDiscoverySiteResource>> GetSAPDiscoverySiteAsync(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySiteAsync(sapDiscoverySiteName, cancellationToken).ConfigureAwait(false);
         }
@@ -179,7 +194,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         [ForwardsClientCalls]
         public static Response<SAPDiscoverySiteResource> GetSAPDiscoverySite(this ResourceGroupResource resourceGroupResource, string sapDiscoverySiteName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMigrationDiscoverySapResourceGroupResource(resourceGroupResource).GetSAPDiscoverySite(sapDiscoverySiteName, cancellationToken);
         }
@@ -215,7 +233,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> An async collection of <see cref="SAPDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SAPDiscoverySiteResource> GetSAPDiscoverySitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSAPDiscoverySitesAsync(cancellationToken);
         }
@@ -251,7 +272,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> A collection of <see cref="SAPDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SAPDiscoverySiteResource> GetSAPDiscoverySites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMigrationDiscoverySapSubscriptionResource(subscriptionResource).GetSAPDiscoverySites(cancellationToken);
         }

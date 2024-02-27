@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPerformanceData(document.RootElement, options);
+            return DeserializePerformanceDetail(document.RootElement, options);
         }
 
         internal static UnknownPerformanceData DeserializeUnknownPerformanceData(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPerformanceData(document.RootElement, options);
+                        return DeserializePerformanceDetail(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PerformanceDetail)} does not support '{options.Format}' format.");

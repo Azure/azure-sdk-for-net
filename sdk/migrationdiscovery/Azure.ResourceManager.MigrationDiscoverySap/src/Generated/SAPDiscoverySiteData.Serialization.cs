@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
+            if (ExtendedLocation != null)
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 writer.WriteObjectValue(ExtendedLocation);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,29 +61,29 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MasterSiteId))
+            if (MasterSiteId != null)
             {
                 writer.WritePropertyName("masterSiteId"u8);
                 writer.WriteStringValue(MasterSiteId);
             }
-            if (Optional.IsDefined(MigrateProjectId))
+            if (MigrateProjectId != null)
             {
                 writer.WritePropertyName("migrateProjectId"u8);
                 writer.WriteStringValue(MigrateProjectId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 return null;
             }
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value);
+                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value, options);
                             continue;
                         }
                     }
@@ -240,7 +240,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SAPDiscoverySiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, masterSiteId.Value, migrateProjectId.Value, Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SAPDiscoverySiteData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation.Value,
+                masterSiteId.Value,
+                migrateProjectId.Value,
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SAPDiscoverySiteData>.Write(ModelReaderWriterOptions options)

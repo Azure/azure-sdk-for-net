@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SystemSid))
+            if (options.Format != "W" && SystemSid != null)
             {
                 writer.WritePropertyName("systemSid"u8);
                 writer.WriteStringValue(SystemSid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Environment))
+            if (options.Format != "W" && Environment.HasValue)
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LandscapeSid))
+            if (options.Format != "W" && LandscapeSid != null)
             {
                 writer.WritePropertyName("landscapeSid"u8);
                 writer.WriteStringValue(LandscapeSid);
             }
-            if (options.Format != "W" && Optional.IsDefined(Application))
+            if (options.Format != "W" && Application != null)
             {
                 writer.WritePropertyName("application"u8);
                 writer.WriteStringValue(Application);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value);
+                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value, options);
                             continue;
                         }
                     }
@@ -251,7 +251,20 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SAPInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, systemSid.Value, Optional.ToNullable(environment), landscapeSid.Value, application.Value, Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SAPInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                systemSid.Value,
+                Optional.ToNullable(environment),
+                landscapeSid.Value,
+                application.Value,
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SAPInstanceData>.Write(ModelReaderWriterOptions options)

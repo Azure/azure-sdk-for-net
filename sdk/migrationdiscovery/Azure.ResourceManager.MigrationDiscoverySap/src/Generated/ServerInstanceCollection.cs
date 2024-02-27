@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverInstanceName, ServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string serverInstanceName, ServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual async Task<Response<ServerInstanceResource>> GetAsync(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual Response<ServerInstanceResource> Get(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServerInstanceResource>> GetIfExistsAsync(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <exception cref="ArgumentNullException"> <paramref name="serverInstanceName"/> is null. </exception>
         public virtual NullableResponse<ServerInstanceResource> GetIfExists(string serverInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverInstanceName, nameof(serverInstanceName));
+            if (serverInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(serverInstanceName));
+            }
+            if (serverInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverInstanceName));
+            }
 
             using var scope = _serverInstanceClientDiagnostics.CreateScope("ServerInstanceCollection.GetIfExists");
             scope.Start();

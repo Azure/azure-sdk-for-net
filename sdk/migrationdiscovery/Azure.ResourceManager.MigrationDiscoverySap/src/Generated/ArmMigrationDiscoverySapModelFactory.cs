@@ -34,7 +34,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SAPDiscoverySiteData(id, name, resourceType, systemData, tags, location, extendedLocation, masterSiteId, migrateProjectId, provisioningState, errors, serializedAdditionalRawData: null);
+            return new SAPDiscoverySiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                masterSiteId,
+                migrateProjectId,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SAPMigrateError"/>. </summary>
@@ -81,7 +93,20 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SAPInstanceData(id, name, resourceType, systemData, tags, location, systemSid, environment, landscapeSid, application, provisioningState, errors, serializedAdditionalRawData: null);
+            return new SAPInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                systemSid,
+                environment,
+                landscapeSid,
+                application,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationDiscoverySap.ServerInstanceData"/>. </summary>
@@ -106,7 +131,22 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <returns> A new <see cref="MigrationDiscoverySap.ServerInstanceData"/> instance for mocking. </returns>
         public static ServerInstanceData ServerInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationDetail configurationData = null, PerformanceDetail performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
         {
-            return new ServerInstanceData(id, name, resourceType, systemData, serverName, sapInstanceType, instanceSid, sapProduct, sapProductVersion, operatingSystem, configurationData, performanceData, provisioningState, errors, serializedAdditionalRawData: null);
+            return new ServerInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serverName,
+                sapInstanceType,
+                instanceSid,
+                sapProduct,
+                sapProductVersion,
+                operatingSystem,
+                configurationData,
+                performanceData,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServerInstanceProperties"/>. </summary>
@@ -127,7 +167,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <returns> A new <see cref="Models.ServerInstanceProperties"/> instance for mocking. </returns>
         public static ServerInstanceProperties ServerInstanceProperties(string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationDetail configurationData = null, PerformanceDetail performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
         {
-            return new ServerInstanceProperties(serverName, sapInstanceType, instanceSid, sapProduct, sapProductVersion, operatingSystem, configurationData, performanceData, provisioningState, errors, serializedAdditionalRawData: null);
+            return new ServerInstanceProperties(
+                serverName,
+                sapInstanceType,
+                instanceSid,
+                sapProduct,
+                sapProductVersion,
+                operatingSystem,
+                configurationData,
+                performanceData,
+                provisioningState,
+                errors,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationDetail"/>. </summary>
@@ -145,7 +196,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <returns> A new <see cref="Models.ConfigurationDetail"/> instance for mocking. </returns>
         public static ConfigurationDetail ConfigurationDetail(int? saps = null, int? cpu = null, string cpuType = null, int? cpuInMhz = null, int? ram = null, string hardwareManufacturer = null, string model = null, int? totalDiskSizeGB = null, int? totalDiskIops = null, DatabaseType? databaseType = null, int? targetHanaRamSizeGB = null)
         {
-            return new ConfigurationDetail(saps, cpu, cpuType, cpuInMhz, ram, hardwareManufacturer, model, totalDiskSizeGB, totalDiskIops, databaseType, targetHanaRamSizeGB, serializedAdditionalRawData: null);
+            return new ConfigurationDetail(
+                saps,
+                cpu,
+                cpuType,
+                cpuInMhz,
+                ram,
+                hardwareManufacturer,
+                model,
+                totalDiskSizeGB,
+                totalDiskIops,
+                databaseType,
+                targetHanaRamSizeGB,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExcelPerformanceDetail"/>. </summary>

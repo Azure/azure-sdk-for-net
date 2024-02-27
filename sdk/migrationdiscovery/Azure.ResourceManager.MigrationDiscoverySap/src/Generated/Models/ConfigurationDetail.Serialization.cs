@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Saps))
+            if (options.Format != "W" && Saps.HasValue)
             {
                 writer.WritePropertyName("saps"u8);
                 writer.WriteNumberValue(Saps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Cpu))
+            if (options.Format != "W" && Cpu.HasValue)
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuType))
+            if (options.Format != "W" && CpuType != null)
             {
                 writer.WritePropertyName("cpuType"u8);
                 writer.WriteStringValue(CpuType);
             }
-            if (options.Format != "W" && Optional.IsDefined(CpuInMhz))
+            if (options.Format != "W" && CpuInMhz.HasValue)
             {
                 writer.WritePropertyName("cpuInMhz"u8);
                 writer.WriteNumberValue(CpuInMhz.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ram))
+            if (options.Format != "W" && Ram.HasValue)
             {
                 writer.WritePropertyName("ram"u8);
                 writer.WriteNumberValue(Ram.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HardwareManufacturer))
+            if (options.Format != "W" && HardwareManufacturer != null)
             {
                 writer.WritePropertyName("hardwareManufacturer"u8);
                 writer.WriteStringValue(HardwareManufacturer);
             }
-            if (options.Format != "W" && Optional.IsDefined(Model))
+            if (options.Format != "W" && Model != null)
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalDiskSizeGB))
+            if (options.Format != "W" && TotalDiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("totalDiskSizeGB"u8);
                 writer.WriteNumberValue(TotalDiskSizeGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalDiskIops))
+            if (options.Format != "W" && TotalDiskIops.HasValue)
             {
                 writer.WritePropertyName("totalDiskIops"u8);
                 writer.WriteNumberValue(TotalDiskIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseType))
+            if (options.Format != "W" && DatabaseType.HasValue)
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetHanaRamSizeGB))
+            if (options.Format != "W" && TargetHanaRamSizeGB.HasValue)
             {
                 writer.WritePropertyName("targetHanaRamSizeGB"u8);
                 writer.WriteNumberValue(TargetHanaRamSizeGB.Value);
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationDetail(Optional.ToNullable(saps), Optional.ToNullable(cpu), cpuType.Value, Optional.ToNullable(cpuInMhz), Optional.ToNullable(ram), hardwareManufacturer.Value, model.Value, Optional.ToNullable(totalDiskSizeGB), Optional.ToNullable(totalDiskIops), Optional.ToNullable(databaseType), Optional.ToNullable(targetHanaRamSizeGB), serializedAdditionalRawData);
+            return new ConfigurationDetail(
+                Optional.ToNullable(saps),
+                Optional.ToNullable(cpu),
+                cpuType.Value,
+                Optional.ToNullable(cpuInMhz),
+                Optional.ToNullable(ram),
+                hardwareManufacturer.Value,
+                model.Value,
+                Optional.ToNullable(totalDiskSizeGB),
+                Optional.ToNullable(totalDiskIops),
+                Optional.ToNullable(databaseType),
+                Optional.ToNullable(targetHanaRamSizeGB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationDetail>.Write(ModelReaderWriterOptions options)

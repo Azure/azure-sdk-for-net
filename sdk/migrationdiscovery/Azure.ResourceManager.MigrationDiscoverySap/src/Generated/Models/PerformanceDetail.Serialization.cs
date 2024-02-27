@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Excel": return ExcelPerformanceDetail.DeserializeExcelPerformanceDetail(element);
-                    case "Native": return NativePerformanceDetail.DeserializeNativePerformanceDetail(element);
+                    case "Excel": return ExcelPerformanceDetail.DeserializeExcelPerformanceDetail(element, options);
+                    case "Native": return NativePerformanceDetail.DeserializeNativePerformanceDetail(element, options);
                 }
             }
-            return UnknownPerformanceData.DeserializeUnknownPerformanceData(element);
+            return UnknownPerformanceData.DeserializeUnknownPerformanceData(element, options);
         }
 
         BinaryData IPersistableModel<PerformanceDetail>.Write(ModelReaderWriterOptions options)

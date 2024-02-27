@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocationType"/> or <paramref name="name"/> is null. </exception>
         public ExtendedLocation(string extendedLocationType, string name)
         {
-            Argument.AssertNotNull(extendedLocationType, nameof(extendedLocationType));
-            Argument.AssertNotNull(name, nameof(name));
+            if (extendedLocationType == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocationType));
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
 
             ExtendedLocationType = extendedLocationType;
             Name = name;

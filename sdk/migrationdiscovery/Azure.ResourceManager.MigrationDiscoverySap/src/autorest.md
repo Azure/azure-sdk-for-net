@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: MigrationDiscoverySap
 namespace: Azure.ResourceManager.MigrationDiscoverySap
-require: https://github.com/Azure/azure-rest-api-specs/blob/d6745c626ad231bffed757935b52024a13d1b365/specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/72bd8aba9c7ce9fccb47e4c651abcc8117427fd0/specification/workloads/resource-manager/Microsoft.Workloads/SAPDiscoverySites/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,6 +20,7 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
+
 
 rename-mapping:
   ErrorDefinition: SapDiscoveryErrorDetail

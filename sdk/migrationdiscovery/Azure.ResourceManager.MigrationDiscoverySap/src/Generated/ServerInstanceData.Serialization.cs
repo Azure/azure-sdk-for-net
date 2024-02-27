@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SapInstanceType))
+            if (options.Format != "W" && SapInstanceType.HasValue)
             {
                 writer.WritePropertyName("sapInstanceType"u8);
                 writer.WriteStringValue(SapInstanceType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceSid))
+            if (options.Format != "W" && InstanceSid != null)
             {
                 writer.WritePropertyName("instanceSid"u8);
                 writer.WriteStringValue(InstanceSid);
             }
-            if (options.Format != "W" && Optional.IsDefined(SapProduct))
+            if (options.Format != "W" && SapProduct != null)
             {
                 writer.WritePropertyName("sapProduct"u8);
                 writer.WriteStringValue(SapProduct);
             }
-            if (options.Format != "W" && Optional.IsDefined(SapProductVersion))
+            if (options.Format != "W" && SapProductVersion != null)
             {
                 writer.WritePropertyName("sapProductVersion"u8);
                 writer.WriteStringValue(SapProductVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
+            if (options.Format != "W" && OperatingSystem.HasValue)
             {
                 writer.WritePropertyName("operatingSystem"u8);
                 writer.WriteStringValue(OperatingSystem.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
+            if (options.Format != "W" && ConfigurationData != null)
             {
                 writer.WritePropertyName("configurationData"u8);
                 writer.WriteObjectValue(ConfigurationData);
             }
-            if (options.Format != "W" && Optional.IsDefined(PerformanceData))
+            if (options.Format != "W" && PerformanceData != null)
             {
                 writer.WritePropertyName("performanceData"u8);
                 writer.WriteObjectValue(PerformanceData);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
+            if (options.Format != "W" && Errors != null)
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteObjectValue(Errors);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            configurationData = ConfigurationDetail.DeserializeConfigurationDetail(property0.Value);
+                            configurationData = ConfigurationDetail.DeserializeConfigurationDetail(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("performanceData"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            performanceData = PerformanceDetail.DeserializePerformanceDetail(property0.Value);
+                            performanceData = PerformanceDetail.DeserializePerformanceDetail(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                             {
                                 continue;
                             }
-                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value);
+                            errors = SAPMigrateError.DeserializeSAPMigrateError(property0.Value, options);
                             continue;
                         }
                     }
@@ -273,7 +273,22 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerInstanceData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(sapInstanceType), instanceSid.Value, sapProduct.Value, sapProductVersion.Value, Optional.ToNullable(operatingSystem), configurationData.Value, performanceData.Value, Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new ServerInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverName.Value,
+                Optional.ToNullable(sapInstanceType),
+                instanceSid.Value,
+                sapProduct.Value,
+                sapProductVersion.Value,
+                Optional.ToNullable(operatingSystem),
+                configurationData.Value,
+                performanceData.Value,
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerInstanceData>.Write(ModelReaderWriterOptions options)

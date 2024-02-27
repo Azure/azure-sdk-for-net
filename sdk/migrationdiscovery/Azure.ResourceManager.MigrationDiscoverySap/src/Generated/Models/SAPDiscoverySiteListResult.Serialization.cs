@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     List<SAPDiscoverySiteData> array = new List<SAPDiscoverySiteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SAPDiscoverySiteData.DeserializeSAPDiscoverySiteData(item));
+                        array.Add(SAPDiscoverySiteData.DeserializeSAPDiscoverySiteData(item, options));
                     }
                     value = array;
                     continue;
