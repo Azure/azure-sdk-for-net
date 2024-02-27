@@ -18,8 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         internal readonly DoubleBuffer _documentBuffer = new();
         internal static bool? s_isAzureWebApp = null;
 
-        //private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        //private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
+        private DateTimeOffset cachedCollectedTime = DateTimeOffset.MinValue;
+        private long cachedCollectedValue = 0;
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -91,32 +91,47 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            // TODO: Reenable Perf Counters
-            //foreach (var metricPoint in CollectPerfCounters())
-            //{
-            //    dataPoint.Metrics.Add(metricPoint);
-            //}
+            foreach (var metricPoint in CollectPerfCounters())
+            {
+                dataPoint.Metrics.Add(metricPoint);
+            }
 
             return dataPoint;
         }
 
-        //public IEnumerable<Models.MetricPoint> CollectPerfCounters()
-        //{
-        //    // PERFORMANCE COUNTERS
-        //    yield return new Models.MetricPoint
-        //    {
-        //        Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-        //        Value = _performanceCounter_CommittedBytes.NextValue(),
-        //        Weight = 1
-        //    };
+        /// <summary>
+        /// Collect Perf Counters for the current process.
+        /// </summary>
+        /// <remarks>
+        /// For Memory:
+        /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.privatememorysize64"/>.
+        /// "The amount of memory, in bytes, allocated for the associated process that cannot be shared with other processes.".
+        ///
+        /// For CPU:
+        /// <see href="https://learn.microsoft.com/dotnet/api/system.diagnostics.process.totalprocessortime"/>.
+        /// "A TimeSpan that indicates the amount of time that the associated process has spent utilizing the CPU. This value is the sum of the UserProcessorTime and the PrivilegedProcessorTime.".
+        /// </remarks>
+        public IEnumerable<Models.MetricPoint> CollectPerfCounters()
+        {
+            var process = Process.GetCurrentProcess();
 
-        //    yield return new Models.MetricPoint
-        //    {
-        //        Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-        //        Value = _performanceCounter_ProcessorTime.NextValue(),
-        //        Weight = 1
-        //    };
-        //}
+            yield return new Models.MetricPoint
+            {
+                Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
+                Value = process.WorkingSet64,
+                Weight = 1
+            };
+
+            if (TryCalculateCPUCounter(process, out var processorValue))
+            {
+                yield return new Models.MetricPoint
+                {
+                    Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
+                    Value = Convert.ToSingle(processorValue),
+                    Weight = 1
+                };
+            }
+        }
 
         /// <summary>
         /// Searches for the environment variable specific to Azure Web App.
@@ -148,6 +163,71 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return s_isAzureWebApp;
+        }
+
+        private void ResetCachedValues()
+        {
+            this.cachedCollectedTime = DateTimeOffset.MinValue;
+            this.cachedCollectedValue = 0;
+        }
+
+        /// <summary>
+        /// Calcualte the CPU usage as the diff between two ticks divided by the period of time, and then divided by the number of processors.
+        /// </summary>
+        private bool TryCalculateCPUCounter(Process process, out double normalizedValue)
+        {
+            var previousCollectedValue = this.cachedCollectedValue;
+            var previousCollectedTime = this.cachedCollectedTime;
+
+            var recentCollectedValue = this.cachedCollectedValue = process.TotalProcessorTime.Ticks;
+            var recentCollectedTime = this.cachedCollectedTime = DateTimeOffset.UtcNow;
+
+            var processorCount = Environment.ProcessorCount;
+
+            double calculatedValue;
+
+            if (previousCollectedTime == DateTimeOffset.MinValue)
+            {
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} DateTimeOffset.MinValue");
+                normalizedValue = default;
+                return false;
+            }
+
+            var period = recentCollectedTime.Ticks - previousCollectedTime.Ticks;
+            if (period < 0)
+            {
+                // Not likely to happen but being safe here incase of clock issues in multi-core.
+                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeTimeSpan(
+                    previousCollectedTime: previousCollectedTime.Ticks,
+                    recentCollectedTime: recentCollectedTime.Ticks);
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period less than zero");
+                normalizedValue = default;
+                return false;
+            }
+
+            var diff = recentCollectedValue - previousCollectedValue;
+            if (diff < 0)
+            {
+                LiveMetricsExporterEventSource.Log.ProcessCountersUnexpectedNegativeValue(
+                    previousCollectedValue: previousCollectedValue,
+                    recentCollectedValue: recentCollectedValue);
+                Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} diff less than zero");
+                normalizedValue = default;
+                return false;
+            }
+
+            period = period != 0 ? period : 1;
+            calculatedValue = diff * 100.0 / period;
+            normalizedValue = calculatedValue / processorCount;
+            LiveMetricsExporterEventSource.Log.ProcessCountersCpuCounter(
+                period: previousCollectedValue,
+                diffValue: recentCollectedValue,
+                calculatedValue: calculatedValue,
+                processorCount: processorCount,
+                normalizedValue: normalizedValue);
+            // TryCalculateCPUCounter period: 10313304 diff: 64062500 calculatedValue: 621.1636930318354 processorCount: 8 normalizedValue: 77.64546162897942
+            Debug.WriteLine($"{nameof(TryCalculateCPUCounter)} period: {period} diff: {diff} calculatedValue: {calculatedValue} processorCount: {processorCount} normalizedValue: {normalizedValue}");
+            return true;
         }
     }
 }
