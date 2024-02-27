@@ -143,6 +143,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
             }
+            if (MaxConcurrentOffers.HasValue)
+            {
+                writer.WritePropertyName("maxConcurrentOffers"u8);
+                writer.WriteNumberValue(MaxConcurrentOffers.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
