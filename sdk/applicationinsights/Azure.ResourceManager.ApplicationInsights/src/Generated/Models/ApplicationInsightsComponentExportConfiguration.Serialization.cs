@@ -283,7 +283,27 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentExportConfiguration(exportId.Value, instrumentationKey.Value, recordTypes.Value, applicationName.Value, subscriptionId.Value, resourceGroup.Value, destinationStorageSubscriptionId.Value, destinationStorageLocationId.Value, destinationAccountId.Value, destinationType.Value, isUserEnabled.Value, lastUserUpdate.Value, notificationQueueEnabled.Value, exportStatus.Value, lastSuccessTime.Value, lastGapTime.Value, permanentErrorReason.Value, storageName.Value, containerName.Value, serializedAdditionalRawData);
+            return new ApplicationInsightsComponentExportConfiguration(
+                exportId.Value,
+                instrumentationKey.Value,
+                recordTypes.Value,
+                applicationName.Value,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                destinationStorageSubscriptionId.Value,
+                destinationStorageLocationId.Value,
+                destinationAccountId.Value,
+                destinationType.Value,
+                isUserEnabled.Value,
+                lastUserUpdate.Value,
+                notificationQueueEnabled.Value,
+                exportStatus.Value,
+                lastSuccessTime.Value,
+                lastGapTime.Value,
+                permanentErrorReason.Value,
+                storageName.Value,
+                containerName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentExportConfiguration>.Write(ModelReaderWriterOptions options)

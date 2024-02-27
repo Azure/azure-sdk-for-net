@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingJobOutputData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, datasource.Value, Optional.ToNullable(timeWindow), Optional.ToNullable(sizeWindow), serialization.Value, diagnostics.Value, Optional.ToNullable(etag), lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(), watermarkSettings.Value);
+            return new StreamingJobOutputData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                datasource.Value,
+                Optional.ToNullable(timeWindow),
+                Optional.ToNullable(sizeWindow),
+                serialization.Value,
+                diagnostics.Value,
+                Optional.ToNullable(etag),
+                lastOutputEventTimestamps ?? new ChangeTrackingList<LastOutputEventTimestamp>(),
+                watermarkSettings.Value);
         }
 
         BinaryData IPersistableModel<StreamingJobOutputData>.Write(ModelReaderWriterOptions options)

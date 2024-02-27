@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(), serializedAdditionalRawData);
+            return new NotificationStatus(
+                context.Value,
+                state,
+                Optional.ToNullable(completedTime),
+                Optional.ToNullable(createdTime),
+                actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationStatus>.Write(ModelReaderWriterOptions options)

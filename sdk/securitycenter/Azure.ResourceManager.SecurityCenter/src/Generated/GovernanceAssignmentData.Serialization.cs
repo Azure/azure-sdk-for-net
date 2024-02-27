@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GovernanceAssignmentData(id, name, type, systemData.Value, owner.Value, Optional.ToNullable(remediationDueDate), remediationEta.Value, Optional.ToNullable(isGracePeriod), governanceEmailNotification.Value, additionalData.Value, serializedAdditionalRawData);
+            return new GovernanceAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                owner.Value,
+                Optional.ToNullable(remediationDueDate),
+                remediationEta.Value,
+                Optional.ToNullable(isGracePeriod),
+                governanceEmailNotification.Value,
+                additionalData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options)

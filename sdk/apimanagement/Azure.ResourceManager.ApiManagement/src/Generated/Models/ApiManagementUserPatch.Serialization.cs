@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementUserPatch(Optional.ToNullable(state), note.Value, identities ?? new ChangeTrackingList<UserIdentityContract>(), email.Value, password.Value, firstName.Value, lastName.Value, serializedAdditionalRawData);
+            return new ApiManagementUserPatch(
+                Optional.ToNullable(state),
+                note.Value,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                email.Value,
+                password.Value,
+                firstName.Value,
+                lastName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementUserPatch>.Write(ModelReaderWriterOptions options)

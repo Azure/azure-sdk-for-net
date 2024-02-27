@@ -334,7 +334,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MySqlLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, driverVersion.Value, connectionString.Value, server.Value, port.Value, username.Value, database.Value, sslMode.Value, useSystemTrustStore.Value, password, encryptedCredential.Value);
+            return new MySqlLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                driverVersion.Value,
+                connectionString.Value,
+                server.Value,
+                port.Value,
+                username.Value,
+                database.Value,
+                sslMode.Value,
+                useSystemTrustStore.Value,
+                password,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<MySqlLinkedService>.Write(ModelReaderWriterOptions options)

@@ -34,7 +34,15 @@ namespace Azure.ResourceManager.Storage.Models
             capabilities ??= new List<StorageSkuCapability>();
             restrictions ??= new List<StorageSkuRestriction>();
 
-            return new StorageSkuInformation(name, tier, resourceType, kind, locations?.ToList(), capabilities?.ToList(), restrictions?.ToList(), serializedAdditionalRawData: null);
+            return new StorageSkuInformation(
+                name,
+                tier,
+                resourceType,
+                kind,
+                locations?.ToList(),
+                capabilities?.ToList(),
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSkuCapability"/>. </summary>
@@ -112,7 +120,37 @@ namespace Azure.ResourceManager.Storage.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageAccountCreateOrUpdateContent(sku, kind, location, extendedLocation, tags, identity, allowedCopyScope, publicNetworkAccess, sasPolicy, keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value, serializedAdditionalRawData: null) : null, customDomain, encryption, networkRuleSet, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, largeFileSharesState, routingPreference, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, immutableStorageWithVersioning, dnsEndpointType, serializedAdditionalRawData: null);
+            return new StorageAccountCreateOrUpdateContent(
+                sku,
+                kind,
+                location,
+                extendedLocation,
+                tags,
+                identity,
+                allowedCopyScope,
+                publicNetworkAccess,
+                sasPolicy,
+                keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value, serializedAdditionalRawData: null) : null,
+                customDomain,
+                encryption,
+                networkRuleSet,
+                accessTier,
+                azureFilesIdentityBasedAuthentication,
+                enableHttpsTrafficOnly,
+                isSftpEnabled,
+                isLocalUserEnabled,
+                isHnsEnabled,
+                largeFileSharesState,
+                routingPreference,
+                allowBlobPublicAccess,
+                minimumTlsVersion,
+                allowSharedKeyAccess,
+                isNfsV3Enabled,
+                allowCrossTenantReplication,
+                isDefaultToOAuthAuthentication,
+                immutableStorageWithVersioning,
+                dnsEndpointType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageSku"/>. </summary>
@@ -144,7 +182,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageAccountKeyVaultProperties"/> instance for mocking. </returns>
         public static StorageAccountKeyVaultProperties StorageAccountKeyVaultProperties(string keyName = null, string keyVersion = null, Uri keyVaultUri = null, string currentVersionedKeyIdentifier = null, DateTimeOffset? lastKeyRotationTimestamp = null, DateTimeOffset? currentVersionedKeyExpirationTimestamp = null)
         {
-            return new StorageAccountKeyVaultProperties(keyName, keyVersion, keyVaultUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, currentVersionedKeyExpirationTimestamp, serializedAdditionalRawData: null);
+            return new StorageAccountKeyVaultProperties(
+                keyName,
+                keyVersion,
+                keyVaultUri,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountData"/>. </summary>
@@ -202,7 +247,56 @@ namespace Azure.ResourceManager.Storage.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<StoragePrivateEndpointConnectionData>();
 
-            return new StorageAccountData(id, name, resourceType, systemData, tags, location, sku, kind, identity, extendedLocation, provisioningState, primaryEndpoints, primaryLocation, statusOfPrimary, lastGeoFailoverOn, secondaryLocation, statusOfSecondary, createdOn, customDomain, sasPolicy, keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value, serializedAdditionalRawData: null) : null, keyCreationTime, secondaryEndpoints, encryption, accessTier, azureFilesIdentityBasedAuthentication, enableHttpsTrafficOnly, networkRuleSet, isSftpEnabled, isLocalUserEnabled, isHnsEnabled, geoReplicationStats, isFailoverInProgress, largeFileSharesState, privateEndpointConnections?.ToList(), routingPreference, blobRestoreStatus, allowBlobPublicAccess, minimumTlsVersion, allowSharedKeyAccess, isNfsV3Enabled, allowCrossTenantReplication, isDefaultToOAuthAuthentication, publicNetworkAccess, immutableStorageWithVersioning, allowedCopyScope, storageAccountSkuConversionStatus, dnsEndpointType, serializedAdditionalRawData: null);
+            return new StorageAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                kind,
+                identity,
+                extendedLocation,
+                provisioningState,
+                primaryEndpoints,
+                primaryLocation,
+                statusOfPrimary,
+                lastGeoFailoverOn,
+                secondaryLocation,
+                statusOfSecondary,
+                createdOn,
+                customDomain,
+                sasPolicy,
+                keyExpirationPeriodInDays.HasValue ? new StorageAccountKeyPolicy(keyExpirationPeriodInDays.Value, serializedAdditionalRawData: null) : null,
+                keyCreationTime,
+                secondaryEndpoints,
+                encryption,
+                accessTier,
+                azureFilesIdentityBasedAuthentication,
+                enableHttpsTrafficOnly,
+                networkRuleSet,
+                isSftpEnabled,
+                isLocalUserEnabled,
+                isHnsEnabled,
+                geoReplicationStats,
+                isFailoverInProgress,
+                largeFileSharesState,
+                privateEndpointConnections?.ToList(),
+                routingPreference,
+                blobRestoreStatus,
+                allowBlobPublicAccess,
+                minimumTlsVersion,
+                allowSharedKeyAccess,
+                isNfsV3Enabled,
+                allowCrossTenantReplication,
+                isDefaultToOAuthAuthentication,
+                publicNetworkAccess,
+                immutableStorageWithVersioning,
+                allowedCopyScope,
+                storageAccountSkuConversionStatus,
+                dnsEndpointType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountEndpoints"/>. </summary>
@@ -217,7 +311,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageAccountEndpoints"/> instance for mocking. </returns>
         public static StorageAccountEndpoints StorageAccountEndpoints(Uri blobUri = null, Uri queueUri = null, Uri tableUri = null, Uri fileUri = null, Uri webUri = null, Uri dfsUri = null, StorageAccountMicrosoftEndpoints microsoftEndpoints = null, StorageAccountInternetEndpoints internetEndpoints = null)
         {
-            return new StorageAccountEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, microsoftEndpoints, internetEndpoints, serializedAdditionalRawData: null);
+            return new StorageAccountEndpoints(
+                blobUri,
+                queueUri,
+                tableUri,
+                fileUri,
+                webUri,
+                dfsUri,
+                microsoftEndpoints,
+                internetEndpoints,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountMicrosoftEndpoints"/>. </summary>
@@ -230,7 +333,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.StorageAccountMicrosoftEndpoints"/> instance for mocking. </returns>
         public static StorageAccountMicrosoftEndpoints StorageAccountMicrosoftEndpoints(Uri blobUri = null, Uri queueUri = null, Uri tableUri = null, Uri fileUri = null, Uri webUri = null, Uri dfsUri = null)
         {
-            return new StorageAccountMicrosoftEndpoints(blobUri, queueUri, tableUri, fileUri, webUri, dfsUri, serializedAdditionalRawData: null);
+            return new StorageAccountMicrosoftEndpoints(
+                blobUri,
+                queueUri,
+                tableUri,
+                fileUri,
+                webUri,
+                dfsUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountInternetEndpoints"/>. </summary>
@@ -274,7 +384,15 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.StoragePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static StoragePrivateEndpointConnectionData StoragePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, StoragePrivateLinkServiceConnectionState connectionState = null, StoragePrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new StoragePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new StoragePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobRestoreStatus"/>. </summary>
@@ -312,7 +430,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.DeletedAccountData"/> instance for mocking. </returns>
         public static DeletedAccountData DeletedAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier storageAccountResourceId = null, AzureLocation? location = null, string restoreReference = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null)
         {
-            return new DeletedAccountData(id, name, resourceType, systemData, storageAccountResourceId, location, restoreReference, createdOn, deletedOn, serializedAdditionalRawData: null);
+            return new DeletedAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountResourceId,
+                location,
+                restoreReference,
+                createdOn,
+                deletedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageAccountKey"/>. </summary>
@@ -358,7 +486,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.AccountSasContent"/> instance for mocking. </returns>
         public static AccountSasContent AccountSasContent(StorageAccountSasSignedService services = default, StorageAccountSasSignedResourceType resourceTypes = default, StorageAccountSasPermission permissions = default, string ipAddressOrRange = null, StorageAccountHttpProtocol? protocols = null, DateTimeOffset? sharedAccessStartOn = null, DateTimeOffset sharedAccessExpireOn = default, string keyToSign = null)
         {
-            return new AccountSasContent(services, resourceTypes, permissions, ipAddressOrRange, protocols, sharedAccessStartOn, sharedAccessExpireOn, keyToSign, serializedAdditionalRawData: null);
+            return new AccountSasContent(
+                services,
+                resourceTypes,
+                permissions,
+                ipAddressOrRange,
+                protocols,
+                sharedAccessStartOn,
+                sharedAccessExpireOn,
+                keyToSign,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetAccountSasResult"/>. </summary>
@@ -391,7 +528,26 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.ServiceSasContent"/> instance for mocking. </returns>
         public static ServiceSasContent ServiceSasContent(string canonicalizedResource = null, ServiceSasSignedResourceType? resource = null, StorageAccountSasPermission? permissions = null, string ipAddressOrRange = null, StorageAccountHttpProtocol? protocols = null, DateTimeOffset? sharedAccessStartOn = null, DateTimeOffset? sharedAccessExpiryOn = null, string identifier = null, string partitionKeyStart = null, string partitionKeyEnd = null, string rowKeyStart = null, string rowKeyEnd = null, string keyToSign = null, string cacheControl = null, string contentDisposition = null, string contentEncoding = null, string contentLanguage = null, string contentType = null)
         {
-            return new ServiceSasContent(canonicalizedResource, resource, permissions, ipAddressOrRange, protocols, sharedAccessStartOn, sharedAccessExpiryOn, identifier, partitionKeyStart, partitionKeyEnd, rowKeyStart, rowKeyEnd, keyToSign, cacheControl, contentDisposition, contentEncoding, contentLanguage, contentType, serializedAdditionalRawData: null);
+            return new ServiceSasContent(
+                canonicalizedResource,
+                resource,
+                permissions,
+                ipAddressOrRange,
+                protocols,
+                sharedAccessStartOn,
+                sharedAccessExpiryOn,
+                identifier,
+                partitionKeyStart,
+                partitionKeyEnd,
+                rowKeyStart,
+                rowKeyEnd,
+                keyToSign,
+                cacheControl,
+                contentDisposition,
+                contentEncoding,
+                contentLanguage,
+                contentType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GetServiceSasResult"/>. </summary>
@@ -414,7 +570,14 @@ namespace Azure.ResourceManager.Storage.Models
         {
             rules ??= new List<ManagementPolicyRule>();
 
-            return new StorageAccountManagementPolicyData(id, name, resourceType, systemData, lastModifiedOn, rules != null ? new ManagementPolicySchema(rules?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new StorageAccountManagementPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedOn,
+                rules != null ? new ManagementPolicySchema(rules?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.BlobInventoryPolicyData"/>. </summary>
@@ -427,7 +590,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.BlobInventoryPolicyData"/> instance for mocking. </returns>
         public static BlobInventoryPolicyData BlobInventoryPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? lastModifiedOn = null, BlobInventoryPolicySchema policySchema = null)
         {
-            return new BlobInventoryPolicyData(id, name, resourceType, systemData, lastModifiedOn, policySchema, serializedAdditionalRawData: null);
+            return new BlobInventoryPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedOn,
+                policySchema,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobInventoryPolicySchema"/>. </summary>
@@ -457,7 +627,15 @@ namespace Azure.ResourceManager.Storage.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new StoragePrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new StoragePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.ObjectReplicationPolicyData"/>. </summary>
@@ -475,7 +653,17 @@ namespace Azure.ResourceManager.Storage.Models
         {
             rules ??= new List<ObjectReplicationPolicyRule>();
 
-            return new ObjectReplicationPolicyData(id, name, resourceType, systemData, policyId, enabledOn, sourceAccount, destinationAccount, rules?.ToList(), serializedAdditionalRawData: null);
+            return new ObjectReplicationPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyId,
+                enabledOn,
+                sourceAccount,
+                destinationAccount,
+                rules?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageAccountLocalUserData"/>. </summary>
@@ -496,7 +684,19 @@ namespace Azure.ResourceManager.Storage.Models
             permissionScopes ??= new List<StoragePermissionScope>();
             sshAuthorizedKeys ??= new List<StorageSshPublicKey>();
 
-            return new StorageAccountLocalUserData(id, name, resourceType, systemData, permissionScopes?.ToList(), homeDirectory, sshAuthorizedKeys?.ToList(), sid, hasSharedKey, hasSshKey, hasSshPassword, serializedAdditionalRawData: null);
+            return new StorageAccountLocalUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                permissionScopes?.ToList(),
+                homeDirectory,
+                sshAuthorizedKeys?.ToList(),
+                sid,
+                hasSharedKey,
+                hasSshKey,
+                hasSshPassword,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LocalUserKeys"/>. </summary>
@@ -532,7 +732,18 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.EncryptionScopeData"/> instance for mocking. </returns>
         public static EncryptionScopeData EncryptionScopeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EncryptionScopeSource? source = null, EncryptionScopeState? state = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, EncryptionScopeKeyVaultProperties keyVaultProperties = null, bool? requireInfrastructureEncryption = null)
         {
-            return new EncryptionScopeData(id, name, resourceType, systemData, source, state, createdOn, lastModifiedOn, keyVaultProperties, requireInfrastructureEncryption, serializedAdditionalRawData: null);
+            return new EncryptionScopeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                source,
+                state,
+                createdOn,
+                lastModifiedOn,
+                keyVaultProperties,
+                requireInfrastructureEncryption,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EncryptionScopeKeyVaultProperties"/>. </summary>
@@ -565,7 +776,22 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new BlobServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null, defaultServiceVersion, deleteRetentionPolicy, isVersioningEnabled, isAutomaticSnapshotPolicyEnabled, changeFeed, restorePolicy, containerDeleteRetentionPolicy, lastAccessTimeTrackingPolicy, serializedAdditionalRawData: null);
+            return new BlobServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null,
+                defaultServiceVersion,
+                deleteRetentionPolicy,
+                isVersioningEnabled,
+                isAutomaticSnapshotPolicyEnabled,
+                changeFeed,
+                restorePolicy,
+                containerDeleteRetentionPolicy,
+                lastAccessTimeTrackingPolicy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorePolicy"/>. </summary>
@@ -609,7 +835,32 @@ namespace Azure.ResourceManager.Storage.Models
         {
             metadata ??= new Dictionary<string, string>();
 
-            return new BlobContainerData(id, name, resourceType, systemData, version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata, immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, immutableStorageWithVersioning, enableNfsV3RootSquash, enableNfsV3AllSquash, etag, serializedAdditionalRawData: null);
+            return new BlobContainerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                version,
+                isDeleted,
+                deletedOn,
+                remainingRetentionDays,
+                defaultEncryptionScope,
+                preventEncryptionScopeOverride,
+                publicAccess,
+                lastModifiedOn,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                metadata,
+                immutabilityPolicy,
+                legalHold,
+                hasLegalHold,
+                hasImmutabilityPolicy,
+                immutableStorageWithVersioning,
+                enableNfsV3RootSquash,
+                enableNfsV3AllSquash,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobContainerImmutabilityPolicy"/>. </summary>
@@ -624,7 +875,14 @@ namespace Azure.ResourceManager.Storage.Models
         {
             updateHistory ??= new List<UpdateHistoryEntry>();
 
-            return new BlobContainerImmutabilityPolicy(etag, updateHistory?.ToList(), immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, serializedAdditionalRawData: null);
+            return new BlobContainerImmutabilityPolicy(
+                etag,
+                updateHistory?.ToList(),
+                immutabilityPeriodSinceCreationInDays,
+                state,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpdateHistoryEntry"/>. </summary>
@@ -639,7 +897,16 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.UpdateHistoryEntry"/> instance for mocking. </returns>
         public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType = null, int? immutabilityPeriodSinceCreationInDays = null, DateTimeOffset? timestamp = null, string objectIdentifier = null, Guid? tenantId = null, string upn = null, bool? allowProtectedAppendWrites = null, bool? allowProtectedAppendWritesAll = null)
         {
-            return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId, upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll, serializedAdditionalRawData: null);
+            return new UpdateHistoryEntry(
+                updateType,
+                immutabilityPeriodSinceCreationInDays,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LegalHoldProperties"/>. </summary>
@@ -663,7 +930,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.LegalHoldTag"/> instance for mocking. </returns>
         public static LegalHoldTag LegalHoldTag(string tag = null, DateTimeOffset? timestamp = null, string objectIdentifier = null, Guid? tenantId = null, string upn = null)
         {
-            return new LegalHoldTag(tag, timestamp, objectIdentifier, tenantId, upn, serializedAdditionalRawData: null);
+            return new LegalHoldTag(
+                tag,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProtectedAppendWritesHistory"/>. </summary>
@@ -710,7 +983,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Storage.ImmutabilityPolicyData"/> instance for mocking. </returns>
         public static ImmutabilityPolicyData ImmutabilityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? immutabilityPeriodSinceCreationInDays = null, ImmutabilityPolicyState? state = null, bool? allowProtectedAppendWrites = null, bool? allowProtectedAppendWritesAll = null, ETag? etag = null)
         {
-            return new ImmutabilityPolicyData(id, name, resourceType, systemData, immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, etag, serializedAdditionalRawData: null);
+            return new ImmutabilityPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                immutabilityPeriodSinceCreationInDays,
+                state,
+                allowProtectedAppendWrites,
+                allowProtectedAppendWritesAll,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LeaseContainerContent"/>. </summary>
@@ -722,7 +1005,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.LeaseContainerContent"/> instance for mocking. </returns>
         public static LeaseContainerContent LeaseContainerContent(LeaseContainerAction action = default, string leaseId = null, int? breakPeriod = null, int? leaseDuration = null, string proposedLeaseId = null)
         {
-            return new LeaseContainerContent(action, leaseId, breakPeriod, leaseDuration, proposedLeaseId, serializedAdditionalRawData: null);
+            return new LeaseContainerContent(
+                action,
+                leaseId,
+                breakPeriod,
+                leaseDuration,
+                proposedLeaseId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LeaseContainerResponse"/>. </summary>
@@ -748,7 +1037,16 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new FileServiceData(id, name, resourceType, systemData, sku, corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null, shareDeleteRetentionPolicy, protocolSmbSetting != null ? new ProtocolSettings(protocolSmbSetting, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FileServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null,
+                shareDeleteRetentionPolicy,
+                protocolSmbSetting != null ? new ProtocolSettings(protocolSmbSetting, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.FileShareData"/>. </summary>
@@ -781,7 +1079,31 @@ namespace Azure.ResourceManager.Storage.Models
             metadata ??= new Dictionary<string, string>();
             signedIdentifiers ??= new List<StorageSignedIdentifier>();
 
-            return new FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers?.ToList(), snapshotOn, etag, serializedAdditionalRawData: null);
+            return new FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedOn,
+                metadata,
+                shareQuota,
+                enabledProtocol,
+                rootSquash,
+                version,
+                isDeleted,
+                deletedOn,
+                remainingRetentionDays,
+                accessTier,
+                accessTierChangeOn,
+                accessTierStatus,
+                shareUsageBytes,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                signedIdentifiers?.ToList(),
+                snapshotOn,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LeaseShareContent"/>. </summary>
@@ -793,7 +1115,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <returns> A new <see cref="Models.LeaseShareContent"/> instance for mocking. </returns>
         public static LeaseShareContent LeaseShareContent(LeaseShareAction action = default, string leaseId = null, int? breakPeriod = null, int? leaseDuration = null, string proposedLeaseId = null)
         {
-            return new LeaseShareContent(action, leaseId, breakPeriod, leaseDuration, proposedLeaseId, serializedAdditionalRawData: null);
+            return new LeaseShareContent(
+                action,
+                leaseId,
+                breakPeriod,
+                leaseDuration,
+                proposedLeaseId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LeaseShareResponse"/>. </summary>
@@ -816,7 +1144,13 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new QueueServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new QueueServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.StorageQueueData"/>. </summary>
@@ -831,7 +1165,14 @@ namespace Azure.ResourceManager.Storage.Models
         {
             metadata ??= new Dictionary<string, string>();
 
-            return new StorageQueueData(id, name, resourceType, systemData, metadata, approximateMessageCount, serializedAdditionalRawData: null);
+            return new StorageQueueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadata,
+                approximateMessageCount,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.TableServiceData"/>. </summary>
@@ -845,7 +1186,13 @@ namespace Azure.ResourceManager.Storage.Models
         {
             corsRules ??= new List<StorageCorsRule>();
 
-            return new TableServiceData(id, name, resourceType, systemData, corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new TableServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                corsRules != null ? new StorageCorsRules(corsRules?.ToList(), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.TableData"/>. </summary>
@@ -860,7 +1207,14 @@ namespace Azure.ResourceManager.Storage.Models
         {
             signedIdentifiers ??= new List<StorageTableSignedIdentifier>();
 
-            return new TableData(id, name, resourceType, systemData, tableName, signedIdentifiers?.ToList(), serializedAdditionalRawData: null);
+            return new TableData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tableName,
+                signedIdentifiers?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -389,7 +389,28 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementAuthorizationServerData(id, name, type, systemData.Value, description.Value, authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(), clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(), tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(), tokenEndpoint.Value, Optional.ToNullable(supportState), defaultScope.Value, bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(), resourceOwnerUsername.Value, resourceOwnerPassword.Value, displayName.Value, clientRegistrationEndpoint.Value, authorizationEndpoint.Value, grantTypes ?? new ChangeTrackingList<GrantType>(), clientId.Value, clientSecret.Value, serializedAdditionalRawData);
+            return new ApiManagementAuthorizationServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                authorizationMethods ?? new ChangeTrackingList<AuthorizationMethod>(),
+                clientAuthenticationMethod ?? new ChangeTrackingList<ClientAuthenticationMethod>(),
+                tokenBodyParameters ?? new ChangeTrackingList<TokenBodyParameterContract>(),
+                tokenEndpoint.Value,
+                Optional.ToNullable(supportState),
+                defaultScope.Value,
+                bearerTokenSendingMethods ?? new ChangeTrackingList<BearerTokenSendingMethod>(),
+                resourceOwnerUsername.Value,
+                resourceOwnerPassword.Value,
+                displayName.Value,
+                clientRegistrationEndpoint.Value,
+                authorizationEndpoint.Value,
+                grantTypes ?? new ChangeTrackingList<GrantType>(),
+                clientId.Value,
+                clientSecret.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementAuthorizationServerData>.Write(ModelReaderWriterOptions options)

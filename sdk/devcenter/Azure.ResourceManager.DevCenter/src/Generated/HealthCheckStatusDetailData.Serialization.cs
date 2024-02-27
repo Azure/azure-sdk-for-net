@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthCheckStatusDetailData(id, name, type, systemData.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>(), serializedAdditionalRawData);
+            return new HealthCheckStatusDetailData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(endDateTime),
+                healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthCheckStatusDetailData>.Write(ModelReaderWriterOptions options)

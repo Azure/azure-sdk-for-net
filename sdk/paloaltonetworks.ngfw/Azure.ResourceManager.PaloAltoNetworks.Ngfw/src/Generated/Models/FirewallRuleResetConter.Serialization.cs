@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleResetConter(priority.Value, ruleStackName.Value, ruleListName.Value, firewallName.Value, ruleName.Value, serializedAdditionalRawData);
+            return new FirewallRuleResetConter(
+                priority.Value,
+                ruleStackName.Value,
+                ruleListName.Value,
+                firewallName.Value,
+                ruleName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleResetConter>.Write(ModelReaderWriterOptions options)

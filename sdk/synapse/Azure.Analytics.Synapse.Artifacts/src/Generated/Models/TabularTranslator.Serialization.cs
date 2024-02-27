@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
+            return new TabularTranslator(
+                type,
+                additionalProperties,
+                columnMappings.Value,
+                schemaMapping.Value,
+                collectionReference.Value,
+                mapComplexValuesToString.Value,
+                mappings.Value,
+                typeConversion.Value,
+                typeConversionSettings.Value);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>

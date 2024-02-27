@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareV2FabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, migrationSolutionId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
+            return new VMwareV2FabricSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareSiteId.Value,
+                physicalSiteId.Value,
+                migrationSolutionId.Value,
+                serviceEndpoint.Value,
+                serviceResourceId.Value,
+                serviceContainerId.Value,
+                processServers ?? new ChangeTrackingList<SiteRecoveryProcessServerDetails>());
         }
 
         BinaryData IPersistableModel<VMwareV2FabricSpecificDetails>.Write(ModelReaderWriterOptions options)

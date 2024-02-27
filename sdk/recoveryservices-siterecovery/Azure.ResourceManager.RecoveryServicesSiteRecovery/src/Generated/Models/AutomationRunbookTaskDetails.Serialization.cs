@@ -189,7 +189,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRunbookTaskDetails(instanceType, serializedAdditionalRawData, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Optional.ToNullable(isPrimarySideScript));
+            return new AutomationRunbookTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name.Value,
+                cloudServiceName.Value,
+                subscriptionId.Value,
+                accountName.Value,
+                runbookId.Value,
+                runbookName.Value,
+                jobId.Value,
+                jobOutput.Value,
+                Optional.ToNullable(isPrimarySideScript));
         }
 
         BinaryData IPersistableModel<AutomationRunbookTaskDetails>.Write(ModelReaderWriterOptions options)

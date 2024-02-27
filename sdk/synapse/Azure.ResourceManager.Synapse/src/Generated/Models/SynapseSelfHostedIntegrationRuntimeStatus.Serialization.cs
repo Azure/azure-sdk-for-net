@@ -417,7 +417,30 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), taskQueueId.Value, nodeCommunicationChannelEncryptionMode.Value, Optional.ToNullable(internalChannelEncryption), version.Value, nodes ?? new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>(), Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, capabilities ?? new ChangeTrackingDictionary<string, string>(), serviceUrls ?? new ChangeTrackingList<string>(), Optional.ToNullable(autoUpdate), versionStatus.Value, links ?? new ChangeTrackingList<SynapseLinkedIntegrationRuntime>(), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), serviceRegion.Value, newerVersions ?? new ChangeTrackingList<string>());
+            return new SynapseSelfHostedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                taskQueueId.Value,
+                nodeCommunicationChannelEncryptionMode.Value,
+                Optional.ToNullable(internalChannelEncryption),
+                version.Value,
+                nodes ?? new ChangeTrackingList<SynapseSelfHostedIntegrationRuntimeNode>(),
+                Optional.ToNullable(scheduledUpdateDate),
+                updateDelayOffset.Value,
+                localTimeZoneOffset.Value,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                serviceUrls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(autoUpdate),
+                versionStatus.Value,
+                links ?? new ChangeTrackingList<SynapseLinkedIntegrationRuntime>(),
+                pushedVersion.Value,
+                latestVersion.Value,
+                Optional.ToNullable(autoUpdateEta),
+                serviceRegion.Value,
+                newerVersions ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

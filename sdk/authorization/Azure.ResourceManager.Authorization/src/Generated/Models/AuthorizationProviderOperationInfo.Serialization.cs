@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationInfo(name.Value, displayName.Value, description.Value, origin.Value, properties.Value, Optional.ToNullable(isDataAction), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationInfo(
+                name.Value,
+                displayName.Value,
+                description.Value,
+                origin.Value,
+                properties.Value,
+                Optional.ToNullable(isDataAction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationInfo>.Write(ModelReaderWriterOptions options)

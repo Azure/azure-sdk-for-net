@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new DataLakeStoreFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIPAddress.Value,
+                endIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreFirewallRuleData>.Write(ModelReaderWriterOptions options)

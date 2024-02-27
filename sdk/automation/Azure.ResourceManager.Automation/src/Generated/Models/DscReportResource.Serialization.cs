@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportResource(resourceId.Value, sourceInfo.Value, dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
+            return new DscReportResource(
+                resourceId.Value,
+                sourceInfo.Value,
+                dependsOn ?? new ChangeTrackingList<DscReportResourceNavigation>(),
+                moduleName.Value,
+                moduleVersion.Value,
+                resourceName.Value,
+                error.Value,
+                status.Value,
+                Optional.ToNullable(durationInSeconds),
+                Optional.ToNullable(startDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)

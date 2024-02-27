@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapperAttributeMapping(name.Value, Optional.ToNullable(type), functionName.Value, expression.Value, attributeReference.Value, attributeReferences ?? new ChangeTrackingList<MapperAttributeReference>(), serializedAdditionalRawData);
+            return new MapperAttributeMapping(
+                name.Value,
+                Optional.ToNullable(type),
+                functionName.Value,
+                expression.Value,
+                attributeReference.Value,
+                attributeReferences ?? new ChangeTrackingList<MapperAttributeReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapperAttributeMapping>.Write(ModelReaderWriterOptions options)

@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationTask(taskName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), customProperties.Value, childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(), serializedAdditionalRawData);
+            return new DataReplicationTask(
+                taskName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                customProperties.Value,
+                childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationTask>.Write(ModelReaderWriterOptions options)

@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverProjectData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new StorageMoverProjectData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverProjectData>.Write(ModelReaderWriterOptions options)

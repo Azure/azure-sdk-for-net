@@ -216,7 +216,15 @@ namespace Azure.ResourceManager.EdgeOrder
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderData(id, name, type, systemData.Value, orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(), currentStage.Value, orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(), serializedAdditionalRawData);
+            return new EdgeOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                currentStage.Value,
+                orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderData>.Write(ModelReaderWriterOptions options)

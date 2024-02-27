@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlacementPolicyPatch(Optional.ToNullable(state), vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(), hostMembers ?? new ChangeTrackingList<string>(), Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType), serializedAdditionalRawData);
+            return new PlacementPolicyPatch(
+                Optional.ToNullable(state),
+                vmMembers ?? new ChangeTrackingList<ResourceIdentifier>(),
+                hostMembers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(affinityStrength),
+                Optional.ToNullable(azureHybridBenefitType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlacementPolicyPatch>.Write(ModelReaderWriterOptions options)

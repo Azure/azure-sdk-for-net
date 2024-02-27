@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryAgentPoolData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(count), tier.Value, Optional.ToNullable(os), virtualNetworkSubnetResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerRegistryAgentPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(count),
+                tier.Value,
+                Optional.ToNullable(os),
+                virtualNetworkSubnetResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryAgentPoolData>.Write(ModelReaderWriterOptions options)

@@ -381,7 +381,22 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EntityData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, parent, Optional.ToNullable(permissions), Optional.ToNullable(inheritedPermissions), Optional.ToNullable(numberOfDescendants), Optional.ToNullable(numberOfChildren), Optional.ToNullable(numberOfChildGroups), parentDisplayNameChain ?? new ChangeTrackingList<string>(), parentNameChain ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EntityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(tenantId),
+                displayName.Value,
+                parent,
+                Optional.ToNullable(permissions),
+                Optional.ToNullable(inheritedPermissions),
+                Optional.ToNullable(numberOfDescendants),
+                Optional.ToNullable(numberOfChildren),
+                Optional.ToNullable(numberOfChildGroups),
+                parentDisplayNameChain ?? new ChangeTrackingList<string>(),
+                parentNameChain ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityData>.Write(ModelReaderWriterOptions options)

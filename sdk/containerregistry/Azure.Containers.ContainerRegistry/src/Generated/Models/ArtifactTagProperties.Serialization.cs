@@ -122,7 +122,17 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactTagProperties(registry, imageName, name, digest, createdTime, lastUpdateTime, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactTagProperties(
+                registry,
+                imageName,
+                name,
+                digest,
+                createdTime,
+                lastUpdateTime,
+                Optional.ToNullable(deleteEnabled),
+                Optional.ToNullable(writeEnabled),
+                Optional.ToNullable(listEnabled),
+                Optional.ToNullable(readEnabled));
         }
     }
 }

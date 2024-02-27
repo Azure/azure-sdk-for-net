@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptPackageData(id, name, type, systemData.Value, description.Value, version.Value, company.Value, uri.Value, serializedAdditionalRawData);
+            return new ScriptPackageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                version.Value,
+                company.Value,
+                uri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptPackageData>.Write(ModelReaderWriterOptions options)

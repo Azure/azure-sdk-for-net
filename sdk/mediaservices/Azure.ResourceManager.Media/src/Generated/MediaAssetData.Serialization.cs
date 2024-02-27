@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat), encryptionScope.Value, serializedAdditionalRawData);
+            return new MediaAssetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(assetId),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                alternateId.Value,
+                description.Value,
+                container.Value,
+                storageAccountName.Value,
+                Optional.ToNullable(storageEncryptionFormat),
+                encryptionScope.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetData>.Write(ModelReaderWriterOptions options)

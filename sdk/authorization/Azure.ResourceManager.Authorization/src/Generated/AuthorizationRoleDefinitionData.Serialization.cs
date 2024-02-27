@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, description.Value, Optional.ToNullable(type0), permissions ?? new ChangeTrackingList<RoleDefinitionPermission>(), assignableScopes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AuthorizationRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                roleName.Value,
+                description.Value,
+                Optional.ToNullable(type0),
+                permissions ?? new ChangeTrackingList<RoleDefinitionPermission>(),
+                assignableScopes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationRoleDefinitionData>.Write(ModelReaderWriterOptions options)

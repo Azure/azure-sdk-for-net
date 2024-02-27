@@ -253,7 +253,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceUsage(id, name, type, systemData.Value, displayName.Value, resourceName.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(nextResetTime), Optional.ToNullable(computeMode), siteMode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceUsage(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                resourceName.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(nextResetTime),
+                Optional.ToNullable(computeMode),
+                siteMode.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceUsage>.Write(ModelReaderWriterOptions options)

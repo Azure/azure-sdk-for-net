@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayAuthorizationRuleData(id, name, type, systemData.Value, rights ?? new ChangeTrackingList<RelayAccessRight>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayAuthorizationRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                rights ?? new ChangeTrackingList<RelayAccessRight>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayAuthorizationRuleData>.Write(ModelReaderWriterOptions options)

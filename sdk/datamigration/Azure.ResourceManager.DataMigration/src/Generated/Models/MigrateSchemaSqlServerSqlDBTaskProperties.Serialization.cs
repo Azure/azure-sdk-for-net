@@ -250,7 +250,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskProperties(taskType, errors ?? new ChangeTrackingList<ODataError>(), Optional.ToNullable(state), commands ?? new ChangeTrackingList<CommandProperties>(), clientData ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, input.Value, output ?? new ChangeTrackingList<MigrateSchemaSqlServerSqlDBTaskOutput>(), createdOn.Value, taskId.Value, Optional.ToNullable(isCloneable));
+            return new MigrateSchemaSqlServerSqlDBTaskProperties(
+                taskType,
+                errors ?? new ChangeTrackingList<ODataError>(),
+                Optional.ToNullable(state),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
+                clientData ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                input.Value,
+                output ?? new ChangeTrackingList<MigrateSchemaSqlServerSqlDBTaskOutput>(),
+                createdOn.Value,
+                taskId.Value,
+                Optional.ToNullable(isCloneable));
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskProperties>.Write(ModelReaderWriterOptions options)

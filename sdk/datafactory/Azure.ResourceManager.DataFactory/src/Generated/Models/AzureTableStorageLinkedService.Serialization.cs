@@ -259,7 +259,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString.Value, accountKey, sasUri.Value, sasToken, encryptedCredential.Value);
+            return new AzureTableStorageLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString.Value,
+                accountKey,
+                sasUri.Value,
+                sasToken,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AzureTableStorageLinkedService>.Write(ModelReaderWriterOptions options)

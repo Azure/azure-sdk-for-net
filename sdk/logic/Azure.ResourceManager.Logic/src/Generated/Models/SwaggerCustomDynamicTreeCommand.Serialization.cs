@@ -177,7 +177,16 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeCommand(
+                operationId.Value,
+                itemsPath.Value,
+                itemValuePath.Value,
+                itemTitlePath.Value,
+                itemFullTitlePath.Value,
+                itemIsParent.Value,
+                selectableFilter.Value,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeCommand>.Write(ModelReaderWriterOptions options)

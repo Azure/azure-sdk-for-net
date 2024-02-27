@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterAaddsDetail(domainName.Value, Optional.ToNullable(initialSyncComplete), Optional.ToNullable(ldapsEnabled), ldapsPublicCertificateInBase64.Value, resourceId.Value, subnetId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new HDInsightClusterAaddsDetail(
+                domainName.Value,
+                Optional.ToNullable(initialSyncComplete),
+                Optional.ToNullable(ldapsEnabled),
+                ldapsPublicCertificateInBase64.Value,
+                resourceId.Value,
+                subnetId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterAaddsDetail>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPodIdentity(name, @namespace, bindingSelector.Value, identity, Optional.ToNullable(provisioningState), provisioningInfo.Value, serializedAdditionalRawData);
+            return new ManagedClusterPodIdentity(
+                name,
+                @namespace,
+                bindingSelector.Value,
+                identity,
+                Optional.ToNullable(provisioningState),
+                provisioningInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPodIdentity>.Write(ModelReaderWriterOptions options)

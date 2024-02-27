@@ -205,7 +205,20 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value, serializedAdditionalRawData);
+            return new DataBoxShippingAddress(
+                streetAddress1,
+                streetAddress2.Value,
+                streetAddress3.Value,
+                city.Value,
+                stateOrProvince.Value,
+                country,
+                postalCode,
+                zipExtendedCode.Value,
+                companyName.Value,
+                Optional.ToNullable(addressType),
+                Optional.ToNullable(skipAddressValidation),
+                taxIdentificationNumber.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxShippingAddress>.Write(ModelReaderWriterOptions options)

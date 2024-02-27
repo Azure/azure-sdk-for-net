@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc), serializedAdditionalRawData);
+            return new PolicyTrackedResourceRecord(
+                trackedResourceId.Value,
+                policyDetails.Value,
+                createdBy.Value,
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastUpdateUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyTrackedResourceRecord>.Write(ModelReaderWriterOptions options)

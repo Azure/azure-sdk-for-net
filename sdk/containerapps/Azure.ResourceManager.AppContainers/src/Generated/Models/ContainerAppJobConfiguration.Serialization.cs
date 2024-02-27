@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobConfiguration(secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(), serializedAdditionalRawData);
+            return new ContainerAppJobConfiguration(
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                triggerType,
+                replicaTimeout,
+                Optional.ToNullable(replicaRetryLimit),
+                manualTriggerConfig.Value,
+                scheduleTriggerConfig.Value,
+                eventTriggerConfig.Value,
+                registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobConfiguration>.Write(ModelReaderWriterOptions options)

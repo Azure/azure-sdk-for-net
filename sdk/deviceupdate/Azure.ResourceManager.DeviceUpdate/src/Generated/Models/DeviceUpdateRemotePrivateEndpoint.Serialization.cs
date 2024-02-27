@@ -241,7 +241,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateRemotePrivateEndpoint(id.Value, Optional.ToNullable(location), immutableSubscriptionId.Value, immutableResourceId.Value, vnetTrafficTag.Value, manualPrivateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(), privateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(), privateLinkServiceProxies ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy>(), connectionDetails ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails>(), serializedAdditionalRawData);
+            return new DeviceUpdateRemotePrivateEndpoint(
+                id.Value,
+                Optional.ToNullable(location),
+                immutableSubscriptionId.Value,
+                immutableResourceId.Value,
+                vnetTrafficTag.Value,
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceConnections ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceConnection>(),
+                privateLinkServiceProxies ?? new ChangeTrackingList<DeviceUpdatePrivateLinkServiceProxy>(),
+                connectionDetails ?? new ChangeTrackingList<DeviceUpdatePrivateEndpointConnectionDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateRemotePrivateEndpoint>.Write(ModelReaderWriterOptions options)

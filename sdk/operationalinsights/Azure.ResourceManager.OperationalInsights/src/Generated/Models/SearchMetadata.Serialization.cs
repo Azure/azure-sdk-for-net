@@ -326,7 +326,25 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchMetadata(requestId.Value, resultType.Value, Optional.ToNullable(total), Optional.ToNullable(top), id.Value, coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(), status.Value, Optional.ToNullable(startTime), Optional.ToNullable(lastUpdated), Optional.ToNullable(eTag), sort ?? new ChangeTrackingList<SearchSort>(), Optional.ToNullable(requestTime), aggregatedValueField.Value, aggregatedGroupingFields.Value, Optional.ToNullable(sum), Optional.ToNullable(max), schema.Value, serializedAdditionalRawData);
+            return new SearchMetadata(
+                requestId.Value,
+                resultType.Value,
+                Optional.ToNullable(total),
+                Optional.ToNullable(top),
+                id.Value,
+                coreSummaries ?? new ChangeTrackingList<OperationalInsightsSearchCoreSummary>(),
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(eTag),
+                sort ?? new ChangeTrackingList<SearchSort>(),
+                Optional.ToNullable(requestTime),
+                aggregatedValueField.Value,
+                aggregatedGroupingFields.Value,
+                Optional.ToNullable(sum),
+                Optional.ToNullable(max),
+                schema.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchMetadata>.Write(ModelReaderWriterOptions options)

@@ -49,7 +49,22 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             privateEndpointConnections ??= new List<DeviceUpdatePrivateEndpointConnectionData>();
             locations ??= new List<DeviceUpdateAccountLocationDetail>();
 
-            return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, encryption, locations?.ToList(), serializedAdditionalRawData: null);
+            return new DeviceUpdateAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                hostName,
+                publicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                sku,
+                encryption,
+                locations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionData"/>. </summary>
@@ -66,7 +81,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             groupIds ??= new List<string>();
 
-            return new DeviceUpdatePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new DeviceUpdatePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                groupIds?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdateAccountLocationDetail"/>. </summary>
@@ -96,7 +120,19 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             tags ??= new Dictionary<string, string>();
             iotHubs ??= new List<DeviceUpdateIotHubSettings>();
 
-            return new DeviceUpdateInstanceData(id, name, resourceType, systemData, tags, location, provisioningState, accountName, iotHubs?.ToList(), enableDiagnostics, diagnosticStorageProperties, serializedAdditionalRawData: null);
+            return new DeviceUpdateInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                accountName,
+                iotHubs?.ToList(),
+                enableDiagnostics,
+                diagnosticStorageProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateLinkData"/>. </summary>
@@ -114,7 +150,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new DeviceUpdatePrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new DeviceUpdatePrivateLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/>. </summary>
@@ -129,7 +174,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdatePrivateEndpointConnectionProxyData"/> instance for mocking. </returns>
         public static DeviceUpdatePrivateEndpointConnectionProxyData DeviceUpdatePrivateEndpointConnectionProxyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeviceUpdatePrivateEndpointConnectionProxyProvisioningState? provisioningState = null, string eTag = null, DeviceUpdateRemotePrivateEndpoint remotePrivateEndpoint = null, string status = null)
         {
-            return new DeviceUpdatePrivateEndpointConnectionProxyData(id, name, resourceType, systemData, provisioningState, eTag, remotePrivateEndpoint, status, serializedAdditionalRawData: null);
+            return new DeviceUpdatePrivateEndpointConnectionProxyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                eTag,
+                remotePrivateEndpoint,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupConnectivityInformation"/>. </summary>
@@ -144,7 +198,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         {
             customerVisibleFqdns ??= new List<string>();
 
-            return new GroupConnectivityInformation(groupId, memberName, customerVisibleFqdns?.ToList(), internalFqdn, redirectMapId, privateLinkServiceArmRegion, serializedAdditionalRawData: null);
+            return new GroupConnectivityInformation(
+                groupId,
+                memberName,
+                customerVisibleFqdns?.ToList(),
+                internalFqdn,
+                redirectMapId,
+                privateLinkServiceArmRegion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/>. </summary>
@@ -156,7 +217,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <returns> A new <see cref="Models.DeviceUpdatePrivateEndpointConnectionDetails"/> instance for mocking. </returns>
         public static DeviceUpdatePrivateEndpointConnectionDetails DeviceUpdatePrivateEndpointConnectionDetails(string id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null)
         {
-            return new DeviceUpdatePrivateEndpointConnectionDetails(id, privateIPAddress, linkIdentifier, groupId, memberName, serializedAdditionalRawData: null);
+            return new DeviceUpdatePrivateEndpointConnectionDetails(
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
+                serializedAdditionalRawData: null);
         }
     }
 }

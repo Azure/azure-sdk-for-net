@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagDestination(Optional.ToNullable(action), addressPrefixes ?? new ChangeTrackingList<string>(), portRanges.Value, protocol.Value, serviceTag.Value, serializedAdditionalRawData);
+            return new ServiceTagDestination(
+                Optional.ToNullable(action),
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                portRanges.Value,
+                protocol.Value,
+                serviceTag.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagDestination>.Write(ModelReaderWriterOptions options)

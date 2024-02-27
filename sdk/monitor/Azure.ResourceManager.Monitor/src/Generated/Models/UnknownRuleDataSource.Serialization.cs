@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRuleDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, serializedAdditionalRawData);
+            return new UnknownRuleDataSource(
+                odataType,
+                resourceUri.Value,
+                legacyResourceId.Value,
+                resourceLocation.Value,
+                metricNamespace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RuleDataSource>.Write(ModelReaderWriterOptions options)

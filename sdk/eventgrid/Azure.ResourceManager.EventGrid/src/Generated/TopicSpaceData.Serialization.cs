@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TopicSpaceData(id, name, type, systemData.Value, description.Value, topicTemplates ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new TopicSpaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                topicTemplates ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TopicSpaceData>.Write(ModelReaderWriterOptions options)

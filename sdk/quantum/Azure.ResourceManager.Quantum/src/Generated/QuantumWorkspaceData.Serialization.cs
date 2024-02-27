@@ -269,7 +269,20 @@ namespace Azure.ResourceManager.Quantum
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuantumWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, providers ?? new ChangeTrackingList<Provider>(), Optional.ToNullable(usable), Optional.ToNullable(provisioningState), storageAccount.Value, endpointUri.Value, serializedAdditionalRawData);
+            return new QuantumWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                providers ?? new ChangeTrackingList<Provider>(),
+                Optional.ToNullable(usable),
+                Optional.ToNullable(provisioningState),
+                storageAccount.Value,
+                endpointUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuantumWorkspaceData>.Write(ModelReaderWriterOptions options)

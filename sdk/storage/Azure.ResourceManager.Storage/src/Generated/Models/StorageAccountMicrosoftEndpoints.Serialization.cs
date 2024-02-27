@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountMicrosoftEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value, serializedAdditionalRawData);
+            return new StorageAccountMicrosoftEndpoints(
+                blob.Value,
+                queue.Value,
+                table.Value,
+                file.Value,
+                web.Value,
+                dfs.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountMicrosoftEndpoints>.Write(ModelReaderWriterOptions options)

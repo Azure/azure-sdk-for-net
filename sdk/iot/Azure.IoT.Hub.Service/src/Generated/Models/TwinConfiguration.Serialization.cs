@@ -189,7 +189,18 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new TwinConfiguration(id.Value, schemaVersion.Value, labels ?? new ChangeTrackingDictionary<string, string>(), content.Value, targetCondition.Value, Optional.ToNullable(createdTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToNullable(priority), systemMetrics.Value, metrics.Value, etag.Value);
+            return new TwinConfiguration(
+                id.Value,
+                schemaVersion.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                content.Value,
+                targetCondition.Value,
+                Optional.ToNullable(createdTimeUtc),
+                Optional.ToNullable(lastUpdatedTimeUtc),
+                Optional.ToNullable(priority),
+                systemMetrics.Value,
+                metrics.Value,
+                etag.Value);
         }
     }
 }

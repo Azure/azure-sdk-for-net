@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudEdgeManagementRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(localManagementStatus), edgeProfile.Value, Optional.ToNullable(roleStatus));
+            return new CloudEdgeManagementRole(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(localManagementStatus),
+                edgeProfile.Value,
+                Optional.ToNullable(roleStatus));
         }
 
         BinaryData IPersistableModel<CloudEdgeManagementRole>.Write(ModelReaderWriterOptions options)

@@ -88,7 +88,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientCreatedOrUpdatedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, Optional.ToNullable(state), Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), attributes ?? new ChangeTrackingDictionary<string, string>());
+            return new EventGridMqttClientCreatedOrUpdatedEventData(
+                clientAuthenticationName.Value,
+                clientName.Value,
+                namespaceName.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(updatedOn),
+                attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>

@@ -264,7 +264,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityRunInformation(pipelineName.Value, Optional.ToNullable(pipelineRunId), activityName.Value, activityType.Value, Optional.ToNullable(activityRunId), linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new PipelineActivityRunInformation(
+                pipelineName.Value,
+                Optional.ToNullable(pipelineRunId),
+                activityName.Value,
+                activityType.Value,
+                Optional.ToNullable(activityRunId),
+                linkedServiceName.Value,
+                status.Value,
+                Optional.ToNullable(activityRunStart),
+                Optional.ToNullable(activityRunEnd),
+                Optional.ToNullable(durationInMs),
+                input.Value,
+                output.Value,
+                error.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineActivityRunInformation>.Write(ModelReaderWriterOptions options)

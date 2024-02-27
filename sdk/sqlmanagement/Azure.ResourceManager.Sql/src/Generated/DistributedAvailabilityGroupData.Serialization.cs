@@ -265,7 +265,22 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DistributedAvailabilityGroupData(id, name, type, systemData.Value, targetDatabase.Value, sourceEndpoint.Value, primaryAvailabilityGroupName.Value, secondaryAvailabilityGroupName.Value, Optional.ToNullable(replicationMode), Optional.ToNullable(distributedAvailabilityGroupId), Optional.ToNullable(sourceReplicaId), Optional.ToNullable(targetReplicaId), linkState.Value, lastHardenedLsn.Value, serializedAdditionalRawData);
+            return new DistributedAvailabilityGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                targetDatabase.Value,
+                sourceEndpoint.Value,
+                primaryAvailabilityGroupName.Value,
+                secondaryAvailabilityGroupName.Value,
+                Optional.ToNullable(replicationMode),
+                Optional.ToNullable(distributedAvailabilityGroupId),
+                Optional.ToNullable(sourceReplicaId),
+                Optional.ToNullable(targetReplicaId),
+                linkState.Value,
+                lastHardenedLsn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options)

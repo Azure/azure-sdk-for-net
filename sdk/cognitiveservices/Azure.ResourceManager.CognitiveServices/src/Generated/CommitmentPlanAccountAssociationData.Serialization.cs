@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanAccountAssociationData(id, name, type, systemData.Value, Optional.ToNullable(etag), accountId.Value, serializedAdditionalRawData);
+            return new CommitmentPlanAccountAssociationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                accountId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanAccountAssociationData>.Write(ModelReaderWriterOptions options)

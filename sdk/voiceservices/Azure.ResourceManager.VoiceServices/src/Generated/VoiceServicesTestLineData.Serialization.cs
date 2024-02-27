@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.VoiceServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VoiceServicesTestLineData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), phoneNumber.Value, Optional.ToNullable(purpose), serializedAdditionalRawData);
+            return new VoiceServicesTestLineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                phoneNumber.Value,
+                Optional.ToNullable(purpose),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VoiceServicesTestLineData>.Write(ModelReaderWriterOptions options)

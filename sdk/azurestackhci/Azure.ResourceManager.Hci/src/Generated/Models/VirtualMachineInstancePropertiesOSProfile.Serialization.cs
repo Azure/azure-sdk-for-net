@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesOSProfile(adminPassword.Value, adminUsername.Value, computerName.Value, linuxConfiguration.Value, windowsConfiguration.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesOSProfile(
+                adminPassword.Value,
+                adminUsername.Value,
+                computerName.Value,
+                linuxConfiguration.Value,
+                windowsConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfile>.Write(ModelReaderWriterOptions options)

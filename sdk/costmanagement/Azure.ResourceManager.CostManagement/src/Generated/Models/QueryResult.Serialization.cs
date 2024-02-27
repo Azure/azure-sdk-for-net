@@ -308,7 +308,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryResult(id, name, type, systemData.Value, nextLink.Value, columns ?? new ChangeTrackingList<QueryColumn>(), rows ?? new ChangeTrackingList<IList<BinaryData>>(), Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new QueryResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                nextLink.Value,
+                columns ?? new ChangeTrackingList<QueryColumn>(),
+                rows ?? new ChangeTrackingList<IList<BinaryData>>(),
+                Optional.ToNullable(location),
+                sku.Value,
+                Optional.ToNullable(eTag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryResult>.Write(ModelReaderWriterOptions options)

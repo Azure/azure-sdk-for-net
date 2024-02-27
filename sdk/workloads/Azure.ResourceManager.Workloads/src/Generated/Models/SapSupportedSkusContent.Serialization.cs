@@ -129,7 +129,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSupportedSkusContent(appLocation, environment, sapProduct, deploymentType, databaseType, Optional.ToNullable(highAvailabilityType), serializedAdditionalRawData);
+            return new SapSupportedSkusContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                databaseType,
+                Optional.ToNullable(highAvailabilityType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSupportedSkusContent>.Write(ModelReaderWriterOptions options)

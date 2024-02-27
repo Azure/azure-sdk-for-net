@@ -364,7 +364,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CosmosDBLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionString.Value, accountEndpoint.Value, database.Value, accountKey, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential, tenant.Value, azureCloudType.Value, Optional.ToNullable(connectionMode), encryptedCredential.Value, credential.Value);
+            return new CosmosDBLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionString.Value,
+                accountEndpoint.Value,
+                database.Value,
+                accountKey,
+                servicePrincipalId.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential,
+                tenant.Value,
+                azureCloudType.Value,
+                Optional.ToNullable(connectionMode),
+                encryptedCredential.Value,
+                credential.Value);
         }
 
         BinaryData IPersistableModel<CosmosDBLinkedService>.Write(ModelReaderWriterOptions options)

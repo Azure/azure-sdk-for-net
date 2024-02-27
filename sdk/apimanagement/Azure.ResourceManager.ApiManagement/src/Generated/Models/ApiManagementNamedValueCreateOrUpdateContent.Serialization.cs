@@ -215,7 +215,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementNamedValueCreateOrUpdateContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingList<string>(), Optional.ToNullable(secret), displayName.Value, value.Value, keyVault.Value, serializedAdditionalRawData);
+            return new ApiManagementNamedValueCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(secret),
+                displayName.Value,
+                value.Value,
+                keyVault.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementNamedValueCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

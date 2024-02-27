@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(), serializedAdditionalRawData);
+            return new WebApplicationRuleMatchCondition(
+                matchVariable,
+                selector.Value,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValue,
+                transforms ?? new ChangeTrackingList<WebApplicationRuleMatchTransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationRuleMatchCondition>.Write(ModelReaderWriterOptions options)

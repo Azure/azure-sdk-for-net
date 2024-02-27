@@ -228,7 +228,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>(), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod), serializedAdditionalRawData);
+            return new VirtualMachinePublicIPAddressConfiguration(
+                name,
+                sku.Value,
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(deleteOption),
+                dnsSettings.Value,
+                ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>(),
+                publicIPPrefix,
+                Optional.ToNullable(publicIPAddressVersion),
+                Optional.ToNullable(publicIPAllocationMethod),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachinePublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)

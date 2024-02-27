@@ -411,7 +411,29 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), acrConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), resourceVersionPolicyConfiguration.Value, importConfiguration.Value, implementationGuidesConfiguration.Value, encryption.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new FhirServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(provisioningState),
+                acrConfiguration.Value,
+                authenticationConfiguration.Value,
+                corsConfiguration.Value,
+                exportConfiguration.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(eventState),
+                resourceVersionPolicyConfiguration.Value,
+                importConfiguration.Value,
+                implementationGuidesConfiguration.Value,
+                encryption.Value,
+                identity,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FhirServiceData>.Write(ModelReaderWriterOptions options)

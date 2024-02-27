@@ -191,7 +191,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceLoadBalancerBgpPeer(Optional.ToNullable(bfdEnabled), Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Optional.ToNullable(peerPort), serializedAdditionalRawData);
+            return new ServiceLoadBalancerBgpPeer(
+                Optional.ToNullable(bfdEnabled),
+                Optional.ToNullable(bgpMultiHop),
+                holdTime.Value,
+                keepAliveTime.Value,
+                Optional.ToNullable(myAsn),
+                name,
+                password.Value,
+                peerAddress,
+                peerAsn,
+                Optional.ToNullable(peerPort),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceLoadBalancerBgpPeer>.Write(ModelReaderWriterOptions options)

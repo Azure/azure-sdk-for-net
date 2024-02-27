@@ -490,7 +490,33 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, ipTags ?? new ChangeTrackingList<IPTag>(), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            return new PublicIPAddressData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                sku.Value,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicIPAllocationMethod),
+                Optional.ToNullable(publicIPAddressVersion),
+                ipConfiguration.Value,
+                dnsSettings.Value,
+                ddosSettings.Value,
+                ipTags ?? new ChangeTrackingList<IPTag>(),
+                ipAddress.Value,
+                publicIPPrefix,
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                servicePublicIPAddress.Value,
+                natGateway.Value,
+                Optional.ToNullable(migrationPhase),
+                linkedPublicIPAddress.Value,
+                Optional.ToNullable(deleteOption));
         }
 
         BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options)

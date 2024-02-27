@@ -142,7 +142,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);
+            return new IntegrationRuntimeConnectionInfo(
+                serviceToken.Value,
+                identityCertThumbprint.Value,
+                hostServiceUri.Value,
+                version.Value,
+                publicKey.Value,
+                Optional.ToNullable(isIdentityCertExprired),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)

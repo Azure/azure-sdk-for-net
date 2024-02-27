@@ -241,7 +241,21 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolConnectionPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), securityEnabledAccess.Value, proxyDnsName.Value, proxyPort.Value, visibility.Value, useServerDefault.Value, redirectionState.Value, state.Value, serializedAdditionalRawData);
+            return new SynapseSqlPoolConnectionPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(location),
+                securityEnabledAccess.Value,
+                proxyDnsName.Value,
+                proxyPort.Value,
+                visibility.Value,
+                useServerDefault.Value,
+                redirectionState.Value,
+                state.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolConnectionPolicyData>.Write(ModelReaderWriterOptions options)

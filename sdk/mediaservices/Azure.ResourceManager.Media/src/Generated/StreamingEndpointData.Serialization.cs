@@ -438,7 +438,31 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingEndpointData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, description.Value, Optional.ToNullable(scaleUnits), availabilitySetName.Value, accessControl.Value, Optional.ToNullable(maxCacheAge), customHostNames ?? new ChangeTrackingList<string>(), hostName.Value, Optional.ToNullable(cdnEnabled), cdnProvider.Value, cdnProfile.Value, provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(freeTrialEndTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new StreamingEndpointData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                description.Value,
+                Optional.ToNullable(scaleUnits),
+                availabilitySetName.Value,
+                accessControl.Value,
+                Optional.ToNullable(maxCacheAge),
+                customHostNames ?? new ChangeTrackingList<string>(),
+                hostName.Value,
+                Optional.ToNullable(cdnEnabled),
+                cdnProvider.Value,
+                cdnProfile.Value,
+                provisioningState.Value,
+                Optional.ToNullable(resourceState),
+                crossSiteAccessPolicies.Value,
+                Optional.ToNullable(freeTrialEndTime),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingEndpointData>.Write(ModelReaderWriterOptions options)

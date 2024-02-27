@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForOracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, partitionOption.Value, partitionSettings.Value, additionalColumns.Value);
+            return new AmazonRdsForOracleSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                oracleReaderQuery.Value,
+                queryTimeout.Value,
+                partitionOption.Value,
+                partitionSettings.Value,
+                additionalColumns.Value);
         }
 
         BinaryData IPersistableModel<AmazonRdsForOracleSource>.Write(ModelReaderWriterOptions options)

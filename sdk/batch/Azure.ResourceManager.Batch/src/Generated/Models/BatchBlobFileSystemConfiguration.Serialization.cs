@@ -146,7 +146,15 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchBlobFileSystemConfiguration(accountName, containerName, accountKey.Value, sasKey.Value, blobfuseOptions.Value, relativeMountPath, identityReference.Value, serializedAdditionalRawData);
+            return new BatchBlobFileSystemConfiguration(
+                accountName,
+                containerName,
+                accountKey.Value,
+                sasKey.Value,
+                blobfuseOptions.Value,
+                relativeMountPath,
+                identityReference.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchBlobFileSystemConfiguration>.Write(ModelReaderWriterOptions options)

@@ -293,7 +293,25 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value, serializedAdditionalRawData);
+            return new DataMaskingRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind.Value,
+                aliasName.Value,
+                Optional.ToNullable(ruleState),
+                schemaName.Value,
+                tableName.Value,
+                columnName.Value,
+                Optional.ToNullable(maskingFunction),
+                numberFrom.Value,
+                numberTo.Value,
+                prefixSize.Value,
+                suffixSize.Value,
+                replacementString.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options)

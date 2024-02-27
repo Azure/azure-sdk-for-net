@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayNetworkRuleSetData(id, name, type, systemData.Value, Optional.ToNullable(defaultAction), Optional.ToNullable(publicNetworkAccess), ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>(), serializedAdditionalRawData);
+            return new RelayNetworkRuleSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(defaultAction),
+                Optional.ToNullable(publicNetworkAccess),
+                ipRules ?? new ChangeTrackingList<RelayNetworkRuleSetIPRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayNetworkRuleSetData>.Write(ModelReaderWriterOptions options)

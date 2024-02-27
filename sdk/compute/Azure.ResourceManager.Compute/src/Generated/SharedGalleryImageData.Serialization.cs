@@ -354,7 +354,24 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryImageData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), features ?? new ChangeTrackingList<GalleryImageFeature>(), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>());
+            return new SharedGalleryImageData(
+                name.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                uniqueId.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osState),
+                Optional.ToNullable(endOfLifeDate),
+                identifier.Value,
+                recommended.Value,
+                disallowed.Value,
+                Optional.ToNullable(hyperVGeneration),
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                purchasePlan.Value,
+                Optional.ToNullable(architecture),
+                privacyStatementUri.Value,
+                eula.Value,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<SharedGalleryImageData>.Write(ModelReaderWriterOptions options)

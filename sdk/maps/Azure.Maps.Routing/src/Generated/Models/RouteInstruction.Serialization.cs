@@ -185,7 +185,26 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), roadNumbers ?? new ChangeTrackingList<string>(), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
+            return new RouteInstruction(
+                Optional.ToNullable(routeOffsetInMeters),
+                Optional.ToNullable(travelTimeInSeconds),
+                point.Value,
+                Optional.ToNullable(pointIndex),
+                Optional.ToNullable(instructionType),
+                roadNumbers ?? new ChangeTrackingList<string>(),
+                exitNumber.Value,
+                street.Value,
+                signpostText.Value,
+                countryCode.Value,
+                stateCode.Value,
+                Optional.ToNullable(junctionType),
+                Optional.ToNullable(turnAngleInDecimalDegrees),
+                roundaboutExitNumber.Value,
+                Optional.ToNullable(possibleCombineWithNext),
+                Optional.ToNullable(drivingSide),
+                Optional.ToNullable(maneuver),
+                message.Value,
+                combinedMessage.Value);
         }
     }
 }

@@ -155,7 +155,19 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), references ?? new ChangeTrackingList<ArtifactManifestPlatform>(), tags ?? new ChangeTrackingList<string>(), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(
+                digest,
+                Optional.ToNullable(imageSize),
+                createdTime,
+                lastUpdateTime,
+                Optional.ToNullable(architecture),
+                Optional.ToNullable(os),
+                references ?? new ChangeTrackingList<ArtifactManifestPlatform>(),
+                tags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(deleteEnabled),
+                Optional.ToNullable(writeEnabled),
+                Optional.ToNullable(listEnabled),
+                Optional.ToNullable(readEnabled));
         }
     }
 }

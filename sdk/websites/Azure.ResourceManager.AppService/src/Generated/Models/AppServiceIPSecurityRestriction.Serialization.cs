@@ -252,7 +252,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceIPSecurityRestriction(ipAddress.Value, subnetMask.Value, vnetSubnetResourceId.Value, Optional.ToNullable(vnetTrafficTag), Optional.ToNullable(subnetTrafficTag), action.Value, Optional.ToNullable(tag), Optional.ToNullable(priority), name.Value, description.Value, headers ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
+            return new AppServiceIPSecurityRestriction(
+                ipAddress.Value,
+                subnetMask.Value,
+                vnetSubnetResourceId.Value,
+                Optional.ToNullable(vnetTrafficTag),
+                Optional.ToNullable(subnetTrafficTag),
+                action.Value,
+                Optional.ToNullable(tag),
+                Optional.ToNullable(priority),
+                name.Value,
+                description.Value,
+                headers ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkRetryHistory(Optional.ToNullable(startTime), Optional.ToNullable(endTime), code.Value, clientRequestId.Value, serviceRequestId.Value, error.Value, serializedAdditionalRawData);
+            return new LogicWorkRetryHistory(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                code.Value,
+                clientRequestId.Value,
+                serviceRequestId.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkRetryHistory>.Write(ModelReaderWriterOptions options)

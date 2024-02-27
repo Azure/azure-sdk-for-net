@@ -155,7 +155,17 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12DelimiterOverrides(protocolVersion.Value, messageId.Value, dataElementSeparator, componentSeparator, segmentTerminator, segmentTerminatorSuffix, replaceCharacter, replaceSeparatorsInPayload, targetNamespace.Value, serializedAdditionalRawData);
+            return new X12DelimiterOverrides(
+                protocolVersion.Value,
+                messageId.Value,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                segmentTerminatorSuffix,
+                replaceCharacter,
+                replaceSeparatorsInPayload,
+                targetNamespace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12DelimiterOverrides>.Write(ModelReaderWriterOptions options)

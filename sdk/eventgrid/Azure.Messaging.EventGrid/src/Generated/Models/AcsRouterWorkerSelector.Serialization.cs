@@ -78,7 +78,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerSelector(key.Value, Optional.ToNullable(labelOperator), labelValue.Value, Optional.ToNullable(ttlSeconds), Optional.ToNullable(state), Optional.ToNullable(expirationTime));
+            return new AcsRouterWorkerSelector(
+                key.Value,
+                Optional.ToNullable(labelOperator),
+                labelValue.Value,
+                Optional.ToNullable(ttlSeconds),
+                Optional.ToNullable(state),
+                Optional.ToNullable(expirationTime));
         }
     }
 }

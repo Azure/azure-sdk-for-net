@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceMonitoringDetails(cpuDetails.Value, ramDetails.Value, datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(), disksReplicationDetails.Value, esxiNfcBuffer.Value, networkBandwidth.Value, serializedAdditionalRawData);
+            return new ApplianceMonitoringDetails(
+                cpuDetails.Value,
+                ramDetails.Value,
+                datastoreSnapshot ?? new ChangeTrackingList<DataStoreUtilizationDetails>(),
+                disksReplicationDetails.Value,
+                esxiNfcBuffer.Value,
+                networkBandwidth.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceMonitoringDetails>.Write(ModelReaderWriterOptions options)

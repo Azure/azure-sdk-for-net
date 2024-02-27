@@ -228,7 +228,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableDroppedManagedDatabaseData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, databaseName.Value, Optional.ToNullable(creationDate), Optional.ToNullable(deletionDate), Optional.ToNullable(earliestRestoreDate), serializedAdditionalRawData);
+            return new RestorableDroppedManagedDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                databaseName.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(earliestRestoreDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options)

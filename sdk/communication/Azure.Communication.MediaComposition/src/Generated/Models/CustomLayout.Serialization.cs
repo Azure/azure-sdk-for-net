@@ -123,7 +123,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(), inputGroups);
+            return new CustomLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
+                inputGroups);
         }
     }
 }

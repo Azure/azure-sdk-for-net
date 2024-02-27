@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CdnCustomDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                hostName.Value,
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(customHttpsProvisioningState),
+                Optional.ToNullable(customHttpsProvisioningSubstate),
+                customHttpsParameters.Value,
+                validationData.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CdnCustomDomainData>.Write(ModelReaderWriterOptions options)

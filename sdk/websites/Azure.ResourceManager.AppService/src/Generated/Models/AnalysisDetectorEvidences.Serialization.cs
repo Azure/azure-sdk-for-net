@@ -187,7 +187,13 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(), data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), detectorMetaData.Value, serializedAdditionalRawData);
+            return new AnalysisDetectorEvidences(
+                source.Value,
+                detectorDefinition.Value,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                detectorMetaData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options)

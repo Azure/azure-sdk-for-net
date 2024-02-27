@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobGetResultCreateOrUpdateContent(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DataTransferJobGetResultCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobGetResultCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

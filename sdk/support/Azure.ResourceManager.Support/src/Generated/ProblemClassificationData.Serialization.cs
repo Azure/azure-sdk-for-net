@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Support
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProblemClassificationData(id, name, type, systemData.Value, displayName.Value, secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(), serializedAdditionalRawData);
+            return new ProblemClassificationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                secondaryConsentEnabled ?? new ChangeTrackingList<SecondaryConsentEnabled>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options)

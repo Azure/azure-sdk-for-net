@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OracleCloudStorageLocation(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new OracleCloudStorageLocation(
+                type,
+                folderPath.Value,
+                fileName.Value,
+                additionalProperties,
+                bucketName.Value,
+                version.Value);
         }
 
         BinaryData IPersistableModel<OracleCloudStorageLocation>.Write(ModelReaderWriterOptions options)

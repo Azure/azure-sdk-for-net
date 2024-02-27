@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateSummary(Optional.ToNullable(totalCertificates), Optional.ToNullable(pairedKeys), Optional.ToNullable(expired), Optional.ToNullable(expiringSoon), Optional.ToNullable(weakSignature), Optional.ToNullable(selfSigned), Optional.ToNullable(shortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoCertificateSummary(
+                Optional.ToNullable(totalCertificates),
+                Optional.ToNullable(pairedKeys),
+                Optional.ToNullable(expired),
+                Optional.ToNullable(expiringSoon),
+                Optional.ToNullable(weakSignature),
+                Optional.ToNullable(selfSigned),
+                Optional.ToNullable(shortKeySize),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoCertificateSummary>.Write(ModelReaderWriterOptions options)

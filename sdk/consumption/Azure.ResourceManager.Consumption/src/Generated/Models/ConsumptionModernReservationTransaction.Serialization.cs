@@ -411,7 +411,33 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, tags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ConsumptionModernReservationTransaction(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(amount),
+                armSkuName.Value,
+                billingFrequency.Value,
+                billingProfileId.Value,
+                billingProfileName.Value,
+                currency.Value,
+                description.Value,
+                Optional.ToNullable(eventDate),
+                eventType.Value,
+                invoice.Value,
+                invoiceId.Value,
+                invoiceSectionId.Value,
+                invoiceSectionName.Value,
+                Optional.ToNullable(purchasingSubscriptionGuid),
+                purchasingSubscriptionName.Value,
+                Optional.ToNullable(quantity),
+                region.Value,
+                reservationOrderId.Value,
+                reservationOrderName.Value,
+                term.Value,
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionModernReservationTransaction>.Write(ModelReaderWriterOptions options)

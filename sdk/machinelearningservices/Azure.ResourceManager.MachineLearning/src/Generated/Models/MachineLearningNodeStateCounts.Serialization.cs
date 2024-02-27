@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNodeStateCounts(Optional.ToNullable(idleNodeCount), Optional.ToNullable(runningNodeCount), Optional.ToNullable(preparingNodeCount), Optional.ToNullable(unusableNodeCount), Optional.ToNullable(leavingNodeCount), Optional.ToNullable(preemptedNodeCount), serializedAdditionalRawData);
+            return new MachineLearningNodeStateCounts(
+                Optional.ToNullable(idleNodeCount),
+                Optional.ToNullable(runningNodeCount),
+                Optional.ToNullable(preparingNodeCount),
+                Optional.ToNullable(unusableNodeCount),
+                Optional.ToNullable(leavingNodeCount),
+                Optional.ToNullable(preemptedNodeCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNodeStateCounts>.Write(ModelReaderWriterOptions options)

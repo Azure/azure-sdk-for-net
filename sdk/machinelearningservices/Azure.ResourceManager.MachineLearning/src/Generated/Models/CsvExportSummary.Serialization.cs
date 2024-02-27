@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsvExportSummary(Optional.ToNullable(endDateTime), Optional.ToNullable(exportedRowCount), format, labelingJobId.Value, Optional.ToNullable(startDateTime), serializedAdditionalRawData, containerName.Value, snapshotPath.Value);
+            return new CsvExportSummary(
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(exportedRowCount),
+                format,
+                labelingJobId.Value,
+                Optional.ToNullable(startDateTime),
+                serializedAdditionalRawData,
+                containerName.Value,
+                snapshotPath.Value);
         }
 
         BinaryData IPersistableModel<CsvExportSummary>.Write(ModelReaderWriterOptions options)

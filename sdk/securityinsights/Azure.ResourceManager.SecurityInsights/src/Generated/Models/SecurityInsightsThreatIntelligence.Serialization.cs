@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsThreatIntelligence(Optional.ToNullable(confidence), providerName.Value, reportLink.Value, threatDescription.Value, threatName.Value, threatType.Value, serializedAdditionalRawData);
+            return new SecurityInsightsThreatIntelligence(
+                Optional.ToNullable(confidence),
+                providerName.Value,
+                reportLink.Value,
+                threatDescription.Value,
+                threatName.Value,
+                threatType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsThreatIntelligence>.Write(ModelReaderWriterOptions options)

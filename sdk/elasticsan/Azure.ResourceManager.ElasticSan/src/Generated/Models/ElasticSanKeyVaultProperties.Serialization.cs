@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp), serializedAdditionalRawData);
+            return new ElasticSanKeyVaultProperties(
+                keyName.Value,
+                keyVersion.Value,
+                keyVaultUri.Value,
+                currentVersionedKeyIdentifier.Value,
+                Optional.ToNullable(lastKeyRotationTimestamp),
+                Optional.ToNullable(currentVersionedKeyExpirationTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanKeyVaultProperties>.Write(ModelReaderWriterOptions options)

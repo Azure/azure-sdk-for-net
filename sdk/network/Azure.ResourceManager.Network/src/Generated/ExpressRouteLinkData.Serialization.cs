@@ -262,7 +262,21 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteLinkData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routerName.Value, interfaceName.Value, patchPanelId.Value, rackId.Value, coloLocation.Value, Optional.ToNullable(connectorType), Optional.ToNullable(adminState), Optional.ToNullable(provisioningState), macSecConfig.Value);
+            return new ExpressRouteLinkData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routerName.Value,
+                interfaceName.Value,
+                patchPanelId.Value,
+                rackId.Value,
+                coloLocation.Value,
+                Optional.ToNullable(connectorType),
+                Optional.ToNullable(adminState),
+                Optional.ToNullable(provisioningState),
+                macSecConfig.Value);
         }
 
         BinaryData IPersistableModel<ExpressRouteLinkData>.Write(ModelReaderWriterOptions options)

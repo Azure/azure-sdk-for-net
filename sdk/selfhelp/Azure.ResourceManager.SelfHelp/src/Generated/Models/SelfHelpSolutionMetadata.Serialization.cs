@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(), serializedAdditionalRawData);
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SelfHelpSolutionMetadata>.Write(ModelReaderWriterOptions options)

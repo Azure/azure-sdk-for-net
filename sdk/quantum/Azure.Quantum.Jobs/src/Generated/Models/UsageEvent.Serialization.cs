@@ -69,7 +69,13 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new UsageEvent(dimensionId.Value, dimensionName.Value, measureUnit.Value, Optional.ToNullable(amountBilled), Optional.ToNullable(amountConsumed), Optional.ToNullable(unitPrice));
+            return new UsageEvent(
+                dimensionId.Value,
+                dimensionName.Value,
+                measureUnit.Value,
+                Optional.ToNullable(amountBilled),
+                Optional.ToNullable(amountConsumed),
+                Optional.ToNullable(unitPrice));
         }
     }
 }

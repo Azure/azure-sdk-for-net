@@ -245,7 +245,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerExpressRouteCircuitConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), expressRouteCircuitPeering, peerExpressRouteCircuitPeering, addressPrefix.Value, Optional.ToNullable(circuitConnectionStatus), connectionName.Value, Optional.ToNullable(authResourceGuid), Optional.ToNullable(provisioningState));
+            return new PeerExpressRouteCircuitConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                expressRouteCircuitPeering,
+                peerExpressRouteCircuitPeering,
+                addressPrefix.Value,
+                Optional.ToNullable(circuitConnectionStatus),
+                connectionName.Value,
+                Optional.ToNullable(authResourceGuid),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<PeerExpressRouteCircuitConnectionData>.Write(ModelReaderWriterOptions options)

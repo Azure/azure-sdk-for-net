@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), identity, provisioningState.Value, activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(), encryption.Value, Optional.ToNullable(disableShowmount), serializedAdditionalRawData);
+            return new NetAppAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                identity,
+                provisioningState.Value,
+                activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
+                encryption.Value,
+                Optional.ToNullable(disableShowmount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppAccountData>.Write(ModelReaderWriterOptions options)

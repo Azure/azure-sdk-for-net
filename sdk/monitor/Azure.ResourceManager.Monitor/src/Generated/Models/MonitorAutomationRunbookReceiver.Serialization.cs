@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorAutomationRunbookReceiver(
+                automationAccountId,
+                runbookName,
+                webhookResourceId,
+                isGlobalRunbook,
+                name.Value,
+                serviceUri.Value,
+                Optional.ToNullable(useCommonAlertSchema),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorAutomationRunbookReceiver>.Write(ModelReaderWriterOptions options)

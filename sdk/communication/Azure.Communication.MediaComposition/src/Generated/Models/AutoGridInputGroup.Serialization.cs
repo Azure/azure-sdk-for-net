@@ -118,7 +118,14 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode), inputIds);
+            return new AutoGridInputGroup(
+                kind,
+                position.Value,
+                width.Value,
+                height.Value,
+                layer.Value,
+                Optional.ToNullable(scalingMode),
+                inputIds);
         }
     }
 }

@@ -307,7 +307,22 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>(), serialNumber.Value, deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(), returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
+            return new DataBoxEdgeOrderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                orderId.Value,
+                contactInformation.Value,
+                shippingAddress.Value,
+                currentStatus.Value,
+                orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>(),
+                serialNumber.Value,
+                deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>(),
+                Optional.ToNullable(shipmentType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeOrderData>.Write(ModelReaderWriterOptions options)

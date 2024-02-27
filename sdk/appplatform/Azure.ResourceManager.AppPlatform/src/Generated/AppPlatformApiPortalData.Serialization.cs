@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalData(id, name, type, systemData.Value, properties.Value, sku.Value, serializedAdditionalRawData);
+            return new AppPlatformApiPortalData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalData>.Write(ModelReaderWriterOptions options)

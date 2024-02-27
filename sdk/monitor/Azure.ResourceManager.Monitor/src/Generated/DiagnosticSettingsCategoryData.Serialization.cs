@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSettingsCategoryData(id, name, type, systemData.Value, Optional.ToNullable(categoryType), categoryGroups ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DiagnosticSettingsCategoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(categoryType),
+                categoryGroups ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSettingsCategoryData>.Write(ModelReaderWriterOptions options)

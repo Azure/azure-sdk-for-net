@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteZipDeployment(id, name, type, systemData.Value, appZipUrl.Value, apiZipUrl.Value, deploymentTitle.Value, provider.Value, functionLanguage.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteZipDeployment(
+                id,
+                name,
+                type,
+                systemData.Value,
+                appZipUrl.Value,
+                apiZipUrl.Value,
+                deploymentTitle.Value,
+                provider.Value,
+                functionLanguage.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteZipDeployment>.Write(ModelReaderWriterOptions options)

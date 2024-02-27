@@ -318,7 +318,21 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProximityPlacementGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(proximityPlacementGroupType), virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(), colocationStatus.Value, intent.Value, serializedAdditionalRawData);
+            return new ProximityPlacementGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(proximityPlacementGroupType),
+                virtualMachines ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                virtualMachineScaleSets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                availabilitySets ?? new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>(),
+                colocationStatus.Value,
+                intent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options)

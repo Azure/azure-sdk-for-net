@@ -273,7 +273,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineSkuSlot(Optional.ToNullable(rackSlot), Optional.ToNullable(bootstrapProtocol), Optional.ToNullable(cpuCores), Optional.ToNullable(cpuSockets), disks ?? new ChangeTrackingList<MachineDisk>(), generation.Value, hardwareVersion.Value, Optional.ToNullable(memoryCapacityGB), model.Value, networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(), Optional.ToNullable(totalThreads), vendor.Value, serializedAdditionalRawData);
+            return new MachineSkuSlot(
+                Optional.ToNullable(rackSlot),
+                Optional.ToNullable(bootstrapProtocol),
+                Optional.ToNullable(cpuCores),
+                Optional.ToNullable(cpuSockets),
+                disks ?? new ChangeTrackingList<MachineDisk>(),
+                generation.Value,
+                hardwareVersion.Value,
+                Optional.ToNullable(memoryCapacityGB),
+                model.Value,
+                networkInterfaces ?? new ChangeTrackingList<NetworkCloudNetworkInterface>(),
+                Optional.ToNullable(totalThreads),
+                vendor.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineSkuSlot>.Write(ModelReaderWriterOptions options)

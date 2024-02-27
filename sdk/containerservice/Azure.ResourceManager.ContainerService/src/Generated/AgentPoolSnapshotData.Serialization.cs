@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolSnapshotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, creationData.Value, Optional.ToNullable(snapshotType), kubernetesVersion.Value, nodeImageVersion.Value, Optional.ToNullable(osType), Optional.ToNullable(osSku), vmSize.Value, Optional.ToNullable(enableFIPS), serializedAdditionalRawData);
+            return new AgentPoolSnapshotData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                creationData.Value,
+                Optional.ToNullable(snapshotType),
+                kubernetesVersion.Value,
+                nodeImageVersion.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osSku),
+                vmSize.Value,
+                Optional.ToNullable(enableFIPS),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolSnapshotData>.Write(ModelReaderWriterOptions options)

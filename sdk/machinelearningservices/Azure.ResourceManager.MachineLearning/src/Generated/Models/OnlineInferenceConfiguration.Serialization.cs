@@ -200,7 +200,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineInferenceConfiguration(configurations ?? new ChangeTrackingDictionary<string, string>(), entryScript.Value, livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
+            return new OnlineInferenceConfiguration(
+                configurations ?? new ChangeTrackingDictionary<string, string>(),
+                entryScript.Value,
+                livenessRoute.Value,
+                readinessRoute.Value,
+                scoringRoute.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineInferenceConfiguration>.Write(ModelReaderWriterOptions options)

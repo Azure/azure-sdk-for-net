@@ -380,7 +380,27 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
+            return new KpiDefinition(
+                entityType,
+                entityTypeName,
+                Optional.ToNullable(tenantId),
+                kpiName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                calculationWindow,
+                calculationWindowFieldName.Value,
+                function,
+                expression,
+                unit.Value,
+                filter.Value,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                Optional.ToNullable(provisioningState),
+                thresHolds.Value,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)

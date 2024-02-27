@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, capacityReservations ?? new ChangeTrackingList<SubResource>(), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), instanceView.Value, sharingProfile.Value);
+            return new CapacityReservationGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                capacityReservations ?? new ChangeTrackingList<SubResource>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                instanceView.Value,
+                sharingProfile.Value);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)

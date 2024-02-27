@@ -279,7 +279,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DpmProtectedItemExtendedInfo(protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value, serializedAdditionalRawData);
+            return new DpmProtectedItemExtendedInfo(
+                protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(@protected),
+                Optional.ToNullable(isPresentOnCloud),
+                lastBackupStatus.Value,
+                Optional.ToNullable(lastRefreshedAt),
+                Optional.ToNullable(oldestRecoveryPoint),
+                Optional.ToNullable(recoveryPointCount),
+                Optional.ToNullable(onPremiseOldestRecoveryPoint),
+                Optional.ToNullable(onPremiseLatestRecoveryPoint),
+                Optional.ToNullable(onPremiseRecoveryPointCount),
+                Optional.ToNullable(isCollocated),
+                protectionGroupName.Value,
+                diskStorageUsedInBytes.Value,
+                totalDiskStorageSizeInBytes.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)

@@ -83,7 +83,14 @@ namespace Azure.AI.MetricsAdvisor
                     continue;
                 }
             }
-            return new MetricPeriodFeedback(feedbackType, feedbackId.Value, Optional.ToNullable(createdTime), userPrincipal.Value, metricId, dimensionFilter, value);
+            return new MetricPeriodFeedback(
+                feedbackType,
+                feedbackId.Value,
+                Optional.ToNullable(createdTime),
+                userPrincipal.Value,
+                metricId,
+                dimensionFilter,
+                value);
         }
     }
 }

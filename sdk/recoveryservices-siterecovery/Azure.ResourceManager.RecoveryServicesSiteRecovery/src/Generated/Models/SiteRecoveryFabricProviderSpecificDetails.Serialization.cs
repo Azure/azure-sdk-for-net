@@ -209,7 +209,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryFabricProviderSpecificDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(location), containerIds ?? new ChangeTrackingList<ResourceIdentifier>(), zones ?? new ChangeTrackingList<A2AZoneDetails>(), extendedLocations ?? new ChangeTrackingList<A2AExtendedLocationDetails>(), locationDetails ?? new ChangeTrackingList<A2AFabricSpecificLocationDetails>());
+            return new SiteRecoveryFabricProviderSpecificDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(location),
+                containerIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                zones ?? new ChangeTrackingList<A2AZoneDetails>(),
+                extendedLocations ?? new ChangeTrackingList<A2AExtendedLocationDetails>(),
+                locationDetails ?? new ChangeTrackingList<A2AFabricSpecificLocationDetails>());
         }
 
         BinaryData IPersistableModel<SiteRecoveryFabricProviderSpecificDetails>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,14 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), rows, columns, inputIds);
+            return new GridLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                rows,
+                columns,
+                inputIds);
         }
     }
 }

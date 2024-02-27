@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanSummaryCount(Optional.ToNullable(succeededCount), Optional.ToNullable(failedCount), Optional.ToNullable(expiringCount), Optional.ToNullable(expiredCount), Optional.ToNullable(pendingCount), Optional.ToNullable(cancelledCount), Optional.ToNullable(processingCount), Optional.ToNullable(noBenefitCount), Optional.ToNullable(warningCount), serializedAdditionalRawData);
+            return new SavingsPlanSummaryCount(
+                Optional.ToNullable(succeededCount),
+                Optional.ToNullable(failedCount),
+                Optional.ToNullable(expiringCount),
+                Optional.ToNullable(expiredCount),
+                Optional.ToNullable(pendingCount),
+                Optional.ToNullable(cancelledCount),
+                Optional.ToNullable(processingCount),
+                Optional.ToNullable(noBenefitCount),
+                Optional.ToNullable(warningCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanSummaryCount>.Write(ModelReaderWriterOptions options)

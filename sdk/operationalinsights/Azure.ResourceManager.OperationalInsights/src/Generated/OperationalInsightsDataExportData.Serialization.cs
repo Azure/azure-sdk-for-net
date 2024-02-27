@@ -295,7 +295,20 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsDataExportData(id, name, type, systemData.Value, Optional.ToNullable(dataExportId), tableNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(enable), Optional.ToNullable(createdDate), Optional.ToNullable(lastModifiedDate), resourceId.Value, Optional.ToNullable(type0), eventHubName.Value, serializedAdditionalRawData);
+            return new OperationalInsightsDataExportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dataExportId),
+                tableNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enable),
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(lastModifiedDate),
+                resourceId.Value,
+                Optional.ToNullable(type0),
+                eventHubName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsDataExportData>.Write(ModelReaderWriterOptions options)

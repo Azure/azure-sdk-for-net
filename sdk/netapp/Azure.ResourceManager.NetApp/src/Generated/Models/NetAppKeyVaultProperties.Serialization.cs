@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppKeyVaultProperties(keyVaultId.Value, keyVaultUri, keyName, keyVaultResourceId, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new NetAppKeyVaultProperties(
+                keyVaultId.Value,
+                keyVaultUri,
+                keyName,
+                keyVaultResourceId,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppKeyVaultProperties>.Write(ModelReaderWriterOptions options)

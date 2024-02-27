@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreOutputDataSource(type, serializedAdditionalRawData, refreshToken.Value, tokenUserPrincipalName.Value, tokenUserDisplayName.Value, accountName.Value, Optional.ToNullable(tenantId), filePathPrefix.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode));
+            return new DataLakeStoreOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                refreshToken.Value,
+                tokenUserPrincipalName.Value,
+                tokenUserDisplayName.Value,
+                accountName.Value,
+                Optional.ToNullable(tenantId),
+                filePathPrefix.Value,
+                dateFormat.Value,
+                timeFormat.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<DataLakeStoreOutputDataSource>.Write(ModelReaderWriterOptions options)

@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicApiResourceGeneralInformation(iconUrl.Value, displayName.Value, description.Value, termsOfUseUrl.Value, releaseTag.Value, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new LogicApiResourceGeneralInformation(
+                iconUrl.Value,
+                displayName.Value,
+                description.Value,
+                termsOfUseUrl.Value,
+                releaseTag.Value,
+                Optional.ToNullable(tier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicApiResourceGeneralInformation>.Write(ModelReaderWriterOptions options)

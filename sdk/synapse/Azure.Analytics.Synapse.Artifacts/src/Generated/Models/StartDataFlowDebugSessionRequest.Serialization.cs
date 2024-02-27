@@ -177,7 +177,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionRequest(sessionId.Value, dataFlow.Value, dataFlows ?? new ChangeTrackingList<DataFlowResource>(), datasets ?? new ChangeTrackingList<DatasetResource>(), linkedServices ?? new ChangeTrackingList<LinkedServiceResource>(), staging.Value, debugSettings.Value, Optional.ToNullable(incrementalDebug));
+            return new StartDataFlowDebugSessionRequest(
+                sessionId.Value,
+                dataFlow.Value,
+                dataFlows ?? new ChangeTrackingList<DataFlowResource>(),
+                datasets ?? new ChangeTrackingList<DatasetResource>(),
+                linkedServices ?? new ChangeTrackingList<LinkedServiceResource>(),
+                staging.Value,
+                debugSettings.Value,
+                Optional.ToNullable(incrementalDebug));
         }
 
         internal partial class StartDataFlowDebugSessionRequestConverter : JsonConverter<StartDataFlowDebugSessionRequest>

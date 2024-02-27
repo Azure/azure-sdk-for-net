@@ -174,7 +174,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EMachineLearningStudioFunctionBinding(type, serializedAdditionalRawData, endpoint.Value, apiKey.Value, inputs.Value, outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(), Optional.ToNullable(batchSize));
+            return new EMachineLearningStudioFunctionBinding(
+                type,
+                serializedAdditionalRawData,
+                endpoint.Value,
+                apiKey.Value,
+                inputs.Value,
+                outputs ?? new ChangeTrackingList<MachineLearningStudioOutputColumn>(),
+                Optional.ToNullable(batchSize));
         }
 
         BinaryData IPersistableModel<EMachineLearningStudioFunctionBinding>.Write(ModelReaderWriterOptions options)

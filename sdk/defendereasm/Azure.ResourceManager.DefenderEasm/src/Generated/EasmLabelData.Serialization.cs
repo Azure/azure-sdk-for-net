@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.DefenderEasm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), displayName.Value, color.Value, serializedAdditionalRawData);
+            return new EasmLabelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                displayName.Value,
+                color.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelData>.Write(ModelReaderWriterOptions options)

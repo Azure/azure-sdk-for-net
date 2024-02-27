@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorIncident(name.Value, ruleName.Value, Optional.ToNullable(isActive), Optional.ToNullable(activatedTime), Optional.ToNullable(resolvedTime), serializedAdditionalRawData);
+            return new MonitorIncident(
+                name.Value,
+                ruleName.Value,
+                Optional.ToNullable(isActive),
+                Optional.ToNullable(activatedTime),
+                Optional.ToNullable(resolvedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorIncident>.Write(ModelReaderWriterOptions options)

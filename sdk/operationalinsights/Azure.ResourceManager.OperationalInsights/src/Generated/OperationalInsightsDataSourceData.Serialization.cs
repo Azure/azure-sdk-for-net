@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsDataSourceData(id, name, type, systemData.Value, properties, Optional.ToNullable(etag), kind, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new OperationalInsightsDataSourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                Optional.ToNullable(etag),
+                kind,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsDataSourceData>.Write(ModelReaderWriterOptions options)

@@ -41,13 +41,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCaseSource(typeof(ReaderWriterTestSource), "EmptyObjectBinaryData")]
         public void ValidateEmptyObjectBinaryData(BinaryData data)
         {
-            ModelX? x = JsonSerializer.Deserialize<ModelX>(data, _options);
-            Assert.IsNotNull(x);
-            Assert.IsNull(x!.Kind);
-
-            object? obj = JsonSerializer.Deserialize(data, typeof(ModelX), _options);
-            Assert.IsNotNull(obj);
-            Assert.IsNull(((ModelX)obj!).Kind);
+            Assert.Throws<JsonException>(() => ModelReaderWriter.Read<ModelX>(data));
+            Assert.Throws<JsonException>(() => ModelReaderWriter.Read(data, typeof(ModelX)));
         }
 
         [TestCase("J")]

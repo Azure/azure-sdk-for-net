@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitoringMetricConfigurationData(id, name, type, systemData.Value, metricConfigurations, serializedAdditionalRawData);
+            return new MonitoringMetricConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metricConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitoringMetricConfigurationData>.Write(ModelReaderWriterOptions options)

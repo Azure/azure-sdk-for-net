@@ -82,7 +82,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingStreamReceivedEventData(ingestUrl.Value, trackType.Value, trackName.Value, Optional.ToNullable(bitrate), encoderIp.Value, encoderPort.Value, timestamp.Value, duration.Value, timescale.Value);
+            return new MediaLiveEventIncomingStreamReceivedEventData(
+                ingestUrl.Value,
+                trackType.Value,
+                trackName.Value,
+                Optional.ToNullable(bitrate),
+                encoderIp.Value,
+                encoderPort.Value,
+                timestamp.Value,
+                duration.Value,
+                timescale.Value);
         }
 
         internal partial class MediaLiveEventIncomingStreamReceivedEventDataConverter : JsonConverter<MediaLiveEventIncomingStreamReceivedEventData>

@@ -70,7 +70,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new PolicyInsightsPolicyStateChangedEventData(Optional.ToNullable(timestamp), policyAssignmentId.Value, policyDefinitionId.Value, policyDefinitionReferenceId.Value, complianceState.Value, subscriptionId.Value, complianceReasonCode.Value);
+            return new PolicyInsightsPolicyStateChangedEventData(
+                Optional.ToNullable(timestamp),
+                policyAssignmentId.Value,
+                policyDefinitionId.Value,
+                policyDefinitionReferenceId.Value,
+                complianceState.Value,
+                subscriptionId.Value,
+                complianceReasonCode.Value);
         }
 
         internal partial class PolicyInsightsPolicyStateChangedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateChangedEventData>

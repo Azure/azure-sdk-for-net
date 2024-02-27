@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MySqlFlexibleServerDataEncryption(
+                primaryUserAssignedIdentityId.Value,
+                primaryKeyUri.Value,
+                geoBackupUserAssignedIdentityId.Value,
+                geoBackupKeyUri.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)

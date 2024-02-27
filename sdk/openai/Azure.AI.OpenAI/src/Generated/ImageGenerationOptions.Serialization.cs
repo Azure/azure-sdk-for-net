@@ -180,7 +180,16 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationOptions(model.Value, prompt, Optional.ToNullable(n), Optional.ToNullable(size), Optional.ToNullable(responseFormat), Optional.ToNullable(quality), Optional.ToNullable(style), user.Value, serializedAdditionalRawData);
+            return new ImageGenerationOptions(
+                model.Value,
+                prompt,
+                Optional.ToNullable(n),
+                Optional.ToNullable(size),
+                Optional.ToNullable(responseFormat),
+                Optional.ToNullable(quality),
+                Optional.ToNullable(style),
+                user.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationOptions>.Write(ModelReaderWriterOptions options)

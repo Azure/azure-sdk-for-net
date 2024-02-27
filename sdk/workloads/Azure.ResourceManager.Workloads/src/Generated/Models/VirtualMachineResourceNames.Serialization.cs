@@ -180,7 +180,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineResourceNames(vmName.Value, hostName.Value, networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(), osDiskName.Value, dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
+            return new VirtualMachineResourceNames(
+                vmName.Value,
+                hostName.Value,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceResourceNames>(),
+                osDiskName.Value,
+                dataDiskNames ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineResourceNames>.Write(ModelReaderWriterOptions options)

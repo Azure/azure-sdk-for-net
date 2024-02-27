@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
+            return new GatewayRoute(
+                localAddress.Value,
+                network.Value,
+                nextHop.Value,
+                sourcePeer.Value,
+                origin.Value,
+                asPath.Value,
+                Optional.ToNullable(weight),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)

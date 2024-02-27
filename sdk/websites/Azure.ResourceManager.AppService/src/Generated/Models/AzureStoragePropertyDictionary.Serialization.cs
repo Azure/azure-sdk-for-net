@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStoragePropertyDictionary(id, name, type, systemData.Value, properties ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(), kind.Value, serializedAdditionalRawData);
+            return new AzureStoragePropertyDictionary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureStoragePropertyDictionary>.Write(ModelReaderWriterOptions options)

@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(), serializedAdditionalRawData);
+            return new Assessment(
+                name.Value,
+                Optional.ToNullable(severity),
+                description.Value,
+                remediation.Value,
+                Optional.ToNullable(isPass),
+                policyId.Value,
+                resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Assessment>.Write(ModelReaderWriterOptions options)

@@ -246,7 +246,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), serializedAdditionalRawData);
+            return new InMageRcmNicDetails(
+                nicId.Value,
+                isPrimaryNic.Value,
+                isSelectedForFailover.Value,
+                sourceIPAddress.Value,
+                Optional.ToNullable(sourceIPAddressType),
+                sourceNetworkId.Value,
+                sourceSubnetName.Value,
+                targetIPAddress.Value,
+                Optional.ToNullable(targetIPAddressType),
+                targetSubnetName.Value,
+                testSubnetName.Value,
+                testIPAddress.Value,
+                Optional.ToNullable(testIPAddressType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmNicDetails>.Write(ModelReaderWriterOptions options)

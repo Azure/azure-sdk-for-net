@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityWorkspaceSettingData(id, name, type, systemData.Value, workspaceId.Value, scope.Value, serializedAdditionalRawData);
+            return new SecurityWorkspaceSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                workspaceId.Value,
+                scope.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityWorkspaceSettingData>.Write(ModelReaderWriterOptions options)

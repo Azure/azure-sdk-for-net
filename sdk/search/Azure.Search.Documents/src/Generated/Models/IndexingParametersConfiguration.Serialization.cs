@@ -253,7 +253,24 @@ namespace Azure.Search.Documents.Indexes.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IndexingParametersConfiguration(Optional.ToNullable(parsingMode), excludedFileNameExtensions.Value, indexedFileNameExtensions.Value, Optional.ToNullable(failOnUnsupportedContentType), Optional.ToNullable(failOnUnprocessableDocument), Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments), delimitedTextHeaders.Value, delimitedTextDelimiter.Value, Optional.ToNullable(firstLineContainsHeaders), documentRoot.Value, Optional.ToNullable(dataToExtract), Optional.ToNullable(imageAction), Optional.ToNullable(allowSkillsetToReadFileData), Optional.ToNullable(pdfTextRotationAlgorithm), Optional.ToNullable(executionEnvironment), queryTimeout.Value, additionalProperties);
+            return new IndexingParametersConfiguration(
+                Optional.ToNullable(parsingMode),
+                excludedFileNameExtensions.Value,
+                indexedFileNameExtensions.Value,
+                Optional.ToNullable(failOnUnsupportedContentType),
+                Optional.ToNullable(failOnUnprocessableDocument),
+                Optional.ToNullable(indexStorageMetadataOnlyForOversizedDocuments),
+                delimitedTextHeaders.Value,
+                delimitedTextDelimiter.Value,
+                Optional.ToNullable(firstLineContainsHeaders),
+                documentRoot.Value,
+                Optional.ToNullable(dataToExtract),
+                Optional.ToNullable(imageAction),
+                Optional.ToNullable(allowSkillsetToReadFileData),
+                Optional.ToNullable(pdfTextRotationAlgorithm),
+                Optional.ToNullable(executionEnvironment),
+                queryTimeout.Value,
+                additionalProperties);
         }
     }
 }

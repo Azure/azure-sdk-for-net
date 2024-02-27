@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceOperation(id.Value, name.Value, Optional.ToNullable(status), errors ?? new ChangeTrackingList<ResponseError>(), Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), Optional.ToNullable(expirationTime), Optional.ToNullable(geoMasterOperationId), serializedAdditionalRawData);
+            return new AppServiceOperation(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(status),
+                errors ?? new ChangeTrackingList<ResponseError>(),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(modifiedTime),
+                Optional.ToNullable(expirationTime),
+                Optional.ToNullable(geoMasterOperationId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceOperation>.Write(ModelReaderWriterOptions options)

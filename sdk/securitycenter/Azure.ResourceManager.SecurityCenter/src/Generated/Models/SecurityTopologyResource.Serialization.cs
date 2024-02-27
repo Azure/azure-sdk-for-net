@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityTopologyResource(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), topologyResources ?? new ChangeTrackingList<TopologySingleResource>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityTopologyResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(calculatedDateTime),
+                topologyResources ?? new ChangeTrackingList<TopologySingleResource>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityTopologyResource>.Write(ModelReaderWriterOptions options)

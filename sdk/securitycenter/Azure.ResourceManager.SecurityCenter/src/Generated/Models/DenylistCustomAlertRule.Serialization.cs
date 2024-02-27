@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DenylistCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), denylistValues);
+            return new DenylistCustomAlertRule(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(valueType),
+                denylistValues);
         }
 
         BinaryData IPersistableModel<DenylistCustomAlertRule>.Write(ModelReaderWriterOptions options)

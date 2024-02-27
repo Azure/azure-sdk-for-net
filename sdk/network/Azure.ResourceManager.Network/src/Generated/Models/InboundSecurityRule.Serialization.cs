@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundSecurityRule(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), rules ?? new ChangeTrackingList<InboundSecurityRules>(), Optional.ToNullable(provisioningState));
+            return new InboundSecurityRule(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                rules ?? new ChangeTrackingList<InboundSecurityRules>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<InboundSecurityRule>.Write(ModelReaderWriterOptions options)

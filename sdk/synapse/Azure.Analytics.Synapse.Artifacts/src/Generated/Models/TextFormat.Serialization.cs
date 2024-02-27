@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new TextFormat(
+                type,
+                serializer.Value,
+                deserializer.Value,
+                additionalProperties,
+                columnDelimiter.Value,
+                rowDelimiter.Value,
+                escapeChar.Value,
+                quoteChar.Value,
+                nullValue.Value,
+                encodingName.Value,
+                treatEmptyAsNull.Value,
+                skipLineCount.Value,
+                firstRowAsHeader.Value);
         }
 
         internal partial class TextFormatConverter : JsonConverter<TextFormat>

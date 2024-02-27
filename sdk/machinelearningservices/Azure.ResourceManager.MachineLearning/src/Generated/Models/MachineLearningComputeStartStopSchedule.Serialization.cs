@@ -202,7 +202,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeStartStopSchedule(
+                id.Value,
+                Optional.ToNullable(provisioningStatus),
+                Optional.ToNullable(status),
+                Optional.ToNullable(action),
+                Optional.ToNullable(triggerType),
+                recurrence.Value,
+                cron.Value,
+                schedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeStartStopSchedule>.Write(ModelReaderWriterOptions options)

@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, dependsOn ?? new ChangeTrackingList<DependencyReference>());
+            return new TumblingWindowTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                Optional.ToNullable(endTime),
+                delay.Value,
+                maxConcurrency,
+                retryPolicy.Value,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 
         BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)

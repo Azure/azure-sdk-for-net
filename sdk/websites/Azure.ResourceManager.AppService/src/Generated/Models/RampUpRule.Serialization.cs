@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RampUpRule(actionHostName.Value, Optional.ToNullable(reroutePercentage), Optional.ToNullable(changeStep), Optional.ToNullable(changeIntervalInMinutes), Optional.ToNullable(minReroutePercentage), Optional.ToNullable(maxReroutePercentage), changeDecisionCallbackUrl.Value, name.Value, serializedAdditionalRawData);
+            return new RampUpRule(
+                actionHostName.Value,
+                Optional.ToNullable(reroutePercentage),
+                Optional.ToNullable(changeStep),
+                Optional.ToNullable(changeIntervalInMinutes),
+                Optional.ToNullable(minReroutePercentage),
+                Optional.ToNullable(maxReroutePercentage),
+                changeDecisionCallbackUrl.Value,
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RampUpRule>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,14 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticsearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields ?? new ChangeTrackingList<string>(), contentFieldsSeparator.Value, vectorFields ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ElasticsearchIndexFieldMappingOptions(
+                titleField.Value,
+                urlField.Value,
+                filepathField.Value,
+                contentFields ?? new ChangeTrackingList<string>(),
+                contentFieldsSeparator.Value,
+                vectorFields ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticsearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)

@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobInputHttp(odataType, serializedAdditionalRawData, files ?? new ChangeTrackingList<string>(), start.Value, end.Value, label.Value, inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>(), baseUri.Value);
+            return new MediaJobInputHttp(
+                odataType,
+                serializedAdditionalRawData,
+                files ?? new ChangeTrackingList<string>(),
+                start.Value,
+                end.Value,
+                label.Value,
+                inputDefinitions ?? new ChangeTrackingList<MediaJobInputDefinition>(),
+                baseUri.Value);
         }
 
         BinaryData IPersistableModel<MediaJobInputHttp>.Write(ModelReaderWriterOptions options)

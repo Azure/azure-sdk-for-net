@@ -342,7 +342,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, labels ?? new ChangeTrackingList<KubernetesLabel>(), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(), Optional.ToNullable(powerState), Optional.ToNullable(role), taints ?? new ChangeTrackingList<KubernetesLabel>(), vmSkuName.Value, serializedAdditionalRawData);
+            return new KubernetesClusterNode(
+                agentPoolId.Value,
+                availabilityZone.Value,
+                bareMetalMachineId.Value,
+                Optional.ToNullable(cpuCores),
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                Optional.ToNullable(diskSizeGB),
+                image.Value,
+                kubernetesVersion.Value,
+                labels ?? new ChangeTrackingList<KubernetesLabel>(),
+                Optional.ToNullable(memorySizeGB),
+                Optional.ToNullable(mode),
+                name.Value,
+                networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
+                Optional.ToNullable(powerState),
+                Optional.ToNullable(role),
+                taints ?? new ChangeTrackingList<KubernetesLabel>(),
+                vmSkuName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterNode>.Write(ModelReaderWriterOptions options)

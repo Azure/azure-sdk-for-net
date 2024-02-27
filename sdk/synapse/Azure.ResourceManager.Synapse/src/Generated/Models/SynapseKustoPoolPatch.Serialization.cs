@@ -325,7 +325,24 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseKustoPoolPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID), serializedAdditionalRawData);
+            return new SynapseKustoPoolPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(provisioningState),
+                uri.Value,
+                dataIngestionUri.Value,
+                stateReason.Value,
+                optimizedAutoscale.Value,
+                Optional.ToNullable(enableStreamingIngest),
+                Optional.ToNullable(enablePurge),
+                languageExtensions.Value,
+                Optional.ToNullable(workspaceUID),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseKustoPoolPatch>.Write(ModelReaderWriterOptions options)

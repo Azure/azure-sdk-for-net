@@ -549,7 +549,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProviderResourceType(name.Value, Optional.ToNullable(routingType), Optional.ToNullable(resourceValidation), allowedUnauthorizedActions ?? new ChangeTrackingList<string>(), authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(), linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(), defaultApiVersion.Value, loggingRules ?? new ChangeTrackingList<LoggingRule>(), throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(), endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(), Optional.ToNullable(marketplaceType), identityManagement.Value, metadata.Value, requiredFeatures ?? new ChangeTrackingList<string>(), featuresRule.Value, subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(), serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(), requestHeaderOptions.Value, skuLink.Value, disallowedActionVerbs ?? new ChangeTrackingList<string>(), templateDeploymentPolicy.Value, extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(), linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(), Optional.ToNullable(resourceDeletionPolicy), serializedAdditionalRawData);
+            return new ProviderResourceType(
+                name.Value,
+                Optional.ToNullable(routingType),
+                Optional.ToNullable(resourceValidation),
+                allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
+                authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
+                linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
+                defaultApiVersion.Value,
+                loggingRules ?? new ChangeTrackingList<LoggingRule>(),
+                throttlingRules ?? new ChangeTrackingList<ThrottlingRule>(),
+                endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>(),
+                Optional.ToNullable(marketplaceType),
+                identityManagement.Value,
+                metadata.Value,
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                subscriptionStateRules ?? new ChangeTrackingList<ProviderSubscriptionStateRule>(),
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                requestHeaderOptions.Value,
+                skuLink.Value,
+                disallowedActionVerbs ?? new ChangeTrackingList<string>(),
+                templateDeploymentPolicy.Value,
+                extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
+                linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
+                Optional.ToNullable(resourceDeletionPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProviderResourceType>.Write(ModelReaderWriterOptions options)

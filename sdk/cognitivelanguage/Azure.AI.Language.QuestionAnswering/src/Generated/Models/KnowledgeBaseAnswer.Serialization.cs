@@ -104,7 +104,15 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswer(questions ?? new ChangeTrackingList<string>(), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, metadata ?? new ChangeTrackingDictionary<string, string>(), dialog.Value, answerSpan.Value);
+            return new KnowledgeBaseAnswer(
+                questions ?? new ChangeTrackingList<string>(),
+                answer.Value,
+                Optional.ToNullable(confidenceScore),
+                Optional.ToNullable(id),
+                source.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                dialog.Value,
+                answerSpan.Value);
         }
     }
 }

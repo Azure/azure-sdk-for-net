@@ -269,7 +269,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData, Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
+            return new PercentileMetricValue(
+                Optional.ToNullable(count),
+                Optional.ToNullable(average),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(total),
+                serializedAdditionalRawData,
+                Optional.ToNullable(p10),
+                Optional.ToNullable(p25),
+                Optional.ToNullable(p50),
+                Optional.ToNullable(p75),
+                Optional.ToNullable(p90),
+                Optional.ToNullable(p95),
+                Optional.ToNullable(p99));
         }
 
         BinaryData IPersistableModel<PercentileMetricValue>.Write(ModelReaderWriterOptions options)

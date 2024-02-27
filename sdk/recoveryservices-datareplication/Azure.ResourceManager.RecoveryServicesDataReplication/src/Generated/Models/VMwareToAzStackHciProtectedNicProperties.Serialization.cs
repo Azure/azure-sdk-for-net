@@ -170,7 +170,16 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedNicProperties(nicId.Value, macAddress.Value, label.Value, Optional.ToNullable(isPrimaryNic), networkName.Value, targetNetworkId.Value, testNetworkId.Value, Optional.ToNullable(selectionTypeForFailover), serializedAdditionalRawData);
+            return new VMwareToAzStackHciProtectedNicProperties(
+                nicId.Value,
+                macAddress.Value,
+                label.Value,
+                Optional.ToNullable(isPrimaryNic),
+                networkName.Value,
+                targetNetworkId.Value,
+                testNetworkId.Value,
+                Optional.ToNullable(selectionTypeForFailover),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedNicProperties>.Write(ModelReaderWriterOptions options)

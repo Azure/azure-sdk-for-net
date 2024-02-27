@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRecoverableSqlPoolData(id, name, type, systemData.Value, edition.Value, serviceLevelObjective.Value, elasticPoolName.Value, Optional.ToNullable(lastAvailableBackupDate), serializedAdditionalRawData);
+            return new SynapseRecoverableSqlPoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                edition.Value,
+                serviceLevelObjective.Value,
+                elasticPoolName.Value,
+                Optional.ToNullable(lastAvailableBackupDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRecoverableSqlPoolData>.Write(ModelReaderWriterOptions options)

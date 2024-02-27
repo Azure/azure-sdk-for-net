@@ -212,7 +212,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveSummary(Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown), Optional.ToNullable(undefined), serializedAdditionalRawData);
+            return new CveSummary(
+                Optional.ToNullable(critical),
+                Optional.ToNullable(high),
+                Optional.ToNullable(medium),
+                Optional.ToNullable(low),
+                Optional.ToNullable(unknown),
+                Optional.ToNullable(undefined),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)

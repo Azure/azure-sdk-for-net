@@ -245,7 +245,21 @@ namespace Azure.ResourceManager.DevSpaces
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
+            return new ControllerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                Optional.ToNullable(provisioningState),
+                hostSuffix.Value,
+                dataPlaneFqdn.Value,
+                targetContainerHostApiServerFqdn.Value,
+                targetContainerHostResourceId,
+                targetContainerHostCredentialsBase64,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerData>.Write(ModelReaderWriterOptions options)

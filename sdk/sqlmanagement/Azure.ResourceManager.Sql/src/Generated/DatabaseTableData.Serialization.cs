@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseTableData(id, name, type, systemData.Value, Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized), serializedAdditionalRawData);
+            return new DatabaseTableData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(temporalType),
+                Optional.ToNullable(memoryOptimized),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseTableData>.Write(ModelReaderWriterOptions options)

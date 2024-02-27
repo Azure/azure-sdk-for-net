@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformData(id, name, type, systemData.Value, Optional.ToNullable(created), description.Value, Optional.ToNullable(lastModified), outputs ?? new ChangeTrackingList<MediaTransformOutput>(), serializedAdditionalRawData);
+            return new MediaTransformData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(created),
+                description.Value,
+                Optional.ToNullable(lastModified),
+                outputs ?? new ChangeTrackingList<MediaTransformOutput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformData>.Write(ModelReaderWriterOptions options)

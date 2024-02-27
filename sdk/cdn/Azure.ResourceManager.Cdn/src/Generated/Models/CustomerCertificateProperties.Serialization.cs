@@ -190,7 +190,17 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, subjectAlternativeNames ?? new ChangeTrackingList<string>(), thumbprint.Value);
+            return new CustomerCertificateProperties(
+                type,
+                serializedAdditionalRawData,
+                secretSource,
+                secretVersion.Value,
+                Optional.ToNullable(useLatestVersion),
+                subject.Value,
+                Optional.ToNullable(expirationDate),
+                certificateAuthority.Value,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                thumbprint.Value);
         }
 
         BinaryData IPersistableModel<CustomerCertificateProperties>.Write(ModelReaderWriterOptions options)

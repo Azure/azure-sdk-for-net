@@ -42,7 +42,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
         public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null, LinkConnectionRefreshStatus refreshStatus = null, DateTimeOffset? landingZoneCredentialExpireTime = null)
         {
-            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime);
+            return new LinkConnectionDetailedStatus(
+                id,
+                name,
+                isApplyingChanges,
+                isPartiallyFailed,
+                startTime,
+                stopTime,
+                status,
+                continuousRunId,
+                error,
+                refreshStatus,
+                landingZoneCredentialExpireTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkConnectionRefreshStatus"/>. </summary>
@@ -99,7 +110,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
         public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, DateTimeOffset? lastProcessedData = null, DateTimeOffset? lastTransactionCommitTime = null)
         {
-            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
+            return new LinkTableStatus(
+                id,
+                status,
+                errorMessage,
+                startTime,
+                stopTime,
+                linkTableId,
+                errorCode,
+                lastProcessedData,
+                lastTransactionCommitTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookResponse"/>. </summary>
@@ -123,7 +143,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
         public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
         {
-            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
+            return new RunNotebookResult(
+                runId,
+                runStatus,
+                lastCheckedOn,
+                sessionId,
+                sparkPool,
+                sessionDetail,
+                exitValue,
+                error);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookError"/>. </summary>
@@ -158,7 +186,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
         public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null)
         {
-            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
+            return new RunNotebookSnapshotResult(
+                snapshot,
+                error,
+                runId,
+                runStatus,
+                lastCheckedOn,
+                sessionId,
+                sparkPool);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookSnapshot"/>. </summary>
@@ -176,7 +211,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             parameters ??= new Dictionary<string, RunNotebookParameter>();
 
-            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent);
+            return new RunNotebookSnapshot(
+                exitValue,
+                id,
+                notebook,
+                sessionOptions,
+                honorSessionTimeToLive,
+                sessionId,
+                sparkPool,
+                parameters,
+                notebookContent);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotebookResource"/>. </summary>
@@ -300,7 +344,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             tags ??= new Dictionary<string, string>();
             customLibraries ??= new List<LibraryInfo>();
 
-            return new BigDataPoolResourceInfo(id, name, type, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
+            return new BigDataPoolResourceInfo(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                provisioningState,
+                autoScale,
+                creationDate,
+                autoPause,
+                isComputeIsolationEnabled,
+                sessionLevelPackagesEnabled,
+                cacheSize,
+                dynamicExecutorAllocation,
+                sparkEventsFolder,
+                nodeCount,
+                libraryRequirements,
+                customLibraries?.ToList(),
+                sparkConfigProperties,
+                sparkVersion,
+                defaultSparkLogFolder,
+                nodeSize,
+                nodeSizeFamily,
+                lastSucceededTimestamp);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryRequirements"/>. </summary>
@@ -324,7 +391,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
         public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryInfo(
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrackedResource"/>. </summary>
@@ -381,7 +455,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddDataFlowToDebugSessionResponse"/>. </summary>
@@ -475,7 +559,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
         public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryResourceProperties(
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryResourceInfo"/>. </summary>
@@ -491,7 +582,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
         public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
         {
-            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
+            return new LibraryResourceInfo(
+                id,
+                recordId,
+                state,
+                created,
+                changed,
+                type,
+                name,
+                operationId,
+                artifactId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationResult"/>. </summary>
@@ -552,7 +652,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             runDimensions ??= new Dictionary<string, object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new PipelineResource(id, name, type, etag, description, activities?.ToList(), parameters, variables, concurrency, annotations?.ToList(), runDimensions, folder, additionalProperties);
+            return new PipelineResource(
+                id,
+                name,
+                type,
+                etag,
+                description,
+                activities?.ToList(),
+                parameters,
+                variables,
+                concurrency,
+                annotations?.ToList(),
+                runDimensions,
+                folder,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateRunResponse"/>. </summary>
@@ -600,7 +713,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             parameters ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new PipelineRun(runId, runGroupId, isLatest, pipelineName, parameters, invokedBy, lastUpdated, runStart, runEnd, durationInMs, status, message, additionalProperties);
+            return new PipelineRun(
+                runId,
+                runGroupId,
+                isLatest,
+                pipelineName,
+                parameters,
+                invokedBy,
+                lastUpdated,
+                runStart,
+                runEnd,
+                durationInMs,
+                status,
+                message,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PipelineRunInvokedBy"/>. </summary>
@@ -644,7 +770,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
+            return new ActivityRun(
+                pipelineName,
+                pipelineRunId,
+                activityName,
+                activityType,
+                activityRunId,
+                linkedServiceName,
+                status,
+                activityRunStart,
+                activityRunEnd,
+                durationInMs,
+                input,
+                output,
+                error,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkJobDefinitionResource"/>. </summary>
@@ -686,7 +826,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkBatchJob(
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                scheduler,
+                plugin,
+                errors?.ToList(),
+                tags,
+                id,
+                appId,
+                appInfo,
+                state,
+                logLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
@@ -702,7 +860,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(
+                notStartedAt,
+                startingAt,
+                runningAt,
+                deadAt,
+                successAt,
+                terminatedAt,
+                recoveringAt,
+                currentState,
+                jobCreationRequest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
@@ -730,7 +897,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             archives ??= new List<string>();
             configuration ??= new Dictionary<string, string>();
 
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+            return new SparkRequest(
+                name,
+                file,
+                className,
+                arguments?.ToList(),
+                jars?.ToList(),
+                pythonFiles?.ToList(),
+                files?.ToList(),
+                archives?.ToList(),
+                configuration,
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                executorCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
@@ -755,7 +936,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+            return new SparkServicePlugin(
+                preparationStartedAt,
+                resourceAcquisitionStartedAt,
+                submissionStartedAt,
+                monitoringStartedAt,
+                cleanupStartedAt,
+                currentState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
@@ -810,7 +997,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlPool(id, name, type, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, creationDate);
+            return new SqlPool(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                sku,
+                maxSizeBytes,
+                collation,
+                sourceDatabaseId,
+                recoverableDatabaseId,
+                provisioningState,
+                status,
+                restorePointInTime,
+                createMode,
+                creationDate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlScriptResource"/>. </summary>
@@ -893,7 +1095,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             triggeredPipelines ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new TriggerRun(triggerRunId, triggerName, triggerType, triggerRunTimestamp, status, message, properties, triggeredPipelines, additionalProperties);
+            return new TriggerRun(
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
+                properties,
+                triggeredPipelines,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Workspace"/>. </summary>
@@ -927,7 +1138,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             privateEndpointConnections ??= new List<PrivateEndpointConnection>();
             extraProperties ??= new Dictionary<string, object>();
 
-            return new Workspace(id, name, type, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkProfile, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewConfiguration, adlaResourceId);
+            return new Workspace(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                identity,
+                defaultDataLakeStorage,
+                sqlAdministratorLoginPassword,
+                managedResourceGroupName,
+                provisioningState,
+                sqlAdministratorLogin,
+                virtualNetworkProfile,
+                connectivityEndpoints,
+                managedVirtualNetwork,
+                privateEndpointConnections?.ToList(),
+                encryption,
+                workspaceUID,
+                extraProperties,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                adlaResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnection"/>. </summary>
@@ -940,7 +1173,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
         public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
+            return new PrivateEndpointConnection(
+                id,
+                name,
+                type,
+                privateEndpoint,
+                connectionState,
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpoint"/>. </summary>
@@ -1056,7 +1295,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new RerunTumblingWindowTrigger("RerunTumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+            return new RerunTumblingWindowTrigger(
+                "RerunTumblingWindowTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                parentTrigger,
+                requestedStartTime,
+                requestedEndTime,
+                rerunConcurrency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MultiplePipelineTrigger"/>. </summary>
@@ -1072,7 +1320,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new MultiplePipelineTrigger("MultiplePipelineTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
+            return new MultiplePipelineTrigger(
+                "MultiplePipelineTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduleTrigger"/>. </summary>
@@ -1089,7 +1343,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new ScheduleTrigger("ScheduleTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
+            return new ScheduleTrigger(
+                "ScheduleTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                recurrence);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobTrigger"/>. </summary>
@@ -1108,7 +1369,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new BlobTrigger("BlobTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
+            return new BlobTrigger(
+                "BlobTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                folderPath,
+                maxConcurrency,
+                linkedService);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobEventsTrigger"/>. </summary>
@@ -1130,7 +1400,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<BlobEventType>();
 
-            return new BlobEventsTrigger("BlobEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
+            return new BlobEventsTrigger(
+                "BlobEventsTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
+                events?.ToList(),
+                scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomEventsTrigger"/>. </summary>
@@ -1151,7 +1432,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<object>();
 
-            return new CustomEventsTrigger("CustomEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
+            return new CustomEventsTrigger(
+                "CustomEventsTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                subjectBeginsWith,
+                subjectEndsWith,
+                events?.ToList(),
+                scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TumblingWindowTrigger"/>. </summary>
@@ -1179,7 +1470,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<DependencyReference>();
 
-            return new TumblingWindowTrigger("TumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
+            return new TumblingWindowTrigger(
+                "TumblingWindowTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChainingTrigger"/>. </summary>
@@ -1197,7 +1502,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<PipelineReference>();
 
-            return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
+            return new ChainingTrigger(
+                "ChainingTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipeline,
+                dependsOn?.ToList(),
+                runDimension);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
@@ -1213,7 +1526,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
+            return new ManagedIntegrationRuntime(
+                type,
+                description,
+                additionalProperties,
+                state,
+                managedVirtualNetwork,
+                computeProperties,
+                ssisProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedVirtualNetworkReference"/>. </summary>

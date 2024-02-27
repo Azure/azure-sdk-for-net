@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmInstanceHybridIdentityMetadataData(id, name, type, systemData.Value, resourceUid.Value, publicKey.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VmInstanceHybridIdentityMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceUid.Value,
+                publicKey.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmInstanceHybridIdentityMetadataData>.Write(ModelReaderWriterOptions options)

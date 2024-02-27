@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlReferenceInputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, Optional.ToNullable(refreshType), Optional.ToNullable(refreshRate), fullSnapshotQuery.Value, deltaSnapshotQuery.Value, Optional.ToNullable(authenticationMode));
+            return new SqlReferenceInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                server.Value,
+                database.Value,
+                user.Value,
+                password.Value,
+                Optional.ToNullable(refreshType),
+                Optional.ToNullable(refreshRate),
+                fullSnapshotQuery.Value,
+                deltaSnapshotQuery.Value,
+                Optional.ToNullable(authenticationMode));
         }
 
         BinaryData IPersistableModel<SqlReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

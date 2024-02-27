@@ -296,7 +296,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, filters ?? new ChangeTrackingList<PacketCaptureFilter>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PacketCaptureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                target.Value,
+                scope.Value,
+                Optional.ToNullable(targetType),
+                Optional.ToNullable(bytesToCapturePerPacket),
+                Optional.ToNullable(totalBytesPerSession),
+                Optional.ToNullable(timeLimitInSeconds),
+                storageLocation.Value,
+                filters ?? new ChangeTrackingList<PacketCaptureFilter>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options)

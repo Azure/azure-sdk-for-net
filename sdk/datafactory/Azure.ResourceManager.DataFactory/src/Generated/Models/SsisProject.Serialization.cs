@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisProject(type, Optional.ToNullable(id), name.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(folderId), Optional.ToNullable(version), environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>(), parameters ?? new ChangeTrackingList<SsisParameterInfo>());
+            return new SsisProject(
+                type,
+                Optional.ToNullable(id),
+                name.Value,
+                description.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(folderId),
+                Optional.ToNullable(version),
+                environmentRefs ?? new ChangeTrackingList<SsisEnvironmentReference>(),
+                parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 
         BinaryData IPersistableModel<SsisProject>.Write(ModelReaderWriterOptions options)

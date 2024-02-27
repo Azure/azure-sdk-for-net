@@ -476,7 +476,35 @@ namespace Azure.ResourceManager.ServiceBus
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceBusQueueData(id, name, type, systemData.Value, countDetails.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(sizeInBytes), Optional.ToNullable(messageCount), Optional.ToNullable(lockDuration), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new ServiceBusQueueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                countDetails.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                Optional.ToNullable(accessedAt),
+                Optional.ToNullable(sizeInBytes),
+                Optional.ToNullable(messageCount),
+                Optional.ToNullable(lockDuration),
+                Optional.ToNullable(maxSizeInMegabytes),
+                Optional.ToNullable(maxMessageSizeInKilobytes),
+                Optional.ToNullable(requiresDuplicateDetection),
+                Optional.ToNullable(requiresSession),
+                Optional.ToNullable(defaultMessageTimeToLive),
+                Optional.ToNullable(deadLetteringOnMessageExpiration),
+                Optional.ToNullable(duplicateDetectionHistoryTimeWindow),
+                Optional.ToNullable(maxDeliveryCount),
+                Optional.ToNullable(status),
+                Optional.ToNullable(enableBatchedOperations),
+                Optional.ToNullable(autoDeleteOnIdle),
+                Optional.ToNullable(enablePartitioning),
+                Optional.ToNullable(enableExpress),
+                forwardTo.Value,
+                forwardDeadLetteredMessagesTo.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceBusQueueData>.Write(ModelReaderWriterOptions options)

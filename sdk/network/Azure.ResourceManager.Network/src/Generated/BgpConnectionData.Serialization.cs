@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peerAsn), peerIP.Value, hubVirtualNetworkConnection, Optional.ToNullable(provisioningState), Optional.ToNullable(connectionState));
+            return new BgpConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(peerAsn),
+                peerIP.Value,
+                hubVirtualNetworkConnection,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(connectionState));
         }
 
         BinaryData IPersistableModel<BgpConnectionData>.Write(ModelReaderWriterOptions options)

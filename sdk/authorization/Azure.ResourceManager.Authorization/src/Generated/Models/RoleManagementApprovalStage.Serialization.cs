@@ -184,7 +184,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementApprovalStage(Optional.ToNullable(approvalStageTimeOutInDays), Optional.ToNullable(isApproverJustificationRequired), Optional.ToNullable(escalationTimeInMinutes), primaryApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(), Optional.ToNullable(isEscalationEnabled), escalationApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(), serializedAdditionalRawData);
+            return new RoleManagementApprovalStage(
+                Optional.ToNullable(approvalStageTimeOutInDays),
+                Optional.ToNullable(isApproverJustificationRequired),
+                Optional.ToNullable(escalationTimeInMinutes),
+                primaryApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
+                Optional.ToNullable(isEscalationEnabled),
+                escalationApprovers ?? new ChangeTrackingList<RoleManagementUserInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleManagementApprovalStage>.Write(ModelReaderWriterOptions options)

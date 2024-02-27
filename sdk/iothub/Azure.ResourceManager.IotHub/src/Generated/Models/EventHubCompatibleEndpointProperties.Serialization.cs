@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), partitionIds ?? new ChangeTrackingList<string>(), path.Value, endpoint.Value, serializedAdditionalRawData);
+            return new EventHubCompatibleEndpointProperties(
+                Optional.ToNullable(retentionTimeInDays),
+                Optional.ToNullable(partitionCount),
+                partitionIds ?? new ChangeTrackingList<string>(),
+                path.Value,
+                endpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubCompatibleEndpointProperties>.Write(ModelReaderWriterOptions options)

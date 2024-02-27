@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppOpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppOpenIdConnectConfig(
+                authorizationEndpoint.Value,
+                tokenEndpoint.Value,
+                issuer.Value,
+                certificationUri.Value,
+                wellKnownOpenIdConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppOpenIdConnectConfig>.Write(ModelReaderWriterOptions options)

@@ -206,7 +206,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VCenterInventoryItemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                inventoryType,
+                managedResourceId.Value,
+                moRefId.Value,
+                moName.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options)

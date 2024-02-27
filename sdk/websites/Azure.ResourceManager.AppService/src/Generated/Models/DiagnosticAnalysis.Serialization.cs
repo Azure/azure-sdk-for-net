@@ -254,7 +254,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticAnalysis(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(), payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(), nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(), kind.Value, serializedAdditionalRawData);
+            return new DiagnosticAnalysis(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
+                payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
+                nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticAnalysis>.Write(ModelReaderWriterOptions options)

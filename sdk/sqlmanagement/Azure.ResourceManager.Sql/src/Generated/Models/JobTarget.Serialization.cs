@@ -152,7 +152,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobTarget(Optional.ToNullable(membershipType), type, serverName.Value, databaseName.Value, elasticPoolName.Value, shardMapName.Value, refreshCredential.Value, serializedAdditionalRawData);
+            return new JobTarget(
+                Optional.ToNullable(membershipType),
+                type,
+                serverName.Value,
+                databaseName.Value,
+                elasticPoolName.Value,
+                shardMapName.Value,
+                refreshCredential.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobTarget>.Write(ModelReaderWriterOptions options)

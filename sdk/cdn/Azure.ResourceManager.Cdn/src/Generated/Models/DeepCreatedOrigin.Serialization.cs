@@ -305,7 +305,21 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeepCreatedOrigin(name, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), Optional.ToNullable(enabled), privateLinkAlias.Value, privateLinkResourceId.Value, privateLinkLocation.Value, privateLinkApprovalMessage.Value, Optional.ToNullable(privateEndpointStatus), serializedAdditionalRawData);
+            return new DeepCreatedOrigin(
+                name,
+                hostName.Value,
+                Optional.ToNullable(httpPort),
+                Optional.ToNullable(httpsPort),
+                originHostHeader.Value,
+                Optional.ToNullable(priority),
+                Optional.ToNullable(weight),
+                Optional.ToNullable(enabled),
+                privateLinkAlias.Value,
+                privateLinkResourceId.Value,
+                privateLinkLocation.Value,
+                privateLinkApprovalMessage.Value,
+                Optional.ToNullable(privateEndpointStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeepCreatedOrigin>.Write(ModelReaderWriterOptions options)

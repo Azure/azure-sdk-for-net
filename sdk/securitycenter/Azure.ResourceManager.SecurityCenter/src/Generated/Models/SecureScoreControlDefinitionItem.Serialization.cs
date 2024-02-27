@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, assessmentDefinitions ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new SecureScoreControlDefinitionItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(maxScore),
+                source.Value,
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionItem>.Write(ModelReaderWriterOptions options)

@@ -311,7 +311,23 @@ namespace Azure.ResourceManager.Automation
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), uri.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(lastInvokedTime), parameters ?? new ChangeTrackingDictionary<string, string>(), runbook.Value, runOn.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, description.Value, serializedAdditionalRawData);
+            return new AutomationWebhookData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                uri.Value,
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(lastInvokedTime),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                runbook.Value,
+                runOn.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                lastModifiedBy.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookData>.Write(ModelReaderWriterOptions options)

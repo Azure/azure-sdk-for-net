@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubConfiguration(id.Value, subscriptionId.Value, name.Value, nameSpace.Value, policyName.Value, serializedAdditionalRawData);
+            return new EventHubConfiguration(
+                id.Value,
+                subscriptionId.Value,
+                name.Value,
+                nameSpace.Value,
+                policyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubConfiguration>.Write(ModelReaderWriterOptions options)

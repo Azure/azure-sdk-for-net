@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPatch(tags ?? new ChangeTrackingList<string>(), serializedAdditionalRawData, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value);
+            return new LabPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                autoShutdownProfile.Value,
+                connectionProfile.Value,
+                virtualMachineProfile.Value,
+                securityProfile.Value,
+                rosterProfile.Value,
+                labPlanId.Value,
+                title.Value,
+                description.Value);
         }
 
         BinaryData IPersistableModel<LabPatch>.Write(ModelReaderWriterOptions options)

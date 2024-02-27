@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(version), schedule.Value, serializedAdditionalRawData);
+            return new SqlServerJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(version),
+                schedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobData>.Write(ModelReaderWriterOptions options)

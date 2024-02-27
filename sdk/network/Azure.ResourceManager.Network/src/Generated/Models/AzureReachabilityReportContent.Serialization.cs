@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportContent(providerLocation, providers ?? new ChangeTrackingList<string>(), azureLocations ?? new ChangeTrackingList<AzureLocation>(), startTime, endTime, serializedAdditionalRawData);
+            return new AzureReachabilityReportContent(
+                providerLocation,
+                providers ?? new ChangeTrackingList<string>(),
+                azureLocations ?? new ChangeTrackingList<AzureLocation>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportContent>.Write(ModelReaderWriterOptions options)

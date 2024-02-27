@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchResult(solutionId.Value, content.Value, title.Value, Optional.ToNullable(confidence), source.Value, Optional.ToNullable(resultType), Optional.ToNullable(rank), link.Value, serializedAdditionalRawData);
+            return new SearchResult(
+                solutionId.Value,
+                content.Value,
+                title.Value,
+                Optional.ToNullable(confidence),
+                source.Value,
+                Optional.ToNullable(resultType),
+                Optional.ToNullable(rank),
+                link.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchResult>.Write(ModelReaderWriterOptions options)

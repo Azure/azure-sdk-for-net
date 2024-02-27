@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplacementMaps(webResults ?? new ChangeTrackingList<WebResult>(), diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>(), troubleshooters ?? new ChangeTrackingList<SolutionsTroubleshooters>(), metricsBasedCharts ?? new ChangeTrackingList<MetricsBasedChart>(), videos ?? new ChangeTrackingList<SelfHelpVideo>(), videoGroups ?? new ChangeTrackingList<VideoGroup>(), serializedAdditionalRawData);
+            return new ReplacementMaps(
+                webResults ?? new ChangeTrackingList<WebResult>(),
+                diagnostics ?? new ChangeTrackingList<SolutionsDiagnostic>(),
+                troubleshooters ?? new ChangeTrackingList<SolutionsTroubleshooters>(),
+                metricsBasedCharts ?? new ChangeTrackingList<MetricsBasedChart>(),
+                videos ?? new ChangeTrackingList<SelfHelpVideo>(),
+                videoGroups ?? new ChangeTrackingList<VideoGroup>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplacementMaps>.Write(ModelReaderWriterOptions options)
