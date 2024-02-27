@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DaysPerMonth))
+            if (DaysPerMonth.HasValue)
             {
                 writer.WritePropertyName("daysPerMonth"u8);
                 writer.WriteNumberValue(DaysPerMonth.Value);
             }
-            if (Optional.IsDefined(HoursPerDay))
+            if (HoursPerDay.HasValue)
             {
                 writer.WritePropertyName("hoursPerDay"u8);
                 writer.WriteNumberValue(HoursPerDay.Value);

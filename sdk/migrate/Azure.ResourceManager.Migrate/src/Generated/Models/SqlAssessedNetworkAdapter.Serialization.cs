@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Suitability))
+            if (Suitability.HasValue)
             {
                 writer.WritePropertyName("suitability"u8);
                 writer.WriteStringValue(Suitability.Value.ToString());
             }
-            if (Optional.IsDefined(SuitabilityDetail))
+            if (SuitabilityDetail.HasValue)
             {
                 writer.WritePropertyName("suitabilityDetail"u8);
                 writer.WriteStringValue(SuitabilityDetail.Value.ToString());
             }
-            if (Optional.IsDefined(SuitabilityExplanation))
+            if (SuitabilityExplanation.HasValue)
             {
                 writer.WritePropertyName("suitabilityExplanation"u8);
                 writer.WriteStringValue(SuitabilityExplanation.Value.ToString());
             }
-            if (Optional.IsDefined(MonthlyBandwidthCosts))
+            if (MonthlyBandwidthCosts.HasValue)
             {
                 writer.WritePropertyName("monthlyBandwidthCosts"u8);
                 writer.WriteNumberValue(MonthlyBandwidthCosts.Value);
             }
-            if (Optional.IsDefined(NetGigabytesTransmittedPerMonth))
+            if (NetGigabytesTransmittedPerMonth.HasValue)
             {
                 writer.WritePropertyName("netGigabytesTransmittedPerMonth"u8);
                 writer.WriteNumberValue(NetGigabytesTransmittedPerMonth.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(MacAddress))
+            if (MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MegabytesPerSecondReceived))
+            if (MegabytesPerSecondReceived.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondReceived"u8);
                 writer.WriteNumberValue(MegabytesPerSecondReceived.Value);
             }
-            if (Optional.IsDefined(MegabytesPerSecondTransmitted))
+            if (MegabytesPerSecondTransmitted.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondTransmitted"u8);
                 writer.WriteNumberValue(MegabytesPerSecondTransmitted.Value);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Migrate.Models
             Optional<string> name = default;
             Optional<string> displayName = default;
             Optional<string> macAddress = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            IReadOnlyList<string> ipAddresses = default;
             Optional<double> megabytesPerSecondReceived = default;
             Optional<double> megabytesPerSecondTransmitted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -237,7 +237,19 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAssessedNetworkAdapter(Optional.ToNullable(suitability), Optional.ToNullable(suitabilityDetail), Optional.ToNullable(suitabilityExplanation), Optional.ToNullable(monthlyBandwidthCosts), Optional.ToNullable(netGigabytesTransmittedPerMonth), name.Value, displayName.Value, macAddress.Value, Optional.ToList(ipAddresses), Optional.ToNullable(megabytesPerSecondReceived), Optional.ToNullable(megabytesPerSecondTransmitted), serializedAdditionalRawData);
+            return new SqlAssessedNetworkAdapter(
+                Optional.ToNullable(suitability),
+                Optional.ToNullable(suitabilityDetail),
+                Optional.ToNullable(suitabilityExplanation),
+                Optional.ToNullable(monthlyBandwidthCosts),
+                Optional.ToNullable(netGigabytesTransmittedPerMonth),
+                name.Value,
+                displayName.Value,
+                macAddress.Value,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(megabytesPerSecondReceived),
+                Optional.ToNullable(megabytesPerSecondTransmitted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAssessedNetworkAdapter>.Write(ModelReaderWriterOptions options)

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Migrate.Models
 {
@@ -49,11 +48,8 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <summary> Initializes a new instance of <see cref="AssessmentReportDownloadUri"/>. </summary>
         /// <param name="assessmentReportUri"> Hyperlink to download report. </param>
         /// <param name="expireOn"> Expiry date of download url. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessmentReportUri"/> is null. </exception>
         internal AssessmentReportDownloadUri(Uri assessmentReportUri, DateTimeOffset expireOn)
         {
-            Argument.AssertNotNull(assessmentReportUri, nameof(assessmentReportUri));
-
             AssessmentReportUri = assessmentReportUri;
             ExpireOn = expireOn;
         }

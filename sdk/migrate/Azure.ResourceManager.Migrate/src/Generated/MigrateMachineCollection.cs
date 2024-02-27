@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<Response<MigrateMachineResource>> GetAsync(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual Response<MigrateMachineResource> Get(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.Get");
             scope.Start();
@@ -238,7 +252,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.Exists");
             scope.Start();
@@ -281,7 +302,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual Response<bool> Exists(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.Exists");
             scope.Start();
@@ -324,7 +352,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateMachineResource>> GetIfExistsAsync(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.GetIfExists");
             scope.Start();
@@ -369,7 +404,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         public virtual NullableResponse<MigrateMachineResource> GetIfExists(string machineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
+            if (machineName == null)
+            {
+                throw new ArgumentNullException(nameof(machineName));
+            }
+            if (machineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(machineName));
+            }
 
             using var scope = _migrateMachineMachinesOperationsClientDiagnostics.CreateScope("MigrateMachineCollection.GetIfExists");
             scope.Start();

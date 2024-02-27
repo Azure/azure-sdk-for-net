@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(IsMultiSubnet))
+            if (IsMultiSubnet.HasValue)
             {
                 writer.WritePropertyName("isMultiSubnet"u8);
                 writer.WriteBooleanValue(IsMultiSubnet.Value);
             }
-            if (Optional.IsDefined(FciSharedDiskCount))
+            if (FciSharedDiskCount.HasValue)
             {
                 writer.WritePropertyName("fciSharedDiskCount"u8);
                 writer.WriteNumberValue(FciSharedDiskCount.Value);

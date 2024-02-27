@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ObjectName))
+            if (options.Format != "W" && ObjectName != null)
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectType))
+            if (options.Format != "W" && ObjectType != null)
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);

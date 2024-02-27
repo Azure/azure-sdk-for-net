@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FamilyName))
+            if (options.Format != "W" && FamilyName != null)
             {
                 writer.WritePropertyName("familyName"u8);
                 writer.WriteStringValue(FamilyName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TargetLocations))
+            if (options.Format != "W" && !(TargetLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetLocations"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Category))
+            if (options.Format != "W" && !(Category is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             Optional<string> familyName = default;
-            Optional<IReadOnlyList<string>> targetLocations = default;
-            Optional<IReadOnlyList<string>> category = default;
+            IReadOnlyList<string> targetLocations = default;
+            IReadOnlyList<string> category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmFamilyConfig(familyName.Value, Optional.ToList(targetLocations), Optional.ToList(category), serializedAdditionalRawData);
+            return new VmFamilyConfig(familyName.Value, targetLocations ?? new ChangeTrackingList<string>(), category ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmFamilyConfig>.Write(ModelReaderWriterOptions options)

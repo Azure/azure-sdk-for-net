@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputeTier))
+            if (ComputeTier.HasValue)
             {
                 writer.WritePropertyName("computeTier"u8);
                 writer.WriteStringValue(ComputeTier.Value.ToString());
             }
-            if (Optional.IsDefined(HardwareGeneration))
+            if (HardwareGeneration.HasValue)
             {
                 writer.WritePropertyName("hardwareGeneration"u8);
                 writer.WriteStringValue(HardwareGeneration.Value.ToString());
             }
-            if (Optional.IsDefined(TargetType))
+            if (TargetType.HasValue)
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToString());
             }
-            if (Optional.IsDefined(ServiceTier))
+            if (ServiceTier.HasValue)
             {
                 writer.WritePropertyName("serviceTier"u8);
                 writer.WriteStringValue(ServiceTier.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetLocations))
+            if (!(TargetLocations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetLocations"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Migrate.Models
             Optional<MigrateHardwareGeneration> hardwareGeneration = default;
             Optional<MigrateTargetType> targetType = default;
             Optional<AzureSqlServiceTier> serviceTier = default;
-            Optional<IList<AzureLocation>> targetLocations = default;
+            IList<AzureLocation> targetLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlPaaSTargetConfig(Optional.ToNullable(computeTier), Optional.ToNullable(hardwareGeneration), Optional.ToNullable(targetType), Optional.ToNullable(serviceTier), Optional.ToList(targetLocations), serializedAdditionalRawData);
+            return new SqlPaaSTargetConfig(
+                Optional.ToNullable(computeTier),
+                Optional.ToNullable(hardwareGeneration),
+                Optional.ToNullable(targetType),
+                Optional.ToNullable(serviceTier),
+                targetLocations ?? new ChangeTrackingList<AzureLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlPaaSTargetConfig>.Write(ModelReaderWriterOptions options)

@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorSummaryAffectedEntities))
+            if (options.Format != "W" && !(ErrorSummaryAffectedEntities is ChangeTrackingList<AssessmentErrorSummary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errorSummaryAffectedEntities"u8);
                 writer.WriteStartArray();
@@ -60,32 +60,32 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfPrivateEndpointConnections))
+            if (options.Format != "W" && NumberOfPrivateEndpointConnections.HasValue)
             {
                 writer.WritePropertyName("numberOfPrivateEndpointConnections"u8);
                 writer.WriteNumberValue(NumberOfPrivateEndpointConnections.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfGroups))
+            if (options.Format != "W" && NumberOfGroups.HasValue)
             {
                 writer.WritePropertyName("numberOfGroups"u8);
                 writer.WriteNumberValue(NumberOfGroups.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfMachines))
+            if (options.Format != "W" && NumberOfMachines.HasValue)
             {
                 writer.WritePropertyName("numberOfMachines"u8);
                 writer.WriteNumberValue(NumberOfMachines.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfImportMachines))
+            if (options.Format != "W" && NumberOfImportMachines.HasValue)
             {
                 writer.WritePropertyName("numberOfImportMachines"u8);
                 writer.WriteNumberValue(NumberOfImportMachines.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfAssessments))
+            if (options.Format != "W" && NumberOfAssessments.HasValue)
             {
                 writer.WritePropertyName("numberOfAssessments"u8);
                 writer.WriteNumberValue(NumberOfAssessments.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastAssessedOn))
+            if (options.Format != "W" && LastAssessedOn.HasValue)
             {
                 writer.WritePropertyName("lastAssessmentTimestamp"u8);
                 writer.WriteStringValue(LastAssessedOn.Value, "O");
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Migrate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AssessmentErrorSummary>> errorSummaryAffectedEntities = default;
+            IReadOnlyList<AssessmentErrorSummary> errorSummaryAffectedEntities = default;
             Optional<int> numberOfPrivateEndpointConnections = default;
             Optional<int> numberOfGroups = default;
             Optional<int> numberOfMachines = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Migrate
                             List<AssessmentErrorSummary> array = new List<AssessmentErrorSummary>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssessmentErrorSummary.DeserializeAssessmentErrorSummary(item));
+                                array.Add(AssessmentErrorSummary.DeserializeAssessmentErrorSummary(item, options));
                             }
                             errorSummaryAffectedEntities = array;
                             continue;
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateAssessmentProjectSummaryData(id, name, type, systemData.Value, Optional.ToList(errorSummaryAffectedEntities), Optional.ToNullable(numberOfPrivateEndpointConnections), Optional.ToNullable(numberOfGroups), Optional.ToNullable(numberOfMachines), Optional.ToNullable(numberOfImportMachines), Optional.ToNullable(numberOfAssessments), Optional.ToNullable(lastAssessmentTimestamp), serializedAdditionalRawData);
+            return new MigrateAssessmentProjectSummaryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                errorSummaryAffectedEntities ?? new ChangeTrackingList<AssessmentErrorSummary>(),
+                Optional.ToNullable(numberOfPrivateEndpointConnections),
+                Optional.ToNullable(numberOfGroups),
+                Optional.ToNullable(numberOfMachines),
+                Optional.ToNullable(numberOfImportMachines),
+                Optional.ToNullable(numberOfAssessments),
+                Optional.ToNullable(lastAssessmentTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateAssessmentProjectSummaryData>.Write(ModelReaderWriterOptions options)

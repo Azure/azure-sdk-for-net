@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WorkloadSummary))
+            if (options.Format != "W" && WorkloadSummary != null)
             {
                 writer.WritePropertyName("workloadSummary"u8);
                 writer.WriteObjectValue(WorkloadSummary);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<MigrateError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -65,77 +65,77 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(HostProcessor))
+            if (options.Format != "W" && HostProcessor != null)
             {
                 writer.WritePropertyName("hostProcessor"u8);
                 writer.WriteObjectValue(HostProcessor);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
+            if (options.Format != "W" && ProductSupportStatus != null)
             {
                 writer.WritePropertyName("productSupportStatus"u8);
                 writer.WriteObjectValue(ProductSupportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiscoveryMachineArmId))
+            if (options.Format != "W" && DiscoveryMachineArmId != null)
             {
                 writer.WritePropertyName("discoveryMachineArmId"u8);
                 writer.WriteStringValue(DiscoveryMachineArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatacenterManagementServerArmId))
+            if (options.Format != "W" && DatacenterManagementServerArmId != null)
             {
                 writer.WritePropertyName("datacenterManagementServerArmId"u8);
                 writer.WriteStringValue(DatacenterManagementServerArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatacenterManagementServerName))
+            if (options.Format != "W" && DatacenterManagementServerName != null)
             {
                 writer.WritePropertyName("datacenterManagementServerName"u8);
                 writer.WriteStringValue(DatacenterManagementServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BootType))
+            if (options.Format != "W" && BootType.HasValue)
             {
                 writer.WritePropertyName("bootType"u8);
                 writer.WriteStringValue(BootType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MegabytesOfMemory))
+            if (options.Format != "W" && MegabytesOfMemory.HasValue)
             {
                 writer.WritePropertyName("megabytesOfMemory"u8);
                 writer.WriteNumberValue(MegabytesOfMemory.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfCores))
+            if (options.Format != "W" && NumberOfCores.HasValue)
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystemType))
+            if (options.Format != "W" && OperatingSystemType != null)
             {
                 writer.WritePropertyName("operatingSystemType"u8);
                 writer.WriteStringValue(OperatingSystemType);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystemName))
+            if (options.Format != "W" && OperatingSystemName != null)
             {
                 writer.WritePropertyName("operatingSystemName"u8);
                 writer.WriteStringValue(OperatingSystemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystemVersion))
+            if (options.Format != "W" && OperatingSystemVersion != null)
             {
                 writer.WritePropertyName("operatingSystemVersion"u8);
                 writer.WriteStringValue(OperatingSystemVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Disks))
+            if (options.Format != "W" && !(Disks is ChangeTrackingDictionary<string, MigrateDisk> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartObject();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            if (options.Format != "W" && !(Groups is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkAdapters))
+            if (options.Format != "W" && !(NetworkAdapters is ChangeTrackingDictionary<string, MigrateNetworkAdapter> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("networkAdapters"u8);
                 writer.WriteStartObject();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SqlInstances))
+            if (options.Format != "W" && !(SqlInstances is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("sqlInstances"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(WebApplications))
+            if (options.Format != "W" && !(WebApplications is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("webApplications"u8);
                 writer.WriteStartArray();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Migrate
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<WorkloadSummary> workloadSummary = default;
-            Optional<IReadOnlyList<MigrateError>> errors = default;
+            IReadOnlyList<MigrateError> errors = default;
             Optional<ProcessorInfo> hostProcessor = default;
             Optional<ProductSupportStatus> productSupportStatus = default;
             Optional<ResourceIdentifier> discoveryMachineArmId = default;
@@ -251,11 +251,11 @@ namespace Azure.ResourceManager.Migrate
             Optional<string> operatingSystemVersion = default;
             Optional<string> description = default;
             Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<IReadOnlyDictionary<string, MigrateDisk>> disks = default;
-            Optional<IReadOnlyList<string>> groups = default;
-            Optional<IReadOnlyDictionary<string, MigrateNetworkAdapter>> networkAdapters = default;
-            Optional<IReadOnlyList<string>> sqlInstances = default;
-            Optional<IReadOnlyList<string>> webApplications = default;
+            IReadOnlyDictionary<string, MigrateDisk> disks = default;
+            IReadOnlyList<string> groups = default;
+            IReadOnlyDictionary<string, MigrateNetworkAdapter> networkAdapters = default;
+            IReadOnlyList<string> sqlInstances = default;
+            IReadOnlyList<string> webApplications = default;
             Optional<DateTimeOffset> updatedTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            workloadSummary = WorkloadSummary.DeserializeWorkloadSummary(property0.Value);
+                            workloadSummary = WorkloadSummary.DeserializeWorkloadSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("errors"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Migrate
                             List<MigrateError> array = new List<MigrateError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MigrateError.DeserializeMigrateError(item));
+                                array.Add(MigrateError.DeserializeMigrateError(item, options));
                             }
                             errors = array;
                             continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            hostProcessor = ProcessorInfo.DeserializeProcessorInfo(property0.Value);
+                            hostProcessor = ProcessorInfo.DeserializeProcessorInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("productSupportStatus"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value);
+                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("discoveryMachineArmId"u8))
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Migrate
                             Dictionary<string, MigrateDisk> dictionary = new Dictionary<string, MigrateDisk>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, MigrateDisk.DeserializeMigrateDisk(property1.Value));
+                                dictionary.Add(property1.Name, MigrateDisk.DeserializeMigrateDisk(property1.Value, options));
                             }
                             disks = dictionary;
                             continue;
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Migrate
                             Dictionary<string, MigrateNetworkAdapter> dictionary = new Dictionary<string, MigrateNetworkAdapter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, MigrateNetworkAdapter.DeserializeMigrateNetworkAdapter(property1.Value));
+                                dictionary.Add(property1.Name, MigrateNetworkAdapter.DeserializeMigrateNetworkAdapter(property1.Value, options));
                             }
                             networkAdapters = dictionary;
                             continue;
@@ -507,7 +507,34 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateMachineData(id, name, type, systemData.Value, workloadSummary.Value, Optional.ToList(errors), hostProcessor.Value, productSupportStatus.Value, discoveryMachineArmId.Value, datacenterManagementServerArmId.Value, datacenterManagementServerName.Value, Optional.ToNullable(bootType), displayName.Value, Optional.ToNullable(megabytesOfMemory), Optional.ToNullable(numberOfCores), operatingSystemType.Value, operatingSystemName.Value, operatingSystemVersion.Value, description.Value, Optional.ToNullable(createdTimestamp), Optional.ToDictionary(disks), Optional.ToList(groups), Optional.ToDictionary(networkAdapters), Optional.ToList(sqlInstances), Optional.ToList(webApplications), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new MigrateMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                workloadSummary.Value,
+                errors ?? new ChangeTrackingList<MigrateError>(),
+                hostProcessor.Value,
+                productSupportStatus.Value,
+                discoveryMachineArmId.Value,
+                datacenterManagementServerArmId.Value,
+                datacenterManagementServerName.Value,
+                Optional.ToNullable(bootType),
+                displayName.Value,
+                Optional.ToNullable(megabytesOfMemory),
+                Optional.ToNullable(numberOfCores),
+                operatingSystemType.Value,
+                operatingSystemName.Value,
+                operatingSystemVersion.Value,
+                description.Value,
+                Optional.ToNullable(createdTimestamp),
+                disks ?? new ChangeTrackingDictionary<string, MigrateDisk>(),
+                groups ?? new ChangeTrackingList<string>(),
+                networkAdapters ?? new ChangeTrackingDictionary<string, MigrateNetworkAdapter>(),
+                sqlInstances ?? new ChangeTrackingList<string>(),
+                webApplications ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(updatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateMachineData>.Write(ModelReaderWriterOptions options)

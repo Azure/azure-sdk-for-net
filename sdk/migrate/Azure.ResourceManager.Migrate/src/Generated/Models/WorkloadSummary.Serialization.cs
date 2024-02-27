@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OracleInstances))
+            if (OracleInstances.HasValue)
             {
                 writer.WritePropertyName("oracleInstances"u8);
                 writer.WriteNumberValue(OracleInstances.Value);
             }
-            if (Optional.IsDefined(SpringApps))
+            if (SpringApps.HasValue)
             {
                 writer.WritePropertyName("springApps"u8);
                 writer.WriteNumberValue(SpringApps.Value);

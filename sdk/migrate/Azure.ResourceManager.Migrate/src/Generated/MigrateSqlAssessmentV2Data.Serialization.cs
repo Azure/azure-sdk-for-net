@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Migrate
 {
-    public partial class MigrateAssessmentData : IUtf8JsonSerializable, IJsonModel<MigrateAssessmentData>
+    public partial class MigrateSqlAssessmentV2Data : IUtf8JsonSerializable, IJsonModel<MigrateSqlAssessmentV2Data>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlAssessmentV2Data>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MigrateAssessmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigrateSqlAssessmentV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlAssessmentV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlAssessmentV2Data)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,259 +43,199 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentErrorSummary))
+            if (OSLicense.HasValue)
             {
-                writer.WritePropertyName("assessmentErrorSummary"u8);
-                writer.WriteStartObject();
-                foreach (var item in AssessmentErrorSummary)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("osLicense"u8);
+                writer.WriteStringValue(OSLicense.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyUltraStorageCost))
+            if (EnvironmentType.HasValue)
             {
-                writer.WritePropertyName("monthlyUltraStorageCost"u8);
-                writer.WriteNumberValue(MonthlyUltraStorageCost.Value);
+                writer.WritePropertyName("environmentType"u8);
+                writer.WriteStringValue(EnvironmentType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CostComponents))
+            if (EntityUptime != null)
             {
-                writer.WritePropertyName("costComponents"u8);
-                writer.WriteStartArray();
-                foreach (var item in CostComponents)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("entityUptime"u8);
+                writer.WriteObjectValue(EntityUptime);
             }
-            if (Optional.IsDefined(EASubscriptionId))
+            if (OptimizationLogic.HasValue)
+            {
+                writer.WritePropertyName("optimizationLogic"u8);
+                writer.WriteStringValue(OptimizationLogic.Value.ToString());
+            }
+            if (ReservedInstanceForVm.HasValue)
+            {
+                writer.WritePropertyName("reservedInstanceForVm"u8);
+                writer.WriteStringValue(ReservedInstanceForVm.Value.ToString());
+            }
+            if (AzureOfferCodeForVm.HasValue)
+            {
+                writer.WritePropertyName("azureOfferCodeForVm"u8);
+                writer.WriteStringValue(AzureOfferCodeForVm.Value.ToString());
+            }
+            if (EASubscriptionId != null)
             {
                 writer.WritePropertyName("eaSubscriptionId"u8);
                 writer.WriteStringValue(EASubscriptionId);
             }
-            if (Optional.IsDefined(AzurePricingTier))
+            if (AzureSqlManagedInstanceSettings != null)
             {
-                writer.WritePropertyName("azurePricingTier"u8);
-                writer.WriteStringValue(AzurePricingTier.Value.ToString());
+                writer.WritePropertyName("azureSqlManagedInstanceSettings"u8);
+                writer.WriteObjectValue(AzureSqlManagedInstanceSettings);
             }
-            if (Optional.IsDefined(AzureStorageRedundancy))
+            if (AzureSqlDatabaseSettings != null)
             {
-                writer.WritePropertyName("azureStorageRedundancy"u8);
-                writer.WriteStringValue(AzureStorageRedundancy.Value.ToString());
+                writer.WritePropertyName("azureSqlDatabaseSettings"u8);
+                writer.WriteObjectValue(AzureSqlDatabaseSettings);
             }
-            if (Optional.IsDefined(ReservedInstance))
+            if (AzureSqlVmSettings != null)
+            {
+                writer.WritePropertyName("azureSqlVmSettings"u8);
+                writer.WriteObjectValue(AzureSqlVmSettings);
+            }
+            if (MultiSubnetIntent.HasValue)
+            {
+                writer.WritePropertyName("multiSubnetIntent"u8);
+                writer.WriteStringValue(MultiSubnetIntent.Value.ToString());
+            }
+            if (AsyncCommitModeIntent.HasValue)
+            {
+                writer.WritePropertyName("asyncCommitModeIntent"u8);
+                writer.WriteStringValue(AsyncCommitModeIntent.Value.ToString());
+            }
+            if (IsInternetAccessAvailable.HasValue)
+            {
+                writer.WritePropertyName("isInternetAccessAvailable"u8);
+                writer.WriteBooleanValue(IsInternetAccessAvailable.Value);
+            }
+            if (DisasterRecoveryLocation.HasValue)
+            {
+                writer.WritePropertyName("disasterRecoveryLocation"u8);
+                writer.WriteStringValue(DisasterRecoveryLocation.Value);
+            }
+            if (EnableHadrAssessment.HasValue)
+            {
+                writer.WritePropertyName("enableHadrAssessment"u8);
+                writer.WriteBooleanValue(EnableHadrAssessment.Value);
+            }
+            if (AzureSecurityOfferingType.HasValue)
+            {
+                writer.WritePropertyName("azureSecurityOfferingType"u8);
+                writer.WriteStringValue(AzureSecurityOfferingType.Value.ToString());
+            }
+            if (ReservedInstance.HasValue)
             {
                 writer.WritePropertyName("reservedInstance"u8);
                 writer.WriteStringValue(ReservedInstance.Value.ToString());
             }
-            if (Optional.IsDefined(AzureHybridUseBenefit))
+            if (SqlServerLicense.HasValue)
             {
-                writer.WritePropertyName("azureHybridUseBenefit"u8);
-                writer.WriteStringValue(AzureHybridUseBenefit.Value.ToString());
+                writer.WritePropertyName("sqlServerLicense"u8);
+                writer.WriteStringValue(SqlServerLicense.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AzureDiskTypes))
-            {
-                writer.WritePropertyName("azureDiskTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in AzureDiskTypes)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(AzureVmFamilies))
-            {
-                writer.WritePropertyName("azureVmFamilies"u8);
-                writer.WriteStartArray();
-                foreach (var item in AzureVmFamilies)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionBySupportStatus))
-            {
-                writer.WritePropertyName("distributionBySupportStatus"u8);
-                writer.WriteStartObject();
-                foreach (var item in DistributionBySupportStatus)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionByServicePackInsight))
-            {
-                writer.WritePropertyName("distributionByServicePackInsight"u8);
-                writer.WriteStartObject();
-                foreach (var item in DistributionByServicePackInsight)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionByOSName))
-            {
-                writer.WritePropertyName("distributionByOsName"u8);
-                writer.WriteStartObject();
-                foreach (var item in DistributionByOSName)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyComputeCost))
-            {
-                writer.WritePropertyName("monthlyComputeCost"u8);
-                writer.WriteNumberValue(MonthlyComputeCost.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyBandwidthCost))
-            {
-                writer.WritePropertyName("monthlyBandwidthCost"u8);
-                writer.WriteNumberValue(MonthlyBandwidthCost.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyStorageCost))
-            {
-                writer.WritePropertyName("monthlyStorageCost"u8);
-                writer.WriteNumberValue(MonthlyStorageCost.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyPremiumStorageCost))
-            {
-                writer.WritePropertyName("monthlyPremiumStorageCost"u8);
-                writer.WriteNumberValue(MonthlyPremiumStorageCost.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyStandardSsdStorageCost))
-            {
-                writer.WritePropertyName("monthlyStandardSsdStorageCost"u8);
-                writer.WriteNumberValue(MonthlyStandardSsdStorageCost.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuitabilitySummary))
-            {
-                writer.WritePropertyName("suitabilitySummary"u8);
-                writer.WriteStartObject();
-                foreach (var item in SuitabilitySummary)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfMachines))
-            {
-                writer.WritePropertyName("numberOfMachines"u8);
-                writer.WriteNumberValue(NumberOfMachines.Value);
-            }
-            if (Optional.IsDefined(VmUptime))
-            {
-                writer.WritePropertyName("vmUptime"u8);
-                writer.WriteObjectValue(VmUptime);
-            }
-            if (options.Format != "W" && Optional.IsDefined(GroupType))
+            if (GroupType.HasValue)
             {
                 writer.WritePropertyName("groupType"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AssessmentType))
+            if (AssessmentType.HasValue)
             {
                 writer.WritePropertyName("assessmentType"u8);
                 writer.WriteStringValue(AssessmentType.Value.ToString());
             }
-            if (Optional.IsDefined(AzureLocation))
+            if (AzureLocation.HasValue)
             {
                 writer.WritePropertyName("azureLocation"u8);
                 writer.WriteStringValue(AzureLocation.Value);
             }
-            if (Optional.IsDefined(AzureOfferCode))
+            if (AzureOfferCode.HasValue)
             {
                 writer.WritePropertyName("azureOfferCode"u8);
                 writer.WriteStringValue(AzureOfferCode.Value.ToString());
             }
-            if (Optional.IsDefined(Currency))
+            if (Currency.HasValue)
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency.Value.ToString());
             }
-            if (Optional.IsDefined(ScalingFactor))
+            if (ScalingFactor.HasValue)
             {
                 writer.WritePropertyName("scalingFactor"u8);
                 writer.WriteNumberValue(ScalingFactor.Value);
             }
-            if (Optional.IsDefined(Percentile))
+            if (Percentile.HasValue)
             {
                 writer.WritePropertyName("percentile"u8);
                 writer.WriteStringValue(Percentile.Value.ToString());
             }
-            if (Optional.IsDefined(TimeRange))
+            if (TimeRange.HasValue)
             {
                 writer.WritePropertyName("timeRange"u8);
                 writer.WriteStringValue(TimeRange.Value.ToString());
             }
-            if (Optional.IsDefined(PerfDataStartOn))
+            if (PerfDataStartOn.HasValue)
             {
                 writer.WritePropertyName("perfDataStartTime"u8);
                 writer.WriteStringValue(PerfDataStartOn.Value, "O");
             }
-            if (Optional.IsDefined(PerfDataEndOn))
+            if (PerfDataEndOn.HasValue)
             {
                 writer.WritePropertyName("perfDataEndTime"u8);
                 writer.WriteStringValue(PerfDataEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Stage))
+            if (options.Format != "W" && Stage.HasValue)
             {
                 writer.WritePropertyName("stage"u8);
                 writer.WriteStringValue(Stage.Value.ToString());
             }
-            if (Optional.IsDefined(DiscountPercentage))
+            if (DiscountPercentage.HasValue)
             {
                 writer.WritePropertyName("discountPercentage"u8);
                 writer.WriteNumberValue(DiscountPercentage.Value);
             }
-            if (Optional.IsDefined(SizingCriterion))
+            if (SizingCriterion.HasValue)
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceRatingInPercentage))
+            if (ConfidenceRatingInPercentage.HasValue)
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PricesQueriedOn))
+            if (options.Format != "W" && PricesQueriedOn.HasValue)
             {
                 writer.WritePropertyName("pricesTimestamp"u8);
                 writer.WriteStringValue(PricesQueriedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SchemaVersion))
+            if (options.Format != "W" && SchemaVersion != null)
             {
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
@@ -319,19 +259,19 @@ namespace Azure.ResourceManager.Migrate
             writer.WriteEndObject();
         }
 
-        MigrateAssessmentData IJsonModel<MigrateAssessmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MigrateSqlAssessmentV2Data IJsonModel<MigrateSqlAssessmentV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlAssessmentV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateAssessmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlAssessmentV2Data)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrateAssessmentData(document.RootElement, options);
+            return DeserializeMigrateSqlAssessmentV2Data(document.RootElement, options);
         }
 
-        internal static MigrateAssessmentData DeserializeMigrateAssessmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MigrateSqlAssessmentV2Data DeserializeMigrateSqlAssessmentV2Data(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -344,27 +284,24 @@ namespace Azure.ResourceManager.Migrate
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<MigrateProvisioningState> provisioningState = default;
-            Optional<IReadOnlyDictionary<string, int>> assessmentErrorSummary = default;
-            Optional<double> monthlyUltraStorageCost = default;
-            Optional<IReadOnlyList<CostComponent>> costComponents = default;
+            Optional<MigrateOSLicense> osLicense = default;
+            Optional<AssessmentEnvironmentType> environmentType = default;
+            Optional<EntityUptime> entityUptime = default;
+            Optional<SqlOptimizationLogic> optimizationLogic = default;
+            Optional<AzureReservedInstance> reservedInstanceForVm = default;
+            Optional<AzureOfferCode> azureOfferCodeForVm = default;
             Optional<string> eaSubscriptionId = default;
-            Optional<AzurePricingTier> azurePricingTier = default;
-            Optional<AzureStorageRedundancy> azureStorageRedundancy = default;
+            Optional<SqlMISettings> azureSqlManagedInstanceSettings = default;
+            Optional<SqlDBSettings> azureSqlDatabaseSettings = default;
+            Optional<SqlVmSettings> azureSqlVmSettings = default;
+            Optional<MultiSubnetIntent> multiSubnetIntent = default;
+            Optional<AsyncCommitModeIntent> asyncCommitModeIntent = default;
+            Optional<bool> isInternetAccessAvailable = default;
+            Optional<AzureLocation> disasterRecoveryLocation = default;
+            Optional<bool> enableHadrAssessment = default;
+            Optional<AzureSecurityOfferingType> azureSecurityOfferingType = default;
             Optional<AzureReservedInstance> reservedInstance = default;
-            Optional<AzureHybridUseBenefit> azureHybridUseBenefit = default;
-            Optional<IList<AzureDiskType>> azureDiskTypes = default;
-            Optional<IList<AzureVmFamily>> azureVmFamilies = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionBySupportStatus = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionByServicePackInsight = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionByOSName = default;
-            Optional<double> monthlyComputeCost = default;
-            Optional<double> monthlyBandwidthCost = default;
-            Optional<double> monthlyStorageCost = default;
-            Optional<double> monthlyPremiumStorageCost = default;
-            Optional<double> monthlyStandardSsdStorageCost = default;
-            Optional<IReadOnlyDictionary<string, int>> suitabilitySummary = default;
-            Optional<int> numberOfMachines = default;
-            Optional<VmUptime> vmUptime = default;
+            Optional<SqlServerLicense> sqlServerLicense = default;
             Optional<MigrateGroupType> groupType = default;
             Optional<AssessmentType> assessmentType = default;
             Optional<AzureLocation> azureLocation = default;
@@ -430,41 +367,58 @@ namespace Azure.ResourceManager.Migrate
                             provisioningState = new MigrateProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("assessmentErrorSummary"u8))
+                        if (property0.NameEquals("osLicense"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetInt32());
-                            }
-                            assessmentErrorSummary = dictionary;
+                            osLicense = new MigrateOSLicense(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("monthlyUltraStorageCost"u8))
+                        if (property0.NameEquals("environmentType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            monthlyUltraStorageCost = property0.Value.GetDouble();
+                            environmentType = new AssessmentEnvironmentType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("costComponents"u8))
+                        if (property0.NameEquals("entityUptime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<CostComponent> array = new List<CostComponent>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            entityUptime = EntityUptime.DeserializeEntityUptime(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("optimizationLogic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                array.Add(CostComponent.DeserializeCostComponent(item));
+                                continue;
                             }
-                            costComponents = array;
+                            optimizationLogic = new SqlOptimizationLogic(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("reservedInstanceForVm"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reservedInstanceForVm = new AzureReservedInstance(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("azureOfferCodeForVm"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureOfferCodeForVm = new AzureOfferCode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eaSubscriptionId"u8))
@@ -472,22 +426,85 @@ namespace Azure.ResourceManager.Migrate
                             eaSubscriptionId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("azurePricingTier"u8))
+                        if (property0.NameEquals("azureSqlManagedInstanceSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            azurePricingTier = new AzurePricingTier(property0.Value.GetString());
+                            azureSqlManagedInstanceSettings = SqlMISettings.DeserializeSqlMISettings(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("azureStorageRedundancy"u8))
+                        if (property0.NameEquals("azureSqlDatabaseSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            azureStorageRedundancy = new AzureStorageRedundancy(property0.Value.GetString());
+                            azureSqlDatabaseSettings = SqlDBSettings.DeserializeSqlDBSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("azureSqlVmSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureSqlVmSettings = SqlVmSettings.DeserializeSqlVmSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("multiSubnetIntent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            multiSubnetIntent = new MultiSubnetIntent(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("asyncCommitModeIntent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            asyncCommitModeIntent = new AsyncCommitModeIntent(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isInternetAccessAvailable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isInternetAccessAvailable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("disasterRecoveryLocation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            disasterRecoveryLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enableHadrAssessment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHadrAssessment = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("azureSecurityOfferingType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            azureSecurityOfferingType = new AzureSecurityOfferingType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("reservedInstance"u8))
@@ -499,160 +516,13 @@ namespace Azure.ResourceManager.Migrate
                             reservedInstance = new AzureReservedInstance(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("azureHybridUseBenefit"u8))
+                        if (property0.NameEquals("sqlServerLicense"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            azureHybridUseBenefit = new AzureHybridUseBenefit(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("azureDiskTypes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AzureDiskType> array = new List<AzureDiskType>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new AzureDiskType(item.GetString()));
-                            }
-                            azureDiskTypes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("azureVmFamilies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AzureVmFamily> array = new List<AzureVmFamily>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new AzureVmFamily(item.GetString()));
-                            }
-                            azureVmFamilies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("distributionBySupportStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetInt32());
-                            }
-                            distributionBySupportStatus = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("distributionByServicePackInsight"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetInt32());
-                            }
-                            distributionByServicePackInsight = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("distributionByOsName"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetInt32());
-                            }
-                            distributionByOSName = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyComputeCost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monthlyComputeCost = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyBandwidthCost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monthlyBandwidthCost = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyStorageCost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monthlyStorageCost = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyPremiumStorageCost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monthlyPremiumStorageCost = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("monthlyStandardSsdStorageCost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monthlyStandardSsdStorageCost = property0.Value.GetDouble();
-                            continue;
-                        }
-                        if (property0.NameEquals("suitabilitySummary"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, int> dictionary = new Dictionary<string, int>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetInt32());
-                            }
-                            suitabilitySummary = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("numberOfMachines"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            numberOfMachines = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("vmUptime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vmUptime = VmUptime.DeserializeVmUptime(property0.Value);
+                            sqlServerLicense = new SqlServerLicense(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("groupType"u8))
@@ -831,38 +701,81 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateAssessmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToDictionary(assessmentErrorSummary), Optional.ToNullable(monthlyUltraStorageCost), Optional.ToList(costComponents), eaSubscriptionId.Value, Optional.ToNullable(azurePricingTier), Optional.ToNullable(azureStorageRedundancy), Optional.ToNullable(reservedInstance), Optional.ToNullable(azureHybridUseBenefit), Optional.ToList(azureDiskTypes), Optional.ToList(azureVmFamilies), Optional.ToDictionary(distributionBySupportStatus), Optional.ToDictionary(distributionByServicePackInsight), Optional.ToDictionary(distributionByOSName), Optional.ToNullable(monthlyComputeCost), Optional.ToNullable(monthlyBandwidthCost), Optional.ToNullable(monthlyStorageCost), Optional.ToNullable(monthlyPremiumStorageCost), Optional.ToNullable(monthlyStandardSsdStorageCost), Optional.ToDictionary(suitabilitySummary), Optional.ToNullable(numberOfMachines), vmUptime.Value, Optional.ToNullable(groupType), Optional.ToNullable(assessmentType), Optional.ToNullable(azureLocation), Optional.ToNullable(azureOfferCode), Optional.ToNullable(currency), Optional.ToNullable(scalingFactor), Optional.ToNullable(percentile), Optional.ToNullable(timeRange), Optional.ToNullable(perfDataStartTime), Optional.ToNullable(perfDataEndTime), Optional.ToNullable(stage), Optional.ToNullable(discountPercentage), Optional.ToNullable(sizingCriterion), Optional.ToNullable(confidenceRatingInPercentage), Optional.ToNullable(pricesTimestamp), Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(status), schemaVersion.Value, serializedAdditionalRawData);
+            return new MigrateSqlAssessmentV2Data(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(osLicense),
+                Optional.ToNullable(environmentType),
+                entityUptime.Value,
+                Optional.ToNullable(optimizationLogic),
+                Optional.ToNullable(reservedInstanceForVm),
+                Optional.ToNullable(azureOfferCodeForVm),
+                eaSubscriptionId.Value,
+                azureSqlManagedInstanceSettings.Value,
+                azureSqlDatabaseSettings.Value,
+                azureSqlVmSettings.Value,
+                Optional.ToNullable(multiSubnetIntent),
+                Optional.ToNullable(asyncCommitModeIntent),
+                Optional.ToNullable(isInternetAccessAvailable),
+                Optional.ToNullable(disasterRecoveryLocation),
+                Optional.ToNullable(enableHadrAssessment),
+                Optional.ToNullable(azureSecurityOfferingType),
+                Optional.ToNullable(reservedInstance),
+                Optional.ToNullable(sqlServerLicense),
+                Optional.ToNullable(groupType),
+                Optional.ToNullable(assessmentType),
+                Optional.ToNullable(azureLocation),
+                Optional.ToNullable(azureOfferCode),
+                Optional.ToNullable(currency),
+                Optional.ToNullable(scalingFactor),
+                Optional.ToNullable(percentile),
+                Optional.ToNullable(timeRange),
+                Optional.ToNullable(perfDataStartTime),
+                Optional.ToNullable(perfDataEndTime),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(discountPercentage),
+                Optional.ToNullable(sizingCriterion),
+                Optional.ToNullable(confidenceRatingInPercentage),
+                Optional.ToNullable(pricesTimestamp),
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                Optional.ToNullable(status),
+                schemaVersion.Value,
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MigrateAssessmentData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MigrateSqlAssessmentV2Data>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlAssessmentV2Data>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlAssessmentV2Data)} does not support '{options.Format}' format.");
             }
         }
 
-        MigrateAssessmentData IPersistableModel<MigrateAssessmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MigrateSqlAssessmentV2Data IPersistableModel<MigrateSqlAssessmentV2Data>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlAssessmentV2Data>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMigrateAssessmentData(document.RootElement, options);
+                        return DeserializeMigrateSqlAssessmentV2Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateAssessmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlAssessmentV2Data)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrateAssessmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigrateSqlAssessmentV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

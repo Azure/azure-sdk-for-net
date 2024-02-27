@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AvsNodes))
+            if (!(AvsNodes is ChangeTrackingList<AvsSkuConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("avsNodes"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FailuresToTolerateAndRaidLevelValues))
+            if (!(FailuresToTolerateAndRaidLevelValues is ChangeTrackingList<FttAndRaidLevel> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("failuresToTolerateAndRaidLevelValues"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceAvsNodes))
+            if (!(ReservedInstanceAvsNodes is ChangeTrackingList<AvsNodeType> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceAvsNodes"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedLocations))
+            if (!(ReservedInstanceSupportedLocations is ChangeTrackingList<AzureLocation> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedCurrencies))
+            if (!(ReservedInstanceSupportedCurrencies is ChangeTrackingList<AzureCurrency> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedCurrencies"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedOffers))
+            if (!(ReservedInstanceSupportedOffers is ChangeTrackingList<AzureOfferCode> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedOffers"u8);
                 writer.WriteStartArray();
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Migrate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<AvsSkuConfig>> avsNodes = default;
-            Optional<IList<FttAndRaidLevel>> failuresToTolerateAndRaidLevelValues = default;
-            Optional<IList<AvsNodeType>> reservedInstanceAvsNodes = default;
-            Optional<IList<AzureLocation>> reservedInstanceSupportedLocations = default;
-            Optional<IList<AzureCurrency>> reservedInstanceSupportedCurrencies = default;
-            Optional<IList<AzureOfferCode>> reservedInstanceSupportedOffers = default;
+            IList<AvsSkuConfig> avsNodes = default;
+            IList<FttAndRaidLevel> failuresToTolerateAndRaidLevelValues = default;
+            IList<AvsNodeType> reservedInstanceAvsNodes = default;
+            IList<AzureLocation> reservedInstanceSupportedLocations = default;
+            IList<AzureCurrency> reservedInstanceSupportedCurrencies = default;
+            IList<AzureOfferCode> reservedInstanceSupportedOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Migrate
                             List<AvsSkuConfig> array = new List<AvsSkuConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvsSkuConfig.DeserializeAvsSkuConfig(item));
+                                array.Add(AvsSkuConfig.DeserializeAvsSkuConfig(item, options));
                             }
                             avsNodes = array;
                             continue;
@@ -289,7 +289,18 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateAvsAssessmentOptionData(id, name, type, systemData.Value, Optional.ToList(avsNodes), Optional.ToList(failuresToTolerateAndRaidLevelValues), Optional.ToList(reservedInstanceAvsNodes), Optional.ToList(reservedInstanceSupportedLocations), Optional.ToList(reservedInstanceSupportedCurrencies), Optional.ToList(reservedInstanceSupportedOffers), serializedAdditionalRawData);
+            return new MigrateAvsAssessmentOptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                avsNodes ?? new ChangeTrackingList<AvsSkuConfig>(),
+                failuresToTolerateAndRaidLevelValues ?? new ChangeTrackingList<FttAndRaidLevel>(),
+                reservedInstanceAvsNodes ?? new ChangeTrackingList<AvsNodeType>(),
+                reservedInstanceSupportedLocations ?? new ChangeTrackingList<AzureLocation>(),
+                reservedInstanceSupportedCurrencies ?? new ChangeTrackingList<AzureCurrency>(),
+                reservedInstanceSupportedOffers ?? new ChangeTrackingList<AzureOfferCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateAvsAssessmentOptionData>.Write(ModelReaderWriterOptions options)

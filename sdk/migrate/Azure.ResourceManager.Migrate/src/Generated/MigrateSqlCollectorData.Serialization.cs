@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Migrate
 {
-    public partial class MigrateVMwareCollectorData : IUtf8JsonSerializable, IJsonModel<MigrateVMwareCollectorData>
+    public partial class MigrateSqlCollectorData : IUtf8JsonSerializable, IJsonModel<MigrateSqlCollectorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateVMwareCollectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlCollectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MigrateVMwareCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigrateSqlCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateVMwareCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateVMwareCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlCollectorData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AgentProperties))
+            if (AgentProperties != null)
             {
                 writer.WritePropertyName("agentProperties"u8);
                 writer.WriteObjectValue(AgentProperties);
             }
-            if (Optional.IsDefined(DiscoverySiteId))
+            if (DiscoverySiteId != null)
             {
                 writer.WritePropertyName("discoverySiteId"u8);
                 writer.WriteStringValue(DiscoverySiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -94,19 +94,19 @@ namespace Azure.ResourceManager.Migrate
             writer.WriteEndObject();
         }
 
-        MigrateVMwareCollectorData IJsonModel<MigrateVMwareCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MigrateSqlCollectorData IJsonModel<MigrateSqlCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateVMwareCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlCollectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateVMwareCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlCollectorData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrateVMwareCollectorData(document.RootElement, options);
+            return DeserializeMigrateSqlCollectorData(document.RootElement, options);
         }
 
-        internal static MigrateVMwareCollectorData DeserializeMigrateVMwareCollectorData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MigrateSqlCollectorData DeserializeMigrateSqlCollectorData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value);
+                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("discoverySiteId"u8))
@@ -210,38 +210,48 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateVMwareCollectorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), agentProperties.Value, discoverySiteId.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new MigrateSqlCollectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                agentProperties.Value,
+                discoverySiteId.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MigrateVMwareCollectorData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MigrateSqlCollectorData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateVMwareCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlCollectorData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateVMwareCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlCollectorData)} does not support '{options.Format}' format.");
             }
         }
 
-        MigrateVMwareCollectorData IPersistableModel<MigrateVMwareCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MigrateSqlCollectorData IPersistableModel<MigrateSqlCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateVMwareCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlCollectorData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMigrateVMwareCollectorData(document.RootElement, options);
+                        return DeserializeMigrateSqlCollectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateVMwareCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlCollectorData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrateVMwareCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigrateSqlCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfSynchronousReadReplicas))
+            if (NumberOfSynchronousReadReplicas.HasValue)
             {
                 writer.WritePropertyName("numberOfSynchronousReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfSynchronousReadReplicas.Value);
             }
-            if (Optional.IsDefined(NumberOfSynchronousNonReadReplicas))
+            if (NumberOfSynchronousNonReadReplicas.HasValue)
             {
                 writer.WritePropertyName("numberOfSynchronousNonReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfSynchronousNonReadReplicas.Value);
             }
-            if (Optional.IsDefined(NumberOfAsynchronousReadReplicas))
+            if (NumberOfAsynchronousReadReplicas.HasValue)
             {
                 writer.WritePropertyName("numberOfAsynchronousReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfAsynchronousReadReplicas.Value);
             }
-            if (Optional.IsDefined(NumberOfAsynchronousNonReadReplicas))
+            if (NumberOfAsynchronousNonReadReplicas.HasValue)
             {
                 writer.WritePropertyName("numberOfAsynchronousNonReadReplicas"u8);
                 writer.WriteNumberValue(NumberOfAsynchronousNonReadReplicas.Value);
             }
-            if (Optional.IsDefined(NumberOfPrimaryReplicas))
+            if (NumberOfPrimaryReplicas.HasValue)
             {
                 writer.WritePropertyName("numberOfPrimaryReplicas"u8);
                 writer.WriteNumberValue(NumberOfPrimaryReplicas.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAvailabilityReplicaSummary(Optional.ToNullable(numberOfSynchronousReadReplicas), Optional.ToNullable(numberOfSynchronousNonReadReplicas), Optional.ToNullable(numberOfAsynchronousReadReplicas), Optional.ToNullable(numberOfAsynchronousNonReadReplicas), Optional.ToNullable(numberOfPrimaryReplicas), serializedAdditionalRawData);
+            return new SqlAvailabilityReplicaSummary(
+                Optional.ToNullable(numberOfSynchronousReadReplicas),
+                Optional.ToNullable(numberOfSynchronousNonReadReplicas),
+                Optional.ToNullable(numberOfAsynchronousReadReplicas),
+                Optional.ToNullable(numberOfAsynchronousNonReadReplicas),
+                Optional.ToNullable(numberOfPrimaryReplicas),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAvailabilityReplicaSummary>.Write(ModelReaderWriterOptions options)

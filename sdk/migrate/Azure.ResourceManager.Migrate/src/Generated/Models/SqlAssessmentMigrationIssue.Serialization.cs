@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IssueId))
+            if (options.Format != "W" && IssueId != null)
             {
                 writer.WritePropertyName("issueId"u8);
                 writer.WriteStringValue(IssueId);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueCategory))
+            if (options.Format != "W" && IssueCategory.HasValue)
             {
                 writer.WritePropertyName("issueCategory"u8);
                 writer.WriteStringValue(IssueCategory.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ImpactedObjects))
+            if (options.Format != "W" && !(ImpactedObjects is ChangeTrackingList<ImpactedAssessmentObject> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("impactedObjects"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             Optional<string> issueId = default;
             Optional<SqlAssessmentMigrationIssueCategory> issueCategory = default;
-            Optional<IReadOnlyList<ImpactedAssessmentObject>> impactedObjects = default;
+            IReadOnlyList<ImpactedAssessmentObject> impactedObjects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<ImpactedAssessmentObject> array = new List<ImpactedAssessmentObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImpactedAssessmentObject.DeserializeImpactedAssessmentObject(item));
+                        array.Add(ImpactedAssessmentObject.DeserializeImpactedAssessmentObject(item, options));
                     }
                     impactedObjects = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAssessmentMigrationIssue(issueId.Value, Optional.ToNullable(issueCategory), Optional.ToList(impactedObjects), serializedAdditionalRawData);
+            return new SqlAssessmentMigrationIssue(issueId.Value, Optional.ToNullable(issueCategory), impactedObjects ?? new ChangeTrackingList<ImpactedAssessmentObject>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAssessmentMigrationIssue>.Write(ModelReaderWriterOptions options)

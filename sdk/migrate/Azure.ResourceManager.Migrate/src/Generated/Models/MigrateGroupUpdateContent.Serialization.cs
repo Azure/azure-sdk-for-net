@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    properties = MigrateGroupUpdateProperties.DeserializeMigrateGroupUpdateProperties(property.Value);
+                    properties = MigrateGroupUpdateProperties.DeserializeMigrateGroupUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

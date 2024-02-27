@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<MigratePrivateLinkResource>> GetAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<MigratePrivateLinkResource> Get(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigratePrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         public virtual NullableResponse<MigratePrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+            if (privateLinkResourceName == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkResourceName));
+            }
+            if (privateLinkResourceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkResourceName));
+            }
 
             using var scope = _migratePrivateLinkResourcePrivateLinkResourceOperationsClientDiagnostics.CreateScope("MigratePrivateLinkResourceCollection.GetIfExists");
             scope.Start();

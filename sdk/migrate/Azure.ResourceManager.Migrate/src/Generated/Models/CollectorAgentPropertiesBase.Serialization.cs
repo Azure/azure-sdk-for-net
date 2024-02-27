@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(LastHeartbeatOn))
+            if (LastHeartbeatOn.HasValue)
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
                 writer.WriteStringValue(LastHeartbeatOn.Value, "O");
             }
-            if (Optional.IsDefined(SpnDetails))
+            if (SpnDetails != null)
             {
                 writer.WritePropertyName("spnDetails"u8);
                 writer.WriteObjectValue(SpnDetails);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    spnDetails = CollectorAgentSpnPropertiesBase.DeserializeCollectorAgentSpnPropertiesBase(property.Value);
+                    spnDetails = CollectorAgentSpnPropertiesBase.DeserializeCollectorAgentSpnPropertiesBase(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

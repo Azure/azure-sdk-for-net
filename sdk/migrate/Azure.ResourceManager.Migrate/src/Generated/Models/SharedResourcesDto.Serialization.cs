@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedDataDisks))
+            if (options.Format != "W" && !(SharedDataDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sharedDataDisks"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedLogDisks))
+            if (options.Format != "W" && !(SharedLogDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sharedLogDisks"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SharedTempDBDisks))
+            if (options.Format != "W" && !(SharedTempDBDisks is ChangeTrackingList<AzureManagedDiskSkuDto> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sharedTempDbDisks"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfMounts))
+            if (options.Format != "W" && NumberOfMounts.HasValue)
             {
                 writer.WritePropertyName("numberOfMounts"u8);
                 writer.WriteNumberValue(NumberOfMounts.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuorumWitness))
+            if (options.Format != "W" && QuorumWitness != null)
             {
                 writer.WritePropertyName("quorumWitness"u8);
                 writer.WriteObjectValue(QuorumWitness);
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AzureManagedDiskSkuDto>> sharedDataDisks = default;
-            Optional<IReadOnlyList<AzureManagedDiskSkuDto>> sharedLogDisks = default;
-            Optional<IReadOnlyList<AzureManagedDiskSkuDto>> sharedTempDBDisks = default;
+            IReadOnlyList<AzureManagedDiskSkuDto> sharedDataDisks = default;
+            IReadOnlyList<AzureManagedDiskSkuDto> sharedLogDisks = default;
+            IReadOnlyList<AzureManagedDiskSkuDto> sharedTempDBDisks = default;
             Optional<int> numberOfMounts = default;
             Optional<AzureQuorumWitnessDto> quorumWitness = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item));
+                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
                     }
                     sharedDataDisks = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item));
+                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
                     }
                     sharedLogDisks = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<AzureManagedDiskSkuDto> array = new List<AzureManagedDiskSkuDto>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item));
+                        array.Add(AzureManagedDiskSkuDto.DeserializeAzureManagedDiskSkuDto(item, options));
                     }
                     sharedTempDBDisks = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     {
                         continue;
                     }
-                    quorumWitness = AzureQuorumWitnessDto.DeserializeAzureQuorumWitnessDto(property.Value);
+                    quorumWitness = AzureQuorumWitnessDto.DeserializeAzureQuorumWitnessDto(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +179,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedResourcesDto(Optional.ToList(sharedDataDisks), Optional.ToList(sharedLogDisks), Optional.ToList(sharedTempDBDisks), Optional.ToNullable(numberOfMounts), quorumWitness.Value, serializedAdditionalRawData);
+            return new SharedResourcesDto(
+                sharedDataDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
+                sharedLogDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
+                sharedTempDBDisks ?? new ChangeTrackingList<AzureManagedDiskSkuDto>(),
+                Optional.ToNullable(numberOfMounts),
+                quorumWitness.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedResourcesDto>.Write(ModelReaderWriterOptions options)

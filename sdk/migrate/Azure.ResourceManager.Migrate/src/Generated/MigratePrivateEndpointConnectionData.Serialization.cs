@@ -12,19 +12,20 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Migrate.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Migrate
 {
-    public partial class MigrateServerCollectorData : IUtf8JsonSerializable, IJsonModel<MigrateServerCollectorData>
+    public partial class MigratePrivateEndpointConnectionData : IUtf8JsonSerializable, IJsonModel<MigratePrivateEndpointConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateServerCollectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePrivateEndpointConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<MigrateServerCollectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigratePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateServerCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigratePrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateServerCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePrivateEndpointConnectionData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,37 +44,37 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && !(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            {
+                writer.WritePropertyName("groupIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (PrivateEndpoint != null)
+            {
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
+            }
+            if (ConnectionState != null)
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                writer.WriteObjectValue(ConnectionState);
+            }
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(AgentProperties))
-            {
-                writer.WritePropertyName("agentProperties"u8);
-                writer.WriteObjectValue(AgentProperties);
-            }
-            if (Optional.IsDefined(DiscoverySiteId))
-            {
-                writer.WritePropertyName("discoverySiteId"u8);
-                writer.WriteStringValue(DiscoverySiteId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdTimestamp"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
-            {
-                writer.WritePropertyName("updatedTimestamp"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,19 +95,19 @@ namespace Azure.ResourceManager.Migrate
             writer.WriteEndObject();
         }
 
-        MigrateServerCollectorData IJsonModel<MigrateServerCollectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MigratePrivateEndpointConnectionData IJsonModel<MigratePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateServerCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigratePrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateServerCollectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePrivateEndpointConnectionData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrateServerCollectorData(document.RootElement, options);
+            return DeserializeMigratePrivateEndpointConnectionData(document.RootElement, options);
         }
 
-        internal static MigrateServerCollectorData DeserializeMigrateServerCollectorData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MigratePrivateEndpointConnectionData DeserializeMigratePrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -118,11 +119,10 @@ namespace Azure.ResourceManager.Migrate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<MigrateProvisioningState> provisioningState = default;
-            Optional<CollectorAgentPropertiesBase> agentProperties = default;
-            Optional<string> discoverySiteId = default;
-            Optional<DateTimeOffset> createdTimestamp = default;
-            Optional<DateTimeOffset> updatedTimestamp = default;
+            IReadOnlyList<string> groupIds = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<MigratePrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<MigratePrivateEndpointConnectionProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,45 +160,45 @@ namespace Azure.ResourceManager.Migrate
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkServiceConnectionState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            privateLinkServiceConnectionState = MigratePrivateLinkServiceConnectionState.DeserializeMigratePrivateLinkServiceConnectionState(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new MigrateProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("agentProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("discoverySiteId"u8))
-                        {
-                            discoverySiteId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdTimestamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            createdTimestamp = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("updatedTimestamp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            updatedTimestamp = property0.Value.GetDateTimeOffset("O");
+                            provisioningState = new MigratePrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -210,38 +210,47 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateServerCollectorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), agentProperties.Value, discoverySiteId.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new MigratePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MigrateServerCollectorData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MigratePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateServerCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigratePrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateServerCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        MigrateServerCollectorData IPersistableModel<MigrateServerCollectorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MigratePrivateEndpointConnectionData IPersistableModel<MigratePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateServerCollectorData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MigratePrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMigrateServerCollectorData(document.RootElement, options);
+                        return DeserializeMigratePrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateServerCollectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePrivateEndpointConnectionData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrateServerCollectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigratePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

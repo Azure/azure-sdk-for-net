@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AzureVmFamily))
+            if (options.Format != "W" && AzureVmFamily.HasValue)
             {
                 writer.WritePropertyName("azureVmFamily"u8);
                 writer.WriteStringValue(AzureVmFamily.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Cores))
+            if (options.Format != "W" && Cores.HasValue)
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSkuName))
+            if (options.Format != "W" && AzureSkuName.HasValue)
             {
                 writer.WritePropertyName("azureSkuName"u8);
                 writer.WriteStringValue(AzureSkuName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailableCores))
+            if (options.Format != "W" && AvailableCores.HasValue)
             {
                 writer.WritePropertyName("availableCores"u8);
                 writer.WriteNumberValue(AvailableCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxNetworkInterfaces))
+            if (options.Format != "W" && MaxNetworkInterfaces.HasValue)
             {
                 writer.WritePropertyName("maxNetworkInterfaces"u8);
                 writer.WriteNumberValue(MaxNetworkInterfaces.Value);
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureVmSkuDto(Optional.ToNullable(azureVmFamily), Optional.ToNullable(cores), Optional.ToNullable(azureSkuName), Optional.ToNullable(availableCores), Optional.ToNullable(maxNetworkInterfaces), serializedAdditionalRawData);
+            return new AzureVmSkuDto(
+                Optional.ToNullable(azureVmFamily),
+                Optional.ToNullable(cores),
+                Optional.ToNullable(azureSkuName),
+                Optional.ToNullable(availableCores),
+                Optional.ToNullable(maxNetworkInterfaces),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureVmSkuDto>.Write(ModelReaderWriterOptions options)

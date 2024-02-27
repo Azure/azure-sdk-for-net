@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NodeType))
+            if (NodeType.HasValue)
             {
                 writer.WritePropertyName("nodeType"u8);
                 writer.WriteStringValue(NodeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(TargetLocations))
+            if (!(TargetLocations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetLocations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             Optional<AvsNodeType> nodeType = default;
-            Optional<IList<AzureLocation>> targetLocations = default;
+            IList<AzureLocation> targetLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsSkuConfig(Optional.ToNullable(nodeType), Optional.ToList(targetLocations), serializedAdditionalRawData);
+            return new AvsSkuConfig(Optional.ToNullable(nodeType), targetLocations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsSkuConfig>.Write(ModelReaderWriterOptions options)

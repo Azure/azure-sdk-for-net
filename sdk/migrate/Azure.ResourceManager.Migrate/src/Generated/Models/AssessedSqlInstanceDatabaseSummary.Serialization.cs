@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NumberOfUserDatabases))
+            if (NumberOfUserDatabases.HasValue)
             {
                 writer.WritePropertyName("numberOfUserDatabases"u8);
                 writer.WriteNumberValue(NumberOfUserDatabases.Value);
             }
-            if (Optional.IsDefined(TotalDatabaseSizeInMB))
+            if (TotalDatabaseSizeInMB.HasValue)
             {
                 writer.WritePropertyName("totalDatabaseSizeInMB"u8);
                 writer.WriteNumberValue(TotalDatabaseSizeInMB.Value);
             }
-            if (Optional.IsDefined(LargestDatabaseSizeInMB))
+            if (LargestDatabaseSizeInMB.HasValue)
             {
                 writer.WritePropertyName("largestDatabaseSizeInMB"u8);
                 writer.WriteNumberValue(LargestDatabaseSizeInMB.Value);
             }
-            if (Optional.IsDefined(TotalDiscoveredUserDatabases))
+            if (TotalDiscoveredUserDatabases.HasValue)
             {
                 writer.WritePropertyName("totalDiscoveredUserDatabases"u8);
                 writer.WriteNumberValue(TotalDiscoveredUserDatabases.Value);

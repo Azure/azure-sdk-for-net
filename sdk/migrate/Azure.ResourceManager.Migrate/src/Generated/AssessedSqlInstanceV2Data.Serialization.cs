@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MemoryInUseInMB))
+            if (options.Format != "W" && MemoryInUseInMB.HasValue)
             {
                 writer.WritePropertyName("memoryInUseInMB"u8);
                 writer.WriteNumberValue(MemoryInUseInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(HasScanOccurred))
+            if (options.Format != "W" && HasScanOccurred.HasValue)
             {
                 writer.WritePropertyName("hasScanOccurred"u8);
                 writer.WriteBooleanValue(HasScanOccurred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedAzureSqlTargetType))
+            if (options.Format != "W" && RecommendedAzureSqlTargetType.HasValue)
             {
                 writer.WritePropertyName("recommendedAzureSqlTargetType"u8);
                 writer.WriteStringValue(RecommendedAzureSqlTargetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedSuitability))
+            if (options.Format != "W" && RecommendedSuitability.HasValue)
             {
                 writer.WritePropertyName("recommendedSuitability"u8);
                 writer.WriteStringValue(RecommendedSuitability.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
+            if (options.Format != "W" && AzureSqlMISuitabilityDetails != null)
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlMISuitabilityDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
+            if (options.Format != "W" && AzureSqlDBSuitabilityDetails != null)
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlDBSuitabilityDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlVmSuitabilityDetails))
+            if (options.Format != "W" && AzureSqlVmSuitabilityDetails != null)
             {
                 writer.WritePropertyName("azureSqlVMSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlVmSuitabilityDetails);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(StorageTypeBasedDetails))
+            if (options.Format != "W" && !(StorageTypeBasedDetails is ChangeTrackingList<AssessedSqlInstanceStorageDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageTypeBasedDetails"u8);
                 writer.WriteStartArray();
@@ -95,32 +95,32 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
+            if (options.Format != "W" && ProductSupportStatus != null)
             {
                 writer.WritePropertyName("productSupportStatus"u8);
                 writer.WriteObjectValue(ProductSupportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(FciMetadata))
+            if (options.Format != "W" && FciMetadata != null)
             {
                 writer.WritePropertyName("fciMetadata"u8);
                 writer.WriteObjectValue(FciMetadata);
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityReplicaSummary))
+            if (options.Format != "W" && AvailabilityReplicaSummary != null)
             {
                 writer.WritePropertyName("availabilityReplicaSummary"u8);
                 writer.WriteObjectValue(AvailabilityReplicaSummary);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsClustered))
+            if (options.Format != "W" && IsClustered.HasValue)
             {
                 writer.WritePropertyName("isClustered"u8);
                 writer.WriteBooleanValue(IsClustered.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsHighAvailabilityEnabled))
+            if (options.Format != "W" && IsHighAvailabilityEnabled.HasValue)
             {
                 writer.WritePropertyName("isHighAvailabilityEnabled"u8);
                 writer.WriteBooleanValue(IsHighAvailabilityEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedTargetReasonings))
+            if (options.Format != "W" && !(RecommendedTargetReasonings is ChangeTrackingList<SqlRecommendationReasoning> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("recommendedTargetReasonings"u8);
                 writer.WriteStartArray();
@@ -130,47 +130,47 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineArmId))
+            if (options.Format != "W" && MachineArmId != null)
             {
                 writer.WritePropertyName("machineArmId"u8);
                 writer.WriteStringValue(MachineArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineName))
+            if (options.Format != "W" && MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceName))
+            if (options.Format != "W" && InstanceName != null)
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SqlInstanceSdsArmId))
+            if (options.Format != "W" && SqlInstanceSdsArmId != null)
             {
                 writer.WritePropertyName("sqlInstanceSdsArmId"u8);
                 writer.WriteStringValue(SqlInstanceSdsArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SqlEdition))
+            if (options.Format != "W" && SqlEdition != null)
             {
                 writer.WritePropertyName("sqlEdition"u8);
                 writer.WriteStringValue(SqlEdition);
             }
-            if (options.Format != "W" && Optional.IsDefined(SqlVersion))
+            if (options.Format != "W" && SqlVersion != null)
             {
                 writer.WritePropertyName("sqlVersion"u8);
                 writer.WriteStringValue(SqlVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfCoresAllocated))
+            if (options.Format != "W" && NumberOfCoresAllocated.HasValue)
             {
                 writer.WritePropertyName("numberOfCoresAllocated"u8);
                 writer.WriteNumberValue(NumberOfCoresAllocated.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentageCoresUtilization))
+            if (options.Format != "W" && PercentageCoresUtilization.HasValue)
             {
                 writer.WritePropertyName("percentageCoresUtilization"u8);
                 writer.WriteNumberValue(PercentageCoresUtilization.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LogicalDisks))
+            if (options.Format != "W" && !(LogicalDisks is ChangeTrackingList<AssessedSqlInstanceDiskDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("logicalDisks"u8);
                 writer.WriteStartArray();
@@ -180,27 +180,27 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseSummary))
+            if (options.Format != "W" && DatabaseSummary != null)
             {
                 writer.WritePropertyName("databaseSummary"u8);
                 writer.WriteObjectValue(DatabaseSummary);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceRatingInPercentage))
+            if (options.Format != "W" && ConfidenceRatingInPercentage.HasValue)
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizingCriterion))
+            if (options.Format != "W" && SizingCriterion.HasValue)
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -255,13 +255,13 @@ namespace Azure.ResourceManager.Migrate
             Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlMISuitabilityDetails = default;
             Optional<SqlAssessmentV2PaasSuitabilityDetails> azureSqlDBSuitabilityDetails = default;
             Optional<SqlAssessmentV2IaasSuitabilityDetails> azureSqlVmSuitabilityDetails = default;
-            Optional<IReadOnlyList<AssessedSqlInstanceStorageDetails>> storageTypeBasedDetails = default;
+            IReadOnlyList<AssessedSqlInstanceStorageDetails> storageTypeBasedDetails = default;
             Optional<ProductSupportStatus> productSupportStatus = default;
             Optional<SqlFciMetadata> fciMetadata = default;
             Optional<SqlAvailabilityReplicaSummary> availabilityReplicaSummary = default;
             Optional<bool> isClustered = default;
             Optional<bool> isHighAvailabilityEnabled = default;
-            Optional<IReadOnlyList<SqlRecommendationReasoning>> recommendedTargetReasonings = default;
+            IReadOnlyList<SqlRecommendationReasoning> recommendedTargetReasonings = default;
             Optional<ResourceIdentifier> machineArmId = default;
             Optional<string> machineName = default;
             Optional<string> instanceName = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Migrate
             Optional<string> sqlVersion = default;
             Optional<int> numberOfCoresAllocated = default;
             Optional<double> percentageCoresUtilization = default;
-            Optional<IReadOnlyList<AssessedSqlInstanceDiskDetails>> logicalDisks = default;
+            IReadOnlyList<AssessedSqlInstanceDiskDetails> logicalDisks = default;
             Optional<AssessedSqlInstanceDatabaseSummary> databaseSummary = default;
             Optional<double> confidenceRatingInPercentage = default;
             Optional<AssessmentSizingCriterion> sizingCriterion = default;
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value);
+                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlDBSuitabilityDetails"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value);
+                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlVMSuitabilityDetails"u8))
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            azureSqlVmSuitabilityDetails = SqlAssessmentV2IaasSuitabilityDetails.DeserializeSqlAssessmentV2IaasSuitabilityDetails(property0.Value);
+                            azureSqlVmSuitabilityDetails = SqlAssessmentV2IaasSuitabilityDetails.DeserializeSqlAssessmentV2IaasSuitabilityDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageTypeBasedDetails"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Migrate
                             List<AssessedSqlInstanceStorageDetails> array = new List<AssessedSqlInstanceStorageDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssessedSqlInstanceStorageDetails.DeserializeAssessedSqlInstanceStorageDetails(item));
+                                array.Add(AssessedSqlInstanceStorageDetails.DeserializeAssessedSqlInstanceStorageDetails(item, options));
                             }
                             storageTypeBasedDetails = array;
                             continue;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value);
+                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fciMetadata"u8))
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            fciMetadata = SqlFciMetadata.DeserializeSqlFciMetadata(property0.Value);
+                            fciMetadata = SqlFciMetadata.DeserializeSqlFciMetadata(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("availabilityReplicaSummary"u8))
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            availabilityReplicaSummary = SqlAvailabilityReplicaSummary.DeserializeSqlAvailabilityReplicaSummary(property0.Value);
+                            availabilityReplicaSummary = SqlAvailabilityReplicaSummary.DeserializeSqlAvailabilityReplicaSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isClustered"u8))
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Migrate
                             List<SqlRecommendationReasoning> array = new List<SqlRecommendationReasoning>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlRecommendationReasoning.DeserializeSqlRecommendationReasoning(item));
+                                array.Add(SqlRecommendationReasoning.DeserializeSqlRecommendationReasoning(item, options));
                             }
                             recommendedTargetReasonings = array;
                             continue;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Migrate
                             List<AssessedSqlInstanceDiskDetails> array = new List<AssessedSqlInstanceDiskDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssessedSqlInstanceDiskDetails.DeserializeAssessedSqlInstanceDiskDetails(item));
+                                array.Add(AssessedSqlInstanceDiskDetails.DeserializeAssessedSqlInstanceDiskDetails(item, options));
                             }
                             logicalDisks = array;
                             continue;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            databaseSummary = AssessedSqlInstanceDatabaseSummary.DeserializeAssessedSqlInstanceDatabaseSummary(property0.Value);
+                            databaseSummary = AssessedSqlInstanceDatabaseSummary.DeserializeAssessedSqlInstanceDatabaseSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("confidenceRatingInPercentage"u8))
@@ -573,7 +573,40 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedSqlInstanceV2Data(id, name, type, systemData.Value, Optional.ToNullable(memoryInUseInMB), Optional.ToNullable(hasScanOccurred), Optional.ToNullable(recommendedAzureSqlTargetType), Optional.ToNullable(recommendedSuitability), azureSqlMISuitabilityDetails.Value, azureSqlDBSuitabilityDetails.Value, azureSqlVmSuitabilityDetails.Value, Optional.ToList(storageTypeBasedDetails), productSupportStatus.Value, fciMetadata.Value, availabilityReplicaSummary.Value, Optional.ToNullable(isClustered), Optional.ToNullable(isHighAvailabilityEnabled), Optional.ToList(recommendedTargetReasonings), machineArmId.Value, machineName.Value, instanceName.Value, sqlInstanceSdsArmId.Value, sqlEdition.Value, sqlVersion.Value, Optional.ToNullable(numberOfCoresAllocated), Optional.ToNullable(percentageCoresUtilization), Optional.ToList(logicalDisks), databaseSummary.Value, Optional.ToNullable(confidenceRatingInPercentage), Optional.ToNullable(sizingCriterion), Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new AssessedSqlInstanceV2Data(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(memoryInUseInMB),
+                Optional.ToNullable(hasScanOccurred),
+                Optional.ToNullable(recommendedAzureSqlTargetType),
+                Optional.ToNullable(recommendedSuitability),
+                azureSqlMISuitabilityDetails.Value,
+                azureSqlDBSuitabilityDetails.Value,
+                azureSqlVmSuitabilityDetails.Value,
+                storageTypeBasedDetails ?? new ChangeTrackingList<AssessedSqlInstanceStorageDetails>(),
+                productSupportStatus.Value,
+                fciMetadata.Value,
+                availabilityReplicaSummary.Value,
+                Optional.ToNullable(isClustered),
+                Optional.ToNullable(isHighAvailabilityEnabled),
+                recommendedTargetReasonings ?? new ChangeTrackingList<SqlRecommendationReasoning>(),
+                machineArmId.Value,
+                machineName.Value,
+                instanceName.Value,
+                sqlInstanceSdsArmId.Value,
+                sqlEdition.Value,
+                sqlVersion.Value,
+                Optional.ToNullable(numberOfCoresAllocated),
+                Optional.ToNullable(percentageCoresUtilization),
+                logicalDisks ?? new ChangeTrackingList<AssessedSqlInstanceDiskDetails>(),
+                databaseSummary.Value,
+                Optional.ToNullable(confidenceRatingInPercentage),
+                Optional.ToNullable(sizingCriterion),
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedSqlInstanceV2Data>.Write(ModelReaderWriterOptions options)

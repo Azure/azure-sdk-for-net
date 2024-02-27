@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAssessmentProjectResource"/> object. </returns>
         public static MigrateAssessmentProjectResource GetMigrateAssessmentProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAssessmentProjectResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAssessmentOptionResource"/> object. </returns>
         public static MigrateAssessmentOptionResource GetMigrateAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAssessmentOptionResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAvsAssessmentOptionResource"/> object. </returns>
         public static MigrateAvsAssessmentOptionResource GetMigrateAvsAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAvsAssessmentOptionResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateGroupResource"/> object. </returns>
         public static MigrateGroupResource GetMigrateGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateGroupResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAssessmentResource"/> object. </returns>
         public static MigrateAssessmentResource GetMigrateAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAssessmentResource(id);
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="AssessedMachineResource"/> object. </returns>
         public static AssessedMachineResource GetAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetAssessedMachineResource(id);
         }
@@ -162,7 +180,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAvsAssessmentResource"/> object. </returns>
         public static MigrateAvsAssessmentResource GetMigrateAvsAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAvsAssessmentResource(id);
         }
@@ -181,7 +202,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAvsAssessedMachineResource"/> object. </returns>
         public static MigrateAvsAssessedMachineResource GetMigrateAvsAssessedMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAvsAssessedMachineResource(id);
         }
@@ -200,7 +224,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateSqlAssessmentV2Resource"/> object. </returns>
         public static MigrateSqlAssessmentV2Resource GetMigrateSqlAssessmentV2Resource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateSqlAssessmentV2Resource(id);
         }
@@ -219,7 +246,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="AssessedSqlDatabaseV2Resource"/> object. </returns>
         public static AssessedSqlDatabaseV2Resource GetAssessedSqlDatabaseV2Resource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetAssessedSqlDatabaseV2Resource(id);
         }
@@ -238,7 +268,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="AssessedSqlInstanceV2Resource"/> object. </returns>
         public static AssessedSqlInstanceV2Resource GetAssessedSqlInstanceV2Resource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetAssessedSqlInstanceV2Resource(id);
         }
@@ -257,7 +290,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="AssessedSqlMachineResource"/> object. </returns>
         public static AssessedSqlMachineResource GetAssessedSqlMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetAssessedSqlMachineResource(id);
         }
@@ -276,7 +312,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="AssessedSqlRecommendedEntityResource"/> object. </returns>
         public static AssessedSqlRecommendedEntityResource GetAssessedSqlRecommendedEntityResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetAssessedSqlRecommendedEntityResource(id);
         }
@@ -295,7 +334,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateSqlAssessmentV2SummaryResource"/> object. </returns>
         public static MigrateSqlAssessmentV2SummaryResource GetMigrateSqlAssessmentV2SummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateSqlAssessmentV2SummaryResource(id);
         }
@@ -314,7 +356,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateHyperVCollectorResource"/> object. </returns>
         public static MigrateHyperVCollectorResource GetMigrateHyperVCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateHyperVCollectorResource(id);
         }
@@ -333,7 +378,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateImportCollectorResource"/> object. </returns>
         public static MigrateImportCollectorResource GetMigrateImportCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateImportCollectorResource(id);
         }
@@ -352,7 +400,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateMachineResource"/> object. </returns>
         public static MigrateMachineResource GetMigrateMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateMachineResource(id);
         }
@@ -371,7 +422,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigratePrivateEndpointConnectionResource"/> object. </returns>
         public static MigratePrivateEndpointConnectionResource GetMigratePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigratePrivateEndpointConnectionResource(id);
         }
@@ -390,7 +444,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigratePrivateLinkResource"/> object. </returns>
         public static MigratePrivateLinkResource GetMigratePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigratePrivateLinkResource(id);
         }
@@ -409,7 +466,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateAssessmentProjectSummaryResource"/> object. </returns>
         public static MigrateAssessmentProjectSummaryResource GetMigrateAssessmentProjectSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateAssessmentProjectSummaryResource(id);
         }
@@ -428,7 +488,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateServerCollectorResource"/> object. </returns>
         public static MigrateServerCollectorResource GetMigrateServerCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateServerCollectorResource(id);
         }
@@ -447,7 +510,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateSqlAssessmentOptionResource"/> object. </returns>
         public static MigrateSqlAssessmentOptionResource GetMigrateSqlAssessmentOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateSqlAssessmentOptionResource(id);
         }
@@ -466,7 +532,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateSqlCollectorResource"/> object. </returns>
         public static MigrateSqlCollectorResource GetMigrateSqlCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateSqlCollectorResource(id);
         }
@@ -485,7 +554,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> Returns a <see cref="MigrateVMwareCollectorResource"/> object. </returns>
         public static MigrateVMwareCollectorResource GetMigrateVMwareCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableMigrateArmClient(client).GetMigrateVMwareCollectorResource(id);
         }
@@ -502,7 +574,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> An object representing collection of MigrateAssessmentProjectResources and their operations over a MigrateAssessmentProjectResource. </returns>
         public static MigrateAssessmentProjectCollection GetMigrateAssessmentProjects(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateAssessmentProjects();
         }
@@ -540,7 +615,10 @@ namespace Azure.ResourceManager.Migrate
         [ForwardsClientCalls]
         public static async Task<Response<MigrateAssessmentProjectResource>> GetMigrateAssessmentProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateAssessmentProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
@@ -578,7 +656,10 @@ namespace Azure.ResourceManager.Migrate
         [ForwardsClientCalls]
         public static Response<MigrateAssessmentProjectResource> GetMigrateAssessmentProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableMigrateResourceGroupResource(resourceGroupResource).GetMigrateAssessmentProject(projectName, cancellationToken);
         }
@@ -614,7 +695,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> An async collection of <see cref="MigrateAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MigrateAssessmentProjectResource> GetMigrateAssessmentProjectsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMigrateSubscriptionResource(subscriptionResource).GetMigrateAssessmentProjectsAsync(cancellationToken);
         }
@@ -650,7 +734,10 @@ namespace Azure.ResourceManager.Migrate
         /// <returns> A collection of <see cref="MigrateAssessmentProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MigrateAssessmentProjectResource> GetMigrateAssessmentProjects(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableMigrateSubscriptionResource(subscriptionResource).GetMigrateAssessmentProjects(cancellationToken);
         }

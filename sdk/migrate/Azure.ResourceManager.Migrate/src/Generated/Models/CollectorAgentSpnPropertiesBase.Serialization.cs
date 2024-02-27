@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authority))
+            if (Authority != null)
             {
                 writer.WritePropertyName("authority"u8);
                 writer.WriteStringValue(Authority);
             }
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(Audience))
+            if (Audience != null)
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
             }
-            if (Optional.IsDefined(ObjectId))
+            if (ObjectId != null)
             {
                 writer.WritePropertyName("objectId"u8);
                 writer.WriteStringValue(ObjectId);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CollectorAgentSpnPropertiesBase(authority.Value, applicationId.Value, audience.Value, objectId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new CollectorAgentSpnPropertiesBase(
+                authority.Value,
+                applicationId.Value,
+                audience.Value,
+                objectId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CollectorAgentSpnPropertiesBase>.Write(ModelReaderWriterOptions options)

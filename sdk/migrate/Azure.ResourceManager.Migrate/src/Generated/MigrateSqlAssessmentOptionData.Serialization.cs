@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(VmFamilies))
+            if (options.Format != "W" && !(VmFamilies is ChangeTrackingList<VmFamilyConfig> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmFamilies"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ReservedInstanceVmFamilies))
+            if (options.Format != "W" && !(ReservedInstanceVmFamilies is ChangeTrackingList<AzureVmFamily> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceVmFamilies"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PremiumDiskVmFamilies))
+            if (options.Format != "W" && !(PremiumDiskVmFamilies is ChangeTrackingList<AzureVmFamily> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("premiumDiskVmFamilies"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlanVmFamilies))
+            if (!(SavingsPlanVmFamilies is ChangeTrackingList<AzureVmFamily> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlanVmFamilies"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlanSupportedLocations))
+            if (!(SavingsPlanSupportedLocations is ChangeTrackingList<AzureLocation> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlanSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlanSupportedLocationsForPaas))
+            if (!(SavingsPlanSupportedLocationsForPaas is ChangeTrackingList<AzureLocation> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlanSupportedLocationsForPaas"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedLocationsForIaas))
+            if (!(ReservedInstanceSupportedLocationsForIaas is ChangeTrackingList<AzureLocation> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedLocationsForIaas"u8);
                 writer.WriteStartArray();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlanSupportedOffers))
+            if (!(SavingsPlanSupportedOffers is ChangeTrackingList<AzureOfferCode> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlanSupportedOffers"u8);
                 writer.WriteStartArray();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SqlSkus))
+            if (!(SqlSkus is ChangeTrackingList<SqlPaaSTargetConfig> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("sqlSkus"u8);
                 writer.WriteStartArray();
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSqlTargets))
+            if (!(ReservedInstanceSqlTargets is ChangeTrackingList<MigrateTargetType> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSqlTargets"u8);
                 writer.WriteStartArray();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedLocations))
+            if (!(ReservedInstanceSupportedLocations is ChangeTrackingList<AzureLocation> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedLocations"u8);
                 writer.WriteStartArray();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedCurrencies))
+            if (!(ReservedInstanceSupportedCurrencies is ChangeTrackingList<AzureCurrency> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedCurrencies"u8);
                 writer.WriteStartArray();
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservedInstanceSupportedOffers))
+            if (!(ReservedInstanceSupportedOffers is ChangeTrackingList<AzureOfferCode> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("reservedInstanceSupportedOffers"u8);
                 writer.WriteStartArray();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedOffers))
+            if (!(SupportedOffers is ChangeTrackingList<AzureOfferCode> collection12 && collection12.IsUndefined))
             {
                 writer.WritePropertyName("supportedOffers"u8);
                 writer.WriteStartArray();
@@ -233,20 +233,20 @@ namespace Azure.ResourceManager.Migrate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<VmFamilyConfig>> vmFamilies = default;
-            Optional<IReadOnlyList<AzureVmFamily>> reservedInstanceVmFamilies = default;
-            Optional<IReadOnlyList<AzureVmFamily>> premiumDiskVmFamilies = default;
-            Optional<IList<AzureVmFamily>> savingsPlanVmFamilies = default;
-            Optional<IList<AzureLocation>> savingsPlanSupportedLocations = default;
-            Optional<IList<AzureLocation>> savingsPlanSupportedLocationsForPaas = default;
-            Optional<IList<AzureLocation>> reservedInstanceSupportedLocationsForIaas = default;
-            Optional<IList<AzureOfferCode>> savingsPlanSupportedOffers = default;
-            Optional<IList<SqlPaaSTargetConfig>> sqlSkus = default;
-            Optional<IList<MigrateTargetType>> reservedInstanceSqlTargets = default;
-            Optional<IList<AzureLocation>> reservedInstanceSupportedLocations = default;
-            Optional<IList<AzureCurrency>> reservedInstanceSupportedCurrencies = default;
-            Optional<IList<AzureOfferCode>> reservedInstanceSupportedOffers = default;
-            Optional<IList<AzureOfferCode>> supportedOffers = default;
+            IReadOnlyList<VmFamilyConfig> vmFamilies = default;
+            IReadOnlyList<AzureVmFamily> reservedInstanceVmFamilies = default;
+            IReadOnlyList<AzureVmFamily> premiumDiskVmFamilies = default;
+            IList<AzureVmFamily> savingsPlanVmFamilies = default;
+            IList<AzureLocation> savingsPlanSupportedLocations = default;
+            IList<AzureLocation> savingsPlanSupportedLocationsForPaas = default;
+            IList<AzureLocation> reservedInstanceSupportedLocationsForIaas = default;
+            IList<AzureOfferCode> savingsPlanSupportedOffers = default;
+            IList<SqlPaaSTargetConfig> sqlSkus = default;
+            IList<MigrateTargetType> reservedInstanceSqlTargets = default;
+            IList<AzureLocation> reservedInstanceSupportedLocations = default;
+            IList<AzureCurrency> reservedInstanceSupportedCurrencies = default;
+            IList<AzureOfferCode> reservedInstanceSupportedOffers = default;
+            IList<AzureOfferCode> supportedOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Migrate
                             List<VmFamilyConfig> array = new List<VmFamilyConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmFamilyConfig.DeserializeVmFamilyConfig(item));
+                                array.Add(VmFamilyConfig.DeserializeVmFamilyConfig(item, options));
                             }
                             vmFamilies = array;
                             continue;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Migrate
                             List<SqlPaaSTargetConfig> array = new List<SqlPaaSTargetConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlPaaSTargetConfig.DeserializeSqlPaaSTargetConfig(item));
+                                array.Add(SqlPaaSTargetConfig.DeserializeSqlPaaSTargetConfig(item, options));
                             }
                             sqlSkus = array;
                             continue;
@@ -489,7 +489,26 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlAssessmentOptionData(id, name, type, systemData.Value, Optional.ToList(vmFamilies), Optional.ToList(reservedInstanceVmFamilies), Optional.ToList(premiumDiskVmFamilies), Optional.ToList(savingsPlanVmFamilies), Optional.ToList(savingsPlanSupportedLocations), Optional.ToList(savingsPlanSupportedLocationsForPaas), Optional.ToList(reservedInstanceSupportedLocationsForIaas), Optional.ToList(savingsPlanSupportedOffers), Optional.ToList(sqlSkus), Optional.ToList(reservedInstanceSqlTargets), Optional.ToList(reservedInstanceSupportedLocations), Optional.ToList(reservedInstanceSupportedCurrencies), Optional.ToList(reservedInstanceSupportedOffers), Optional.ToList(supportedOffers), serializedAdditionalRawData);
+            return new MigrateSqlAssessmentOptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                vmFamilies ?? new ChangeTrackingList<VmFamilyConfig>(),
+                reservedInstanceVmFamilies ?? new ChangeTrackingList<AzureVmFamily>(),
+                premiumDiskVmFamilies ?? new ChangeTrackingList<AzureVmFamily>(),
+                savingsPlanVmFamilies ?? new ChangeTrackingList<AzureVmFamily>(),
+                savingsPlanSupportedLocations ?? new ChangeTrackingList<AzureLocation>(),
+                savingsPlanSupportedLocationsForPaas ?? new ChangeTrackingList<AzureLocation>(),
+                reservedInstanceSupportedLocationsForIaas ?? new ChangeTrackingList<AzureLocation>(),
+                savingsPlanSupportedOffers ?? new ChangeTrackingList<AzureOfferCode>(),
+                sqlSkus ?? new ChangeTrackingList<SqlPaaSTargetConfig>(),
+                reservedInstanceSqlTargets ?? new ChangeTrackingList<MigrateTargetType>(),
+                reservedInstanceSupportedLocations ?? new ChangeTrackingList<AzureLocation>(),
+                reservedInstanceSupportedCurrencies ?? new ChangeTrackingList<AzureCurrency>(),
+                reservedInstanceSupportedOffers ?? new ChangeTrackingList<AzureOfferCode>(),
+                supportedOffers ?? new ChangeTrackingList<AzureOfferCode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlAssessmentOptionData>.Write(ModelReaderWriterOptions options)

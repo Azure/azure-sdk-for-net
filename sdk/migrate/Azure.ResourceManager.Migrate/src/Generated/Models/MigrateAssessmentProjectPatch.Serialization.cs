@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,37 +39,37 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssessmentSolutionId))
+            if (AssessmentSolutionId != null)
             {
                 writer.WritePropertyName("assessmentSolutionId"u8);
                 writer.WriteStringValue(AssessmentSolutionId);
             }
-            if (Optional.IsDefined(ProjectStatus))
+            if (ProjectStatus.HasValue)
             {
                 writer.WritePropertyName("projectStatus"u8);
                 writer.WriteStringValue(ProjectStatus.Value.ToString());
             }
-            if (Optional.IsDefined(CustomerWorkspaceId))
+            if (CustomerWorkspaceId != null)
             {
                 writer.WritePropertyName("customerWorkspaceId"u8);
                 writer.WriteStringValue(CustomerWorkspaceId);
             }
-            if (Optional.IsDefined(CustomerWorkspaceLocation))
+            if (CustomerWorkspaceLocation != null)
             {
                 writer.WritePropertyName("customerWorkspaceLocation"u8);
                 writer.WriteStringValue(CustomerWorkspaceLocation);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess != null)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(CustomerStorageAccountArmId))
+            if (CustomerStorageAccountArmId != null)
             {
                 writer.WritePropertyName("customerStorageAccountArmId"u8);
                 writer.WriteStringValue(CustomerStorageAccountArmId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> assessmentSolutionId = default;
             Optional<AssessmentProjectStatus> projectStatus = default;
             Optional<ResourceIdentifier> customerWorkspaceId = default;
@@ -208,7 +208,16 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateAssessmentProjectPatch(Optional.ToDictionary(tags), assessmentSolutionId.Value, Optional.ToNullable(projectStatus), customerWorkspaceId.Value, customerWorkspaceLocation.Value, publicNetworkAccess.Value, customerStorageAccountArmId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MigrateAssessmentProjectPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                assessmentSolutionId.Value,
+                Optional.ToNullable(projectStatus),
+                customerWorkspaceId.Value,
+                customerWorkspaceLocation.Value,
+                publicNetworkAccess.Value,
+                customerStorageAccountArmId.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateAssessmentProjectPatch>.Write(ModelReaderWriterOptions options)

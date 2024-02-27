@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(GuidelineId))
+            if (GuidelineId != null)
             {
                 writer.WritePropertyName("guidelineId"u8);
                 writer.WriteStringValue(GuidelineId);
             }
-            if (Optional.IsDefined(MigrationGuidelineCategory))
+            if (MigrationGuidelineCategory.HasValue)
             {
                 writer.WritePropertyName("migrationGuidelineCategory"u8);
                 writer.WriteStringValue(MigrationGuidelineCategory.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MigrationGuidelineContext))
+            if (options.Format != "W" && !(MigrationGuidelineContext is ChangeTrackingList<MigrationGuidelineContext> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("migrationGuidelineContext"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
             Optional<string> guidelineId = default;
             Optional<SqlMigrationGuidelineCategory> migrationGuidelineCategory = default;
-            Optional<IReadOnlyList<MigrationGuidelineContext>> migrationGuidelineContext = default;
+            IReadOnlyList<MigrationGuidelineContext> migrationGuidelineContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<MigrationGuidelineContext> array = new List<MigrationGuidelineContext>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.MigrationGuidelineContext.DeserializeMigrationGuidelineContext(item));
+                        array.Add(Models.MigrationGuidelineContext.DeserializeMigrationGuidelineContext(item, options));
                     }
                     migrationGuidelineContext = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlMigrationGuideline(guidelineId.Value, Optional.ToNullable(migrationGuidelineCategory), Optional.ToList(migrationGuidelineContext), serializedAdditionalRawData);
+            return new SqlMigrationGuideline(guidelineId.Value, Optional.ToNullable(migrationGuidelineCategory), migrationGuidelineContext ?? new ChangeTrackingList<MigrationGuidelineContext>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlMigrationGuideline>.Write(ModelReaderWriterOptions options)

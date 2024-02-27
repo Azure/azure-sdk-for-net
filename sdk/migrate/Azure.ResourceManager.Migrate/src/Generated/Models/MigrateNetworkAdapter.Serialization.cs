@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            if (options.Format != "W" && MacAddress != null)
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             Optional<string> macAddress = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            IReadOnlyList<string> ipAddresses = default;
             Optional<string> displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateNetworkAdapter(macAddress.Value, Optional.ToList(ipAddresses), displayName.Value, serializedAdditionalRawData);
+            return new MigrateNetworkAdapter(macAddress.Value, ipAddresses ?? new ChangeTrackingList<string>(), displayName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateNetworkAdapter>.Write(ModelReaderWriterOptions options)

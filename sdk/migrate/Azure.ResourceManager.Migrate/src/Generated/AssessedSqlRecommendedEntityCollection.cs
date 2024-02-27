@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual async Task<Response<AssessedSqlRecommendedEntityResource>> GetAsync(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual Response<AssessedSqlRecommendedEntityResource> Get(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.Get");
             scope.Start();
@@ -238,7 +252,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.Exists");
             scope.Start();
@@ -281,7 +302,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual Response<bool> Exists(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.Exists");
             scope.Start();
@@ -324,7 +352,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssessedSqlRecommendedEntityResource>> GetIfExistsAsync(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.GetIfExists");
             scope.Start();
@@ -369,7 +404,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedAssessedEntityName"/> is null. </exception>
         public virtual NullableResponse<AssessedSqlRecommendedEntityResource> GetIfExists(string recommendedAssessedEntityName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedAssessedEntityName, nameof(recommendedAssessedEntityName));
+            if (recommendedAssessedEntityName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedAssessedEntityName));
+            }
+            if (recommendedAssessedEntityName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedAssessedEntityName));
+            }
 
             using var scope = _assessedSqlRecommendedEntityAssessedSqlRecommendedEntityOperationsClientDiagnostics.CreateScope("AssessedSqlRecommendedEntityCollection.GetIfExists");
             scope.Start();

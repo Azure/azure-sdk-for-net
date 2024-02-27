@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(GigabytesProvisioned))
+            if (options.Format != "W" && GigabytesProvisioned.HasValue)
             {
                 writer.WritePropertyName("gigabytesProvisioned"u8);
                 writer.WriteNumberValue(GigabytesProvisioned.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfRead))
+            if (options.Format != "W" && MegabytesPerSecondOfRead.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfWrite))
+            if (options.Format != "W" && MegabytesPerSecondOfWrite.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfReadOperationsPerSecond))
+            if (options.Format != "W" && NumberOfReadOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfWriteOperationsPerSecond))
+            if (options.Format != "W" && NumberOfWriteOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsAssessedDisk(name.Value, displayName.Value, Optional.ToNullable(gigabytesProvisioned), Optional.ToNullable(megabytesPerSecondOfRead), Optional.ToNullable(megabytesPerSecondOfWrite), Optional.ToNullable(numberOfReadOperationsPerSecond), Optional.ToNullable(numberOfWriteOperationsPerSecond), serializedAdditionalRawData);
+            return new AvsAssessedDisk(
+                name.Value,
+                displayName.Value,
+                Optional.ToNullable(gigabytesProvisioned),
+                Optional.ToNullable(megabytesPerSecondOfRead),
+                Optional.ToNullable(megabytesPerSecondOfWrite),
+                Optional.ToNullable(numberOfReadOperationsPerSecond),
+                Optional.ToNullable(numberOfWriteOperationsPerSecond),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsAssessedDisk>.Write(ModelReaderWriterOptions options)

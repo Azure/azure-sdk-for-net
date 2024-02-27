@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(InstanceSeries))
+            if (!(InstanceSeries is ChangeTrackingList<AzureVmFamily> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceSeries"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<IList<AzureVmFamily>> instanceSeries = default;
+            IList<AzureVmFamily> instanceSeries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmSettings(Optional.ToList(instanceSeries), serializedAdditionalRawData);
+            return new SqlVmSettings(instanceSeries ?? new ChangeTrackingList<AzureVmFamily>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmSettings>.Write(ModelReaderWriterOptions options)

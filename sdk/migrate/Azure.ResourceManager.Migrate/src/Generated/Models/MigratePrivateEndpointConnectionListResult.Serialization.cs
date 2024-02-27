@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<MigratePrivateEndpointConnectionData> array = new List<MigratePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigratePrivateEndpointConnectionData.DeserializeMigratePrivateEndpointConnectionData(item));
+                        array.Add(MigratePrivateEndpointConnectionData.DeserializeMigratePrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

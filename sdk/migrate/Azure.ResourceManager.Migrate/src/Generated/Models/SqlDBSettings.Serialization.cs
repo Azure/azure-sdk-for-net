@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSqlServiceTier))
+            if (AzureSqlServiceTier.HasValue)
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (Optional.IsDefined(AzureSqlDataBaseType))
+            if (AzureSqlDataBaseType.HasValue)
             {
                 writer.WritePropertyName("azureSqlDataBaseType"u8);
                 writer.WriteStringValue(AzureSqlDataBaseType.Value.ToString());
             }
-            if (Optional.IsDefined(AzureSqlComputeTier))
+            if (AzureSqlComputeTier.HasValue)
             {
                 writer.WritePropertyName("azureSqlComputeTier"u8);
                 writer.WriteStringValue(AzureSqlComputeTier.Value.ToString());
             }
-            if (Optional.IsDefined(AzureSqlPurchaseModel))
+            if (AzureSqlPurchaseModel.HasValue)
             {
                 writer.WritePropertyName("azureSqlPurchaseModel"u8);
                 writer.WriteStringValue(AzureSqlPurchaseModel.Value.ToString());

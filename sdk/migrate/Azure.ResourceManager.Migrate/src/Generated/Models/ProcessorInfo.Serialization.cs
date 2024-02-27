@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NumberOfSockets))
+            if (NumberOfSockets.HasValue)
             {
                 writer.WritePropertyName("numberOfSockets"u8);
                 writer.WriteNumberValue(NumberOfSockets.Value);
             }
-            if (Optional.IsDefined(NumberOfCoresPerSocket))
+            if (NumberOfCoresPerSocket.HasValue)
             {
                 writer.WritePropertyName("numberOfCoresPerSocket"u8);
                 writer.WriteNumberValue(NumberOfCoresPerSocket.Value);

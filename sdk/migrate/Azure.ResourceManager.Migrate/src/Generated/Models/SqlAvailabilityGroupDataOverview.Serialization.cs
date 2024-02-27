@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AvailabilityGroupId))
+            if (AvailabilityGroupId != null)
             {
                 writer.WritePropertyName("availabilityGroupId"u8);
                 writer.WriteStringValue(AvailabilityGroupId);
             }
-            if (Optional.IsDefined(AvailabilityGroupName))
+            if (AvailabilityGroupName != null)
             {
                 writer.WritePropertyName("availabilityGroupName"u8);
                 writer.WriteStringValue(AvailabilityGroupName);
             }
-            if (Optional.IsDefined(SqlAvailabilityGroupSdsArmId))
+            if (SqlAvailabilityGroupSdsArmId != null)
             {
                 writer.WritePropertyName("sqlAvailabilityGroupSdsArmId"u8);
                 writer.WriteStringValue(SqlAvailabilityGroupSdsArmId);
             }
-            if (Optional.IsDefined(SqlAvailabilityGroupEntityId))
+            if (SqlAvailabilityGroupEntityId != null)
             {
                 writer.WritePropertyName("sqlAvailabilityGroupEntityId"u8);
                 writer.WriteStringValue(SqlAvailabilityGroupEntityId);
             }
-            if (Optional.IsDefined(SqlAvailabilityReplicaId))
+            if (SqlAvailabilityReplicaId != null)
             {
                 writer.WritePropertyName("sqlAvailabilityReplicaId"u8);
                 writer.WriteStringValue(SqlAvailabilityReplicaId);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAvailabilityGroupDataOverview(availabilityGroupId.Value, availabilityGroupName.Value, sqlAvailabilityGroupSdsArmId.Value, sqlAvailabilityGroupEntityId.Value, sqlAvailabilityReplicaId.Value, serializedAdditionalRawData);
+            return new SqlAvailabilityGroupDataOverview(
+                availabilityGroupId.Value,
+                availabilityGroupName.Value,
+                sqlAvailabilityGroupSdsArmId.Value,
+                sqlAvailabilityGroupEntityId.Value,
+                sqlAvailabilityReplicaId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAvailabilityGroupDataOverview>.Write(ModelReaderWriterOptions options)

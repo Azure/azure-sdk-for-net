@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(GigabytesAllocated))
+            if (options.Format != "W" && GigabytesAllocated.HasValue)
             {
                 writer.WritePropertyName("gigabytesAllocated"u8);
                 writer.WriteNumberValue(GigabytesAllocated.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

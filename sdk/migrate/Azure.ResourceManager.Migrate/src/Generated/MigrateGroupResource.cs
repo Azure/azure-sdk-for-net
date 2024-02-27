@@ -489,7 +489,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateGroupResource>> UpdateAsync(WaitUntil waitUntil, MigrateGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateGroupGroupsOperationsClientDiagnostics.CreateScope("MigrateGroupResource.Update");
             scope.Start();
@@ -535,7 +538,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateGroupResource> Update(WaitUntil waitUntil, MigrateGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateGroupGroupsOperationsClientDiagnostics.CreateScope("MigrateGroupResource.Update");
             scope.Start();
@@ -581,7 +587,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateGroupResource>> UpdateMachinesAsync(WaitUntil waitUntil, MigrateGroupUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _migrateGroupGroupsOperationsClientDiagnostics.CreateScope("MigrateGroupResource.UpdateMachines");
             scope.Start();
@@ -627,7 +636,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<MigrateGroupResource> UpdateMachines(WaitUntil waitUntil, MigrateGroupUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _migrateGroupGroupsOperationsClientDiagnostics.CreateScope("MigrateGroupResource.UpdateMachines");
             scope.Start();

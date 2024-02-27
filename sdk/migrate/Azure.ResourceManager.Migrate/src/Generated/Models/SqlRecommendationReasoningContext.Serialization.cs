@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContextKey))
+            if (ContextKey != null)
             {
                 writer.WritePropertyName("contextKey"u8);
                 writer.WriteStringValue(ContextKey);
             }
-            if (Optional.IsDefined(ContextValue))
+            if (ContextValue != null)
             {
                 writer.WritePropertyName("contextValue"u8);
                 writer.WriteStringValue(ContextValue);

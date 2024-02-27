@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(SuitabilitySummary))
+            if (options.Format != "W" && !(SuitabilitySummary is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("suitabilitySummary"u8);
                 writer.WriteStartObject();
@@ -37,27 +37,27 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyComputeCost))
+            if (options.Format != "W" && MonthlyComputeCost.HasValue)
             {
                 writer.WritePropertyName("monthlyComputeCost"u8);
                 writer.WriteNumberValue(MonthlyComputeCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyStorageCost))
+            if (options.Format != "W" && MonthlyStorageCost.HasValue)
             {
                 writer.WritePropertyName("monthlyStorageCost"u8);
                 writer.WriteNumberValue(MonthlyStorageCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlyLicenseCost))
+            if (options.Format != "W" && MonthlyLicenseCost.HasValue)
             {
                 writer.WritePropertyName("monthlyLicenseCost"u8);
                 writer.WriteNumberValue(MonthlyLicenseCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceScore))
+            if (options.Format != "W" && ConfidenceScore.HasValue)
             {
                 writer.WritePropertyName("confidenceScore"u8);
                 writer.WriteNumberValue(ConfidenceScore.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MonthlySecurityCost))
+            if (options.Format != "W" && MonthlySecurityCost.HasValue)
             {
                 writer.WritePropertyName("monthlySecurityCost"u8);
                 writer.WriteNumberValue(MonthlySecurityCost.Value);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Migrate.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, int>> suitabilitySummary = default;
+            IReadOnlyDictionary<string, int> suitabilitySummary = default;
             Optional<double> monthlyComputeCost = default;
             Optional<double> monthlyStorageCost = default;
             Optional<double> monthlyLicenseCost = default;
@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlAssessmentV2SummaryDetails(Optional.ToDictionary(suitabilitySummary), Optional.ToNullable(monthlyComputeCost), Optional.ToNullable(monthlyStorageCost), Optional.ToNullable(monthlyLicenseCost), Optional.ToNullable(confidenceScore), Optional.ToNullable(monthlySecurityCost), serializedAdditionalRawData);
+            return new SqlAssessmentV2SummaryDetails(
+                suitabilitySummary ?? new ChangeTrackingDictionary<string, int>(),
+                Optional.ToNullable(monthlyComputeCost),
+                Optional.ToNullable(monthlyStorageCost),
+                Optional.ToNullable(monthlyLicenseCost),
+                Optional.ToNullable(confidenceScore),
+                Optional.ToNullable(monthlySecurityCost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlAssessmentV2SummaryDetails>.Write(ModelReaderWriterOptions options)

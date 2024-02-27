@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FamilyName))
+            if (FamilyName != null)
             {
                 writer.WritePropertyName("familyName"u8);
                 writer.WriteStringValue(FamilyName);
             }
-            if (Optional.IsCollectionDefined(TargetLocations))
+            if (!(TargetLocations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targetLocations"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             Optional<string> familyName = default;
-            Optional<IReadOnlyList<string>> targetLocations = default;
+            IReadOnlyList<string> targetLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UltraDiskAssessmentConfig(familyName.Value, Optional.ToList(targetLocations), serializedAdditionalRawData);
+            return new UltraDiskAssessmentConfig(familyName.Value, targetLocations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UltraDiskAssessmentConfig>.Write(ModelReaderWriterOptions options)

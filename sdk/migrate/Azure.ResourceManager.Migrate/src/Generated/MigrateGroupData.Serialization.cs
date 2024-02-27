@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(GroupStatus))
+            if (options.Format != "W" && GroupStatus.HasValue)
             {
                 writer.WritePropertyName("groupStatus"u8);
                 writer.WriteStringValue(GroupStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineCount))
+            if (options.Format != "W" && MachineCount.HasValue)
             {
                 writer.WritePropertyName("machineCount"u8);
                 writer.WriteNumberValue(MachineCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Assessments))
+            if (options.Format != "W" && !(Assessments is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessments"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedAssessmentTypes))
+            if (!(SupportedAssessmentTypes is ChangeTrackingList<AssessmentType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedAssessmentTypes"u8);
                 writer.WriteStartArray();
@@ -85,22 +85,22 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AreAssessmentsRunning))
+            if (options.Format != "W" && AreAssessmentsRunning.HasValue)
             {
                 writer.WritePropertyName("areAssessmentsRunning"u8);
                 writer.WriteBooleanValue(AreAssessmentsRunning.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (Optional.IsDefined(GroupType))
+            if (GroupType.HasValue)
             {
                 writer.WritePropertyName("groupType"u8);
                 writer.WriteStringValue(GroupType.Value.ToString());
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.Migrate
             Optional<MigrateProvisioningState> provisioningState = default;
             Optional<MigrateGroupStatus> groupStatus = default;
             Optional<int> machineCount = default;
-            Optional<IReadOnlyList<string>> assessments = default;
-            Optional<IList<AssessmentType>> supportedAssessmentTypes = default;
+            IReadOnlyList<string> assessments = default;
+            IList<AssessmentType> supportedAssessmentTypes = default;
             Optional<bool> areAssessmentsRunning = default;
             Optional<DateTimeOffset> createdTimestamp = default;
             Optional<DateTimeOffset> updatedTimestamp = default;
@@ -294,7 +294,21 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateGroupData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(groupStatus), Optional.ToNullable(machineCount), Optional.ToList(assessments), Optional.ToList(supportedAssessmentTypes), Optional.ToNullable(areAssessmentsRunning), Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(groupType), serializedAdditionalRawData);
+            return new MigrateGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(groupStatus),
+                Optional.ToNullable(machineCount),
+                assessments ?? new ChangeTrackingList<string>(),
+                supportedAssessmentTypes ?? new ChangeTrackingList<AssessmentType>(),
+                Optional.ToNullable(areAssessmentsRunning),
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                Optional.ToNullable(groupType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateGroupData>.Write(ModelReaderWriterOptions options)

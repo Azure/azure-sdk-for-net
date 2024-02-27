@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual async Task<Response<MigrateSqlAssessmentOptionResource>> GetAsync(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual Response<MigrateSqlAssessmentOptionResource> Get(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual Response<bool> Exists(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateSqlAssessmentOptionResource>> GetIfExistsAsync(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentOptionsName"/> is null. </exception>
         public virtual NullableResponse<MigrateSqlAssessmentOptionResource> GetIfExists(string assessmentOptionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessmentOptionsName, nameof(assessmentOptionsName));
+            if (assessmentOptionsName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentOptionsName));
+            }
+            if (assessmentOptionsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentOptionsName));
+            }
 
             using var scope = _migrateSqlAssessmentOptionSqlAssessmentOptionsOperationsClientDiagnostics.CreateScope("MigrateSqlAssessmentOptionCollection.GetIfExists");
             scope.Start();

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskSizeInMB))
+            if (DiskSizeInMB.HasValue)
             {
                 writer.WritePropertyName("diskSizeInMB"u8);
                 writer.WriteNumberValue(DiskSizeInMB.Value);
             }
-            if (Optional.IsDefined(MegabytesPerSecondOfRead))
+            if (MegabytesPerSecondOfRead.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (Optional.IsDefined(MegabytesPerSecondOfWrite))
+            if (MegabytesPerSecondOfWrite.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (Optional.IsDefined(NumberOfReadOperationsPerSecond))
+            if (NumberOfReadOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (Optional.IsDefined(NumberOfWriteOperationsPerSecond))
+            if (NumberOfWriteOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedSqlInstanceDiskDetails(diskId.Value, Optional.ToNullable(diskSizeInMB), Optional.ToNullable(megabytesPerSecondOfRead), Optional.ToNullable(megabytesPerSecondOfWrite), Optional.ToNullable(numberOfReadOperationsPerSecond), Optional.ToNullable(numberOfWriteOperationsPerSecond), serializedAdditionalRawData);
+            return new AssessedSqlInstanceDiskDetails(
+                diskId.Value,
+                Optional.ToNullable(diskSizeInMB),
+                Optional.ToNullable(megabytesPerSecondOfRead),
+                Optional.ToNullable(megabytesPerSecondOfWrite),
+                Optional.ToNullable(numberOfReadOperationsPerSecond),
+                Optional.ToNullable(numberOfWriteOperationsPerSecond),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedSqlInstanceDiskDetails>.Write(ModelReaderWriterOptions options)

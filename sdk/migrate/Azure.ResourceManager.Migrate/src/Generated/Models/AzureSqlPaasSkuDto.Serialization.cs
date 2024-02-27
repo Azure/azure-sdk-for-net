@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlServiceTier))
+            if (options.Format != "W" && AzureSqlServiceTier.HasValue)
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlComputeTier))
+            if (options.Format != "W" && AzureSqlComputeTier.HasValue)
             {
                 writer.WritePropertyName("azureSqlComputeTier"u8);
                 writer.WriteStringValue(AzureSqlComputeTier.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlHardwareGeneration))
+            if (options.Format != "W" && AzureSqlHardwareGeneration.HasValue)
             {
                 writer.WritePropertyName("azureSqlHardwareGeneration"u8);
                 writer.WriteStringValue(AzureSqlHardwareGeneration.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageMaxSizeInMB))
+            if (options.Format != "W" && StorageMaxSizeInMB.HasValue)
             {
                 writer.WritePropertyName("storageMaxSizeInMB"u8);
                 writer.WriteNumberValue(StorageMaxSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictedDataSizeInMB))
+            if (options.Format != "W" && PredictedDataSizeInMB.HasValue)
             {
                 writer.WritePropertyName("predictedDataSizeInMB"u8);
                 writer.WriteNumberValue(PredictedDataSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictedLogSizeInMB))
+            if (options.Format != "W" && PredictedLogSizeInMB.HasValue)
             {
                 writer.WritePropertyName("predictedLogSizeInMB"u8);
                 writer.WriteNumberValue(PredictedLogSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Cores))
+            if (options.Format != "W" && Cores.HasValue)
             {
                 writer.WritePropertyName("cores"u8);
                 writer.WriteNumberValue(Cores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlTargetType))
+            if (options.Format != "W" && AzureSqlTargetType.HasValue)
             {
                 writer.WritePropertyName("azureSqlTargetType"u8);
                 writer.WriteStringValue(AzureSqlTargetType.Value.ToString());
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureSqlPaasSkuDto(Optional.ToNullable(azureSqlServiceTier), Optional.ToNullable(azureSqlComputeTier), Optional.ToNullable(azureSqlHardwareGeneration), Optional.ToNullable(storageMaxSizeInMB), Optional.ToNullable(predictedDataSizeInMB), Optional.ToNullable(predictedLogSizeInMB), Optional.ToNullable(cores), Optional.ToNullable(azureSqlTargetType), serializedAdditionalRawData);
+            return new AzureSqlPaasSkuDto(
+                Optional.ToNullable(azureSqlServiceTier),
+                Optional.ToNullable(azureSqlComputeTier),
+                Optional.ToNullable(azureSqlHardwareGeneration),
+                Optional.ToNullable(storageMaxSizeInMB),
+                Optional.ToNullable(predictedDataSizeInMB),
+                Optional.ToNullable(predictedLogSizeInMB),
+                Optional.ToNullable(cores),
+                Optional.ToNullable(azureSqlTargetType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureSqlPaasSkuDto>.Write(ModelReaderWriterOptions options)

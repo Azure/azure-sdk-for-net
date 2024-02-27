@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (options.Format != "W" && Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
+            if (options.Format != "W" && RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ApplianceName))
+            if (options.Format != "W" && ApplianceName != null)
             {
                 writer.WritePropertyName("applianceName"u8);
                 writer.WriteStringValue(ApplianceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(SummaryMessage))
+            if (options.Format != "W" && SummaryMessage != null)
             {
                 writer.WritePropertyName("summaryMessage"u8);
                 writer.WriteStringValue(SummaryMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentScenario))
+            if (options.Format != "W" && AgentScenario != null)
             {
                 writer.WritePropertyName("agentScenario"u8);
                 writer.WriteStringValue(AgentScenario);
             }
-            if (options.Format != "W" && Optional.IsDefined(PossibleCauses))
+            if (options.Format != "W" && PossibleCauses != null)
             {
                 writer.WritePropertyName("possibleCauses"u8);
                 writer.WriteStringValue(PossibleCauses);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedAction))
+            if (options.Format != "W" && RecommendedAction != null)
             {
                 writer.WritePropertyName("recommendedAction"u8);
                 writer.WriteStringValue(RecommendedAction);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(MessageParameters))
+            if (options.Format != "W" && !(MessageParameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("messageParameters"u8);
                 writer.WriteStartObject();
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimeStamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ImpactedAssessmentType))
+            if (options.Format != "W" && ImpactedAssessmentType != null)
             {
                 writer.WritePropertyName("impactedAssessmentType"u8);
                 writer.WriteStringValue(ImpactedAssessmentType);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Migrate.Models
             Optional<string> possibleCauses = default;
             Optional<string> recommendedAction = default;
             Optional<string> severity = default;
-            Optional<IReadOnlyDictionary<string, string>> messageParameters = default;
+            IReadOnlyDictionary<string, string> messageParameters = default;
             Optional<DateTimeOffset> updatedTimeStamp = default;
             Optional<string> impactedAssessmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -240,7 +240,21 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateError(Optional.ToNullable(id), code.Value, runAsAccountId.Value, applianceName.Value, message.Value, summaryMessage.Value, agentScenario.Value, possibleCauses.Value, recommendedAction.Value, severity.Value, Optional.ToDictionary(messageParameters), Optional.ToNullable(updatedTimeStamp), impactedAssessmentType.Value, serializedAdditionalRawData);
+            return new MigrateError(
+                Optional.ToNullable(id),
+                code.Value,
+                runAsAccountId.Value,
+                applianceName.Value,
+                message.Value,
+                summaryMessage.Value,
+                agentScenario.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                severity.Value,
+                messageParameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(updatedTimeStamp),
+                impactedAssessmentType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateError>.Write(ModelReaderWriterOptions options)

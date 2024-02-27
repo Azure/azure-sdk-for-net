@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskType))
+            if (options.Format != "W" && DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskSize))
+            if (options.Format != "W" && DiskSize.HasValue)
             {
                 writer.WritePropertyName("diskSize"u8);
                 writer.WriteStringValue(DiskSize.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskRedundancy))
+            if (options.Format != "W" && DiskRedundancy.HasValue)
             {
                 writer.WritePropertyName("diskRedundancy"u8);
                 writer.WriteStringValue(DiskRedundancy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageCost))
+            if (options.Format != "W" && StorageCost.HasValue)
             {
                 writer.WritePropertyName("storageCost"u8);
                 writer.WriteNumberValue(StorageCost.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedSizeInGib))
+            if (options.Format != "W" && RecommendedSizeInGib.HasValue)
             {
                 writer.WritePropertyName("recommendedSizeInGib"u8);
                 writer.WriteNumberValue(RecommendedSizeInGib.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedThroughputInMbps))
+            if (options.Format != "W" && RecommendedThroughputInMbps.HasValue)
             {
                 writer.WritePropertyName("recommendedThroughputInMbps"u8);
                 writer.WriteNumberValue(RecommendedThroughputInMbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedIops))
+            if (options.Format != "W" && RecommendedIops.HasValue)
             {
                 writer.WritePropertyName("recommendedIops"u8);
                 writer.WriteNumberValue(RecommendedIops.Value);
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureManagedDiskSkuDto(Optional.ToNullable(diskType), Optional.ToNullable(diskSize), Optional.ToNullable(diskRedundancy), Optional.ToNullable(storageCost), Optional.ToNullable(recommendedSizeInGib), Optional.ToNullable(recommendedThroughputInMbps), Optional.ToNullable(recommendedIops), serializedAdditionalRawData);
+            return new AzureManagedDiskSkuDto(
+                Optional.ToNullable(diskType),
+                Optional.ToNullable(diskSize),
+                Optional.ToNullable(diskRedundancy),
+                Optional.ToNullable(storageCost),
+                Optional.ToNullable(recommendedSizeInGib),
+                Optional.ToNullable(recommendedThroughputInMbps),
+                Optional.ToNullable(recommendedIops),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureManagedDiskSkuDto>.Write(ModelReaderWriterOptions options)

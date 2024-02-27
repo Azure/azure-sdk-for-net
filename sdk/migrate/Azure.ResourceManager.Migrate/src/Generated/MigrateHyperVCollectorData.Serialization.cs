@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AgentProperties))
+            if (AgentProperties != null)
             {
                 writer.WritePropertyName("agentProperties"u8);
                 writer.WriteObjectValue(AgentProperties);
             }
-            if (Optional.IsDefined(DiscoverySiteId))
+            if (DiscoverySiteId != null)
             {
                 writer.WritePropertyName("discoverySiteId"u8);
                 writer.WriteStringValue(DiscoverySiteId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value);
+                            agentProperties = CollectorAgentPropertiesBase.DeserializeCollectorAgentPropertiesBase(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("discoverySiteId"u8))
@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateHyperVCollectorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), agentProperties.Value, discoverySiteId.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new MigrateHyperVCollectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                agentProperties.Value,
+                discoverySiteId.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateHyperVCollectorData>.Write(ModelReaderWriterOptions options)

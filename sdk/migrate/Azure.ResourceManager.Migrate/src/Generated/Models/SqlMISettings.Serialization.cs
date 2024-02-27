@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureSqlServiceTier))
+            if (AzureSqlServiceTier.HasValue)
             {
                 writer.WritePropertyName("azureSqlServiceTier"u8);
                 writer.WriteStringValue(AzureSqlServiceTier.Value.ToString());
             }
-            if (Optional.IsDefined(AzureSqlInstanceType))
+            if (AzureSqlInstanceType.HasValue)
             {
                 writer.WritePropertyName("azureSqlInstanceType"u8);
                 writer.WriteStringValue(AzureSqlInstanceType.Value.ToString());

@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateServerCollectorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serverCollectorName, MigrateServerCollectorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateServerCollectorResource> CreateOrUpdate(WaitUntil waitUntil, string serverCollectorName, MigrateServerCollectorData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual async Task<Response<MigrateServerCollectorResource>> GetAsync(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual Response<MigrateServerCollectorResource> Get(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual Response<bool> Exists(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateServerCollectorResource>> GetIfExistsAsync(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="serverCollectorName"/> is null. </exception>
         public virtual NullableResponse<MigrateServerCollectorResource> GetIfExists(string serverCollectorName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serverCollectorName, nameof(serverCollectorName));
+            if (serverCollectorName == null)
+            {
+                throw new ArgumentNullException(nameof(serverCollectorName));
+            }
+            if (serverCollectorName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(serverCollectorName));
+            }
 
             using var scope = _migrateServerCollectorServerCollectorsOperationsClientDiagnostics.CreateScope("MigrateServerCollectorCollection.GetIfExists");
             scope.Start();

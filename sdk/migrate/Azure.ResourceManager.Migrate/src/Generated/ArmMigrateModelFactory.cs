@@ -52,7 +52,25 @@ namespace Azure.ResourceManager.Migrate.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MigratePrivateEndpointConnectionData>();
 
-            return new MigrateAssessmentProjectData(id, name, resourceType, systemData, tags, location, provisioningState, createOn, updatedOn, serviceEndpoint, assessmentSolutionId, projectStatus, customerWorkspaceId, customerWorkspaceLocation, publicNetworkAccess, privateEndpointConnections?.ToList(), customerStorageAccountArmId, serializedAdditionalRawData: null);
+            return new MigrateAssessmentProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                createOn,
+                updatedOn,
+                serviceEndpoint,
+                assessmentSolutionId,
+                projectStatus,
+                customerWorkspaceId,
+                customerWorkspaceLocation,
+                publicNetworkAccess,
+                privateEndpointConnections?.ToList(),
+                customerStorageAccountArmId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigratePrivateEndpointConnectionData"/>. </summary>
@@ -69,7 +87,16 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             groupIds ??= new List<string>();
 
-            return new MigratePrivateEndpointConnectionData(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new MigratePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds?.ToList(),
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateAssessmentOptionData"/>. </summary>
@@ -102,7 +129,21 @@ namespace Azure.ResourceManager.Migrate.Models
             savingsPlanVmFamilies ??= new List<string>();
             savingsPlanSupportedLocations ??= new List<string>();
 
-            return new MigrateAssessmentOptionData(id, name, resourceType, systemData, vmFamilies?.ToList(), reservedInstanceVmFamilies?.ToList(), reservedInstanceSupportedLocations?.ToList(), reservedInstanceSupportedCurrencies?.ToList(), reservedInstanceSupportedOffers?.ToList(), ultraDiskVmFamilies?.ToList(), premiumDiskVmFamilies?.ToList(), savingsPlanVmFamilies?.ToList(), savingsPlanSupportedLocations?.ToList(), serializedAdditionalRawData: null);
+            return new MigrateAssessmentOptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vmFamilies?.ToList(),
+                reservedInstanceVmFamilies?.ToList(),
+                reservedInstanceSupportedLocations?.ToList(),
+                reservedInstanceSupportedCurrencies?.ToList(),
+                reservedInstanceSupportedOffers?.ToList(),
+                ultraDiskVmFamilies?.ToList(),
+                premiumDiskVmFamilies?.ToList(),
+                savingsPlanVmFamilies?.ToList(),
+                savingsPlanSupportedLocations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmFamilyConfig"/>. </summary>
@@ -150,7 +191,18 @@ namespace Azure.ResourceManager.Migrate.Models
             reservedInstanceSupportedCurrencies ??= new List<AzureCurrency>();
             reservedInstanceSupportedOffers ??= new List<AzureOfferCode>();
 
-            return new MigrateAvsAssessmentOptionData(id, name, resourceType, systemData, avsNodes?.ToList(), failuresToTolerateAndRaidLevelValues?.ToList(), reservedInstanceAvsNodes?.ToList(), reservedInstanceSupportedLocations?.ToList(), reservedInstanceSupportedCurrencies?.ToList(), reservedInstanceSupportedOffers?.ToList(), serializedAdditionalRawData: null);
+            return new MigrateAvsAssessmentOptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                avsNodes?.ToList(),
+                failuresToTolerateAndRaidLevelValues?.ToList(),
+                reservedInstanceAvsNodes?.ToList(),
+                reservedInstanceSupportedLocations?.ToList(),
+                reservedInstanceSupportedCurrencies?.ToList(),
+                reservedInstanceSupportedOffers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateGroupData"/>. </summary>
@@ -173,7 +225,21 @@ namespace Azure.ResourceManager.Migrate.Models
             assessments ??= new List<string>();
             supportedAssessmentTypes ??= new List<AssessmentType>();
 
-            return new MigrateGroupData(id, name, resourceType, systemData, provisioningState, groupStatus, machineCount, assessments?.ToList(), supportedAssessmentTypes?.ToList(), areAssessmentsRunning, createdOn, updatedOn, groupType, serializedAdditionalRawData: null);
+            return new MigrateGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                groupStatus,
+                machineCount,
+                assessments?.ToList(),
+                supportedAssessmentTypes?.ToList(),
+                areAssessmentsRunning,
+                createdOn,
+                updatedOn,
+                groupType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateAssessmentData"/>. </summary>
@@ -265,7 +331,53 @@ namespace Azure.ResourceManager.Migrate.Models
             distributionByOSName ??= new Dictionary<string, int>();
             suitabilitySummary ??= new Dictionary<string, int>();
 
-            return new MigrateAssessmentData(id, name, resourceType, systemData, provisioningState, assessmentErrorSummary, monthlyUltraStorageCost, costComponents?.ToList(), eaSubscriptionId, azurePricingTier, azureStorageRedundancy, reservedInstance, azureHybridUseBenefit, azureDiskTypes?.ToList(), azureVmFamilies?.ToList(), distributionBySupportStatus, distributionByServicePackInsight, distributionByOSName, monthlyComputeCost, monthlyBandwidthCost, monthlyStorageCost, monthlyPremiumStorageCost, monthlyStandardSsdStorageCost, suitabilitySummary, numberOfMachines, vmUptime, groupType, assessmentType, azureLocation, azureOfferCode, currency, scalingFactor, percentile, timeRange, perfDataStartOn, perfDataEndOn, stage, discountPercentage, sizingCriterion, confidenceRatingInPercentage, pricesQueriedOn, createdOn, updatedOn, status, schemaVersion, serializedAdditionalRawData: null);
+            return new MigrateAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                assessmentErrorSummary,
+                monthlyUltraStorageCost,
+                costComponents?.ToList(),
+                eaSubscriptionId,
+                azurePricingTier,
+                azureStorageRedundancy,
+                reservedInstance,
+                azureHybridUseBenefit,
+                azureDiskTypes?.ToList(),
+                azureVmFamilies?.ToList(),
+                distributionBySupportStatus,
+                distributionByServicePackInsight,
+                distributionByOSName,
+                monthlyComputeCost,
+                monthlyBandwidthCost,
+                monthlyStorageCost,
+                monthlyPremiumStorageCost,
+                monthlyStandardSsdStorageCost,
+                suitabilitySummary,
+                numberOfMachines,
+                vmUptime,
+                groupType,
+                assessmentType,
+                azureLocation,
+                azureOfferCode,
+                currency,
+                scalingFactor,
+                percentile,
+                timeRange,
+                perfDataStartOn,
+                perfDataEndOn,
+                stage,
+                discountPercentage,
+                sizingCriterion,
+                confidenceRatingInPercentage,
+                pricesQueriedOn,
+                createdOn,
+                updatedOn,
+                status,
+                schemaVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CostComponent"/>. </summary>
@@ -341,7 +453,48 @@ namespace Azure.ResourceManager.Migrate.Models
             costComponents ??= new List<CostComponent>();
             networkAdapters ??= new Dictionary<string, AssessedNetworkAdapter>();
 
-            return new AssessedMachineData(id, name, resourceType, systemData, errors?.ToList(), disks, monthlyUltraStorageCost, hostProcessor, costComponents?.ToList(), productSupportStatus, monthlyBandwidthCost, monthlyStorageCost, monthlyPremiumStorageCost, monthlyStandardSsdStorageCost, networkAdapters, recommendedSize, numberOfCoresForRecommendedSize, megabytesOfMemoryForRecommendedSize, monthlyComputeCostForRecommendedSize, suitabilityExplanation, suitabilityDetail, typePropertiesType, bootType, operatingSystemType, operatingSystemName, operatingSystemVersion, operatingSystemArchitecture, createdOn, updatedOn, displayName, description, datacenterMachineArmId, datacenterManagementServerArmId, datacenterManagementServerName, megabytesOfMemory, numberOfCores, confidenceRatingInPercentage, percentageCoresUtilization, percentageMemoryUtilization, suitability, serializedAdditionalRawData: null);
+            return new AssessedMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                errors?.ToList(),
+                disks,
+                monthlyUltraStorageCost,
+                hostProcessor,
+                costComponents?.ToList(),
+                productSupportStatus,
+                monthlyBandwidthCost,
+                monthlyStorageCost,
+                monthlyPremiumStorageCost,
+                monthlyStandardSsdStorageCost,
+                networkAdapters,
+                recommendedSize,
+                numberOfCoresForRecommendedSize,
+                megabytesOfMemoryForRecommendedSize,
+                monthlyComputeCostForRecommendedSize,
+                suitabilityExplanation,
+                suitabilityDetail,
+                typePropertiesType,
+                bootType,
+                operatingSystemType,
+                operatingSystemName,
+                operatingSystemVersion,
+                operatingSystemArchitecture,
+                createdOn,
+                updatedOn,
+                displayName,
+                description,
+                datacenterMachineArmId,
+                datacenterManagementServerArmId,
+                datacenterManagementServerName,
+                megabytesOfMemory,
+                numberOfCores,
+                confidenceRatingInPercentage,
+                percentageCoresUtilization,
+                percentageMemoryUtilization,
+                suitability,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateError"/>. </summary>
@@ -363,7 +516,21 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             messageParameters ??= new Dictionary<string, string>();
 
-            return new MigrateError(id, code, runAsAccountId, applianceName, message, summaryMessage, agentScenario, possibleCauses, recommendedAction, severity, messageParameters, updatedOn, impactedAssessmentType, serializedAdditionalRawData: null);
+            return new MigrateError(
+                id,
+                code,
+                runAsAccountId,
+                applianceName,
+                message,
+                summaryMessage,
+                agentScenario,
+                possibleCauses,
+                recommendedAction,
+                severity,
+                messageParameters,
+                updatedOn,
+                impactedAssessmentType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedDisk"/>. </summary>
@@ -386,7 +553,24 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AssessedDisk"/> instance for mocking. </returns>
         public static AssessedDisk AssessedDisk(MigrateCloudSuitability? suitability = null, AzureDiskSuitabilityExplanation? suitabilityExplanation = null, AzureDiskSuitabilityDetail? suitabilityDetail = null, AzureDiskSize? recommendedDiskSize = null, AzureDiskType? recommendedDiskType = null, int? gigabytesForRecommendedDiskSize = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedDisk(suitability, suitabilityExplanation, suitabilityDetail, recommendedDiskSize, recommendedDiskType, gigabytesForRecommendedDiskSize, recommendDiskThroughputInMbps, recommendedDiskIops, monthlyStorageCost, name, displayName, gigabytesProvisioned, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, serializedAdditionalRawData: null);
+            return new AssessedDisk(
+                suitability,
+                suitabilityExplanation,
+                suitabilityDetail,
+                recommendedDiskSize,
+                recommendedDiskType,
+                gigabytesForRecommendedDiskSize,
+                recommendDiskThroughputInMbps,
+                recommendedDiskIops,
+                monthlyStorageCost,
+                name,
+                displayName,
+                gigabytesProvisioned,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductSupportStatus"/>. </summary>
@@ -404,7 +588,19 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.ProductSupportStatus"/> instance for mocking. </returns>
         public static ProductSupportStatus ProductSupportStatus(string currentVersion = null, string servicePackStatus = null, string esuStatus = null, string supportStatus = null, int? eta = null, string currentEsuYear = null, DateTimeOffset? mainstreamEndOn = null, DateTimeOffset? extendedSupportEndOn = null, DateTimeOffset? extendedSecurityUpdateYear1EndOn = null, DateTimeOffset? extendedSecurityUpdateYear2EndOn = null, DateTimeOffset? extendedSecurityUpdateYear3EndOn = null)
         {
-            return new ProductSupportStatus(currentVersion, servicePackStatus, esuStatus, supportStatus, eta, currentEsuYear, mainstreamEndOn, extendedSupportEndOn, extendedSecurityUpdateYear1EndOn, extendedSecurityUpdateYear2EndOn, extendedSecurityUpdateYear3EndOn, serializedAdditionalRawData: null);
+            return new ProductSupportStatus(
+                currentVersion,
+                servicePackStatus,
+                esuStatus,
+                supportStatus,
+                eta,
+                currentEsuYear,
+                mainstreamEndOn,
+                extendedSupportEndOn,
+                extendedSecurityUpdateYear1EndOn,
+                extendedSecurityUpdateYear2EndOn,
+                extendedSecurityUpdateYear3EndOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedNetworkAdapter"/>. </summary>
@@ -423,7 +619,18 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             ipAddresses ??= new List<string>();
 
-            return new AssessedNetworkAdapter(suitability, suitabilityDetail, suitabilityExplanation, monthlyBandwidthCosts, netGigabytesTransmittedPerMonth, displayName, macAddress, ipAddresses?.ToList(), megabytesPerSecondReceived, megabytesPerSecondTransmitted, serializedAdditionalRawData: null);
+            return new AssessedNetworkAdapter(
+                suitability,
+                suitabilityDetail,
+                suitabilityExplanation,
+                monthlyBandwidthCosts,
+                netGigabytesTransmittedPerMonth,
+                displayName,
+                macAddress,
+                ipAddresses?.ToList(),
+                megabytesPerSecondReceived,
+                megabytesPerSecondTransmitted,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessmentReportDownloadUri"/>. </summary>
@@ -503,7 +710,53 @@ namespace Azure.ResourceManager.Migrate.Models
             assessmentErrorSummary ??= new Dictionary<string, int>();
             suitabilitySummary ??= new Dictionary<string, int>();
 
-            return new MigrateAvsAssessmentData(id, name, resourceType, systemData, provisioningState, assessmentErrorSummary, failuresToTolerateAndRaidLevel, vcpuOversubscription, nodeType, reservedInstance, totalMonthlyCost, suitability, suitabilityExplanation, numberOfNodes, cpuUtilization, ramUtilization, storageUtilization, totalCpuCores, totalRamInGB, totalStorageInGB, numberOfMachines, suitabilitySummary, memOvercommit, dedupeCompression, limitingFactor, isStretchClusterEnabled, groupType, assessmentType, azureLocation, azureOfferCode, currency, scalingFactor, percentile, timeRange, perfDataStartOn, perfDataEndOn, stage, discountPercentage, sizingCriterion, confidenceRatingInPercentage, pricesQueriedOn, createdOn, updatedOn, status, schemaVersion, serializedAdditionalRawData: null);
+            return new MigrateAvsAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                assessmentErrorSummary,
+                failuresToTolerateAndRaidLevel,
+                vcpuOversubscription,
+                nodeType,
+                reservedInstance,
+                totalMonthlyCost,
+                suitability,
+                suitabilityExplanation,
+                numberOfNodes,
+                cpuUtilization,
+                ramUtilization,
+                storageUtilization,
+                totalCpuCores,
+                totalRamInGB,
+                totalStorageInGB,
+                numberOfMachines,
+                suitabilitySummary,
+                memOvercommit,
+                dedupeCompression,
+                limitingFactor,
+                isStretchClusterEnabled,
+                groupType,
+                assessmentType,
+                azureLocation,
+                azureOfferCode,
+                currency,
+                scalingFactor,
+                percentile,
+                timeRange,
+                perfDataStartOn,
+                perfDataEndOn,
+                stage,
+                discountPercentage,
+                sizingCriterion,
+                confidenceRatingInPercentage,
+                pricesQueriedOn,
+                createdOn,
+                updatedOn,
+                status,
+                schemaVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateAvsAssessedMachineData"/>. </summary>
@@ -557,7 +810,37 @@ namespace Azure.ResourceManager.Migrate.Models
             disks ??= new Dictionary<string, AvsAssessedDisk>();
             networkAdapters ??= new Dictionary<string, AvsAssessedNetworkAdapter>();
 
-            return new MigrateAvsAssessedMachineData(id, name, resourceType, systemData, errors?.ToList(), disks, networkAdapters, storageInUseGB, suitabilityExplanation, suitabilityDetail, typePropertiesType, bootType, operatingSystemType, operatingSystemName, operatingSystemVersion, operatingSystemArchitecture, createdOn, updatedOn, displayName, description, datacenterMachineArmId, datacenterManagementServerArmId, datacenterManagementServerName, megabytesOfMemory, numberOfCores, confidenceRatingInPercentage, percentageCoresUtilization, percentageMemoryUtilization, suitability, serializedAdditionalRawData: null);
+            return new MigrateAvsAssessedMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                errors?.ToList(),
+                disks,
+                networkAdapters,
+                storageInUseGB,
+                suitabilityExplanation,
+                suitabilityDetail,
+                typePropertiesType,
+                bootType,
+                operatingSystemType,
+                operatingSystemName,
+                operatingSystemVersion,
+                operatingSystemArchitecture,
+                createdOn,
+                updatedOn,
+                displayName,
+                description,
+                datacenterMachineArmId,
+                datacenterManagementServerArmId,
+                datacenterManagementServerName,
+                megabytesOfMemory,
+                numberOfCores,
+                confidenceRatingInPercentage,
+                percentageCoresUtilization,
+                percentageMemoryUtilization,
+                suitability,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsAssessedDisk"/>. </summary>
@@ -571,7 +854,15 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AvsAssessedDisk"/> instance for mocking. </returns>
         public static AvsAssessedDisk AvsAssessedDisk(string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AvsAssessedDisk(name, displayName, gigabytesProvisioned, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, serializedAdditionalRawData: null);
+            return new AvsAssessedDisk(
+                name,
+                displayName,
+                gigabytesProvisioned,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsAssessedNetworkAdapter"/>. </summary>
@@ -593,7 +884,13 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             ipAddresses ??= new List<string>();
 
-            return new AvsAssessedNetworkAdapter(macAddress, ipAddresses?.ToList(), displayName, megabytesPerSecondReceived, megabytesPerSecondTransmitted, serializedAdditionalRawData: null);
+            return new AvsAssessedNetworkAdapter(
+                macAddress,
+                ipAddresses?.ToList(),
+                displayName,
+                megabytesPerSecondReceived,
+                megabytesPerSecondTransmitted,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateSqlAssessmentV2Data"/>. </summary>
@@ -659,7 +956,50 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             azureSqlVmInstanceSeries ??= new List<AzureVmFamily>();
 
-            return new MigrateSqlAssessmentV2Data(id, name, resourceType, systemData, provisioningState, osLicense, environmentType, entityUptime, optimizationLogic, reservedInstanceForVm, azureOfferCodeForVm, eaSubscriptionId, azureSqlManagedInstanceSettings, azureSqlDatabaseSettings, azureSqlVmInstanceSeries != null ? new SqlVmSettings(azureSqlVmInstanceSeries?.ToList(), serializedAdditionalRawData: null) : null, multiSubnetIntent, asyncCommitModeIntent, isInternetAccessAvailable, disasterRecoveryLocation, enableHadrAssessment, azureSecurityOfferingType, reservedInstance, sqlServerLicense, groupType, assessmentType, azureLocation, azureOfferCode, currency, scalingFactor, percentile, timeRange, perfDataStartOn, perfDataEndOn, stage, discountPercentage, sizingCriterion, confidenceRatingInPercentage, pricesQueriedOn, createdOn, updatedOn, status, schemaVersion, serializedAdditionalRawData: null);
+            return new MigrateSqlAssessmentV2Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                osLicense,
+                environmentType,
+                entityUptime,
+                optimizationLogic,
+                reservedInstanceForVm,
+                azureOfferCodeForVm,
+                eaSubscriptionId,
+                azureSqlManagedInstanceSettings,
+                azureSqlDatabaseSettings,
+                azureSqlVmInstanceSeries != null ? new SqlVmSettings(azureSqlVmInstanceSeries?.ToList(), serializedAdditionalRawData: null) : null,
+                multiSubnetIntent,
+                asyncCommitModeIntent,
+                isInternetAccessAvailable,
+                disasterRecoveryLocation,
+                enableHadrAssessment,
+                azureSecurityOfferingType,
+                reservedInstance,
+                sqlServerLicense,
+                groupType,
+                assessmentType,
+                azureLocation,
+                azureOfferCode,
+                currency,
+                scalingFactor,
+                percentile,
+                timeRange,
+                perfDataStartOn,
+                perfDataEndOn,
+                stage,
+                discountPercentage,
+                sizingCriterion,
+                confidenceRatingInPercentage,
+                pricesQueriedOn,
+                createdOn,
+                updatedOn,
+                status,
+                schemaVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.AssessedSqlDatabaseV2Data"/>. </summary>
@@ -704,7 +1044,37 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.AssessedSqlDatabaseV2Data"/> instance for mocking. </returns>
         public static AssessedSqlDatabaseV2Data AssessedSqlDatabaseV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateTargetType? recommendedAzureSqlTargetType = null, RecommendedSuitability? recommendedSuitability = null, double? bufferCacheSizeInMB = null, ProductSupportStatus productSupportStatus = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, bool? isDatabaseHighlyAvailable = null, SqlAvailabilityGroupDataOverview linkedAvailabilityGroupOverview = null, ResourceIdentifier machineArmId = null, ResourceIdentifier assessedSqlInstanceArmId = null, string machineName = null, string instanceName = null, string databaseName = null, double? databaseSizeInMB = null, CompatibilityLevel? compatibilityLevel = null, ResourceIdentifier sqlDatabaseSdsArmId = null, double? percentageCoresUtilization = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null, double? confidenceRatingInPercentage = null, AssessmentSizingCriterion? sizingCriterion = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new AssessedSqlDatabaseV2Data(id, name, resourceType, systemData, recommendedAzureSqlTargetType, recommendedSuitability, bufferCacheSizeInMB, productSupportStatus, azureSqlMISuitabilityDetails, azureSqlDBSuitabilityDetails, isDatabaseHighlyAvailable, linkedAvailabilityGroupOverview, machineArmId, assessedSqlInstanceArmId, machineName, instanceName, databaseName, databaseSizeInMB, compatibilityLevel, sqlDatabaseSdsArmId, percentageCoresUtilization, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, confidenceRatingInPercentage, sizingCriterion, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new AssessedSqlDatabaseV2Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                recommendedAzureSqlTargetType,
+                recommendedSuitability,
+                bufferCacheSizeInMB,
+                productSupportStatus,
+                azureSqlMISuitabilityDetails,
+                azureSqlDBSuitabilityDetails,
+                isDatabaseHighlyAvailable,
+                linkedAvailabilityGroupOverview,
+                machineArmId,
+                assessedSqlInstanceArmId,
+                machineName,
+                instanceName,
+                databaseName,
+                databaseSizeInMB,
+                compatibilityLevel,
+                sqlDatabaseSdsArmId,
+                percentageCoresUtilization,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                confidenceRatingInPercentage,
+                sizingCriterion,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlAssessmentV2PaasSuitabilityDetails"/>. </summary>
@@ -731,7 +1101,22 @@ namespace Azure.ResourceManager.Migrate.Models
             recommendationReasonings ??= new List<SqlRecommendationReasoning>();
             migrationIssues ??= new List<SqlAssessmentMigrationIssue>();
 
-            return new SqlAssessmentV2PaasSuitabilityDetails(azureSqlSku, replicaAzureSqlSku?.ToList(), sharedResources, monthlyComputeCost, monthlyStorageCost, costComponents?.ToList(), securitySuitability, shouldProvisionReplicas, skuReplicationMode, migrationGuidelines?.ToList(), recommendationReasonings?.ToList(), migrationTargetPlatform, suitability, migrationIssues?.ToList(), serializedAdditionalRawData: null);
+            return new SqlAssessmentV2PaasSuitabilityDetails(
+                azureSqlSku,
+                replicaAzureSqlSku?.ToList(),
+                sharedResources,
+                monthlyComputeCost,
+                monthlyStorageCost,
+                costComponents?.ToList(),
+                securitySuitability,
+                shouldProvisionReplicas,
+                skuReplicationMode,
+                migrationGuidelines?.ToList(),
+                recommendationReasonings?.ToList(),
+                migrationTargetPlatform,
+                suitability,
+                migrationIssues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureSqlPaasSkuDto"/>. </summary>
@@ -752,7 +1137,16 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AzureSqlPaasSkuDto"/> instance for mocking. </returns>
         public static AzureSqlPaasSkuDto AzureSqlPaasSkuDto(AzureSqlServiceTier? azureSqlServiceTier = null, MigrateComputeTier? azureSqlComputeTier = null, MigrateHardwareGeneration? azureSqlHardwareGeneration = null, double? storageMaxSizeInMB = null, double? predictedDataSizeInMB = null, double? predictedLogSizeInMB = null, int? cores = null, MigrateTargetType? azureSqlTargetType = null)
         {
-            return new AzureSqlPaasSkuDto(azureSqlServiceTier, azureSqlComputeTier, azureSqlHardwareGeneration, storageMaxSizeInMB, predictedDataSizeInMB, predictedLogSizeInMB, cores, azureSqlTargetType, serializedAdditionalRawData: null);
+            return new AzureSqlPaasSkuDto(
+                azureSqlServiceTier,
+                azureSqlComputeTier,
+                azureSqlHardwareGeneration,
+                storageMaxSizeInMB,
+                predictedDataSizeInMB,
+                predictedLogSizeInMB,
+                cores,
+                azureSqlTargetType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SharedResourcesDto"/>. </summary>
@@ -768,7 +1162,13 @@ namespace Azure.ResourceManager.Migrate.Models
             sharedLogDisks ??= new List<AzureManagedDiskSkuDto>();
             sharedTempDBDisks ??= new List<AzureManagedDiskSkuDto>();
 
-            return new SharedResourcesDto(sharedDataDisks?.ToList(), sharedLogDisks?.ToList(), sharedTempDBDisks?.ToList(), numberOfMounts, quorumWitnessType != null ? new AzureQuorumWitnessDto(quorumWitnessType, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SharedResourcesDto(
+                sharedDataDisks?.ToList(),
+                sharedLogDisks?.ToList(),
+                sharedTempDBDisks?.ToList(),
+                numberOfMounts,
+                quorumWitnessType != null ? new AzureQuorumWitnessDto(quorumWitnessType, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureManagedDiskSkuDto"/>. </summary>
@@ -782,7 +1182,15 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AzureManagedDiskSkuDto"/> instance for mocking. </returns>
         public static AzureManagedDiskSkuDto AzureManagedDiskSkuDto(AzureManagedDiskSkuDtoDiskType? diskType = null, AzureDiskSize? diskSize = null, AzureManagedDiskSkuDtoDiskRedundancy? diskRedundancy = null, double? storageCost = null, double? recommendedSizeInGib = null, double? recommendedThroughputInMbps = null, double? recommendedIops = null)
         {
-            return new AzureManagedDiskSkuDto(diskType, diskSize, diskRedundancy, storageCost, recommendedSizeInGib, recommendedThroughputInMbps, recommendedIops, serializedAdditionalRawData: null);
+            return new AzureManagedDiskSkuDto(
+                diskType,
+                diskSize,
+                diskRedundancy,
+                storageCost,
+                recommendedSizeInGib,
+                recommendedThroughputInMbps,
+                recommendedIops,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlMigrationGuideline"/>. </summary>
@@ -858,7 +1266,13 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.SqlAvailabilityGroupDataOverview"/> instance for mocking. </returns>
         public static SqlAvailabilityGroupDataOverview SqlAvailabilityGroupDataOverview(string availabilityGroupId = null, string availabilityGroupName = null, ResourceIdentifier sqlAvailabilityGroupSdsArmId = null, string sqlAvailabilityGroupEntityId = null, string sqlAvailabilityReplicaId = null)
         {
-            return new SqlAvailabilityGroupDataOverview(availabilityGroupId, availabilityGroupName, sqlAvailabilityGroupSdsArmId, sqlAvailabilityGroupEntityId, sqlAvailabilityReplicaId, serializedAdditionalRawData: null);
+            return new SqlAvailabilityGroupDataOverview(
+                availabilityGroupId,
+                availabilityGroupName,
+                sqlAvailabilityGroupSdsArmId,
+                sqlAvailabilityGroupEntityId,
+                sqlAvailabilityReplicaId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.AssessedSqlInstanceV2Data"/>. </summary>
@@ -904,7 +1318,40 @@ namespace Azure.ResourceManager.Migrate.Models
             recommendedTargetReasonings ??= new List<SqlRecommendationReasoning>();
             logicalDisks ??= new List<AssessedSqlInstanceDiskDetails>();
 
-            return new AssessedSqlInstanceV2Data(id, name, resourceType, systemData, memoryInUseInMB, hasScanOccurred, recommendedAzureSqlTargetType, recommendedSuitability, azureSqlMISuitabilityDetails, azureSqlDBSuitabilityDetails, azureSqlVmSuitabilityDetails, storageTypeBasedDetails?.ToList(), productSupportStatus, fciMetadata, availabilityReplicaSummary, isClustered, isHighAvailabilityEnabled, recommendedTargetReasonings?.ToList(), machineArmId, machineName, instanceName, sqlInstanceSdsArmId, sqlEdition, sqlVersion, numberOfCoresAllocated, percentageCoresUtilization, logicalDisks?.ToList(), databaseSummary, confidenceRatingInPercentage, sizingCriterion, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new AssessedSqlInstanceV2Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                memoryInUseInMB,
+                hasScanOccurred,
+                recommendedAzureSqlTargetType,
+                recommendedSuitability,
+                azureSqlMISuitabilityDetails,
+                azureSqlDBSuitabilityDetails,
+                azureSqlVmSuitabilityDetails,
+                storageTypeBasedDetails?.ToList(),
+                productSupportStatus,
+                fciMetadata,
+                availabilityReplicaSummary,
+                isClustered,
+                isHighAvailabilityEnabled,
+                recommendedTargetReasonings?.ToList(),
+                machineArmId,
+                machineName,
+                instanceName,
+                sqlInstanceSdsArmId,
+                sqlEdition,
+                sqlVersion,
+                numberOfCoresAllocated,
+                percentageCoresUtilization,
+                logicalDisks?.ToList(),
+                databaseSummary,
+                confidenceRatingInPercentage,
+                sizingCriterion,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlAssessmentV2IaasSuitabilityDetails"/>. </summary>
@@ -931,7 +1378,22 @@ namespace Azure.ResourceManager.Migrate.Models
             recommendationReasonings ??= new List<SqlRecommendationReasoning>();
             migrationIssues ??= new List<SqlAssessmentMigrationIssue>();
 
-            return new SqlAssessmentV2IaasSuitabilityDetails(azureSqlSku, replicaAzureSqlSku?.ToList(), sharedResources, monthlyComputeCost, monthlyStorageCost, costComponents?.ToList(), securitySuitability, shouldProvisionReplicas, skuReplicationMode, migrationGuidelines?.ToList(), recommendationReasonings?.ToList(), migrationTargetPlatform, suitability, migrationIssues?.ToList(), serializedAdditionalRawData: null);
+            return new SqlAssessmentV2IaasSuitabilityDetails(
+                azureSqlSku,
+                replicaAzureSqlSku?.ToList(),
+                sharedResources,
+                monthlyComputeCost,
+                monthlyStorageCost,
+                costComponents?.ToList(),
+                securitySuitability,
+                shouldProvisionReplicas,
+                skuReplicationMode,
+                migrationGuidelines?.ToList(),
+                recommendationReasonings?.ToList(),
+                migrationTargetPlatform,
+                suitability,
+                migrationIssues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureSqlIaasSkuDto"/>. </summary>
@@ -960,7 +1422,13 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AzureVmSkuDto"/> instance for mocking. </returns>
         public static AzureVmSkuDto AzureVmSkuDto(AzureVmFamily? azureVmFamily = null, int? cores = null, AzureVmSize? azureSkuName = null, int? availableCores = null, int? maxNetworkInterfaces = null)
         {
-            return new AzureVmSkuDto(azureVmFamily, cores, azureSkuName, availableCores, maxNetworkInterfaces, serializedAdditionalRawData: null);
+            return new AzureVmSkuDto(
+                azureVmFamily,
+                cores,
+                azureSkuName,
+                availableCores,
+                maxNetworkInterfaces,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedSqlInstanceStorageDetails"/>. </summary>
@@ -973,7 +1441,14 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AssessedSqlInstanceStorageDetails"/> instance for mocking. </returns>
         public static AssessedSqlInstanceStorageDetails AssessedSqlInstanceStorageDetails(string storageType = null, double? diskSizeInMB = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedSqlInstanceStorageDetails(storageType, diskSizeInMB, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, serializedAdditionalRawData: null);
+            return new AssessedSqlInstanceStorageDetails(
+                storageType,
+                diskSizeInMB,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlFciMetadata"/>. </summary>
@@ -995,7 +1470,13 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.SqlAvailabilityReplicaSummary"/> instance for mocking. </returns>
         public static SqlAvailabilityReplicaSummary SqlAvailabilityReplicaSummary(int? numberOfSynchronousReadReplicas = null, int? numberOfSynchronousNonReadReplicas = null, int? numberOfAsynchronousReadReplicas = null, int? numberOfAsynchronousNonReadReplicas = null, int? numberOfPrimaryReplicas = null)
         {
-            return new SqlAvailabilityReplicaSummary(numberOfSynchronousReadReplicas, numberOfSynchronousNonReadReplicas, numberOfAsynchronousReadReplicas, numberOfAsynchronousNonReadReplicas, numberOfPrimaryReplicas, serializedAdditionalRawData: null);
+            return new SqlAvailabilityReplicaSummary(
+                numberOfSynchronousReadReplicas,
+                numberOfSynchronousNonReadReplicas,
+                numberOfAsynchronousReadReplicas,
+                numberOfAsynchronousNonReadReplicas,
+                numberOfPrimaryReplicas,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedSqlInstanceDiskDetails"/>. </summary>
@@ -1008,7 +1489,14 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AssessedSqlInstanceDiskDetails"/> instance for mocking. </returns>
         public static AssessedSqlInstanceDiskDetails AssessedSqlInstanceDiskDetails(string diskId = null, double? diskSizeInMB = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedSqlInstanceDiskDetails(diskId, diskSizeInMB, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, serializedAdditionalRawData: null);
+            return new AssessedSqlInstanceDiskDetails(
+                diskId,
+                diskSizeInMB,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedSqlInstanceDatabaseSummary"/>. </summary>
@@ -1088,7 +1576,50 @@ namespace Azure.ResourceManager.Migrate.Models
             costComponents ??= new List<CostComponent>();
             migrationGuidelines ??= new List<SqlMigrationGuideline>();
 
-            return new AssessedSqlMachineData(id, name, resourceType, systemData, biosGuid, fqdn, sqlInstances?.ToList(), suitabilityDetail, suitabilityExplanation, recommendedVmSize, recommendedVmFamily, productSupportStatus, recommendedVmSizeNumberOfCores, recommendedVmSizeMegabytesOfMemory, monthlyComputeCost, disks, networkAdapters, monthlyBandwidthCost, monthlyStorageCost, costComponents?.ToList(), securitySuitability, migrationGuidelines?.ToList(), bootType, operatingSystemType, operatingSystemName, operatingSystemVersion, operatingSystemArchitecture, createdOn, updatedOn, displayName, typePropertiesType, description, datacenterMachineArmId, datacenterManagementServerArmId, datacenterManagementServerName, megabytesOfMemory, numberOfCores, confidenceRatingInPercentage, percentageCoresUtilization, percentageMemoryUtilization, suitability, sizingCriterion, serializedAdditionalRawData: null);
+            return new AssessedSqlMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                biosGuid,
+                fqdn,
+                sqlInstances?.ToList(),
+                suitabilityDetail,
+                suitabilityExplanation,
+                recommendedVmSize,
+                recommendedVmFamily,
+                productSupportStatus,
+                recommendedVmSizeNumberOfCores,
+                recommendedVmSizeMegabytesOfMemory,
+                monthlyComputeCost,
+                disks,
+                networkAdapters,
+                monthlyBandwidthCost,
+                monthlyStorageCost,
+                costComponents?.ToList(),
+                securitySuitability,
+                migrationGuidelines?.ToList(),
+                bootType,
+                operatingSystemType,
+                operatingSystemName,
+                operatingSystemVersion,
+                operatingSystemArchitecture,
+                createdOn,
+                updatedOn,
+                displayName,
+                typePropertiesType,
+                description,
+                datacenterMachineArmId,
+                datacenterManagementServerArmId,
+                datacenterManagementServerName,
+                megabytesOfMemory,
+                numberOfCores,
+                confidenceRatingInPercentage,
+                percentageCoresUtilization,
+                percentageMemoryUtilization,
+                suitability,
+                sizingCriterion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedSqlInstanceSummary"/>. </summary>
@@ -1104,7 +1635,17 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AssessedSqlInstanceSummary"/> instance for mocking. </returns>
         public static AssessedSqlInstanceSummary AssessedSqlInstanceSummary(string instanceId = null, string instanceName = null, ResourceIdentifier sqlInstanceSdsArmId = null, string sqlInstanceEntityId = null, string sqlEdition = null, string sqlVersion = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, SqlFciState? sqlFciState = null)
         {
-            return new AssessedSqlInstanceSummary(instanceId, instanceName, sqlInstanceSdsArmId, sqlInstanceEntityId, sqlEdition, sqlVersion, isClustered, isHighAvailabilityEnabled, sqlFciState, serializedAdditionalRawData: null);
+            return new AssessedSqlInstanceSummary(
+                instanceId,
+                instanceName,
+                sqlInstanceSdsArmId,
+                sqlInstanceEntityId,
+                sqlEdition,
+                sqlVersion,
+                isClustered,
+                isHighAvailabilityEnabled,
+                sqlFciState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessedDataDisk"/>. </summary>
@@ -1127,7 +1668,24 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Models.AssessedDataDisk"/> instance for mocking. </returns>
         public static AssessedDataDisk AssessedDataDisk(MigrateCloudSuitability? suitability = null, AzureDiskSuitabilityExplanation? suitabilityExplanation = null, AzureDiskSuitabilityDetail? suitabilityDetail = null, AzureDiskSize? recommendedDiskSize = null, AzureDiskType? recommendedDiskType = null, int? recommendedDiskSizeGigabytes = null, double? recommendDiskThroughputInMbps = null, double? recommendedDiskIops = null, double? monthlyStorageCost = null, string name = null, string displayName = null, double? gigabytesProvisioned = null, double? megabytesPerSecondOfRead = null, double? megabytesPerSecondOfWrite = null, double? numberOfReadOperationsPerSecond = null, double? numberOfWriteOperationsPerSecond = null)
         {
-            return new AssessedDataDisk(suitability, suitabilityExplanation, suitabilityDetail, recommendedDiskSize, recommendedDiskType, recommendedDiskSizeGigabytes, recommendDiskThroughputInMbps, recommendedDiskIops, monthlyStorageCost, name, displayName, gigabytesProvisioned, megabytesPerSecondOfRead, megabytesPerSecondOfWrite, numberOfReadOperationsPerSecond, numberOfWriteOperationsPerSecond, serializedAdditionalRawData: null);
+            return new AssessedDataDisk(
+                suitability,
+                suitabilityExplanation,
+                suitabilityDetail,
+                recommendedDiskSize,
+                recommendedDiskType,
+                recommendedDiskSizeGigabytes,
+                recommendDiskThroughputInMbps,
+                recommendedDiskIops,
+                monthlyStorageCost,
+                name,
+                displayName,
+                gigabytesProvisioned,
+                megabytesPerSecondOfRead,
+                megabytesPerSecondOfWrite,
+                numberOfReadOperationsPerSecond,
+                numberOfWriteOperationsPerSecond,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlAssessedNetworkAdapter"/>. </summary>
@@ -1147,7 +1705,19 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             ipAddresses ??= new List<string>();
 
-            return new SqlAssessedNetworkAdapter(suitability, suitabilityDetail, suitabilityExplanation, monthlyBandwidthCosts, netGigabytesTransmittedPerMonth, name, displayName, macAddress, ipAddresses?.ToList(), megabytesPerSecondReceived, megabytesPerSecondTransmitted, serializedAdditionalRawData: null);
+            return new SqlAssessedNetworkAdapter(
+                suitability,
+                suitabilityDetail,
+                suitabilityExplanation,
+                monthlyBandwidthCosts,
+                netGigabytesTransmittedPerMonth,
+                name,
+                displayName,
+                macAddress,
+                ipAddresses?.ToList(),
+                megabytesPerSecondReceived,
+                megabytesPerSecondTransmitted,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.AssessedSqlRecommendedEntityData"/>. </summary>
@@ -1178,7 +1748,29 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.AssessedSqlRecommendedEntityData"/> instance for mocking. </returns>
         public static AssessedSqlRecommendedEntityData AssessedSqlRecommendedEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string machineName = null, string instanceName = null, ProductSupportStatus productSupportStatus = null, int? dbCount = null, int? discoveredDBCount = null, bool? hasScanOccurred = null, MigrateTargetType? recommendedAzureSqlTargetType = null, RecommendedSuitability? recommendedSuitability = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlMISuitabilityDetails = null, SqlAssessmentV2PaasSuitabilityDetails azureSqlDBSuitabilityDetails = null, SqlAssessmentV2IaasSuitabilityDetails azureSqlVmSuitabilityDetails = null, ResourceIdentifier assessedSqlEntityArmId = null, bool? isClustered = null, bool? isHighAvailabilityEnabled = null, string sqlEdition = null, string sqlVersion = null, AssessmentSizingCriterion? sizingCriterion = null)
         {
-            return new AssessedSqlRecommendedEntityData(id, name, resourceType, systemData, machineName, instanceName, productSupportStatus, dbCount, discoveredDBCount, hasScanOccurred, recommendedAzureSqlTargetType, recommendedSuitability, azureSqlMISuitabilityDetails, azureSqlDBSuitabilityDetails, azureSqlVmSuitabilityDetails, assessedSqlEntityArmId, isClustered, isHighAvailabilityEnabled, sqlEdition, sqlVersion, sizingCriterion, serializedAdditionalRawData: null);
+            return new AssessedSqlRecommendedEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                machineName,
+                instanceName,
+                productSupportStatus,
+                dbCount,
+                discoveredDBCount,
+                hasScanOccurred,
+                recommendedAzureSqlTargetType,
+                recommendedSuitability,
+                azureSqlMISuitabilityDetails,
+                azureSqlDBSuitabilityDetails,
+                azureSqlVmSuitabilityDetails,
+                assessedSqlEntityArmId,
+                isClustered,
+                isHighAvailabilityEnabled,
+                sqlEdition,
+                sqlVersion,
+                sizingCriterion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateSqlAssessmentV2SummaryData"/>. </summary>
@@ -1210,7 +1802,25 @@ namespace Azure.ResourceManager.Migrate.Models
             instanceDistributionBySizingCriterion ??= new Dictionary<string, int>();
             databaseDistributionBySizingCriterion ??= new Dictionary<string, int>();
 
-            return new MigrateSqlAssessmentV2SummaryData(id, name, resourceType, systemData, assessmentSummary, distributionBySupportStatus, distributionByServicePackInsight, distributionBySqlVersion, distributionBySqlEdition, instanceDistributionBySizingCriterion, databaseDistributionBySizingCriterion, numberOfMachines, numberOfSqlInstances, numberOfSuccessfullyDiscoveredSqlInstances, numberOfSqlDatabases, numberOfFciInstances, numberOfSqlAvailabilityGroups, serializedAdditionalRawData: null);
+            return new MigrateSqlAssessmentV2SummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                assessmentSummary,
+                distributionBySupportStatus,
+                distributionByServicePackInsight,
+                distributionBySqlVersion,
+                distributionBySqlEdition,
+                instanceDistributionBySizingCriterion,
+                databaseDistributionBySizingCriterion,
+                numberOfMachines,
+                numberOfSqlInstances,
+                numberOfSuccessfullyDiscoveredSqlInstances,
+                numberOfSqlDatabases,
+                numberOfFciInstances,
+                numberOfSqlAvailabilityGroups,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlAssessmentV2SummaryDetails"/>. </summary>
@@ -1225,7 +1835,14 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             suitabilitySummary ??= new Dictionary<string, int>();
 
-            return new SqlAssessmentV2SummaryDetails(suitabilitySummary, monthlyComputeCost, monthlyStorageCost, monthlyLicenseCost, confidenceScore, monthlySecurityCost, serializedAdditionalRawData: null);
+            return new SqlAssessmentV2SummaryDetails(
+                suitabilitySummary,
+                monthlyComputeCost,
+                monthlyStorageCost,
+                monthlyLicenseCost,
+                confidenceScore,
+                monthlySecurityCost,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateHyperVCollectorData"/>. </summary>
@@ -1241,7 +1858,17 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.MigrateHyperVCollectorData"/> instance for mocking. </returns>
         public static MigrateHyperVCollectorData MigrateHyperVCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateProvisioningState? provisioningState = null, CollectorAgentPropertiesBase agentProperties = null, string discoverySiteId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new MigrateHyperVCollectorData(id, name, resourceType, systemData, provisioningState, agentProperties, discoverySiteId, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new MigrateHyperVCollectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                agentProperties,
+                discoverySiteId,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateImportCollectorData"/>. </summary>
@@ -1256,7 +1883,16 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.MigrateImportCollectorData"/> instance for mocking. </returns>
         public static MigrateImportCollectorData MigrateImportCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateProvisioningState? provisioningState = null, string discoverySiteId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new MigrateImportCollectorData(id, name, resourceType, systemData, provisioningState, discoverySiteId, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new MigrateImportCollectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                discoverySiteId,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateMachineData"/>. </summary>
@@ -1296,7 +1932,34 @@ namespace Azure.ResourceManager.Migrate.Models
             sqlInstances ??= new List<string>();
             webApplications ??= new List<string>();
 
-            return new MigrateMachineData(id, name, resourceType, systemData, workloadSummary, errors?.ToList(), hostProcessor, productSupportStatus, discoveryMachineArmId, datacenterManagementServerArmId, datacenterManagementServerName, bootType, displayName, megabytesOfMemory, numberOfCores, operatingSystemType, operatingSystemName, operatingSystemVersion, description, createdOn, disks, groups?.ToList(), networkAdapters, sqlInstances?.ToList(), webApplications?.ToList(), updatedOn, serializedAdditionalRawData: null);
+            return new MigrateMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                workloadSummary,
+                errors?.ToList(),
+                hostProcessor,
+                productSupportStatus,
+                discoveryMachineArmId,
+                datacenterManagementServerArmId,
+                datacenterManagementServerName,
+                bootType,
+                displayName,
+                megabytesOfMemory,
+                numberOfCores,
+                operatingSystemType,
+                operatingSystemName,
+                operatingSystemVersion,
+                description,
+                createdOn,
+                disks,
+                groups?.ToList(),
+                networkAdapters,
+                sqlInstances?.ToList(),
+                webApplications?.ToList(),
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadSummary"/>. </summary>
@@ -1343,7 +2006,15 @@ namespace Azure.ResourceManager.Migrate.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MigratePrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new MigratePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateAssessmentProjectSummaryData"/>. </summary>
@@ -1366,7 +2037,19 @@ namespace Azure.ResourceManager.Migrate.Models
         {
             errorSummaryAffectedEntities ??= new List<AssessmentErrorSummary>();
 
-            return new MigrateAssessmentProjectSummaryData(id, name, resourceType, systemData, errorSummaryAffectedEntities?.ToList(), numberOfPrivateEndpointConnections, numberOfGroups, numberOfMachines, numberOfImportMachines, numberOfAssessments, lastAssessedOn, serializedAdditionalRawData: null);
+            return new MigrateAssessmentProjectSummaryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                errorSummaryAffectedEntities?.ToList(),
+                numberOfPrivateEndpointConnections,
+                numberOfGroups,
+                numberOfMachines,
+                numberOfImportMachines,
+                numberOfAssessments,
+                lastAssessedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AssessmentErrorSummary"/>. </summary>
@@ -1391,7 +2074,17 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.MigrateServerCollectorData"/> instance for mocking. </returns>
         public static MigrateServerCollectorData MigrateServerCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateProvisioningState? provisioningState = null, CollectorAgentPropertiesBase agentProperties = null, string discoverySiteId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new MigrateServerCollectorData(id, name, resourceType, systemData, provisioningState, agentProperties, discoverySiteId, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new MigrateServerCollectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                agentProperties,
+                discoverySiteId,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateSqlAssessmentOptionData"/>. </summary>
@@ -1431,7 +2124,26 @@ namespace Azure.ResourceManager.Migrate.Models
             reservedInstanceSupportedOffers ??= new List<AzureOfferCode>();
             supportedOffers ??= new List<AzureOfferCode>();
 
-            return new MigrateSqlAssessmentOptionData(id, name, resourceType, systemData, vmFamilies?.ToList(), reservedInstanceVmFamilies?.ToList(), premiumDiskVmFamilies?.ToList(), savingsPlanVmFamilies?.ToList(), savingsPlanSupportedLocations?.ToList(), savingsPlanSupportedLocationsForPaas?.ToList(), reservedInstanceSupportedLocationsForIaas?.ToList(), savingsPlanSupportedOffers?.ToList(), sqlSkus?.ToList(), reservedInstanceSqlTargets?.ToList(), reservedInstanceSupportedLocations?.ToList(), reservedInstanceSupportedCurrencies?.ToList(), reservedInstanceSupportedOffers?.ToList(), supportedOffers?.ToList(), serializedAdditionalRawData: null);
+            return new MigrateSqlAssessmentOptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vmFamilies?.ToList(),
+                reservedInstanceVmFamilies?.ToList(),
+                premiumDiskVmFamilies?.ToList(),
+                savingsPlanVmFamilies?.ToList(),
+                savingsPlanSupportedLocations?.ToList(),
+                savingsPlanSupportedLocationsForPaas?.ToList(),
+                reservedInstanceSupportedLocationsForIaas?.ToList(),
+                savingsPlanSupportedOffers?.ToList(),
+                sqlSkus?.ToList(),
+                reservedInstanceSqlTargets?.ToList(),
+                reservedInstanceSupportedLocations?.ToList(),
+                reservedInstanceSupportedCurrencies?.ToList(),
+                reservedInstanceSupportedOffers?.ToList(),
+                supportedOffers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateSqlCollectorData"/>. </summary>
@@ -1447,7 +2159,17 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.MigrateSqlCollectorData"/> instance for mocking. </returns>
         public static MigrateSqlCollectorData MigrateSqlCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateProvisioningState? provisioningState = null, CollectorAgentPropertiesBase agentProperties = null, string discoverySiteId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new MigrateSqlCollectorData(id, name, resourceType, systemData, provisioningState, agentProperties, discoverySiteId, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new MigrateSqlCollectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                agentProperties,
+                discoverySiteId,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Migrate.MigrateVMwareCollectorData"/>. </summary>
@@ -1463,7 +2185,17 @@ namespace Azure.ResourceManager.Migrate.Models
         /// <returns> A new <see cref="Migrate.MigrateVMwareCollectorData"/> instance for mocking. </returns>
         public static MigrateVMwareCollectorData MigrateVMwareCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrateProvisioningState? provisioningState = null, CollectorAgentPropertiesBase agentProperties = null, string discoverySiteId = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new MigrateVMwareCollectorData(id, name, resourceType, systemData, provisioningState, agentProperties, discoverySiteId, createdOn, updatedOn, serializedAdditionalRawData: null);
+            return new MigrateVMwareCollectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                agentProperties,
+                discoverySiteId,
+                createdOn,
+                updatedOn,
+                serializedAdditionalRawData: null);
         }
     }
 }

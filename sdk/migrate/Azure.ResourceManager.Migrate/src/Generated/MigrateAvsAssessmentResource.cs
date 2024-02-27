@@ -352,7 +352,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MigrateAvsAssessmentResource>> UpdateAsync(WaitUntil waitUntil, MigrateAvsAssessmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateAvsAssessmentAvsAssessmentsOperationsClientDiagnostics.CreateScope("MigrateAvsAssessmentResource.Update");
             scope.Start();
@@ -398,7 +401,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MigrateAvsAssessmentResource> Update(WaitUntil waitUntil, MigrateAvsAssessmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _migrateAvsAssessmentAvsAssessmentsOperationsClientDiagnostics.CreateScope("MigrateAvsAssessmentResource.Update");
             scope.Start();
@@ -444,7 +450,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual async Task<ArmOperation<AssessmentReportDownloadUri>> DownloadUrlAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _migrateAvsAssessmentAvsAssessmentsOperationsClientDiagnostics.CreateScope("MigrateAvsAssessmentResource.DownloadUrl");
             scope.Start();
@@ -490,7 +499,10 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public virtual ArmOperation<AssessmentReportDownloadUri> DownloadUrl(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            if (body == null)
+            {
+                throw new ArgumentNullException(nameof(body));
+            }
 
             using var scope = _migrateAvsAssessmentAvsAssessmentsOperationsClientDiagnostics.CreateScope("MigrateAvsAssessmentResource.DownloadUrl");
             scope.Start();

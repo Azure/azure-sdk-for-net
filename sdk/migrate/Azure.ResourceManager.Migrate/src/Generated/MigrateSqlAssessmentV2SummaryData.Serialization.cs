@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentSummary))
+            if (options.Format != "W" && !(AssessmentSummary is ChangeTrackingDictionary<string, SqlAssessmentV2SummaryDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assessmentSummary"u8);
                 writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionBySupportStatus))
+            if (options.Format != "W" && !(DistributionBySupportStatus is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("distributionBySupportStatus"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionByServicePackInsight))
+            if (options.Format != "W" && !(DistributionByServicePackInsight is ChangeTrackingDictionary<string, int> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("distributionByServicePackInsight"u8);
                 writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionBySqlVersion))
+            if (options.Format != "W" && !(DistributionBySqlVersion is ChangeTrackingDictionary<string, int> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("distributionBySqlVersion"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DistributionBySqlEdition))
+            if (options.Format != "W" && !(DistributionBySqlEdition is ChangeTrackingDictionary<string, int> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("distributionBySqlEdition"u8);
                 writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InstanceDistributionBySizingCriterion))
+            if (options.Format != "W" && !(InstanceDistributionBySizingCriterion is ChangeTrackingDictionary<string, int> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("instanceDistributionBySizingCriterion"u8);
                 writer.WriteStartObject();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DatabaseDistributionBySizingCriterion))
+            if (options.Format != "W" && !(DatabaseDistributionBySizingCriterion is ChangeTrackingDictionary<string, int> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("databaseDistributionBySizingCriterion"u8);
                 writer.WriteStartObject();
@@ -127,32 +127,32 @@ namespace Azure.ResourceManager.Migrate
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfMachines))
+            if (options.Format != "W" && NumberOfMachines.HasValue)
             {
                 writer.WritePropertyName("numberOfMachines"u8);
                 writer.WriteNumberValue(NumberOfMachines.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSqlInstances))
+            if (options.Format != "W" && NumberOfSqlInstances.HasValue)
             {
                 writer.WritePropertyName("numberOfSqlInstances"u8);
                 writer.WriteNumberValue(NumberOfSqlInstances.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSuccessfullyDiscoveredSqlInstances))
+            if (options.Format != "W" && NumberOfSuccessfullyDiscoveredSqlInstances.HasValue)
             {
                 writer.WritePropertyName("numberOfSuccessfullyDiscoveredSqlInstances"u8);
                 writer.WriteNumberValue(NumberOfSuccessfullyDiscoveredSqlInstances.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSqlDatabases))
+            if (options.Format != "W" && NumberOfSqlDatabases.HasValue)
             {
                 writer.WritePropertyName("numberOfSqlDatabases"u8);
                 writer.WriteNumberValue(NumberOfSqlDatabases.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfFciInstances))
+            if (options.Format != "W" && NumberOfFciInstances.HasValue)
             {
                 writer.WritePropertyName("numberOfFciInstances"u8);
                 writer.WriteNumberValue(NumberOfFciInstances.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfSqlAvailabilityGroups))
+            if (options.Format != "W" && NumberOfSqlAvailabilityGroups.HasValue)
             {
                 writer.WritePropertyName("numberOfSqlAvailabilityGroups"u8);
                 writer.WriteNumberValue(NumberOfSqlAvailabilityGroups.Value);
@@ -200,13 +200,13 @@ namespace Azure.ResourceManager.Migrate
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, SqlAssessmentV2SummaryDetails>> assessmentSummary = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionBySupportStatus = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionByServicePackInsight = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionBySqlVersion = default;
-            Optional<IReadOnlyDictionary<string, int>> distributionBySqlEdition = default;
-            Optional<IReadOnlyDictionary<string, int>> instanceDistributionBySizingCriterion = default;
-            Optional<IReadOnlyDictionary<string, int>> databaseDistributionBySizingCriterion = default;
+            IReadOnlyDictionary<string, SqlAssessmentV2SummaryDetails> assessmentSummary = default;
+            IReadOnlyDictionary<string, int> distributionBySupportStatus = default;
+            IReadOnlyDictionary<string, int> distributionByServicePackInsight = default;
+            IReadOnlyDictionary<string, int> distributionBySqlVersion = default;
+            IReadOnlyDictionary<string, int> distributionBySqlEdition = default;
+            IReadOnlyDictionary<string, int> instanceDistributionBySizingCriterion = default;
+            IReadOnlyDictionary<string, int> databaseDistributionBySizingCriterion = default;
             Optional<int> numberOfMachines = default;
             Optional<int> numberOfSqlInstances = default;
             Optional<int> numberOfSuccessfullyDiscoveredSqlInstances = default;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Migrate
                             Dictionary<string, SqlAssessmentV2SummaryDetails> dictionary = new Dictionary<string, SqlAssessmentV2SummaryDetails>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlAssessmentV2SummaryDetails.DeserializeSqlAssessmentV2SummaryDetails(property1.Value));
+                                dictionary.Add(property1.Name, SqlAssessmentV2SummaryDetails.DeserializeSqlAssessmentV2SummaryDetails(property1.Value, options));
                             }
                             assessmentSummary = dictionary;
                             continue;
@@ -411,7 +411,25 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlAssessmentV2SummaryData(id, name, type, systemData.Value, Optional.ToDictionary(assessmentSummary), Optional.ToDictionary(distributionBySupportStatus), Optional.ToDictionary(distributionByServicePackInsight), Optional.ToDictionary(distributionBySqlVersion), Optional.ToDictionary(distributionBySqlEdition), Optional.ToDictionary(instanceDistributionBySizingCriterion), Optional.ToDictionary(databaseDistributionBySizingCriterion), Optional.ToNullable(numberOfMachines), Optional.ToNullable(numberOfSqlInstances), Optional.ToNullable(numberOfSuccessfullyDiscoveredSqlInstances), Optional.ToNullable(numberOfSqlDatabases), Optional.ToNullable(numberOfFciInstances), Optional.ToNullable(numberOfSqlAvailabilityGroups), serializedAdditionalRawData);
+            return new MigrateSqlAssessmentV2SummaryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                assessmentSummary ?? new ChangeTrackingDictionary<string, SqlAssessmentV2SummaryDetails>(),
+                distributionBySupportStatus ?? new ChangeTrackingDictionary<string, int>(),
+                distributionByServicePackInsight ?? new ChangeTrackingDictionary<string, int>(),
+                distributionBySqlVersion ?? new ChangeTrackingDictionary<string, int>(),
+                distributionBySqlEdition ?? new ChangeTrackingDictionary<string, int>(),
+                instanceDistributionBySizingCriterion ?? new ChangeTrackingDictionary<string, int>(),
+                databaseDistributionBySizingCriterion ?? new ChangeTrackingDictionary<string, int>(),
+                Optional.ToNullable(numberOfMachines),
+                Optional.ToNullable(numberOfSqlInstances),
+                Optional.ToNullable(numberOfSuccessfullyDiscoveredSqlInstances),
+                Optional.ToNullable(numberOfSqlDatabases),
+                Optional.ToNullable(numberOfFciInstances),
+                Optional.ToNullable(numberOfSqlAvailabilityGroups),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlAssessmentV2SummaryData>.Write(ModelReaderWriterOptions options)

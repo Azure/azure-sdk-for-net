@@ -93,11 +93,46 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvsAssessedMachineListResult>> ListByAvsAssessmentAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string filter = null, int? pageSize = null, string continuationToken = null, int? totalRecordCount = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
 
             using var message = CreateListByAvsAssessmentRequest(subscriptionId, resourceGroupName, projectName, groupName, assessmentName, filter, pageSize, continuationToken, totalRecordCount);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,11 +165,46 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvsAssessedMachineListResult> ListByAvsAssessment(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string filter = null, int? pageSize = null, string continuationToken = null, int? totalRecordCount = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
 
             using var message = CreateListByAvsAssessmentRequest(subscriptionId, resourceGroupName, projectName, groupName, assessmentName, filter, pageSize, continuationToken, totalRecordCount);
             _pipeline.Send(message, cancellationToken);
@@ -190,12 +260,54 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="avsAssessedMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<MigrateAvsAssessedMachineData>> GetAsync(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string avsAssessedMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(avsAssessedMachineName, nameof(avsAssessedMachineName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
+            if (avsAssessedMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(avsAssessedMachineName));
+            }
+            if (avsAssessedMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(avsAssessedMachineName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, groupName, assessmentName, avsAssessedMachineName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -227,12 +339,54 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/>, <paramref name="assessmentName"/> or <paramref name="avsAssessedMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<MigrateAvsAssessedMachineData> Get(string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string avsAssessedMachineName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
-            Argument.AssertNotNullOrEmpty(avsAssessedMachineName, nameof(avsAssessedMachineName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
+            if (avsAssessedMachineName == null)
+            {
+                throw new ArgumentNullException(nameof(avsAssessedMachineName));
+            }
+            if (avsAssessedMachineName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(avsAssessedMachineName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, projectName, groupName, assessmentName, avsAssessedMachineName);
             _pipeline.Send(message, cancellationToken);
@@ -282,12 +436,50 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvsAssessedMachineListResult>> ListByAvsAssessmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string filter = null, int? pageSize = null, string continuationToken = null, int? totalRecordCount = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
 
             using var message = CreateListByAvsAssessmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, groupName, assessmentName, filter, pageSize, continuationToken, totalRecordCount);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -321,12 +513,50 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="projectName"/>, <paramref name="groupName"/> or <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvsAssessedMachineListResult> ListByAvsAssessmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string projectName, string groupName, string assessmentName, string filter = null, int? pageSize = null, string continuationToken = null, int? totalRecordCount = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
-            Argument.AssertNotNullOrEmpty(assessmentName, nameof(assessmentName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (projectName == null)
+            {
+                throw new ArgumentNullException(nameof(projectName));
+            }
+            if (projectName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectName));
+            }
+            if (groupName == null)
+            {
+                throw new ArgumentNullException(nameof(groupName));
+            }
+            if (groupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(groupName));
+            }
+            if (assessmentName == null)
+            {
+                throw new ArgumentNullException(nameof(assessmentName));
+            }
+            if (assessmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessmentName));
+            }
 
             using var message = CreateListByAvsAssessmentNextPageRequest(nextLink, subscriptionId, resourceGroupName, projectName, groupName, assessmentName, filter, pageSize, continuationToken, totalRecordCount);
             _pipeline.Send(message, cancellationToken);

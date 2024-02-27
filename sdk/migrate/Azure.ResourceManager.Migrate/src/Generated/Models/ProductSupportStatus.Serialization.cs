@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CurrentVersion))
+            if (options.Format != "W" && CurrentVersion != null)
             {
                 writer.WritePropertyName("currentVersion"u8);
                 writer.WriteStringValue(CurrentVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServicePackStatus))
+            if (options.Format != "W" && ServicePackStatus != null)
             {
                 writer.WritePropertyName("servicePackStatus"u8);
                 writer.WriteStringValue(ServicePackStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(EsuStatus))
+            if (options.Format != "W" && EsuStatus != null)
             {
                 writer.WritePropertyName("esuStatus"u8);
                 writer.WriteStringValue(EsuStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportStatus))
+            if (options.Format != "W" && SupportStatus != null)
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(Eta))
+            if (options.Format != "W" && Eta.HasValue)
             {
                 writer.WritePropertyName("eta"u8);
                 writer.WriteNumberValue(Eta.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentEsuYear))
+            if (options.Format != "W" && CurrentEsuYear != null)
             {
                 writer.WritePropertyName("currentEsuYear"u8);
                 writer.WriteStringValue(CurrentEsuYear);
             }
-            if (options.Format != "W" && Optional.IsDefined(MainstreamEndOn))
+            if (options.Format != "W" && MainstreamEndOn.HasValue)
             {
                 writer.WritePropertyName("mainstreamEndDate"u8);
                 writer.WriteStringValue(MainstreamEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedSupportEndOn))
+            if (options.Format != "W" && ExtendedSupportEndOn.HasValue)
             {
                 writer.WritePropertyName("extendedSupportEndDate"u8);
                 writer.WriteStringValue(ExtendedSupportEndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedSecurityUpdateYear1EndOn))
+            if (options.Format != "W" && ExtendedSecurityUpdateYear1EndOn.HasValue)
             {
                 writer.WritePropertyName("extendedSecurityUpdateYear1EndDate"u8);
                 writer.WriteStringValue(ExtendedSecurityUpdateYear1EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedSecurityUpdateYear2EndOn))
+            if (options.Format != "W" && ExtendedSecurityUpdateYear2EndOn.HasValue)
             {
                 writer.WritePropertyName("extendedSecurityUpdateYear2EndDate"u8);
                 writer.WriteStringValue(ExtendedSecurityUpdateYear2EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedSecurityUpdateYear3EndOn))
+            if (options.Format != "W" && ExtendedSecurityUpdateYear3EndOn.HasValue)
             {
                 writer.WritePropertyName("extendedSecurityUpdateYear3EndDate"u8);
                 writer.WriteStringValue(ExtendedSecurityUpdateYear3EndOn.Value, "O");
@@ -219,7 +219,19 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductSupportStatus(currentVersion.Value, servicePackStatus.Value, esuStatus.Value, supportStatus.Value, Optional.ToNullable(eta), currentEsuYear.Value, Optional.ToNullable(mainstreamEndDate), Optional.ToNullable(extendedSupportEndDate), Optional.ToNullable(extendedSecurityUpdateYear1EndDate), Optional.ToNullable(extendedSecurityUpdateYear2EndDate), Optional.ToNullable(extendedSecurityUpdateYear3EndDate), serializedAdditionalRawData);
+            return new ProductSupportStatus(
+                currentVersion.Value,
+                servicePackStatus.Value,
+                esuStatus.Value,
+                supportStatus.Value,
+                Optional.ToNullable(eta),
+                currentEsuYear.Value,
+                Optional.ToNullable(mainstreamEndDate),
+                Optional.ToNullable(extendedSupportEndDate),
+                Optional.ToNullable(extendedSecurityUpdateYear1EndDate),
+                Optional.ToNullable(extendedSecurityUpdateYear2EndDate),
+                Optional.ToNullable(extendedSecurityUpdateYear3EndDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductSupportStatus>.Write(ModelReaderWriterOptions options)

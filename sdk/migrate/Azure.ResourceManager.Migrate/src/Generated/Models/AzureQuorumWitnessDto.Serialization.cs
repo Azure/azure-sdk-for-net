@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(QuorumWitnessType))
+            if (options.Format != "W" && QuorumWitnessType.HasValue)
             {
                 writer.WritePropertyName("quorumWitnessType"u8);
                 writer.WriteStringValue(QuorumWitnessType.Value.ToString());

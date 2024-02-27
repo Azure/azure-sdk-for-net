@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Migrate.Models
                     List<AssessedSqlMachineData> array = new List<AssessedSqlMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessedSqlMachineData.DeserializeAssessedSqlMachineData(item));
+                        array.Add(AssessedSqlMachineData.DeserializeAssessedSqlMachineData(item, options));
                     }
                     value = array;
                     continue;

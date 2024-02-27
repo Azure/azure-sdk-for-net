@@ -43,134 +43,134 @@ namespace Azure.ResourceManager.Migrate
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RecommendedAzureSqlTargetType))
+            if (options.Format != "W" && RecommendedAzureSqlTargetType.HasValue)
             {
                 writer.WritePropertyName("recommendedAzureSqlTargetType"u8);
                 writer.WriteStringValue(RecommendedAzureSqlTargetType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(RecommendedSuitability))
+            if (options.Format != "W" && RecommendedSuitability.HasValue)
             {
                 writer.WritePropertyName("recommendedSuitability"u8);
                 writer.WriteStringValue(RecommendedSuitability.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(BufferCacheSizeInMB))
+            if (options.Format != "W" && BufferCacheSizeInMB.HasValue)
             {
                 writer.WritePropertyName("bufferCacheSizeInMB"u8);
                 writer.WriteNumberValue(BufferCacheSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProductSupportStatus))
+            if (options.Format != "W" && ProductSupportStatus != null)
             {
                 writer.WritePropertyName("productSupportStatus"u8);
                 writer.WriteObjectValue(ProductSupportStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlMISuitabilityDetails))
+            if (options.Format != "W" && AzureSqlMISuitabilityDetails != null)
             {
                 writer.WritePropertyName("azureSqlMISuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlMISuitabilityDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(AzureSqlDBSuitabilityDetails))
+            if (options.Format != "W" && AzureSqlDBSuitabilityDetails != null)
             {
                 writer.WritePropertyName("azureSqlDBSuitabilityDetails"u8);
                 writer.WriteObjectValue(AzureSqlDBSuitabilityDetails);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDatabaseHighlyAvailable))
+            if (options.Format != "W" && IsDatabaseHighlyAvailable.HasValue)
             {
                 writer.WritePropertyName("isDatabaseHighlyAvailable"u8);
                 writer.WriteBooleanValue(IsDatabaseHighlyAvailable.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkedAvailabilityGroupOverview))
+            if (options.Format != "W" && LinkedAvailabilityGroupOverview != null)
             {
                 writer.WritePropertyName("linkedAvailabilityGroupOverview"u8);
                 writer.WriteObjectValue(LinkedAvailabilityGroupOverview);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineArmId))
+            if (options.Format != "W" && MachineArmId != null)
             {
                 writer.WritePropertyName("machineArmId"u8);
                 writer.WriteStringValue(MachineArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(AssessedSqlInstanceArmId))
+            if (options.Format != "W" && AssessedSqlInstanceArmId != null)
             {
                 writer.WritePropertyName("assessedSqlInstanceArmId"u8);
                 writer.WriteStringValue(AssessedSqlInstanceArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineName))
+            if (options.Format != "W" && MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceName))
+            if (options.Format != "W" && InstanceName != null)
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInMB))
+            if (options.Format != "W" && DatabaseSizeInMB.HasValue)
             {
                 writer.WritePropertyName("databaseSizeInMB"u8);
                 writer.WriteNumberValue(DatabaseSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CompatibilityLevel))
+            if (options.Format != "W" && CompatibilityLevel.HasValue)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SqlDatabaseSdsArmId))
+            if (options.Format != "W" && SqlDatabaseSdsArmId != null)
             {
                 writer.WritePropertyName("sqlDatabaseSdsArmId"u8);
                 writer.WriteStringValue(SqlDatabaseSdsArmId);
             }
-            if (options.Format != "W" && Optional.IsDefined(PercentageCoresUtilization))
+            if (options.Format != "W" && PercentageCoresUtilization.HasValue)
             {
                 writer.WritePropertyName("percentageCoresUtilization"u8);
                 writer.WriteNumberValue(PercentageCoresUtilization.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfRead))
+            if (options.Format != "W" && MegabytesPerSecondOfRead.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MegabytesPerSecondOfWrite))
+            if (options.Format != "W" && MegabytesPerSecondOfWrite.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfReadOperationsPerSecond))
+            if (options.Format != "W" && NumberOfReadOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfWriteOperationsPerSecond))
+            if (options.Format != "W" && NumberOfWriteOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidenceRatingInPercentage))
+            if (options.Format != "W" && ConfidenceRatingInPercentage.HasValue)
             {
                 writer.WritePropertyName("confidenceRatingInPercentage"u8);
                 writer.WriteNumberValue(ConfidenceRatingInPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SizingCriterion))
+            if (options.Format != "W" && SizingCriterion.HasValue)
             {
                 writer.WritePropertyName("sizingCriterion"u8);
                 writer.WriteStringValue(SizingCriterion.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value);
+                            productSupportStatus = ProductSupportStatus.DeserializeProductSupportStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlMISuitabilityDetails"u8))
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value);
+                            azureSqlMISuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("azureSqlDBSuitabilityDetails"u8))
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value);
+                            azureSqlDBSuitabilityDetails = SqlAssessmentV2PaasSuitabilityDetails.DeserializeSqlAssessmentV2PaasSuitabilityDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isDatabaseHighlyAvailable"u8))
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Migrate
                             {
                                 continue;
                             }
-                            linkedAvailabilityGroupOverview = SqlAvailabilityGroupDataOverview.DeserializeSqlAvailabilityGroupDataOverview(property0.Value);
+                            linkedAvailabilityGroupOverview = SqlAvailabilityGroupDataOverview.DeserializeSqlAvailabilityGroupDataOverview(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("machineArmId"u8))
@@ -502,7 +502,37 @@ namespace Azure.ResourceManager.Migrate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedSqlDatabaseV2Data(id, name, type, systemData.Value, Optional.ToNullable(recommendedAzureSqlTargetType), Optional.ToNullable(recommendedSuitability), Optional.ToNullable(bufferCacheSizeInMB), productSupportStatus.Value, azureSqlMISuitabilityDetails.Value, azureSqlDBSuitabilityDetails.Value, Optional.ToNullable(isDatabaseHighlyAvailable), linkedAvailabilityGroupOverview.Value, machineArmId.Value, assessedSqlInstanceArmId.Value, machineName.Value, instanceName.Value, databaseName.Value, Optional.ToNullable(databaseSizeInMB), Optional.ToNullable(compatibilityLevel), sqlDatabaseSdsArmId.Value, Optional.ToNullable(percentageCoresUtilization), Optional.ToNullable(megabytesPerSecondOfRead), Optional.ToNullable(megabytesPerSecondOfWrite), Optional.ToNullable(numberOfReadOperationsPerSecond), Optional.ToNullable(numberOfWriteOperationsPerSecond), Optional.ToNullable(confidenceRatingInPercentage), Optional.ToNullable(sizingCriterion), Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), serializedAdditionalRawData);
+            return new AssessedSqlDatabaseV2Data(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(recommendedAzureSqlTargetType),
+                Optional.ToNullable(recommendedSuitability),
+                Optional.ToNullable(bufferCacheSizeInMB),
+                productSupportStatus.Value,
+                azureSqlMISuitabilityDetails.Value,
+                azureSqlDBSuitabilityDetails.Value,
+                Optional.ToNullable(isDatabaseHighlyAvailable),
+                linkedAvailabilityGroupOverview.Value,
+                machineArmId.Value,
+                assessedSqlInstanceArmId.Value,
+                machineName.Value,
+                instanceName.Value,
+                databaseName.Value,
+                Optional.ToNullable(databaseSizeInMB),
+                Optional.ToNullable(compatibilityLevel),
+                sqlDatabaseSdsArmId.Value,
+                Optional.ToNullable(percentageCoresUtilization),
+                Optional.ToNullable(megabytesPerSecondOfRead),
+                Optional.ToNullable(megabytesPerSecondOfWrite),
+                Optional.ToNullable(numberOfReadOperationsPerSecond),
+                Optional.ToNullable(numberOfWriteOperationsPerSecond),
+                Optional.ToNullable(confidenceRatingInPercentage),
+                Optional.ToNullable(sizingCriterion),
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedSqlDatabaseV2Data>.Write(ModelReaderWriterOptions options)

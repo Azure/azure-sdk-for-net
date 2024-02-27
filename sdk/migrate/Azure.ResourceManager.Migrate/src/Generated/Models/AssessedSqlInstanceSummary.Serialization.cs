@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstanceId))
+            if (InstanceId != null)
             {
                 writer.WritePropertyName("instanceId"u8);
                 writer.WriteStringValue(InstanceId);
             }
-            if (Optional.IsDefined(InstanceName))
+            if (InstanceName != null)
             {
                 writer.WritePropertyName("instanceName"u8);
                 writer.WriteStringValue(InstanceName);
             }
-            if (Optional.IsDefined(SqlInstanceSdsArmId))
+            if (SqlInstanceSdsArmId != null)
             {
                 writer.WritePropertyName("sqlInstanceSdsArmId"u8);
                 writer.WriteStringValue(SqlInstanceSdsArmId);
             }
-            if (Optional.IsDefined(SqlInstanceEntityId))
+            if (SqlInstanceEntityId != null)
             {
                 writer.WritePropertyName("sqlInstanceEntityId"u8);
                 writer.WriteStringValue(SqlInstanceEntityId);
             }
-            if (Optional.IsDefined(SqlEdition))
+            if (SqlEdition != null)
             {
                 writer.WritePropertyName("sqlEdition"u8);
                 writer.WriteStringValue(SqlEdition);
             }
-            if (Optional.IsDefined(SqlVersion))
+            if (SqlVersion != null)
             {
                 writer.WritePropertyName("sqlVersion"u8);
                 writer.WriteStringValue(SqlVersion);
             }
-            if (Optional.IsDefined(IsClustered))
+            if (IsClustered.HasValue)
             {
                 writer.WritePropertyName("isClustered"u8);
                 writer.WriteBooleanValue(IsClustered.Value);
             }
-            if (Optional.IsDefined(IsHighAvailabilityEnabled))
+            if (IsHighAvailabilityEnabled.HasValue)
             {
                 writer.WritePropertyName("isHighAvailabilityEnabled"u8);
                 writer.WriteBooleanValue(IsHighAvailabilityEnabled.Value);
             }
-            if (Optional.IsDefined(SqlFciState))
+            if (SqlFciState.HasValue)
             {
                 writer.WritePropertyName("sqlFciState"u8);
                 writer.WriteStringValue(SqlFciState.Value.ToString());
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedSqlInstanceSummary(instanceId.Value, instanceName.Value, sqlInstanceSdsArmId.Value, sqlInstanceEntityId.Value, sqlEdition.Value, sqlVersion.Value, Optional.ToNullable(isClustered), Optional.ToNullable(isHighAvailabilityEnabled), Optional.ToNullable(sqlFciState), serializedAdditionalRawData);
+            return new AssessedSqlInstanceSummary(
+                instanceId.Value,
+                instanceName.Value,
+                sqlInstanceSdsArmId.Value,
+                sqlInstanceEntityId.Value,
+                sqlEdition.Value,
+                sqlVersion.Value,
+                Optional.ToNullable(isClustered),
+                Optional.ToNullable(isHighAvailabilityEnabled),
+                Optional.ToNullable(sqlFciState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedSqlInstanceSummary>.Write(ModelReaderWriterOptions options)

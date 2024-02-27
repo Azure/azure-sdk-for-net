@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual async Task<Response<AssessedSqlDatabaseV2Resource>> GetAsync(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual Response<AssessedSqlDatabaseV2Resource> Get(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.Get");
             scope.Start();
@@ -238,7 +252,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.Exists");
             scope.Start();
@@ -281,7 +302,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.Exists");
             scope.Start();
@@ -324,7 +352,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual async Task<NullableResponse<AssessedSqlDatabaseV2Resource>> GetIfExistsAsync(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.GetIfExists");
             scope.Start();
@@ -369,7 +404,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="assessedSqlDatabaseName"/> is null. </exception>
         public virtual NullableResponse<AssessedSqlDatabaseV2Resource> GetIfExists(string assessedSqlDatabaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(assessedSqlDatabaseName, nameof(assessedSqlDatabaseName));
+            if (assessedSqlDatabaseName == null)
+            {
+                throw new ArgumentNullException(nameof(assessedSqlDatabaseName));
+            }
+            if (assessedSqlDatabaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(assessedSqlDatabaseName));
+            }
 
             using var scope = _assessedSqlDatabaseV2AssessedSqlDatabaseV2OperationsClientDiagnostics.CreateScope("AssessedSqlDatabaseV2Collection.GetIfExists");
             scope.Start();

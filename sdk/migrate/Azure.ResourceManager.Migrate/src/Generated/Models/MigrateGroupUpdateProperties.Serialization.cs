@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationType))
+            if (OperationType.HasValue)
             {
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Machines))
+            if (!(Machines is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("machines"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 return null;
             }
             Optional<MigrateGroupUpdateOperationType> operationType = default;
-            Optional<IList<string>> machines = default;
+            IList<string> machines = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateGroupUpdateProperties(Optional.ToNullable(operationType), Optional.ToList(machines), serializedAdditionalRawData);
+            return new MigrateGroupUpdateProperties(Optional.ToNullable(operationType), machines ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateGroupUpdateProperties>.Write(ModelReaderWriterOptions options)

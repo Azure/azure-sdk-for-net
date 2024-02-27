@@ -26,82 +26,82 @@ namespace Azure.ResourceManager.Migrate.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Suitability))
+            if (Suitability.HasValue)
             {
                 writer.WritePropertyName("suitability"u8);
                 writer.WriteStringValue(Suitability.Value.ToString());
             }
-            if (Optional.IsDefined(SuitabilityExplanation))
+            if (SuitabilityExplanation.HasValue)
             {
                 writer.WritePropertyName("suitabilityExplanation"u8);
                 writer.WriteStringValue(SuitabilityExplanation.Value.ToString());
             }
-            if (Optional.IsDefined(SuitabilityDetail))
+            if (SuitabilityDetail.HasValue)
             {
                 writer.WritePropertyName("suitabilityDetail"u8);
                 writer.WriteStringValue(SuitabilityDetail.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendedDiskSize))
+            if (RecommendedDiskSize.HasValue)
             {
                 writer.WritePropertyName("recommendedDiskSize"u8);
                 writer.WriteStringValue(RecommendedDiskSize.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendedDiskType))
+            if (RecommendedDiskType.HasValue)
             {
                 writer.WritePropertyName("recommendedDiskType"u8);
                 writer.WriteStringValue(RecommendedDiskType.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendedDiskSizeGigabytes))
+            if (RecommendedDiskSizeGigabytes.HasValue)
             {
                 writer.WritePropertyName("recommendedDiskSizeGigabytes"u8);
                 writer.WriteNumberValue(RecommendedDiskSizeGigabytes.Value);
             }
-            if (Optional.IsDefined(RecommendDiskThroughputInMbps))
+            if (RecommendDiskThroughputInMbps.HasValue)
             {
                 writer.WritePropertyName("recommendDiskThroughputInMbps"u8);
                 writer.WriteNumberValue(RecommendDiskThroughputInMbps.Value);
             }
-            if (Optional.IsDefined(RecommendedDiskIops))
+            if (RecommendedDiskIops.HasValue)
             {
                 writer.WritePropertyName("recommendedDiskIops"u8);
                 writer.WriteNumberValue(RecommendedDiskIops.Value);
             }
-            if (Optional.IsDefined(MonthlyStorageCost))
+            if (MonthlyStorageCost.HasValue)
             {
                 writer.WritePropertyName("monthlyStorageCost"u8);
                 writer.WriteNumberValue(MonthlyStorageCost.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(GigabytesProvisioned))
+            if (GigabytesProvisioned.HasValue)
             {
                 writer.WritePropertyName("gigabytesProvisioned"u8);
                 writer.WriteNumberValue(GigabytesProvisioned.Value);
             }
-            if (Optional.IsDefined(MegabytesPerSecondOfRead))
+            if (MegabytesPerSecondOfRead.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfRead"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfRead.Value);
             }
-            if (Optional.IsDefined(MegabytesPerSecondOfWrite))
+            if (MegabytesPerSecondOfWrite.HasValue)
             {
                 writer.WritePropertyName("megabytesPerSecondOfWrite"u8);
                 writer.WriteNumberValue(MegabytesPerSecondOfWrite.Value);
             }
-            if (Optional.IsDefined(NumberOfReadOperationsPerSecond))
+            if (NumberOfReadOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfReadOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfReadOperationsPerSecond.Value);
             }
-            if (Optional.IsDefined(NumberOfWriteOperationsPerSecond))
+            if (NumberOfWriteOperationsPerSecond.HasValue)
             {
                 writer.WritePropertyName("numberOfWriteOperationsPerSecond"u8);
                 writer.WriteNumberValue(NumberOfWriteOperationsPerSecond.Value);
@@ -306,7 +306,24 @@ namespace Azure.ResourceManager.Migrate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessedDataDisk(Optional.ToNullable(suitability), Optional.ToNullable(suitabilityExplanation), Optional.ToNullable(suitabilityDetail), Optional.ToNullable(recommendedDiskSize), Optional.ToNullable(recommendedDiskType), Optional.ToNullable(recommendedDiskSizeGigabytes), Optional.ToNullable(recommendDiskThroughputInMbps), Optional.ToNullable(recommendedDiskIops), Optional.ToNullable(monthlyStorageCost), name.Value, displayName.Value, Optional.ToNullable(gigabytesProvisioned), Optional.ToNullable(megabytesPerSecondOfRead), Optional.ToNullable(megabytesPerSecondOfWrite), Optional.ToNullable(numberOfReadOperationsPerSecond), Optional.ToNullable(numberOfWriteOperationsPerSecond), serializedAdditionalRawData);
+            return new AssessedDataDisk(
+                Optional.ToNullable(suitability),
+                Optional.ToNullable(suitabilityExplanation),
+                Optional.ToNullable(suitabilityDetail),
+                Optional.ToNullable(recommendedDiskSize),
+                Optional.ToNullable(recommendedDiskType),
+                Optional.ToNullable(recommendedDiskSizeGigabytes),
+                Optional.ToNullable(recommendDiskThroughputInMbps),
+                Optional.ToNullable(recommendedDiskIops),
+                Optional.ToNullable(monthlyStorageCost),
+                name.Value,
+                displayName.Value,
+                Optional.ToNullable(gigabytesProvisioned),
+                Optional.ToNullable(megabytesPerSecondOfRead),
+                Optional.ToNullable(megabytesPerSecondOfWrite),
+                Optional.ToNullable(numberOfReadOperationsPerSecond),
+                Optional.ToNullable(numberOfWriteOperationsPerSecond),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessedDataDisk>.Write(ModelReaderWriterOptions options)

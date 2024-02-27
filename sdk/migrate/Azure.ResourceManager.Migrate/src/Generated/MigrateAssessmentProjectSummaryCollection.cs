@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual async Task<Response<MigrateAssessmentProjectSummaryResource>> GetAsync(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual Response<MigrateAssessmentProjectSummaryResource> Get(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.Get");
             scope.Start();
@@ -230,7 +244,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.Exists");
             scope.Start();
@@ -273,7 +294,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual Response<bool> Exists(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.Exists");
             scope.Start();
@@ -316,7 +344,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual async Task<NullableResponse<MigrateAssessmentProjectSummaryResource>> GetIfExistsAsync(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.GetIfExists");
             scope.Start();
@@ -361,7 +396,14 @@ namespace Azure.ResourceManager.Migrate
         /// <exception cref="ArgumentNullException"> <paramref name="projectSummaryName"/> is null. </exception>
         public virtual NullableResponse<MigrateAssessmentProjectSummaryResource> GetIfExists(string projectSummaryName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(projectSummaryName, nameof(projectSummaryName));
+            if (projectSummaryName == null)
+            {
+                throw new ArgumentNullException(nameof(projectSummaryName));
+            }
+            if (projectSummaryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(projectSummaryName));
+            }
 
             using var scope = _migrateAssessmentProjectSummaryAssessmentProjectSummaryOperationsClientDiagnostics.CreateScope("MigrateAssessmentProjectSummaryCollection.GetIfExists");
             scope.Start();
