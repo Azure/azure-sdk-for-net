@@ -46,8 +46,7 @@ Since the interaction of the client is at the certificate profile level, the cli
 
 ```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient_Scenario
     var credential = new DefaultAzureCredential();
-    var signClient = new SigningClient(credential);
-    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
+    var certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 ```
 
 ### Thread safety
