@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMetadataSyncConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(enabled), Optional.ToNullable(syncIntervalInMinutes), serializedAdditionalRawData);
+            return new SynapseMetadataSyncConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(syncIntervalInMinutes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMetadataSyncConfigurationData>.Write(ModelReaderWriterOptions options)

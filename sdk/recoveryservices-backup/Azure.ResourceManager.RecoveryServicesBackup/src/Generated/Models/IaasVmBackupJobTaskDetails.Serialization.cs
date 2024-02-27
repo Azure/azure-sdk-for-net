@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobTaskDetails(taskId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), instanceId.Value, Optional.ToNullable(duration), status.Value, Optional.ToNullable(progressPercentage), taskExecutionDetails.Value, serializedAdditionalRawData);
+            return new IaasVmBackupJobTaskDetails(
+                taskId.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                instanceId.Value,
+                Optional.ToNullable(duration),
+                status.Value,
+                Optional.ToNullable(progressPercentage),
+                taskExecutionDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobTaskDetails>.Write(ModelReaderWriterOptions options)

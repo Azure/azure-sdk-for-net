@@ -234,7 +234,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningScheduleProperties(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, action, displayName.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(provisioningState), trigger);
+            return new MachineLearningScheduleProperties(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                action,
+                displayName.Value,
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(provisioningState),
+                trigger);
         }
 
         BinaryData IPersistableModel<MachineLearningScheduleProperties>.Write(ModelReaderWriterOptions options)

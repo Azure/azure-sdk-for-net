@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationVaultData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, serializedAdditionalRawData);
+            return new DataReplicationVaultData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationVaultData>.Write(ModelReaderWriterOptions options)

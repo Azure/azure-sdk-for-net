@@ -107,7 +107,13 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, categories ?? new ChangeTrackingList<TimeSeriesAggregateCategory>(), defaultCategory);
+            return new CategoricalVariable(
+                kind,
+                filter.Value,
+                value,
+                interpolation.Value,
+                categories ?? new ChangeTrackingList<TimeSeriesAggregateCategory>(),
+                defaultCategory);
         }
     }
 }

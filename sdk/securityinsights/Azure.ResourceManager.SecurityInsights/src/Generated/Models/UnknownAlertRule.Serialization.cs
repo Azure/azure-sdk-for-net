@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new UnknownAlertRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleData>.Write(ModelReaderWriterOptions options)

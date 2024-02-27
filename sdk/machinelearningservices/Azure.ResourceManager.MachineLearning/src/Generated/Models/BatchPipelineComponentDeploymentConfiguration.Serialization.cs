@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPipelineComponentDeploymentConfiguration(deploymentConfigurationType, serializedAdditionalRawData, componentId.Value, description.Value, settings ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>());
+            return new BatchPipelineComponentDeploymentConfiguration(
+                deploymentConfigurationType,
+                serializedAdditionalRawData,
+                componentId.Value,
+                description.Value,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Write(ModelReaderWriterOptions options)

@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, serializedAdditionalRawData);
+            return new RecommendedSensitivityLabelUpdate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(op),
+                schema.Value,
+                table.Value,
+                column.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedSensitivityLabelUpdate>.Write(ModelReaderWriterOptions options)

@@ -242,7 +242,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformKeyVaultCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, dnsNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData, vaultUri, keyVaultCertName, certVersion.Value, Optional.ToNullable(excludePrivateKey));
+            return new AppPlatformKeyVaultCertificateProperties(
+                type,
+                thumbprint.Value,
+                issuer.Value,
+                Optional.ToNullable(issuedDate),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(activateDate),
+                subjectName.Value,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData,
+                vaultUri,
+                keyVaultCertName,
+                certVersion.Value,
+                Optional.ToNullable(excludePrivateKey));
         }
 
         BinaryData IPersistableModel<AppPlatformKeyVaultCertificateProperties>.Write(ModelReaderWriterOptions options)

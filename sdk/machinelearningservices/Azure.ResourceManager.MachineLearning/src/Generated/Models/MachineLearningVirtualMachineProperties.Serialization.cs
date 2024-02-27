@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute), serializedAdditionalRawData);
+            return new MachineLearningVirtualMachineProperties(
+                virtualMachineSize.Value,
+                Optional.ToNullable(sshPort),
+                Optional.ToNullable(notebookServerPort),
+                address.Value,
+                administratorAccount.Value,
+                Optional.ToNullable(isNotebookInstanceCompute),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningVirtualMachineProperties>.Write(ModelReaderWriterOptions options)

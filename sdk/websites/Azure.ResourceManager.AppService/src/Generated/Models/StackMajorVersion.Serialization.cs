@@ -286,7 +286,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), minorVersions ?? new ChangeTrackingList<StackMinorVersion>(), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new StackMajorVersion(
+                displayVersion.Value,
+                runtimeVersion.Value,
+                Optional.ToNullable(isDefault),
+                minorVersions ?? new ChangeTrackingList<StackMinorVersion>(),
+                Optional.ToNullable(applicationInsights),
+                Optional.ToNullable(isPreview),
+                Optional.ToNullable(isDeprecated),
+                Optional.ToNullable(isHidden),
+                appSettingsDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                siteConfigPropertiesDictionary ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)

@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CloudInventoryItem(
+                inventoryType,
+                managedResourceId.Value,
+                uuid.Value,
+                inventoryItemName.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudInventoryItem>.Write(ModelReaderWriterOptions options)

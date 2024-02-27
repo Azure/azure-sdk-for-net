@@ -246,7 +246,19 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestData(id, name, type, systemData.Value, sourceAgent.Value, destination.Value, Optional.ToNullable(destinationPort), Optional.ToNullable(testFrequencyInSec), Optional.ToNullable(isTestSuccessful), path ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ConnectionMonitorTestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sourceAgent.Value,
+                destination.Value,
+                Optional.ToNullable(destinationPort),
+                Optional.ToNullable(testFrequencyInSec),
+                Optional.ToNullable(isTestSuccessful),
+                path ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestData>.Write(ModelReaderWriterOptions options)

@@ -321,7 +321,21 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDetectorResponse(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(issueDetected), detectorDefinition.Value, metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(), abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), responseMetaData.Value, kind.Value, serializedAdditionalRawData);
+            return new DiagnosticDetectorResponse(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(issueDetected),
+                detectorDefinition.Value,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                responseMetaData.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDetectorResponse>.Write(ModelReaderWriterOptions options)

@@ -126,7 +126,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, additionalProperties);
+            return new ScheduleTriggerRecurrence(
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(interval),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeZone.Value,
+                schedule.Value,
+                additionalProperties);
         }
 
         internal partial class ScheduleTriggerRecurrenceConverter : JsonConverter<ScheduleTriggerRecurrence>

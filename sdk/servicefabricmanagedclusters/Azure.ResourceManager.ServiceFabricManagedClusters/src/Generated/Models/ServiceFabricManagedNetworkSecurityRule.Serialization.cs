@@ -269,7 +269,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedNetworkSecurityRule(name, description.Value, protocol, sourceAddressPrefixes ?? new ChangeTrackingList<string>(), destinationAddressPrefixes ?? new ChangeTrackingList<string>(), sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), sourceAddressPrefix.Value, destinationAddressPrefix.Value, sourcePortRange.Value, destinationPortRange.Value, access, priority, direction, serializedAdditionalRawData);
+            return new ServiceFabricManagedNetworkSecurityRule(
+                name,
+                description.Value,
+                protocol,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix.Value,
+                destinationAddressPrefix.Value,
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                access,
+                priority,
+                direction,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

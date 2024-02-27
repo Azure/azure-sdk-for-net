@@ -377,7 +377,25 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentPropertiesExtended(Optional.ToNullable(provisioningState), correlationId.Value, Optional.ToNullable(timestamp), Optional.ToNullable(duration), outputs.Value, providers ?? new ChangeTrackingList<ResourceProviderData>(), dependencies ?? new ChangeTrackingList<ArmDependency>(), templateLink.Value, parameters.Value, parametersLink.Value, Optional.ToNullable(mode), debugSetting.Value, onErrorDeployment.Value, templateHash.Value, outputResources ?? new ChangeTrackingList<SubResource>(), validatedResources ?? new ChangeTrackingList<SubResource>(), error.Value, serializedAdditionalRawData);
+            return new ArmDeploymentPropertiesExtended(
+                Optional.ToNullable(provisioningState),
+                correlationId.Value,
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(duration),
+                outputs.Value,
+                providers ?? new ChangeTrackingList<ResourceProviderData>(),
+                dependencies ?? new ChangeTrackingList<ArmDependency>(),
+                templateLink.Value,
+                parameters.Value,
+                parametersLink.Value,
+                Optional.ToNullable(mode),
+                debugSetting.Value,
+                onErrorDeployment.Value,
+                templateHash.Value,
+                outputResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<SubResource>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)

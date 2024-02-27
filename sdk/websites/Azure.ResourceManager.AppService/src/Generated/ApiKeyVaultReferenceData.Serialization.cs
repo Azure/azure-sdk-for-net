@@ -261,7 +261,22 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiKeyVaultReferenceData(id, name, type, systemData.Value, reference.Value, Optional.ToNullable(status), vaultName.Value, secretName.Value, secretVersion.Value, identityType, details.Value, Optional.ToNullable(source), activeVersion.Value, kind.Value, serializedAdditionalRawData);
+            return new ApiKeyVaultReferenceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                reference.Value,
+                Optional.ToNullable(status),
+                vaultName.Value,
+                secretName.Value,
+                secretVersion.Value,
+                identityType,
+                details.Value,
+                Optional.ToNullable(source),
+                activeVersion.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiKeyVaultReferenceData>.Write(ModelReaderWriterOptions options)

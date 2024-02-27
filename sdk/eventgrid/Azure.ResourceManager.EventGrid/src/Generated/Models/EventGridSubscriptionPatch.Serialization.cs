@@ -219,7 +219,17 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridSubscriptionPatch(destination.Value, deliveryWithResourceIdentity.Value, filter.Value, labels ?? new ChangeTrackingList<string>(), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+            return new EventGridSubscriptionPatch(
+                destination.Value,
+                deliveryWithResourceIdentity.Value,
+                filter.Value,
+                labels ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(expirationTimeUtc),
+                Optional.ToNullable(eventDeliverySchema),
+                retryPolicy.Value,
+                deadLetterDestination.Value,
+                deadLetterWithResourceIdentity.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridSubscriptionPatch>.Write(ModelReaderWriterOptions options)

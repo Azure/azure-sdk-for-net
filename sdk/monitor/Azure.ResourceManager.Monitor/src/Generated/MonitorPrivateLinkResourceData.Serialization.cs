@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorPrivateLinkResourceData(id, name, type, systemData.Value, groupId.Value, requiredMembers ?? new ChangeTrackingList<string>(), requiredZoneNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MonitorPrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupId.Value,
+                requiredMembers ?? new ChangeTrackingList<string>(),
+                requiredZoneNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

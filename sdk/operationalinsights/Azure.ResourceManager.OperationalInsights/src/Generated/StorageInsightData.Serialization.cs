@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageInsightData(id, name, type, systemData.Value, Optional.ToNullable(eTag), tags ?? new ChangeTrackingDictionary<string, string>(), containers ?? new ChangeTrackingList<string>(), tables ?? new ChangeTrackingList<string>(), storageAccount.Value, status.Value, serializedAdditionalRawData);
+            return new StorageInsightData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eTag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                containers ?? new ChangeTrackingList<string>(),
+                tables ?? new ChangeTrackingList<string>(),
+                storageAccount.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageInsightData>.Write(ModelReaderWriterOptions options)

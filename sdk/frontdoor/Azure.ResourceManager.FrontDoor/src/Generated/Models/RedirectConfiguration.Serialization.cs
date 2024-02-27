@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedirectConfiguration(odataType, serializedAdditionalRawData, Optional.ToNullable(redirectType), Optional.ToNullable(redirectProtocol), customHost.Value, customPath.Value, customFragment.Value, customQueryString.Value);
+            return new RedirectConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(redirectType),
+                Optional.ToNullable(redirectProtocol),
+                customHost.Value,
+                customPath.Value,
+                customFragment.Value,
+                customQueryString.Value);
         }
 
         BinaryData IPersistableModel<RedirectConfiguration>.Write(ModelReaderWriterOptions options)

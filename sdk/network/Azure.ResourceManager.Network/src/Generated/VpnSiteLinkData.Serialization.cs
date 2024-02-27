@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteLinkData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), linkProperties.Value, ipAddress.Value, fqdn.Value, bgpProperties.Value, Optional.ToNullable(provisioningState));
+            return new VpnSiteLinkData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                linkProperties.Value,
+                ipAddress.Value,
+                fqdn.Value,
+                bgpProperties.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VpnSiteLinkData>.Write(ModelReaderWriterOptions options)

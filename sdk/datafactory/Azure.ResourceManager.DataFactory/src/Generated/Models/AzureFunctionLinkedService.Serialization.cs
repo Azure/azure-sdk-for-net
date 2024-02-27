@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, functionAppUrl, functionKey, encryptedCredential.Value, credential.Value, resourceId.Value, authentication.Value);
+            return new AzureFunctionLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                functionAppUrl,
+                functionKey,
+                encryptedCredential.Value,
+                credential.Value,
+                resourceId.Value,
+                authentication.Value);
         }
 
         BinaryData IPersistableModel<AzureFunctionLinkedService>.Write(ModelReaderWriterOptions options)

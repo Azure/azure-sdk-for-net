@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBServiceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new CosmosDBServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceData>.Write(ModelReaderWriterOptions options)

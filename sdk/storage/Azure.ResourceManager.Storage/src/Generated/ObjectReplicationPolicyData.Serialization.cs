@@ -212,7 +212,17 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObjectReplicationPolicyData(id, name, type, systemData.Value, policyId.Value, Optional.ToNullable(enabledTime), sourceAccount.Value, destinationAccount.Value, rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(), serializedAdditionalRawData);
+            return new ObjectReplicationPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                policyId.Value,
+                Optional.ToNullable(enabledTime),
+                sourceAccount.Value,
+                destinationAccount.Value,
+                rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObjectReplicationPolicyData>.Write(ModelReaderWriterOptions options)

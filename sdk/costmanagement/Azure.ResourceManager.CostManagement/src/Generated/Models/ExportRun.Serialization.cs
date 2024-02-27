@@ -281,7 +281,22 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRun(id, name, type, systemData.Value, Optional.ToNullable(executionType), Optional.ToNullable(status), submittedBy.Value, Optional.ToNullable(submittedTime), Optional.ToNullable(processingStartTime), Optional.ToNullable(processingEndTime), fileName.Value, runSettings.Value, error.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ExportRun(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(executionType),
+                Optional.ToNullable(status),
+                submittedBy.Value,
+                Optional.ToNullable(submittedTime),
+                Optional.ToNullable(processingStartTime),
+                Optional.ToNullable(processingEndTime),
+                fileName.Value,
+                runSettings.Value,
+                error.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRun>.Write(ModelReaderWriterOptions options)

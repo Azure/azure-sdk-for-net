@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.Maps
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, Optional.ToNullable(kind), identity, properties.Value, serializedAdditionalRawData);
+            return new MapsAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                Optional.ToNullable(kind),
+                identity,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsAccountData>.Write(ModelReaderWriterOptions options)

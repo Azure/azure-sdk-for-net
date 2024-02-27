@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseOperationStatus(id.Value, name.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), status.Value, error.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseOperationStatus(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                status.Value,
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseOperationStatus>.Write(ModelReaderWriterOptions options)

@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerDefinitionContent(name, image.Value, command ?? new ChangeTrackingList<string>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), securityContext.Value, serializedAdditionalRawData);
+            return new InitContainerDefinitionContent(
+                name,
+                image.Value,
+                command ?? new ChangeTrackingList<string>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView.Value,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                securityContext.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerDefinitionContent>.Write(ModelReaderWriterOptions options)

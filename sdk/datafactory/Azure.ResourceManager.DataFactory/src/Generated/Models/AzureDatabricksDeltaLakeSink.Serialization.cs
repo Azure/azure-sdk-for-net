@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value, importSettings.Value);
+            return new AzureDatabricksDeltaLakeSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                preCopyScript.Value,
+                importSettings.Value);
         }
 
         BinaryData IPersistableModel<AzureDatabricksDeltaLakeSink>.Write(ModelReaderWriterOptions options)

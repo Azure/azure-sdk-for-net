@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubUserSubscriptionQuota(id.Value, type.Value, unit.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), name.Value, serializedAdditionalRawData);
+            return new IotHubUserSubscriptionQuota(
+                id.Value,
+                type.Value,
+                unit.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubUserSubscriptionQuota>.Write(ModelReaderWriterOptions options)

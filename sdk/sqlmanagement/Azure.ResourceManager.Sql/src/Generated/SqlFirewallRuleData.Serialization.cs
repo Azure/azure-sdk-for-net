@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlFirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, startIPAddress.Value, endIPAddress.Value);
+            return new SqlFirewallRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                startIPAddress.Value,
+                endIPAddress.Value);
         }
 
         BinaryData IPersistableModel<SqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

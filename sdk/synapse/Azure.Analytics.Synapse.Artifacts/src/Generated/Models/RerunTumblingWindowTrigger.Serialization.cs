@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RerunTumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), annotations ?? new ChangeTrackingList<object>(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+            return new RerunTumblingWindowTrigger(
+                type,
+                description.Value,
+                Optional.ToNullable(runtimeState),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                parentTrigger,
+                requestedStartTime,
+                requestedEndTime,
+                rerunConcurrency);
         }
 
         internal partial class RerunTumblingWindowTriggerConverter : JsonConverter<RerunTumblingWindowTrigger>

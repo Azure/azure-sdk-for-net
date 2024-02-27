@@ -276,7 +276,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized), serializedAdditionalRawData);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                author.Value,
+                Optional.ToNullable(createdDate),
+                description.Value,
+                imageReference.Value,
+                icon.Value,
+                Optional.ToNullable(enabled),
+                planId.Value,
+                Optional.ToNullable(isPlanAuthorized),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImage>.Write(ModelReaderWriterOptions options)

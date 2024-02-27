@@ -176,7 +176,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingProperties(clientId.Value, settingId.Value, clientSecret.Value, scopes.Value, serviceProviderId.Value, serviceProviderDisplayName.Value, parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(), provisioningState.Value, serializedAdditionalRawData);
+            return new BotConnectionSettingProperties(
+                clientId.Value,
+                settingId.Value,
+                clientSecret.Value,
+                scopes.Value,
+                serviceProviderId.Value,
+                serviceProviderDisplayName.Value,
+                parameters ?? new ChangeTrackingList<BotConnectionSettingParameter>(),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingProperties>.Write(ModelReaderWriterOptions options)

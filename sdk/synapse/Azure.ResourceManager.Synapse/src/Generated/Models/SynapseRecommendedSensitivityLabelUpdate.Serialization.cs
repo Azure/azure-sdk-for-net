@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseRecommendedSensitivityLabelUpdate(id, name, type, systemData.Value, Optional.ToNullable(op), schema.Value, table.Value, column.Value, serializedAdditionalRawData);
+            return new SynapseRecommendedSensitivityLabelUpdate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(op),
+                schema.Value,
+                table.Value,
+                column.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseRecommendedSensitivityLabelUpdate>.Write(ModelReaderWriterOptions options)

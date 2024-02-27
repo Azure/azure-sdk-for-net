@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.Relay
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelayHybridConnectionData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(listenerCount), Optional.ToNullable(requiresClientAuthorization), userMetadata.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RelayHybridConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                Optional.ToNullable(listenerCount),
+                Optional.ToNullable(requiresClientAuthorization),
+                userMetadata.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelayHybridConnectionData>.Write(ModelReaderWriterOptions options)

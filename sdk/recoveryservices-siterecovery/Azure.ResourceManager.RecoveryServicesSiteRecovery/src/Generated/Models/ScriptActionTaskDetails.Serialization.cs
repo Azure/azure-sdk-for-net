@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptActionTaskDetails(instanceType, serializedAdditionalRawData, name.Value, path.Value, output.Value, Optional.ToNullable(isPrimarySideScript));
+            return new ScriptActionTaskDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                name.Value,
+                path.Value,
+                output.Value,
+                Optional.ToNullable(isPrimarySideScript));
         }
 
         BinaryData IPersistableModel<ScriptActionTaskDetails>.Write(ModelReaderWriterOptions options)

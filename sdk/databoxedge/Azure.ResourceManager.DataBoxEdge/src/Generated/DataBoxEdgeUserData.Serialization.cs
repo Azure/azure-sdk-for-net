@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeUserData(id, name, type, systemData.Value, encryptedPassword.Value, shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>(), userType, serializedAdditionalRawData);
+            return new DataBoxEdgeUserData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                encryptedPassword.Value,
+                shareAccessRights ?? new ChangeTrackingList<ShareAccessRight>(),
+                userType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeUserData>.Write(ModelReaderWriterOptions options)

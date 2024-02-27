@@ -165,7 +165,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestConfigurationVmssVmInfo(Optional.ToNullable(vmId), vmResourceId.Value, Optional.ToNullable(complianceStatus), Optional.ToNullable(latestReportId), Optional.ToNullable(lastComplianceChecked), serializedAdditionalRawData);
+            return new GuestConfigurationVmssVmInfo(
+                Optional.ToNullable(vmId),
+                vmResourceId.Value,
+                Optional.ToNullable(complianceStatus),
+                Optional.ToNullable(latestReportId),
+                Optional.ToNullable(lastComplianceChecked),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestConfigurationVmssVmInfo>.Write(ModelReaderWriterOptions options)

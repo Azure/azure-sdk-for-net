@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsSavedSearchData(id, name, type, systemData.Value, Optional.ToNullable(etag), category, displayName, query, functionAlias.Value, functionParameters.Value, Optional.ToNullable(version), tags ?? new ChangeTrackingList<OperationalInsightsTag>(), serializedAdditionalRawData);
+            return new OperationalInsightsSavedSearchData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                category,
+                displayName,
+                query,
+                functionAlias.Value,
+                functionParameters.Value,
+                Optional.ToNullable(version),
+                tags ?? new ChangeTrackingList<OperationalInsightsTag>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsSavedSearchData>.Write(ModelReaderWriterOptions options)

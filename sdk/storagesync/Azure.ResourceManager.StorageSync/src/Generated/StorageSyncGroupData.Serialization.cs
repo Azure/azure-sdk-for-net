@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncGroupData(id, name, type, systemData.Value, Optional.ToNullable(uniqueId), syncGroupStatus.Value, serializedAdditionalRawData);
+            return new StorageSyncGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(uniqueId),
+                syncGroupStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options)

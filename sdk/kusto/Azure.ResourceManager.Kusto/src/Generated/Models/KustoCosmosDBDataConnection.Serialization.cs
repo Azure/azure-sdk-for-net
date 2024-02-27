@@ -280,7 +280,23 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoCosmosDBDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, tableName.Value, mappingRuleName.Value, managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), cosmosDBAccountResourceId.Value, cosmosDBDatabase.Value, cosmosDBContainer.Value, Optional.ToNullable(retrievalStartDate), Optional.ToNullable(provisioningState));
+            return new KustoCosmosDBDataConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                tableName.Value,
+                mappingRuleName.Value,
+                managedIdentityResourceId.Value,
+                Optional.ToNullable(managedIdentityObjectId),
+                cosmosDBAccountResourceId.Value,
+                cosmosDBDatabase.Value,
+                cosmosDBContainer.Value,
+                Optional.ToNullable(retrievalStartDate),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<KustoCosmosDBDataConnection>.Write(ModelReaderWriterOptions options)

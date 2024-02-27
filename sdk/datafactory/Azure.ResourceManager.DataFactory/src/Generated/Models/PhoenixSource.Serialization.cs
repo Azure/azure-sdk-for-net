@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PhoenixSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value);
+            return new PhoenixSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                queryTimeout.Value,
+                additionalColumns.Value,
+                query.Value);
         }
 
         BinaryData IPersistableModel<PhoenixSource>.Write(ModelReaderWriterOptions options)

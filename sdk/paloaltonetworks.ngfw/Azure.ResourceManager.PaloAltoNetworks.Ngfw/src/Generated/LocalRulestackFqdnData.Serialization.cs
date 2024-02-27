@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackFqdnData(id, name, type, systemData.Value, description.Value, fqdnList, Optional.ToNullable(etag), auditComment.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new LocalRulestackFqdnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                fqdnList,
+                Optional.ToNullable(etag),
+                auditComment.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackFqdnData>.Write(ModelReaderWriterOptions options)

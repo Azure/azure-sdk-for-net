@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceFleetMemberData(id, name, type, systemData.Value, Optional.ToNullable(eTag), clusterResourceId.Value, group.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ContainerServiceFleetMemberData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(eTag),
+                clusterResourceId.Value,
+                group.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceFleetMemberData>.Write(ModelReaderWriterOptions options)

@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), userSids ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<UserRecommendation>(), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
+            return new PathRecommendation(
+                path.Value,
+                Optional.ToNullable(action),
+                Optional.ToNullable(type),
+                publisherInfo.Value,
+                Optional.ToNullable(common),
+                userSids ?? new ChangeTrackingList<string>(),
+                usernames ?? new ChangeTrackingList<UserRecommendation>(),
+                Optional.ToNullable(fileType),
+                Optional.ToNullable(configurationStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)

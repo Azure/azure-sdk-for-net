@@ -197,7 +197,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>(), otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(), lastOperation.Value);
+            return new ManagedIntegrationRuntimeStatus(
+                type,
+                dataFactoryName.Value,
+                Optional.ToNullable(state),
+                additionalProperties,
+                Optional.ToNullable(createTime),
+                nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>(),
+                otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>(),
+                lastOperation.Value);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

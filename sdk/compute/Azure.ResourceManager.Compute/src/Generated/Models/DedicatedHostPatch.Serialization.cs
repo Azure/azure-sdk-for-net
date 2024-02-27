@@ -268,7 +268,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DedicatedHostPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku.Value, Optional.ToNullable(platformFaultDomain), Optional.ToNullable(autoReplaceOnFailure), hostId.Value, virtualMachines ?? new ChangeTrackingList<SubResource>(), Optional.ToNullable(licenseType), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new DedicatedHostPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku.Value,
+                Optional.ToNullable(platformFaultDomain),
+                Optional.ToNullable(autoReplaceOnFailure),
+                hostId.Value,
+                virtualMachines ?? new ChangeTrackingList<SubResource>(),
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(provisioningTime),
+                provisioningState.Value,
+                instanceView.Value,
+                Optional.ToNullable(timeCreated));
         }
 
         BinaryData IPersistableModel<DedicatedHostPatch>.Write(ModelReaderWriterOptions options)

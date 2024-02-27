@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverReplicationProtectedItemDetails(name.Value, friendlyName.Value, testVmName.Value, testVmFriendlyName.Value, networkConnectionStatus.Value, networkFriendlyName.Value, subnet.Value, recoveryPointId.Value, Optional.ToNullable(recoveryPointTime), serializedAdditionalRawData);
+            return new FailoverReplicationProtectedItemDetails(
+                name.Value,
+                friendlyName.Value,
+                testVmName.Value,
+                testVmFriendlyName.Value,
+                networkConnectionStatus.Value,
+                networkFriendlyName.Value,
+                subnet.Value,
+                recoveryPointId.Value,
+                Optional.ToNullable(recoveryPointTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverReplicationProtectedItemDetails>.Write(ModelReaderWriterOptions options)

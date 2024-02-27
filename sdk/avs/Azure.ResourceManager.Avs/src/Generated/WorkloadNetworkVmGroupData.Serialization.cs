@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkVmGroupData(id, name, type, systemData.Value, displayName.Value, members ?? new ChangeTrackingList<string>(), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkVmGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                members ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkVmGroupData>.Write(ModelReaderWriterOptions options)

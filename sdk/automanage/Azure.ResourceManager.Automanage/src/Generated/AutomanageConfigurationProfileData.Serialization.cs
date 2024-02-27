@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageConfigurationProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, serializedAdditionalRawData);
+            return new AutomanageConfigurationProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageConfigurationProfileData>.Write(ModelReaderWriterOptions options)

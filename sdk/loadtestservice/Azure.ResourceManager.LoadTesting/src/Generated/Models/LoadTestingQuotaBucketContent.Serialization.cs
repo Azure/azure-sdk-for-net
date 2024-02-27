@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestingQuotaBucketContent(id, name, type, systemData.Value, Optional.ToNullable(currentUsage), Optional.ToNullable(currentQuota), Optional.ToNullable(newQuota), dimensions.Value, serializedAdditionalRawData);
+            return new LoadTestingQuotaBucketContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(currentUsage),
+                Optional.ToNullable(currentQuota),
+                Optional.ToNullable(newQuota),
+                dimensions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestingQuotaBucketContent>.Write(ModelReaderWriterOptions options)

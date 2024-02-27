@@ -167,7 +167,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssuePatch(Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, serializedAdditionalRawData);
+            return new ApiIssuePatch(
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(state),
+                apiId.Value,
+                title.Value,
+                description.Value,
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssuePatch>.Write(ModelReaderWriterOptions options)

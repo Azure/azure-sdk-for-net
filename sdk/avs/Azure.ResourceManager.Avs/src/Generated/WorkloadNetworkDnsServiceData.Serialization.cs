@@ -262,7 +262,20 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkloadNetworkDnsServiceData(id, name, type, systemData.Value, displayName.Value, dnsServiceIP.Value, defaultDnsZone.Value, fqdnZones ?? new ChangeTrackingList<string>(), Optional.ToNullable(logLevel), Optional.ToNullable(status), Optional.ToNullable(provisioningState), Optional.ToNullable(revision), serializedAdditionalRawData);
+            return new WorkloadNetworkDnsServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                dnsServiceIP.Value,
+                defaultDnsZone.Value,
+                fqdnZones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(logLevel),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(revision),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkloadNetworkDnsServiceData>.Write(ModelReaderWriterOptions options)

@@ -109,7 +109,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSource(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value);
+            return new DataFlowSource(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService.Value,
+                flowlet.Value,
+                schemaLinkedService.Value);
         }
 
         internal partial class DataFlowSourceConverter : JsonConverter<DataFlowSource>

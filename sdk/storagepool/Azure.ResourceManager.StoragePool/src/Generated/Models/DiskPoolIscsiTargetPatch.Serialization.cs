@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.StoragePool.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskPoolIscsiTargetPatch(id, name, type, systemData.Value, managedBy.Value, managedByExtended ?? new ChangeTrackingList<string>(), staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(), luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(), serializedAdditionalRawData);
+            return new DiskPoolIscsiTargetPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                managedBy.Value,
+                managedByExtended ?? new ChangeTrackingList<string>(),
+                staticAcls ?? new ChangeTrackingList<DiskPoolIscsiTargetPortalGroupAcl>(),
+                luns ?? new ChangeTrackingList<ManagedDiskIscsiLun>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskPoolIscsiTargetPatch>.Write(ModelReaderWriterOptions options)

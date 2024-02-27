@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileServiceData(id, name, type, systemData.Value, sku.Value, cors.Value, shareDeleteRetentionPolicy.Value, protocolSettings.Value, serializedAdditionalRawData);
+            return new FileServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                cors.Value,
+                shareDeleteRetentionPolicy.Value,
+                protocolSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileServiceData>.Write(ModelReaderWriterOptions options)

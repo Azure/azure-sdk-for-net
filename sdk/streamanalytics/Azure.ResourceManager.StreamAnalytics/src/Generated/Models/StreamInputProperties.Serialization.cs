@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamInputProperties(type, serialization.Value, diagnostics.Value, Optional.ToNullable(etag), compression.Value, partitionKey.Value, watermarkSettings.Value, serializedAdditionalRawData, datasource.Value);
+            return new StreamInputProperties(
+                type,
+                serialization.Value,
+                diagnostics.Value,
+                Optional.ToNullable(etag),
+                compression.Value,
+                partitionKey.Value,
+                watermarkSettings.Value,
+                serializedAdditionalRawData,
+                datasource.Value);
         }
 
         BinaryData IPersistableModel<StreamInputProperties>.Write(ModelReaderWriterOptions options)

@@ -411,7 +411,26 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), monitorServices ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(), nextLink.Value, serializedAdditionalRawData);
+            return new SmartGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(alertsCount),
+                Optional.ToNullable(smartGroupState),
+                Optional.ToNullable(severity),
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                lastModifiedUserName.Value,
+                resources ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceTypes ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                resourceGroups ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorServices ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                monitorConditions ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertStates ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                alertSeverities ?? new ChangeTrackingList<SmartGroupAggregatedProperty>(),
+                nextLink.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options)

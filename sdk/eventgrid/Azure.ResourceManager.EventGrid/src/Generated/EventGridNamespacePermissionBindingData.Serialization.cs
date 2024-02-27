@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridNamespacePermissionBindingData(id, name, type, systemData.Value, description.Value, topicSpaceName.Value, Optional.ToNullable(permission), clientGroupName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new EventGridNamespacePermissionBindingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                topicSpaceName.Value,
+                Optional.ToNullable(permission),
+                clientGroupName.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridNamespacePermissionBindingData>.Write(ModelReaderWriterOptions options)

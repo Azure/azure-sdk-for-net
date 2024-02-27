@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PowerQuerySink(name, description.Value, dataset.Value, linkedService, flowlet.Value, serializedAdditionalRawData, schemaLinkedService, rejectedDataLinkedService, script.Value);
+            return new PowerQuerySink(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService,
+                flowlet.Value,
+                serializedAdditionalRawData,
+                schemaLinkedService,
+                rejectedDataLinkedService,
+                script.Value);
         }
 
         BinaryData IPersistableModel<PowerQuerySink>.Write(ModelReaderWriterOptions options)

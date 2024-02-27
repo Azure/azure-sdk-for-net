@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetTrackData(id, name, type, systemData.Value, track.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MediaAssetTrackData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                track.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetTrackData>.Write(ModelReaderWriterOptions options)

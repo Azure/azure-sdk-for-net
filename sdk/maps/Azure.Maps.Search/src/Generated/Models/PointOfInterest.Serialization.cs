@@ -110,7 +110,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new PointOfInterest(name.Value, phone.Value, url.Value, categorySet ?? new ChangeTrackingList<PointOfInterestCategorySet>(), categories ?? new ChangeTrackingList<string>(), classifications ?? new ChangeTrackingList<PointOfInterestClassification>(), brands ?? new ChangeTrackingList<BrandName>(), openingHours.Value);
+            return new PointOfInterest(
+                name.Value,
+                phone.Value,
+                url.Value,
+                categorySet ?? new ChangeTrackingList<PointOfInterestCategorySet>(),
+                categories ?? new ChangeTrackingList<string>(),
+                classifications ?? new ChangeTrackingList<PointOfInterestClassification>(),
+                brands ?? new ChangeTrackingList<BrandName>(),
+                openingHours.Value);
         }
     }
 }

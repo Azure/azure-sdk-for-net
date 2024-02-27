@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), notes.Value, serializedAdditionalRawData);
+            return new ApiReleaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                apiId.Value,
+                Optional.ToNullable(createdDateTime),
+                Optional.ToNullable(updatedDateTime),
+                notes.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiReleaseData>.Write(ModelReaderWriterOptions options)

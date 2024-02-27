@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogFilesDataSource(streams, filePatterns, format, settings.Value, name.Value, serializedAdditionalRawData);
+            return new LogFilesDataSource(
+                streams,
+                filePatterns,
+                format,
+                settings.Value,
+                name.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogFilesDataSource>.Write(ModelReaderWriterOptions options)

@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDaprConfiguration(Optional.ToNullable(enabled), appId.Value, Optional.ToNullable(appProtocol), Optional.ToNullable(appPort), Optional.ToNullable(httpReadBufferSize), Optional.ToNullable(httpMaxRequestSize), Optional.ToNullable(logLevel), Optional.ToNullable(enableApiLogging), serializedAdditionalRawData);
+            return new ContainerAppDaprConfiguration(
+                Optional.ToNullable(enabled),
+                appId.Value,
+                Optional.ToNullable(appProtocol),
+                Optional.ToNullable(appPort),
+                Optional.ToNullable(httpReadBufferSize),
+                Optional.ToNullable(httpMaxRequestSize),
+                Optional.ToNullable(logLevel),
+                Optional.ToNullable(enableApiLogging),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDaprConfiguration>.Write(ModelReaderWriterOptions options)

@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyData(id, name, type, systemData.Value, Optional.ToNullable(policyId), Optional.ToNullable(created), Optional.ToNullable(lastModified), description.Value, options0 ?? new ChangeTrackingList<ContentKeyPolicyOption>(), serializedAdditionalRawData);
+            return new ContentKeyPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(policyId),
+                Optional.ToNullable(created),
+                Optional.ToNullable(lastModified),
+                description.Value,
+                options0 ?? new ChangeTrackingList<ContentKeyPolicyOption>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyData>.Write(ModelReaderWriterOptions options)

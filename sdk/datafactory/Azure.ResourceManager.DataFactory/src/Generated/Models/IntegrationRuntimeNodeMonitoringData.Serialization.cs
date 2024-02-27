@@ -184,7 +184,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeNodeMonitoringData(nodeName.Value, Optional.ToNullable(availableMemoryInMB), Optional.ToNullable(cpuUtilization), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(concurrentJobsRunning), Optional.ToNullable(maxConcurrentJobs), Optional.ToNullable(sentBytes), Optional.ToNullable(receivedBytes), additionalProperties);
+            return new IntegrationRuntimeNodeMonitoringData(
+                nodeName.Value,
+                Optional.ToNullable(availableMemoryInMB),
+                Optional.ToNullable(cpuUtilization),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(concurrentJobsRunning),
+                Optional.ToNullable(maxConcurrentJobs),
+                Optional.ToNullable(sentBytes),
+                Optional.ToNullable(receivedBytes),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeNodeMonitoringData>.Write(ModelReaderWriterOptions options)

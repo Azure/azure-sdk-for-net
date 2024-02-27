@@ -226,7 +226,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareSecurityModulesPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HardwareSecurityModulesPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                groupIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareSecurityModulesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

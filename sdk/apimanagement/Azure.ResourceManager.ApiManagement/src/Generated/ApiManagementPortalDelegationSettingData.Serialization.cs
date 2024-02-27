@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementPortalDelegationSettingData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, serializedAdditionalRawData);
+            return new ApiManagementPortalDelegationSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                uri.Value,
+                validationKey.Value,
+                subscriptions.Value,
+                userRegistration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementPortalDelegationSettingData>.Write(ModelReaderWriterOptions options)

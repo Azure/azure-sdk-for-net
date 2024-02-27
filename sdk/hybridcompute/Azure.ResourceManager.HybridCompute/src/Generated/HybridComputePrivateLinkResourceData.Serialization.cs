@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.HybridCompute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputePrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new HybridComputePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

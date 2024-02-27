@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteResetContent(id, name, type, systemData.Value, repositoryToken.Value, Optional.ToNullable(shouldUpdateRepository), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteResetContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                repositoryToken.Value,
+                Optional.ToNullable(shouldUpdateRepository),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteResetContent>.Write(ModelReaderWriterOptions options)

@@ -166,7 +166,16 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogOrganizationProperties(name.Value, id.Value, linkingAuthCode.Value, linkingClientId.Value, redirectUri.Value, apiKey.Value, applicationKey.Value, enterpriseAppId.Value, serializedAdditionalRawData);
+            return new DatadogOrganizationProperties(
+                name.Value,
+                id.Value,
+                linkingAuthCode.Value,
+                linkingClientId.Value,
+                redirectUri.Value,
+                apiKey.Value,
+                applicationKey.Value,
+                enterpriseAppId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogOrganizationProperties>.Write(ModelReaderWriterOptions options)

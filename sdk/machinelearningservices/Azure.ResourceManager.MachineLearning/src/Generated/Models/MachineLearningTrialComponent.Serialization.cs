@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, environmentVariables ?? new ChangeTrackingDictionary<string, string>(), resources.Value, serializedAdditionalRawData);
+            return new MachineLearningTrialComponent(
+                codeId.Value,
+                command,
+                distribution.Value,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                resources.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningTrialComponent>.Write(ModelReaderWriterOptions options)

@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HdfsDatastore(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault), hdfsServerCertificate.Value, nameNodeAddress, protocol.Value);
+            return new HdfsDatastore(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty.Value,
+                Optional.ToNullable(isDefault),
+                hdfsServerCertificate.Value,
+                nameNodeAddress,
+                protocol.Value);
         }
 
         BinaryData IPersistableModel<HdfsDatastore>.Write(ModelReaderWriterOptions options)

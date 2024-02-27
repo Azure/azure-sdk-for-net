@@ -64,7 +64,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new HealthcareDicomImageUpdatedEventData(partitionName.Value, imageStudyInstanceUid.Value, imageSeriesInstanceUid.Value, imageSopInstanceUid.Value, serviceHostName.Value, Optional.ToNullable(sequenceNumber));
+            return new HealthcareDicomImageUpdatedEventData(
+                partitionName.Value,
+                imageStudyInstanceUid.Value,
+                imageSeriesInstanceUid.Value,
+                imageSopInstanceUid.Value,
+                serviceHostName.Value,
+                Optional.ToNullable(sequenceNumber));
         }
 
         internal partial class HealthcareDicomImageUpdatedEventDataConverter : JsonConverter<HealthcareDicomImageUpdatedEventData>

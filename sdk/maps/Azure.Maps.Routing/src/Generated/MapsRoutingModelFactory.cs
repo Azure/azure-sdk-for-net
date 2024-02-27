@@ -40,7 +40,17 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteLegSummary"/> instance for mocking. </returns>
         public static RouteLegSummary RouteLegSummary(int? lengthInMeters = null, int? travelTimeInSeconds = null, int? trafficDelayInSeconds = null, DateTimeOffset? departureTime = null, DateTimeOffset? arrivalTime = null, int? noTrafficTravelTimeInSeconds = null, int? historicTrafficTravelTimeInSeconds = null, int? liveTrafficIncidentsTravelTimeInSeconds = null, double? fuelConsumptionInLiters = null, double? batteryConsumptionInKwH = null)
         {
-            return new RouteLegSummary(lengthInMeters, travelTimeInSeconds, trafficDelayInSeconds, departureTime, arrivalTime, noTrafficTravelTimeInSeconds, historicTrafficTravelTimeInSeconds, liveTrafficIncidentsTravelTimeInSeconds, fuelConsumptionInLiters, batteryConsumptionInKwH);
+            return new RouteLegSummary(
+                lengthInMeters,
+                travelTimeInSeconds,
+                trafficDelayInSeconds,
+                departureTime,
+                arrivalTime,
+                noTrafficTravelTimeInSeconds,
+                historicTrafficTravelTimeInSeconds,
+                liveTrafficIncidentsTravelTimeInSeconds,
+                fuelConsumptionInLiters,
+                batteryConsumptionInKwH);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteMatrixSummary"/>. </summary>
@@ -105,7 +115,16 @@ namespace Azure.Maps.Routing.Models
         /// <returns> A new <see cref="Models.RouteSection"/> instance for mocking. </returns>
         public static RouteSection RouteSection(int? startPointIndex = null, int? endPointIndex = null, ResponseSectionType? sectionType = null, ResponseTravelMode? travelMode = null, TrafficIncidentCategory? simpleCategory = null, int? effectiveSpeedInKmh = null, int? delayInSeconds = null, DelayMagnitude? delayMagnitude = null, RouteSectionTec tec = null)
         {
-            return new RouteSection(startPointIndex, endPointIndex, sectionType, travelMode, simpleCategory, effectiveSpeedInKmh, delayInSeconds, delayMagnitude, tec);
+            return new RouteSection(
+                startPointIndex,
+                endPointIndex,
+                sectionType,
+                travelMode,
+                simpleCategory,
+                effectiveSpeedInKmh,
+                delayInSeconds,
+                delayMagnitude,
+                tec);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RouteSectionTec"/>. </summary>

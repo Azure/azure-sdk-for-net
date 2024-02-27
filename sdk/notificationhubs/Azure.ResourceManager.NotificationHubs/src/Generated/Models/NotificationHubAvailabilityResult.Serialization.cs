@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubAvailabilityResult(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(isAvailiable), sku.Value, serializedAdditionalRawData);
+            return new NotificationHubAvailabilityResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(isAvailiable),
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubAvailabilityResult>.Write(ModelReaderWriterOptions options)

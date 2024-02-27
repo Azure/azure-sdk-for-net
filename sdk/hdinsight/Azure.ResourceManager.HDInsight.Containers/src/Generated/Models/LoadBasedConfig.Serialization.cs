@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBasedConfig(minNodes, maxNodes, Optional.ToNullable(pollInterval), Optional.ToNullable(cooldownPeriod), scalingRules, serializedAdditionalRawData);
+            return new LoadBasedConfig(
+                minNodes,
+                maxNodes,
+                Optional.ToNullable(pollInterval),
+                Optional.ToNullable(cooldownPeriod),
+                scalingRules,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBasedConfig>.Write(ModelReaderWriterOptions options)

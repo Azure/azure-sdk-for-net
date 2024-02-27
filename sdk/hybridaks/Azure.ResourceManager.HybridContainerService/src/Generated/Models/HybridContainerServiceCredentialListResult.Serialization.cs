@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceCredentialListResult(id.Value, name.Value, resourceId.Value, Optional.ToNullable(status), error.Value, properties.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceCredentialListResult(
+                id.Value,
+                name.Value,
+                resourceId.Value,
+                Optional.ToNullable(status),
+                error.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceCredentialListResult>.Write(ModelReaderWriterOptions options)

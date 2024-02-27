@@ -322,7 +322,25 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDiskData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(diskType), Optional.ToNullable(diskSizeGiB), leasedByLabVmId.Value, diskBlobName.Value, diskUri.Value, storageAccountId.Value, Optional.ToNullable(createdDate), hostCaching.Value, managedDiskId.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabDiskData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(diskType),
+                Optional.ToNullable(diskSizeGiB),
+                leasedByLabVmId.Value,
+                diskBlobName.Value,
+                diskUri.Value,
+                storageAccountId.Value,
+                Optional.ToNullable(createdDate),
+                hostCaching.Value,
+                managedDiskId.Value,
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDiskData>.Write(ModelReaderWriterOptions options)

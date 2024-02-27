@@ -278,7 +278,22 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountCertificateData(id, name, type, systemData.Value, thumbprintAlgorithm.Value, thumbprint.Value, Optional.ToNullable(format), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(previousProvisioningState), Optional.ToNullable(previousProvisioningStateTransitionTime), publicData.Value, deleteCertificateError.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                thumbprintAlgorithm.Value,
+                thumbprint.Value,
+                Optional.ToNullable(format),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(provisioningStateTransitionTime),
+                Optional.ToNullable(previousProvisioningState),
+                Optional.ToNullable(previousProvisioningStateTransitionTime),
+                publicData.Value,
+                deleteCertificateError.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountCertificateData>.Write(ModelReaderWriterOptions options)

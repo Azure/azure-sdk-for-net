@@ -288,7 +288,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, serializedAdditionalRawData, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>(), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
+            return new VirtualMachineScaleSetNetworkConfiguration(
+                id.Value,
+                serializedAdditionalRawData,
+                name,
+                Optional.ToNullable(primary),
+                Optional.ToNullable(enableAcceleratedNetworking),
+                Optional.ToNullable(disableTcpStateTracking),
+                Optional.ToNullable(enableFpga),
+                networkSecurityGroup,
+                dnsSettings.Value,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>(),
+                Optional.ToNullable(enableIPForwarding),
+                Optional.ToNullable(deleteOption),
+                Optional.ToNullable(auxiliaryMode),
+                Optional.ToNullable(auxiliarySku));
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetNetworkConfiguration>.Write(ModelReaderWriterOptions options)

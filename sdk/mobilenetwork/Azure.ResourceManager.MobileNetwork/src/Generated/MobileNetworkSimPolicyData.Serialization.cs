@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimPolicyData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(), ueAmbr, defaultSlice, Optional.ToNullable(rfspIndex), Optional.ToNullable(registrationTimer), sliceConfigurations, serializedAdditionalRawData);
+            return new MobileNetworkSimPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                ueAmbr,
+                defaultSlice,
+                Optional.ToNullable(rfspIndex),
+                Optional.ToNullable(registrationTimer),
+                sliceConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimPolicyData>.Write(ModelReaderWriterOptions options)

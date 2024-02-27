@@ -265,7 +265,20 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsAccountBasic(id, name, type, systemData.Value, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DataLakeAnalyticsAccountBasic(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(accountId),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                endpoint.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsAccountBasic>.Write(ModelReaderWriterOptions options)

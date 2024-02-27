@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(objectId), objectIdAlias.Value, accessPolicyName.Value, serializedAdditionalRawData);
+            return new RedisCacheAccessPolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(objectId),
+                objectIdAlias.Value,
+                accessPolicyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options)

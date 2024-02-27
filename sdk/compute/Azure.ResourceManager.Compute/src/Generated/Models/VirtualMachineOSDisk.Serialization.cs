@@ -243,7 +243,20 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineOSDisk(Optional.ToNullable(osType), encryptionSettings.Value, name.Value, vhd.Value, image.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), diffDiskSettings.Value, createOption, Optional.ToNullable(diskSizeGB), managedDisk.Value, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineOSDisk(
+                Optional.ToNullable(osType),
+                encryptionSettings.Value,
+                name.Value,
+                vhd.Value,
+                image.Value,
+                Optional.ToNullable(caching),
+                Optional.ToNullable(writeAcceleratorEnabled),
+                diffDiskSettings.Value,
+                createOption,
+                Optional.ToNullable(diskSizeGB),
+                managedDisk.Value,
+                Optional.ToNullable(deleteOption),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineOSDisk>.Write(ModelReaderWriterOptions options)

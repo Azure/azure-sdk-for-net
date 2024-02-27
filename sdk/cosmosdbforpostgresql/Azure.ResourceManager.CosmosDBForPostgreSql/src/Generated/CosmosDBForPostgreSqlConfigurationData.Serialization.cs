@@ -231,7 +231,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlConfigurationData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(dataType), allowedValues.Value, Optional.ToNullable(requiresRestart), serverRoleGroupConfigurations ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(dataType),
+                allowedValues.Value,
+                Optional.ToNullable(requiresRestart),
+                serverRoleGroupConfigurations ?? new ChangeTrackingList<CosmosDBForPostgreSqlServerRoleGroupConfiguration>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlConfigurationData>.Write(ModelReaderWriterOptions options)

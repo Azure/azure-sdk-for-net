@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImageReference(offer.Value, publisher.Value, sku.Value, osType.Value, version.Value, serializedAdditionalRawData);
+            return new DevTestLabGalleryImageReference(
+                offer.Value,
+                publisher.Value,
+                sku.Value,
+                osType.Value,
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImageReference>.Write(ModelReaderWriterOptions options)

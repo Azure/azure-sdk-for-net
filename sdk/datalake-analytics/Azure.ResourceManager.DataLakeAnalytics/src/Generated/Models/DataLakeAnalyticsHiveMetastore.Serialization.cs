@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsHiveMetastore(id, name, type, systemData.Value, serverUri.Value, databaseName.Value, runtimeVersion.Value, userName.Value, password.Value, Optional.ToNullable(nestedResourceProvisioningState), serializedAdditionalRawData);
+            return new DataLakeAnalyticsHiveMetastore(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverUri.Value,
+                databaseName.Value,
+                runtimeVersion.Value,
+                userName.Value,
+                password.Value,
+                Optional.ToNullable(nestedResourceProvisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsHiveMetastore>.Write(ModelReaderWriterOptions options)

@@ -91,7 +91,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobCancelledEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, labels ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), note.Value, dispositionCode.Value);
+            return new AcsRouterJobCancelledEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                note.Value,
+                dispositionCode.Value);
         }
 
         internal partial class AcsRouterJobCancelledEventDataConverter : JsonConverter<AcsRouterJobCancelledEventData>

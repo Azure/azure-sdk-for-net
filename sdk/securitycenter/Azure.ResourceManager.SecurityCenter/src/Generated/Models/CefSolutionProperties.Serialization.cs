@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CefSolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties, hostname.Value, agent.Value, lastEventReceived.Value);
+            return new CefSolutionProperties(
+                deviceVendor.Value,
+                deviceType.Value,
+                workspace,
+                additionalProperties,
+                hostname.Value,
+                agent.Value,
+                lastEventReceived.Value);
         }
 
         BinaryData IPersistableModel<CefSolutionProperties>.Write(ModelReaderWriterOptions options)

@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallIPConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), privateIPAddress.Value, subnet, publicIPAddress, Optional.ToNullable(provisioningState));
+            return new AzureFirewallIPConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                privateIPAddress.Value,
+                subnet,
+                publicIPAddress,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<AzureFirewallIPConfiguration>.Write(ModelReaderWriterOptions options)

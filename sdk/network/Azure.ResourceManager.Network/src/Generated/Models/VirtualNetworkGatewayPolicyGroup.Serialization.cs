@@ -242,7 +242,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayPolicyGroup(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), policyMembers ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>(), vngClientConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
+            return new VirtualNetworkGatewayPolicyGroup(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(isDefault),
+                Optional.ToNullable(priority),
+                policyMembers ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>(),
+                vngClientConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayPolicyGroup>.Write(ModelReaderWriterOptions options)

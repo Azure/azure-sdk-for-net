@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SCMetadataEntity(self.Value, resourceName.Value, createdTimestamp.Value, updatedTimestamp.Value, deletedTimestamp.Value, serializedAdditionalRawData);
+            return new SCMetadataEntity(
+                self.Value,
+                resourceName.Value,
+                createdTimestamp.Value,
+                updatedTimestamp.Value,
+                deletedTimestamp.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SCMetadataEntity>.Write(ModelReaderWriterOptions options)

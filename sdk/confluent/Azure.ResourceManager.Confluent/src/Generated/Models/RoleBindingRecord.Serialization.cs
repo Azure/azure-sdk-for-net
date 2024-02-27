@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleBindingRecord(kind.Value, id.Value, metadata.Value, principal.Value, roleName.Value, crnPattern.Value, serializedAdditionalRawData);
+            return new RoleBindingRecord(
+                kind.Value,
+                id.Value,
+                metadata.Value,
+                principal.Value,
+                roleName.Value,
+                crnPattern.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleBindingRecord>.Write(ModelReaderWriterOptions options)

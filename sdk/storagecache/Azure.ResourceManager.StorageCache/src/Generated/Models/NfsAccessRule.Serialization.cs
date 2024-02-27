@@ -168,7 +168,16 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsAccessRule(scope, filter.Value, access, Optional.ToNullable(suid), Optional.ToNullable(submountAccess), Optional.ToNullable(rootSquash), anonymousUID.Value, anonymousGID.Value, serializedAdditionalRawData);
+            return new NfsAccessRule(
+                scope,
+                filter.Value,
+                access,
+                Optional.ToNullable(suid),
+                Optional.ToNullable(submountAccess),
+                Optional.ToNullable(rootSquash),
+                anonymousUID.Value,
+                anonymousGID.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NfsAccessRule>.Write(ModelReaderWriterOptions options)

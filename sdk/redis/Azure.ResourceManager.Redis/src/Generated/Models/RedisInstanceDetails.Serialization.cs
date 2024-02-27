@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
+            return new RedisInstanceDetails(
+                Optional.ToNullable(sslPort),
+                Optional.ToNullable(nonSslPort),
+                zone.Value,
+                Optional.ToNullable(shardId),
+                Optional.ToNullable(isMaster),
+                Optional.ToNullable(isPrimary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisInstanceDetails>.Write(ModelReaderWriterOptions options)

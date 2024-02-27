@@ -492,7 +492,30 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(), resourceFilter ?? new ChangeTrackingList<BinaryData>(), meterFilter ?? new ChangeTrackingList<BinaryData>(), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), contactEmails ?? new ChangeTrackingList<string>(), contactGroups ?? new ChangeTrackingList<string>(), contactRoles ?? new ChangeTrackingList<string>(), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold), serializedAdditionalRawData);
+            return new AlertPropertiesDetails(
+                Optional.ToNullable(timeGrainType),
+                periodStartDate.Value,
+                triggeredBy.Value,
+                resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(),
+                resourceFilter ?? new ChangeTrackingList<BinaryData>(),
+                meterFilter ?? new ChangeTrackingList<BinaryData>(),
+                tagFilter.Value,
+                Optional.ToNullable(threshold),
+                Optional.ToNullable(@operator),
+                Optional.ToNullable(amount),
+                unit.Value,
+                Optional.ToNullable(currentSpend),
+                contactEmails ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                contactRoles ?? new ChangeTrackingList<string>(),
+                overridingAlert.Value,
+                departmentName.Value,
+                companyName.Value,
+                enrollmentNumber.Value,
+                enrollmentStartDate.Value,
+                enrollmentEndDate.Value,
+                Optional.ToNullable(invoicingThreshold),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)

@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new LakeHouseTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, tableActionOption.Value, partitionOption.Value, partitionNameList.Value);
+            return new LakeHouseTableSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                tableActionOption.Value,
+                partitionOption.Value,
+                partitionNameList.Value);
         }
 
         BinaryData IPersistableModel<LakeHouseTableSink>.Write(ModelReaderWriterOptions options)

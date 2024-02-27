@@ -356,7 +356,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiPatch(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, displayName.Value, serviceUri.Value, path.Value, protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(), serializedAdditionalRawData);
+            return new ApiPatch(
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                displayName.Value,
+                serviceUri.Value,
+                path.Value,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiPatch>.Write(ModelReaderWriterOptions options)

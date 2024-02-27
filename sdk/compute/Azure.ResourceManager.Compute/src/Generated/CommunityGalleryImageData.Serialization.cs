@@ -380,7 +380,26 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommunityGalleryImageData(name.Value, Optional.ToNullable(location), Optional.ToNullable(type), uniqueId.Value, serializedAdditionalRawData, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, Optional.ToNullable(hyperVGeneration), features ?? new ChangeTrackingList<GalleryImageFeature>(), purchasePlan.Value, Optional.ToNullable(architecture), privacyStatementUri.Value, eula.Value, disclaimer.Value, artifactTags ?? new ChangeTrackingDictionary<string, string>());
+            return new CommunityGalleryImageData(
+                name.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(type),
+                uniqueId.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osState),
+                Optional.ToNullable(endOfLifeDate),
+                identifier.Value,
+                recommended.Value,
+                disallowed.Value,
+                Optional.ToNullable(hyperVGeneration),
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                purchasePlan.Value,
+                Optional.ToNullable(architecture),
+                privacyStatementUri.Value,
+                eula.Value,
+                disclaimer.Value,
+                artifactTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<CommunityGalleryImageData>.Write(ModelReaderWriterOptions options)

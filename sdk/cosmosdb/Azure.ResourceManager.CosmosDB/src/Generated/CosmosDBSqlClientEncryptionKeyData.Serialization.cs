@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlClientEncryptionKeyData(id, name, type, systemData.Value, resource.Value, serializedAdditionalRawData);
+            return new CosmosDBSqlClientEncryptionKeyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resource.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlClientEncryptionKeyData>.Write(ModelReaderWriterOptions options)

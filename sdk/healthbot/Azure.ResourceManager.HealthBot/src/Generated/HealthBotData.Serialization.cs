@@ -196,7 +196,17 @@ namespace Azure.ResourceManager.HealthBot
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthBotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, identity, properties.Value, serializedAdditionalRawData);
+            return new HealthBotData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthBotData>.Write(ModelReaderWriterOptions options)

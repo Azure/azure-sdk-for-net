@@ -232,7 +232,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(), highIopsSupported.Value, hyperVGenerations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new TargetComputeSizeProperties(
+                name.Value,
+                friendlyName.Value,
+                Optional.ToNullable(cpuCoresCount),
+                Optional.ToNullable(vCpusAvailable),
+                Optional.ToNullable(memoryInGB),
+                Optional.ToNullable(maxDataDiskCount),
+                Optional.ToNullable(maxNicsCount),
+                errors ?? new ChangeTrackingList<SiteRecoveryComputeSizeErrorDetails>(),
+                highIopsSupported.Value,
+                hyperVGenerations ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TargetComputeSizeProperties>.Write(ModelReaderWriterOptions options)

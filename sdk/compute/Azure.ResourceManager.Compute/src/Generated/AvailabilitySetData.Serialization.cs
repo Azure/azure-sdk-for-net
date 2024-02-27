@@ -284,7 +284,20 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilitySetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, Optional.ToNullable(platformUpdateDomainCount), Optional.ToNullable(platformFaultDomainCount), virtualMachines ?? new ChangeTrackingList<WritableSubResource>(), proximityPlacementGroup, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
+            return new AvailabilitySetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(platformUpdateDomainCount),
+                Optional.ToNullable(platformFaultDomainCount),
+                virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
+                proximityPlacementGroup,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)

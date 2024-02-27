@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkIntentPolicy(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag));
+            return new NetworkIntentPolicy(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<NetworkIntentPolicy>.Write(ModelReaderWriterOptions options)

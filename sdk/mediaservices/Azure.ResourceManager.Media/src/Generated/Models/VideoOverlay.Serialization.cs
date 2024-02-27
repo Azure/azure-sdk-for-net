@@ -210,7 +210,18 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoOverlay(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel), serializedAdditionalRawData, position.Value, Optional.ToNullable(opacity), cropRectangle.Value);
+            return new VideoOverlay(
+                odataType,
+                inputLabel,
+                Optional.ToNullable(start),
+                Optional.ToNullable(end),
+                Optional.ToNullable(fadeInDuration),
+                Optional.ToNullable(fadeOutDuration),
+                Optional.ToNullable(audioGainLevel),
+                serializedAdditionalRawData,
+                position.Value,
+                Optional.ToNullable(opacity),
+                cropRectangle.Value);
         }
 
         BinaryData IPersistableModel<VideoOverlay>.Write(ModelReaderWriterOptions options)

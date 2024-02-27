@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

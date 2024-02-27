@@ -243,7 +243,17 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnServerConfigurationPolicyGroupData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(isDefault), Optional.ToNullable(priority), policyMembers ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>(), p2sConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState));
+            return new VpnServerConfigurationPolicyGroupData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(isDefault),
+                Optional.ToNullable(priority),
+                policyMembers ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>(),
+                p2sConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Write(ModelReaderWriterOptions options)

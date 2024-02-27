@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterVersion(id, name, type, systemData.Value, clusterCodeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(osType), serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterVersion(
+                id,
+                name,
+                type,
+                systemData.Value,
+                clusterCodeVersion.Value,
+                Optional.ToNullable(supportExpiryUtc),
+                Optional.ToNullable(osType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterVersion>.Write(ModelReaderWriterOptions options)

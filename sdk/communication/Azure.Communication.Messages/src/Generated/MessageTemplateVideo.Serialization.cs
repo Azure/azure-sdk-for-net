@@ -121,7 +121,13 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateVideo(name, kind, serializedAdditionalRawData, url, caption.Value, fileName.Value);
+            return new MessageTemplateVideo(
+                name,
+                kind,
+                serializedAdditionalRawData,
+                url,
+                caption.Value,
+                fileName.Value);
         }
 
         BinaryData IPersistableModel<MessageTemplateVideo>.Write(ModelReaderWriterOptions options)

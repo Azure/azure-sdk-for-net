@@ -388,7 +388,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>(), loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>(), backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(), loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(), outboundRule, outboundRules ?? new ChangeTrackingList<WritableSubResource>(), inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
+            return new BackendAddressPoolData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(location),
+                tunnelInterfaces ?? new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>(),
+                loadBalancerBackendAddresses ?? new ChangeTrackingList<LoadBalancerBackendAddress>(),
+                backendIPConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>(),
+                loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundRule,
+                outboundRules ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(drainPeriodInSeconds),
+                virtualNetwork,
+                Optional.ToNullable(syncMode));
         }
 
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options)

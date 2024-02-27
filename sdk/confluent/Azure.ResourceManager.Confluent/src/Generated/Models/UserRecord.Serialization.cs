@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserRecord(kind.Value, id.Value, metadata.Value, email.Value, fullName.Value, authType.Value, serializedAdditionalRawData);
+            return new UserRecord(
+                kind.Value,
+                id.Value,
+                metadata.Value,
+                email.Value,
+                fullName.Value,
+                authType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserRecord>.Write(ModelReaderWriterOptions options)

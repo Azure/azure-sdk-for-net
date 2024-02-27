@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), accountName.Value, iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
+            return new DeviceUpdateInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                accountName.Value,
+                iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(),
+                Optional.ToNullable(enableDiagnostics),
+                diagnosticStorageProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options)

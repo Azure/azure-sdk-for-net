@@ -271,7 +271,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServerSecurityAlertPolicyData(id, name, type, systemData.Value, Optional.ToNullable(state), disabledAlerts ?? new ChangeTrackingList<string>(), emailAddresses ?? new ChangeTrackingList<string>(), Optional.ToNullable(emailAccountAdmins), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToNullable(creationTime), serializedAdditionalRawData);
+            return new ManagedServerSecurityAlertPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                disabledAlerts ?? new ChangeTrackingList<string>(),
+                emailAddresses ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(emailAccountAdmins),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                Optional.ToNullable(creationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServerSecurityAlertPolicyData>.Write(ModelReaderWriterOptions options)

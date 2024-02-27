@@ -70,7 +70,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshotResult(snapshot, error.Value, runId, runStatus, lastCheckedOn.Value, sessionId.Value, sparkPool.Value);
+            return new RunNotebookSnapshotResult(
+                snapshot,
+                error.Value,
+                runId,
+                runStatus,
+                lastCheckedOn.Value,
+                sessionId.Value,
+                sparkPool.Value);
         }
 
         internal partial class RunNotebookSnapshotResultConverter : JsonConverter<RunNotebookSnapshotResult>

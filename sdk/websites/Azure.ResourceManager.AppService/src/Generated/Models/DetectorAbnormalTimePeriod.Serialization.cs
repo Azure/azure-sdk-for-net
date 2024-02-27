@@ -228,7 +228,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), Optional.ToNullable(type), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), serializedAdditionalRawData);
+            return new DetectorAbnormalTimePeriod(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                message.Value,
+                source.Value,
+                Optional.ToNullable(priority),
+                metaData ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                Optional.ToNullable(type),
+                solutions ?? new ChangeTrackingList<DiagnosticSolution>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorAbnormalTimePeriod>.Write(ModelReaderWriterOptions options)

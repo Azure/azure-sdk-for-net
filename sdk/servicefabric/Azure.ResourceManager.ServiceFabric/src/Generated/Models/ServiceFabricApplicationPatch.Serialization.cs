@@ -335,7 +335,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricApplicationPatch(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, typeVersion.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), upgradePolicy.Value, Optional.ToNullable(minimumNodes), Optional.ToNullable(maximumNodes), Optional.ToNullable(removeApplicationCapacity), metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(), managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricApplicationPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                typeVersion.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy.Value,
+                Optional.ToNullable(minimumNodes),
+                Optional.ToNullable(maximumNodes),
+                Optional.ToNullable(removeApplicationCapacity),
+                metrics ?? new ChangeTrackingList<ApplicationMetricDescription>(),
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>(),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricApplicationPatch>.Write(ModelReaderWriterOptions options)

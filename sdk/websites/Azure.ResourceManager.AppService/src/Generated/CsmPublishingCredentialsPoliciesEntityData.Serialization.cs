@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CsmPublishingCredentialsPoliciesEntityData(id, name, type, systemData.Value, Optional.ToNullable(allow), kind.Value, serializedAdditionalRawData);
+            return new CsmPublishingCredentialsPoliciesEntityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(allow),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Write(ModelReaderWriterOptions options)

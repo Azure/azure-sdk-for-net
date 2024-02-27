@@ -231,7 +231,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365LinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, office365TenantId, servicePrincipalTenantId, servicePrincipalId, servicePrincipalKey, encryptedCredential.Value);
+            return new Office365LinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                office365TenantId,
+                servicePrincipalTenantId,
+                servicePrincipalId,
+                servicePrincipalKey,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<Office365LinkedService>.Write(ModelReaderWriterOptions options)

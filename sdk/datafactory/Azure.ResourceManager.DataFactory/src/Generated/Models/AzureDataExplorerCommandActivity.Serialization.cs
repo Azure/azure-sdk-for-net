@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataExplorerCommandActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, command, commandTimeout.Value);
+            return new AzureDataExplorerCommandActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                command,
+                commandTimeout.Value);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerCommandActivity>.Write(ModelReaderWriterOptions options)

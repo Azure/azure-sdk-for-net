@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceContainer(name.Value, Optional.ToNullable(autosave), gpu.Value, Optional.ToNullable(network), environment.Value, services ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceContainer(
+                name.Value,
+                Optional.ToNullable(autosave),
+                gpu.Value,
+                Optional.ToNullable(network),
+                environment.Value,
+                services ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceContainer>.Write(ModelReaderWriterOptions options)

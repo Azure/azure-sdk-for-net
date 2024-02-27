@@ -204,7 +204,17 @@ namespace Azure.ResourceManager.ResourceMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceSetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), identity, properties.Value, serializedAdditionalRawData);
+            return new MoverResourceSetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                identity,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSetData>.Write(ModelReaderWriterOptions options)

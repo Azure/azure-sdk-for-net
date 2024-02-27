@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorLogConfiguration(id.Value, subscriptionId.Value, workspace.Value, primaryKey.Value, secondaryKey.Value, serializedAdditionalRawData);
+            return new MonitorLogConfiguration(
+                id.Value,
+                subscriptionId.Value,
+                workspace.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorLogConfiguration>.Write(ModelReaderWriterOptions options)

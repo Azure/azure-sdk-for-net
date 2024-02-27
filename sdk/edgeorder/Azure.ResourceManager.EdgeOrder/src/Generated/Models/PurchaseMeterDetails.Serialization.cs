@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurchaseMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData, productId.Value, skuId.Value, termId.Value);
+            return new PurchaseMeterDetails(
+                billingType,
+                Optional.ToNullable(multiplier),
+                Optional.ToNullable(chargingType),
+                serializedAdditionalRawData,
+                productId.Value,
+                skuId.Value,
+                termId.Value);
         }
 
         BinaryData IPersistableModel<PurchaseMeterDetails>.Write(ModelReaderWriterOptions options)

@@ -229,7 +229,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemotePrivateEndpointConnection(id, name, type, systemData.Value, provisioningState.Value, privateEndpoint, privateLinkServiceConnectionState.Value, ipAddresses ?? new ChangeTrackingList<IPAddress>(), kind.Value, serializedAdditionalRawData);
+            return new RemotePrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemotePrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

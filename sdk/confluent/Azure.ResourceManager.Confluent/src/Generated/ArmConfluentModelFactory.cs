@@ -34,7 +34,20 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentAgreement"/> instance for mocking. </returns>
         public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string product = null, string plan = null, string licenseTextLink = null, string privacyPolicyLink = null, DateTimeOffset? retrieveOn = null, string signature = null, bool? isAccepted = null)
         {
-            return new ConfluentAgreement(id, name, resourceType, systemData, publisher, product, plan, licenseTextLink, privacyPolicyLink, retrieveOn, signature, isAccepted, serializedAdditionalRawData: null);
+            return new ConfluentAgreement(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publisher,
+                product,
+                plan,
+                licenseTextLink,
+                privacyPolicyLink,
+                retrieveOn,
+                signature,
+                isAccepted,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Confluent.ConfluentOrganizationData"/>. </summary>
@@ -56,7 +69,21 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail, linkOrganizationToken != null ? new LinkOrganization(linkOrganizationToken, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                provisioningState,
+                organizationId,
+                ssoUri,
+                offerDetail,
+                userDetail,
+                linkOrganizationToken != null ? new LinkOrganization(linkOrganizationToken, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidationResponse"/>. </summary>
@@ -90,7 +117,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentListMetadata"/> instance for mocking. </returns>
         public static ConfluentListMetadata ConfluentListMetadata(string first = null, string last = null, string prev = null, string next = null, int? totalSize = null)
         {
-            return new ConfluentListMetadata(first, last, prev, next, totalSize, serializedAdditionalRawData: null);
+            return new ConfluentListMetadata(
+                first,
+                last,
+                prev,
+                next,
+                totalSize,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserRecord"/>. </summary>
@@ -103,7 +136,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.UserRecord"/> instance for mocking. </returns>
         public static UserRecord UserRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string fullName = null, string authType = null)
         {
-            return new UserRecord(kind, id, metadata, email, fullName, authType, serializedAdditionalRawData: null);
+            return new UserRecord(
+                kind,
+                id,
+                metadata,
+                email,
+                fullName,
+                authType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetadataEntity"/>. </summary>
@@ -115,7 +155,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.MetadataEntity"/> instance for mocking. </returns>
         public static MetadataEntity MetadataEntity(string self = null, string resourceName = null, string createdAt = null, string updatedAt = null, string deletedAt = null)
         {
-            return new MetadataEntity(self, resourceName, createdAt, updatedAt, deletedAt, serializedAdditionalRawData: null);
+            return new MetadataEntity(
+                self,
+                resourceName,
+                createdAt,
+                updatedAt,
+                deletedAt,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessListServiceAccountsSuccessResponse"/>. </summary>
@@ -139,7 +185,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ServiceAccountRecord"/> instance for mocking. </returns>
         public static ServiceAccountRecord ServiceAccountRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, string description = null)
         {
-            return new ServiceAccountRecord(kind, id, metadata, displayName, description, serializedAdditionalRawData: null);
+            return new ServiceAccountRecord(
+                kind,
+                id,
+                metadata,
+                displayName,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessListInvitationsSuccessResponse"/>. </summary>
@@ -166,7 +218,16 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.InvitationRecord"/> instance for mocking. </returns>
         public static InvitationRecord InvitationRecord(string kind = null, string id = null, MetadataEntity metadata = null, string email = null, string authType = null, string status = null, string acceptedAt = null, string expiresAt = null)
         {
-            return new InvitationRecord(kind, id, metadata, email, authType, status, acceptedAt, expiresAt, serializedAdditionalRawData: null);
+            return new InvitationRecord(
+                kind,
+                id,
+                metadata,
+                email,
+                authType,
+                status,
+                acceptedAt,
+                expiresAt,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessListEnvironmentsSuccessResponse"/>. </summary>
@@ -214,7 +275,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ClusterRecord"/> instance for mocking. </returns>
         public static ClusterRecord ClusterRecord(string kind = null, string id = null, MetadataEntity metadata = null, string displayName = null, ClusterSpecEntity spec = null, ClusterStatusEntity status = null)
         {
-            return new ClusterRecord(kind, id, metadata, displayName, spec, status, serializedAdditionalRawData: null);
+            return new ClusterRecord(
+                kind,
+                id,
+                metadata,
+                displayName,
+                spec,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterSpecEntity"/>. </summary>
@@ -233,7 +301,20 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ClusterSpecEntity"/> instance for mocking. </returns>
         public static ClusterSpecEntity ClusterSpecEntity(string displayName = null, string availability = null, string cloud = null, string zone = null, string region = null, string kafkaBootstrapEndpoint = null, string httpEndpoint = null, string apiEndpoint = null, string configKind = null, ClusterEnvironmentEntity environment = null, ClusterNetworkEntity network = null, ClusterByokEntity byok = null)
         {
-            return new ClusterSpecEntity(displayName, availability, cloud, zone, region, kafkaBootstrapEndpoint, httpEndpoint, apiEndpoint, configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null, environment, network, byok, serializedAdditionalRawData: null);
+            return new ClusterSpecEntity(
+                displayName,
+                availability,
+                cloud,
+                zone,
+                region,
+                kafkaBootstrapEndpoint,
+                httpEndpoint,
+                apiEndpoint,
+                configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null,
+                environment,
+                network,
+                byok,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterEnvironmentEntity"/>. </summary>
@@ -299,7 +380,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.RoleBindingRecord"/> instance for mocking. </returns>
         public static RoleBindingRecord RoleBindingRecord(string kind = null, string id = null, MetadataEntity metadata = null, string principal = null, string roleName = null, string crnPattern = null)
         {
-            return new RoleBindingRecord(kind, id, metadata, principal, roleName, crnPattern, serializedAdditionalRawData: null);
+            return new RoleBindingRecord(
+                kind,
+                id,
+                metadata,
+                principal,
+                roleName,
+                crnPattern,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AccessRoleBindingNameListSuccessResponse"/>. </summary>
@@ -334,7 +422,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SCMetadataEntity"/> instance for mocking. </returns>
         public static SCMetadataEntity SCMetadataEntity(string self = null, string resourceName = null, string createdTimestamp = null, string updatedTimestamp = null, string deletedTimestamp = null)
         {
-            return new SCMetadataEntity(self, resourceName, createdTimestamp, updatedTimestamp, deletedTimestamp, serializedAdditionalRawData: null);
+            return new SCMetadataEntity(
+                self,
+                resourceName,
+                createdTimestamp,
+                updatedTimestamp,
+                deletedTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterRecord"/>. </summary>
@@ -347,7 +441,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SCClusterRecord"/> instance for mocking. </returns>
         public static SCClusterRecord SCClusterRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null, SCClusterSpecEntity spec = null, ClusterStatusEntity status = null)
         {
-            return new SCClusterRecord(kind, id, name, metadata, spec, status, serializedAdditionalRawData: null);
+            return new SCClusterRecord(
+                kind,
+                id,
+                name,
+                metadata,
+                spec,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterSpecEntity"/>. </summary>
@@ -366,7 +467,20 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
         public static SCClusterSpecEntity SCClusterSpecEntity(string name = null, string availability = null, string cloud = null, string zone = null, string region = null, string kafkaBootstrapEndpoint = null, string httpEndpoint = null, string apiEndpoint = null, string configKind = null, SCClusterNetworkEnvironmentEntity environment = null, SCClusterNetworkEnvironmentEntity network = null, SCClusterByokEntity byok = null)
         {
-            return new SCClusterSpecEntity(name, availability, cloud, zone, region, kafkaBootstrapEndpoint, httpEndpoint, apiEndpoint, configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null, environment, network, byok, serializedAdditionalRawData: null);
+            return new SCClusterSpecEntity(
+                name,
+                availability,
+                cloud,
+                zone,
+                region,
+                kafkaBootstrapEndpoint,
+                httpEndpoint,
+                apiEndpoint,
+                configKind != null ? new ClusterConfigEntity(configKind, serializedAdditionalRawData: null) : null,
+                environment,
+                network,
+                byok,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SCClusterNetworkEnvironmentEntity"/>. </summary>
@@ -399,7 +513,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
         public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = null, string id = null, SCMetadataEntity metadata = null, SchemaRegistryClusterSpecEntity spec = null, string statusPhase = null)
         {
-            return new SchemaRegistryClusterRecord(kind, id, metadata, spec, statusPhase != null ? new SchemaRegistryClusterStatusEntity(statusPhase, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new SchemaRegistryClusterRecord(
+                kind,
+                id,
+                metadata,
+                spec,
+                statusPhase != null ? new SchemaRegistryClusterStatusEntity(statusPhase, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SchemaRegistryClusterSpecEntity"/>. </summary>
@@ -412,7 +532,14 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterSpecEntity"/> instance for mocking. </returns>
         public static SchemaRegistryClusterSpecEntity SchemaRegistryClusterSpecEntity(string name = null, string httpEndpoint = null, string package = null, SchemaRegistryClusterEnvironmentRegionEntity region = null, SchemaRegistryClusterEnvironmentRegionEntity environment = null, string cloud = null)
         {
-            return new SchemaRegistryClusterSpecEntity(name, httpEndpoint, package, region, environment, cloud, serializedAdditionalRawData: null);
+            return new SchemaRegistryClusterSpecEntity(
+                name,
+                httpEndpoint,
+                package,
+                region,
+                environment,
+                cloud,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SchemaRegistryClusterEnvironmentRegionEntity"/>. </summary>
@@ -479,7 +606,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.APIKeySpecEntity"/> instance for mocking. </returns>
         public static APIKeySpecEntity APIKeySpecEntity(string description = null, string name = null, string secret = null, APIKeyResourceEntity resource = null, APIKeyOwnerEntity owner = null)
         {
-            return new APIKeySpecEntity(description, name, secret, resource, owner, serializedAdditionalRawData: null);
+            return new APIKeySpecEntity(
+                description,
+                name,
+                secret,
+                resource,
+                owner,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.APIKeyResourceEntity"/>. </summary>
@@ -491,7 +624,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.APIKeyResourceEntity"/> instance for mocking. </returns>
         public static APIKeyResourceEntity APIKeyResourceEntity(string id = null, string environment = null, string related = null, string resourceName = null, string kind = null)
         {
-            return new APIKeyResourceEntity(id, environment, related, resourceName, kind, serializedAdditionalRawData: null);
+            return new APIKeyResourceEntity(
+                id,
+                environment,
+                related,
+                resourceName,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.APIKeyOwnerEntity"/>. </summary>

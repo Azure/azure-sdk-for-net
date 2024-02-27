@@ -354,7 +354,27 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricAlertData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), actions ?? new ChangeTrackingList<MetricAlertAction>(), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
+            return new MetricAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description.Value,
+                severity,
+                enabled,
+                scopes,
+                evaluationFrequency,
+                windowSize,
+                Optional.ToNullable(targetResourceType),
+                Optional.ToNullable(targetResourceRegion),
+                criteria,
+                Optional.ToNullable(autoMitigate),
+                actions ?? new ChangeTrackingList<MetricAlertAction>(),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(isMigrated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options)

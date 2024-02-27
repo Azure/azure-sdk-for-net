@@ -140,7 +140,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownFactoryRepoConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData);
+            return new UnknownFactoryRepoConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId.Value,
+                Optional.ToNullable(disablePublish),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FactoryRepoConfiguration>.Write(ModelReaderWriterOptions options)

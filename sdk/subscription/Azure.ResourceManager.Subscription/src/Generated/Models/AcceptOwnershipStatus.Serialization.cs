@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcceptOwnershipStatus(subscriptionId.Value, Optional.ToNullable(acceptOwnershipState), Optional.ToNullable(provisioningState), billingOwner.Value, Optional.ToNullable(subscriptionTenantId), displayName.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AcceptOwnershipStatus(
+                subscriptionId.Value,
+                Optional.ToNullable(acceptOwnershipState),
+                Optional.ToNullable(provisioningState),
+                billingOwner.Value,
+                Optional.ToNullable(subscriptionTenantId),
+                displayName.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcceptOwnershipStatus>.Write(ModelReaderWriterOptions options)

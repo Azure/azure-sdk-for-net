@@ -185,7 +185,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExecutionStatistics(Optional.ToNullable(executionCount), Optional.ToNullable(cpuTimeMs), Optional.ToNullable(elapsedTimeMs), waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(), Optional.ToNullable(hasErrors), sqlErrors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ExecutionStatistics(
+                Optional.ToNullable(executionCount),
+                Optional.ToNullable(cpuTimeMs),
+                Optional.ToNullable(elapsedTimeMs),
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
+                Optional.ToNullable(hasErrors),
+                sqlErrors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExecutionStatistics>.Write(ModelReaderWriterOptions options)

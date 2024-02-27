@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplica2012EventDetails(instanceType, serializedAdditionalRawData, containerName.Value, fabricName.Value, remoteContainerName.Value, remoteFabricName.Value);
+            return new HyperVReplica2012EventDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                containerName.Value,
+                fabricName.Value,
+                remoteContainerName.Value,
+                remoteFabricName.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplica2012EventDetails>.Write(ModelReaderWriterOptions options)

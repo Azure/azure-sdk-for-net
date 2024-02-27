@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightDiskEncryptionProperties(vaultUri.Value, keyName.Value, keyVersion.Value, Optional.ToNullable(encryptionAlgorithm), msiResourceId.Value, Optional.ToNullable(encryptionAtHost), serializedAdditionalRawData);
+            return new HDInsightDiskEncryptionProperties(
+                vaultUri.Value,
+                keyName.Value,
+                keyVersion.Value,
+                Optional.ToNullable(encryptionAlgorithm),
+                msiResourceId.Value,
+                Optional.ToNullable(encryptionAtHost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightDiskEncryptionProperties>.Write(ModelReaderWriterOptions options)

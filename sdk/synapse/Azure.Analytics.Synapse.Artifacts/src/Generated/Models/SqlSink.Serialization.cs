@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, storedProcedureParameters.Value, storedProcedureTableTypeParameterName.Value, tableOption.Value);
+            return new SqlSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                sqlWriterStoredProcedureName.Value,
+                sqlWriterTableType.Value,
+                preCopyScript.Value,
+                storedProcedureParameters.Value,
+                storedProcedureTableTypeParameterName.Value,
+                tableOption.Value);
         }
 
         internal partial class SqlSinkConverter : JsonConverter<SqlSink>

@@ -258,7 +258,21 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseReadOnlyFollowingDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, leaderClusterResourceId.Value, attachedDatabaseConfigurationName.Value, Optional.ToNullable(principalsModificationKind));
+            return new SynapseReadOnlyFollowingDatabase(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(softDeletePeriod),
+                Optional.ToNullable(hotCachePeriod),
+                statistics.Value,
+                leaderClusterResourceId.Value,
+                attachedDatabaseConfigurationName.Value,
+                Optional.ToNullable(principalsModificationKind));
         }
 
         BinaryData IPersistableModel<SynapseReadOnlyFollowingDatabase>.Write(ModelReaderWriterOptions options)

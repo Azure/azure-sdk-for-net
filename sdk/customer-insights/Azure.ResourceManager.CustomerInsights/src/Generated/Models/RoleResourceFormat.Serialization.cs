@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleResourceFormat(id, name, type, systemData.Value, roleName.Value, description.Value, serializedAdditionalRawData);
+            return new RoleResourceFormat(
+                id,
+                name,
+                type,
+                systemData.Value,
+                roleName.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleResourceFormat>.Write(ModelReaderWriterOptions options)

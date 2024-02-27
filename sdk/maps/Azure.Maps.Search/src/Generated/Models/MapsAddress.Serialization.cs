@@ -161,7 +161,28 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new MapsAddress(buildingNumber.Value, street.Value, crossStreet.Value, streetNumber.Value, routeNumbers ?? new ChangeTrackingList<string>(), streetName.Value, streetNameAndNumber.Value, municipality.Value, municipalitySubdivision.Value, countryTertiarySubdivision.Value, countrySecondarySubdivision.Value, countrySubdivision.Value, postalCode.Value, extendedPostalCode.Value, countryCode.Value, country.Value, countryCodeISO3.Value, freeformAddress.Value, countrySubdivisionName.Value, localName.Value, boundingBox.Value);
+            return new MapsAddress(
+                buildingNumber.Value,
+                street.Value,
+                crossStreet.Value,
+                streetNumber.Value,
+                routeNumbers ?? new ChangeTrackingList<string>(),
+                streetName.Value,
+                streetNameAndNumber.Value,
+                municipality.Value,
+                municipalitySubdivision.Value,
+                countryTertiarySubdivision.Value,
+                countrySecondarySubdivision.Value,
+                countrySubdivision.Value,
+                postalCode.Value,
+                extendedPostalCode.Value,
+                countryCode.Value,
+                country.Value,
+                countryCodeISO3.Value,
+                freeformAddress.Value,
+                countrySubdivisionName.Value,
+                localName.Value,
+                boundingBox.Value);
         }
     }
 }

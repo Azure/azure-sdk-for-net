@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridConnectionLimitData(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(maximum), kind.Value, serializedAdditionalRawData);
+            return new HybridConnectionLimitData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(current),
+                Optional.ToNullable(maximum),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridConnectionLimitData>.Write(ModelReaderWriterOptions options)

@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StandardEncoderPreset(odataType, serializedAdditionalRawData, experimentalOptions ?? new ChangeTrackingDictionary<string, string>(), filters.Value, codecs, formats);
+            return new StandardEncoderPreset(
+                odataType,
+                serializedAdditionalRawData,
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                filters.Value,
+                codecs,
+                formats);
         }
 
         BinaryData IPersistableModel<StandardEncoderPreset>.Write(ModelReaderWriterOptions options)

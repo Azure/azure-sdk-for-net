@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolPatch(sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), dnsZone.Value, maintenanceConfigurationId.Value, serializedAdditionalRawData);
+            return new InstancePoolPatch(
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                subnetId.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(licenseType),
+                dnsZone.Value,
+                maintenanceConfigurationId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolPatch>.Write(ModelReaderWriterOptions options)

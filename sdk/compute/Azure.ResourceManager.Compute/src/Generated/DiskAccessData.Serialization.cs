@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskAccessData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, privateEndpointConnections ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(), provisioningState.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
+            return new DiskAccessData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                privateEndpointConnections ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(),
+                provisioningState.Value,
+                Optional.ToNullable(timeCreated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options)

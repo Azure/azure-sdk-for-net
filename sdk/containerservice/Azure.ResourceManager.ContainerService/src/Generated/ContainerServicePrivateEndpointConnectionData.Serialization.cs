@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value, serializedAdditionalRawData);
+            return new ContainerServicePrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

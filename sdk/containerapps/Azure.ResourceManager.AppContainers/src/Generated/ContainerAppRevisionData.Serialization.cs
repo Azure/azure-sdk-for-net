@@ -296,7 +296,23 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState), Optional.ToNullable(runningState), serializedAdditionalRawData);
+            return new ContainerAppRevisionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(lastActiveTime),
+                fqdn.Value,
+                template.Value,
+                Optional.ToNullable(active),
+                Optional.ToNullable(replicas),
+                Optional.ToNullable(trafficWeight),
+                provisioningError.Value,
+                Optional.ToNullable(healthState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(runningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppRevisionData>.Write(ModelReaderWriterOptions options)

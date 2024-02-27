@@ -648,7 +648,39 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InteractionResourceFormatData(id, name, type, systemData.Value, attributes ?? new ChangeTrackingDictionary<string, IList<string>>(), description ?? new ChangeTrackingDictionary<string, string>(), displayName ?? new ChangeTrackingDictionary<string, string>(), localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), fields ?? new ChangeTrackingList<PropertyDefinition>(), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, idPropertyNames ?? new ChangeTrackingList<string>(), participantProfiles ?? new ChangeTrackingList<Participant>(), primaryParticipantProfilePropertyName.Value, dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new InteractionResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                attributes ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                localizedAttributes ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(),
+                smallImage.Value,
+                mediumImage.Value,
+                largeImage.Value,
+                apiEntitySetName.Value,
+                Optional.ToNullable(entityType),
+                fields ?? new ChangeTrackingList<PropertyDefinition>(),
+                Optional.ToNullable(instancesCount),
+                Optional.ToNullable(lastChangedUtc),
+                Optional.ToNullable(provisioningState),
+                schemaItemTypeLink.Value,
+                Optional.ToNullable(tenantId),
+                timestampFieldName.Value,
+                typeName.Value,
+                idPropertyNames ?? new ChangeTrackingList<string>(),
+                participantProfiles ?? new ChangeTrackingList<Participant>(),
+                primaryParticipantProfilePropertyName.Value,
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                Optional.ToNullable(isActivity),
+                name0.Value,
+                Optional.ToNullable(dataSourceType),
+                Optional.ToNullable(status),
+                Optional.ToNullable(id0),
+                dataSourceReferenceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options)

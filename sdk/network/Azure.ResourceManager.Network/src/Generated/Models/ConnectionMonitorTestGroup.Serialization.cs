@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorTestGroup(name, Optional.ToNullable(disable), testConfigurations, sources, destinations, serializedAdditionalRawData);
+            return new ConnectionMonitorTestGroup(
+                name,
+                Optional.ToNullable(disable),
+                testConfigurations,
+                sources,
+                destinations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorTestGroup>.Write(ModelReaderWriterOptions options)

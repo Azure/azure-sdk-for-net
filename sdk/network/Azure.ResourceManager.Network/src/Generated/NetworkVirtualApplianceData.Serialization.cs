@@ -539,7 +539,33 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkVirtualApplianceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, identity, Optional.ToNullable(etag), nvaSku.Value, addressPrefix.Value, bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(), virtualHub, cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(), cloudInitConfiguration.Value, Optional.ToNullable(virtualApplianceAsn), sshPublicKey.Value, virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(), additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(), internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(), virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(), virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(), inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), deploymentType.Value, delegation.Value, partnerManagedResource.Value);
+            return new NetworkVirtualApplianceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                identity,
+                Optional.ToNullable(etag),
+                nvaSku.Value,
+                addressPrefix.Value,
+                bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),
+                virtualHub,
+                cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(),
+                cloudInitConfiguration.Value,
+                Optional.ToNullable(virtualApplianceAsn),
+                sshPublicKey.Value,
+                virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
+                additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
+                internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
+                virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
+                inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState),
+                deploymentType.Value,
+                delegation.Value,
+                partnerManagedResource.Value);
         }
 
         BinaryData IPersistableModel<NetworkVirtualApplianceData>.Write(ModelReaderWriterOptions options)

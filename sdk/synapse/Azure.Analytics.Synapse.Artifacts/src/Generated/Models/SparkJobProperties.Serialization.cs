@@ -225,7 +225,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkJobProperties(name.Value, file, className.Value, conf.Value, args ?? new ChangeTrackingList<string>(), jars ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), driverMemory, driverCores, executorMemory, executorCores, numExecutors, additionalProperties);
+            return new SparkJobProperties(
+                name.Value,
+                file,
+                className.Value,
+                conf.Value,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                numExecutors,
+                additionalProperties);
         }
 
         internal partial class SparkJobPropertiesConverter : JsonConverter<SparkJobProperties>

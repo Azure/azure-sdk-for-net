@@ -200,7 +200,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ParameterContract(name, description.Value, type, defaultValue.Value, Optional.ToNullable(required), values ?? new ChangeTrackingList<string>(), schemaId.Value, typeName.Value, examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(), serializedAdditionalRawData);
+            return new ParameterContract(
+                name,
+                description.Value,
+                type,
+                defaultValue.Value,
+                Optional.ToNullable(required),
+                values ?? new ChangeTrackingList<string>(),
+                schemaId.Value,
+                typeName.Value,
+                examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ParameterContract>.Write(ModelReaderWriterOptions options)

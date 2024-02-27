@@ -206,7 +206,16 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, plans ?? new ChangeTrackingList<PlanNotificationDetails>(), Optional.ToNullable(publicContext), subscriptionsIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new StopSellOffersPlansNotificationsResult(
+                offerId.Value,
+                displayName.Value,
+                Optional.ToNullable(isEntire),
+                Optional.ToNullable(messageCode),
+                icon.Value,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                Optional.ToNullable(publicContext),
+                subscriptionsIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StopSellOffersPlansNotificationsResult>.Write(ModelReaderWriterOptions options)

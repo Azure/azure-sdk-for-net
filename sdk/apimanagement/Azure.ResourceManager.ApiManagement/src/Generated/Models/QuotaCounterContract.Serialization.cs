@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaCounterContract(counterKey, periodKey, periodStartTime, periodEndTime, value.Value, serializedAdditionalRawData);
+            return new QuotaCounterContract(
+                counterKey,
+                periodKey,
+                periodStartTime,
+                periodEndTime,
+                value.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaCounterContract>.Write(ModelReaderWriterOptions options)

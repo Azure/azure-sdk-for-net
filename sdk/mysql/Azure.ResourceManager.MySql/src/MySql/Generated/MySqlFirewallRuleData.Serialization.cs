@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, serializedAdditionalRawData);
+            return new MySqlFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIPAddress,
+                endIPAddress,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFirewallRuleData>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, blobWriterOverwriteFiles.Value, blobWriterDateTimeFormat.Value, blobWriterAddHeader.Value, copyBehavior.Value);
+            return new BlobSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                blobWriterOverwriteFiles.Value,
+                blobWriterDateTimeFormat.Value,
+                blobWriterAddHeader.Value,
+                copyBehavior.Value);
         }
 
         internal partial class BlobSinkConverter : JsonConverter<BlobSink>

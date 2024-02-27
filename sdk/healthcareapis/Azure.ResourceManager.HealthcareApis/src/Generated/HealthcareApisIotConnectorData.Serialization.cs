@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisIotConnectorData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), ingestionEndpointConfiguration.Value, deviceMapping.Value, identity, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new HealthcareApisIotConnectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                ingestionEndpointConfiguration.Value,
+                deviceMapping.Value,
+                identity,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisIotConnectorData>.Write(ModelReaderWriterOptions options)

@@ -361,7 +361,24 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnScaleUnit), Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, cNameRecords ?? new ChangeTrackingList<string>(), txtRecords ?? new ChangeTrackingList<string>(), aRecords ?? new ChangeTrackingList<string>(), alternateCNameRecords ?? new ChangeTrackingList<string>(), alternateTxtRecords ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
+            return new CustomHostnameAnalysisResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isHostnameAlreadyVerified),
+                Optional.ToNullable(customDomainVerificationTest),
+                customDomainVerificationFailureInfo.Value,
+                Optional.ToNullable(hasConflictOnScaleUnit),
+                Optional.ToNullable(hasConflictAcrossSubscription),
+                conflictingAppResourceId.Value,
+                cNameRecords ?? new ChangeTrackingList<string>(),
+                txtRecords ?? new ChangeTrackingList<string>(),
+                aRecords ?? new ChangeTrackingList<string>(),
+                alternateCNameRecords ?? new ChangeTrackingList<string>(),
+                alternateTxtRecords ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)

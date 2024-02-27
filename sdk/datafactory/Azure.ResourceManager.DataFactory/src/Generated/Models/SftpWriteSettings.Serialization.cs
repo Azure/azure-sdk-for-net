@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(), additionalProperties, operationTimeout.Value, useTempFileRename.Value);
+            return new SftpWriteSettings(
+                type,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                copyBehavior.Value,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties,
+                operationTimeout.Value,
+                useTempFileRename.Value);
         }
 
         BinaryData IPersistableModel<SftpWriteSettings>.Write(ModelReaderWriterOptions options)

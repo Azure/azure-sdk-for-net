@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerRecurrence(Optional.ToNullable(frequency), Optional.ToNullable(interval), Optional.ToNullable(startTime), Optional.ToNullable(endTime), timeZone.Value, schedule.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerRecurrence(
+                Optional.ToNullable(frequency),
+                Optional.ToNullable(interval),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                timeZone.Value,
+                schedule.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerRecurrence>.Write(ModelReaderWriterOptions options)

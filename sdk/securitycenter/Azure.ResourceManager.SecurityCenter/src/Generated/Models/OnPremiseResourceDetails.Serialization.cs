@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnPremiseResourceDetails(source, serializedAdditionalRawData, workspaceId, vmuuid, sourceComputerId, machineName);
+            return new OnPremiseResourceDetails(
+                source,
+                serializedAdditionalRawData,
+                workspaceId,
+                vmuuid,
+                sourceComputerId,
+                machineName);
         }
 
         BinaryData IPersistableModel<OnPremiseResourceDetails>.Write(ModelReaderWriterOptions options)

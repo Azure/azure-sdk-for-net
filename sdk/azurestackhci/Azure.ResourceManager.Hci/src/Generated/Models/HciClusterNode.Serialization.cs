@@ -252,7 +252,22 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp), serializedAdditionalRawData);
+            return new HciClusterNode(
+                name.Value,
+                Optional.ToNullable(id),
+                Optional.ToNullable(windowsServerSubscription),
+                Optional.ToNullable(nodeType),
+                ehcResourceId.Value,
+                manufacturer.Value,
+                model.Value,
+                osName.Value,
+                osVersion.Value,
+                osDisplayVersion.Value,
+                serialNumber.Value,
+                Optional.ToNullable(coreCount),
+                Optional.ToNullable(memoryInGiB),
+                Optional.ToNullable(lastLicensingTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)

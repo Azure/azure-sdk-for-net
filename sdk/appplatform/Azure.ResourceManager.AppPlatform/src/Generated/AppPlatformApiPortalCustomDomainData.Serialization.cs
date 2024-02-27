@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalCustomDomainData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AppPlatformApiPortalCustomDomainData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalCustomDomainData>.Write(ModelReaderWriterOptions options)

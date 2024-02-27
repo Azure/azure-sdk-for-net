@@ -454,7 +454,30 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(), Optional.ToNullable(usePolicyBasedTrafficSelectors), ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(), egressNatRules ?? new ChangeTrackingList<WritableSubResource>());
+            return new VpnSiteLinkConnectionData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                vpnSiteLink,
+                Optional.ToNullable(routingWeight),
+                Optional.ToNullable(vpnLinkConnectionMode),
+                Optional.ToNullable(connectionStatus),
+                Optional.ToNullable(vpnConnectionProtocolType),
+                Optional.ToNullable(ingressBytesTransferred),
+                Optional.ToNullable(egressBytesTransferred),
+                Optional.ToNullable(connectionBandwidth),
+                sharedKey.Value,
+                Optional.ToNullable(enableBgp),
+                vpnGatewayCustomBgpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>(),
+                Optional.ToNullable(usePolicyBasedTrafficSelectors),
+                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
+                Optional.ToNullable(enableRateLimiting),
+                Optional.ToNullable(useLocalAzureIPAddress),
+                Optional.ToNullable(provisioningState),
+                ingressNatRules ?? new ChangeTrackingList<WritableSubResource>(),
+                egressNatRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<VpnSiteLinkConnectionData>.Write(ModelReaderWriterOptions options)

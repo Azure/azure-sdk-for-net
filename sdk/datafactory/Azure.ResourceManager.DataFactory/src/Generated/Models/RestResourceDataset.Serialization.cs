@@ -361,7 +361,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestResourceDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), folder.Value, additionalProperties, relativeUrl.Value, requestMethod.Value, requestBody.Value, additionalHeaders ?? new ChangeTrackingDictionary<string, BinaryData>(), paginationRules ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new RestResourceDataset(
+                type,
+                description.Value,
+                structure.Value,
+                schema.Value,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder.Value,
+                additionalProperties,
+                relativeUrl.Value,
+                requestMethod.Value,
+                requestBody.Value,
+                additionalHeaders ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                paginationRules ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<RestResourceDataset>.Write(ModelReaderWriterOptions options)

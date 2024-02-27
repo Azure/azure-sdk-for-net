@@ -242,7 +242,18 @@ namespace Azure.ResourceManager.KeyVault
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultPrivateEndpointConnectionData(id, name, type, systemData.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new KeyVaultPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

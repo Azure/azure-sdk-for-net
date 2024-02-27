@@ -182,7 +182,16 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceHostSettingsResult(oAuthUrl.Value, toBotFromChannelOpenIdMetadataUrl.Value, toBotFromChannelTokenIssuer.Value, toBotFromEmulatorOpenIdMetadataUrl.Value, toChannelFromBotLoginUrl.Value, toChannelFromBotOAuthScope.Value, Optional.ToNullable(validateAuthority), botOpenIdMetadata.Value, serializedAdditionalRawData);
+            return new BotServiceHostSettingsResult(
+                oAuthUrl.Value,
+                toBotFromChannelOpenIdMetadataUrl.Value,
+                toBotFromChannelTokenIssuer.Value,
+                toBotFromEmulatorOpenIdMetadataUrl.Value,
+                toChannelFromBotLoginUrl.Value,
+                toChannelFromBotOAuthScope.Value,
+                Optional.ToNullable(validateAuthority),
+                botOpenIdMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceHostSettingsResult>.Write(ModelReaderWriterOptions options)

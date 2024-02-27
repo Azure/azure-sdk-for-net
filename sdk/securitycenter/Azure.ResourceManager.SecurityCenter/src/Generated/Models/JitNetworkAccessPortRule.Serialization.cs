@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(), maxRequestAccessDuration, serializedAdditionalRawData);
+            return new JitNetworkAccessPortRule(
+                number,
+                protocol,
+                allowedSourceAddressPrefix.Value,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                maxRequestAccessDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPortRule>.Write(ModelReaderWriterOptions options)

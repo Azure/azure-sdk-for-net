@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedServerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deletionTime), originalId.Value, fullyQualifiedDomainName.Value, serializedAdditionalRawData);
+            return new DeletedServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                version.Value,
+                Optional.ToNullable(deletionTime),
+                originalId.Value,
+                fullyQualifiedDomainName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options)

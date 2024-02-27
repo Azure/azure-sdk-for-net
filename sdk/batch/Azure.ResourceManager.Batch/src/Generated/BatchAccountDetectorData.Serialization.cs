@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountDetectorData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchAccountDetectorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                value.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountDetectorData>.Write(ModelReaderWriterOptions options)

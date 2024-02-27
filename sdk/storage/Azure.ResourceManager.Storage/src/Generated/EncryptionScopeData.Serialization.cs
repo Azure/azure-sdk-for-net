@@ -229,7 +229,18 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EncryptionScopeData(id, name, type, systemData.Value, Optional.ToNullable(source), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), keyVaultProperties.Value, Optional.ToNullable(requireInfrastructureEncryption), serializedAdditionalRawData);
+            return new EncryptionScopeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(source),
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                keyVaultProperties.Value,
+                Optional.ToNullable(requireInfrastructureEncryption),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EncryptionScopeData>.Write(ModelReaderWriterOptions options)

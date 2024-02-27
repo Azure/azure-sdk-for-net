@@ -106,7 +106,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            return new SignalGateProcessor(
+                type,
+                name,
+                inputs,
+                activationEvaluationWindow.Value,
+                activationSignalOffset.Value,
+                minimumActivationTime.Value,
+                maximumActivationTime.Value);
         }
     }
 }

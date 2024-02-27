@@ -194,7 +194,15 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapLandscapeMonitorData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), grouping.Value, topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>(), serializedAdditionalRawData);
+            return new SapLandscapeMonitorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                grouping.Value,
+                topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapLandscapeMonitorData>.Write(ModelReaderWriterOptions options)

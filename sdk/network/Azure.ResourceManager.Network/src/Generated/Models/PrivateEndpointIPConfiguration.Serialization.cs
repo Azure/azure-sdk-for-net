@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointIPConfiguration(name.Value, type.Value, Optional.ToNullable(etag), groupId.Value, memberName.Value, privateIPAddress.Value, serializedAdditionalRawData);
+            return new PrivateEndpointIPConfiguration(
+                name.Value,
+                type.Value,
+                Optional.ToNullable(etag),
+                groupId.Value,
+                memberName.Value,
+                privateIPAddress.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)

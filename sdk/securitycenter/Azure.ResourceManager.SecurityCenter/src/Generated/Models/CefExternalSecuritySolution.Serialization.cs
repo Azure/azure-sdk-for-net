@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CefExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new CefExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData,
+                properties.Value);
         }
 
         BinaryData IPersistableModel<CefExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

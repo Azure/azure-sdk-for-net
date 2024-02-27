@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlPerformanceTier(id.Value, Optional.ToNullable(maxBackupRetentionDays), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxStorageMB), Optional.ToNullable(minLargeStorageMB), Optional.ToNullable(maxLargeStorageMB), Optional.ToNullable(minStorageMB), serviceLevelObjectives ?? new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>(), serializedAdditionalRawData);
+            return new MySqlPerformanceTier(
+                id.Value,
+                Optional.ToNullable(maxBackupRetentionDays),
+                Optional.ToNullable(minBackupRetentionDays),
+                Optional.ToNullable(maxStorageMB),
+                Optional.ToNullable(minLargeStorageMB),
+                Optional.ToNullable(maxLargeStorageMB),
+                Optional.ToNullable(minStorageMB),
+                serviceLevelObjectives ?? new ChangeTrackingList<MySqlPerformanceTierServiceLevelObjectives>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlPerformanceTier>.Write(ModelReaderWriterOptions options)

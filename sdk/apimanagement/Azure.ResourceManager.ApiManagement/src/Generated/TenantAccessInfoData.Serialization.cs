@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TenantAccessInfoData(id, name, type, systemData.Value, id0.Value, principalId.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new TenantAccessInfoData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                id0.Value,
+                principalId.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TenantAccessInfoData>.Write(ModelReaderWriterOptions options)

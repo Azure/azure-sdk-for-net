@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntity(self.Value, resourceName.Value, createdAt.Value, updatedAt.Value, deletedAt.Value, serializedAdditionalRawData);
+            return new MetadataEntity(
+                self.Value,
+                resourceName.Value,
+                createdAt.Value,
+                updatedAt.Value,
+                deletedAt.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntity>.Write(ModelReaderWriterOptions options)

@@ -114,7 +114,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new StopwordsTokenFilter(odataType, name, stopwords ?? new ChangeTrackingList<string>(), Optional.ToNullable(stopwordsList), Optional.ToNullable(ignoreCase), Optional.ToNullable(removeTrailing));
+            return new StopwordsTokenFilter(
+                odataType,
+                name,
+                stopwords ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(stopwordsList),
+                Optional.ToNullable(ignoreCase),
+                Optional.ToNullable(removeTrailing));
         }
     }
 }

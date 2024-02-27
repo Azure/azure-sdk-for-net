@@ -220,7 +220,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceDtcData(id, name, type, systemData.Value, Optional.ToNullable(dtcEnabled), securitySettings.Value, externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(), dtcHostNameDnsSuffix.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ManagedInstanceDtcData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(dtcEnabled),
+                securitySettings.Value,
+                externalDnsSuffixSearchList ?? new ChangeTrackingList<string>(),
+                dtcHostNameDnsSuffix.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceDtcData>.Write(ModelReaderWriterOptions options)

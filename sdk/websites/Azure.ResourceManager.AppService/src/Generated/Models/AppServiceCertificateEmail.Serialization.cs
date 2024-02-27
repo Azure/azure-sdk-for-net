@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceCertificateEmail(id, name, type, systemData.Value, emailId.Value, Optional.ToNullable(timeStamp), kind.Value, serializedAdditionalRawData);
+            return new AppServiceCertificateEmail(
+                id,
+                name,
+                type,
+                systemData.Value,
+                emailId.Value,
+                Optional.ToNullable(timeStamp),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceCertificateEmail>.Write(ModelReaderWriterOptions options)

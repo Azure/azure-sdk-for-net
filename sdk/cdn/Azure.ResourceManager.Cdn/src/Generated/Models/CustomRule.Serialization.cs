@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData);
+            return new CustomRule(
+                name,
+                Optional.ToNullable(enabledState),
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRule>.Write(ModelReaderWriterOptions options)

@@ -600,7 +600,36 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, applicationConfigurations ?? new ChangeTrackingList<SpringBootAppApplicationConfigurationsItem>(), bindingPorts ?? new ChangeTrackingList<int>(), buildJdkVersion.Value, certificates ?? new ChangeTrackingList<string>(), checksum.Value, dependencies ?? new ChangeTrackingList<string>(), environments ?? new ChangeTrackingList<string>(), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), jvmOptions ?? new ChangeTrackingList<string>(), miscs ?? new ChangeTrackingList<SpringBootAppMiscsItem>(), instances ?? new ChangeTrackingList<SpringBootAppInstancesItem>(), runtimeJdkVersion.Value, servers ?? new ChangeTrackingList<string>(), machineArmIds ?? new ChangeTrackingList<ResourceIdentifier>(), siteName.Value, springBootVersion.Value, staticContentLocations ?? new ChangeTrackingList<string>(), connectionStrings ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), errors ?? new ChangeTrackingList<SpringBootSiteError>(), serializedAdditionalRawData);
+            return new SpringBootAppProperties(
+                appName.Value,
+                artifactName.Value,
+                Optional.ToNullable(appPort),
+                appType.Value,
+                applicationConfigurations ?? new ChangeTrackingList<SpringBootAppApplicationConfigurationsItem>(),
+                bindingPorts ?? new ChangeTrackingList<int>(),
+                buildJdkVersion.Value,
+                certificates ?? new ChangeTrackingList<string>(),
+                checksum.Value,
+                dependencies ?? new ChangeTrackingList<string>(),
+                environments ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(instanceCount),
+                jarFileLocation.Value,
+                Optional.ToNullable(jvmMemoryInMB),
+                jvmOptions ?? new ChangeTrackingList<string>(),
+                miscs ?? new ChangeTrackingList<SpringBootAppMiscsItem>(),
+                instances ?? new ChangeTrackingList<SpringBootAppInstancesItem>(),
+                runtimeJdkVersion.Value,
+                servers ?? new ChangeTrackingList<string>(),
+                machineArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                siteName.Value,
+                springBootVersion.Value,
+                staticContentLocations ?? new ChangeTrackingList<string>(),
+                connectionStrings ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(lastModifiedTime),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(provisioningState),
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)

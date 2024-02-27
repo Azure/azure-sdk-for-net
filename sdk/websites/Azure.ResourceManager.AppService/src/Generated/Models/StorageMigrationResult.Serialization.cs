@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMigrationResult(id, name, type, systemData.Value, operationId.Value, kind.Value, serializedAdditionalRawData);
+            return new StorageMigrationResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                operationId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMigrationResult>.Write(ModelReaderWriterOptions options)

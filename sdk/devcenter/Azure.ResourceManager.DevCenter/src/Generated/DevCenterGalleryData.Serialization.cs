@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.DevCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterGalleryData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), galleryResourceId.Value, serializedAdditionalRawData);
+            return new DevCenterGalleryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                galleryResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterGalleryData>.Write(ModelReaderWriterOptions options)

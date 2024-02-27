@@ -183,7 +183,23 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new FieldValue_internal(type, valueString.Value, Optional.ToNullable(valueDate), Optional.ToNullable(valueTime), valuePhoneNumber.Value, Optional.ToNullable(valueNumber), Optional.ToNullable(valueInteger), valueArray ?? new ChangeTrackingList<FieldValue_internal>(), valueObject ?? new ChangeTrackingDictionary<string, FieldValue_internal>(), Optional.ToNullable(valueSelectionMark), valueCountryRegion.Value, text.Value, boundingBox ?? new ChangeTrackingList<float>(), Optional.ToNullable(confidence), elements ?? new ChangeTrackingList<string>(), Optional.ToNullable(page));
+            return new FieldValue_internal(
+                type,
+                valueString.Value,
+                Optional.ToNullable(valueDate),
+                Optional.ToNullable(valueTime),
+                valuePhoneNumber.Value,
+                Optional.ToNullable(valueNumber),
+                Optional.ToNullable(valueInteger),
+                valueArray ?? new ChangeTrackingList<FieldValue_internal>(),
+                valueObject ?? new ChangeTrackingDictionary<string, FieldValue_internal>(),
+                Optional.ToNullable(valueSelectionMark),
+                valueCountryRegion.Value,
+                text.Value,
+                boundingBox ?? new ChangeTrackingList<float>(),
+                Optional.ToNullable(confidence),
+                elements ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(page));
         }
     }
 }

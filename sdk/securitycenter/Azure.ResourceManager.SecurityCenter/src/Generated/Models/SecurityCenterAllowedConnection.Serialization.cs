@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityCenterAllowedConnection(id, name, type, systemData.Value, Optional.ToNullable(calculatedDateTime), connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new SecurityCenterAllowedConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(calculatedDateTime),
+                connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityCenterAllowedConnection>.Write(ModelReaderWriterOptions options)

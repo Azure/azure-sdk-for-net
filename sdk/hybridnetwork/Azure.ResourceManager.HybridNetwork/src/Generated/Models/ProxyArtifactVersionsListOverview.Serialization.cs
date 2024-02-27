@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProxyArtifactVersionsListOverview(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ProxyArtifactVersionsListOverview(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProxyArtifactVersionsListOverview>.Write(ModelReaderWriterOptions options)

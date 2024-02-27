@@ -163,7 +163,13 @@ namespace Azure.AI.ContentSafety
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyzeTextOptions(text, categories ?? new ChangeTrackingList<TextCategory>(), blocklistNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(haltOnBlocklistHit), Optional.ToNullable(outputType), serializedAdditionalRawData);
+            return new AnalyzeTextOptions(
+                text,
+                categories ?? new ChangeTrackingList<TextCategory>(),
+                blocklistNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(haltOnBlocklistHit),
+                Optional.ToNullable(outputType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeTextOptions>.Write(ModelReaderWriterOptions options)

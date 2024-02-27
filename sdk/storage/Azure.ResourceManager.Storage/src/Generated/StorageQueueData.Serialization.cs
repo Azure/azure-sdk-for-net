@@ -179,7 +179,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQueueData(id, name, type, systemData.Value, metadata ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(approximateMessageCount), serializedAdditionalRawData);
+            return new StorageQueueData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(approximateMessageCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageQueueData>.Write(ModelReaderWriterOptions options)

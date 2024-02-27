@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, serializedAdditionalRawData, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningCustomModelJobOutput(
+                description.Value,
+                jobOutputType,
+                serializedAdditionalRawData,
+                assetName.Value,
+                assetVersion.Value,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(mode),
+                uri.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningCustomModelJobOutput>.Write(ModelReaderWriterOptions options)

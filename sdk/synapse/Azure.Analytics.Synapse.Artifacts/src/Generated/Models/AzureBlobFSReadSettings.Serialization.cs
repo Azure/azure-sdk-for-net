@@ -198,7 +198,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureBlobFSReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                fileListPath.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                deleteFilesAfterCompletion.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value);
         }
 
         internal partial class AzureBlobFSReadSettingsConverter : JsonConverter<AzureBlobFSReadSettings>

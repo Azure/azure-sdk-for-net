@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateTopicSpacesConfigurationInfo(Optional.ToNullable(state), routeTopicResourceId.Value, routingEnrichments.Value, clientAuthentication.Value, Optional.ToNullable(maximumSessionExpiryInHours), Optional.ToNullable(maximumClientSessionsPerAuthenticationName), routingIdentityInfo.Value, serializedAdditionalRawData);
+            return new UpdateTopicSpacesConfigurationInfo(
+                Optional.ToNullable(state),
+                routeTopicResourceId.Value,
+                routingEnrichments.Value,
+                clientAuthentication.Value,
+                Optional.ToNullable(maximumSessionExpiryInHours),
+                Optional.ToNullable(maximumClientSessionsPerAuthenticationName),
+                routingIdentityInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateTopicSpacesConfigurationInfo>.Write(ModelReaderWriterOptions options)

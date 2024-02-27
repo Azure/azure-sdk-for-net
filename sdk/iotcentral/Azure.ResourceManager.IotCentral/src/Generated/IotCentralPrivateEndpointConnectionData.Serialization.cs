@@ -210,7 +210,16 @@ namespace Azure.ResourceManager.IotCentral
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralPrivateEndpointConnectionData(id, name, type, systemData.Value, groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new IotCentralPrivateEndpointConnectionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options)

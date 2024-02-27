@@ -131,7 +131,16 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonLineCrossingOperation(type, debug.Value, calibrationConfiguration.Value, cameraConfiguration.Value, cameraCalibratorNodeConfiguration.Value, detectorNodeConfiguration.Value, trackerNodeConfiguration.Value, enableFaceMaskClassifier.Value, lines);
+            return new SpatialAnalysisPersonLineCrossingOperation(
+                type,
+                debug.Value,
+                calibrationConfiguration.Value,
+                cameraConfiguration.Value,
+                cameraCalibratorNodeConfiguration.Value,
+                detectorNodeConfiguration.Value,
+                trackerNodeConfiguration.Value,
+                enableFaceMaskClassifier.Value,
+                lines);
         }
     }
 }

@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.Peering
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeerAsnData(id, name, type, systemData.Value, Optional.ToNullable(peerAsn), peerContactDetail ?? new ChangeTrackingList<PeerAsnContactDetail>(), peerName.Value, Optional.ToNullable(validationState), errorMessage.Value, serializedAdditionalRawData);
+            return new PeerAsnData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(peerAsn),
+                peerContactDetail ?? new ChangeTrackingList<PeerAsnContactDetail>(),
+                peerName.Value,
+                Optional.ToNullable(validationState),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeerAsnData>.Write(ModelReaderWriterOptions options)

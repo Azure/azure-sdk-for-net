@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,18 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="executionHistory"/> or <paramref name="limits"/> is null. </exception>
         internal SearchIndexerStatus(IndexerStatus status, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
         {
-            if (executionHistory == null)
-            {
-                throw new ArgumentNullException(nameof(executionHistory));
-            }
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
-
             Status = status;
             ExecutionHistory = executionHistory.ToList();
             Limits = limits;

@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyVersion(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
+            return new ManagementPolicyVersion(
+                tierToCool.Value,
+                tierToArchive.Value,
+                tierToCold.Value,
+                tierToHot.Value,
+                delete.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyVersion>.Write(ModelReaderWriterOptions options)

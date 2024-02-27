@@ -350,7 +350,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountKind.Value, encryptedCredential.Value, credential.Value, Optional.ToNullable(authenticationType), containerUri.Value);
+            return new AzureBlobStorageLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                connectionString.Value,
+                accountKey.Value,
+                sasUri.Value,
+                sasToken.Value,
+                serviceEndpoint.Value,
+                servicePrincipalId.Value,
+                servicePrincipalKey.Value,
+                tenant.Value,
+                azureCloudType.Value,
+                accountKind.Value,
+                encryptedCredential.Value,
+                credential.Value,
+                Optional.ToNullable(authenticationType),
+                containerUri.Value);
         }
 
         internal partial class AzureBlobStorageLinkedServiceConverter : JsonConverter<AzureBlobStorageLinkedService>

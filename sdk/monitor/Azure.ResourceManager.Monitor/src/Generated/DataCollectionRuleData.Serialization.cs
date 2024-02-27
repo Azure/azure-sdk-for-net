@@ -367,7 +367,26 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(), dataSources.Value, destinations.Value, dataFlows ?? new ChangeTrackingList<DataFlow>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DataCollectionRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(kind),
+                identity,
+                Optional.ToNullable(etag),
+                description.Value,
+                immutableId.Value,
+                dataCollectionEndpointId.Value,
+                metadata.Value,
+                streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
+                dataSources.Value,
+                destinations.Value,
+                dataFlows ?? new ChangeTrackingList<DataFlow>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleData>.Write(ModelReaderWriterOptions options)

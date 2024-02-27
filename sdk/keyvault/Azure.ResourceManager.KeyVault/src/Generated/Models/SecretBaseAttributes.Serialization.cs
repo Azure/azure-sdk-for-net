@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecretBaseAttributes(Optional.ToNullable(enabled), Optional.ToNullable(nbf), Optional.ToNullable(exp), Optional.ToNullable(created), Optional.ToNullable(updated), serializedAdditionalRawData);
+            return new SecretBaseAttributes(
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(nbf),
+                Optional.ToNullable(exp),
+                Optional.ToNullable(created),
+                Optional.ToNullable(updated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecretBaseAttributes>.Write(ModelReaderWriterOptions options)

@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureReprotectContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, storageAccountId.Value, logStorageAccountId.Value);
+            return new HyperVReplicaAzureReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId.Value,
+                vmName.Value,
+                osType.Value,
+                vhdId.Value,
+                storageAccountId.Value,
+                logStorageAccountId.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReprotectContent>.Write(ModelReaderWriterOptions options)

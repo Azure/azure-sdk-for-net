@@ -264,7 +264,19 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerResourceData(id, name, type, systemData.Value, targetService.Value, authInfo.Value, Optional.ToNullable(clientType), provisioningState.Value, vnetSolution.Value, secretStore.Value, scope.Value, serializedAdditionalRawData);
+            return new LinkerResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                targetService.Value,
+                authInfo.Value,
+                Optional.ToNullable(clientType),
+                provisioningState.Value,
+                vnetSolution.Value,
+                secretStore.Value,
+                scope.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options)

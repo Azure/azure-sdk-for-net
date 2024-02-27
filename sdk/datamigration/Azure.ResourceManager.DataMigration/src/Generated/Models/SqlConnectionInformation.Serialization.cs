@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlConnectionInformation(dataSource.Value, authentication.Value, userName.Value, password.Value, Optional.ToNullable(encryptConnection), Optional.ToNullable(trustServerCertificate), serializedAdditionalRawData);
+            return new SqlConnectionInformation(
+                dataSource.Value,
+                authentication.Value,
+                userName.Value,
+                password.Value,
+                Optional.ToNullable(encryptConnection),
+                Optional.ToNullable(trustServerCertificate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlConnectionInformation>.Write(ModelReaderWriterOptions options)

@@ -339,7 +339,25 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, disks ?? new ChangeTrackingList<DiskInstanceView>(), extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>(), vmHealth.Value, bootDiagnostics.Value, assignedHost.Value, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), patchStatus.Value, Optional.ToNullable(isVmInStandbyPool), serializedAdditionalRawData);
+            return new VirtualMachineInstanceView(
+                Optional.ToNullable(platformUpdateDomain),
+                Optional.ToNullable(platformFaultDomain),
+                computerName.Value,
+                osName.Value,
+                osVersion.Value,
+                Optional.ToNullable(hyperVGeneration),
+                rdpThumbPrint.Value,
+                vmAgent.Value,
+                maintenanceRedeployStatus.Value,
+                disks ?? new ChangeTrackingList<DiskInstanceView>(),
+                extensions ?? new ChangeTrackingList<VirtualMachineExtensionInstanceView>(),
+                vmHealth.Value,
+                bootDiagnostics.Value,
+                assignedHost.Value,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                patchStatus.Value,
+                Optional.ToNullable(isVmInStandbyPool),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstanceView>.Write(ModelReaderWriterOptions options)

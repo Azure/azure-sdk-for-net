@@ -301,7 +301,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorCreateOrUpdateContent(Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(), testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(), testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(), outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(), notes.Value, serializedAdditionalRawData);
+            return new ConnectionMonitorCreateOrUpdateContent(
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                source.Value,
+                destination.Value,
+                Optional.ToNullable(autoStart),
+                Optional.ToNullable(monitoringIntervalInSeconds),
+                endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>(),
+                testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>(),
+                testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>(),
+                outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>(),
+                notes.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

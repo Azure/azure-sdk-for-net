@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountBatchConfigurationProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, batchGroupName, releaseCriteria);
+            return new IntegrationAccountBatchConfigurationProperties(
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                metadata.Value,
+                serializedAdditionalRawData,
+                batchGroupName,
+                releaseCriteria);
         }
 
         BinaryData IPersistableModel<IntegrationAccountBatchConfigurationProperties>.Write(ModelReaderWriterOptions options)

@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForwardingConfiguration(odataType, serializedAdditionalRawData, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool);
+            return new ForwardingConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                customForwardingPath.Value,
+                Optional.ToNullable(forwardingProtocol),
+                cacheConfiguration.Value,
+                backendPool);
         }
 
         BinaryData IPersistableModel<ForwardingConfiguration>.Write(ModelReaderWriterOptions options)

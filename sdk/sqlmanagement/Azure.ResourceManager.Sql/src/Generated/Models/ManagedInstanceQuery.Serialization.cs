@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceQuery(id, name, type, systemData.Value, queryText.Value, serializedAdditionalRawData);
+            return new ManagedInstanceQuery(
+                id,
+                name,
+                type,
+                systemData.Value,
+                queryText.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceQuery>.Write(ModelReaderWriterOptions options)

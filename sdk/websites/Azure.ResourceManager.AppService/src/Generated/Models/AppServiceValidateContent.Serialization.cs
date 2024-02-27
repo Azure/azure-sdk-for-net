@@ -295,7 +295,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceValidateContent(name, type, location, serverFarmId.Value, skuName.Value, Optional.ToNullable(needLinuxWorkers), Optional.ToNullable(isSpot), Optional.ToNullable(capacity), hostingEnvironment.Value, Optional.ToNullable(isXenon), containerRegistryBaseUrl.Value, containerRegistryUsername.Value, containerRegistryPassword.Value, containerImageRepository.Value, containerImageTag.Value, containerImagePlatform.Value, appServiceEnvironment.Value, serializedAdditionalRawData);
+            return new AppServiceValidateContent(
+                name,
+                type,
+                location,
+                serverFarmId.Value,
+                skuName.Value,
+                Optional.ToNullable(needLinuxWorkers),
+                Optional.ToNullable(isSpot),
+                Optional.ToNullable(capacity),
+                hostingEnvironment.Value,
+                Optional.ToNullable(isXenon),
+                containerRegistryBaseUrl.Value,
+                containerRegistryUsername.Value,
+                containerRegistryPassword.Value,
+                containerImageRepository.Value,
+                containerImageTag.Value,
+                containerImagePlatform.Value,
+                appServiceEnvironment.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceValidateContent>.Write(ModelReaderWriterOptions options)

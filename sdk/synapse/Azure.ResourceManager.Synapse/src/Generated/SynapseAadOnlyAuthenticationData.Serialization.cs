@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseAadOnlyAuthenticationData(id, name, type, systemData.Value, Optional.ToNullable(azureADOnlyAuthentication), Optional.ToNullable(state), Optional.ToNullable(creationDate), serializedAdditionalRawData);
+            return new SynapseAadOnlyAuthenticationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(azureADOnlyAuthentication),
+                Optional.ToNullable(state),
+                Optional.ToNullable(creationDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseAadOnlyAuthenticationData>.Write(ModelReaderWriterOptions options)

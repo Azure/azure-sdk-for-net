@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Grafana
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedGrafanaData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku.Value, properties.Value, identity, serializedAdditionalRawData);
+            return new ManagedGrafanaData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                properties.Value,
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedGrafanaData>.Write(ModelReaderWriterOptions options)

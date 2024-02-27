@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsStorageContainerData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), serializedAdditionalRawData);
+            return new DataLakeAnalyticsStorageContainerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastModifiedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsStorageContainerData>.Write(ModelReaderWriterOptions options)

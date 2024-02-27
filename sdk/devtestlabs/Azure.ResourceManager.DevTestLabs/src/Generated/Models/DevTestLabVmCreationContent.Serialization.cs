@@ -483,7 +483,35 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVmCreationContent(name.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), bulkCreationParameters.Value, notes.Value, ownerObjectId.Value, ownerUserPrincipalName.Value, Optional.ToNullable(createdDate), customImageId.Value, size.Value, userName.Value, password.Value, sshKey.Value, Optional.ToNullable(isAuthenticationWithSshKey), labSubnetName.Value, labVirtualNetworkId.Value, Optional.ToNullable(disallowPublicIPAddress), artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(), galleryImageReference.Value, planId.Value, networkInterface.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(allowClaim), storageType.Value, environmentId.Value, dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(), scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(), serializedAdditionalRawData);
+            return new DevTestLabVmCreationContent(
+                name.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                bulkCreationParameters.Value,
+                notes.Value,
+                ownerObjectId.Value,
+                ownerUserPrincipalName.Value,
+                Optional.ToNullable(createdDate),
+                customImageId.Value,
+                size.Value,
+                userName.Value,
+                password.Value,
+                sshKey.Value,
+                Optional.ToNullable(isAuthenticationWithSshKey),
+                labSubnetName.Value,
+                labVirtualNetworkId.Value,
+                Optional.ToNullable(disallowPublicIPAddress),
+                artifacts ?? new ChangeTrackingList<DevTestLabArtifactInstallInfo>(),
+                galleryImageReference.Value,
+                planId.Value,
+                networkInterface.Value,
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(allowClaim),
+                storageType.Value,
+                environmentId.Value,
+                dataDiskParameters ?? new ChangeTrackingList<DevTestLabDataDiskProperties>(),
+                scheduleParameters ?? new ChangeTrackingList<DevTestLabScheduleCreationParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVmCreationContent>.Write(ModelReaderWriterOptions options)

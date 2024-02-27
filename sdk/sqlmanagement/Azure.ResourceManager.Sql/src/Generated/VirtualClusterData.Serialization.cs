@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, subnetId.Value, version.Value, childResources ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VirtualClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnetId.Value,
+                version.Value,
+                childResources ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualClusterData>.Write(ModelReaderWriterOptions options)

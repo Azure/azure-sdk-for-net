@@ -146,7 +146,13 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), serializedAdditionalRawData);
+            return new VariableState(
+                variable.Value,
+                Optional.ToNullable(filledNARatio),
+                Optional.ToNullable(effectiveCount),
+                Optional.ToNullable(firstTimestamp),
+                Optional.ToNullable(lastTimestamp),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VariableState>.Write(ModelReaderWriterOptions options)

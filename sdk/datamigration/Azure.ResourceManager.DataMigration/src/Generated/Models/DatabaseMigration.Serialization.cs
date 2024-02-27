@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseMigration(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new DatabaseMigration(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseMigration>.Write(ModelReaderWriterOptions options)

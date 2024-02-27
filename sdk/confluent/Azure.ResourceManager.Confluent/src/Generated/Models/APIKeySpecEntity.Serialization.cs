@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new APIKeySpecEntity(description.Value, name.Value, secret.Value, resource.Value, owner.Value, serializedAdditionalRawData);
+            return new APIKeySpecEntity(
+                description.Value,
+                name.Value,
+                secret.Value,
+                resource.Value,
+                owner.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<APIKeySpecEntity>.Write(ModelReaderWriterOptions options)

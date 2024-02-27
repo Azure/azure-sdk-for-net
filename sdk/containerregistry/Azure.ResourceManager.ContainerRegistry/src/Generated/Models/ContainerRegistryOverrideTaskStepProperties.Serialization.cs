@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryOverrideTaskStepProperties(contextPath.Value, file.Value, arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(), target.Value, values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(), updateTriggerToken.Value, serializedAdditionalRawData);
+            return new ContainerRegistryOverrideTaskStepProperties(
+                contextPath.Value,
+                file.Value,
+                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                target.Value,
+                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                updateTriggerToken.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryOverrideTaskStepProperties>.Write(ModelReaderWriterOptions options)

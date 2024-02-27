@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupVaultResourceMoveDetails(operationId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(completionTimeUtc), sourceResourcePath.Value, targetResourcePath.Value, serializedAdditionalRawData);
+            return new BackupVaultResourceMoveDetails(
+                operationId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(completionTimeUtc),
+                sourceResourcePath.Value,
+                targetResourcePath.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupVaultResourceMoveDetails>.Write(ModelReaderWriterOptions options)

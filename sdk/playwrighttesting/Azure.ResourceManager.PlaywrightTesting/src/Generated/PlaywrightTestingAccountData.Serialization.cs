@@ -248,7 +248,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingAccountData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, dashboardUri.Value, Optional.ToNullable(regionalAffinity), Optional.ToNullable(scalableExecution), Optional.ToNullable(reporting), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PlaywrightTestingAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                dashboardUri.Value,
+                Optional.ToNullable(regionalAffinity),
+                Optional.ToNullable(scalableExecution),
+                Optional.ToNullable(reporting),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingAccountData>.Write(ModelReaderWriterOptions options)

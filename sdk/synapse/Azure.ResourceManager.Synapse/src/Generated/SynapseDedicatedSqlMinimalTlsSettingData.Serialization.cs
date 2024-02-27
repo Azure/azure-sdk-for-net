@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, type, systemData.Value, Optional.ToNullable(location), minimalTlsVersion.Value, serializedAdditionalRawData);
+            return new SynapseDedicatedSqlMinimalTlsSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                minimalTlsVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(ModelReaderWriterOptions options)

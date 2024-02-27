@@ -165,7 +165,22 @@ namespace Azure.Maps.Rendering
                     continue;
                 }
             }
-            return new MapTileSet(tilejson.Value, name.Value, description.Value, version.Value, attribution.Value, template.Value, legend.Value, scheme.Value, tiles ?? new ChangeTrackingList<string>(), grids ?? new ChangeTrackingList<string>(), data ?? new ChangeTrackingList<string>(), Optional.ToNullable(minzoom), Optional.ToNullable(maxzoom), bounds ?? new ChangeTrackingList<float>(), center ?? new ChangeTrackingList<float>());
+            return new MapTileSet(
+                tilejson.Value,
+                name.Value,
+                description.Value,
+                version.Value,
+                attribution.Value,
+                template.Value,
+                legend.Value,
+                scheme.Value,
+                tiles ?? new ChangeTrackingList<string>(),
+                grids ?? new ChangeTrackingList<string>(),
+                data ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(minzoom),
+                Optional.ToNullable(maxzoom),
+                bounds ?? new ChangeTrackingList<float>(),
+                center ?? new ChangeTrackingList<float>());
         }
     }
 }

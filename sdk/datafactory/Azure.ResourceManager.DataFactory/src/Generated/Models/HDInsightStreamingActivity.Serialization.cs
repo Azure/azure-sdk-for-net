@@ -493,7 +493,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightStreamingActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), arguments ?? new ChangeTrackingList<BinaryData>(), Optional.ToNullable(getDebugInfo), mapper, reducer, input, output, filePaths, fileLinkedService, combiner.Value, commandEnvironment ?? new ChangeTrackingList<BinaryData>(), defines ?? new ChangeTrackingDictionary<string, BinaryData>());
+            return new HDInsightStreamingActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<BinaryData>(),
+                Optional.ToNullable(getDebugInfo),
+                mapper,
+                reducer,
+                input,
+                output,
+                filePaths,
+                fileLinkedService,
+                combiner.Value,
+                commandEnvironment ?? new ChangeTrackingList<BinaryData>(),
+                defines ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         BinaryData IPersistableModel<HDInsightStreamingActivity>.Write(ModelReaderWriterOptions options)

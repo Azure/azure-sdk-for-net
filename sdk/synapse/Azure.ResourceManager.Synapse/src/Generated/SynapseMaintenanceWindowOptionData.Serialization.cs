@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseMaintenanceWindowOptionData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), maintenanceWindowCycles ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(), Optional.ToNullable(minDurationInMinutes), Optional.ToNullable(defaultDurationInMinutes), Optional.ToNullable(minCycles), Optional.ToNullable(timeGranularityInMinutes), Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle), serializedAdditionalRawData);
+            return new SynapseMaintenanceWindowOptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                maintenanceWindowCycles ?? new ChangeTrackingList<SynapseMaintenanceWindowTimeRange>(),
+                Optional.ToNullable(minDurationInMinutes),
+                Optional.ToNullable(defaultDurationInMinutes),
+                Optional.ToNullable(minCycles),
+                Optional.ToNullable(timeGranularityInMinutes),
+                Optional.ToNullable(allowMultipleMaintenanceWindowsPerCycle),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options)

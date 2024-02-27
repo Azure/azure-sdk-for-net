@@ -510,7 +510,33 @@ namespace Azure.ResourceManager.ContainerInstance
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, zones ?? new ChangeTrackingList<string>(), identity, provisioningState.Value, containers, imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, volumes ?? new ChangeTrackingList<ContainerVolume>(), instanceView.Value, diagnostics.Value, subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(), extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(), confidentialComputeProperties.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
+            return new ContainerGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                provisioningState.Value,
+                containers,
+                imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
+                Optional.ToNullable(restartPolicy),
+                ipAddress.Value,
+                osType,
+                volumes ?? new ChangeTrackingList<ContainerVolume>(),
+                instanceView.Value,
+                diagnostics.Value,
+                subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(),
+                dnsConfig.Value,
+                Optional.ToNullable(sku),
+                encryptionProperties.Value,
+                initContainers ?? new ChangeTrackingList<InitContainerDefinitionContent>(),
+                extensions ?? new ChangeTrackingList<DeploymentExtensionSpec>(),
+                confidentialComputeProperties.Value,
+                Optional.ToNullable(priority),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options)

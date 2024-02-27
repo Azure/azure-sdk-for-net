@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates), serializedAdditionalRawData);
+            return new WindowsConfiguration(
+                Optional.ToNullable(provisionVmAgent),
+                Optional.ToNullable(enableAutomaticUpdates),
+                timeZone.Value,
+                additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
+                patchSettings.Value,
+                winRM.Value,
+                Optional.ToNullable(enableVmAgentPlatformUpdates),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsConfiguration>.Write(ModelReaderWriterOptions options)

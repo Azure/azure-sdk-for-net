@@ -238,7 +238,18 @@ namespace Azure.ResourceManager.DnsResolver
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsForwardingRulesetData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), dnsResolverOutboundEndpoints, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new DnsForwardingRulesetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                dnsResolverOutboundEndpoints,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceGuid),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsForwardingRulesetData>.Write(ModelReaderWriterOptions options)

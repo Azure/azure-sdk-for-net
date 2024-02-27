@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RollingUpgradePolicy(Optional.ToNullable(maxBatchInstancePercent), Optional.ToNullable(maxUnhealthyInstancePercent), Optional.ToNullable(maxUnhealthyUpgradedInstancePercent), pauseTimeBetweenBatches.Value, Optional.ToNullable(enableCrossZoneUpgrade), Optional.ToNullable(prioritizeUnhealthyInstances), Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach), Optional.ToNullable(maxSurge), serializedAdditionalRawData);
+            return new RollingUpgradePolicy(
+                Optional.ToNullable(maxBatchInstancePercent),
+                Optional.ToNullable(maxUnhealthyInstancePercent),
+                Optional.ToNullable(maxUnhealthyUpgradedInstancePercent),
+                pauseTimeBetweenBatches.Value,
+                Optional.ToNullable(enableCrossZoneUpgrade),
+                Optional.ToNullable(prioritizeUnhealthyInstances),
+                Optional.ToNullable(rollbackFailedInstancesOnPolicyBreach),
+                Optional.ToNullable(maxSurge),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RollingUpgradePolicy>.Write(ModelReaderWriterOptions options)

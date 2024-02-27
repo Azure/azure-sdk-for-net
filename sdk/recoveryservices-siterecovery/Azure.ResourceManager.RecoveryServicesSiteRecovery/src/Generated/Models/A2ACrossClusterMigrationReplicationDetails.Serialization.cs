@@ -156,7 +156,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ACrossClusterMigrationReplicationDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, Optional.ToNullable(primaryFabricLocation), osType.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, lifecycleId.Value);
+            return new A2ACrossClusterMigrationReplicationDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId.Value,
+                Optional.ToNullable(primaryFabricLocation),
+                osType.Value,
+                vmProtectionState.Value,
+                vmProtectionStateDescription.Value,
+                lifecycleId.Value);
         }
 
         BinaryData IPersistableModel<A2ACrossClusterMigrationReplicationDetails>.Write(ModelReaderWriterOptions options)

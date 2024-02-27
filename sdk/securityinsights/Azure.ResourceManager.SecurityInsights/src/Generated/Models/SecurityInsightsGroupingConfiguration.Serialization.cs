@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsGroupingConfiguration(enabled, reopenClosedIncident, lookbackDuration, matchingMethod, groupByEntities ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>(), groupByAlertDetails ?? new ChangeTrackingList<SecurityInsightsAlertDetail>(), groupByCustomDetails ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SecurityInsightsGroupingConfiguration(
+                enabled,
+                reopenClosedIncident,
+                lookbackDuration,
+                matchingMethod,
+                groupByEntities ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>(),
+                groupByAlertDetails ?? new ChangeTrackingList<SecurityInsightsAlertDetail>(),
+                groupByCustomDetails ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupingConfiguration>.Write(ModelReaderWriterOptions options)

@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentUserDetail(firstName.Value, lastName.Value, emailAddress, userPrincipalName.Value, aadEmail.Value, serializedAdditionalRawData);
+            return new ConfluentUserDetail(
+                firstName.Value,
+                lastName.Value,
+                emailAddress,
+                userPrincipalName.Value,
+                aadEmail.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentUserDetail>.Write(ModelReaderWriterOptions options)

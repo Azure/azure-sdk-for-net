@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData);
+            return new UnknownJob(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupGenericJob>.Write(ModelReaderWriterOptions options)

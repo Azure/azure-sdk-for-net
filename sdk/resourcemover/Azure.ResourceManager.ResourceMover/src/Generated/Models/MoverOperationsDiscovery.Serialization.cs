@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverOperationsDiscovery(name.Value, Optional.ToNullable(isDataAction), display.Value, origin.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverOperationsDiscovery(
+                name.Value,
+                Optional.ToNullable(isDataAction),
+                display.Value,
+                origin.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverOperationsDiscovery>.Write(ModelReaderWriterOptions options)

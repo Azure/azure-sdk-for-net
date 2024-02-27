@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabAutoShutdownProfile(Optional.ToNullable(shutdownOnDisconnect), Optional.ToNullable(shutdownWhenNotConnected), Optional.ToNullable(shutdownOnIdle), Optional.ToNullable(disconnectDelay), Optional.ToNullable(noConnectDelay), Optional.ToNullable(idleDelay), serializedAdditionalRawData);
+            return new LabAutoShutdownProfile(
+                Optional.ToNullable(shutdownOnDisconnect),
+                Optional.ToNullable(shutdownWhenNotConnected),
+                Optional.ToNullable(shutdownOnIdle),
+                Optional.ToNullable(disconnectDelay),
+                Optional.ToNullable(noConnectDelay),
+                Optional.ToNullable(idleDelay),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabAutoShutdownProfile>.Write(ModelReaderWriterOptions options)

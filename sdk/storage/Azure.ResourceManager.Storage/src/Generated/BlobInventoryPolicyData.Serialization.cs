@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value, serializedAdditionalRawData);
+            return new BlobInventoryPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastModifiedTime),
+                policy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options)

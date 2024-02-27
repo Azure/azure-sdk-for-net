@@ -281,7 +281,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NlpParameterSubspace(gradientAccumulationSteps.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, numberOfEpochs.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupRatio.Value, weightDecay.Value, serializedAdditionalRawData);
+            return new NlpParameterSubspace(
+                gradientAccumulationSteps.Value,
+                learningRate.Value,
+                learningRateScheduler.Value,
+                modelName.Value,
+                numberOfEpochs.Value,
+                trainingBatchSize.Value,
+                validationBatchSize.Value,
+                warmupRatio.Value,
+                weightDecay.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NlpParameterSubspace>.Write(ModelReaderWriterOptions options)

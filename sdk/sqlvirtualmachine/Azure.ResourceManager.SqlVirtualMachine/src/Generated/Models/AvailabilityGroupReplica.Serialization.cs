@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityGroupReplica(sqlVmInstanceId.Value, Optional.ToNullable(role), Optional.ToNullable(commit), Optional.ToNullable(failover), Optional.ToNullable(readableSecondary), serializedAdditionalRawData);
+            return new AvailabilityGroupReplica(
+                sqlVmInstanceId.Value,
+                Optional.ToNullable(role),
+                Optional.ToNullable(commit),
+                Optional.ToNullable(failover),
+                Optional.ToNullable(readableSecondary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityGroupReplica>.Write(ModelReaderWriterOptions options)

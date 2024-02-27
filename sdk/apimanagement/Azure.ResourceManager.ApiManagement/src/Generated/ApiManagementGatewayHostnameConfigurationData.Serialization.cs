@@ -220,7 +220,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGatewayHostnameConfigurationData(id, name, type, systemData.Value, hostname.Value, certificateId.Value, Optional.ToNullable(negotiateClientCertificate), Optional.ToNullable(tls10Enabled), Optional.ToNullable(tls11Enabled), Optional.ToNullable(http2Enabled), serializedAdditionalRawData);
+            return new ApiManagementGatewayHostnameConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                hostname.Value,
+                certificateId.Value,
+                Optional.ToNullable(negotiateClientCertificate),
+                Optional.ToNullable(tls10Enabled),
+                Optional.ToNullable(tls11Enabled),
+                Optional.ToNullable(http2Enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGatewayHostnameConfigurationData>.Write(ModelReaderWriterOptions options)

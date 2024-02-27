@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudClusterVirtualMachineData(id, name, type, systemData.Value, displayName.Value, moRefId.Value, folderPath.Value, Optional.ToNullable(restrictMovement), serializedAdditionalRawData);
+            return new AvsPrivateCloudClusterVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                moRefId.Value,
+                folderPath.Value,
+                Optional.ToNullable(restrictMovement),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudClusterVirtualMachineData>.Write(ModelReaderWriterOptions options)

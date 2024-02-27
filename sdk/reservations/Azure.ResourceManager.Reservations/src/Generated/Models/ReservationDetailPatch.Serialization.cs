@@ -215,7 +215,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationDetailPatch(Optional.ToNullable(appliedScopeType), appliedScopes ?? new ChangeTrackingList<string>(), appliedScopeProperties.Value, Optional.ToNullable(instanceFlexibility), name.Value, Optional.ToNullable(renew), renewProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
+            return new ReservationDetailPatch(
+                Optional.ToNullable(appliedScopeType),
+                appliedScopes ?? new ChangeTrackingList<string>(),
+                appliedScopeProperties.Value,
+                Optional.ToNullable(instanceFlexibility),
+                name.Value,
+                Optional.ToNullable(renew),
+                renewProperties.Value,
+                Optional.ToNullable(reviewDateTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationDetailPatch>.Write(ModelReaderWriterOptions options)

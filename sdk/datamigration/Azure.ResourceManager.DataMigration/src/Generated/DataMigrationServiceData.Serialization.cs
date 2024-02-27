@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataMigration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMigrationServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), kind.Value, sku.Value, Optional.ToNullable(provisioningState), publicKey.Value, virtualSubnetId.Value, virtualNicId.Value, autoStopDelay.Value, Optional.ToNullable(deleteResourcesOnStop), serializedAdditionalRawData);
+            return new DataMigrationServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                kind.Value,
+                sku.Value,
+                Optional.ToNullable(provisioningState),
+                publicKey.Value,
+                virtualSubnetId.Value,
+                virtualNicId.Value,
+                autoStopDelay.Value,
+                Optional.ToNullable(deleteResourcesOnStop),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMigrationServiceData>.Write(ModelReaderWriterOptions options)
