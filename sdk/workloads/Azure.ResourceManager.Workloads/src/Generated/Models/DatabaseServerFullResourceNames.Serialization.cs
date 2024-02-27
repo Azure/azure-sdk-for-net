@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Workloads.Models
                 return null;
             }
             IList<VirtualMachineResourceNames> virtualMachines = default;
-            Optional<string> availabilitySetName = default;
-            Optional<LoadBalancerResourceNames> loadBalancer = default;
+            string availabilitySetName = default;
+            LoadBalancerResourceNames loadBalancer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName.Value, loadBalancer.Value, serializedAdditionalRawData);
+            return new DatabaseServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName, loadBalancer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseServerFullResourceNames>.Write(ModelReaderWriterOptions options)

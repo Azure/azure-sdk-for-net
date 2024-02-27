@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Storage
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> tableName = default;
+            SystemData systemData = default;
+            string tableName = default;
             IList<StorageTableSignedIdentifier> signedIdentifiers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
-                tableName.Value,
+                systemData,
+                tableName,
                 signedIdentifiers ?? new ChangeTrackingList<StorageTableSignedIdentifier>(),
                 serializedAdditionalRawData);
         }

@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<StorageAccountEncryptionServices> services = default;
-            Optional<StorageAccountKeySource> keySource = default;
-            Optional<bool> requireInfrastructureEncryption = default;
-            Optional<StorageAccountKeyVaultProperties> keyvaultproperties = default;
-            Optional<StorageAccountEncryptionIdentity> identity = default;
+            StorageAccountEncryptionServices services = default;
+            StorageAccountKeySource? keySource = default;
+            bool? requireInfrastructureEncryption = default;
+            StorageAccountKeyVaultProperties keyvaultproperties = default;
+            StorageAccountEncryptionIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new StorageAccountEncryption(
-                services.Value,
-                Optional.ToNullable(keySource),
-                Optional.ToNullable(requireInfrastructureEncryption),
-                keyvaultproperties.Value,
-                identity.Value,
+                services,
+                keySource,
+                requireInfrastructureEncryption,
+                keyvaultproperties,
+                identity,
                 serializedAdditionalRawData);
         }
 

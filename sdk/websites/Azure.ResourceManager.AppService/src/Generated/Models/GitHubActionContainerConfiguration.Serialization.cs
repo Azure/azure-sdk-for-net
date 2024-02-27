@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<Uri> serverUrl = default;
-            Optional<string> imageName = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
+            Uri serverUrl = default;
+            string imageName = default;
+            string username = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GitHubActionContainerConfiguration(serverUrl.Value, imageName.Value, username.Value, password.Value, serializedAdditionalRawData);
+            return new GitHubActionContainerConfiguration(serverUrl, imageName, username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GitHubActionContainerConfiguration>.Write(ModelReaderWriterOptions options)

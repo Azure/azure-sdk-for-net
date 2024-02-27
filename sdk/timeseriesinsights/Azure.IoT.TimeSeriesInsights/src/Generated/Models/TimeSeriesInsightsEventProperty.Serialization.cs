@@ -34,8 +34,8 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<TimeSeriesPropertyType> type = default;
+            string name = default;
+            TimeSeriesPropertyType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesInsightsEventProperty(name.Value, Optional.ToNullable(type));
+            return new TimeSeriesInsightsEventProperty(name, type);
         }
     }
 }

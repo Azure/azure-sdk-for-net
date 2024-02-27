@@ -208,25 +208,25 @@ namespace Azure.ResourceManager.StorageCache
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<StorageCacheSkuInfo> sku = default;
+            ManagedServiceIdentity identity = default;
+            StorageCacheSkuInfo sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> cacheSizeGB = default;
-            Optional<StorageCacheHealth> health = default;
+            SystemData systemData = default;
+            int? cacheSizeGB = default;
+            StorageCacheHealth health = default;
             IReadOnlyList<IPAddress> mountAddresses = default;
-            Optional<StorageCacheProvisioningStateType> provisioningState = default;
-            Optional<ResourceIdentifier> subnet = default;
-            Optional<StorageCacheUpgradeStatus> upgradeStatus = default;
-            Optional<StorageCacheUpgradeSettings> upgradeSettings = default;
-            Optional<StorageCacheNetworkSettings> networkSettings = default;
-            Optional<StorageCacheEncryptionSettings> encryptionSettings = default;
-            Optional<StorageCacheSecuritySettings> securitySettings = default;
-            Optional<StorageCacheDirectorySettings> directoryServicesSettings = default;
+            StorageCacheProvisioningStateType? provisioningState = default;
+            ResourceIdentifier subnet = default;
+            StorageCacheUpgradeStatus upgradeStatus = default;
+            StorageCacheUpgradeSettings upgradeSettings = default;
+            StorageCacheNetworkSettings networkSettings = default;
+            StorageCacheEncryptionSettings encryptionSettings = default;
+            StorageCacheSecuritySettings securitySettings = default;
+            StorageCacheDirectorySettings directoryServicesSettings = default;
             IList<string> zones = default;
             IReadOnlyList<PrimingJob> primingJobs = default;
             IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
@@ -470,22 +470,22 @@ namespace Azure.ResourceManager.StorageCache
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                sku.Value,
-                Optional.ToNullable(cacheSizeGB),
-                health.Value,
+                sku,
+                cacheSizeGB,
+                health,
                 mountAddresses ?? new ChangeTrackingList<IPAddress>(),
-                Optional.ToNullable(provisioningState),
-                subnet.Value,
-                upgradeStatus.Value,
-                upgradeSettings.Value,
-                networkSettings.Value,
-                encryptionSettings.Value,
-                securitySettings.Value,
-                directoryServicesSettings.Value,
+                provisioningState,
+                subnet,
+                upgradeStatus,
+                upgradeSettings,
+                networkSettings,
+                encryptionSettings,
+                securitySettings,
+                directoryServicesSettings,
                 zones ?? new ChangeTrackingList<string>(),
                 primingJobs ?? new ChangeTrackingList<PrimingJob>(),
                 spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>(),

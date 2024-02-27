@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             string address1 = default;
-            Optional<string> address2 = default;
+            string address2 = default;
             string city = default;
             string country = default;
             string postalCode = default;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new RegistrationAddressInfo(
                 address1,
-                address2.Value,
+                address2,
                 city,
                 country,
                 postalCode,

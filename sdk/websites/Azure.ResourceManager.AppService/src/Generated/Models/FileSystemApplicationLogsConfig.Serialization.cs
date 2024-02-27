@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<WebAppLogLevel> level = default;
+            WebAppLogLevel? level = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemApplicationLogsConfig(Optional.ToNullable(level), serializedAdditionalRawData);
+            return new FileSystemApplicationLogsConfig(level, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemApplicationLogsConfig>.Write(ModelReaderWriterOptions options)

@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             AppServiceDatabaseType databaseType = default;
-            Optional<string> name = default;
-            Optional<string> connectionStringName = default;
-            Optional<string> connectionString = default;
+            string name = default;
+            string connectionStringName = default;
+            string connectionString = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDatabaseBackupSetting(databaseType, name.Value, connectionStringName.Value, connectionString.Value, serializedAdditionalRawData);
+            return new AppServiceDatabaseBackupSetting(databaseType, name, connectionStringName, connectionString, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDatabaseBackupSetting>.Write(ModelReaderWriterOptions options)

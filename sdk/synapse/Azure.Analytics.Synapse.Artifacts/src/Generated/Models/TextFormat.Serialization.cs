@@ -90,18 +90,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> columnDelimiter = default;
-            Optional<object> rowDelimiter = default;
-            Optional<object> escapeChar = default;
-            Optional<object> quoteChar = default;
-            Optional<object> nullValue = default;
-            Optional<object> encodingName = default;
-            Optional<object> treatEmptyAsNull = default;
-            Optional<object> skipLineCount = default;
-            Optional<object> firstRowAsHeader = default;
+            object columnDelimiter = default;
+            object rowDelimiter = default;
+            object escapeChar = default;
+            object quoteChar = default;
+            object nullValue = default;
+            object encodingName = default;
+            object treatEmptyAsNull = default;
+            object skipLineCount = default;
+            object firstRowAsHeader = default;
             string type = default;
-            Optional<object> serializer = default;
-            Optional<object> deserializer = default;
+            object serializer = default;
+            object deserializer = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -215,18 +215,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new TextFormat(
                 type,
-                serializer.Value,
-                deserializer.Value,
+                serializer,
+                deserializer,
                 additionalProperties,
-                columnDelimiter.Value,
-                rowDelimiter.Value,
-                escapeChar.Value,
-                quoteChar.Value,
-                nullValue.Value,
-                encodingName.Value,
-                treatEmptyAsNull.Value,
-                skipLineCount.Value,
-                firstRowAsHeader.Value);
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
         }
 
         internal partial class TextFormatConverter : JsonConverter<TextFormat>

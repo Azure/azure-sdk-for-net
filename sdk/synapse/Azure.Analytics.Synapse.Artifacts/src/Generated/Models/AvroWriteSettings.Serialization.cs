@@ -55,10 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> recordName = default;
-            Optional<string> recordNamespace = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            string recordName = default;
+            string recordNamespace = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -103,10 +103,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AvroWriteSettings(
                 type,
                 additionalProperties,
-                recordName.Value,
-                recordNamespace.Value,
-                maxRowsPerFile.Value,
-                fileNamePrefix.Value);
+                recordName,
+                recordNamespace,
+                maxRowsPerFile,
+                fileNamePrefix);
         }
 
         internal partial class AvroWriteSettingsConverter : JsonConverter<AvroWriteSettings>

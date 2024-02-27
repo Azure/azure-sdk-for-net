@@ -196,30 +196,30 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> version = default;
-            Optional<bool> deleted = default;
-            Optional<DateTimeOffset> deletedTime = default;
-            Optional<int> remainingRetentionDays = default;
-            Optional<string> defaultEncryptionScope = default;
-            Optional<bool> denyEncryptionScopeOverride = default;
-            Optional<StoragePublicAccessType> publicAccess = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<StorageLeaseStatus> leaseStatus = default;
-            Optional<StorageLeaseState> leaseState = default;
-            Optional<StorageLeaseDurationType> leaseDuration = default;
+            SystemData systemData = default;
+            string version = default;
+            bool? deleted = default;
+            DateTimeOffset? deletedTime = default;
+            int? remainingRetentionDays = default;
+            string defaultEncryptionScope = default;
+            bool? denyEncryptionScopeOverride = default;
+            StoragePublicAccessType? publicAccess = default;
+            DateTimeOffset? lastModifiedTime = default;
+            StorageLeaseStatus? leaseStatus = default;
+            StorageLeaseState? leaseState = default;
+            StorageLeaseDurationType? leaseDuration = default;
             IDictionary<string, string> metadata = default;
-            Optional<BlobContainerImmutabilityPolicy> immutabilityPolicy = default;
-            Optional<LegalHoldProperties> legalHold = default;
-            Optional<bool> hasLegalHold = default;
-            Optional<bool> hasImmutabilityPolicy = default;
-            Optional<ImmutableStorageWithVersioning> immutableStorageWithVersioning = default;
-            Optional<bool> enableNfsV3RootSquash = default;
-            Optional<bool> enableNfsV3AllSquash = default;
+            BlobContainerImmutabilityPolicy immutabilityPolicy = default;
+            LegalHoldProperties legalHold = default;
+            bool? hasLegalHold = default;
+            bool? hasImmutabilityPolicy = default;
+            ImmutableStorageWithVersioning immutableStorageWithVersioning = default;
+            bool? enableNfsV3RootSquash = default;
+            bool? enableNfsV3AllSquash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -447,27 +447,27 @@ namespace Azure.ResourceManager.Storage
                 id,
                 name,
                 type,
-                systemData.Value,
-                version.Value,
-                Optional.ToNullable(deleted),
-                Optional.ToNullable(deletedTime),
-                Optional.ToNullable(remainingRetentionDays),
-                defaultEncryptionScope.Value,
-                Optional.ToNullable(denyEncryptionScopeOverride),
-                Optional.ToNullable(publicAccess),
-                Optional.ToNullable(lastModifiedTime),
-                Optional.ToNullable(leaseStatus),
-                Optional.ToNullable(leaseState),
-                Optional.ToNullable(leaseDuration),
+                systemData,
+                version,
+                deleted,
+                deletedTime,
+                remainingRetentionDays,
+                defaultEncryptionScope,
+                denyEncryptionScopeOverride,
+                publicAccess,
+                lastModifiedTime,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
-                immutabilityPolicy.Value,
-                legalHold.Value,
-                Optional.ToNullable(hasLegalHold),
-                Optional.ToNullable(hasImmutabilityPolicy),
-                immutableStorageWithVersioning.Value,
-                Optional.ToNullable(enableNfsV3RootSquash),
-                Optional.ToNullable(enableNfsV3AllSquash),
-                Optional.ToNullable(etag),
+                immutabilityPolicy,
+                legalHold,
+                hasLegalHold,
+                hasImmutabilityPolicy,
+                immutableStorageWithVersioning,
+                enableNfsV3RootSquash,
+                enableNfsV3AllSquash,
+                etag,
                 serializedAdditionalRawData);
         }
 

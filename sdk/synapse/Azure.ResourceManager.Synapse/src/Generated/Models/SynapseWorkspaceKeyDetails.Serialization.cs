@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> keyVaultUrl = default;
+            string name = default;
+            Uri keyVaultUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceKeyDetails(name.Value, keyVaultUrl.Value, serializedAdditionalRawData);
+            return new SynapseWorkspaceKeyDetails(name, keyVaultUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceKeyDetails>.Write(ModelReaderWriterOptions options)

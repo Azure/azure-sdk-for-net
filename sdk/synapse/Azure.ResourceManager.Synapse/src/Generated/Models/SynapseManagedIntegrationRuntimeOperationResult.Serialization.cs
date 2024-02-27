@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<string> result = default;
-            Optional<string> errorCode = default;
+            string type = default;
+            DateTimeOffset? startTime = default;
+            string result = default;
+            string errorCode = default;
             IReadOnlyList<string> parameters = default;
-            Optional<string> activityId = default;
+            string activityId = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,12 +153,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SynapseManagedIntegrationRuntimeOperationResult(
-                type.Value,
-                Optional.ToNullable(startTime),
-                result.Value,
-                errorCode.Value,
+                type,
+                startTime,
+                result,
+                errorCode,
                 parameters ?? new ChangeTrackingList<string>(),
-                activityId.Value,
+                activityId,
                 additionalProperties);
         }
 

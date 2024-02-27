@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> code = default;
+            DateTimeOffset? time = default;
+            string code = default;
             IReadOnlyList<string> parameters = default;
-            Optional<string> message = default;
+            string message = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseManagedIntegrationRuntimeError(Optional.ToNullable(time), code.Value, parameters ?? new ChangeTrackingList<string>(), message.Value, additionalProperties);
+            return new SynapseManagedIntegrationRuntimeError(time, code, parameters ?? new ChangeTrackingList<string>(), message, additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeError>.Write(ModelReaderWriterOptions options)

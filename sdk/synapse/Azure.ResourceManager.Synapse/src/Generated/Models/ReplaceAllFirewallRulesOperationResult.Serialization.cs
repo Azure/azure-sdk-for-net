@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> operationId = default;
+            string operationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplaceAllFirewallRulesOperationResult(operationId.Value, serializedAdditionalRawData);
+            return new ReplaceAllFirewallRulesOperationResult(operationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplaceAllFirewallRulesOperationResult>.Write(ModelReaderWriterOptions options)

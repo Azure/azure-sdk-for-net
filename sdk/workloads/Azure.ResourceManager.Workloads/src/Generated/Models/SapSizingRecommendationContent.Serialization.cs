@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Workloads.Models
             long saps = default;
             long dbMemory = default;
             SapDatabaseType databaseType = default;
-            Optional<SapDatabaseScaleMethod> dbScaleMethod = default;
-            Optional<SapHighAvailabilityType> highAvailabilityType = default;
+            SapDatabaseScaleMethod? dbScaleMethod = default;
+            SapHighAvailabilityType? highAvailabilityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.Workloads.Models
                 saps,
                 dbMemory,
                 databaseType,
-                Optional.ToNullable(dbScaleMethod),
-                Optional.ToNullable(highAvailabilityType),
+                dbScaleMethod,
+                highAvailabilityType,
                 serializedAdditionalRawData);
         }
 

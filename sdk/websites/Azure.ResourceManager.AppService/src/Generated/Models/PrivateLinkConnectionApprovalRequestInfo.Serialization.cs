@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<PrivateLinkConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            PrivateLinkConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                privateLinkServiceConnectionState.Value,
-                kind.Value,
+                systemData,
+                privateLinkServiceConnectionState,
+                kind,
                 serializedAdditionalRawData);
         }
 

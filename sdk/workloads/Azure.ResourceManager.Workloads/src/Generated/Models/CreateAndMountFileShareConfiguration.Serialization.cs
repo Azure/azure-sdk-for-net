@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> resourceGroup = default;
-            Optional<string> storageAccountName = default;
+            string resourceGroup = default;
+            string storageAccountName = default;
             ConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup.Value, storageAccountName.Value);
+            return new CreateAndMountFileShareConfiguration(configurationType, serializedAdditionalRawData, resourceGroup, storageAccountName);
         }
 
         BinaryData IPersistableModel<CreateAndMountFileShareConfiguration>.Write(ModelReaderWriterOptions options)

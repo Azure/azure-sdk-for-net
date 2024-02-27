@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> jobVersion = default;
+            string jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"u8))
@@ -30,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AddDataFlowToDebugSessionResponse(jobVersion.Value);
+            return new AddDataFlowToDebugSessionResponse(jobVersion);
         }
 
         internal partial class AddDataFlowToDebugSessionResponseConverter : JsonConverter<AddDataFlowToDebugSessionResponse>
