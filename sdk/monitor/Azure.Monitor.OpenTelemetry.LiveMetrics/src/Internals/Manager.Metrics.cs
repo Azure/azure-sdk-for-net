@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             yield return new Models.MetricPoint
             {
                 Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-                Value = process.WorkingSet64,
+                Value = process.PrivateMemorySize64,
                 Weight = 1
             };
 
