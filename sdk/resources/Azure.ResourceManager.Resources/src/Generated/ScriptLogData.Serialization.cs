@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptLogData(id, name, type, systemData.Value, log.Value, serializedAdditionalRawData);
+            return new ScriptLogData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                log.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptLogData>.Write(ModelReaderWriterOptions options)

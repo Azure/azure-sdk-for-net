@@ -180,7 +180,15 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisCacheAccessPolicyData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(type0), permissions.Value, serializedAdditionalRawData);
+            return new RedisCacheAccessPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(type0),
+                permissions.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisCacheAccessPolicyData>.Write(ModelReaderWriterOptions options)

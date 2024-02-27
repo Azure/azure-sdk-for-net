@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciProtectedDiskProperties(storageContainerId.Value, storageContainerLocalPath.Value, sourceDiskId.Value, sourceDiskName.Value, seedDiskName.Value, testMigrateDiskName.Value, migrateDiskName.Value, Optional.ToNullable(isOSDisk), Optional.ToNullable(capacityInBytes), Optional.ToNullable(isDynamic), diskType.Value, serializedAdditionalRawData);
+            return new VMwareToAzStackHciProtectedDiskProperties(
+                storageContainerId.Value,
+                storageContainerLocalPath.Value,
+                sourceDiskId.Value,
+                sourceDiskName.Value,
+                seedDiskName.Value,
+                testMigrateDiskName.Value,
+                migrateDiskName.Value,
+                Optional.ToNullable(isOSDisk),
+                Optional.ToNullable(capacityInBytes),
+                Optional.ToNullable(isDynamic),
+                diskType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciProtectedDiskProperties>.Write(ModelReaderWriterOptions options)

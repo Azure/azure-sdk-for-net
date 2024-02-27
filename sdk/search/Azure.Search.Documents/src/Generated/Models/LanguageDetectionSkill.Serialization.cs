@@ -151,7 +151,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LanguageDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultCountryHint.Value, modelVersion.Value);
+            return new LanguageDetectionSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                defaultCountryHint.Value,
+                modelVersion.Value);
         }
     }
 }

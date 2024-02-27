@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmReprotectContent(instanceType, serializedAdditionalRawData, reprotectAgentId, datastoreName, logStorageAccountId, policyId.Value);
+            return new InMageRcmReprotectContent(
+                instanceType,
+                serializedAdditionalRawData,
+                reprotectAgentId,
+                datastoreName,
+                logStorageAccountId,
+                policyId.Value);
         }
 
         BinaryData IPersistableModel<InMageRcmReprotectContent>.Write(ModelReaderWriterOptions options)

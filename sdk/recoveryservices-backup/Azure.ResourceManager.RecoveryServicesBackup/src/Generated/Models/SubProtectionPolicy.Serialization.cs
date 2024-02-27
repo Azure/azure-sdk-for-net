@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(), snapshotBackupAdditionalDetails.Value, serializedAdditionalRawData);
+            return new SubProtectionPolicy(
+                Optional.ToNullable(policyType),
+                schedulePolicy.Value,
+                retentionPolicy.Value,
+                tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
+                snapshotBackupAdditionalDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubProtectionPolicy>.Write(ModelReaderWriterOptions options)

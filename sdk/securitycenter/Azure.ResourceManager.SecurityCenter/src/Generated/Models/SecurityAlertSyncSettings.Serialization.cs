@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertSyncSettings(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(enabled));
+            return new SecurityAlertSyncSettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                Optional.ToNullable(enabled));
         }
 
         BinaryData IPersistableModel<SecurityAlertSyncSettings>.Write(ModelReaderWriterOptions options)

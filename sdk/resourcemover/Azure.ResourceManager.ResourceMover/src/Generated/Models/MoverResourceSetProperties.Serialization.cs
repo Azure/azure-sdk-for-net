@@ -183,7 +183,15 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceSetProperties(Optional.ToNullable(sourceRegion), Optional.ToNullable(targetRegion), Optional.ToNullable(moveRegion), Optional.ToNullable(provisioningState), version.Value, Optional.ToNullable(moveType), errors.Value, serializedAdditionalRawData);
+            return new MoverResourceSetProperties(
+                Optional.ToNullable(sourceRegion),
+                Optional.ToNullable(targetRegion),
+                Optional.ToNullable(moveRegion),
+                Optional.ToNullable(provisioningState),
+                version.Value,
+                Optional.ToNullable(moveType),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceSetProperties>.Write(ModelReaderWriterOptions options)

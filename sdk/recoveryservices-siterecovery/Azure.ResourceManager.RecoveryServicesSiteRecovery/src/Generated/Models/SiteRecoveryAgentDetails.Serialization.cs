@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAgentDetails(agentId.Value, machineId.Value, biosId.Value, fqdn.Value, disks ?? new ChangeTrackingList<SiteRecoveryAgentDiskDetails>(), serializedAdditionalRawData);
+            return new SiteRecoveryAgentDetails(
+                agentId.Value,
+                machineId.Value,
+                biosId.Value,
+                fqdn.Value,
+                disks ?? new ChangeTrackingList<SiteRecoveryAgentDiskDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAgentDetails>.Write(ModelReaderWriterOptions options)

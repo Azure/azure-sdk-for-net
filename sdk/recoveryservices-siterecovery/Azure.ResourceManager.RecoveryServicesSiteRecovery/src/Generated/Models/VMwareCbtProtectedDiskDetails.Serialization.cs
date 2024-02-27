@@ -267,7 +267,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectedDiskDetails(diskId.Value, diskName.Value, Optional.ToNullable(diskType), diskPath.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, logStorageAccountSasSecretName.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, targetBlobUri.Value, targetDiskName.Value, gatewayOperationDetails.Value, serializedAdditionalRawData);
+            return new VMwareCbtProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                Optional.ToNullable(diskType),
+                diskPath.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                logStorageAccountId.Value,
+                logStorageAccountSasSecretName.Value,
+                diskEncryptionSetId.Value,
+                seedManagedDiskId.Value,
+                seedBlobUri.Value,
+                targetManagedDiskId.Value,
+                targetBlobUri.Value,
+                targetDiskName.Value,
+                gatewayOperationDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionImpactRecord(dimensionName.Value, unit.Value, Optional.ToNullable(absoluteValue), Optional.ToNullable(changeValueAbsolute), Optional.ToNullable(changeValueRelative), serializedAdditionalRawData);
+            return new RecommendedActionImpactRecord(
+                dimensionName.Value,
+                unit.Value,
+                Optional.ToNullable(absoluteValue),
+                Optional.ToNullable(changeValueAbsolute),
+                Optional.ToNullable(changeValueRelative),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionImpactRecord>.Write(ModelReaderWriterOptions options)

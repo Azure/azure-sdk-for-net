@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionUsageData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, serializedAdditionalRawData);
+            return new SubscriptionUsageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                unit.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionUsageData>.Write(ModelReaderWriterOptions options)

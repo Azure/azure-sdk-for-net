@@ -330,7 +330,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, replicationProviders ?? new ChangeTrackingList<string>(), allowedOperations ?? new ChangeTrackingList<string>(), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(), providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(), serializedAdditionalRawData);
+            return new SiteRecoveryRecoveryPlanProperties(
+                friendlyName.Value,
+                primaryFabricId.Value,
+                primaryFabricFriendlyName.Value,
+                recoveryFabricId.Value,
+                recoveryFabricFriendlyName.Value,
+                failoverDeploymentModel.Value,
+                replicationProviders ?? new ChangeTrackingList<string>(),
+                allowedOperations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(lastPlannedFailoverTime),
+                Optional.ToNullable(lastUnplannedFailoverTime),
+                Optional.ToNullable(lastTestFailoverTime),
+                currentScenario.Value,
+                currentScenarioStatus.Value,
+                currentScenarioStatusDescription.Value,
+                groups ?? new ChangeTrackingList<SiteRecoveryPlanGroup>(),
+                providerSpecificDetails ?? new ChangeTrackingList<RecoveryPlanProviderSpecificDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)

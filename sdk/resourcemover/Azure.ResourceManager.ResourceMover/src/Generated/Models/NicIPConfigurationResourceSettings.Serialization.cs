@@ -202,7 +202,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NicIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, Optional.ToNullable(primary), loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>(), loadBalancerNatRules ?? new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>(), publicIP.Value, serializedAdditionalRawData);
+            return new NicIPConfigurationResourceSettings(
+                name.Value,
+                privateIPAddress.Value,
+                privateIPAllocationMethod.Value,
+                subnet.Value,
+                Optional.ToNullable(primary),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPoolReferenceInfo>(),
+                loadBalancerNatRules ?? new ChangeTrackingList<LoadBalancerNatRuleReferenceInfo>(),
+                publicIP.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NicIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)

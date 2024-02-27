@@ -298,7 +298,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(), databases ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new FailoverGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint.Value,
+                readOnlyEndpoint.Value,
+                Optional.ToNullable(replicationRole),
+                replicationState.Value,
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options)

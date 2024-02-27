@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.Redis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisFirewallRuleData(id, name, type, systemData.Value, startIP, endIP, serializedAdditionalRawData);
+            return new RedisFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                startIP,
+                endIP,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisFirewallRuleData>.Write(ModelReaderWriterOptions options)

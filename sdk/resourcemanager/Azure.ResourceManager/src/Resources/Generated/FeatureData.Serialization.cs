@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeatureData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new FeatureData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeatureData>.Write(ModelReaderWriterOptions options)

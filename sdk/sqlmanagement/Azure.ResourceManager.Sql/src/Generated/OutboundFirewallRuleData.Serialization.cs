@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundFirewallRuleData(id, name, type, systemData.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new OutboundFirewallRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundFirewallRuleData>.Write(ModelReaderWriterOptions options)

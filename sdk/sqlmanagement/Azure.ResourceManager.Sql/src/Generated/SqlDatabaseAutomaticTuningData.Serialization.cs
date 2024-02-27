@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningOptions>(), serializedAdditionalRawData);
+            return new SqlDatabaseAutomaticTuningData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(desiredState),
+                Optional.ToNullable(actualState),
+                options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options)

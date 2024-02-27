@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceLoadMetricDescription(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad), serializedAdditionalRawData);
+            return new ServiceLoadMetricDescription(
+                name,
+                Optional.ToNullable(weight),
+                Optional.ToNullable(primaryDefaultLoad),
+                Optional.ToNullable(secondaryDefaultLoad),
+                Optional.ToNullable(defaultLoad),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceLoadMetricDescription>.Write(ModelReaderWriterOptions options)

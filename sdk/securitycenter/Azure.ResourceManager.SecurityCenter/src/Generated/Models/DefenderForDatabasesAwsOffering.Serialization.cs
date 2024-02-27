@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForDatabasesAwsOffering(offeringType, description.Value, serializedAdditionalRawData, arcAutoProvisioning.Value, rds.Value, databasesDspm.Value);
+            return new DefenderForDatabasesAwsOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                arcAutoProvisioning.Value,
+                rds.Value,
+                databasesDspm.Value);
         }
 
         BinaryData IPersistableModel<DefenderForDatabasesAwsOffering>.Write(ModelReaderWriterOptions options)

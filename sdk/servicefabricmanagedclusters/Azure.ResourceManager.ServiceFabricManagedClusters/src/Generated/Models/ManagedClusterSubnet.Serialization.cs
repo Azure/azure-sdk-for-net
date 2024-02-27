@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterSubnet(name, Optional.ToNullable(enableIPv6), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), networkSecurityGroupId.Value, serializedAdditionalRawData);
+            return new ManagedClusterSubnet(
+                name,
+                Optional.ToNullable(enableIPv6),
+                Optional.ToNullable(privateEndpointNetworkPolicies),
+                Optional.ToNullable(privateLinkServiceNetworkPolicies),
+                networkSecurityGroupId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterSubnet>.Write(ModelReaderWriterOptions options)

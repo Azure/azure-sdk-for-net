@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsIncidentAdditionalInfo(Optional.ToNullable(alertsCount), Optional.ToNullable(bookmarksCount), Optional.ToNullable(commentsCount), alertProductNames ?? new ChangeTrackingList<string>(), tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(), serializedAdditionalRawData);
+            return new SecurityInsightsIncidentAdditionalInfo(
+                Optional.ToNullable(alertsCount),
+                Optional.ToNullable(bookmarksCount),
+                Optional.ToNullable(commentsCount),
+                alertProductNames ?? new ChangeTrackingList<string>(),
+                tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsIncidentAdditionalInfo>.Write(ModelReaderWriterOptions options)

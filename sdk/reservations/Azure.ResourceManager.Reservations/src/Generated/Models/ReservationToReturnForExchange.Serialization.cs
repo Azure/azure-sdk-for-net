@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationToReturnForExchange(reservationId.Value, Optional.ToNullable(quantity), billingRefundAmount.Value, billingInformation.Value, Optional.ToNullable(status), serializedAdditionalRawData);
+            return new ReservationToReturnForExchange(
+                reservationId.Value,
+                Optional.ToNullable(quantity),
+                billingRefundAmount.Value,
+                billingInformation.Value,
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationToReturnForExchange>.Write(ModelReaderWriterOptions options)

@@ -315,7 +315,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MicrosoftSecurityIncidentCreationAlertRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, displayNamesFilter ?? new ChangeTrackingList<string>(), displayNamesExcludeFilter ?? new ChangeTrackingList<string>(), Optional.ToNullable(productFilter), severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(), alertRuleTemplateName.Value, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc));
+            return new MicrosoftSecurityIncidentCreationAlertRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                displayNamesFilter ?? new ChangeTrackingList<string>(),
+                displayNamesExcludeFilter ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(productFilter),
+                severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>(),
+                alertRuleTemplateName.Value,
+                description.Value,
+                displayName.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(lastModifiedUtc));
         }
 
         BinaryData IPersistableModel<MicrosoftSecurityIncidentCreationAlertRule>.Write(ModelReaderWriterOptions options)

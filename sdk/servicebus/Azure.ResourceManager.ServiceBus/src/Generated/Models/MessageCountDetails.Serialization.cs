@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageCountDetails(Optional.ToNullable(activeMessageCount), Optional.ToNullable(deadLetterMessageCount), Optional.ToNullable(scheduledMessageCount), Optional.ToNullable(transferMessageCount), Optional.ToNullable(transferDeadLetterMessageCount), serializedAdditionalRawData);
+            return new MessageCountDetails(
+                Optional.ToNullable(activeMessageCount),
+                Optional.ToNullable(deadLetterMessageCount),
+                Optional.ToNullable(scheduledMessageCount),
+                Optional.ToNullable(transferMessageCount),
+                Optional.ToNullable(transferDeadLetterMessageCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageCountDetails>.Write(ModelReaderWriterOptions options)

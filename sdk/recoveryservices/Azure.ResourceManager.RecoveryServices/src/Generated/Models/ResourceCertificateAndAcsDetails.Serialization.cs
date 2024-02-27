@@ -221,7 +221,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceCertificateAndAcsDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
+            return new ResourceCertificateAndAcsDetails(
+                authType,
+                certificate.Value,
+                friendlyName.Value,
+                issuer.Value,
+                Optional.ToNullable(resourceId),
+                subject.Value,
+                thumbprint.Value,
+                Optional.ToNullable(validFrom),
+                Optional.ToNullable(validTo),
+                serializedAdditionalRawData,
+                globalAcsNamespace,
+                globalAcsHostName,
+                globalAcsRPRealm);
         }
 
         BinaryData IPersistableModel<ResourceCertificateAndAcsDetails>.Write(ModelReaderWriterOptions options)

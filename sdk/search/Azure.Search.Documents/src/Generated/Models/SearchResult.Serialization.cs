@@ -102,7 +102,13 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SearchResult(searchScore, Optional.ToNullable(searchRerankerScore), searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(), searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(), searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(), additionalProperties);
+            return new SearchResult(
+                searchScore,
+                Optional.ToNullable(searchRerankerScore),
+                searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
+                searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
+                searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(),
+                additionalProperties);
         }
     }
 }

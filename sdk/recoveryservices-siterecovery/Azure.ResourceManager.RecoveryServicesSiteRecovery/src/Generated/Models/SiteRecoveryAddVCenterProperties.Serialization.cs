@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryAddVCenterProperties(friendlyName.Value, ipAddress.Value, Optional.ToNullable(processServerId), port.Value, runAsAccountId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryAddVCenterProperties(
+                friendlyName.Value,
+                ipAddress.Value,
+                Optional.ToNullable(processServerId),
+                port.Value,
+                runAsAccountId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryAddVCenterProperties>.Write(ModelReaderWriterOptions options)

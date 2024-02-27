@@ -276,7 +276,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(instanceType, serializedAdditionalRawData, vmwareFabricArmId, vmwareSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
+            return new VMwareToAzStackHciReplicationExtensionModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                vmwareFabricArmId,
+                vmwareSiteId.Value,
+                azStackHciFabricArmId,
+                azStackHciSiteId.Value,
+                storageAccountId.Value,
+                storageAccountSasSecretName.Value,
+                asrServiceUri.Value,
+                rcmServiceUri.Value,
+                gatewayServiceUri.Value,
+                sourceGatewayServiceId.Value,
+                targetGatewayServiceId.Value,
+                sourceStorageContainerName.Value,
+                targetStorageContainerName.Value,
+                resourceLocation.Value,
+                subscriptionId.Value,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<VMwareToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)

@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value, serializedAdditionalRawData);
+            return new SecurityEventSqlInjectionAdditionalProperties(
+                threatId.Value,
+                statement.Value,
+                Optional.ToNullable(statementHighlightOffset),
+                Optional.ToNullable(statementHighlightLength),
+                Optional.ToNullable(errorCode),
+                Optional.ToNullable(errorSeverity),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Write(ModelReaderWriterOptions options)

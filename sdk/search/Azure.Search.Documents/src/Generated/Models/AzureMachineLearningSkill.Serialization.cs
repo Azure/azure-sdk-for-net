@@ -244,7 +244,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureMachineLearningSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri.Value, key.Value, resourceId.Value, Optional.ToNullable(timeout), region.Value, Optional.ToNullable(degreeOfParallelism));
+            return new AzureMachineLearningSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                uri.Value,
+                key.Value,
+                resourceId.Value,
+                Optional.ToNullable(timeout),
+                region.Value,
+                Optional.ToNullable(degreeOfParallelism));
         }
     }
 }

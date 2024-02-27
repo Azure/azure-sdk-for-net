@@ -254,7 +254,21 @@ namespace Azure.ResourceManager.Sphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SphereImageData(id, name, type, systemData.Value, image.Value, imageId.Value, imageName.Value, Optional.ToNullable(regionalDataBoundary), uri.Value, description.Value, componentId.Value, Optional.ToNullable(imageType), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SphereImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                image.Value,
+                imageId.Value,
+                imageName.Value,
+                Optional.ToNullable(regionalDataBoundary),
+                uri.Value,
+                description.Value,
+                componentId.Value,
+                Optional.ToNullable(imageType),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SphereImageData>.Write(ModelReaderWriterOptions options)

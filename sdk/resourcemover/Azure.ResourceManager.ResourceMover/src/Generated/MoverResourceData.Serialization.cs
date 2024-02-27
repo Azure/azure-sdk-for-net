@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.ResourceMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MoverResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverResourceData>.Write(ModelReaderWriterOptions options)

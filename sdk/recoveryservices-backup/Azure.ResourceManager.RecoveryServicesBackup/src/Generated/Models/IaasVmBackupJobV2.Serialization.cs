@@ -273,7 +273,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmBackupJobV2(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, serializedAdditionalRawData, actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(), containerName.Value, Optional.ToNullable(duration), errorDetails ?? new ChangeTrackingList<IaasVmErrorInfo>(), virtualMachineVersion.Value, extendedInfo.Value);
+            return new IaasVmBackupJobV2(
+                entityFriendlyName.Value,
+                Optional.ToNullable(backupManagementType),
+                operation.Value,
+                status.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                activityId.Value,
+                jobType,
+                serializedAdditionalRawData,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                containerName.Value,
+                Optional.ToNullable(duration),
+                errorDetails ?? new ChangeTrackingList<IaasVmErrorInfo>(),
+                virtualMachineVersion.Value,
+                extendedInfo.Value);
         }
 
         BinaryData IPersistableModel<IaasVmBackupJobV2>.Write(ModelReaderWriterOptions options)

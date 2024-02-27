@@ -325,7 +325,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmNicDetails(nicId.Value, replicaNicId.Value, sourceNicArmId.Value, vmNetworkName.Value, recoveryVmNetworkId.Value, ipConfigs ?? new ChangeTrackingList<HyperVIPConfigDetails>(), selectionType.Value, recoveryNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnRecovery), tfoVmNetworkId.Value, tfoNetworkSecurityGroupId.Value, Optional.ToNullable(enableAcceleratedNetworkingOnTfo), recoveryNicName.Value, recoveryNicResourceGroupName.Value, Optional.ToNullable(reuseExistingNic), tfoRecoveryNicName.Value, tfoRecoveryNicResourceGroupName.Value, Optional.ToNullable(tfoReuseExistingNic), targetNicName.Value, serializedAdditionalRawData);
+            return new VmNicDetails(
+                nicId.Value,
+                replicaNicId.Value,
+                sourceNicArmId.Value,
+                vmNetworkName.Value,
+                recoveryVmNetworkId.Value,
+                ipConfigs ?? new ChangeTrackingList<HyperVIPConfigDetails>(),
+                selectionType.Value,
+                recoveryNetworkSecurityGroupId.Value,
+                Optional.ToNullable(enableAcceleratedNetworkingOnRecovery),
+                tfoVmNetworkId.Value,
+                tfoNetworkSecurityGroupId.Value,
+                Optional.ToNullable(enableAcceleratedNetworkingOnTfo),
+                recoveryNicName.Value,
+                recoveryNicResourceGroupName.Value,
+                Optional.ToNullable(reuseExistingNic),
+                tfoRecoveryNicName.Value,
+                tfoRecoveryNicResourceGroupName.Value,
+                Optional.ToNullable(tfoReuseExistingNic),
+                targetNicName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmNicDetails>.Write(ModelReaderWriterOptions options)
