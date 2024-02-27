@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> primaryAggregationType = default;
             IReadOnlyList<ResourceMetricAvailability> metricAvailabilities = default;
             Optional<Uri> resourceUri = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            IReadOnlyDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetricDefinition(id, name, type, systemData.Value, unit.Value, primaryAggregationType.Value, metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(), resourceUri.Value, Optional.ToDictionary(properties), kind.Value, serializedAdditionalRawData);
+            return new ResourceMetricDefinition(
+                id,
+                name,
+                type,
+                systemData.Value,
+                unit.Value,
+                primaryAggregationType.Value,
+                metricAvailabilities ?? new ChangeTrackingList<ResourceMetricAvailability>(),
+                resourceUri.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetricDefinition>.Write(ModelReaderWriterOptions options)

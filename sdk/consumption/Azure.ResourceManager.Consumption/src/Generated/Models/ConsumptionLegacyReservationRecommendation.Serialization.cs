@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             ReservationRecommendationKind kind = default;
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<string> sku = default;
             ResourceIdentifier id = default;
@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLegacyReservationRecommendation(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, serializedAdditionalRawData, lookBackPeriod.Value, Optional.ToNullable(instanceFlexibilityRatio), instanceFlexibilityGroup.Value, normalizedSize.Value, Optional.ToNullable(recommendedQuantityNormalized), Optional.ToNullable(meterId), term.Value, Optional.ToNullable(costWithNoReservedInstances), Optional.ToNullable(recommendedQuantity), Optional.ToNullable(totalCostWithReservedInstances), Optional.ToNullable(netSavings), Optional.ToNullable(firstUsageDate), scope, skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
+            return new ConsumptionLegacyReservationRecommendation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                sku.Value,
+                serializedAdditionalRawData,
+                lookBackPeriod.Value,
+                Optional.ToNullable(instanceFlexibilityRatio),
+                instanceFlexibilityGroup.Value,
+                normalizedSize.Value,
+                Optional.ToNullable(recommendedQuantityNormalized),
+                Optional.ToNullable(meterId),
+                term.Value,
+                Optional.ToNullable(costWithNoReservedInstances),
+                Optional.ToNullable(recommendedQuantity),
+                Optional.ToNullable(totalCostWithReservedInstances),
+                Optional.ToNullable(netSavings),
+                Optional.ToNullable(firstUsageDate),
+                scope,
+                skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>());
         }
 
         BinaryData IPersistableModel<ConsumptionLegacyReservationRecommendation>.Write(ModelReaderWriterOptions options)

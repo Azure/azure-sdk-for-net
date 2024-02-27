@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicObservabilityUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value, serializedAdditionalRawData);
+            return new NewRelicObservabilityUserInfo(
+                firstName.Value,
+                lastName.Value,
+                emailAddress.Value,
+                phoneNumber.Value,
+                country.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicObservabilityUserInfo>.Write(ModelReaderWriterOptions options)

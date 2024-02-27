@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PriceSheetResult(id, name, type, systemData.Value, pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(), nextLink.Value, download.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new PriceSheetResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                pricesheets ?? new ChangeTrackingList<PriceSheetProperties>(),
+                nextLink.Value,
+                download.Value,
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PriceSheetResult>.Write(ModelReaderWriterOptions options)

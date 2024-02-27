@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Analysis
                 return null;
             }
             AnalysisResourceSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -342,7 +342,26 @@ namespace Azure.ResourceManager.Analysis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, asAdministrators.Value, backupBlobContainerUri.Value, gatewayDetails.Value, ipV4FirewallSettings.Value, Optional.ToNullable(querypoolConnectionMode), Optional.ToNullable(managedMode), Optional.ToNullable(serverMonitorMode), Optional.ToNullable(state), Optional.ToNullable(provisioningState), serverFullName.Value, sku0.Value, sku, serializedAdditionalRawData);
+            return new AnalysisServerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                asAdministrators.Value,
+                backupBlobContainerUri.Value,
+                gatewayDetails.Value,
+                ipV4FirewallSettings.Value,
+                Optional.ToNullable(querypoolConnectionMode),
+                Optional.ToNullable(managedMode),
+                Optional.ToNullable(serverMonitorMode),
+                Optional.ToNullable(state),
+                Optional.ToNullable(provisioningState),
+                serverFullName.Value,
+                sku0.Value,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisServerData>.Write(ModelReaderWriterOptions options)

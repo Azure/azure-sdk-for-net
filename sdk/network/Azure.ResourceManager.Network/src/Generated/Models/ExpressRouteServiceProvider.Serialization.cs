@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IList<string> peeringLocations = default;
             IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteServiceProvider(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, peeringLocations ?? new ChangeTrackingList<string>(), bandwidthsOffered ?? new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>(), Optional.ToNullable(provisioningState));
+            return new ExpressRouteServiceProvider(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                peeringLocations ?? new ChangeTrackingList<string>(),
+                bandwidthsOffered ?? new ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ExpressRouteServiceProvider>.Write(ModelReaderWriterOptions options)

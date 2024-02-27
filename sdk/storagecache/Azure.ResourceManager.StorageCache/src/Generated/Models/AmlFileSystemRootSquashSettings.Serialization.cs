@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemRootSquashSettings(Optional.ToNullable(mode), noSquashNidLists.Value, Optional.ToNullable(squashUID), Optional.ToNullable(squashGID), status.Value, serializedAdditionalRawData);
+            return new AmlFileSystemRootSquashSettings(
+                Optional.ToNullable(mode),
+                noSquashNidLists.Value,
+                Optional.ToNullable(squashUID),
+                Optional.ToNullable(squashGID),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemRootSquashSettings>.Write(ModelReaderWriterOptions options)

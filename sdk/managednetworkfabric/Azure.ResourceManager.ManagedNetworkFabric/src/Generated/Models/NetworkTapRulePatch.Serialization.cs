@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> annotation = default;
             Optional<NetworkFabricConfigurationType> configurationType = default;
             Optional<Uri> tapRulesUrl = default;
@@ -206,7 +206,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkTapRulePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(configurationType), tapRulesUrl.Value, matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(), dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
+            return new NetworkTapRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                annotation.Value,
+                Optional.ToNullable(configurationType),
+                tapRulesUrl.Value,
+                matchConfigurations ?? new ChangeTrackingList<NetworkTapRuleMatchConfiguration>(),
+                dynamicMatchConfigurations ?? new ChangeTrackingList<CommonDynamicMatchConfiguration>());
         }
 
         BinaryData IPersistableModel<NetworkTapRulePatch>.Write(ModelReaderWriterOptions options)

@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemResourceUpdateProperties(marketplaceDetails.Value, userDetails.Value, delegatedSubnetId.Value, clusterLoginUrl.Value, privateIPs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new FileSystemResourceUpdateProperties(
+                marketplaceDetails.Value,
+                userDetails.Value,
+                delegatedSubnetId.Value,
+                clusterLoginUrl.Value,
+                privateIPs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemResourceUpdateProperties>.Write(ModelReaderWriterOptions options)

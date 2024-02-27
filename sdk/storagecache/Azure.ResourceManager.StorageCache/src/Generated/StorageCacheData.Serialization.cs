@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<StorageCacheSkuInfo> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -466,7 +466,30 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(cacheSizeGB), health.Value, mountAddresses ?? new ChangeTrackingList<IPAddress>(), Optional.ToNullable(provisioningState), subnet.Value, upgradeStatus.Value, upgradeSettings.Value, networkSettings.Value, encryptionSettings.Value, securitySettings.Value, directoryServicesSettings.Value, zones ?? new ChangeTrackingList<string>(), primingJobs ?? new ChangeTrackingList<PrimingJob>(), spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>(), serializedAdditionalRawData);
+            return new StorageCacheData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                Optional.ToNullable(cacheSizeGB),
+                health.Value,
+                mountAddresses ?? new ChangeTrackingList<IPAddress>(),
+                Optional.ToNullable(provisioningState),
+                subnet.Value,
+                upgradeStatus.Value,
+                upgradeSettings.Value,
+                networkSettings.Value,
+                encryptionSettings.Value,
+                securitySettings.Value,
+                directoryServicesSettings.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                primingJobs ?? new ChangeTrackingList<PrimingJob>(),
+                spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheData>.Write(ModelReaderWriterOptions options)

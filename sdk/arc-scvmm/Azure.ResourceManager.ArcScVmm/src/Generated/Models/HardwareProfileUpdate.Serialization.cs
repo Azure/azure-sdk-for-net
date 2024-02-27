@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HardwareProfileUpdate(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), serializedAdditionalRawData);
+            return new HardwareProfileUpdate(
+                Optional.ToNullable(memoryMB),
+                Optional.ToNullable(cpuCount),
+                Optional.ToNullable(limitCpuForMigration),
+                Optional.ToNullable(dynamicMemoryEnabled),
+                Optional.ToNullable(dynamicMemoryMaxMB),
+                Optional.ToNullable(dynamicMemoryMinMB),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HardwareProfileUpdate>.Write(ModelReaderWriterOptions options)

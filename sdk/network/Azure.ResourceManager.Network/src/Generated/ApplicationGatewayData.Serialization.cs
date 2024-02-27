@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ApplicationGatewaySku> sku = default;
             Optional<ApplicationGatewaySslPolicy> sslPolicy = default;
             Optional<ApplicationGatewayOperationalState> operationalState = default;
@@ -1000,7 +1000,52 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(), authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>(), trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>(), trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>(), sslCertificates ?? new ChangeTrackingList<ApplicationGatewaySslCertificate>(), frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>(), frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>(), probes ?? new ChangeTrackingList<ApplicationGatewayProbe>(), backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(), backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>(), backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>(), httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>(), listeners ?? new ChangeTrackingList<ApplicationGatewayListener>(), sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>(), urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>(), requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>(), routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>(), rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>(), redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>(), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(), privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(), Optional.ToNullable(forceFirewallPolicyAssociation), loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
+            return new ApplicationGatewayData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                sku.Value,
+                sslPolicy.Value,
+                Optional.ToNullable(operationalState),
+                gatewayIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayIPConfiguration>(),
+                authenticationCertificates ?? new ChangeTrackingList<ApplicationGatewayAuthenticationCertificate>(),
+                trustedRootCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedRootCertificate>(),
+                trustedClientCertificates ?? new ChangeTrackingList<ApplicationGatewayTrustedClientCertificate>(),
+                sslCertificates ?? new ChangeTrackingList<ApplicationGatewaySslCertificate>(),
+                frontendIPConfigurations ?? new ChangeTrackingList<ApplicationGatewayFrontendIPConfiguration>(),
+                frontendPorts ?? new ChangeTrackingList<ApplicationGatewayFrontendPort>(),
+                probes ?? new ChangeTrackingList<ApplicationGatewayProbe>(),
+                backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>(),
+                backendHttpSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendHttpSettings>(),
+                backendSettingsCollection ?? new ChangeTrackingList<ApplicationGatewayBackendSettings>(),
+                httpListeners ?? new ChangeTrackingList<ApplicationGatewayHttpListener>(),
+                listeners ?? new ChangeTrackingList<ApplicationGatewayListener>(),
+                sslProfiles ?? new ChangeTrackingList<ApplicationGatewaySslProfile>(),
+                urlPathMaps ?? new ChangeTrackingList<ApplicationGatewayUrlPathMap>(),
+                requestRoutingRules ?? new ChangeTrackingList<ApplicationGatewayRequestRoutingRule>(),
+                routingRules ?? new ChangeTrackingList<ApplicationGatewayRoutingRule>(),
+                rewriteRuleSets ?? new ChangeTrackingList<ApplicationGatewayRewriteRuleSet>(),
+                redirectConfigurations ?? new ChangeTrackingList<ApplicationGatewayRedirectConfiguration>(),
+                webApplicationFirewallConfiguration.Value,
+                firewallPolicy,
+                Optional.ToNullable(enableHttp2),
+                Optional.ToNullable(enableFips),
+                autoscaleConfiguration.Value,
+                privateLinkConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkConfiguration>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ApplicationGatewayPrivateEndpointConnectionData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState),
+                customErrorConfigurations ?? new ChangeTrackingList<ApplicationGatewayCustomError>(),
+                Optional.ToNullable(forceFirewallPolicyAssociation),
+                loadDistributionPolicies ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionPolicy>(),
+                globalConfiguration.Value,
+                Optional.ToNullable(defaultPredefinedSslPolicy));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)

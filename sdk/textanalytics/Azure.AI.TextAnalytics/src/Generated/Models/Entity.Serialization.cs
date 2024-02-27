@@ -78,7 +78,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new Entity(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new Entity(
+                text,
+                category,
+                subcategory.Value,
+                offset,
+                length,
+                confidenceScore);
         }
     }
 }

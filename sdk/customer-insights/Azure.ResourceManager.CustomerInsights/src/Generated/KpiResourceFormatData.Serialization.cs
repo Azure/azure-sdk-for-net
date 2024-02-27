@@ -229,8 +229,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> entityTypeName = default;
             Optional<Guid> tenantId = default;
             Optional<string> kpiName = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
             Optional<CalculationWindowType> calculationWindow = default;
             Optional<string> calculationWindowFieldName = default;
             Optional<KpiFunction> function = default;
@@ -472,7 +472,31 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(entityType), entityTypeName.Value, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(calculationWindow), calculationWindowFieldName.Value, Optional.ToNullable(function), expression.Value, unit.Value, filter.Value, groupBy ?? new ChangeTrackingList<string>(), groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(), participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(), Optional.ToNullable(provisioningState), thresHolds.Value, aliases ?? new ChangeTrackingList<KpiAlias>(), extracts ?? new ChangeTrackingList<KpiExtract>(), serializedAdditionalRawData);
+            return new KpiResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(entityType),
+                entityTypeName.Value,
+                Optional.ToNullable(tenantId),
+                kpiName.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(calculationWindow),
+                calculationWindowFieldName.Value,
+                Optional.ToNullable(function),
+                expression.Value,
+                unit.Value,
+                filter.Value,
+                groupBy ?? new ChangeTrackingList<string>(),
+                groupByMetadata ?? new ChangeTrackingList<KpiGroupByMetadata>(),
+                participantProfilesMetadata ?? new ChangeTrackingList<KpiParticipantProfilesMetadata>(),
+                Optional.ToNullable(provisioningState),
+                thresHolds.Value,
+                aliases ?? new ChangeTrackingList<KpiAlias>(),
+                extracts ?? new ChangeTrackingList<KpiExtract>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiResourceFormatData>.Write(ModelReaderWriterOptions options)

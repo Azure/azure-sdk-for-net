@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementCacheData(id, name, type, systemData.Value, description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementCacheData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                connectionString.Value,
+                useFromLocation.Value,
+                resourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementCacheData>.Write(ModelReaderWriterOptions options)

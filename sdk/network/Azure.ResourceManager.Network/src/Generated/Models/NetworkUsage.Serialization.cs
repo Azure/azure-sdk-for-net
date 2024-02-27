@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkUsage(id.Value, unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new NetworkUsage(
+                id.Value,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkUsage>.Write(ModelReaderWriterOptions options)

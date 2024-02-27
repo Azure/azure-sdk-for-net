@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitPeeringConfig(advertisedPublicPrefixes ?? new ChangeTrackingList<string>(), advertisedCommunities ?? new ChangeTrackingList<string>(), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitPeeringConfig(
+                advertisedPublicPrefixes ?? new ChangeTrackingList<string>(),
+                advertisedCommunities ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(advertisedPublicPrefixesState),
+                Optional.ToNullable(legacyMode),
+                Optional.ToNullable(customerASN),
+                routingRegistryName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)

@@ -302,7 +302,23 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationRun(name.Value, id.Value, softwareUpdateConfiguration.Value, status.Value, Optional.ToNullable(configuredDuration), osType.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(computerCount), Optional.ToNullable(failedCount), Optional.ToNullable(creationTime), createdBy.Value, Optional.ToNullable(lastModifiedTime), lastModifiedBy.Value, tasks.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationRun(
+                name.Value,
+                id.Value,
+                softwareUpdateConfiguration.Value,
+                status.Value,
+                Optional.ToNullable(configuredDuration),
+                osType.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(computerCount),
+                Optional.ToNullable(failedCount),
+                Optional.ToNullable(creationTime),
+                createdBy.Value,
+                Optional.ToNullable(lastModifiedTime),
+                lastModifiedBy.Value,
+                tasks.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationRun>.Write(ModelReaderWriterOptions options)

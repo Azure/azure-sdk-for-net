@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SignalR
             Optional<SignalRResourceSku> sku = default;
             Optional<SignalRServiceKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -513,7 +513,36 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(kind), identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>(), sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>(), tls.Value, hostNamePrefix.Value, features ?? new ChangeTrackingList<SignalRFeature>(), liveTraceConfiguration.Value, resourceLogConfiguration.Value, cors.Value, upstream.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth), serializedAdditionalRawData);
+            return new SignalRData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                Optional.ToNullable(kind),
+                identity,
+                Optional.ToNullable(provisioningState),
+                externalIP.Value,
+                hostName.Value,
+                Optional.ToNullable(publicPort),
+                Optional.ToNullable(serverPort),
+                version.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>(),
+                sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>(),
+                tls.Value,
+                hostNamePrefix.Value,
+                features ?? new ChangeTrackingList<SignalRFeature>(),
+                liveTraceConfiguration.Value,
+                resourceLogConfiguration.Value,
+                cors.Value,
+                upstream.Value,
+                networkACLs.Value,
+                publicNetworkAccess.Value,
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(disableAadAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options)

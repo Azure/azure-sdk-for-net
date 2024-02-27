@@ -210,7 +210,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RcmProxyDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, clientAuthenticationType.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), serializedAdditionalRawData);
+            return new RcmProxyDetails(
+                id.Value,
+                name.Value,
+                biosId.Value,
+                fabricObjectId.Value,
+                fqdn.Value,
+                clientAuthenticationType.Value,
+                version.Value,
+                Optional.ToNullable(lastHeartbeatUtc),
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RcmProxyDetails>.Write(ModelReaderWriterOptions options)

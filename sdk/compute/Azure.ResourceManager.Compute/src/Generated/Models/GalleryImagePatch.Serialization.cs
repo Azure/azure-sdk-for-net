@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -391,7 +391,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImagePatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), features ?? new ChangeTrackingList<GalleryImageFeature>(), Optional.ToNullable(architecture), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryImagePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                eula.Value,
+                privacyStatementUri.Value,
+                releaseNoteUri.Value,
+                Optional.ToNullable(osType),
+                Optional.ToNullable(osState),
+                Optional.ToNullable(hyperVGeneration),
+                Optional.ToNullable(endOfLifeDate),
+                identifier.Value,
+                recommended.Value,
+                disallowed.Value,
+                purchasePlan.Value,
+                Optional.ToNullable(provisioningState),
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                Optional.ToNullable(architecture),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImagePatch>.Write(ModelReaderWriterOptions options)

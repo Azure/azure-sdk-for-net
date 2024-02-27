@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceObjectiveData(id, name, type, systemData.Value, serviceObjectiveName.Value, Optional.ToNullable(isDefault), Optional.ToNullable(isSystem), description.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new ServiceObjectiveData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceObjectiveName.Value,
+                Optional.ToNullable(isDefault),
+                Optional.ToNullable(isSystem),
+                description.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceObjectiveData>.Write(ModelReaderWriterOptions options)

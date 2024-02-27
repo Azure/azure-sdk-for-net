@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
             Optional<string> policyDefinitionId = default;
             Optional<string> scope = default;
             IList<string> notScopes = default;
-            Optional<IDictionary<string, ArmPolicyParameterValue>> parameters = default;
+            IDictionary<string, ArmPolicyParameterValue> parameters = default;
             Optional<string> description = default;
             Optional<BinaryData> metadata = default;
             Optional<EnforcementMode> enforcementMode = default;
@@ -376,7 +376,25 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), identity, displayName.Value, policyDefinitionId.Value, scope.Value, notScopes ?? new ChangeTrackingList<string>(), Optional.ToDictionary(parameters), description.Value, metadata.Value, Optional.ToNullable(enforcementMode), nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(), resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(), overrides ?? new ChangeTrackingList<PolicyOverride>(), serializedAdditionalRawData);
+            return new PolicyAssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                identity,
+                displayName.Value,
+                policyDefinitionId.Value,
+                scope.Value,
+                notScopes ?? new ChangeTrackingList<string>(),
+                parameters ?? new ChangeTrackingDictionary<string, ArmPolicyParameterValue>(),
+                description.Value,
+                metadata.Value,
+                Optional.ToNullable(enforcementMode),
+                nonComplianceMessages ?? new ChangeTrackingList<NonComplianceMessage>(),
+                resourceSelectors ?? new ChangeTrackingList<ResourceSelector>(),
+                overrides ?? new ChangeTrackingList<PolicyOverride>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentData>.Write(ModelReaderWriterOptions options)

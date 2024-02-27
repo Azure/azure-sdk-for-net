@@ -184,7 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, validationErrors ?? new ChangeTrackingList<ReportableException>());
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                databases.Value,
+                logins.Value,
+                agentJobs.Value,
+                databaseTdeCertificateMapping.Value,
+                sourceServerVersion.Value,
+                sourceServerBrandVersion.Value,
+                validationErrors ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)

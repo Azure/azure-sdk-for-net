@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerReference(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, flowName.Value, triggerName.Value);
+            return new LogicWorkflowTriggerReference(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                flowName.Value,
+                triggerName.Value);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerReference>.Write(ModelReaderWriterOptions options)

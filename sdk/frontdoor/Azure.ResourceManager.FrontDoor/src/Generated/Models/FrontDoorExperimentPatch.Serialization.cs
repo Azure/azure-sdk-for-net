@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> description = default;
             Optional<FrontDoorExperimentState> enabledState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorExperimentPatch(Optional.ToDictionary(tags), description.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
+            return new FrontDoorExperimentPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description.Value, Optional.ToNullable(enabledState), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorExperimentPatch>.Write(ModelReaderWriterOptions options)

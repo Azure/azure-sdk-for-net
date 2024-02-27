@@ -122,7 +122,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookCell(cellType, metadata, source, attachments.Value, outputs ?? new ChangeTrackingList<NotebookCellOutputItem>(), additionalProperties);
+            return new NotebookCell(
+                cellType,
+                metadata,
+                source,
+                attachments.Value,
+                outputs ?? new ChangeTrackingList<NotebookCellOutputItem>(),
+                additionalProperties);
         }
 
         internal partial class NotebookCellConverter : JsonConverter<NotebookCell>

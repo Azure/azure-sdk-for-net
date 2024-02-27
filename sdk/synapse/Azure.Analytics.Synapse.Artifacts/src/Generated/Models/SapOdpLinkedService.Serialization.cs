@@ -167,7 +167,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             Optional<object> server = default;
             Optional<object> systemNumber = default;
@@ -422,7 +422,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOdpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, x509CertificatePath.Value, logonGroup.Value, subscriberName.Value, encryptedCredential.Value);
+            return new SapOdpLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                server.Value,
+                systemNumber.Value,
+                clientId.Value,
+                language.Value,
+                systemId.Value,
+                userName.Value,
+                password.Value,
+                messageServer.Value,
+                messageServerService.Value,
+                sncMode.Value,
+                sncMyName.Value,
+                sncPartnerName.Value,
+                sncLibraryPath.Value,
+                sncQop.Value,
+                x509CertificatePath.Value,
+                logonGroup.Value,
+                subscriberName.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class SapOdpLinkedServiceConverter : JsonConverter<SapOdpLinkedService>

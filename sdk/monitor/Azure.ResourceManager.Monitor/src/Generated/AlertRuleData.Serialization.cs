@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -274,7 +274,22 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0, description.Value, provisioningState.Value, isEnabled, condition, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0,
+                description.Value,
+                provisioningState.Value,
+                isEnabled,
+                condition,
+                action.Value,
+                actions ?? new ChangeTrackingList<AlertRuleAction>(),
+                Optional.ToNullable(lastUpdatedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleData>.Write(ModelReaderWriterOptions options)

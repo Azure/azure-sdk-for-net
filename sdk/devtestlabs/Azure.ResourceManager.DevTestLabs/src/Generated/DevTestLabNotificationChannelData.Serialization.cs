@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -287,7 +287,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationChannelData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, webHookUrl.Value, emailRecipient.Value, notificationLocale.Value, description.Value, events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>(), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabNotificationChannelData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                webHookUrl.Value,
+                emailRecipient.Value,
+                notificationLocale.Value,
+                description.Value,
+                events ?? new ChangeTrackingList<DevTestLabNotificationChannelEvent>(),
+                Optional.ToNullable(createdDate),
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationChannelData>.Write(ModelReaderWriterOptions options)

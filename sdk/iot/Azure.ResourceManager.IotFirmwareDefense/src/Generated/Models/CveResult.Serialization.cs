@@ -358,7 +358,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveResult(id, name, type, systemData.Value, cveId.Value, component.Value, severity.Value, name0.Value, cvssScore.Value, cvssVersion.Value, cvssV2Score.Value, cvssV3Score.Value, links ?? new ChangeTrackingList<CveLink>(), description.Value, serializedAdditionalRawData);
+            return new CveResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                cveId.Value,
+                component.Value,
+                severity.Value,
+                name0.Value,
+                cvssScore.Value,
+                cvssVersion.Value,
+                cvssV2Score.Value,
+                cvssV3Score.Value,
+                links ?? new ChangeTrackingList<CveLink>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveResult>.Write(ModelReaderWriterOptions options)

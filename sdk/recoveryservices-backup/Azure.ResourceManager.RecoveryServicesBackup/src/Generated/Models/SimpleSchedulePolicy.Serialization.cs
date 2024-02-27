@@ -177,7 +177,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimpleSchedulePolicy(schedulePolicyType, serializedAdditionalRawData, Optional.ToNullable(scheduleRunFrequency), scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(), scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(), hourlySchedule.Value, Optional.ToNullable(scheduleWeeklyFrequency));
+            return new SimpleSchedulePolicy(
+                schedulePolicyType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(scheduleRunFrequency),
+                scheduleRunDays ?? new ChangeTrackingList<BackupDayOfWeek>(),
+                scheduleRunTimes ?? new ChangeTrackingList<DateTimeOffset>(),
+                hourlySchedule.Value,
+                Optional.ToNullable(scheduleWeeklyFrequency));
         }
 
         BinaryData IPersistableModel<SimpleSchedulePolicy>.Write(ModelReaderWriterOptions options)

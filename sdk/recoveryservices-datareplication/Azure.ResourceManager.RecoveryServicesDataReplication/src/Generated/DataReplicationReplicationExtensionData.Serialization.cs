@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationReplicationExtensionData(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new DataReplicationReplicationExtensionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationReplicationExtensionData>.Write(ModelReaderWriterOptions options)

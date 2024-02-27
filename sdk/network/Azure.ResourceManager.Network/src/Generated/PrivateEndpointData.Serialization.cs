@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<SubnetData> subnet = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -395,7 +395,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), subnet.Value, networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), Optional.ToNullable(provisioningState), privateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(), manualPrivateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(), customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigProperties>(), applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(), ipConfigurations ?? new ChangeTrackingList<PrivateEndpointIPConfiguration>(), customNetworkInterfaceName.Value);
+            return new PrivateEndpointData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                extendedLocation,
+                Optional.ToNullable(etag),
+                subnet.Value,
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                manualPrivateLinkServiceConnections ?? new ChangeTrackingList<NetworkPrivateLinkServiceConnection>(),
+                customDnsConfigs ?? new ChangeTrackingList<CustomDnsConfigProperties>(),
+                applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>(),
+                ipConfigurations ?? new ChangeTrackingList<PrivateEndpointIPConfiguration>(),
+                customNetworkInterfaceName.Value);
         }
 
         BinaryData IPersistableModel<PrivateEndpointData>.Write(ModelReaderWriterOptions options)

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<AutomaticTuningMode> desiredState = default;
             Optional<AutomaticTuningMode> actualState = default;
-            Optional<IDictionary<string, AutomaticTuningOptions>> options0 = default;
+            IDictionary<string, AutomaticTuningOptions> options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options0), serializedAdditionalRawData);
+            return new SqlDatabaseAutomaticTuningData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(desiredState),
+                Optional.ToNullable(actualState),
+                options0 ?? new ChangeTrackingDictionary<string, AutomaticTuningOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseAutomaticTuningData>.Write(ModelReaderWriterOptions options)

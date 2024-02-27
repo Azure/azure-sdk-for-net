@@ -147,7 +147,20 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(), metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(), id.Value, dimensions ?? new ChangeTrackingList<LocalizableString>());
+            return new MetricDefinition(
+                Optional.ToNullable(isDimensionRequired),
+                resourceId.Value,
+                @namespace.Value,
+                name.Value,
+                displayDescription.Value,
+                category.Value,
+                Optional.ToNullable(metricClass),
+                Optional.ToNullable(unit),
+                Optional.ToNullable(primaryAggregationType),
+                supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                id.Value,
+                dimensions ?? new ChangeTrackingList<LocalizableString>());
         }
     }
 }

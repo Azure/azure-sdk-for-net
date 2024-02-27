@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsAssumeRoleAuthenticationDetailsProperties(Optional.ToNullable(authenticationProvisioningState), grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(), authenticationType, serializedAdditionalRawData, accountId.Value, awsAssumeRoleArn, awsExternalId);
+            return new AwsAssumeRoleAuthenticationDetailsProperties(
+                Optional.ToNullable(authenticationProvisioningState),
+                grantedPermissions ?? new ChangeTrackingList<SecurityCenterCloudPermission>(),
+                authenticationType,
+                serializedAdditionalRawData,
+                accountId.Value,
+                awsAssumeRoleArn,
+                awsExternalId);
         }
 
         BinaryData IPersistableModel<AwsAssumeRoleAuthenticationDetailsProperties>.Write(ModelReaderWriterOptions options)

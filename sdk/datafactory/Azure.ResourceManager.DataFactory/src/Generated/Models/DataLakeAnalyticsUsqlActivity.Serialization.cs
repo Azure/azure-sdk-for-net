@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryLinkedServiceReference scriptLinkedService = default;
             Optional<DataFactoryElement<int>> degreeOfParallelism = default;
             Optional<DataFactoryElement<int>> priority = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             Optional<DataFactoryElement<string>> runtimeVersion = default;
             Optional<DataFactoryElement<string>> compilationMode = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsUsqlActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, scriptPath, scriptLinkedService, degreeOfParallelism.Value, priority.Value, Optional.ToDictionary(parameters), runtimeVersion.Value, compilationMode.Value);
+            return new DataLakeAnalyticsUsqlActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                scriptPath,
+                scriptLinkedService,
+                degreeOfParallelism.Value,
+                priority.Value,
+                parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                runtimeVersion.Value,
+                compilationMode.Value);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsUsqlActivity>.Write(ModelReaderWriterOptions options)

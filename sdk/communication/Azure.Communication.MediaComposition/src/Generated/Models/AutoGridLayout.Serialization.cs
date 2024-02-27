@@ -111,7 +111,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new AutoGridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), inputIds, Optional.ToNullable(highlightDominantSpeaker));
+            return new AutoGridLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                inputIds,
+                Optional.ToNullable(highlightDominantSpeaker));
         }
     }
 }

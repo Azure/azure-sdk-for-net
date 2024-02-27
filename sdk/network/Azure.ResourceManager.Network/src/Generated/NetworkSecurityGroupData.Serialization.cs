@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<bool> flushConnection = default;
             IList<SecurityRuleData> securityRules = default;
             IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
@@ -358,7 +358,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(flushConnection), securityRules ?? new ChangeTrackingList<SecurityRuleData>(), defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(), subnets ?? new ChangeTrackingList<SubnetData>(), flowLogs ?? new ChangeTrackingList<FlowLogData>(), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState));
+            return new NetworkSecurityGroupData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(flushConnection),
+                securityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(),
+                networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
+                subnets ?? new ChangeTrackingList<SubnetData>(),
+                flowLogs ?? new ChangeTrackingList<FlowLogData>(),
+                Optional.ToNullable(resourceGuid),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupData>.Write(ModelReaderWriterOptions options)

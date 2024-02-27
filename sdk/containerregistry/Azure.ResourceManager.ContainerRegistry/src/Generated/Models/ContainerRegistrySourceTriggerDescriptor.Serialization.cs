@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerDescriptor(
+                Optional.ToNullable(id),
+                eventType.Value,
+                commitId.Value,
+                pullRequestId.Value,
+                repositoryUrl.Value,
+                branchName.Value,
+                providerType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Write(ModelReaderWriterOptions options)

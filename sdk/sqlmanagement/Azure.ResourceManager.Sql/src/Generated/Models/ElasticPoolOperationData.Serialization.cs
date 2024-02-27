@@ -320,7 +320,26 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticPoolOperationData(id, name, type, systemData.Value, elasticPoolName.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), serializedAdditionalRawData);
+            return new ElasticPoolOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                elasticPoolName.Value,
+                operation.Value,
+                operationFriendlyName.Value,
+                Optional.ToNullable(percentComplete),
+                serverName.Value,
+                Optional.ToNullable(startTime),
+                state.Value,
+                Optional.ToNullable(errorCode),
+                errorDescription.Value,
+                Optional.ToNullable(errorSeverity),
+                Optional.ToNullable(isUserError),
+                Optional.ToNullable(estimatedCompletionTime),
+                description.Value,
+                Optional.ToNullable(isCancellable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticPoolOperationData>.Write(ModelReaderWriterOptions options)

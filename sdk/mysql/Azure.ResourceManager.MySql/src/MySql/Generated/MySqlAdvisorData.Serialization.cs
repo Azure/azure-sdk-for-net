@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlAdvisorData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new MySqlAdvisorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlAdvisorData>.Write(ModelReaderWriterOptions options)

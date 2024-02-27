@@ -308,7 +308,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricExternalNetworkData(id, name, type, systemData.Value, annotation.Value, importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, networkToNetworkInterconnectId.Value, peeringOption, optionBProperties.Value, optionAProperties.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricExternalNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                annotation.Value,
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                networkToNetworkInterconnectId.Value,
+                peeringOption,
+                optionBProperties.Value,
+                optionAProperties.Value,
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricExternalNetworkData>.Write(ModelReaderWriterOptions options)

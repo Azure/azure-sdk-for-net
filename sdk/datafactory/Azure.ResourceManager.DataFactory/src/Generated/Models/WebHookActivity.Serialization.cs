@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebHookActivityMethod method = default;
             DataFactoryElement<string> url = default;
             Optional<string> timeout = default;
-            Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
+            IDictionary<string, DataFactoryElement<string>> headers = default;
             Optional<DataFactoryElement<string>> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<DataFactoryElement<bool>> reportStatusOnCallBack = default;
@@ -316,7 +316,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, policy.Value, method, url, timeout.Value, Optional.ToDictionary(headers), body.Value, authentication.Value, reportStatusOnCallBack.Value);
+            return new WebHookActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                policy.Value,
+                method,
+                url,
+                timeout.Value,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body.Value,
+                authentication.Value,
+                reportStatusOnCallBack.Value);
         }
 
         BinaryData IPersistableModel<WebHookActivity>.Write(ModelReaderWriterOptions options)

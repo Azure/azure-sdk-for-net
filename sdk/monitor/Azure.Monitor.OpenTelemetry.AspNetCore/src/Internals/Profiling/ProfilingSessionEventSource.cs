@@ -3,12 +3,13 @@
 #nullable enable
 
 using System.Diagnostics.Tracing;
+using OpenTelemetry.Resources;
+using static System.Globalization.CultureInfo;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
 {
     /// <summary>
-    /// An EventSource that can be enabled by profilers when profiling is
-    /// active. It's an unusual EventSource because it doesn't emit any events.
+    /// An EventSource to be used by profilers when profiling is active.
     /// Communication from the profiler is via command arguments included when
     /// enabling the EventSource via an EventListener, an ETW provider or via
     /// EventPipe. Profilers should use the command to notify applications of
@@ -17,6 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
     /// active. This session ID may be later used to correlate telemetry with
     /// the resulting profiler artifact.
     /// The GUID of this event source is 15ec0b5c-cb74-5fec-5d64-609c0a49ff31
+    /// The following keyword is supported:
+    /// <list type="bullet">
+    /// <item>ResourceAttributes: Emits OpenTelemetry resource attributes.</item>
+    /// </list>
     /// </summary>
     /// <remarks>
     /// PerfView instructions:
@@ -28,6 +33,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
     internal class ProfilingSessionEventSource : EventSource
     {
         /// <summary>
+        /// The current session ID. May be null if there is no active session.
+        /// </summary>
+        private string? _sessionId;
+
+        /// <summary>
+        /// Event handler to call when the session ID changes.
+        /// </summary>
+        private EventHandler<string?>? _sessionIdChanged;
+
+        /// <summary>
         /// Name of the EventSource.
         /// </summary>
         public const string EventSourceName = "Azure-Monitor-ProfilingSession";
@@ -38,9 +53,36 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         public static ProfilingSessionEventSource Current { get; } = new();
 
         /// <summary>
+        /// Keywords for this EventSource.
+        /// </summary>
+        public static class Keywords
+        {
+            /// <summary>
+            /// Emits the OpenTelemetry Resource attributes. These attributes
+            /// are emitted exactly once at Informational level.
+            /// </summary>
+            public const EventKeywords ResourceAttributes = (EventKeywords)0b_1;
+        }
+
+        /// <summary>
+        /// Event IDs for this EventSource.
+        /// </summary>
+        public static class EventIds
+        {
+            /// <summary>
+            /// Open Telemetry Resource attributes.
+            /// </summary>
+            public const int ResourceAttributes = 1;
+        }
+
+        /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        private ProfilingSessionEventSource() : base(EventSourceName, EventSourceSettings.Default)
+        /// <remarks>
+        /// We need the self-describing format because the <see cref="ResourceAttributes(IEnumerable{KeyValuePair{string, string}})"/>
+        /// method takes a non-primitive argument.
+        /// </remarks>
+        private ProfilingSessionEventSource() : base(EventSourceSettings.EtwSelfDescribingEventFormat)
         {
         }
 
@@ -83,6 +125,95 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// Gets or sets the active profiling session ID.
         /// The value will be null if there is no active session.
         /// </summary>
-        public string? SessionId { get; private set; }
+        public string? SessionId
+        {
+            [NonEvent]
+            get => _sessionId;
+
+            [NonEvent]
+            private set
+            {
+                if (_sessionId != value)
+                {
+                    _sessionId = value;
+                    _sessionIdChanged?.Invoke(this, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the session ID has changed, meaning either a session has started or stopped.
+        /// </summary>
+        /// <remarks>
+        /// If you subscribe to this event when a session has already started, then your handler
+        /// will be called immediately.
+        /// </remarks>
+        public event EventHandler<string?> SessionIdChanged
+        {
+            [NonEvent]
+            add
+            {
+                _sessionIdChanged += value;
+
+                // New subscribers are notified of an active session right away.
+                if (SessionId != null)
+                {
+                    value.Invoke(this, SessionId);
+                }
+            }
+
+            [NonEvent]
+            remove
+            {
+                _sessionIdChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Write the attributes of a <see cref="Resource"/>.
+        /// </summary>
+        /// <param name="resource">The resource.</param>
+        [NonEvent]
+        public void WriteResourceAttributes(Resource resource)
+        {
+            if (resource is null)
+            {
+                return;
+            }
+
+            if (IsEnabled(EventLevel.Informational, Keywords.ResourceAttributes))
+            {
+                IEnumerable<KeyValuePair<string, object>> attributes = resource.Attributes;
+                ResourceAttributes(attributes.Select(kvp => new KeyValuePair<string, string>(kvp.Key, SafeConvertToString(kvp.Value))));
+            }
+
+            // Safely convert an object to a string.
+            // The ResourceBuilder won't allow a non-primitive type for an
+            // attribute value but, just to be sure, catch any exceptions
+            // and return an empty string.
+            // Also truncates the value to a reasonable length.
+            static string SafeConvertToString(object? value)
+            {
+                // The limit is somewhat arbitrary. We want to be able to
+                // represent any *reasonable* attribute value without blowing
+                // up the total event payload.
+                const int maxSensibleLength = 200;
+                try
+                {
+                    string converted = Convert.ToString(value, InvariantCulture) ?? string.Empty;
+                    return converted.Length <= maxSensibleLength ? converted : converted.Substring(0, maxSensibleLength);
+                }
+                catch // In case value's ToString implementation throws.
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        [Event(EventIds.ResourceAttributes, Keywords = Keywords.ResourceAttributes, Level = EventLevel.Informational)]
+        private void ResourceAttributes(IEnumerable<KeyValuePair<string, string>> attributes)
+        {
+            WriteEvent(EventIds.ResourceAttributes, attributes);
+        }
     }
 }

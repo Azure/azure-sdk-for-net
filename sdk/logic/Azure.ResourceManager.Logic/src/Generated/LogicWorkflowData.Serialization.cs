@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicResourceReference> integrationAccount = default;
             Optional<LogicResourceReference> integrationServiceEnvironment = default;
             Optional<BinaryData> definition = default;
-            Optional<IDictionary<string, LogicWorkflowParameterInfo>> parameters = default;
+            IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -393,7 +393,28 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), Optional.ToNullable(state), version.Value, accessEndpoint.Value, endpointsConfiguration.Value, accessControl.Value, sku.Value, integrationAccount.Value, integrationServiceEnvironment.Value, definition.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new LogicWorkflowData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(changedTime),
+                Optional.ToNullable(state),
+                version.Value,
+                accessEndpoint.Value,
+                endpointsConfiguration.Value,
+                accessControl.Value,
+                sku.Value,
+                integrationAccount.Value,
+                integrationServiceEnvironment.Value,
+                definition.Value,
+                parameters ?? new ChangeTrackingDictionary<string, LogicWorkflowParameterInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowData>.Write(ModelReaderWriterOptions options)

@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BotService
             Optional<BotServiceKind?> kind = default;
             Optional<ETag> etag = default;
             IReadOnlyList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -252,7 +252,19 @@ namespace Azure.ResourceManager.BotService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotConnectionSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BotConnectionSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                sku.Value,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotConnectionSettingData>.Write(ModelReaderWriterOptions options)

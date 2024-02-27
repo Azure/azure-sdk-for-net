@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache
             Optional<ManagedServiceIdentity> identity = default;
             Optional<StorageCacheSkuName> sku = default;
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -374,7 +374,27 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AmlFileSystemData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, zones ?? new ChangeTrackingList<string>(), Optional.ToNullable(storageCapacityTiB), health.Value, Optional.ToNullable(provisioningState), filesystemSubnet.Value, clientInfo.Value, Optional.ToNullable(throughputProvisionedMBps), encryptionSettings.Value, maintenanceWindow.Value, hsm.Value, rootSquashSettings.Value, serializedAdditionalRawData);
+            return new AmlFileSystemData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(storageCapacityTiB),
+                health.Value,
+                Optional.ToNullable(provisioningState),
+                filesystemSubnet.Value,
+                clientInfo.Value,
+                Optional.ToNullable(throughputProvisionedMBps),
+                encryptionSettings.Value,
+                maintenanceWindow.Value,
+                hsm.Value,
+                rootSquashSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AmlFileSystemData>.Write(ModelReaderWriterOptions options)

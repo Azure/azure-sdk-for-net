@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Search
             }
             Optional<SearchSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -445,7 +445,30 @@ namespace Azure.ResourceManager.Search
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(replicaCount), Optional.ToNullable(partitionCount), Optional.ToNullable(hostingMode), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(status), statusDetails.Value, Optional.ToNullable(provisioningState), networkRuleSet.Value, encryptionWithCmk.Value, Optional.ToNullable(disableLocalAuth), authOptions.Value, privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(), Optional.ToNullable(semanticSearch), sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(), serializedAdditionalRawData);
+            return new SearchServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                Optional.ToNullable(replicaCount),
+                Optional.ToNullable(partitionCount),
+                Optional.ToNullable(hostingMode),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(status),
+                statusDetails.Value,
+                Optional.ToNullable(provisioningState),
+                networkRuleSet.Value,
+                encryptionWithCmk.Value,
+                Optional.ToNullable(disableLocalAuth),
+                authOptions.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
+                Optional.ToNullable(semanticSearch),
+                sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options)

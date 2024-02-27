@@ -447,7 +447,32 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreRulestackRuleData(id, name, type, systemData.Value, Optional.ToNullable(etag), ruleName, Optional.ToNullable(priority), description.Value, Optional.ToNullable(ruleState), source.Value, Optional.ToNullable(negateSource), destination.Value, Optional.ToNullable(negateDestination), applications ?? new ChangeTrackingList<string>(), category.Value, protocol.Value, protocolPortList ?? new ChangeTrackingList<string>(), inboundInspectionCertificate.Value, auditComment.Value, Optional.ToNullable(actionType), Optional.ToNullable(enableLogging), Optional.ToNullable(decryptionRuleType), tags ?? new ChangeTrackingList<RulestackTagInfo>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PreRulestackRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                ruleName,
+                Optional.ToNullable(priority),
+                description.Value,
+                Optional.ToNullable(ruleState),
+                source.Value,
+                Optional.ToNullable(negateSource),
+                destination.Value,
+                Optional.ToNullable(negateDestination),
+                applications ?? new ChangeTrackingList<string>(),
+                category.Value,
+                protocol.Value,
+                protocolPortList ?? new ChangeTrackingList<string>(),
+                inboundInspectionCertificate.Value,
+                auditComment.Value,
+                Optional.ToNullable(actionType),
+                Optional.ToNullable(enableLogging),
+                Optional.ToNullable(decryptionRuleType),
+                tags ?? new ChangeTrackingList<RulestackTagInfo>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreRulestackRuleData>.Write(ModelReaderWriterOptions options)

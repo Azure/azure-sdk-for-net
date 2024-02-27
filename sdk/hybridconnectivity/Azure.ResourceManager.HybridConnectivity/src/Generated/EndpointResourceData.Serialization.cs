@@ -273,7 +273,21 @@ namespace Azure.ResourceManager.HybridConnectivity
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointResourceData(id, name, type, systemData.Value, Optional.ToNullable(type0), resourceId.Value, provisioningState.Value, createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt), serializedAdditionalRawData);
+            return new EndpointResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(type0),
+                resourceId.Value,
+                provisioningState.Value,
+                createdBy.Value,
+                Optional.ToNullable(createdByType),
+                Optional.ToNullable(createdAt),
+                lastModifiedBy.Value,
+                Optional.ToNullable(lastModifiedByType),
+                Optional.ToNullable(lastModifiedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointResourceData>.Write(ModelReaderWriterOptions options)

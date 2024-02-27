@@ -36,7 +36,18 @@ namespace Azure.ResourceManager.Batch.Models
             tags ??= new Dictionary<string, string>();
             allowedAuthenticationModes ??= new List<BatchAuthenticationMode>();
 
-            return new BatchAccountCreateOrUpdateContent(location, tags, identity, autoStorage, poolAllocationMode, keyVaultReference, publicNetworkAccess, networkProfile, encryption, allowedAuthenticationModes?.ToList(), serializedAdditionalRawData: null);
+            return new BatchAccountCreateOrUpdateContent(
+                location,
+                tags,
+                identity,
+                autoStorage,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
+                encryption,
+                allowedAuthenticationModes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchIPRule"/>. </summary>
@@ -81,7 +92,32 @@ namespace Azure.ResourceManager.Batch.Models
             allowedAuthenticationModes ??= new List<BatchAuthenticationMode>();
             tags ??= new Dictionary<string, string>();
 
-            return new BatchAccountData(id, name, resourceType, systemData, identity, accountEndpoint, nodeManagementEndpoint, provisioningState, poolAllocationMode, keyVaultReference, publicNetworkAccess, networkProfile, privateEndpointConnections?.ToList(), autoStorage, encryption, dedicatedCoreQuota, lowPriorityCoreQuota, dedicatedCoreQuotaPerVmFamily?.ToList(), isDedicatedCoreQuotaPerVmFamilyEnforced, poolQuota, activeJobAndJobScheduleQuota, allowedAuthenticationModes?.ToList(), location, tags, serializedAdditionalRawData: null);
+            return new BatchAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                accountEndpoint,
+                nodeManagementEndpoint,
+                provisioningState,
+                poolAllocationMode,
+                keyVaultReference,
+                publicNetworkAccess,
+                networkProfile,
+                privateEndpointConnections?.ToList(),
+                autoStorage,
+                encryption,
+                dedicatedCoreQuota,
+                lowPriorityCoreQuota,
+                dedicatedCoreQuotaPerVmFamily?.ToList(),
+                isDedicatedCoreQuotaPerVmFamilyEnforced,
+                poolQuota,
+                activeJobAndJobScheduleQuota,
+                allowedAuthenticationModes?.ToList(),
+                location,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
@@ -99,7 +135,17 @@ namespace Azure.ResourceManager.Batch.Models
         {
             groupIds ??= new List<string>();
 
-            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState, etag, serializedAdditionalRawData: null);
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                groupIds?.ToList(),
+                connectionState,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchPrivateLinkServiceConnectionState"/>. </summary>
@@ -145,7 +191,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
         public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BatchApplicationPackageState? state = null, string format = null, Uri storageUri = null, DateTimeOffset? storageUriExpireOn = null, DateTimeOffset? lastActivatedOn = null, ETag? etag = null)
         {
-            return new BatchApplicationPackageData(id, name, resourceType, systemData, state, format, storageUri, storageUriExpireOn, lastActivatedOn, etag, serializedAdditionalRawData: null);
+            return new BatchApplicationPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                format,
+                storageUri,
+                storageUriExpireOn,
+                lastActivatedOn,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
@@ -160,7 +217,16 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Batch.BatchApplicationData"/> instance for mocking. </returns>
         public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, bool? allowUpdates = null, string defaultVersion = null, ETag? etag = null)
         {
-            return new BatchApplicationData(id, name, resourceType, systemData, displayName, allowUpdates, defaultVersion, etag, serializedAdditionalRawData: null);
+            return new BatchApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                allowUpdates,
+                defaultVersion,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchLocationQuota"/>. </summary>
@@ -229,7 +295,22 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Batch.BatchAccountCertificateData"/> instance for mocking. </returns>
         public static BatchAccountCertificateData BatchAccountCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = null, BatchAccountCertificateProvisioningState? provisioningState = null, DateTimeOffset? provisioningStateTransitOn = null, BatchAccountCertificateProvisioningState? previousProvisioningState = null, DateTimeOffset? previousProvisioningStateTransitOn = null, string publicData = null, ResponseError deleteCertificateError = null, ETag? etag = null)
         {
-            return new BatchAccountCertificateData(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprintString, format, provisioningState, provisioningStateTransitOn, previousProvisioningState, previousProvisioningStateTransitOn, publicData, deleteCertificateError, etag, serializedAdditionalRawData: null);
+            return new BatchAccountCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                thumbprintAlgorithm,
+                thumbprintString,
+                format,
+                provisioningState,
+                provisioningStateTransitOn,
+                previousProvisioningState,
+                previousProvisioningStateTransitOn,
+                publicData,
+                deleteCertificateError,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/>. </summary>
@@ -246,7 +327,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Models.BatchAccountCertificateCreateOrUpdateContent"/> instance for mocking. </returns>
         public static BatchAccountCertificateCreateOrUpdateContent BatchAccountCertificateCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string thumbprintAlgorithm = null, string thumbprintString = null, BatchAccountCertificateFormat? format = null, BinaryData data = null, string password = null, ETag? etag = null)
         {
-            return new BatchAccountCertificateCreateOrUpdateContent(id, name, resourceType, systemData, thumbprintAlgorithm, thumbprintString, format, data, password, etag, serializedAdditionalRawData: null);
+            return new BatchAccountCertificateCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                thumbprintAlgorithm,
+                thumbprintString,
+                format,
+                data,
+                password,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
@@ -259,7 +351,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <returns> A new <see cref="Batch.BatchAccountDetectorData"/> instance for mocking. </returns>
         public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, ETag? etag = null)
         {
-            return new BatchAccountDetectorData(id, name, resourceType, systemData, value, etag, serializedAdditionalRawData: null);
+            return new BatchAccountDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
@@ -277,7 +376,16 @@ namespace Azure.ResourceManager.Batch.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), etag, serializedAdditionalRawData: null);
+            return new BatchPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>
@@ -330,7 +438,42 @@ namespace Azure.ResourceManager.Batch.Models
             mountConfiguration ??= new List<BatchMountConfiguration>();
             resourceTags ??= new Dictionary<string, string>();
 
-            return new BatchAccountPoolData(id, name, resourceType, systemData, identity, displayName, lastModifiedOn, createdOn, provisioningState, provisioningStateTransitOn, allocationState, allocationStateTransitionOn, vmSize, deploymentConfiguration, currentDedicatedNodes, currentLowPriorityNodes, scaleSettings, autoScaleRun, interNodeCommunication, networkConfiguration, taskSlotsPerNode, taskSchedulingNodeFillType.HasValue ? new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value, serializedAdditionalRawData: null) : null, userAccounts?.ToList(), metadata?.ToList(), startTask, certificates?.ToList(), applicationPackages?.ToList(), applicationLicenses?.ToList(), resizeOperationStatus, mountConfiguration?.ToList(), targetNodeCommunicationMode, currentNodeCommunicationMode, resourceTags, etag, serializedAdditionalRawData: null);
+            return new BatchAccountPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                displayName,
+                lastModifiedOn,
+                createdOn,
+                provisioningState,
+                provisioningStateTransitOn,
+                allocationState,
+                allocationStateTransitionOn,
+                vmSize,
+                deploymentConfiguration,
+                currentDedicatedNodes,
+                currentLowPriorityNodes,
+                scaleSettings,
+                autoScaleRun,
+                interNodeCommunication,
+                networkConfiguration,
+                taskSlotsPerNode,
+                taskSchedulingNodeFillType.HasValue ? new TaskSchedulingPolicy(taskSchedulingNodeFillType.Value, serializedAdditionalRawData: null) : null,
+                userAccounts?.ToList(),
+                metadata?.ToList(),
+                startTask,
+                certificates?.ToList(),
+                applicationPackages?.ToList(),
+                applicationLicenses?.ToList(),
+                resizeOperationStatus,
+                mountConfiguration?.ToList(),
+                targetNodeCommunicationMode,
+                currentNodeCommunicationMode,
+                resourceTags,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchAccountPoolAutoScaleRun"/>. </summary>
@@ -355,7 +498,14 @@ namespace Azure.ResourceManager.Batch.Models
         {
             errors ??= new List<ResponseError>();
 
-            return new BatchResizeOperationStatus(targetDedicatedNodes, targetLowPriorityNodes, resizeTimeout, nodeDeallocationOption, startOn, errors?.ToList(), serializedAdditionalRawData: null);
+            return new BatchResizeOperationStatus(
+                targetDedicatedNodes,
+                targetLowPriorityNodes,
+                resizeTimeout,
+                nodeDeallocationOption,
+                startOn,
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchAccountOutboundEnvironmentEndpoint"/>. </summary>

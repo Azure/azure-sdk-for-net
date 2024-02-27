@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleRule(verbs ?? new ChangeTrackingList<string>(), apiGroups ?? new ChangeTrackingList<string>(), resources ?? new ChangeTrackingList<string>(), resourceNames ?? new ChangeTrackingList<string>(), nonResourceUrls ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleRule(
+                verbs ?? new ChangeTrackingList<string>(),
+                apiGroups ?? new ChangeTrackingList<string>(),
+                resources ?? new ChangeTrackingList<string>(),
+                resourceNames ?? new ChangeTrackingList<string>(),
+                nonResourceUrls ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleRule>.Write(ModelReaderWriterOptions options)

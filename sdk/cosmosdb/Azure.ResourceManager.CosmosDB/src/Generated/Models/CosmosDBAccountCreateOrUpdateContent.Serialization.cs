@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             Optional<CosmosDBAccountKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -798,7 +798,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBAccountCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), consistencyPolicy.Value, locations, databaseAccountOfferType, ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(), virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(createMode), backupPolicy.Value, cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(), Optional.ToNullable(networkAclBypass), networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), diagnosticLogSettings.Value, Optional.ToNullable(disableLocalAuth), restoreParameters.Value, capacity.Value, Optional.ToNullable(enableMaterializedViews), keysMetadata.Value, Optional.ToNullable(enablePartitionMerge), Optional.ToNullable(enableBurstCapacity), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(customerManagedKeyStatus), Optional.ToNullable(enablePriorityBasedExecution), Optional.ToNullable(defaultPriorityLevel), identity, serializedAdditionalRawData);
+            return new CosmosDBAccountCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(kind),
+                consistencyPolicy.Value,
+                locations,
+                databaseAccountOfferType,
+                ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
+                Optional.ToNullable(isVirtualNetworkFilterEnabled),
+                Optional.ToNullable(enableAutomaticFailover),
+                capabilities ?? new ChangeTrackingList<CosmosDBAccountCapability>(),
+                virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>(),
+                Optional.ToNullable(enableMultipleWriteLocations),
+                Optional.ToNullable(enableCassandraConnector),
+                Optional.ToNullable(connectorOffer),
+                Optional.ToNullable(disableKeyBasedMetadataWriteAccess),
+                keyVaultKeyUri.Value,
+                defaultIdentity.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(enableFreeTier),
+                apiProperties.Value,
+                Optional.ToNullable(enableAnalyticalStorage),
+                analyticalStorageConfiguration.Value,
+                Optional.ToNullable(createMode),
+                backupPolicy.Value,
+                cors ?? new ChangeTrackingList<CosmosDBAccountCorsPolicy>(),
+                Optional.ToNullable(networkAclBypass),
+                networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                diagnosticLogSettings.Value,
+                Optional.ToNullable(disableLocalAuth),
+                restoreParameters.Value,
+                capacity.Value,
+                Optional.ToNullable(enableMaterializedViews),
+                keysMetadata.Value,
+                Optional.ToNullable(enablePartitionMerge),
+                Optional.ToNullable(enableBurstCapacity),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(customerManagedKeyStatus),
+                Optional.ToNullable(enablePriorityBasedExecution),
+                Optional.ToNullable(defaultPriorityLevel),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

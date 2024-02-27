@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentOperationData(id, name, type, systemData.Value, blueprintVersion.Value, assignmentState.Value, timeCreated.Value, timeStarted.Value, timeFinished.Value, deployments ?? new ChangeTrackingList<AssignmentDeploymentJob>(), serializedAdditionalRawData);
+            return new AssignmentOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                blueprintVersion.Value,
+                assignmentState.Value,
+                timeCreated.Value,
+                timeStarted.Value,
+                timeFinished.Value,
+                deployments ?? new ChangeTrackingList<AssignmentDeploymentJob>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentOperationData>.Write(ModelReaderWriterOptions options)

@@ -193,7 +193,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUser(id, name, type, systemData.Value, provider.Value, userId.Value, displayName.Value, roles.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUser(
+                id,
+                name,
+                type,
+                systemData.Value,
+                provider.Value,
+                userId.Value,
+                displayName.Value,
+                roles.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUser>.Write(ModelReaderWriterOptions options)

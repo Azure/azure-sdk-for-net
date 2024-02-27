@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenericRecoveryPoint(objectType, serializedAdditionalRawData, friendlyName.Value, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, recoveryPointProperties.Value);
+            return new GenericRecoveryPoint(
+                objectType,
+                serializedAdditionalRawData,
+                friendlyName.Value,
+                recoveryPointType.Value,
+                Optional.ToNullable(recoveryPointTime),
+                recoveryPointAdditionalInfo.Value,
+                recoveryPointProperties.Value);
         }
 
         BinaryData IPersistableModel<GenericRecoveryPoint>.Write(ModelReaderWriterOptions options)

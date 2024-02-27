@@ -297,7 +297,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProcessThreadInfo(id, name, type, systemData.Value, Optional.ToNullable(identifier), href.Value, process.Value, startAddress.Value, Optional.ToNullable(currentPriority), priorityLevel.Value, Optional.ToNullable(basePriority), Optional.ToNullable(startTime), totalProcessorTime.Value, userProcessorTime.Value, state.Value, waitReason.Value, kind.Value, serializedAdditionalRawData);
+            return new ProcessThreadInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(identifier),
+                href.Value,
+                process.Value,
+                startAddress.Value,
+                Optional.ToNullable(currentPriority),
+                priorityLevel.Value,
+                Optional.ToNullable(basePriority),
+                Optional.ToNullable(startTime),
+                totalProcessorTime.Value,
+                userProcessorTime.Value,
+                state.Value,
+                waitReason.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProcessThreadInfo>.Write(ModelReaderWriterOptions options)

@@ -318,7 +318,24 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
+            return new ApplicationGatewayProbe(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(protocol),
+                host.Value,
+                path.Value,
+                Optional.ToNullable(interval),
+                Optional.ToNullable(timeout),
+                Optional.ToNullable(unhealthyThreshold),
+                Optional.ToNullable(pickHostNameFromBackendHttpSettings),
+                Optional.ToNullable(pickHostNameFromBackendSettings),
+                Optional.ToNullable(minServers),
+                match.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(port));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayProbe>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -276,7 +276,22 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabGalleryImage(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, author.Value, Optional.ToNullable(createdDate), description.Value, imageReference.Value, icon.Value, Optional.ToNullable(enabled), planId.Value, Optional.ToNullable(isPlanAuthorized), serializedAdditionalRawData);
+            return new DevTestLabGalleryImage(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                author.Value,
+                Optional.ToNullable(createdDate),
+                description.Value,
+                imageReference.Value,
+                icon.Value,
+                Optional.ToNullable(enabled),
+                planId.Value,
+                Optional.ToNullable(isPlanAuthorized),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabGalleryImage>.Write(ModelReaderWriterOptions options)

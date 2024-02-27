@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<int> port = default;
@@ -373,7 +373,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SparkLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, port, Optional.ToNullable(serverType), Optional.ToNullable(thriftTransportProtocol), authenticationType, username.Value, password, httpPath.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new SparkLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                port,
+                Optional.ToNullable(serverType),
+                Optional.ToNullable(thriftTransportProtocol),
+                authenticationType,
+                username.Value,
+                password,
+                httpPath.Value,
+                enableSsl.Value,
+                trustedCertPath.Value,
+                useSystemTrustStore.Value,
+                allowHostNameCNMismatch.Value,
+                allowSelfSignedServerCert.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SparkLinkedService>.Write(ModelReaderWriterOptions options)

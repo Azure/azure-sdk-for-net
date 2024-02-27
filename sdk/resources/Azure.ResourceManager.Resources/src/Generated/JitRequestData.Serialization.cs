@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.Resources
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitRequestData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, applicationResourceId.Value, Optional.ToNullable(publisherTenantId), jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(), jitSchedulingPolicy.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(jitRequestState), createdBy.Value, updatedBy.Value, serializedAdditionalRawData);
+            return new JitRequestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                applicationResourceId.Value,
+                Optional.ToNullable(publisherTenantId),
+                jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(),
+                jitSchedulingPolicy.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(jitRequestState),
+                createdBy.Value,
+                updatedBy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitRequestData>.Write(ModelReaderWriterOptions options)

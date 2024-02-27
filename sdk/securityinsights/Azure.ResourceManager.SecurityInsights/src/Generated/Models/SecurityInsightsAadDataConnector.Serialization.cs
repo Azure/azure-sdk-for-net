@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAadDataConnector(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, Optional.ToNullable(tenantId), dataTypes.Value);
+            return new SecurityInsightsAadDataConnector(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData,
+                Optional.ToNullable(tenantId),
+                dataTypes.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAadDataConnector>.Write(ModelReaderWriterOptions options)

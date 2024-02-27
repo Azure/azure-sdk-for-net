@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<DateTimeOffset?> time = default;
             Optional<SourceControlStreamType> streamType = default;
             Optional<string> streamText = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            IReadOnlyDictionary<string, BinaryData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,7 +220,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value), serializedAdditionalRawData);
+            return new SourceControlSyncJobStreamResult(
+                id.Value,
+                sourceControlSyncJobStreamId.Value,
+                summary.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(streamType),
+                streamText.Value,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobStreamResult>.Write(ModelReaderWriterOptions options)

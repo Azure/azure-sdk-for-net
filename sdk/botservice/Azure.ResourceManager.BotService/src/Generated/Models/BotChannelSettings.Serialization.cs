@@ -214,7 +214,18 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotChannelSettings(extensionKey1.Value, extensionKey2.Value, sites ?? new ChangeTrackingList<BotChannelSite>(), channelId.Value, channelDisplayName.Value, botId.Value, botIconUrl.Value, Optional.ToNullable(isEnabled), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(requireTermsAgreement), serializedAdditionalRawData);
+            return new BotChannelSettings(
+                extensionKey1.Value,
+                extensionKey2.Value,
+                sites ?? new ChangeTrackingList<BotChannelSite>(),
+                channelId.Value,
+                channelDisplayName.Value,
+                botId.Value,
+                botIconUrl.Value,
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(requireTermsAgreement),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotChannelSettings>.Write(ModelReaderWriterOptions options)

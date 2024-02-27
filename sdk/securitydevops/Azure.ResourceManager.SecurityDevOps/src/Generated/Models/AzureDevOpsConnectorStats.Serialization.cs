@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsConnectorStats(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AzureDevOpsConnectorStats(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsConnectorStats>.Write(ModelReaderWriterOptions options)

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<PipelineActivityUserProperty> userProperties = default;
             AzureFunctionActivityMethod method = default;
             DataFactoryElement<string> functionName = default;
-            Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
+            IDictionary<string, DataFactoryElement<string>> headers = default;
             Optional<DataFactoryElement<string>> body = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -290,7 +290,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureFunctionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, linkedServiceName, policy.Value, method, functionName, Optional.ToDictionary(headers), body.Value);
+            return new AzureFunctionActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy.Value,
+                method,
+                functionName,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body.Value);
         }
 
         BinaryData IPersistableModel<AzureFunctionActivity>.Write(ModelReaderWriterOptions options)

@@ -228,7 +228,19 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Optional.ToNullable(sessionStateV4), Optional.ToNullable(sessionStateV6), Optional.ToNullable(maxPrefixesAdvertisedV4), Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value, serializedAdditionalRawData);
+            return new PeeringBgpSession(
+                sessionPrefixV4.Value,
+                sessionPrefixV6.Value,
+                microsoftSessionIPv4Address.Value,
+                microsoftSessionIPv6Address.Value,
+                peerSessionIPv4Address.Value,
+                peerSessionIPv6Address.Value,
+                Optional.ToNullable(sessionStateV4),
+                Optional.ToNullable(sessionStateV6),
+                Optional.ToNullable(maxPrefixesAdvertisedV4),
+                Optional.ToNullable(maxPrefixesAdvertisedV6),
+                md5AuthenticationKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options)

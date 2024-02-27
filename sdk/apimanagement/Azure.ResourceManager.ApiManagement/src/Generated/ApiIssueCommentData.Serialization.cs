@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiIssueCommentData(id, name, type, systemData.Value, text.Value, Optional.ToNullable(createdDate), userId.Value, serializedAdditionalRawData);
+            return new ApiIssueCommentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                text.Value,
+                Optional.ToNullable(createdDate),
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options)

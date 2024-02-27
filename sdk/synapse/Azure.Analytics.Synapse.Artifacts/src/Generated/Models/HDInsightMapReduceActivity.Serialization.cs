@@ -171,7 +171,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object jarFilePath = default;
             Optional<LinkedServiceReference> jarLinkedService = default;
             IList<object> jarLibs = default;
-            Optional<IDictionary<string, object>> defines = default;
+            IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -375,7 +375,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments ?? new ChangeTrackingList<object>(), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService.Value, jarLibs ?? new ChangeTrackingList<object>(), Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<object>(),
+                Optional.ToNullable(getDebugInfo),
+                className,
+                jarFilePath,
+                jarLinkedService.Value,
+                jarLibs ?? new ChangeTrackingList<object>(),
+                defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightMapReduceActivityConverter : JsonConverter<HDInsightMapReduceActivity>

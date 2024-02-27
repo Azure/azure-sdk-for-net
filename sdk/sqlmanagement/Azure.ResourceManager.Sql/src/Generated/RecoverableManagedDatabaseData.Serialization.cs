@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoverableManagedDatabaseData(id, name, type, systemData.Value, lastAvailableBackupDate.Value, serializedAdditionalRawData);
+            return new RecoverableManagedDatabaseData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                lastAvailableBackupDate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoverableManagedDatabaseData>.Write(ModelReaderWriterOptions options)

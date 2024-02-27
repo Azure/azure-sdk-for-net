@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitHubOwnerData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SecurityConnectorGitHubOwnerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitHubOwnerData>.Write(ModelReaderWriterOptions options)

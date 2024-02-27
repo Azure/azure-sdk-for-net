@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value, serializedAdditionalRawData);
+            return new NotificationActionDetail(
+                mechanismType.Value,
+                name.Value,
+                status.Value,
+                subState.Value,
+                Optional.ToNullable(sendTime),
+                detail.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationActionDetail>.Write(ModelReaderWriterOptions options)

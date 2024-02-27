@@ -106,7 +106,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PatternAnalyzer(odataType, name, Optional.ToNullable(lowercase), pattern.Value, flags.Value, stopwords ?? new ChangeTrackingList<string>());
+            return new PatternAnalyzer(
+                odataType,
+                name,
+                Optional.ToNullable(lowercase),
+                pattern.Value,
+                flags.Value,
+                stopwords ?? new ChangeTrackingList<string>());
         }
     }
 }

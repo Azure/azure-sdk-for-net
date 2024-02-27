@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaxSizeRangeCapability(minValue.Value, maxValue.Value, scaleSize.Value, logSize.Value, Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new MaxSizeRangeCapability(
+                minValue.Value,
+                maxValue.Value,
+                scaleSize.Value,
+                logSize.Value,
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaxSizeRangeCapability>.Write(ModelReaderWriterOptions options)

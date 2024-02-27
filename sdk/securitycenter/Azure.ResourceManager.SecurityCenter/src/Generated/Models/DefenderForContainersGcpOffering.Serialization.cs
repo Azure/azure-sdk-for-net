@@ -198,7 +198,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderForContainersGcpOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                nativeCloudConnection.Value,
+                dataPipelineNativeCloudConnection.Value,
+                Optional.ToNullable(auditLogsAutoProvisioningFlag),
+                Optional.ToNullable(defenderAgentAutoProvisioningFlag),
+                Optional.ToNullable(policyAgentAutoProvisioningFlag),
+                mdcContainersImageAssessment.Value,
+                mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Media
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -359,7 +359,24 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(), Optional.ToNullable(minimumTlsVersion), serializedAdditionalRawData);
+            return new MediaServicesAccountData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(mediaServiceId),
+                storageAccounts ?? new ChangeTrackingList<MediaServicesStorageAccount>(),
+                Optional.ToNullable(storageAuthentication),
+                encryption.Value,
+                keyDelivery.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(provisioningState),
+                privateEndpointConnections ?? new ChangeTrackingList<MediaServicesPrivateEndpointConnectionData>(),
+                Optional.ToNullable(minimumTlsVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaServicesAccountData>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             Optional<SenderAuthorization> authorization = default;
-            Optional<IReadOnlyDictionary<string, string>> claims = default;
+            IReadOnlyDictionary<string, string> claims = default;
             Optional<string> caller = default;
             Optional<string> description = default;
             Optional<string> id = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<MonitorLocalizableString> resourceType = default;
             Optional<string> operationId = default;
             Optional<MonitorLocalizableString> operationName = default;
-            Optional<IReadOnlyDictionary<string, string>> properties = default;
+            IReadOnlyDictionary<string, string> properties = default;
             Optional<MonitorLocalizableString> status = default;
             Optional<MonitorLocalizableString> subStatus = default;
             Optional<DateTimeOffset> eventTimestamp = default;
@@ -424,7 +424,32 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EventDataInfo(
+                authorization.Value,
+                claims ?? new ChangeTrackingDictionary<string, string>(),
+                caller.Value,
+                description.Value,
+                id.Value,
+                eventDataId.Value,
+                correlationId.Value,
+                eventName.Value,
+                category.Value,
+                httpRequest.Value,
+                Optional.ToNullable(level),
+                resourceGroupName.Value,
+                resourceProviderName.Value,
+                resourceId.Value,
+                resourceType.Value,
+                operationId.Value,
+                operationName.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                status.Value,
+                subStatus.Value,
+                Optional.ToNullable(eventTimestamp),
+                Optional.ToNullable(submissionTimestamp),
+                subscriptionId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)

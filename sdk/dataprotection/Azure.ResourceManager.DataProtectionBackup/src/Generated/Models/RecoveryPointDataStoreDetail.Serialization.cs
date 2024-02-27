@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPointDataStoreDetail(Optional.ToNullable(creationTime), Optional.ToNullable(expiryTime), Optional.ToNullable(id), metaData.Value, state.Value, type.Value, Optional.ToNullable(visible), Optional.ToNullable(rehydrationExpiryTime), Optional.ToNullable(rehydrationStatus), serializedAdditionalRawData);
+            return new RecoveryPointDataStoreDetail(
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(id),
+                metaData.Value,
+                state.Value,
+                type.Value,
+                Optional.ToNullable(visible),
+                Optional.ToNullable(rehydrationExpiryTime),
+                Optional.ToNullable(rehydrationStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryPointDataStoreDetail>.Write(ModelReaderWriterOptions options)

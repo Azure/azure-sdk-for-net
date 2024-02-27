@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(creationDate), Optional.ToNullable(autoRotationEnabled), serializedAdditionalRawData);
+            return new ManagedInstanceKeyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(serverKeyType),
+                uri.Value,
+                thumbprint.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(autoRotationEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceKeyData>.Write(ModelReaderWriterOptions options)

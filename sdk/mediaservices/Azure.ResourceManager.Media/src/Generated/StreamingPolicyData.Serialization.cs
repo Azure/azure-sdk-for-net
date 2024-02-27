@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Media
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(created), defaultContentKeyPolicyName.Value, envelopeEncryption.Value, commonEncryptionCenc.Value, commonEncryptionCbcs.Value, noEncryption.Value, serializedAdditionalRawData);
+            return new StreamingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(created),
+                defaultContentKeyPolicyName.Value,
+                envelopeEncryption.Value,
+                commonEncryptionCenc.Value,
+                commonEncryptionCbcs.Value,
+                noEncryption.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamingPolicyData>.Write(ModelReaderWriterOptions options)

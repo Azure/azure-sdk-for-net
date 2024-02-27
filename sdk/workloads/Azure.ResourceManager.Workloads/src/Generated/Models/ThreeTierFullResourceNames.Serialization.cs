@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierFullResourceNames(namingPatternType, serializedAdditionalRawData, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value);
+            return new ThreeTierFullResourceNames(
+                namingPatternType,
+                serializedAdditionalRawData,
+                centralServer.Value,
+                applicationServer.Value,
+                databaseServer.Value,
+                sharedStorage.Value);
         }
 
         BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options)

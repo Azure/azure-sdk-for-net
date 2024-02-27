@@ -119,7 +119,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyDetectionConfiguration(anomalyDetectionConfigurationId.Value, name, description.Value, metricId, wholeMetricConfiguration, dimensionGroupOverrideConfigurations ?? new ChangeTrackingList<MetricSeriesGroupDetectionCondition>(), seriesOverrideConfigurations ?? new ChangeTrackingList<MetricSingleSeriesDetectionCondition>());
+            return new AnomalyDetectionConfiguration(
+                anomalyDetectionConfigurationId.Value,
+                name,
+                description.Value,
+                metricId,
+                wholeMetricConfiguration,
+                dimensionGroupOverrideConfigurations ?? new ChangeTrackingList<MetricSeriesGroupDetectionCondition>(),
+                seriesOverrideConfigurations ?? new ChangeTrackingList<MetricSingleSeriesDetectionCondition>());
         }
     }
 }

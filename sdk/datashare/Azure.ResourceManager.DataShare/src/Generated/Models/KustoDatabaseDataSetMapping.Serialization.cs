@@ -207,7 +207,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoDatabaseDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            return new KustoDatabaseDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                kustoClusterResourceId,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<KustoDatabaseDataSetMapping>.Write(ModelReaderWriterOptions options)

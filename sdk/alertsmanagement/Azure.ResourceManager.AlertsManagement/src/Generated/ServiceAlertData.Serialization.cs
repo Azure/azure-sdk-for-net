@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AlertsManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ServiceAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertData>.Write(ModelReaderWriterOptions options)

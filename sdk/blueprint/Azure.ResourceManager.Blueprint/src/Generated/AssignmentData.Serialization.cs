@@ -282,7 +282,23 @@ namespace Azure.ResourceManager.Blueprint
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentData(id, name, type, systemData.Value, identity, displayName.Value, description.Value, blueprintId.Value, scope.Value, parameters, resourceGroups, status.Value, locks.Value, Optional.ToNullable(provisioningState), location, serializedAdditionalRawData);
+            return new AssignmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                displayName.Value,
+                description.Value,
+                blueprintId.Value,
+                scope.Value,
+                parameters,
+                resourceGroups,
+                status.Value,
+                locks.Value,
+                Optional.ToNullable(provisioningState),
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentData>.Write(ModelReaderWriterOptions options)

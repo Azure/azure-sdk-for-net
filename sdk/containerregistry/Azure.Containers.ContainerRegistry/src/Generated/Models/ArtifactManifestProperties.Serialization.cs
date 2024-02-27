@@ -179,7 +179,21 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ArtifactManifestProperties(registry.Value, imageName.Value, digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), references ?? new ChangeTrackingList<ArtifactManifestPlatform>(), tags ?? new ChangeTrackingList<string>(), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ArtifactManifestProperties(
+                registry.Value,
+                imageName.Value,
+                digest,
+                Optional.ToNullable(imageSize),
+                createdTime,
+                lastUpdateTime,
+                Optional.ToNullable(architecture),
+                Optional.ToNullable(os),
+                references ?? new ChangeTrackingList<ArtifactManifestPlatform>(),
+                tags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(deleteEnabled),
+                Optional.ToNullable(writeEnabled),
+                Optional.ToNullable(listEnabled),
+                Optional.ToNullable(readEnabled));
         }
     }
 }

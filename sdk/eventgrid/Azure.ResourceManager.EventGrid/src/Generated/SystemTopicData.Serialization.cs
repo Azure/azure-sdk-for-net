@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -244,7 +244,19 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), source.Value, topicType.Value, Optional.ToNullable(metricResourceId), serializedAdditionalRawData);
+            return new SystemTopicData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(provisioningState),
+                source.Value,
+                topicType.Value,
+                Optional.ToNullable(metricResourceId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemTopicData>.Write(ModelReaderWriterOptions options)

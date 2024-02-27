@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> fqdnTagName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallFqdnTag(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), fqdnTagName.Value);
+            return new AzureFirewallFqdnTag(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                fqdnTagName.Value);
         }
 
         BinaryData IPersistableModel<AzureFirewallFqdnTag>.Write(ModelReaderWriterOptions options)

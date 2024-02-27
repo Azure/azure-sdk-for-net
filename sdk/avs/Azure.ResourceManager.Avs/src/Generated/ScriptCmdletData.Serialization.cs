@@ -190,7 +190,15 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptCmdletData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(timeout), parameters ?? new ChangeTrackingList<ScriptParameter>(), serializedAdditionalRawData);
+            return new ScriptCmdletData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                Optional.ToNullable(timeout),
+                parameters ?? new ChangeTrackingList<ScriptParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptCmdletData>.Write(ModelReaderWriterOptions options)

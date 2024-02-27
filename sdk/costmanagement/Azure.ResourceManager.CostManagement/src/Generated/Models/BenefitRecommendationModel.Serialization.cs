@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitRecommendationModel(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new BenefitRecommendationModel(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(kind),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationModel>.Write(ModelReaderWriterOptions options)

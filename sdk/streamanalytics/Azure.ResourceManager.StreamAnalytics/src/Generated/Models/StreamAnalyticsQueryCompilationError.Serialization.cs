@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryCompilationError(message.Value, Optional.ToNullable(startLine), Optional.ToNullable(startColumn), Optional.ToNullable(endLine), Optional.ToNullable(endColumn), Optional.ToNullable(isGlobal), serializedAdditionalRawData);
+            return new StreamAnalyticsQueryCompilationError(
+                message.Value,
+                Optional.ToNullable(startLine),
+                Optional.ToNullable(startColumn),
+                Optional.ToNullable(endLine),
+                Optional.ToNullable(endColumn),
+                Optional.ToNullable(isGlobal),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationError>.Write(ModelReaderWriterOptions options)

@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PlaywrightTestingQuotaData(id, name, type, systemData.Value, freeTrial.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PlaywrightTestingQuotaData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                freeTrial.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingQuotaData>.Write(ModelReaderWriterOptions options)

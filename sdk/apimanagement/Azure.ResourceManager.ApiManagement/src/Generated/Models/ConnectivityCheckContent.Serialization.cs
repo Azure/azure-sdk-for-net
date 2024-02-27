@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckContent(source, destination, Optional.ToNullable(preferredIPVersion), Optional.ToNullable(protocol), protocolConfiguration.Value, serializedAdditionalRawData);
+            return new ConnectivityCheckContent(
+                source,
+                destination,
+                Optional.ToNullable(preferredIPVersion),
+                Optional.ToNullable(protocol),
+                protocolConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckContent>.Write(ModelReaderWriterOptions options)

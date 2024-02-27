@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             RedisEnterpriseSku sku = default;
             IList<string> zones = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -328,7 +328,24 @@ namespace Azure.ResourceManager.RedisEnterprise
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, zones ?? new ChangeTrackingList<string>(), identity, Optional.ToNullable(minimumTlsVersion), encryption.Value, hostName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), redisVersion.Value, privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new RedisEnterpriseClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                zones ?? new ChangeTrackingList<string>(),
+                identity,
+                Optional.ToNullable(minimumTlsVersion),
+                encryption.Value,
+                hostName.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceState),
+                redisVersion.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseClusterData>.Write(ModelReaderWriterOptions options)

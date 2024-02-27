@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new SqlServerVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualNetworkSubnetId.Value,
+                Optional.ToNullable(ignoreMissingVnetServiceEndpoint),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

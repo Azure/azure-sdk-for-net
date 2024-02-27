@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> networkType = default;
             IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), serializedAdditionalRawData, testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
+            return new TestFailoverJobDetails(
+                instanceType,
+                affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                testFailoverStatus.Value,
+                comments.Value,
+                networkName.Value,
+                networkFriendlyName.Value,
+                networkType.Value,
+                protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
         }
 
         BinaryData IPersistableModel<TestFailoverJobDetails>.Write(ModelReaderWriterOptions options)

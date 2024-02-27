@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppScaleRule(name.Value, azureQueue.Value, custom.Value, http.Value, tcp.Value, serializedAdditionalRawData);
+            return new ContainerAppScaleRule(
+                name.Value,
+                azureQueue.Value,
+                custom.Value,
+                http.Value,
+                tcp.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppScaleRule>.Write(ModelReaderWriterOptions options)

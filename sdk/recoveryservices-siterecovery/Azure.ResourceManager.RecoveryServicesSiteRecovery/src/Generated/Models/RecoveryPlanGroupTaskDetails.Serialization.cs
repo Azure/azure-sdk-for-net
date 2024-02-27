@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanGroupTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<AsrTask>(), serializedAdditionalRawData, name.Value, groupId.Value, rpGroupType.Value);
+            return new RecoveryPlanGroupTaskDetails(
+                instanceType,
+                childTasks ?? new ChangeTrackingList<AsrTask>(),
+                serializedAdditionalRawData,
+                name.Value,
+                groupId.Value,
+                rpGroupType.Value);
         }
 
         BinaryData IPersistableModel<RecoveryPlanGroupTaskDetails>.Write(ModelReaderWriterOptions options)

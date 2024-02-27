@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, details ?? new ChangeTrackingList<ExtendedErrorInfo>(), additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>(), serializedAdditionalRawData);
+            return new ExtendedErrorInfo(
+                code.Value,
+                target.Value,
+                message.Value,
+                details ?? new ChangeTrackingList<ExtendedErrorInfo>(),
+                additionalInfo ?? new ChangeTrackingList<TypedErrorInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedErrorInfo>.Write(ModelReaderWriterOptions options)

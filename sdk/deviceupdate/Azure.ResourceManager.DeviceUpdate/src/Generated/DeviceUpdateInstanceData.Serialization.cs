@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.DeviceUpdate
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value, serializedAdditionalRawData);
+            return new DeviceUpdateInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                accountName.Value,
+                iotHubs ?? new ChangeTrackingList<DeviceUpdateIotHubSettings>(),
+                Optional.ToNullable(enableDiagnostics),
+                diagnosticStorageProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdateInstanceData>.Write(ModelReaderWriterOptions options)

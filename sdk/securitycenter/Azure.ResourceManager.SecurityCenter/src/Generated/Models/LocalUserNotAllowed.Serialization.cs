@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalUserNotAllowed(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData, Optional.ToNullable(valueType), allowlistValues);
+            return new LocalUserNotAllowed(
+                displayName.Value,
+                description.Value,
+                isEnabled,
+                ruleType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(valueType),
+                allowlistValues);
         }
 
         BinaryData IPersistableModel<LocalUserNotAllowed>.Write(ModelReaderWriterOptions options)

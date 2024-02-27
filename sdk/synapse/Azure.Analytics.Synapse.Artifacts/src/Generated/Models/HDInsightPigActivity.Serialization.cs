@@ -145,7 +145,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
             Optional<object> scriptPath = default;
             Optional<LinkedServiceReference> scriptLinkedService = default;
-            Optional<IDictionary<string, object>> defines = default;
+            IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -315,7 +315,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightPigActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(), arguments.Value, Optional.ToNullable(getDebugInfo), scriptPath.Value, scriptLinkedService.Value, Optional.ToDictionary(defines));
+            return new HDInsightPigActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments.Value,
+                Optional.ToNullable(getDebugInfo),
+                scriptPath.Value,
+                scriptLinkedService.Value,
+                defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightPigActivityConverter : JsonConverter<HDInsightPigActivity>

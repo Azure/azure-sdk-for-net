@@ -196,7 +196,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayOperationDetails(state.Value, Optional.ToNullable(progressPercentage), Optional.ToNullable(timeElapsed), Optional.ToNullable(timeRemaining), Optional.ToNullable(uploadSpeed), hostName.Value, dataStores ?? new ChangeTrackingList<string>(), Optional.ToNullable(vmwareReadThroughput), serializedAdditionalRawData);
+            return new GatewayOperationDetails(
+                state.Value,
+                Optional.ToNullable(progressPercentage),
+                Optional.ToNullable(timeElapsed),
+                Optional.ToNullable(timeRemaining),
+                Optional.ToNullable(uploadSpeed),
+                hostName.Value,
+                dataStores ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(vmwareReadThroughput),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayOperationDetails>.Write(ModelReaderWriterOptions options)

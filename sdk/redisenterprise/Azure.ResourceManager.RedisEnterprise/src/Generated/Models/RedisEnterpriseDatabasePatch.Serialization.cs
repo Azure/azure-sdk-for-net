@@ -234,7 +234,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseDatabasePatch(Optional.ToNullable(clientProtocol), Optional.ToNullable(port), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), Optional.ToNullable(clusteringPolicy), Optional.ToNullable(evictionPolicy), persistence.Value, modules ?? new ChangeTrackingList<RedisEnterpriseModule>(), geoReplication.Value, serializedAdditionalRawData);
+            return new RedisEnterpriseDatabasePatch(
+                Optional.ToNullable(clientProtocol),
+                Optional.ToNullable(port),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(clusteringPolicy),
+                Optional.ToNullable(evictionPolicy),
+                persistence.Value,
+                modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
+                geoReplication.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseDatabasePatch>.Write(ModelReaderWriterOptions options)

@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVMigrateFabricModelCustomProperties(instanceType, serializedAdditionalRawData, hyperVSiteId, fabricResourceId.Value, fabricContainerId.Value, migrationSolutionId, migrationHubUri.Value);
+            return new HyperVMigrateFabricModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                hyperVSiteId,
+                fabricResourceId.Value,
+                fabricContainerId.Value,
+                migrationSolutionId,
+                migrationHubUri.Value);
         }
 
         BinaryData IPersistableModel<HyperVMigrateFabricModelCustomProperties>.Write(ModelReaderWriterOptions options)

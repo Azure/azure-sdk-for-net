@@ -216,7 +216,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
+            return new PredictionModelStatus(
+                Optional.ToNullable(tenantId),
+                predictionName.Value,
+                predictionGuidId.Value,
+                status,
+                message.Value,
+                Optional.ToNullable(trainingSetCount),
+                Optional.ToNullable(testSetCount),
+                Optional.ToNullable(validationSetCount),
+                Optional.ToNullable(trainingAccuracy),
+                Optional.ToNullable(signalsUsed),
+                modelVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionModelStatus>.Write(ModelReaderWriterOptions options)

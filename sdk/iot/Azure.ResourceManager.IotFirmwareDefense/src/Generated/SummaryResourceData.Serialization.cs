@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SummaryResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SummaryResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SummaryResourceData>.Write(ModelReaderWriterOptions options)

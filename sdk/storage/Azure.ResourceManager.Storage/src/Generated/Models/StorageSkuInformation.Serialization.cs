@@ -198,7 +198,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToNullable(kind), locations ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<StorageSkuCapability>(), restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(), serializedAdditionalRawData);
+            return new StorageSkuInformation(
+                name,
+                Optional.ToNullable(tier),
+                resourceType.Value,
+                Optional.ToNullable(kind),
+                locations ?? new ChangeTrackingList<string>(),
+                capabilities ?? new ChangeTrackingList<StorageSkuCapability>(),
+                restrictions ?? new ChangeTrackingList<StorageSkuRestriction>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSkuInformation>.Write(ModelReaderWriterOptions options)

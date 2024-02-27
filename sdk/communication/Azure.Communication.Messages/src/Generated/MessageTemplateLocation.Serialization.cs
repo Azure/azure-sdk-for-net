@@ -129,7 +129,14 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplateLocation(name, kind, serializedAdditionalRawData, locationName.Value, address.Value, latitude, longitude);
+            return new MessageTemplateLocation(
+                name,
+                kind,
+                serializedAdditionalRawData,
+                locationName.Value,
+                address.Value,
+                latitude,
+                longitude);
         }
 
         BinaryData IPersistableModel<MessageTemplateLocation>.Write(ModelReaderWriterOptions options)

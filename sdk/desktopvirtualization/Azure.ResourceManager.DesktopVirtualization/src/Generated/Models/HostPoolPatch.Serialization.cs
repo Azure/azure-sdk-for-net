@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -406,7 +406,31 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), friendlyName.Value, description.Value, customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), Optional.ToNullable(personalDesktopAssignmentType), Optional.ToNullable(loadBalancerType), Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), Optional.ToNullable(preferredAppGroupType), Optional.ToNullable(startVmOnConnect), Optional.ToNullable(publicNetworkAccess), agentUpdate.Value, serializedAdditionalRawData);
+            return new HostPoolPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                friendlyName.Value,
+                description.Value,
+                customRdpProperty.Value,
+                Optional.ToNullable(maxSessionLimit),
+                Optional.ToNullable(personalDesktopAssignmentType),
+                Optional.ToNullable(loadBalancerType),
+                Optional.ToNullable(ring),
+                Optional.ToNullable(validationEnvironment),
+                registrationInfo.Value,
+                vmTemplate.Value,
+                ssoadfsAuthority.Value,
+                ssoClientId.Value,
+                ssoClientSecretKeyVaultPath.Value,
+                Optional.ToNullable(ssoSecretType),
+                Optional.ToNullable(preferredAppGroupType),
+                Optional.ToNullable(startVmOnConnect),
+                Optional.ToNullable(publicNetworkAccess),
+                agentUpdate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostPoolPatch>.Write(ModelReaderWriterOptions options)

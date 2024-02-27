@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             Optional<ManagedServiceIdentity> identity = default;
             AppConfigurationSku sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -360,7 +360,26 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku, Optional.ToNullable(provisioningState), Optional.ToNullable(creationDate), endpoint.Value, encryption.Value, privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), serializedAdditionalRawData);
+            return new AppConfigurationStoreData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(creationDate),
+                endpoint.Value,
+                encryption.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(softDeleteRetentionInDays),
+                Optional.ToNullable(enablePurgeProtection),
+                Optional.ToNullable(createMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreData>.Write(ModelReaderWriterOptions options)

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
             Optional<bool> @public = default;
             Optional<string> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
             Optional<AppPlatformAppProvisioningState> provisioningState = default;
             Optional<string> fqdn = default;
             Optional<bool> httpsOnly = default;
@@ -334,7 +334,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(), Optional.ToNullable(enableEndToEndTls), loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(), vnetAddons.Value, ingressSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformAppProperties(
+                Optional.ToNullable(@public),
+                uri.Value,
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                Optional.ToNullable(provisioningState),
+                fqdn.Value,
+                Optional.ToNullable(httpsOnly),
+                temporaryDisk.Value,
+                persistentDisk.Value,
+                customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(),
+                Optional.ToNullable(enableEndToEndTls),
+                loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(),
+                vnetAddons.Value,
+                ingressSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)

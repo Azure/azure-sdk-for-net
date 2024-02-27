@@ -123,7 +123,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerExecutionResult(status, Optional.ToNullable(statusDetail), currentState.Value, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
+            return new IndexerExecutionResult(
+                status,
+                Optional.ToNullable(statusDetail),
+                currentState.Value,
+                errorMessage.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                errors,
+                warnings,
+                itemsProcessed,
+                itemsFailed,
+                initialTrackingState.Value,
+                finalTrackingState.Value);
         }
     }
 }

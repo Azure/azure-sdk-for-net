@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelectAudioTrackByAttribute(odataType, serializedAdditionalRawData, Optional.ToNullable(channelMapping), attribute, filter, filterValue.Value);
+            return new SelectAudioTrackByAttribute(
+                odataType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(channelMapping),
+                attribute,
+                filter,
+                filterValue.Value);
         }
 
         BinaryData IPersistableModel<SelectAudioTrackByAttribute>.Write(ModelReaderWriterOptions options)

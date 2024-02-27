@@ -263,7 +263,19 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(allocatedOutboundPorts), frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(), backendAddressPool, Optional.ToNullable(provisioningState), Optional.ToNullable(protocol), Optional.ToNullable(enableTcpReset), Optional.ToNullable(idleTimeoutInMinutes));
+            return new OutboundRuleData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(allocatedOutboundPorts),
+                frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
+                backendAddressPool,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(protocol),
+                Optional.ToNullable(enableTcpReset),
+                Optional.ToNullable(idleTimeoutInMinutes));
         }
 
         BinaryData IPersistableModel<OutboundRuleData>.Write(ModelReaderWriterOptions options)

@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverProcessServerProperties(containerName.Value, Optional.ToNullable(sourceProcessServerId), Optional.ToNullable(targetProcessServerId), vmsToMigrate ?? new ChangeTrackingList<string>(), updateType.Value, serializedAdditionalRawData);
+            return new FailoverProcessServerProperties(
+                containerName.Value,
+                Optional.ToNullable(sourceProcessServerId),
+                Optional.ToNullable(targetProcessServerId),
+                vmsToMigrate ?? new ChangeTrackingList<string>(),
+                updateType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverProcessServerProperties>.Write(ModelReaderWriterOptions options)

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.IotCentral
             }
             IotCentralAppSkuInfo sku = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -329,7 +329,25 @@ namespace Azure.ResourceManager.IotCentral
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(applicationId), displayName.Value, subdomain.Value, template.Value, Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), networkRuleSets.Value, privateEndpointConnections ?? new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new IotCentralAppData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(applicationId),
+                displayName.Value,
+                subdomain.Value,
+                template.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(publicNetworkAccess),
+                networkRuleSets.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<IotCentralPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppData>.Write(ModelReaderWriterOptions options)

@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Optional<string> name = default;
             Optional<HybridContainerServiceOSType> osType = default;
             Optional<HybridContainerServiceOSSku> ossku = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
+            IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceNamedAgentPoolProfile(Optional.ToNullable(osType), Optional.ToNullable(ossku), Optional.ToDictionary(nodeLabels), nodeTaints ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(maxPods), serializedAdditionalRawData, Optional.ToNullable(count), vmSize.Value, kubernetesVersion.Value, name.Value);
+            return new HybridContainerServiceNamedAgentPoolProfile(
+                Optional.ToNullable(osType),
+                Optional.ToNullable(ossku),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(minCount),
+                Optional.ToNullable(enableAutoScaling),
+                Optional.ToNullable(maxPods),
+                serializedAdditionalRawData,
+                Optional.ToNullable(count),
+                vmSize.Value,
+                kubernetesVersion.Value,
+                name.Value);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)

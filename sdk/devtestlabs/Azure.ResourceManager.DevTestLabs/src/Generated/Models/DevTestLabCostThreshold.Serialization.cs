@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostThreshold(thresholdId.Value, percentageThreshold.Value, Optional.ToNullable(displayOnChart), Optional.ToNullable(sendNotificationWhenExceeded), notificationSent.Value, serializedAdditionalRawData);
+            return new DevTestLabCostThreshold(
+                thresholdId.Value,
+                percentageThreshold.Value,
+                Optional.ToNullable(displayOnChart),
+                Optional.ToNullable(sendNotificationWhenExceeded),
+                notificationSent.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostThreshold>.Write(ModelReaderWriterOptions options)

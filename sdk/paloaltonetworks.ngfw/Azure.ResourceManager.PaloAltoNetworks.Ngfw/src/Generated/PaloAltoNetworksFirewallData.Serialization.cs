@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -323,7 +323,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(), Optional.ToNullable(provisioningState), planData, marketplaceDetails, serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                Optional.ToNullable(panETag),
+                networkProfile,
+                Optional.ToNullable(isPanoramaManaged),
+                panoramaConfig.Value,
+                associatedRulestack.Value,
+                dnsSettings,
+                frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>(),
+                Optional.ToNullable(provisioningState),
+                planData,
+                marketplaceDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallData>.Write(ModelReaderWriterOptions options)

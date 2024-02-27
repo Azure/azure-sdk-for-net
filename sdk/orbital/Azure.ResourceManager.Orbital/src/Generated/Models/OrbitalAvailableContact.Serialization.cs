@@ -251,7 +251,19 @@ namespace Azure.ResourceManager.Orbital.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), serializedAdditionalRawData);
+            return new OrbitalAvailableContact(
+                spacecraft,
+                groundStationName.Value,
+                Optional.ToNullable(maximumElevationDegrees),
+                Optional.ToNullable(txStartTime),
+                Optional.ToNullable(txEndTime),
+                Optional.ToNullable(rxStartTime),
+                Optional.ToNullable(rxEndTime),
+                Optional.ToNullable(startAzimuthDegrees),
+                Optional.ToNullable(endAzimuthDegrees),
+                Optional.ToNullable(startElevationDegrees),
+                Optional.ToNullable(endElevationDegrees),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalAvailableContact>.Write(ModelReaderWriterOptions options)

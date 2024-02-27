@@ -366,7 +366,27 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, customDomains ?? new ChangeTrackingList<string>(), repositoryToken.Value, buildProperties.Value, privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(), provider.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSitePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                defaultHostname.Value,
+                repositoryUrl.Value,
+                branch.Value,
+                customDomains ?? new ChangeTrackingList<string>(),
+                repositoryToken.Value,
+                buildProperties.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(),
+                Optional.ToNullable(stagingEnvironmentPolicy),
+                Optional.ToNullable(allowConfigFileUpdates),
+                templateProperties.Value,
+                contentDistributionEndpoint.Value,
+                keyVaultReferenceIdentity.Value,
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                provider.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)

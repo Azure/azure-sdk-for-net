@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstancePrivateLinkData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new ManagedInstancePrivateLinkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstancePrivateLinkData>.Write(ModelReaderWriterOptions options)

@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAuthConfigData(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, serializedAdditionalRawData);
+            return new ContainerAppAuthConfigData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                platform.Value,
+                globalValidation.Value,
+                identityProviders.Value,
+                login.Value,
+                httpSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAuthConfigData>.Write(ModelReaderWriterOptions options)

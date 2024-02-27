@@ -261,7 +261,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownServiceResourceProperties(placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(), serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(), servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(), Optional.ToNullable(defaultMoveCost), scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value);
+            return new UnknownServiceResourceProperties(
+                placementConstraints.Value,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                Optional.ToNullable(defaultMoveCost),
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState.Value,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                Optional.ToNullable(servicePackageActivationMode),
+                serviceDnsName.Value);
         }
 
         BinaryData IPersistableModel<ManagedServiceProperties>.Write(ModelReaderWriterOptions options)

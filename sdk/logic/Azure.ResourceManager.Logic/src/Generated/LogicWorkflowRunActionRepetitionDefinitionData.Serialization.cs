@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Logic
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -442,7 +442,29 @@ namespace Azure.ResourceManager.Logic
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(startTime), Optional.ToNullable(endTime), correlation.Value, Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), inputs.Value, inputsLink.Value, outputs.Value, outputsLink.Value, trackedProperties.Value, retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(), Optional.ToNullable(iterationCount), repetitionIndexes ?? new ChangeTrackingList<LogicWorkflowRepetitionIndex>(), serializedAdditionalRawData);
+            return new LogicWorkflowRunActionRepetitionDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                correlation.Value,
+                Optional.ToNullable(status),
+                code.Value,
+                error.Value,
+                Optional.ToNullable(trackingId),
+                inputs.Value,
+                inputsLink.Value,
+                outputs.Value,
+                outputsLink.Value,
+                trackedProperties.Value,
+                retryHistory ?? new ChangeTrackingList<LogicWorkRetryHistory>(),
+                Optional.ToNullable(iterationCount),
+                repetitionIndexes ?? new ChangeTrackingList<LogicWorkflowRepetitionIndex>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRunActionRepetitionDefinitionData>.Write(ModelReaderWriterOptions options)

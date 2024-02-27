@@ -201,7 +201,17 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorDefinitionResourceData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(isEnabled), kind.Value, serializedAdditionalRawData);
+            return new DetectorDefinitionResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(rank),
+                Optional.ToNullable(isEnabled),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options)

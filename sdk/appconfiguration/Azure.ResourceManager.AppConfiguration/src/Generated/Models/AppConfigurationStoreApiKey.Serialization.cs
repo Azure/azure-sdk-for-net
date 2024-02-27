@@ -148,7 +148,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStoreApiKey(id.Value, name.Value, value.Value, connectionString.Value, Optional.ToNullable(lastModified), Optional.ToNullable(readOnly), serializedAdditionalRawData);
+            return new AppConfigurationStoreApiKey(
+                id.Value,
+                name.Value,
+                value.Value,
+                connectionString.Value,
+                Optional.ToNullable(lastModified),
+                Optional.ToNullable(readOnly),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStoreApiKey>.Write(ModelReaderWriterOptions options)

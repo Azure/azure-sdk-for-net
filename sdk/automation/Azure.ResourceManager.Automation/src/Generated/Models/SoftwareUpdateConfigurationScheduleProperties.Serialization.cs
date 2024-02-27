@@ -292,7 +292,22 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareUpdateConfigurationScheduleProperties(Optional.ToNullable(startTime), Optional.ToNullable(startTimeOffsetMinutes), Optional.ToNullable(expiryTime), Optional.ToNullable(expiryTimeOffsetMinutes), Optional.ToNullable(isEnabled), Optional.ToNullable(nextRun), Optional.ToNullable(nextRunOffsetMinutes), Optional.ToNullable(interval), Optional.ToNullable(frequency), timeZone.Value, advancedSchedule.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
+            return new SoftwareUpdateConfigurationScheduleProperties(
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(startTimeOffsetMinutes),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(expiryTimeOffsetMinutes),
+                Optional.ToNullable(isEnabled),
+                Optional.ToNullable(nextRun),
+                Optional.ToNullable(nextRunOffsetMinutes),
+                Optional.ToNullable(interval),
+                Optional.ToNullable(frequency),
+                timeZone.Value,
+                advancedSchedule.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(lastModifiedTime),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareUpdateConfigurationScheduleProperties>.Write(ModelReaderWriterOptions options)

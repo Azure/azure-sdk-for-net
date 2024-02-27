@@ -222,7 +222,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBRoleDefinitionData(id, name, type, systemData.Value, roleName.Value, Optional.ToNullable(type0), databaseName.Value, privileges ?? new ChangeTrackingList<MongoDBPrivilege>(), roles ?? new ChangeTrackingList<MongoDBRole>(), serializedAdditionalRawData);
+            return new MongoDBRoleDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                roleName.Value,
+                Optional.ToNullable(type0),
+                databaseName.Value,
+                privileges ?? new ChangeTrackingList<MongoDBPrivilege>(),
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBRoleDefinitionData>.Write(ModelReaderWriterOptions options)

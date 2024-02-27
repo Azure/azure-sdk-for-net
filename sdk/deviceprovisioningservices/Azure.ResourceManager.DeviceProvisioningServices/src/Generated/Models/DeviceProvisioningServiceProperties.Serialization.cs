@@ -279,7 +279,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServiceProperties(Optional.ToNullable(state), Optional.ToNullable(publicNetworkAccess), ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>(), privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(), provisioningState.Value, iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(), Optional.ToNullable(allocationPolicy), serviceOperationsHostName.Value, deviceProvisioningHostName.Value, idScope.Value, authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            return new DeviceProvisioningServiceProperties(
+                Optional.ToNullable(state),
+                Optional.ToNullable(publicNetworkAccess),
+                ipFilterRules ?? new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>(),
+                privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
+                provisioningState.Value,
+                iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
+                Optional.ToNullable(allocationPolicy),
+                serviceOperationsHostName.Value,
+                deviceProvisioningHostName.Value,
+                idScope.Value,
+                authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(),
+                Optional.ToNullable(enableDataResidency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServiceProperties>.Write(ModelReaderWriterOptions options)

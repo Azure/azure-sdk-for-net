@@ -247,7 +247,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, nextHopIds ?? new ChangeTrackingList<string>(), previousHopIds ?? new ChangeTrackingList<string>(), links ?? new ChangeTrackingList<HopLink>(), previousLinks ?? new ChangeTrackingList<HopLink>(), issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(), serializedAdditionalRawData);
+            return new ConnectivityHopInfo(
+                type.Value,
+                id.Value,
+                address.Value,
+                resourceId.Value,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                previousHopIds ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<HopLink>(),
+                previousLinks ?? new ChangeTrackingList<HopLink>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)

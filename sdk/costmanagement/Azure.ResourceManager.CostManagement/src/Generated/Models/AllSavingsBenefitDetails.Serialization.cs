@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllSavingsBenefitDetails(Optional.ToNullable(overageCost), Optional.ToNullable(benefitCost), Optional.ToNullable(totalCost), Optional.ToNullable(savingsAmount), Optional.ToNullable(savingsPercentage), Optional.ToNullable(coveragePercentage), Optional.ToNullable(commitmentAmount), Optional.ToNullable(averageUtilizationPercentage), Optional.ToNullable(wastageCost), serializedAdditionalRawData);
+            return new AllSavingsBenefitDetails(
+                Optional.ToNullable(overageCost),
+                Optional.ToNullable(benefitCost),
+                Optional.ToNullable(totalCost),
+                Optional.ToNullable(savingsAmount),
+                Optional.ToNullable(savingsPercentage),
+                Optional.ToNullable(coveragePercentage),
+                Optional.ToNullable(commitmentAmount),
+                Optional.ToNullable(averageUtilizationPercentage),
+                Optional.ToNullable(wastageCost),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllSavingsBenefitDetails>.Write(ModelReaderWriterOptions options)

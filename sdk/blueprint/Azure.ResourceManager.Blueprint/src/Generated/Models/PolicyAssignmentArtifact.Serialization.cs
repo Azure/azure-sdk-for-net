@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, dependsOn ?? new ChangeTrackingList<string>(), policyDefinitionId, parameters, resourceGroup.Value);
+            return new PolicyAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                displayName.Value,
+                description.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                policyDefinitionId,
+                parameters,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentArtifact>.Write(ModelReaderWriterOptions options)

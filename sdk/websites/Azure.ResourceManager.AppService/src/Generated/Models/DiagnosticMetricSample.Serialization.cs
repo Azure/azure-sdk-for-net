@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticMetricSample(Optional.ToNullable(timestamp), roleInstance.Value, Optional.ToNullable(total), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(isAggregated), serializedAdditionalRawData);
+            return new DiagnosticMetricSample(
+                Optional.ToNullable(timestamp),
+                roleInstance.Value,
+                Optional.ToNullable(total),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(isAggregated),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticMetricSample>.Write(ModelReaderWriterOptions options)

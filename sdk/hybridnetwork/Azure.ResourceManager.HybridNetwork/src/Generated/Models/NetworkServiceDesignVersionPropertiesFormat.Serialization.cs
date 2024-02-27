@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ProvisioningState> provisioningState = default;
             Optional<VersionState> versionState = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, WritableSubResource>> configurationGroupSchemaReferences = default;
-            Optional<IDictionary<string, NfviDetails>> nfvisFromSite = default;
+            IDictionary<string, WritableSubResource> configurationGroupSchemaReferences = default;
+            IDictionary<string, NfviDetails> nfvisFromSite = default;
             IList<ResourceElementTemplate> resourceElementTemplates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, Optional.ToDictionary(configurationGroupSchemaReferences), Optional.ToDictionary(nfvisFromSite), resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(), serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(versionState),
+                description.Value,
+                configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

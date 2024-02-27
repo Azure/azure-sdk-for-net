@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -311,7 +311,22 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, allowedSubnets ?? new ChangeTrackingList<DevTestLabSubnet>(), description.Value, externalProviderResourceId.Value, externalSubnets ?? new ChangeTrackingList<DevTestLabExternalSubnet>(), subnetOverrides ?? new ChangeTrackingList<DevTestLabSubnetOverride>(), Optional.ToNullable(createdDate), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabVirtualNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                allowedSubnets ?? new ChangeTrackingList<DevTestLabSubnet>(),
+                description.Value,
+                externalProviderResourceId.Value,
+                externalSubnets ?? new ChangeTrackingList<DevTestLabExternalSubnet>(),
+                subnetOverrides ?? new ChangeTrackingList<DevTestLabSubnetOverride>(),
+                Optional.ToNullable(createdDate),
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabVirtualNetworkData>.Write(ModelReaderWriterOptions options)

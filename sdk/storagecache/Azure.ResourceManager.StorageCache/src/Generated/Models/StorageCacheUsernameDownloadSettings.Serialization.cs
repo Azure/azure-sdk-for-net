@@ -246,7 +246,20 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageCacheUsernameDownloadSettings(Optional.ToNullable(extendedGroups), Optional.ToNullable(usernameSource), groupFileUri.Value, userFileUri.Value, ldapServer.Value, ldapBaseDN.Value, Optional.ToNullable(encryptLdapConnection), Optional.ToNullable(requireValidCertificate), Optional.ToNullable(autoDownloadCertificate), caCertificateUri.Value, Optional.ToNullable(usernameDownloaded), credentials.Value, serializedAdditionalRawData);
+            return new StorageCacheUsernameDownloadSettings(
+                Optional.ToNullable(extendedGroups),
+                Optional.ToNullable(usernameSource),
+                groupFileUri.Value,
+                userFileUri.Value,
+                ldapServer.Value,
+                ldapBaseDN.Value,
+                Optional.ToNullable(encryptLdapConnection),
+                Optional.ToNullable(requireValidCertificate),
+                Optional.ToNullable(autoDownloadCertificate),
+                caCertificateUri.Value,
+                Optional.ToNullable(usernameDownloaded),
+                credentials.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageCacheUsernameDownloadSettings>.Write(ModelReaderWriterOptions options)

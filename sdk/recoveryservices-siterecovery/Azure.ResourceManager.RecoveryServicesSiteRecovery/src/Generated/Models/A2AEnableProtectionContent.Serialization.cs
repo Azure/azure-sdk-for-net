@@ -360,7 +360,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId, recoveryContainerId.Value, recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, recoveryProximityPlacementGroupId.Value, vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(), vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccountId.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryExtendedLocation.Value, recoveryAzureNetworkId.Value, recoverySubnetName.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value, Optional.ToNullable(autoProtectionOfDataDisk));
+            return new A2AEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                recoveryContainerId.Value,
+                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId.Value,
+                recoveryAvailabilitySetId.Value,
+                recoveryProximityPlacementGroupId.Value,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                multiVmGroupName.Value,
+                multiVmGroupId.Value,
+                recoveryBootDiagStorageAccountId.Value,
+                diskEncryptionInfo.Value,
+                recoveryAvailabilityZone.Value,
+                recoveryExtendedLocation.Value,
+                recoveryAzureNetworkId.Value,
+                recoverySubnetName.Value,
+                recoveryVirtualMachineScaleSetId.Value,
+                recoveryCapacityReservationGroupId.Value,
+                Optional.ToNullable(autoProtectionOfDataDisk));
         }
 
         BinaryData IPersistableModel<A2AEnableProtectionContent>.Write(ModelReaderWriterOptions options)

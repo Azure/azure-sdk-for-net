@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> targetDatabaseName = default;
-            Optional<IDictionary<string, BinaryData>> migrationSetting = default;
-            Optional<IDictionary<string, string>> sourceSetting = default;
-            Optional<IDictionary<string, string>> targetSetting = default;
+            IDictionary<string, BinaryData> migrationSetting = default;
+            IDictionary<string, string> sourceSetting = default;
+            IDictionary<string, string> targetSetting = default;
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> selectedTables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -229,7 +229,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(name.Value, id.Value, targetDatabaseName.Value, Optional.ToDictionary(migrationSetting), Optional.ToDictionary(sourceSetting), Optional.ToDictionary(targetSetting), selectedTables ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(), serializedAdditionalRawData);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(
+                name.Value,
+                id.Value,
+                targetDatabaseName.Value,
+                migrationSetting ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                sourceSetting ?? new ChangeTrackingDictionary<string, string>(),
+                targetSetting ?? new ChangeTrackingDictionary<string, string>(),
+                selectedTables ?? new ChangeTrackingList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>.Write(ModelReaderWriterOptions options)

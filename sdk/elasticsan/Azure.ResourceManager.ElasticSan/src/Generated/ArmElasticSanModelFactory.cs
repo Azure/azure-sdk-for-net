@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
             locationInfo ??= new List<ElasticSanSkuLocationInfo>();
             capabilities ??= new List<ElasticSanSkuCapability>();
 
-            return new ElasticSanSkuInformation(name, tier, resourceType, locations?.ToList(), locationInfo?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
+            return new ElasticSanSkuInformation(
+                name,
+                tier,
+                resourceType,
+                locations?.ToList(),
+                locationInfo?.ToList(),
+                capabilities?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticSanSkuLocationInfo"/>. </summary>
@@ -80,7 +87,26 @@ namespace Azure.ResourceManager.ElasticSan.Models
             availabilityZones ??= new List<string>();
             privateEndpointConnections ??= new List<ElasticSanPrivateEndpointConnectionData>();
 
-            return new ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones?.ToList(), provisioningState, baseSizeTiB, extendedCapacitySizeTiB, totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
+            return new ElasticSanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                availabilityZones?.ToList(),
+                provisioningState,
+                baseSizeTiB,
+                extendedCapacitySizeTiB,
+                totalVolumeSizeGiB,
+                volumeGroupCount,
+                totalIops,
+                totalMbps,
+                totalSizeTiB,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanPrivateEndpointConnectionData"/>. </summary>
@@ -97,7 +123,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             groupIds ??= new List<string>();
 
-            return new ElasticSanPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, groupIds?.ToList(), serializedAdditionalRawData: null);
+            return new ElasticSanPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                groupIds?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeGroupData"/>. </summary>
@@ -118,7 +153,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             virtualNetworkRules ??= new List<ElasticSanVirtualNetworkRule>();
             privateEndpointConnections ??= new List<ElasticSanPrivateEndpointConnectionData>();
 
-            return new ElasticSanVolumeGroupData(id, name, resourceType, systemData, identity, provisioningState, protocolType, encryption, encryptionProperties, virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList(), serializedAdditionalRawData: null) : null, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
+            return new ElasticSanVolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                provisioningState,
+                protocolType,
+                encryption,
+                encryptionProperties,
+                virtualNetworkRules != null ? new NetworkRuleSet(virtualNetworkRules?.ToList(), serializedAdditionalRawData: null) : null,
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticSanKeyVaultProperties"/>. </summary>
@@ -131,7 +178,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.ElasticSanKeyVaultProperties"/> instance for mocking. </returns>
         public static ElasticSanKeyVaultProperties ElasticSanKeyVaultProperties(string keyName = null, string keyVersion = null, Uri keyVaultUri = null, string currentVersionedKeyIdentifier = null, DateTimeOffset? lastKeyRotationTimestamp = null, DateTimeOffset? currentVersionedKeyExpirationTimestamp = null)
         {
-            return new ElasticSanKeyVaultProperties(keyName, keyVersion, keyVaultUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, currentVersionedKeyExpirationTimestamp, serializedAdditionalRawData: null);
+            return new ElasticSanKeyVaultProperties(
+                keyName,
+                keyVersion,
+                keyVaultUri,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeData"/>. </summary>
@@ -148,7 +202,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
         public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? volumeId = null, ElasticSanVolumeDataSourceInfo creationData = null, long sizeGiB = default, IscsiTargetInfo storageTarget = null, ResourceIdentifier managedByResourceId = null, ElasticSanProvisioningState? provisioningState = null)
         {
-            return new ElasticSanVolumeData(id, name, resourceType, systemData, volumeId, creationData, sizeGiB, storageTarget, managedByResourceId != null ? new ManagedByInfo(managedByResourceId, serializedAdditionalRawData: null) : null, provisioningState, serializedAdditionalRawData: null);
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                volumeId,
+                creationData,
+                sizeGiB,
+                storageTarget,
+                managedByResourceId != null ? new ManagedByInfo(managedByResourceId, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IscsiTargetInfo"/>. </summary>
@@ -160,7 +225,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.IscsiTargetInfo"/> instance for mocking. </returns>
         public static IscsiTargetInfo IscsiTargetInfo(string targetIqn = null, string targetPortalHostname = null, int? targetPortalPort = null, ElasticSanProvisioningState? provisioningState = null, ResourceOperationalStatus? status = null)
         {
-            return new IscsiTargetInfo(targetIqn, targetPortalHostname, targetPortalPort, provisioningState, status, serializedAdditionalRawData: null);
+            return new IscsiTargetInfo(
+                targetIqn,
+                targetPortalHostname,
+                targetPortalPort,
+                provisioningState,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ElasticSanPrivateLinkResource"/>. </summary>
@@ -177,7 +248,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new ElasticSanPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new ElasticSanPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanSnapshotData"/>. </summary>
@@ -192,7 +271,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="ElasticSan.ElasticSanSnapshotData"/> instance for mocking. </returns>
         public static ElasticSanSnapshotData ElasticSanSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier creationDataSourceId = null, ElasticSanProvisioningState? provisioningState = null, long? sourceVolumeSizeGiB = null, string volumeName = null)
         {
-            return new ElasticSanSnapshotData(id, name, resourceType, systemData, creationDataSourceId != null ? new SnapshotCreationInfo(creationDataSourceId, serializedAdditionalRawData: null) : null, provisioningState, sourceVolumeSizeGiB, volumeName, serializedAdditionalRawData: null);
+            return new ElasticSanSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                creationDataSourceId != null ? new SnapshotCreationInfo(creationDataSourceId, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                sourceVolumeSizeGiB,
+                volumeName,
+                serializedAdditionalRawData: null);
         }
     }
 }

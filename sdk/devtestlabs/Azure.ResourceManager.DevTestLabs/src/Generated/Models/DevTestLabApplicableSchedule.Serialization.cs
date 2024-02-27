@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabApplicableSchedule(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, labVmsShutdown.Value, labVmsStartup.Value, serializedAdditionalRawData);
+            return new DevTestLabApplicableSchedule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                labVmsShutdown.Value,
+                labVmsStartup.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabApplicableSchedule>.Write(ModelReaderWriterOptions options)

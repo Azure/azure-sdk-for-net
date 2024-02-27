@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.CustomerInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
+            IDictionary<string, string> description = default;
+            IDictionary<string, string> displayName = default;
             IList<string> involvedInteractionTypes = default;
             IList<string> involvedKpiTypes = default;
             IList<string> involvedRelationships = default;
@@ -432,7 +432,29 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(description), Optional.ToDictionary(displayName), involvedInteractionTypes ?? new ChangeTrackingList<string>(), involvedKpiTypes ?? new ChangeTrackingList<string>(), involvedRelationships ?? new ChangeTrackingList<string>(), negativeOutcomeExpression.Value, positiveOutcomeExpression.Value, primaryProfileType.Value, Optional.ToNullable(provisioningState), predictionName.Value, scopeExpression.Value, Optional.ToNullable(tenantId), Optional.ToNullable(autoAnalyze), mappings.Value, scoreLabel.Value, grades ?? new ChangeTrackingList<PredictionGradesItem>(), systemGeneratedEntities.Value, serializedAdditionalRawData);
+            return new PredictionResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                involvedInteractionTypes ?? new ChangeTrackingList<string>(),
+                involvedKpiTypes ?? new ChangeTrackingList<string>(),
+                involvedRelationships ?? new ChangeTrackingList<string>(),
+                negativeOutcomeExpression.Value,
+                positiveOutcomeExpression.Value,
+                primaryProfileType.Value,
+                Optional.ToNullable(provisioningState),
+                predictionName.Value,
+                scopeExpression.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(autoAnalyze),
+                mappings.Value,
+                scoreLabel.Value,
+                grades ?? new ChangeTrackingList<PredictionGradesItem>(),
+                systemGeneratedEntities.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionResourceFormatData>.Write(ModelReaderWriterOptions options)

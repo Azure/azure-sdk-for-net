@@ -136,7 +136,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime), serializedAdditionalRawData);
+            return new WebAppBackupSchedule(
+                frequencyInterval,
+                frequencyUnit,
+                keepAtLeastOneBackup,
+                retentionPeriodInDays,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(lastExecutionTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppBackupSchedule>.Write(ModelReaderWriterOptions options)

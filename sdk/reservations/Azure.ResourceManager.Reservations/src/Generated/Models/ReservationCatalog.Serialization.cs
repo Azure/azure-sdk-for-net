@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
             Optional<string> resourceType = default;
             Optional<string> name = default;
-            Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
+            IReadOnlyDictionary<string, IList<ReservationBillingPlan>> billingPlans = default;
             IReadOnlyList<ReservationTerm> terms = default;
             IReadOnlyList<AzureLocation> locations = default;
             IReadOnlyList<SkuProperty> skuProperties = default;
@@ -306,7 +306,19 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), terms ?? new ChangeTrackingList<ReservationTerm>(), locations ?? new ChangeTrackingList<AzureLocation>(), skuProperties ?? new ChangeTrackingList<SkuProperty>(), msrp.Value, restrictions ?? new ChangeTrackingList<SkuRestriction>(), tier.Value, size.Value, capabilities ?? new ChangeTrackingList<SkuCapability>(), serializedAdditionalRawData);
+            return new ReservationCatalog(
+                resourceType.Value,
+                name.Value,
+                billingPlans ?? new ChangeTrackingDictionary<string, IList<ReservationBillingPlan>>(),
+                terms ?? new ChangeTrackingList<ReservationTerm>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                skuProperties ?? new ChangeTrackingList<SkuProperty>(),
+                msrp.Value,
+                restrictions ?? new ChangeTrackingList<SkuRestriction>(),
+                tier.Value,
+                size.Value,
+                capabilities ?? new ChangeTrackingList<SkuCapability>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationCatalog>.Write(ModelReaderWriterOptions options)

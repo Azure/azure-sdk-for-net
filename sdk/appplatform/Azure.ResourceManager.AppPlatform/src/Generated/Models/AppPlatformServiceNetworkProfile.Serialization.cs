@@ -203,7 +203,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceNetworkProfile(serviceRuntimeSubnetId.Value, appSubnetId.Value, serviceCidr.Value, serviceRuntimeNetworkResourceGroup.Value, appNetworkResourceGroup.Value, outboundIPs.Value, requiredTraffics ?? new ChangeTrackingList<AppPlatformServiceRequiredTraffic>(), ingressConfig.Value, outboundType.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceNetworkProfile(
+                serviceRuntimeSubnetId.Value,
+                appSubnetId.Value,
+                serviceCidr.Value,
+                serviceRuntimeNetworkResourceGroup.Value,
+                appNetworkResourceGroup.Value,
+                outboundIPs.Value,
+                requiredTraffics ?? new ChangeTrackingList<AppPlatformServiceRequiredTraffic>(),
+                ingressConfig.Value,
+                outboundType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterJob(id, name, type, systemData.Value, properties, serializedAdditionalRawData);
+            return new ClusterJob(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterJob>.Write(ModelReaderWriterOptions options)

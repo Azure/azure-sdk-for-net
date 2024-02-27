@@ -131,7 +131,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object deploymentType = default;
             Optional<object> hostName = default;
@@ -318,7 +318,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CommonDataServiceForAppsLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), annotations ?? new ChangeTrackingList<object>(), additionalProperties, deploymentType, hostName.Value, port.Value, serviceUri.Value, organizationName.Value, authenticationType, username.Value, password.Value, servicePrincipalId.Value, servicePrincipalCredentialType.Value, servicePrincipalCredential.Value, encryptedCredential.Value);
+            return new CommonDataServiceForAppsLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                deploymentType,
+                hostName.Value,
+                port.Value,
+                serviceUri.Value,
+                organizationName.Value,
+                authenticationType,
+                username.Value,
+                password.Value,
+                servicePrincipalId.Value,
+                servicePrincipalCredentialType.Value,
+                servicePrincipalCredential.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class CommonDataServiceForAppsLinkedServiceConverter : JsonConverter<CommonDataServiceForAppsLinkedService>

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<ManagedServiceIdentity> identity = default;
             Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -373,7 +373,27 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, applicationGroupReferences ?? new ChangeTrackingList<string>(), Optional.ToNullable(cloudPCResource), Optional.ToNullable(publicNetworkAccess), privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
+            return new VirtualWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                objectId.Value,
+                description.Value,
+                friendlyName.Value,
+                applicationGroupReferences ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(cloudPCResource),
+                Optional.ToNullable(publicNetworkAccess),
+                privateEndpointConnections ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnection>(),
+                managedBy.Value,
+                kind.Value,
+                Optional.ToNullable(etag),
+                identity,
+                sku.Value,
+                plan,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWorkspaceData>.Write(ModelReaderWriterOptions options)

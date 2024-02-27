@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.Automanage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomanageBestPracticeData(id, name, type, systemData.Value, configuration.Value, serializedAdditionalRawData);
+            return new AutomanageBestPracticeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                configuration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomanageBestPracticeData>.Write(ModelReaderWriterOptions options)

@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex), serializedAdditionalRawData);
+            return new DesktopVirtualizationStartMenuItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                appAlias.Value,
+                filePath.Value,
+                commandLineArguments.Value,
+                iconPath.Value,
+                Optional.ToNullable(iconIndex),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DesktopVirtualizationStartMenuItem>.Write(ModelReaderWriterOptions options)

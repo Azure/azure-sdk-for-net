@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<OperationalInsightsClusterSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<OperationalInsightsKeyVaultProperties> keyVaultProperties = default;
             Optional<OperationalInsightsBillingType> billingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -176,7 +176,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsClusterPatch(identity, sku.Value, Optional.ToDictionary(tags), keyVaultProperties.Value, Optional.ToNullable(billingType), serializedAdditionalRawData);
+            return new OperationalInsightsClusterPatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                keyVaultProperties.Value,
+                Optional.ToNullable(billingType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsClusterPatch>.Write(ModelReaderWriterOptions options)

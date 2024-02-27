@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkGatewayData(id, name, type, systemData.Value, vnetName.Value, vpnPackageUri.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkGatewayData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                vnetName.Value,
+                vpnPackageUri.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)

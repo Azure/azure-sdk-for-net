@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> viewName = default;
             Optional<string> userId = default;
             Optional<Guid> tenantId = default;
-            Optional<IDictionary<string, string>> displayName = default;
+            IDictionary<string, string> displayName = default;
             Optional<string> definition = default;
             Optional<DateTimeOffset> changed = default;
             Optional<DateTimeOffset> created = default;
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ViewResourceFormatData(id, name, type, systemData.Value, viewName.Value, userId.Value, Optional.ToNullable(tenantId), Optional.ToDictionary(displayName), definition.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new ViewResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                viewName.Value,
+                userId.Value,
+                Optional.ToNullable(tenantId),
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                definition.Value,
+                Optional.ToNullable(changed),
+                Optional.ToNullable(created),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ViewResourceFormatData>.Write(ModelReaderWriterOptions options)

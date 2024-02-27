@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseRestoreDetailBackupSetProperties(status.Value, firstStripeName.Value, Optional.ToNullable(numberOfStripes), Optional.ToNullable(backupSizeMB), Optional.ToNullable(restoreStartedTimestampUtc), Optional.ToNullable(restoreFinishedTimestampUtc), serializedAdditionalRawData);
+            return new ManagedDatabaseRestoreDetailBackupSetProperties(
+                status.Value,
+                firstStripeName.Value,
+                Optional.ToNullable(numberOfStripes),
+                Optional.ToNullable(backupSizeMB),
+                Optional.ToNullable(restoreStartedTimestampUtc),
+                Optional.ToNullable(restoreFinishedTimestampUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(ModelReaderWriterOptions options)

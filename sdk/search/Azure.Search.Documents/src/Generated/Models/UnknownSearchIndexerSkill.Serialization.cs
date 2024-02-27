@@ -106,7 +106,13 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownSearchIndexerSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs);
+            return new UnknownSearchIndexerSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs);
         }
     }
 }

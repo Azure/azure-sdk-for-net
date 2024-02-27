@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmEncryptionDetails(Optional.ToNullable(encryptionEnabled), kekUrl.Value, secretKeyUrl.Value, kekVaultId.Value, secretKeyVaultId.Value, serializedAdditionalRawData);
+            return new VmEncryptionDetails(
+                Optional.ToNullable(encryptionEnabled),
+                kekUrl.Value,
+                secretKeyUrl.Value,
+                kekVaultId.Value,
+                secretKeyVaultId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmEncryptionDetails>.Write(ModelReaderWriterOptions options)

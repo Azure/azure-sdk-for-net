@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeSecuritySettings(id, name, type, systemData.Value, deviceAdminPassword, serializedAdditionalRawData);
+            return new DataBoxEdgeSecuritySettings(
+                id,
+                name,
+                type,
+                systemData.Value,
+                deviceAdminPassword,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeSecuritySettings>.Write(ModelReaderWriterOptions options)

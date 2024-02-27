@@ -266,7 +266,26 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RedisCommonConfiguration(Optional.ToNullable(rdbBackupEnabled), rdbBackupFrequency.Value, Optional.ToNullable(rdbBackupMaxSnapshotCount), rdbStorageConnectionString.Value, Optional.ToNullable(aofBackupEnabled), aofStorageConnectionString0.Value, aofStorageConnectionString1.Value, maxfragmentationmemoryReserved.Value, maxmemoryPolicy.Value, maxmemoryReserved.Value, maxmemoryDelta.Value, maxclients.Value, preferredDataArchiveAuthMethod.Value, preferredDataPersistenceAuthMethod.Value, zonalConfiguration.Value, authnotrequired.Value, storageSubscriptionId.Value, aadEnabled.Value, additionalProperties);
+            return new RedisCommonConfiguration(
+                Optional.ToNullable(rdbBackupEnabled),
+                rdbBackupFrequency.Value,
+                Optional.ToNullable(rdbBackupMaxSnapshotCount),
+                rdbStorageConnectionString.Value,
+                Optional.ToNullable(aofBackupEnabled),
+                aofStorageConnectionString0.Value,
+                aofStorageConnectionString1.Value,
+                maxfragmentationmemoryReserved.Value,
+                maxmemoryPolicy.Value,
+                maxmemoryReserved.Value,
+                maxmemoryDelta.Value,
+                maxclients.Value,
+                preferredDataArchiveAuthMethod.Value,
+                preferredDataPersistenceAuthMethod.Value,
+                zonalConfiguration.Value,
+                authnotrequired.Value,
+                storageSubscriptionId.Value,
+                aadEnabled.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<RedisCommonConfiguration>.Write(ModelReaderWriterOptions options)

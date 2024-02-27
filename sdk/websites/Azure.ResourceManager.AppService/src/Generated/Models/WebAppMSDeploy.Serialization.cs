@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> connectionString = default;
             Optional<string> dbType = default;
             Optional<Uri> setParametersXmlFileUri = default;
-            Optional<IDictionary<string, string>> setParameters = default;
+            IDictionary<string, string> setParameters = default;
             Optional<bool> skipAppData = default;
             Optional<bool> appOffline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppMSDeploy(id, name, type, systemData.Value, packageUri.Value, connectionString.Value, dbType.Value, setParametersXmlFileUri.Value, Optional.ToDictionary(setParameters), Optional.ToNullable(skipAppData), Optional.ToNullable(appOffline), kind.Value, serializedAdditionalRawData);
+            return new WebAppMSDeploy(
+                id,
+                name,
+                type,
+                systemData.Value,
+                packageUri.Value,
+                connectionString.Value,
+                dbType.Value,
+                setParametersXmlFileUri.Value,
+                setParameters ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(skipAppData),
+                Optional.ToNullable(appOffline),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppMSDeploy>.Write(ModelReaderWriterOptions options)

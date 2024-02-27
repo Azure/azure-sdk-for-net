@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SbomComponentResult(id, name, type, systemData.Value, componentId.Value, componentName.Value, version.Value, license.Value, filePaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new SbomComponentResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                componentId.Value,
+                componentName.Value,
+                version.Value,
+                license.Value,
+                filePaths ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SbomComponentResult>.Write(ModelReaderWriterOptions options)

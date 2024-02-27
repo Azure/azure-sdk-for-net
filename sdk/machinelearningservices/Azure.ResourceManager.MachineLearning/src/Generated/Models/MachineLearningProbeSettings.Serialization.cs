@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningProbeSettings(Optional.ToNullable(failureThreshold), Optional.ToNullable(initialDelay), Optional.ToNullable(period), Optional.ToNullable(successThreshold), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new MachineLearningProbeSettings(
+                Optional.ToNullable(failureThreshold),
+                Optional.ToNullable(initialDelay),
+                Optional.ToNullable(period),
+                Optional.ToNullable(successThreshold),
+                Optional.ToNullable(timeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningProbeSettings>.Write(ModelReaderWriterOptions options)

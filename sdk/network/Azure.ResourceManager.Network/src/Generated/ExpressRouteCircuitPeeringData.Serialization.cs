@@ -440,7 +440,32 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitPeeringData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(peeringType), Optional.ToNullable(state), Optional.ToNullable(azureASN), Optional.ToNullable(peerASN), primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, primaryAzurePort.Value, secondaryAzurePort.Value, sharedKey.Value, Optional.ToNullable(vlanId), microsoftPeeringConfig.Value, stats.Value, Optional.ToNullable(provisioningState), gatewayManagerETag.Value, lastModifiedBy.Value, routeFilter, ipv6PeeringConfig.Value, expressRouteConnection, connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(), peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>());
+            return new ExpressRouteCircuitPeeringData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(peeringType),
+                Optional.ToNullable(state),
+                Optional.ToNullable(azureASN),
+                Optional.ToNullable(peerASN),
+                primaryPeerAddressPrefix.Value,
+                secondaryPeerAddressPrefix.Value,
+                primaryAzurePort.Value,
+                secondaryAzurePort.Value,
+                sharedKey.Value,
+                Optional.ToNullable(vlanId),
+                microsoftPeeringConfig.Value,
+                stats.Value,
+                Optional.ToNullable(provisioningState),
+                gatewayManagerETag.Value,
+                lastModifiedBy.Value,
+                routeFilter,
+                ipv6PeeringConfig.Value,
+                expressRouteConnection,
+                connections ?? new ChangeTrackingList<ExpressRouteCircuitConnectionData>(),
+                peeredConnections ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>());
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options)

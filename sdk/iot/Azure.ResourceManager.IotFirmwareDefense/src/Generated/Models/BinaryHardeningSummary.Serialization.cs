@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BinaryHardeningSummary(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalFiles), Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            return new BinaryHardeningSummary(
+                summaryType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(totalFiles),
+                Optional.ToNullable(nx),
+                Optional.ToNullable(pie),
+                Optional.ToNullable(relro),
+                Optional.ToNullable(canary),
+                Optional.ToNullable(stripped));
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)

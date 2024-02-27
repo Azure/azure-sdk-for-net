@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             IList<string> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<PublicNetworkAccess> publicNetworkAccess = default;
             Optional<VirtualNetworkConfiguration> virtualNetworkConfiguration = default;
             IList<AdditionalLocation> additionalLocations = default;
-            Optional<IDictionary<string, string>> customProperties = default;
+            IDictionary<string, string> customProperties = default;
             IList<CertificateConfiguration> certificates = default;
             Optional<bool> enableClientCertificate = default;
             Optional<bool> disableGateway = default;
@@ -727,7 +727,46 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(), Optional.ToDictionary(customProperties), certificates ?? new ChangeTrackingList<CertificateConfiguration>(), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(), Optional.ToNullable(platformVersion), publisherEmail, publisherName, serializedAdditionalRawData);
+            return new ApiManagementServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                notificationSenderEmail.Value,
+                provisioningState.Value,
+                targetProvisioningState.Value,
+                Optional.ToNullable(createdAtUtc),
+                gatewayUri.Value,
+                gatewayRegionalUri.Value,
+                portalUri.Value,
+                managementApiUri.Value,
+                scmUri.Value,
+                developerPortalUri.Value,
+                hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                virtualNetworkConfiguration.Value,
+                additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
+                Optional.ToNullable(enableClientCertificate),
+                Optional.ToNullable(disableGateway),
+                Optional.ToNullable(virtualNetworkType),
+                apiVersionConstraint.Value,
+                Optional.ToNullable(restore),
+                privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
+                Optional.ToNullable(platformVersion),
+                publisherEmail,
+                publisherName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServiceData>.Write(ModelReaderWriterOptions options)

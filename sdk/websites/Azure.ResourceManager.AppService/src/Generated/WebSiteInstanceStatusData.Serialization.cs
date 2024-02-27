@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppService
             Optional<Uri> detectorUrl = default;
             Optional<Uri> consoleUrl = default;
             Optional<string> healthCheckUrl = default;
-            Optional<IDictionary<string, ContainerInfo>> containers = default;
+            IDictionary<string, ContainerInfo> containers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -247,7 +247,19 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value, serializedAdditionalRawData);
+            return new WebSiteInstanceStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                statusUrl.Value,
+                detectorUrl.Value,
+                consoleUrl.Value,
+                healthCheckUrl.Value,
+                containers ?? new ChangeTrackingDictionary<string, ContainerInfo>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteInstanceStatusData>.Write(ModelReaderWriterOptions options)

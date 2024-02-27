@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -288,7 +288,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricNeighborGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, destination.Value, networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(), networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new NetworkFabricNeighborGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation.Value,
+                destination.Value,
+                networkTapIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                networkTapRuleIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricNeighborGroupData>.Write(ModelReaderWriterOptions options)

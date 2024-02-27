@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IReadOnlyList<string> pyFiles = default;
             IReadOnlyList<string> files = default;
             IReadOnlyList<string> archives = default;
-            Optional<IReadOnlyDictionary<string, string>> conf = default;
+            IReadOnlyDictionary<string, string> conf = default;
             Optional<string> driverMemory = default;
             Optional<int> driverCores = default;
             Optional<string> executorMemory = default;
@@ -175,7 +175,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkRequest(name.Value, file.Value, className.Value, args ?? new ChangeTrackingList<string>(), jars ?? new ChangeTrackingList<string>(), pyFiles ?? new ChangeTrackingList<string>(), files ?? new ChangeTrackingList<string>(), archives ?? new ChangeTrackingList<string>(), Optional.ToDictionary(conf), driverMemory.Value, Optional.ToNullable(driverCores), executorMemory.Value, Optional.ToNullable(executorCores), Optional.ToNullable(numExecutors));
+            return new SparkRequest(
+                name.Value,
+                file.Value,
+                className.Value,
+                args ?? new ChangeTrackingList<string>(),
+                jars ?? new ChangeTrackingList<string>(),
+                pyFiles ?? new ChangeTrackingList<string>(),
+                files ?? new ChangeTrackingList<string>(),
+                archives ?? new ChangeTrackingList<string>(),
+                conf ?? new ChangeTrackingDictionary<string, string>(),
+                driverMemory.Value,
+                Optional.ToNullable(driverCores),
+                executorMemory.Value,
+                Optional.ToNullable(executorCores),
+                Optional.ToNullable(numExecutors));
         }
 
         internal partial class SparkRequestConverter : JsonConverter<SparkRequest>

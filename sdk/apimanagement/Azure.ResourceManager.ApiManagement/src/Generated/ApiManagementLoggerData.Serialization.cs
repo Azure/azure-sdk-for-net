@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<SystemData> systemData = default;
             Optional<LoggerType> loggerType = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> credentials = default;
+            IDictionary<string, string> credentials = default;
             Optional<bool> isBuffered = default;
             Optional<ResourceIdentifier> resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -221,7 +221,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementLoggerData(id, name, type, systemData.Value, Optional.ToNullable(loggerType), description.Value, Optional.ToDictionary(credentials), Optional.ToNullable(isBuffered), resourceId.Value, serializedAdditionalRawData);
+            return new ApiManagementLoggerData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(loggerType),
+                description.Value,
+                credentials ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(isBuffered),
+                resourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementLoggerData>.Write(ModelReaderWriterOptions options)

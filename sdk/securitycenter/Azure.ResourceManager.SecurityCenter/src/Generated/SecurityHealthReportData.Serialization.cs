@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<HealthReportStatus> status = default;
             IList<string> affectedDefendersPlans = default;
             IList<string> affectedDefendersSubPlans = default;
-            Optional<IReadOnlyDictionary<string, string>> reportAdditionalData = default;
+            IReadOnlyDictionary<string, string> reportAdditionalData = default;
             IList<SecurityHealthReportIssue> issues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -300,7 +300,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityHealthReportData(id, name, type, systemData.Value, resourceDetails.Value, environmentDetails.Value, healthDataClassification.Value, status.Value, affectedDefendersPlans ?? new ChangeTrackingList<string>(), affectedDefendersSubPlans ?? new ChangeTrackingList<string>(), Optional.ToDictionary(reportAdditionalData), issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(), serializedAdditionalRawData);
+            return new SecurityHealthReportData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                resourceDetails.Value,
+                environmentDetails.Value,
+                healthDataClassification.Value,
+                status.Value,
+                affectedDefendersPlans ?? new ChangeTrackingList<string>(),
+                affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
+                reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                issues ?? new ChangeTrackingList<SecurityHealthReportIssue>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityHealthReportData>.Write(ModelReaderWriterOptions options)

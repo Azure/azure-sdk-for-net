@@ -184,7 +184,13 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AcknowledgeOfferNotificationContent(Optional.ToNullable(acknowledge), Optional.ToNullable(dismiss), Optional.ToNullable(removeOffer), addPlans ?? new ChangeTrackingList<string>(), removePlans ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AcknowledgeOfferNotificationContent(
+                Optional.ToNullable(acknowledge),
+                Optional.ToNullable(dismiss),
+                Optional.ToNullable(removeOffer),
+                addPlans ?? new ChangeTrackingList<string>(),
+                removePlans ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcknowledgeOfferNotificationContent>.Write(ModelReaderWriterOptions options)

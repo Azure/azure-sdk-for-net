@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(), policyDetails ?? new ChangeTrackingList<ComplianceDetail>(), policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(), serializedAdditionalRawData);
+            return new PolicySummaryResults(
+                queryResultsUri.Value,
+                Optional.ToNullable(nonCompliantResources),
+                Optional.ToNullable(nonCompliantPolicies),
+                resourceDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                policyDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                policyGroupDetails ?? new ChangeTrackingList<ComplianceDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicySummaryResults>.Write(ModelReaderWriterOptions options)

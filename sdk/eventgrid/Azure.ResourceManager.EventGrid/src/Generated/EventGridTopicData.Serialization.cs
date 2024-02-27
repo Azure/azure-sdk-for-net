@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceKind> kind = default;
             Optional<ExtendedLocation> extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -430,7 +430,30 @@ namespace Azure.ResourceManager.EventGrid
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(kind), extendedLocation, privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(), Optional.ToNullable(provisioningState), endpoint.Value, eventTypeInfo.Value, Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(inputSchema), inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(dataResidencyBoundary), serializedAdditionalRawData);
+            return new EventGridTopicData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                Optional.ToNullable(kind),
+                extendedLocation,
+                privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>(),
+                Optional.ToNullable(provisioningState),
+                endpoint.Value,
+                eventTypeInfo.Value,
+                Optional.ToNullable(minimumTlsVersionAllowed),
+                Optional.ToNullable(inputSchema),
+                inputSchemaMapping.Value,
+                metricResourceId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(dataResidencyBoundary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridTopicData>.Write(ModelReaderWriterOptions options)

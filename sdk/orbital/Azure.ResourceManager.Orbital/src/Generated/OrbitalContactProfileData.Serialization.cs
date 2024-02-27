@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Orbital
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -304,7 +304,22 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(minimumViableContactDuration), Optional.ToNullable(minimumElevationDegrees), Optional.ToNullable(autoTrackingConfiguration), eventHubUri.Value, networkConfiguration.Value, links ?? new ChangeTrackingList<OrbitalContactProfileLink>(), serializedAdditionalRawData);
+            return new OrbitalContactProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(minimumViableContactDuration),
+                Optional.ToNullable(minimumElevationDegrees),
+                Optional.ToNullable(autoTrackingConfiguration),
+                eventHubUri.Value,
+                networkConfiguration.Value,
+                links ?? new ChangeTrackingList<OrbitalContactProfileLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactProfileData>.Write(ModelReaderWriterOptions options)

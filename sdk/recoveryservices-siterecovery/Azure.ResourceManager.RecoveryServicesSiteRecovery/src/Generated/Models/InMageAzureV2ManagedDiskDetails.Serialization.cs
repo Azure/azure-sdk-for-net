@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ManagedDiskDetails(diskId.Value, seedManagedDiskId.Value, replicaDiskType.Value, diskEncryptionSetId.Value, targetDiskName.Value, serializedAdditionalRawData);
+            return new InMageAzureV2ManagedDiskDetails(
+                diskId.Value,
+                seedManagedDiskId.Value,
+                replicaDiskType.Value,
+                diskEncryptionSetId.Value,
+                targetDiskName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ManagedDiskDetails>.Write(ModelReaderWriterOptions options)

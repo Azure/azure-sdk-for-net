@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string name = default;
             Optional<MobileNetworkProvisioningState> provisioningState = default;
             Optional<MobileNetworkSimState> simState = default;
-            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
+            IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
             Optional<string> integratedCircuitCardIdentifier = default;
             Optional<string> deviceType = default;
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SimNameAndEncryptedProperties(name, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), Optional.ToDictionary(siteProvisioningState), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(), vendorName.Value, vendorKeyFingerprint.Value, encryptedCredentials.Value, serializedAdditionalRawData);
+            return new SimNameAndEncryptedProperties(
+                name,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(simState),
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier.Value,
+                deviceType.Value,
+                simPolicy,
+                staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(),
+                vendorName.Value,
+                vendorKeyFingerprint.Value,
+                encryptedCredentials.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SimNameAndEncryptedProperties>.Write(ModelReaderWriterOptions options)

@@ -366,7 +366,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StatefulServiceProperties(placementConstraints.Value, correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(), serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(), servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(), Optional.ToNullable(defaultMoveCost), scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(), serializedAdditionalRawData, provisioningState.Value, serviceKind, serviceTypeName, partitionDescription, Optional.ToNullable(servicePackageActivationMode), serviceDnsName.Value, Optional.ToNullable(hasPersistedState), Optional.ToNullable(targetReplicaSetSize), Optional.ToNullable(minReplicaSetSize), Optional.ToNullable(replicaRestartWaitDuration), Optional.ToNullable(quorumLossWaitDuration), Optional.ToNullable(standByReplicaKeepDuration), Optional.ToNullable(servicePlacementTimeLimit));
+            return new StatefulServiceProperties(
+                placementConstraints.Value,
+                correlationScheme ?? new ChangeTrackingList<ManagedServiceCorrelation>(),
+                serviceLoadMetrics ?? new ChangeTrackingList<ManagedServiceLoadMetric>(),
+                servicePlacementPolicies ?? new ChangeTrackingList<ManagedServicePlacementPolicy>(),
+                Optional.ToNullable(defaultMoveCost),
+                scalingPolicies ?? new ChangeTrackingList<ManagedServiceScalingPolicy>(),
+                serializedAdditionalRawData,
+                provisioningState.Value,
+                serviceKind,
+                serviceTypeName,
+                partitionDescription,
+                Optional.ToNullable(servicePackageActivationMode),
+                serviceDnsName.Value,
+                Optional.ToNullable(hasPersistedState),
+                Optional.ToNullable(targetReplicaSetSize),
+                Optional.ToNullable(minReplicaSetSize),
+                Optional.ToNullable(replicaRestartWaitDuration),
+                Optional.ToNullable(quorumLossWaitDuration),
+                Optional.ToNullable(standByReplicaKeepDuration),
+                Optional.ToNullable(servicePlacementTimeLimit));
         }
 
         BinaryData IPersistableModel<StatefulServiceProperties>.Write(ModelReaderWriterOptions options)

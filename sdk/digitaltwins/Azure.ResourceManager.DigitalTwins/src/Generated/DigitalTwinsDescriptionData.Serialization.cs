@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DigitalTwins
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -314,7 +314,21 @@ namespace Azure.ResourceManager.DigitalTwins
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), hostName.Value, privateEndpointConnections ?? new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(lastUpdatedTime),
+                Optional.ToNullable(provisioningState),
+                hostName.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<DigitalTwinsPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options)

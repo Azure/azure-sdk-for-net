@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppTwitterConfiguration> twitter = default;
             Optional<ContainerAppAppleConfiguration> apple = default;
             Optional<ContainerAppAzureStaticWebAppsConfiguration> azureStaticWebApps = default;
-            Optional<IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>> customOpenIdConnectProviders = default;
+            IDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> customOpenIdConnectProviders = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
+            return new ContainerAppIdentityProvidersConfiguration(
+                azureActiveDirectory.Value,
+                facebook.Value,
+                gitHub.Value,
+                google.Value,
+                twitter.Value,
+                apple.Value,
+                azureStaticWebApps.Value,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)

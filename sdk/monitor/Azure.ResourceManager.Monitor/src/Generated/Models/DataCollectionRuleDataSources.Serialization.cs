@@ -314,7 +314,18 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleDataSources(performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(), windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(), syslog ?? new ChangeTrackingList<SyslogDataSource>(), extensions ?? new ChangeTrackingList<ExtensionDataSource>(), logFiles ?? new ChangeTrackingList<LogFilesDataSource>(), iisLogs ?? new ChangeTrackingList<IisLogsDataSource>(), windowsFirewallLogs ?? new ChangeTrackingList<WindowsFirewallLogsDataSource>(), prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(), platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(), dataImports.Value, serializedAdditionalRawData);
+            return new DataCollectionRuleDataSources(
+                performanceCounters ?? new ChangeTrackingList<PerfCounterDataSource>(),
+                windowsEventLogs ?? new ChangeTrackingList<WindowsEventLogDataSource>(),
+                syslog ?? new ChangeTrackingList<SyslogDataSource>(),
+                extensions ?? new ChangeTrackingList<ExtensionDataSource>(),
+                logFiles ?? new ChangeTrackingList<LogFilesDataSource>(),
+                iisLogs ?? new ChangeTrackingList<IisLogsDataSource>(),
+                windowsFirewallLogs ?? new ChangeTrackingList<WindowsFirewallLogsDataSource>(),
+                prometheusForwarder ?? new ChangeTrackingList<PrometheusForwarderDataSource>(),
+                platformTelemetry ?? new ChangeTrackingList<PlatformTelemetryDataSource>(),
+                dataImports.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleDataSources>.Write(ModelReaderWriterOptions options)

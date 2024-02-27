@@ -235,7 +235,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderProduct(displayName.Value, description.Value, imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, filterableProperties ?? new ChangeTrackingList<FilterableProperty>(), configurations ?? new ChangeTrackingList<ProductConfiguration>(), serializedAdditionalRawData);
+            return new EdgeOrderProduct(
+                displayName.Value,
+                description.Value,
+                imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
+                costInformation.Value,
+                availabilityInformation.Value,
+                hierarchyInformation.Value,
+                filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
+                configurations ?? new ChangeTrackingList<ProductConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderProduct>.Write(ModelReaderWriterOptions options)

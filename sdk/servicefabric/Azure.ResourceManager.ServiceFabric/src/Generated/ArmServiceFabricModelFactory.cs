@@ -95,7 +95,48 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             nodeTypes ??= new List<ClusterNodeTypeDescription>();
             notifications ??= new List<ClusterNotification>();
 
-            return new ServiceFabricClusterData(id, name, resourceType, systemData, tags, location, addOnFeatures?.ToList(), availableClusterVersions?.ToList(), azureActiveDirectory, certificate, certificateCommonNames, clientCertificateCommonNames?.ToList(), clientCertificateThumbprints?.ToList(), clusterCodeVersion, clusterEndpoint, clusterId, clusterState, diagnosticsStorageAccountConfig, isEventStoreServiceEnabled, fabricSettings?.ToList(), managementEndpoint, nodeTypes?.ToList(), provisioningState, reliabilityLevel, reverseProxyCertificate, reverseProxyCertificateCommonNames, upgradeDescription, upgradeMode, maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, serializedAdditionalRawData: null) : null, vmImage, serviceFabricZonalUpgradeMode, vmssZonalUpgradeMode, isInfrastructureServiceManagerEnabled, upgradeWave, upgradePauseStartOn, upgradePauseEndOn, isWaveUpgradePaused, notifications?.ToList(), isHttpGatewayExclusiveAuthModeEnabled, etag, serializedAdditionalRawData: null);
+            return new ServiceFabricClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                addOnFeatures?.ToList(),
+                availableClusterVersions?.ToList(),
+                azureActiveDirectory,
+                certificate,
+                certificateCommonNames,
+                clientCertificateCommonNames?.ToList(),
+                clientCertificateThumbprints?.ToList(),
+                clusterCodeVersion,
+                clusterEndpoint,
+                clusterId,
+                clusterState,
+                diagnosticsStorageAccountConfig,
+                isEventStoreServiceEnabled,
+                fabricSettings?.ToList(),
+                managementEndpoint,
+                nodeTypes?.ToList(),
+                provisioningState,
+                reliabilityLevel,
+                reverseProxyCertificate,
+                reverseProxyCertificateCommonNames,
+                upgradeDescription,
+                upgradeMode,
+                maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, serializedAdditionalRawData: null) : null,
+                vmImage,
+                serviceFabricZonalUpgradeMode,
+                vmssZonalUpgradeMode,
+                isInfrastructureServiceManagerEnabled,
+                upgradeWave,
+                upgradePauseStartOn,
+                upgradePauseEndOn,
+                isWaveUpgradePaused,
+                notifications?.ToList(),
+                isHttpGatewayExclusiveAuthModeEnabled,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterVersionDetails"/>. </summary>
@@ -119,7 +160,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="Models.ClusterCodeVersionsResult"/> instance for mocking. </returns>
         public static ClusterCodeVersionsResult ClusterCodeVersionsResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string codeVersion = null, DateTimeOffset? supportExpireOn = null, ClusterEnvironment? environment = null)
         {
-            return new ClusterCodeVersionsResult(id, name, resourceType, systemData, codeVersion, supportExpireOn, environment, serializedAdditionalRawData: null);
+            return new ClusterCodeVersionsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                codeVersion,
+                supportExpireOn,
+                environment,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UpgradableVersionPathResult"/>. </summary>
@@ -141,7 +190,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <returns> A new <see cref="ServiceFabric.ServiceFabricVmSizeResourceData"/> instance for mocking. </returns>
         public static ServiceFabricVmSizeResourceData ServiceFabricVmSizeResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vmSize = null)
         {
-            return new ServiceFabricVmSizeResourceData(id, name, resourceType, systemData, vmSize != null ? new VmSize(vmSize, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ServiceFabricVmSizeResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vmSize != null ? new VmSize(vmSize, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationTypeData"/>. </summary>
@@ -158,7 +213,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceFabricApplicationTypeData(id, name, resourceType, systemData, tags, location, provisioningState, etag, serializedAdditionalRawData: null);
+            return new ServiceFabricApplicationTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationTypeVersionData"/>. </summary>
@@ -178,7 +242,18 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             tags ??= new Dictionary<string, string>();
             defaultParameterList ??= new Dictionary<string, string>();
 
-            return new ServiceFabricApplicationTypeVersionData(id, name, resourceType, systemData, tags, location, provisioningState, appPackageUri, defaultParameterList, etag, serializedAdditionalRawData: null);
+            return new ServiceFabricApplicationTypeVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                appPackageUri,
+                defaultParameterList,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabric.ServiceFabricApplicationData"/>. </summary>
@@ -208,7 +283,26 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             metrics ??= new List<ApplicationMetricDescription>();
             managedIdentities ??= new List<ApplicationUserAssignedIdentity>();
 
-            return new ServiceFabricApplicationData(id, name, resourceType, systemData, tags, location, identity, typeVersion, parameters, upgradePolicy, minimumNodes, maximumNodes, removeApplicationCapacity, metrics?.ToList(), managedIdentities?.ToList(), provisioningState, typeName, etag, serializedAdditionalRawData: null);
+            return new ServiceFabricApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                typeVersion,
+                parameters,
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
+                metrics?.ToList(),
+                managedIdentities?.ToList(),
+                provisioningState,
+                typeName,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricApplicationPatch"/>. </summary>
@@ -235,7 +329,23 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             metrics ??= new List<ApplicationMetricDescription>();
             managedIdentities ??= new List<ApplicationUserAssignedIdentity>();
 
-            return new ServiceFabricApplicationPatch(id, name, resourceType, systemData, tags, location, typeVersion, parameters, upgradePolicy, minimumNodes, maximumNodes, removeApplicationCapacity, metrics?.ToList(), managedIdentities?.ToList(), etag, serializedAdditionalRawData: null);
+            return new ServiceFabricApplicationPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                typeVersion,
+                parameters,
+                upgradePolicy,
+                minimumNodes,
+                maximumNodes,
+                removeApplicationCapacity,
+                metrics?.ToList(),
+                managedIdentities?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of ServiceFabricClusterData. </summary>

@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            return new HyperVVmDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                sourceItemId.Value,
+                generation.Value,
+                osDetails.Value,
+                diskDetails ?? new ChangeTrackingList<SiteRecoveryDiskDetails>(),
+                Optional.ToNullable(hasPhysicalDisk),
+                Optional.ToNullable(hasFibreChannelAdapter),
+                Optional.ToNullable(hasSharedVhd),
+                hyperVHostId.Value);
         }
 
         BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options)

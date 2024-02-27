@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipsLookup(profileName.Value, profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), relatedProfileName.Value, relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), existingRelationshipName.Value, serializedAdditionalRawData);
+            return new RelationshipsLookup(
+                profileName.Value,
+                profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                relatedProfileName.Value,
+                relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                existingRelationshipName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipsLookup>.Write(ModelReaderWriterOptions options)

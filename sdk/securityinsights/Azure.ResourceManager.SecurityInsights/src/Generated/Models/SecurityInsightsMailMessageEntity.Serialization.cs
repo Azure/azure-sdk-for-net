@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             IReadOnlyList<string> fileEntityIds = default;
             Optional<string> recipient = default;
@@ -590,7 +590,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailMessageEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, fileEntityIds ?? new ChangeTrackingList<string>(), recipient.Value, urls ?? new ChangeTrackingList<Uri>(), threats ?? new ChangeTrackingList<string>(), p1Sender.Value, p1SenderDisplayName.Value, p1SenderDomain.Value, senderIP.Value, p2Sender.Value, p2SenderDisplayName.Value, p2SenderDomain.Value, Optional.ToNullable(receiveDate), Optional.ToNullable(networkMessageId), internetMessageId.Value, subject.Value, language.Value, threatDetectionMethods ?? new ChangeTrackingList<string>(), Optional.ToNullable(bodyFingerprintBin1), Optional.ToNullable(bodyFingerprintBin2), Optional.ToNullable(bodyFingerprintBin3), Optional.ToNullable(bodyFingerprintBin4), Optional.ToNullable(bodyFingerprintBin5), Optional.ToNullable(antispamDirection), Optional.ToNullable(deliveryAction), Optional.ToNullable(deliveryLocation));
+            return new SecurityInsightsMailMessageEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                fileEntityIds ?? new ChangeTrackingList<string>(),
+                recipient.Value,
+                urls ?? new ChangeTrackingList<Uri>(),
+                threats ?? new ChangeTrackingList<string>(),
+                p1Sender.Value,
+                p1SenderDisplayName.Value,
+                p1SenderDomain.Value,
+                senderIP.Value,
+                p2Sender.Value,
+                p2SenderDisplayName.Value,
+                p2SenderDomain.Value,
+                Optional.ToNullable(receiveDate),
+                Optional.ToNullable(networkMessageId),
+                internetMessageId.Value,
+                subject.Value,
+                language.Value,
+                threatDetectionMethods ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(bodyFingerprintBin1),
+                Optional.ToNullable(bodyFingerprintBin2),
+                Optional.ToNullable(bodyFingerprintBin3),
+                Optional.ToNullable(bodyFingerprintBin4),
+                Optional.ToNullable(bodyFingerprintBin5),
+                Optional.ToNullable(antispamDirection),
+                Optional.ToNullable(deliveryAction),
+                Optional.ToNullable(deliveryLocation));
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailMessageEntity>.Write(ModelReaderWriterOptions options)

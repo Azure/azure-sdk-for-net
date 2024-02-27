@@ -172,7 +172,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformCustomContainer(server.Value, containerImage.Value, command ?? new ChangeTrackingList<string>(), args ?? new ChangeTrackingList<string>(), imageRegistryCredential.Value, languageFramework.Value, serializedAdditionalRawData);
+            return new AppPlatformCustomContainer(
+                server.Value,
+                containerImage.Value,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                imageRegistryCredential.Value,
+                languageFramework.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformCustomContainer>.Write(ModelReaderWriterOptions options)

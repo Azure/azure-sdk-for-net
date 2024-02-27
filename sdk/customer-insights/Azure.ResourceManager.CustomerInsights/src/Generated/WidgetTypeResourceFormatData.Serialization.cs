@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<string> widgetTypeName = default;
             Optional<string> definition = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, string>> displayName = default;
+            IDictionary<string, string> displayName = default;
             Optional<Uri> imageUrl = default;
             Optional<Guid> tenantId = default;
             Optional<string> widgetVersion = default;
@@ -268,7 +268,21 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WidgetTypeResourceFormatData(id, name, type, systemData.Value, widgetTypeName.Value, definition.Value, description.Value, Optional.ToDictionary(displayName), imageUrl.Value, Optional.ToNullable(tenantId), widgetVersion.Value, Optional.ToNullable(changed), Optional.ToNullable(created), serializedAdditionalRawData);
+            return new WidgetTypeResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                widgetTypeName.Value,
+                definition.Value,
+                description.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                imageUrl.Value,
+                Optional.ToNullable(tenantId),
+                widgetVersion.Value,
+                Optional.ToNullable(changed),
+                Optional.ToNullable(created),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WidgetTypeResourceFormatData>.Write(ModelReaderWriterOptions options)

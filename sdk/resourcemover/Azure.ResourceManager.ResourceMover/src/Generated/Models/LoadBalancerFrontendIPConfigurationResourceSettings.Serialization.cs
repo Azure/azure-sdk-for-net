@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerFrontendIPConfigurationResourceSettings(name.Value, privateIPAddress.Value, privateIPAllocationMethod.Value, subnet.Value, zones.Value, serializedAdditionalRawData);
+            return new LoadBalancerFrontendIPConfigurationResourceSettings(
+                name.Value,
+                privateIPAddress.Value,
+                privateIPAllocationMethod.Value,
+                subnet.Value,
+                zones.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerFrontendIPConfigurationResourceSettings>.Write(ModelReaderWriterOptions options)

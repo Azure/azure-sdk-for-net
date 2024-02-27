@@ -231,7 +231,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridContainerServiceVirtualNetworkProperties(infraVnetProfile.Value, vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(), vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(), dnsServers ?? new ChangeTrackingList<string>(), gateway.Value, ipAddressPrefix.Value, Optional.ToNullable(vlanId), Optional.ToNullable(provisioningState), status.Value, serializedAdditionalRawData);
+            return new HybridContainerServiceVirtualNetworkProperties(
+                infraVnetProfile.Value,
+                vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
+                vmipPool ?? new ChangeTrackingList<VirtualMachineIPItem>(),
+                dnsServers ?? new ChangeTrackingList<string>(),
+                gateway.Value,
+                ipAddressPrefix.Value,
+                Optional.ToNullable(vlanId),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

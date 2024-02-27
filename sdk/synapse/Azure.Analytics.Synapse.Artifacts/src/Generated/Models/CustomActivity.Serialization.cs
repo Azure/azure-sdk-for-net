@@ -141,7 +141,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<LinkedServiceReference> resourceLinkedService = default;
             Optional<object> folderPath = default;
             Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, object>> extendedProperties = default;
+            IDictionary<string, object> extendedProperties = default;
             Optional<object> retentionTimeInDays = default;
             Optional<object> autoUserSpecification = default;
             IDictionary<string, object> additionalProperties = default;
@@ -313,7 +313,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
+            return new CustomActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                command,
+                resourceLinkedService.Value,
+                folderPath.Value,
+                referenceObjects.Value,
+                extendedProperties ?? new ChangeTrackingDictionary<string, object>(),
+                retentionTimeInDays.Value,
+                autoUserSpecification.Value);
         }
 
         internal partial class CustomActivityConverter : JsonConverter<CustomActivity>

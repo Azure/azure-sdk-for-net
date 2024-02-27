@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), serializedAdditionalRawData);
+            return new CopyProgressDetails(
+                tableName.Value,
+                status.Value,
+                parallelCopyType.Value,
+                Optional.ToNullable(usedParallelCopies),
+                Optional.ToNullable(dataRead),
+                Optional.ToNullable(dataWritten),
+                Optional.ToNullable(rowsRead),
+                Optional.ToNullable(rowsCopied),
+                Optional.ToNullable(copyStart),
+                Optional.ToNullable(copyThroughput),
+                Optional.ToNullable(copyDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyProgressDetails>.Write(ModelReaderWriterOptions options)

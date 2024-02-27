@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNspAccessRule(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new EventHubsNspAccessRule(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNspAccessRule>.Write(ModelReaderWriterOptions options)

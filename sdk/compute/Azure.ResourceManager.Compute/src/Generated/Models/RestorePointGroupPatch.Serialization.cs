@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<RestorePointGroupSource> source = default;
             Optional<string> provisioningState = default;
             Optional<string> restorePointGroupId = default;
@@ -178,7 +178,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorePointGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, source.Value, provisioningState.Value, restorePointGroupId.Value, restorePoints ?? new ChangeTrackingList<RestorePointData>());
+            return new RestorePointGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                source.Value,
+                provisioningState.Value,
+                restorePointGroupId.Value,
+                restorePoints ?? new ChangeTrackingList<RestorePointData>());
         }
 
         BinaryData IPersistableModel<RestorePointGroupPatch>.Write(ModelReaderWriterOptions options)

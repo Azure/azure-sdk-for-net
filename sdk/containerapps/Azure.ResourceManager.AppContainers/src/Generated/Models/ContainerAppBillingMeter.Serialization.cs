@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new ContainerAppBillingMeter(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppBillingMeter>.Write(ModelReaderWriterOptions options)

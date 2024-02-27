@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -886,7 +886,58 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, extendedLocation, state.Value, hostNames ?? new ChangeTrackingList<string>(), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), enabledHostNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(availabilityState), hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, trafficManagerHostNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value, serializedAdditionalRawData);
+            return new WebSiteData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                extendedLocation,
+                state.Value,
+                hostNames ?? new ChangeTrackingList<string>(),
+                repositorySiteName.Value,
+                Optional.ToNullable(usageState),
+                Optional.ToNullable(enabled),
+                enabledHostNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(availabilityState),
+                hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
+                serverFarmId.Value,
+                Optional.ToNullable(reserved),
+                Optional.ToNullable(isXenon),
+                Optional.ToNullable(hyperV),
+                Optional.ToNullable(lastModifiedTimeUtc),
+                siteConfig.Value,
+                trafficManagerHostNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(scmSiteAlsoStopped),
+                targetSwapSlot.Value,
+                hostingEnvironmentProfile.Value,
+                Optional.ToNullable(clientAffinityEnabled),
+                Optional.ToNullable(clientCertEnabled),
+                Optional.ToNullable(clientCertMode),
+                clientCertExclusionPaths.Value,
+                Optional.ToNullable(hostNamesDisabled),
+                customDomainVerificationId.Value,
+                outboundIPAddresses.Value,
+                possibleOutboundIPAddresses.Value,
+                Optional.ToNullable(containerSize),
+                Optional.ToNullable(dailyMemoryTimeQuota),
+                Optional.ToNullable(suspendedTill),
+                Optional.ToNullable(maxNumberOfWorkers),
+                cloningInfo.Value,
+                resourceGroup.Value,
+                Optional.ToNullable(isDefaultContainer),
+                defaultHostName.Value,
+                slotSwapStatus.Value,
+                Optional.ToNullable(httpsOnly),
+                Optional.ToNullable(redundancyMode),
+                Optional.ToNullable(inProgressOperationId),
+                Optional.ToNullable(storageAccountRequired),
+                keyVaultReferenceIdentity.Value,
+                virtualNetworkSubnetId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebSiteData>.Write(ModelReaderWriterOptions options)

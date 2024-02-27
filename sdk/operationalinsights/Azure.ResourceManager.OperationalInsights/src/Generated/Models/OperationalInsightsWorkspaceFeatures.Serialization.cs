@@ -183,7 +183,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OperationalInsightsWorkspaceFeatures(Optional.ToNullable(enableDataExport), Optional.ToNullable(immediatePurgeDataOn30Days), Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions), clusterResourceId.Value, Optional.ToNullable(disableLocalAuth), additionalProperties);
+            return new OperationalInsightsWorkspaceFeatures(
+                Optional.ToNullable(enableDataExport),
+                Optional.ToNullable(immediatePurgeDataOn30Days),
+                Optional.ToNullable(enableLogAccessUsingOnlyResourcePermissions),
+                clusterResourceId.Value,
+                Optional.ToNullable(disableLocalAuth),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<OperationalInsightsWorkspaceFeatures>.Write(ModelReaderWriterOptions options)

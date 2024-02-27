@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
             Optional<AppServiceSkuDescription> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -430,7 +430,31 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, defaultHostname.Value, repositoryUrl.Value, branch.Value, customDomains ?? new ChangeTrackingList<string>(), repositoryToken.Value, buildProperties.Value, privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(), provider.Value, kind.Value, serializedAdditionalRawData);
+            return new StaticSiteData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                identity,
+                defaultHostname.Value,
+                repositoryUrl.Value,
+                branch.Value,
+                customDomains ?? new ChangeTrackingList<string>(),
+                repositoryToken.Value,
+                buildProperties.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ResponseMessageEnvelopeRemotePrivateEndpointConnection>(),
+                Optional.ToNullable(stagingEnvironmentPolicy),
+                Optional.ToNullable(allowConfigFileUpdates),
+                templateProperties.Value,
+                contentDistributionEndpoint.Value,
+                keyVaultReferenceIdentity.Value,
+                userProvidedFunctionApps ?? new ChangeTrackingList<StaticSiteUserProvidedFunctionAppData>(),
+                provider.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteData>.Write(ModelReaderWriterOptions options)

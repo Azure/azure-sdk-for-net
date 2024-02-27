@@ -308,7 +308,26 @@ namespace Azure.ResourceManager.StorageMover
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JobDefinitionData(id, name, type, systemData.Value, description.Value, copyMode, sourceName, sourceResourceId.Value, sourceSubpath.Value, targetName, targetResourceId.Value, targetSubpath.Value, latestJobRunName.Value, latestJobRunResourceId.Value, Optional.ToNullable(latestJobRunStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new JobDefinitionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                copyMode,
+                sourceName,
+                sourceResourceId.Value,
+                sourceSubpath.Value,
+                targetName,
+                targetResourceId.Value,
+                targetSubpath.Value,
+                latestJobRunName.Value,
+                latestJobRunResourceId.Value,
+                Optional.ToNullable(latestJobRunStatus),
+                agentName.Value,
+                agentResourceId.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobDefinitionData>.Write(ModelReaderWriterOptions options)

@@ -299,7 +299,19 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomEntity(name, description.Value, type.Value, subtype.Value, id.Value, Optional.ToNullable(caseSensitive), Optional.ToNullable(accentSensitive), Optional.ToNullable(fuzzyEditDistance), Optional.ToNullable(defaultCaseSensitive), Optional.ToNullable(defaultAccentSensitive), Optional.ToNullable(defaultFuzzyEditDistance), aliases ?? new ChangeTrackingList<CustomEntityAlias>());
+            return new CustomEntity(
+                name,
+                description.Value,
+                type.Value,
+                subtype.Value,
+                id.Value,
+                Optional.ToNullable(caseSensitive),
+                Optional.ToNullable(accentSensitive),
+                Optional.ToNullable(fuzzyEditDistance),
+                Optional.ToNullable(defaultCaseSensitive),
+                Optional.ToNullable(defaultAccentSensitive),
+                Optional.ToNullable(defaultFuzzyEditDistance),
+                aliases ?? new ChangeTrackingList<CustomEntityAlias>());
         }
     }
 }

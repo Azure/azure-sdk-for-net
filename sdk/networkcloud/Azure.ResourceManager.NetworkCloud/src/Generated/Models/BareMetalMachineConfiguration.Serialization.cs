@@ -147,7 +147,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BareMetalMachineConfiguration(bmcConnectionString.Value, bmcCredentials, bmcMacAddress, bootMacAddress, machineDetails.Value, machineName.Value, rackSlot, serialNumber, serializedAdditionalRawData);
+            return new BareMetalMachineConfiguration(
+                bmcConnectionString.Value,
+                bmcCredentials,
+                bmcMacAddress,
+                bootMacAddress,
+                machineDetails.Value,
+                machineName.Value,
+                rackSlot,
+                serialNumber,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BareMetalMachineConfiguration>.Write(ModelReaderWriterOptions options)

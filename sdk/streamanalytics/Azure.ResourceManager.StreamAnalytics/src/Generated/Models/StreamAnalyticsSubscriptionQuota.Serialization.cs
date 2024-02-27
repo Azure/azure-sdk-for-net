@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSubscriptionQuota(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(maxCount), Optional.ToNullable(currentCount));
+            return new StreamAnalyticsSubscriptionQuota(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(maxCount),
+                Optional.ToNullable(currentCount));
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSubscriptionQuota>.Write(ModelReaderWriterOptions options)

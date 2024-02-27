@@ -69,7 +69,13 @@ namespace Azure.IoT.TimeSeriesInsights
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TimeSeriesOperationError(code.Value, message.Value, target.Value, innerError.Value, details ?? new ChangeTrackingList<TimeSeriesOperationErrorDetails>(), additionalProperties);
+            return new TimeSeriesOperationError(
+                code.Value,
+                message.Value,
+                target.Value,
+                innerError.Value,
+                details ?? new ChangeTrackingList<TimeSeriesOperationErrorDetails>(),
+                additionalProperties);
         }
     }
 }

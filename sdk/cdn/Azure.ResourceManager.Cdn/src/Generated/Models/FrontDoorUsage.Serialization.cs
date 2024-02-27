@@ -121,7 +121,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorUsage(id.Value, unit, currentValue, limit, name, serializedAdditionalRawData);
+            return new FrontDoorUsage(
+                id.Value,
+                unit,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorUsage>.Write(ModelReaderWriterOptions options)

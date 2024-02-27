@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> storageAccountSasSecretName = default;
             Optional<string> serviceBusConnectionStringSecretName = default;
             Optional<string> targetLocation = default;
-            Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
+            IReadOnlyDictionary<string, int> roleSizeToNicCountMap = default;
             IReadOnlyList<string> excludedSkus = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -211,7 +211,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtProtectionContainerMappingDetails(instanceType, serializedAdditionalRawData, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap), excludedSkus ?? new ChangeTrackingList<string>());
+            return new VMwareCbtProtectionContainerMappingDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                keyVaultId.Value,
+                keyVaultUri.Value,
+                storageAccountId.Value,
+                storageAccountSasSecretName.Value,
+                serviceBusConnectionStringSecretName.Value,
+                targetLocation.Value,
+                roleSizeToNicCountMap ?? new ChangeTrackingDictionary<string, int>(),
+                excludedSkus ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<VMwareCbtProtectionContainerMappingDetails>.Write(ModelReaderWriterOptions options)

@@ -273,7 +273,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerInstanceContainer(name, image, command ?? new ChangeTrackingList<string>(), ports ?? new ChangeTrackingList<ContainerPort>(), environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(), instanceView.Value, resources, volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(), livenessProbe.Value, readinessProbe.Value, securityContext.Value, serializedAdditionalRawData);
+            return new ContainerInstanceContainer(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                ports ?? new ChangeTrackingList<ContainerPort>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView.Value,
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                livenessProbe.Value,
+                readinessProbe.Value,
+                securityContext.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerInstanceContainer>.Write(ModelReaderWriterOptions options)

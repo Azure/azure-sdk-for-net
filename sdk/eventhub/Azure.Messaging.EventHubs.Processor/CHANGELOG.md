@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  A notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
 ## 5.11.0 (2024-02-13)
 
 ### Acknowledgments

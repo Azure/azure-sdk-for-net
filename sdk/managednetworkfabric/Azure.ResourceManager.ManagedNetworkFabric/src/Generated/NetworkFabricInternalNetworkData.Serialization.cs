@@ -418,7 +418,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFabricInternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(), connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), Optional.ToNullable(extension), vlanId, bgpConfiguration.Value, staticRouteConfiguration.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
+            return new NetworkFabricInternalNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                annotation.Value,
+                Optional.ToNullable(mtu),
+                connectedIPv4Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                connectedIPv6Subnets ?? new ChangeTrackingList<ConnectedSubnet>(),
+                importRoutePolicyId.Value,
+                exportRoutePolicyId.Value,
+                importRoutePolicy.Value,
+                exportRoutePolicy.Value,
+                ingressAclId.Value,
+                egressAclId.Value,
+                Optional.ToNullable(isMonitoringEnabled),
+                Optional.ToNullable(extension),
+                vlanId,
+                bgpConfiguration.Value,
+                staticRouteConfiguration.Value,
+                Optional.ToNullable(configurationState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(administrativeState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFabricInternalNetworkData>.Write(ModelReaderWriterOptions options)

@@ -248,7 +248,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12ProtocolSettings(validationSettings, framingSettings, envelopeSettings, acknowledgementSettings, messageFilter, securitySettings, processingSettings, envelopeOverrides ?? new ChangeTrackingList<X12EnvelopeOverride>(), validationOverrides ?? new ChangeTrackingList<X12ValidationOverride>(), messageFilterList ?? new ChangeTrackingList<X12MessageIdentifier>(), schemaReferences, x12DelimiterOverrides ?? new ChangeTrackingList<X12DelimiterOverrides>(), serializedAdditionalRawData);
+            return new X12ProtocolSettings(
+                validationSettings,
+                framingSettings,
+                envelopeSettings,
+                acknowledgementSettings,
+                messageFilter,
+                securitySettings,
+                processingSettings,
+                envelopeOverrides ?? new ChangeTrackingList<X12EnvelopeOverride>(),
+                validationOverrides ?? new ChangeTrackingList<X12ValidationOverride>(),
+                messageFilterList ?? new ChangeTrackingList<X12MessageIdentifier>(),
+                schemaReferences,
+                x12DelimiterOverrides ?? new ChangeTrackingList<X12DelimiterOverrides>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12ProtocolSettings>.Write(ModelReaderWriterOptions options)

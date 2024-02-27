@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql
                 return null;
             }
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -298,7 +298,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(), databases ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new FailoverGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                readWriteEndpoint.Value,
+                readOnlyEndpoint.Value,
+                Optional.ToNullable(replicationRole),
+                replicationState.Value,
+                partnerServers ?? new ChangeTrackingList<PartnerServerInfo>(),
+                databases ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupData>.Write(ModelReaderWriterOptions options)

@@ -166,7 +166,17 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, additionalEmailAddresses ?? new ChangeTrackingList<string>(), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage, serializedAdditionalRawData);
+            return new SupportContactProfile(
+                firstName,
+                lastName,
+                preferredContactMethod,
+                primaryEmailAddress,
+                additionalEmailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumber.Value,
+                preferredTimeZone,
+                country,
+                preferredSupportLanguage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportContactProfile>.Write(ModelReaderWriterOptions options)

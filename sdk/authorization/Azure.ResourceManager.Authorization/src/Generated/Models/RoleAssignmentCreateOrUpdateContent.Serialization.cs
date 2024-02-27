@@ -239,7 +239,20 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentCreateOrUpdateContent(scope.Value, roleDefinitionId, principalId, Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value, serializedAdditionalRawData);
+            return new RoleAssignmentCreateOrUpdateContent(
+                scope.Value,
+                roleDefinitionId,
+                principalId,
+                Optional.ToNullable(principalType),
+                description.Value,
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(updatedOn),
+                createdBy.Value,
+                updatedBy.Value,
+                delegatedManagedIdentityResourceId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -389,7 +389,29 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionReservationSummary(id, name, type, systemData.Value, reservationOrderId.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage), kind.Value, Optional.ToNullable(purchasedQuantity), Optional.ToNullable(remainingQuantity), Optional.ToNullable(totalReservedQuantity), Optional.ToNullable(usedQuantity), Optional.ToNullable(utilizedPercentage), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionReservationSummary(
+                id,
+                name,
+                type,
+                systemData.Value,
+                reservationOrderId.Value,
+                reservationId.Value,
+                skuName.Value,
+                Optional.ToNullable(reservedHours),
+                Optional.ToNullable(usageDate),
+                Optional.ToNullable(usedHours),
+                Optional.ToNullable(minUtilizationPercentage),
+                Optional.ToNullable(avgUtilizationPercentage),
+                Optional.ToNullable(maxUtilizationPercentage),
+                kind.Value,
+                Optional.ToNullable(purchasedQuantity),
+                Optional.ToNullable(remainingQuantity),
+                Optional.ToNullable(totalReservedQuantity),
+                Optional.ToNullable(usedQuantity),
+                Optional.ToNullable(utilizedPercentage),
+                Optional.ToNullable(etag),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionReservationSummary>.Write(ModelReaderWriterOptions options)

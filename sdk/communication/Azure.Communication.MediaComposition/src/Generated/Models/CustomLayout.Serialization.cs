@@ -62,7 +62,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<IDictionary<string, LayoutLayer>> layers = default;
+            IDictionary<string, LayoutLayer> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
             Optional<LayoutResolution> resolution = default;
@@ -123,7 +123,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), Optional.ToDictionary(layers), inputGroups);
+            return new CustomLayout(
+                kind,
+                resolution.Value,
+                placeholderImageUri.Value,
+                Optional.ToNullable(scalingMode),
+                layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
+                inputGroups);
         }
     }
 }

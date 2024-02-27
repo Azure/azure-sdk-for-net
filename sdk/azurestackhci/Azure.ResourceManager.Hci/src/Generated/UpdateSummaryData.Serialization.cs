@@ -327,7 +327,24 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateSummaryData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), oemFamily.Value, hardwareModel.Value, packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(), currentVersion.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(lastChecked), Optional.ToNullable(healthState), healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(), Optional.ToNullable(healthCheckDate), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new UpdateSummaryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                oemFamily.Value,
+                hardwareModel.Value,
+                packageVersions ?? new ChangeTrackingList<HciPackageVersionInfo>(),
+                currentVersion.Value,
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(lastChecked),
+                Optional.ToNullable(healthState),
+                healthCheckResult ?? new ChangeTrackingList<HciPrecheckResult>(),
+                Optional.ToNullable(healthCheckDate),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateSummaryData>.Write(ModelReaderWriterOptions options)

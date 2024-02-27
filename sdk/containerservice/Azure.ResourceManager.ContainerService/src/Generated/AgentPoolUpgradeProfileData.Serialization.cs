@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.ContainerService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolUpgradeProfileData(id, name, type, systemData.Value, kubernetesVersion, osType, upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(), latestNodeImageVersion.Value, serializedAdditionalRawData);
+            return new AgentPoolUpgradeProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kubernetesVersion,
+                osType,
+                upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>(),
+                latestNodeImageVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeProfileData>.Write(ModelReaderWriterOptions options)

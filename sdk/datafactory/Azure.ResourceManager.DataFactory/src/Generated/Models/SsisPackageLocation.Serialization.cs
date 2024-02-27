@@ -242,7 +242,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, childPackages ?? new ChangeTrackingList<SsisChildPackage>(), serializedAdditionalRawData);
+            return new SsisPackageLocation(
+                packagePath.Value,
+                Optional.ToNullable(type),
+                packagePassword,
+                accessCredential.Value,
+                configurationPath.Value,
+                configurationAccessCredential.Value,
+                packageName.Value,
+                packageContent.Value,
+                packageLastModifiedDate.Value,
+                childPackages ?? new ChangeTrackingList<SsisChildPackage>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisPackageLocation>.Write(ModelReaderWriterOptions options)

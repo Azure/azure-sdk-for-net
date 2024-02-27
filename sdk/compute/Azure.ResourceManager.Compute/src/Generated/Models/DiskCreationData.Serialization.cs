@@ -258,7 +258,21 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value, Optional.ToNullable(provisionedBandwidthCopySpeed), serializedAdditionalRawData);
+            return new DiskCreationData(
+                createOption,
+                storageAccountId.Value,
+                imageReference.Value,
+                galleryImageReference.Value,
+                sourceUri.Value,
+                sourceResourceId.Value,
+                sourceUniqueId.Value,
+                Optional.ToNullable(uploadSizeBytes),
+                Optional.ToNullable(logicalSectorSize),
+                securityDataUri.Value,
+                Optional.ToNullable(performancePlus),
+                elasticSanResourceId.Value,
+                Optional.ToNullable(provisionedBandwidthCopySpeed),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskCreationData>.Write(ModelReaderWriterOptions options)

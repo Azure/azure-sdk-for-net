@@ -224,7 +224,21 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdlsGen2FolderDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), fileSystem, folderPath, Optional.ToNullable(provisioningState), resourceGroup, storageAccountName, subscriptionId);
+            return new AdlsGen2FolderDataSetMapping(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                dataSetId,
+                Optional.ToNullable(dataSetMappingStatus),
+                fileSystem,
+                folderPath,
+                Optional.ToNullable(provisioningState),
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<AdlsGen2FolderDataSetMapping>.Write(ModelReaderWriterOptions options)

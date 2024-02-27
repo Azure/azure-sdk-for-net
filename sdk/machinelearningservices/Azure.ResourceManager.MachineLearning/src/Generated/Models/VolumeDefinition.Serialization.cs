@@ -226,7 +226,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VolumeDefinition(Optional.ToNullable(type), Optional.ToNullable(readOnly), source.Value, target.Value, consistency.Value, bind.Value, volume.Value, tmpfs.Value, serializedAdditionalRawData);
+            return new VolumeDefinition(
+                Optional.ToNullable(type),
+                Optional.ToNullable(readOnly),
+                source.Value,
+                target.Value,
+                consistency.Value,
+                bind.Value,
+                volume.Value,
+                tmpfs.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VolumeDefinition>.Write(ModelReaderWriterOptions options)

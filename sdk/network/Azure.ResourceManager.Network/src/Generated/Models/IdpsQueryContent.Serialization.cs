@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdpsQueryContent(filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(), search.Value, orderBy.Value, Optional.ToNullable(resultsPerPage), Optional.ToNullable(skip), serializedAdditionalRawData);
+            return new IdpsQueryContent(
+                filters ?? new ChangeTrackingList<IdpsQueryFilterItems>(),
+                search.Value,
+                orderBy.Value,
+                Optional.ToNullable(resultsPerPage),
+                Optional.ToNullable(skip),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdpsQueryContent>.Write(ModelReaderWriterOptions options)

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<bool>> continueOnError = default;
             Optional<DataFactoryElement<bool>> runConcurrently = default;
             Optional<DataFactoryElement<int>> sourceStagingConcurrency = default;
-            Optional<IDictionary<string, PowerQuerySink>> sinks = default;
+            IDictionary<string, PowerQuerySink> sinks = default;
             IList<PowerQuerySinkMapping> queries = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -370,7 +370,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteWranglingDataflowActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(), userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(), additionalProperties, policy.Value, dataFlow, staging.Value, integrationRuntime.Value, compute.Value, traceLevel.Value, continueOnError.Value, runConcurrently.Value, sourceStagingConcurrency.Value, Optional.ToDictionary(sinks), queries ?? new ChangeTrackingList<PowerQuerySinkMapping>());
+            return new ExecuteWranglingDataflowActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                policy.Value,
+                dataFlow,
+                staging.Value,
+                integrationRuntime.Value,
+                compute.Value,
+                traceLevel.Value,
+                continueOnError.Value,
+                runConcurrently.Value,
+                sourceStagingConcurrency.Value,
+                sinks ?? new ChangeTrackingDictionary<string, PowerQuerySink>(),
+                queries ?? new ChangeTrackingList<PowerQuerySinkMapping>());
         }
 
         BinaryData IPersistableModel<ExecuteWranglingDataflowActivity>.Write(ModelReaderWriterOptions options)

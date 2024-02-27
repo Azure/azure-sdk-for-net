@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IReadOnlyList<SubResource> capacityReservations = default;
             IReadOnlyList<SubResource> virtualMachinesAssociated = default;
             Optional<CapacityReservationGroupInstanceView> instanceView = default;
@@ -196,7 +196,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationGroupPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, capacityReservations ?? new ChangeTrackingList<SubResource>(), virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(), instanceView.Value, sharingProfile.Value);
+            return new CapacityReservationGroupPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                capacityReservations ?? new ChangeTrackingList<SubResource>(),
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                instanceView.Value,
+                sharingProfile.Value);
         }
 
         BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<WritableSubResource> virtualWan = default;
             Optional<DeviceProperties> deviceProperties = default;
             Optional<string> ipAddress = default;
@@ -341,7 +341,24 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(), o365Policy.Value);
+            return new VpnSiteData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                virtualWan,
+                deviceProperties.Value,
+                ipAddress.Value,
+                siteKey.Value,
+                addressSpace.Value,
+                bgpProperties.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(isSecuritySite),
+                vpnSiteLinks ?? new ChangeTrackingList<VpnSiteLinkData>(),
+                o365Policy.Value);
         }
 
         BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)

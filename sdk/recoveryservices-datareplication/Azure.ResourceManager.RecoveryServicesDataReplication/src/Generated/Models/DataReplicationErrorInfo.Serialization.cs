@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationErrorInfo(code.Value, type.Value, severity.Value, Optional.ToNullable(creationTime), message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
+            return new DataReplicationErrorInfo(
+                code.Value,
+                type.Value,
+                severity.Value,
+                Optional.ToNullable(creationTime),
+                message.Value,
+                causes.Value,
+                recommendation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationErrorInfo>.Write(ModelReaderWriterOptions options)

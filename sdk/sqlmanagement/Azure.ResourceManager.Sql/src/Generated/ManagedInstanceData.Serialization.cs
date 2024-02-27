@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Sql
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -618,7 +618,45 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, sku.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(managedInstanceCreateMode), fullyQualifiedDomainName.Value, administratorLogin.Value, administratorLoginPassword.Value, subnetId.Value, state.Value, Optional.ToNullable(licenseType), Optional.ToNullable(vCores), Optional.ToNullable(storageSizeInGB), collation.Value, dnsZone.Value, dnsZonePartner.Value, Optional.ToNullable(publicDataEndpointEnabled), sourceManagedInstanceId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(proxyOverride), timezoneId.Value, instancePoolId.Value, maintenanceConfigurationId.Value, privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(), minimalTlsVersion.Value, Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(zoneRedundant), primaryUserAssignedIdentityId.Value, keyId.Value, administrators.Value, servicePrincipal.Value, serializedAdditionalRawData);
+            return new ManagedInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                sku.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(managedInstanceCreateMode),
+                fullyQualifiedDomainName.Value,
+                administratorLogin.Value,
+                administratorLoginPassword.Value,
+                subnetId.Value,
+                state.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(storageSizeInGB),
+                collation.Value,
+                dnsZone.Value,
+                dnsZonePartner.Value,
+                Optional.ToNullable(publicDataEndpointEnabled),
+                sourceManagedInstanceId.Value,
+                Optional.ToNullable(restorePointInTime),
+                Optional.ToNullable(proxyOverride),
+                timezoneId.Value,
+                instancePoolId.Value,
+                maintenanceConfigurationId.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ManagedInstancePecProperty>(),
+                minimalTlsVersion.Value,
+                Optional.ToNullable(currentBackupStorageRedundancy),
+                Optional.ToNullable(requestedBackupStorageRedundancy),
+                Optional.ToNullable(zoneRedundant),
+                primaryUserAssignedIdentityId.Value,
+                keyId.Value,
+                administrators.Value,
+                servicePrincipal.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedInstanceData>.Write(ModelReaderWriterOptions options)

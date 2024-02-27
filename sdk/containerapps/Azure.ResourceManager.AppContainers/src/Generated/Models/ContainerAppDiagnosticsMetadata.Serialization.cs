@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(), analysisTypes ?? new ChangeTrackingList<string>(), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                author.Value,
+                category.Value,
+                supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(),
+                analysisTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(score),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsMetadata>.Write(ModelReaderWriterOptions options)

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HealthcareApis
             HealthcareApisKind kind = default;
             Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.HealthcareApis
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, kind, Optional.ToNullable(etag), identity, serializedAdditionalRawData);
+            return new HealthcareApisServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                kind,
+                Optional.ToNullable(etag),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceData>.Write(ModelReaderWriterOptions options)

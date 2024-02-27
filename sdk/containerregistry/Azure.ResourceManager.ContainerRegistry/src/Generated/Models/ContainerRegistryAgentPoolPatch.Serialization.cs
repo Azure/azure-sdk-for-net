@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<int> count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryAgentPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ContainerRegistryAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(count), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryAgentPoolPatch>.Write(ModelReaderWriterOptions options)

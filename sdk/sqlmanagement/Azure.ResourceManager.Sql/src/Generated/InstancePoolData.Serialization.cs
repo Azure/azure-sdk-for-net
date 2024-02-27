@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql
                 return null;
             }
             Optional<SqlSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -259,7 +259,20 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), dnsZone.Value, maintenanceConfigurationId.Value, serializedAdditionalRawData);
+            return new InstancePoolData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku.Value,
+                subnetId.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(licenseType),
+                dnsZone.Value,
+                maintenanceConfigurationId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolData>.Write(ModelReaderWriterOptions options)

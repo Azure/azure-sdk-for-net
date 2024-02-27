@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabRosterProfile(activeDirectoryGroupId.Value, ltiContextId.Value, lmsInstance.Value, ltiClientId.Value, ltiRosterEndpoint.Value, serializedAdditionalRawData);
+            return new LabRosterProfile(
+                activeDirectoryGroupId.Value,
+                ltiContextId.Value,
+                lmsInstance.Value,
+                ltiClientId.Value,
+                ltiRosterEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabRosterProfile>.Write(ModelReaderWriterOptions options)

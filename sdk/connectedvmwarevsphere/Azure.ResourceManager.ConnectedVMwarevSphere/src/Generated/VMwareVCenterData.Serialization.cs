@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -333,7 +333,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareVCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, fqdn, Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareVCenterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind.Value,
+                uuid.Value,
+                fqdn,
+                Optional.ToNullable(port),
+                version.Value,
+                instanceUuid.Value,
+                connectionStatus.Value,
+                customResourceName.Value,
+                credentials.Value,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareVCenterData>.Write(ModelReaderWriterOptions options)

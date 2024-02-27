@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<FeatureWindow> featureWindow = default;
             Optional<string> jobId = default;
             Optional<MachineLearningJobStatus> status = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<FeatureStoreJobType> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -276,7 +276,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningFeatureSetJob(Optional.ToNullable(createdDate), displayName.Value, Optional.ToNullable(duration), experimentId.Value, featureWindow.Value, jobId.Value, Optional.ToNullable(status), Optional.ToDictionary(tags), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new MachineLearningFeatureSetJob(
+                Optional.ToNullable(createdDate),
+                displayName.Value,
+                Optional.ToNullable(duration),
+                experimentId.Value,
+                featureWindow.Value,
+                jobId.Value,
+                Optional.ToNullable(status),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(type),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningFeatureSetJob>.Write(ModelReaderWriterOptions options)

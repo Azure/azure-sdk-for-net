@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<string> size = default;
             IReadOnlyList<WritableSubResource> ruleCollectionGroups = default;
             Optional<NetworkProvisioningState> provisioningState = default;
@@ -471,7 +471,31 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, size.Value, ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(provisioningState), basePolicy, firewalls ?? new ChangeTrackingList<WritableSubResource>(), childPolicies ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
+            return new FirewallPolicyData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                identity,
+                size.Value,
+                ruleCollectionGroups ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(provisioningState),
+                basePolicy,
+                firewalls ?? new ChangeTrackingList<WritableSubResource>(),
+                childPolicies ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(threatIntelMode),
+                threatIntelWhitelist.Value,
+                insights.Value,
+                snat.Value,
+                sql.Value,
+                dnsSettings.Value,
+                explicitProxy.Value,
+                intrusionDetection.Value,
+                transportSecurity.Value,
+                sku.Value);
         }
 
         BinaryData IPersistableModel<FirewallPolicyData>.Write(ModelReaderWriterOptions options)

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServices
             Optional<RecoveryServicesVaultProperties> properties = default;
             Optional<RecoveryServicesSku> sku = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -219,7 +219,18 @@ namespace Azure.ResourceManager.RecoveryServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesVaultData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, properties.Value, sku.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new RecoveryServicesVaultData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                properties.Value,
+                sku.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesVaultData>.Write(ModelReaderWriterOptions options)

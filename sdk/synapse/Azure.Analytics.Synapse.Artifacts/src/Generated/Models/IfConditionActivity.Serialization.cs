@@ -220,7 +220,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IfConditionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, expression, ifTrueActivities ?? new ChangeTrackingList<Activity>(), ifFalseActivities ?? new ChangeTrackingList<Activity>());
+            return new IfConditionActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                expression,
+                ifTrueActivities ?? new ChangeTrackingList<Activity>(),
+                ifFalseActivities ?? new ChangeTrackingList<Activity>());
         }
 
         internal partial class IfConditionActivityConverter : JsonConverter<IfConditionActivity>

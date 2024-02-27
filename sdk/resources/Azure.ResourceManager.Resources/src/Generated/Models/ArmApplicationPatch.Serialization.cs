@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<ArmApplicationManagedIdentity> identity = default;
             Optional<string> managedBy = default;
             Optional<ArmApplicationSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -498,7 +498,34 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(), createdBy.Value, updatedBy.Value);
+            return new ArmApplicationPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                managedBy.Value,
+                sku.Value,
+                serializedAdditionalRawData,
+                plan,
+                kind.Value,
+                identity.Value,
+                managedResourceGroupId.Value,
+                applicationDefinitionId.Value,
+                parameters.Value,
+                outputs.Value,
+                Optional.ToNullable(provisioningState),
+                billingDetails.Value,
+                jitAccessPolicy.Value,
+                Optional.ToNullable(publisherTenantId),
+                authorizations ?? new ChangeTrackingList<ArmApplicationAuthorization>(),
+                Optional.ToNullable(managementMode),
+                customerSupport.Value,
+                supportUris.Value,
+                artifacts ?? new ChangeTrackingList<ArmApplicationArtifact>(),
+                createdBy.Value,
+                updatedBy.Value);
         }
 
         BinaryData IPersistableModel<ArmApplicationPatch>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ResourceSku> sku = default;
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
@@ -276,7 +276,19 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventGridDomainPatch(Optional.ToDictionary(tags), identity, sku.Value, Optional.ToNullable(publicNetworkAccess), inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(autoCreateTopicWithFirstSubscription), Optional.ToNullable(autoDeleteTopicWithLastSubscription), Optional.ToNullable(dataResidencyBoundary), eventTypeInfo.Value, serializedAdditionalRawData);
+            return new EventGridDomainPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                sku.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                Optional.ToNullable(minimumTlsVersionAllowed),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(autoCreateTopicWithFirstSubscription),
+                Optional.ToNullable(autoDeleteTopicWithLastSubscription),
+                Optional.ToNullable(dataResidencyBoundary),
+                eventTypeInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventGridDomainPatch>.Write(ModelReaderWriterOptions options)

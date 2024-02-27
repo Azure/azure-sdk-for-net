@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAlertRuleTemplate(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownAlertRuleTemplate(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleTemplateData>.Write(ModelReaderWriterOptions options)

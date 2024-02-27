@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, managedBy.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value, serializedAdditionalRawData);
+            return new SynapseDataMaskingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                kind.Value,
+                managedBy.Value,
+                Optional.ToNullable(dataMaskingState),
+                exemptPrincipals.Value,
+                applicationPrincipals.Value,
+                maskingLevel.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDataMaskingPolicyData>.Write(ModelReaderWriterOptions options)

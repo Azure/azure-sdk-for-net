@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Synapse
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -273,19 +273,19 @@ namespace Azure.ResourceManager.Synapse
             Optional<string> provisioningState = default;
             Optional<string> sqlAdministratorLogin = default;
             Optional<VirtualNetworkProfile> virtualNetworkProfile = default;
-            Optional<IDictionary<string, string>> connectivityEndpoints = default;
+            IDictionary<string, string> connectivityEndpoints = default;
             Optional<string> managedVirtualNetwork = default;
             IList<SynapsePrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<SynapseEncryptionDetails> encryption = default;
             Optional<Guid> workspaceUID = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> extraProperties = default;
+            IReadOnlyDictionary<string, BinaryData> extraProperties = default;
             Optional<SynapseManagedVirtualNetworkSettings> managedVirtualNetworkSettings = default;
             Optional<SynapseWorkspaceRepositoryConfiguration> workspaceRepositoryConfiguration = default;
             Optional<PurviewConfiguration> purviewConfiguration = default;
             Optional<ResourceIdentifier> adlaResourceId = default;
             Optional<WorkspacePublicNetworkAccess> publicNetworkAccess = default;
             Optional<CspWorkspaceAdminProperties> cspWorkspaceAdminProperties = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> settings = default;
+            IReadOnlyDictionary<string, BinaryData> settings = default;
             Optional<bool> azureADOnlyAuthentication = default;
             Optional<bool> trustedServiceBypassEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -566,7 +566,36 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, Optional.ToDictionary(connectivityEndpoints), managedVirtualNetwork.Value, privateEndpointConnections ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionData>(), encryption.Value, Optional.ToNullable(workspaceUID), Optional.ToDictionary(extraProperties), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value, Optional.ToNullable(publicNetworkAccess), cspWorkspaceAdminProperties.Value, Optional.ToDictionary(settings), Optional.ToNullable(azureADOnlyAuthentication), Optional.ToNullable(trustedServiceBypassEnabled), serializedAdditionalRawData);
+            return new SynapseWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                defaultDataLakeStorage.Value,
+                sqlAdministratorLoginPassword.Value,
+                managedResourceGroupName.Value,
+                provisioningState.Value,
+                sqlAdministratorLogin.Value,
+                virtualNetworkProfile.Value,
+                connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
+                managedVirtualNetwork.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<SynapsePrivateEndpointConnectionData>(),
+                encryption.Value,
+                Optional.ToNullable(workspaceUID),
+                extraProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                managedVirtualNetworkSettings.Value,
+                workspaceRepositoryConfiguration.Value,
+                purviewConfiguration.Value,
+                adlaResourceId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                cspWorkspaceAdminProperties.Value,
+                settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                Optional.ToNullable(azureADOnlyAuthentication),
+                Optional.ToNullable(trustedServiceBypassEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceData>.Write(ModelReaderWriterOptions options)

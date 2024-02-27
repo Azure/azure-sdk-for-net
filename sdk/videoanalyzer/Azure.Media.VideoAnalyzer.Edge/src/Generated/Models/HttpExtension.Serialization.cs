@@ -93,7 +93,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new HttpExtension(type, name, inputs, endpoint, image, samplingOptions.Value);
+            return new HttpExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions.Value);
         }
     }
 }

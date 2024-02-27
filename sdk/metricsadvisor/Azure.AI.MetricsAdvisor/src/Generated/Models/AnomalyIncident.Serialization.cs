@@ -70,7 +70,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyIncident(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, incidentId, startTime, lastTime, rootNode, property);
+            return new AnomalyIncident(
+                dataFeedId.Value,
+                metricId.Value,
+                anomalyDetectionConfigurationId.Value,
+                incidentId,
+                startTime,
+                lastTime,
+                rootNode,
+                property);
         }
     }
 }

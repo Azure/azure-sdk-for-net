@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<ResourceIdentifier> id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImageBase(id.Value, serializedAdditionalRawData, name, location, Optional.ToDictionary(tags), extendedLocation);
+            return new VirtualMachineImageBase(
+                id.Value,
+                serializedAdditionalRawData,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation);
         }
 
         BinaryData IPersistableModel<VirtualMachineImageBase>.Write(ModelReaderWriterOptions options)

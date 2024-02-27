@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(id, name, type, systemData.Value, logicAppResourceId.Value, triggerUri.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new SecurityInsightsAlertRuleActionCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                logicAppResourceId.Value,
+                triggerUri.Value,
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleActionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

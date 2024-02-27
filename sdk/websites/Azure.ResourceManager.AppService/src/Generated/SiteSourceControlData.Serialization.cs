@@ -259,7 +259,20 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteSourceControlData(id, name, type, systemData.Value, repoUrl.Value, branch.Value, Optional.ToNullable(isManualIntegration), Optional.ToNullable(isGitHubAction), Optional.ToNullable(deploymentRollbackEnabled), Optional.ToNullable(isMercurial), gitHubActionConfiguration.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteSourceControlData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                repoUrl.Value,
+                branch.Value,
+                Optional.ToNullable(isManualIntegration),
+                Optional.ToNullable(isGitHubAction),
+                Optional.ToNullable(deploymentRollbackEnabled),
+                Optional.ToNullable(isMercurial),
+                gitHubActionConfiguration.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteSourceControlData>.Write(ModelReaderWriterOptions options)

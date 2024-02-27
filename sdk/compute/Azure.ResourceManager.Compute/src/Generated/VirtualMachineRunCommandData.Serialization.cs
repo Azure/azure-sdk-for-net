@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -391,7 +391,28 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, source.Value, parameters ?? new ChangeTrackingList<RunCommandInputParameter>(), protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(), Optional.ToNullable(asyncExecution), runAsUser.Value, runAsPassword.Value, Optional.ToNullable(timeoutInSeconds), outputBlobUri.Value, errorBlobUri.Value, outputBlobManagedIdentity.Value, errorBlobManagedIdentity.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(treatFailureAsDeploymentFailure), serializedAdditionalRawData);
+            return new VirtualMachineRunCommandData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source.Value,
+                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
+                Optional.ToNullable(asyncExecution),
+                runAsUser.Value,
+                runAsPassword.Value,
+                Optional.ToNullable(timeoutInSeconds),
+                outputBlobUri.Value,
+                errorBlobUri.Value,
+                outputBlobManagedIdentity.Value,
+                errorBlobManagedIdentity.Value,
+                provisioningState.Value,
+                instanceView.Value,
+                Optional.ToNullable(treatFailureAsDeploymentFailure),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options)

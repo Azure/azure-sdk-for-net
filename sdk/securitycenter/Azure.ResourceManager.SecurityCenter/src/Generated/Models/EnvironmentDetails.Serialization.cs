@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnvironmentDetails(nativeResourceId.Value, environmentHierarchyId.Value, organizationalHierarchyId.Value, subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new EnvironmentDetails(
+                nativeResourceId.Value,
+                environmentHierarchyId.Value,
+                organizationalHierarchyId.Value,
+                subscriptionId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnvironmentDetails>.Write(ModelReaderWriterOptions options)

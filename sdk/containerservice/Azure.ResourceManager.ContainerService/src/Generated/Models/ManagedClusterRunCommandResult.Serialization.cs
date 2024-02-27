@@ -178,7 +178,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterRunCommandResult(id.Value, provisioningState.Value, Optional.ToNullable(exitCode), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), logs.Value, reason.Value, serializedAdditionalRawData);
+            return new ManagedClusterRunCommandResult(
+                id.Value,
+                provisioningState.Value,
+                Optional.ToNullable(exitCode),
+                Optional.ToNullable(startedAt),
+                Optional.ToNullable(finishedAt),
+                logs.Value,
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterRunCommandResult>.Write(ModelReaderWriterOptions options)

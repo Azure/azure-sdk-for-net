@@ -164,7 +164,15 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineConnectionProfile(
+                privateIPAddress.Value,
+                sshAuthority.Value,
+                sshInBrowserUrl.Value,
+                rdpAuthority.Value,
+                rdpInBrowserUrl.Value,
+                adminUsername.Value,
+                nonAdminUsername.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineConnectionProfile>.Write(ModelReaderWriterOptions options)

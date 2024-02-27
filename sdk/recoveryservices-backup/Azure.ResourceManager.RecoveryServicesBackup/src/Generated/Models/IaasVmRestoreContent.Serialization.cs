@@ -443,7 +443,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IaasVmRestoreContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, restoreDiskLunList ?? new ChangeTrackingList<int>(), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, zones ?? new ChangeTrackingList<string>(), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value);
+            return new IaasVmRestoreContent(
+                objectType,
+                serializedAdditionalRawData,
+                recoveryPointId.Value,
+                Optional.ToNullable(recoveryType),
+                sourceResourceId.Value,
+                targetVirtualMachineId.Value,
+                targetResourceGroupId.Value,
+                storageAccountId.Value,
+                virtualNetworkId.Value,
+                subnetId.Value,
+                targetDomainNameId.Value,
+                Optional.ToNullable(region),
+                affinityGroup.Value,
+                Optional.ToNullable(createNewCloudService),
+                Optional.ToNullable(originalStorageAccountOption),
+                encryptionDetails.Value,
+                restoreDiskLunList ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(restoreWithManagedDisks),
+                diskEncryptionSetId.Value,
+                zones ?? new ChangeTrackingList<string>(),
+                identityInfo.Value,
+                identityBasedRestoreDetails.Value,
+                extendedLocation,
+                securedVmDetails.Value,
+                targetDiskNetworkAccessSettings.Value);
         }
 
         BinaryData IPersistableModel<IaasVmRestoreContent>.Write(ModelReaderWriterOptions options)

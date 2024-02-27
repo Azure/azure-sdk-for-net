@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value, serializedAdditionalRawData);
+            return new WorkbookTemplateGallery(
+                name.Value,
+                category.Value,
+                type.Value,
+                Optional.ToNullable(order),
+                resourceType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookTemplateGallery>.Write(ModelReaderWriterOptions options)

@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 return null;
             }
             ExtendedLocation extendedLocation = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -535,7 +535,39 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(), networkData.Value, placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, volumes ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new NetworkCloudVirtualMachineData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                adminUsername,
+                availabilityZone.Value,
+                bareMetalMachineId.Value,
+                Optional.ToNullable(bootMethod),
+                cloudServicesNetworkAttachment,
+                clusterId.Value,
+                cpuCores,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                Optional.ToNullable(isolateEmulatorThread),
+                memorySizeGB,
+                networkAttachments ?? new ChangeTrackingList<NetworkAttachment>(),
+                networkData.Value,
+                placementHints ?? new ChangeTrackingList<VirtualMachinePlacementHint>(),
+                Optional.ToNullable(powerState),
+                Optional.ToNullable(provisioningState),
+                sshPublicKeys ?? new ChangeTrackingList<NetworkCloudSshPublicKey>(),
+                storageProfile,
+                userData.Value,
+                Optional.ToNullable(virtioInterface),
+                Optional.ToNullable(vmDeviceModel),
+                vmImage,
+                vmImageRepositoryCredentials.Value,
+                volumes ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudVirtualMachineData>.Write(ModelReaderWriterOptions options)

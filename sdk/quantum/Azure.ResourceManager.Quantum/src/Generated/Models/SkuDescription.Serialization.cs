@@ -223,7 +223,17 @@ namespace Azure.ResourceManager.Quantum.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuDescription(id.Value, name.Value, version.Value, description.Value, restrictedAccessUri.Value, Optional.ToNullable(autoAdd), targets ?? new ChangeTrackingList<string>(), quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(), pricingDetails ?? new ChangeTrackingList<PricingDetail>(), serializedAdditionalRawData);
+            return new SkuDescription(
+                id.Value,
+                name.Value,
+                version.Value,
+                description.Value,
+                restrictedAccessUri.Value,
+                Optional.ToNullable(autoAdd),
+                targets ?? new ChangeTrackingList<string>(),
+                quotaDimensions ?? new ChangeTrackingList<QuotaDimension>(),
+                pricingDetails ?? new ChangeTrackingList<PricingDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuDescription>.Write(ModelReaderWriterOptions options)

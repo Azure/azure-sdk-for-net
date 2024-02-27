@@ -262,7 +262,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayUrlPathMap(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), defaultBackendAddressPool, defaultBackendHttpSettings, defaultRewriteRuleSet, defaultRedirectConfiguration, defaultLoadDistributionPolicy, pathRules ?? new ChangeTrackingList<ApplicationGatewayPathRule>(), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayUrlPathMap(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                defaultBackendAddressPool,
+                defaultBackendHttpSettings,
+                defaultRewriteRuleSet,
+                defaultRedirectConfiguration,
+                defaultLoadDistributionPolicy,
+                pathRules ?? new ChangeTrackingList<ApplicationGatewayPathRule>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayUrlPathMap>.Write(ModelReaderWriterOptions options)

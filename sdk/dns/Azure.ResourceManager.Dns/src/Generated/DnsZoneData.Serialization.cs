@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Dns
                 return null;
             }
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -333,7 +333,22 @@ namespace Azure.ResourceManager.Dns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(maxNumberOfRecordsPerRecordSet), Optional.ToNullable(numberOfRecordSets), nameServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(zoneType), registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
+            return new DnsZoneData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(maxNumberOfRecordSets),
+                Optional.ToNullable(maxNumberOfRecordsPerRecordSet),
+                Optional.ToNullable(numberOfRecordSets),
+                nameServers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(zoneType),
+                registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsZoneData>.Write(ModelReaderWriterOptions options)

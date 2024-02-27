@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
@@ -156,7 +156,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerTrackedResourceData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToDictionary(tags), Optional.ToNullable(location));
+            return new TrafficManagerTrackedResourceData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location));
         }
 
         BinaryData IPersistableModel<TrafficManagerTrackedResourceData>.Write(ModelReaderWriterOptions options)

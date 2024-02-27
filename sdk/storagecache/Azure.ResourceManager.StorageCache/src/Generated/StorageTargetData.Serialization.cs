@@ -299,7 +299,22 @@ namespace Azure.ResourceManager.StorageCache
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageTargetData(id, name, type, systemData.Value, junctions ?? new ChangeTrackingList<NamespaceJunction>(), Optional.ToNullable(targetType), Optional.ToNullable(provisioningState), Optional.ToNullable(state), nfs3.Value, clfs.Value, unknown.Value, blobNfs.Value, Optional.ToNullable(allocationPercentage), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new StorageTargetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                junctions ?? new ChangeTrackingList<NamespaceJunction>(),
+                Optional.ToNullable(targetType),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(state),
+                nfs3.Value,
+                clfs.Value,
+                unknown.Value,
+                blobNfs.Value,
+                Optional.ToNullable(allocationPercentage),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTargetData>.Write(ModelReaderWriterOptions options)

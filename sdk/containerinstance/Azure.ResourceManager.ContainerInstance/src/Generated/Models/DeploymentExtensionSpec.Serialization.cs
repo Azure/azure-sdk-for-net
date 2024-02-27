@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentExtensionSpec(name, extensionType.Value, version.Value, settings.Value, protectedSettings.Value, serializedAdditionalRawData);
+            return new DeploymentExtensionSpec(
+                name,
+                extensionType.Value,
+                version.Value,
+                settings.Value,
+                protectedSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentExtensionSpec>.Write(ModelReaderWriterOptions options)

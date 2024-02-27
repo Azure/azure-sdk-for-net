@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<WritableSubResource> virtualHub = default;
             IList<VpnConnectionData> connections = default;
             Optional<BgpSettings> bgpSettings = default;
@@ -354,7 +354,23 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualHub, connections ?? new ChangeTrackingList<VpnConnectionData>(), bgpSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(vpnGatewayScaleUnit), ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(isRoutingPreferenceInternet), natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
+            return new VpnGatewayData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                virtualHub,
+                connections ?? new ChangeTrackingList<VpnConnectionData>(),
+                bgpSettings.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(vpnGatewayScaleUnit),
+                ipConfigurations ?? new ChangeTrackingList<VpnGatewayIPConfiguration>(),
+                Optional.ToNullable(enableBgpRouteTranslationForNat),
+                Optional.ToNullable(isRoutingPreferenceInternet),
+                natRules ?? new ChangeTrackingList<VpnGatewayNatRuleData>());
         }
 
         BinaryData IPersistableModel<VpnGatewayData>.Write(ModelReaderWriterOptions options)

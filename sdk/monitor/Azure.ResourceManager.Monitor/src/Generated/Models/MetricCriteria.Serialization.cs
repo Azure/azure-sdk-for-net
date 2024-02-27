@@ -167,7 +167,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricCriteria(criterionType, name, metricName, metricNamespace.Value, timeAggregation, dimensions ?? new ChangeTrackingList<MetricDimension>(), Optional.ToNullable(skipMetricValidation), additionalProperties, @operator, threshold);
+            return new MetricCriteria(
+                criterionType,
+                name,
+                metricName,
+                metricNamespace.Value,
+                timeAggregation,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                Optional.ToNullable(skipMetricValidation),
+                additionalProperties,
+                @operator,
+                threshold);
         }
 
         BinaryData IPersistableModel<MetricCriteria>.Write(ModelReaderWriterOptions options)

@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeAlias(name.Value, paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value, serializedAdditionalRawData);
+            return new ResourceTypeAlias(
+                name.Value,
+                paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(),
+                Optional.ToNullable(type),
+                defaultPath.Value,
+                defaultPattern.Value,
+                defaultMetadata.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeAlias>.Write(ModelReaderWriterOptions options)

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, scopes ?? new ChangeTrackingList<string>(), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
+            return new ActivityLogAlertData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                scopes ?? new ChangeTrackingList<string>(),
+                condition.Value,
+                actions.Value,
+                Optional.ToNullable(enabled),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options)

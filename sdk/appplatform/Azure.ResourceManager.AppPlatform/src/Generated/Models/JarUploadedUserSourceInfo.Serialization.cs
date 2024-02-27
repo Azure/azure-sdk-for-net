@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JarUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, runtimeVersion.Value, jvmOptions.Value);
+            return new JarUploadedUserSourceInfo(
+                type,
+                version.Value,
+                serializedAdditionalRawData,
+                relativePath.Value,
+                runtimeVersion.Value,
+                jvmOptions.Value);
         }
 
         BinaryData IPersistableModel<JarUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)

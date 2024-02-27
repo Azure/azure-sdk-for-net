@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareData(id, name, type, systemData.Value, fileName.Value, vendor.Value, model.Value, version.Value, description.Value, Optional.ToNullable(fileSize), Optional.ToNullable(status), statusMessages ?? new ChangeTrackingList<StatusMessage>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new FirmwareData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                fileName.Value,
+                vendor.Value,
+                model.Value,
+                version.Value,
+                description.Value,
+                Optional.ToNullable(fileSize),
+                Optional.ToNullable(status),
+                statusMessages ?? new ChangeTrackingList<StatusMessage>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareData>.Write(ModelReaderWriterOptions options)

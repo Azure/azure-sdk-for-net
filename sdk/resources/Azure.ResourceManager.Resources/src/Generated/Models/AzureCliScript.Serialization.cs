@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ScriptType kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -433,7 +433,31 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, serializedAdditionalRawData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, supportingScriptUris ?? new ChangeTrackingList<Uri>(), scriptContent.Value, arguments.Value, environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
+            return new AzureCliScript(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData,
+                containerSettings.Value,
+                storageAccountSettings.Value,
+                Optional.ToNullable(cleanupPreference),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                outputs.Value,
+                primaryScriptUri.Value,
+                supportingScriptUris ?? new ChangeTrackingList<Uri>(),
+                scriptContent.Value,
+                arguments.Value,
+                environmentVariables ?? new ChangeTrackingList<ScriptEnvironmentVariable>(),
+                forceUpdateTag.Value,
+                retentionInterval,
+                Optional.ToNullable(timeout),
+                azCliVersion);
         }
 
         BinaryData IPersistableModel<AzureCliScript>.Write(ModelReaderWriterOptions options)

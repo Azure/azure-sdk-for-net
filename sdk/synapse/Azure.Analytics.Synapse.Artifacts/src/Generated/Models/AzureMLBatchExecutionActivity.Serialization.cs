@@ -132,9 +132,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
-            Optional<IDictionary<string, object>> globalParameters = default;
-            Optional<IDictionary<string, AzureMLWebServiceFile>> webServiceOutputs = default;
-            Optional<IDictionary<string, AzureMLWebServiceFile>> webServiceInputs = default;
+            IDictionary<string, object> globalParameters = default;
+            IDictionary<string, AzureMLWebServiceFile> webServiceOutputs = default;
+            IDictionary<string, AzureMLWebServiceFile> webServiceInputs = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -282,7 +282,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLBatchExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToDictionary(globalParameters), Optional.ToDictionary(webServiceOutputs), Optional.ToDictionary(webServiceInputs));
+            return new AzureMLBatchExecutionActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                globalParameters ?? new ChangeTrackingDictionary<string, object>(),
+                webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(),
+                webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>());
         }
 
         internal partial class AzureMLBatchExecutionActivityConverter : JsonConverter<AzureMLBatchExecutionActivity>

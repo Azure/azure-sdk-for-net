@@ -21,7 +21,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             Optional<string> id = default;
             Optional<string> name = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
+            IReadOnlyDictionary<string, string> labels = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterQueueDetails(id.Value, name.Value, Optional.ToDictionary(labels));
+            return new AcsRouterQueueDetails(id.Value, name.Value, labels ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

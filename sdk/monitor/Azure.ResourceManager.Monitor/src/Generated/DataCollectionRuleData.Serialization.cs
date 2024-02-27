@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionRuleResourceKind> kind = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<string> immutableId = default;
             Optional<ResourceIdentifier> dataCollectionEndpointId = default;
             Optional<DataCollectionRuleMetadata> metadata = default;
-            Optional<IDictionary<string, DataStreamDeclaration>> streamDeclarations = default;
+            IDictionary<string, DataStreamDeclaration> streamDeclarations = default;
             Optional<DataCollectionRuleDataSources> dataSources = default;
             Optional<DataCollectionRuleDestinations> destinations = default;
             IList<DataFlow> dataFlows = default;
@@ -367,7 +367,26 @@ namespace Azure.ResourceManager.Monitor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, dataFlows ?? new ChangeTrackingList<DataFlow>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new DataCollectionRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(kind),
+                identity,
+                Optional.ToNullable(etag),
+                description.Value,
+                immutableId.Value,
+                dataCollectionEndpointId.Value,
+                metadata.Value,
+                streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
+                dataSources.Value,
+                destinations.Value,
+                dataFlows ?? new ChangeTrackingList<DataFlow>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleData>.Write(ModelReaderWriterOptions options)

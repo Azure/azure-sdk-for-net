@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -352,7 +352,26 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, availabilityZones ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new ElasticSanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                baseSizeTiB,
+                extendedCapacitySizeTiB,
+                Optional.ToNullable(totalVolumeSizeGiB),
+                Optional.ToNullable(volumeGroupCount),
+                Optional.ToNullable(totalIops),
+                Optional.ToNullable(totalMbps),
+                Optional.ToNullable(totalSizeTiB),
+                privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options)

@@ -219,7 +219,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), diskUuid.Value, Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, Optional.ToNullable(lastSyncTime), serializedAdditionalRawData);
+            return new InMageRcmFailbackProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                isOSDisk.Value,
+                Optional.ToNullable(capacityInBytes),
+                diskUuid.Value,
+                Optional.ToNullable(dataPendingInLogDataStoreInMB),
+                Optional.ToNullable(dataPendingAtSourceAgentInMB),
+                isInitialReplicationComplete.Value,
+                irDetails.Value,
+                resyncDetails.Value,
+                Optional.ToNullable(lastSyncTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
