@@ -13,7 +13,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     {
         private Dictionary<string, BinaryData> _rawData;
 
-        public static implicit operator BinaryContent(BaseModel baseModel)
+        public static implicit operator BinaryContent?(BaseModel? baseModel)
         {
             if (baseModel == null)
             {
@@ -31,13 +31,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
-        protected internal BaseModel(Dictionary<string, BinaryData> rawData)
+        protected internal BaseModel(Dictionary<string, BinaryData>? rawData)
         {
             _rawData = rawData ?? new Dictionary<string, BinaryData>();
         }
 
-        public string Kind { get; internal set; }
-        public string Name { get; set; }
+        public string? Kind { get; internal set; }
+        public string? Name { get; set; }
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
         {
@@ -77,16 +77,16 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel DeserializeBaseModel(BinaryData data, ModelReaderWriterOptions options)
+        internal static BaseModel DeserializeBaseModel(BinaryData data, ModelReaderWriterOptions? options)
             => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
 
-        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(BaseModel)}'");
             }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
@@ -99,10 +99,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
             }
 
-            //Deserialize unknown subtype
-            string kind = default;
+            // Deserialize unknown subtype
+            string? kind = default;
             OptionalProperty<string> name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -121,6 +122,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
             return new UnknownBaseModel(kind, name, rawData);
         }
 
