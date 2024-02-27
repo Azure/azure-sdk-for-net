@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for cryptographic key summary. </summary>
-    public partial class FirmwareCryptoKeySummaryResource : SummaryResourceProperties
+    public partial class FirmwareFirmwareCryptoKeySummaryResourceInfo : SummaryResourceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummaryResource"/>. </summary>
-        internal FirmwareCryptoKeySummaryResource()
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoKeySummaryResourceInfo"/>. </summary>
+        internal FirmwareFirmwareCryptoKeySummaryResourceInfo()
         {
             SummaryType = SummaryType.FirmwareCryptoKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeySummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoKeySummaryResourceInfo"/>. </summary>
         /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="privateKeys"> Total number of private keys found. </param>
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        internal FirmwareCryptoKeySummaryResource(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
+        internal FirmwareFirmwareCryptoKeySummaryResourceInfo(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
             TotalKeys = totalKeys;
             PublicKeys = publicKeys;

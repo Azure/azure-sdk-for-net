@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateListResult"/>. </summary>
         internal FirmwareCryptoCertificateListResult()
         {
-            Value = new ChangeTrackingList<FirmwareCryptoCertificateResource>();
+            Value = new ChangeTrackingList<FirmwareFirmwareCryptoCertificateResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateListResult"/>. </summary>
         /// <param name="value"> The list of crypto certificate results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoCertificateListResult(IReadOnlyList<FirmwareCryptoCertificateResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareCryptoCertificateListResult(IReadOnlyList<FirmwareFirmwareCryptoCertificateResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of crypto certificate results. </summary>
-        public IReadOnlyList<FirmwareCryptoCertificateResource> Value { get; }
+        public IReadOnlyList<FirmwareFirmwareCryptoCertificateResourceData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }

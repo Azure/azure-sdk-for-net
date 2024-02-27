@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoCertificateResource : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoCertificateResource>
+    public partial class FirmwareFirmwareCryptoCertificateResourceData : IUtf8JsonSerializable, IJsonModel<FirmwareFirmwareCryptoCertificateResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoCertificateResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareFirmwareCryptoCertificateResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FirmwareCryptoCertificateResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirmwareFirmwareCryptoCertificateResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificateResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareCryptoCertificateResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoCertificateResourceData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CryptoCertId != null)
+            if (CryptoCertId.HasValue)
             {
                 if (CryptoCertId != null)
                 {
                     writer.WritePropertyName("cryptoCertId"u8);
-                    writer.WriteStringValue(CryptoCertId);
+                    writer.WriteStringValue(CryptoCertId.Value);
                 }
                 else
                 {
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        FirmwareCryptoCertificateResource IJsonModel<FirmwareCryptoCertificateResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FirmwareFirmwareCryptoCertificateResourceData IJsonModel<FirmwareFirmwareCryptoCertificateResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificateResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareCryptoCertificateResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoCertificateResourceData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirmwareCryptoCertificateResource(document.RootElement, options);
+            return DeserializeFirmwareFirmwareCryptoCertificateResourceData(document.RootElement, options);
         }
 
-        internal static FirmwareCryptoCertificateResource DeserializeFirmwareCryptoCertificateResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FirmwareFirmwareCryptoCertificateResourceData DeserializeFirmwareFirmwareCryptoCertificateResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> cryptoCertId = default;
+            Optional<Guid?> cryptoCertId = default;
             Optional<string> name0 = default;
             Optional<FirmwareCryptoCertificateEntity> subject = default;
             Optional<FirmwareCryptoCertificateEntity> issuer = default;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                                 cryptoCertId = null;
                                 continue;
                             }
-                            cryptoCertId = property0.Value.GetString();
+                            cryptoCertId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("name"u8))
@@ -616,38 +616,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoCertificateResource(id, name, type, systemData.Value, cryptoCertId.Value, name0.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
+            return new FirmwareFirmwareCryptoCertificateResourceData(id, name, type, systemData.Value, Optional.ToNullable(cryptoCertId), name0.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, usage ?? new ChangeTrackingList<string>(), filePaths ?? new ChangeTrackingList<string>(), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FirmwareCryptoCertificateResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificateResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareCryptoCertificateResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoCertificateResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        FirmwareCryptoCertificateResource IPersistableModel<FirmwareCryptoCertificateResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FirmwareFirmwareCryptoCertificateResourceData IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificateResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFirmwareCryptoCertificateResource(document.RootElement, options);
+                        return DeserializeFirmwareFirmwareCryptoCertificateResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareCryptoCertificateResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoCertificateResourceData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirmwareCryptoCertificateResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirmwareFirmwareCryptoCertificateResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

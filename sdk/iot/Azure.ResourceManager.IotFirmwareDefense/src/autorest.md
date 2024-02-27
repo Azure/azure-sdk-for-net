@@ -84,12 +84,12 @@ rename-mapping:
   BinaryHardeningSummaryResource: BinaryHardeningSummaryResourceInfo
   CveResource: CveResourceData
   CveResource.properties.cveId: -|uuid
-  FirmwareCryptoCertificateResource: FirmwareCryptoCertificateResourceData
-  FirmwareCryptoCertificateResource.properties.cryptoCertId: -|uuid
-  FirmwareCryptoCertificateSummaryResource: FirmwareCryptoCertificateSummaryResourceInfo
-  FirmwareCryptoKeyResource: FirmwareCryptoKeyResourceData
-  FirmwareCryptoKeyResource.properties.cryptoKeyId: -|uuid
-  FirmwareCryptoKeySummaryResource: FirmwareCryptoKeySummaryResourceInfo
+  CryptoCertificateResource: FirmwareCryptoCertificateResourceData
+  CryptoCertificateResource.properties.cryptoCertId: -|uuid
+  CryptoCertificateSummaryResource: FirmwareCryptoCertificateSummaryResourceInfo
+  CryptoKeyResource: FirmwareCryptoKeyResourceData
+  CryptoKeyResource.properties.cryptoKeyId: -|uuid
+  CryptoKeySummaryResource: FirmwareCryptoKeySummaryResourceInfo
   PairedKey.id: -|uuid
   PasswordHashResource: PasswordHashResourceData
   SbomComponentResource: SbomComponentResourceData

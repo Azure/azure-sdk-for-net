@@ -11,15 +11,15 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for cryptographic certificate summary. </summary>
-    public partial class FirmwareCryptoCertificateSummaryResource : SummaryResourceProperties
+    public partial class FirmwareFirmwareCryptoCertificateSummaryResourceInfo : SummaryResourceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummaryResource"/>. </summary>
-        internal FirmwareCryptoCertificateSummaryResource()
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoCertificateSummaryResourceInfo"/>. </summary>
+        internal FirmwareFirmwareCryptoCertificateSummaryResourceInfo()
         {
             SummaryType = SummaryType.FirmwareCryptoCertificate;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoCertificateSummaryResourceInfo"/>. </summary>
         /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        internal FirmwareCryptoCertificateSummaryResource(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
+        internal FirmwareFirmwareCryptoCertificateSummaryResourceInfo(SummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
             TotalCertificates = totalCertificates;
             PairedKeys = pairedKeys;

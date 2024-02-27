@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoCertificateResource item in firmware.GetCryptoCertificatesAsync())
+            await foreach (FirmwareFirmwareCryptoCertificateResourceData item in firmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoCertificateResource item in firmware.GetCryptoCertificatesAsync())
+            await foreach (FirmwareFirmwareCryptoCertificateResourceData item in firmware.GetCryptoCertificatesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoKeyResource item in firmware.GetCryptoKeysAsync())
+            await foreach (FirmwareFirmwareCryptoKeyResourceData item in firmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (FirmwareCryptoKeyResource item in firmware.GetCryptoKeysAsync())
+            await foreach (FirmwareFirmwareCryptoKeyResourceData item in firmware.GetCryptoKeysAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

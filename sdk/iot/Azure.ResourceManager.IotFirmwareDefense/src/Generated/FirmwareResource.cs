@@ -505,12 +505,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoCertificateResource> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareFirmwareCryptoCertificateResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareFirmwareCryptoCertificateResourceData> GetCryptoCertificatesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResource.DeserializeFirmwareCryptoCertificateResource(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareFirmwareCryptoCertificateResourceData.DeserializeFirmwareFirmwareCryptoCertificateResourceData(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -531,12 +531,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoCertificateResource> GetCryptoCertificates(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareFirmwareCryptoCertificateResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareFirmwareCryptoCertificateResourceData> GetCryptoCertificates(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoCertificatesRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoCertificatesRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoCertificateResource.DeserializeFirmwareCryptoCertificateResource(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareFirmwareCryptoCertificateResourceData.DeserializeFirmwareFirmwareCryptoCertificateResourceData(e), _cryptoCertificatesClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoCertificates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -557,12 +557,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareCryptoKeyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirmwareCryptoKeyResource> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="FirmwareFirmwareCryptoKeyResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirmwareFirmwareCryptoKeyResourceData> GetCryptoKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResource.DeserializeFirmwareCryptoKeyResource(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FirmwareFirmwareCryptoKeyResourceData.DeserializeFirmwareFirmwareCryptoKeyResourceData(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -583,12 +583,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareCryptoKeyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirmwareCryptoKeyResource> GetCryptoKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FirmwareFirmwareCryptoKeyResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirmwareFirmwareCryptoKeyResourceData> GetCryptoKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cryptoKeysRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cryptoKeysRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareCryptoKeyResource.DeserializeFirmwareCryptoKeyResource(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FirmwareFirmwareCryptoKeyResourceData.DeserializeFirmwareFirmwareCryptoKeyResourceData(e), _cryptoKeysClientDiagnostics, Pipeline, "FirmwareResource.GetCryptoKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

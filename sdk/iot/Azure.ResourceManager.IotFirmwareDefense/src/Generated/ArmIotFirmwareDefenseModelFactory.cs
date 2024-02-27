@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new BinaryHardeningResourceData(id, name, resourceType, systemData, binaryHardeningId, architecture, filePath, @class, runpath, rpath, isNx, isPie, isRelro, isCanary, isStripped, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareFirmwareCryptoCertificateResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,16 +64,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isSelfSigned"> Indicates if the certificate is self-signed. </param>
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.FirmwareCryptoCertificateResource"/> instance for mocking. </returns>
-        public static FirmwareCryptoCertificateResource FirmwareCryptoCertificateResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cryptoCertId = null, string namePropertiesName = null, FirmwareCryptoCertificateEntity subject = null, FirmwareCryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareFirmwareCryptoCertificateResourceData"/> instance for mocking. </returns>
+        public static FirmwareFirmwareCryptoCertificateResourceData FirmwareFirmwareCryptoCertificateResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? cryptoCertId = null, string namePropertiesName = null, FirmwareCryptoCertificateEntity subject = null, FirmwareCryptoCertificateEntity issuer = null, DateTimeOffset? issuedOn = null, DateTimeOffset? expireOn = null, string role = null, string signatureAlgorithm = null, long? keySize = null, string keyAlgorithm = null, string encoding = null, string serialNumber = null, string fingerprint = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, bool? isExpired = null, bool? isSelfSigned = null, bool? isWeakSignature = null, bool? isShortKeySize = null)
         {
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new FirmwareCryptoCertificateResource(id, name, resourceType, systemData, cryptoCertId, namePropertiesName, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareFirmwareCryptoCertificateResourceData(id, name, resourceType, systemData, cryptoCertId, namePropertiesName, subject, issuer, issuedOn, expireOn, role, signatureAlgorithm, keySize, keyAlgorithm, encoding, serialNumber, fingerprint, usage?.ToList(), filePaths?.ToList(), pairedKey, isExpired, isSelfSigned, isWeakSignature, isShortKeySize, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoKeyResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareFirmwareCryptoKeyResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -86,13 +86,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="filePaths"> List of files where this key was found. </param>
         /// <param name="pairedKey"> A matching paired key or certificate. </param>
         /// <param name="isShortKeySize"> Indicates the key size is considered too small to be secure for the algorithm. </param>
-        /// <returns> A new <see cref="Models.FirmwareCryptoKeyResource"/> instance for mocking. </returns>
-        public static FirmwareCryptoKeyResource FirmwareCryptoKeyResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string firmwareCryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, bool? isShortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareFirmwareCryptoKeyResourceData"/> instance for mocking. </returns>
+        public static FirmwareFirmwareCryptoKeyResourceData FirmwareFirmwareCryptoKeyResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? firmwareCryptoKeyId = null, string keyType = null, long? keySize = null, string keyAlgorithm = null, IEnumerable<string> usage = null, IEnumerable<string> filePaths = null, PairedKey pairedKey = null, bool? isShortKeySize = null)
         {
             usage ??= new List<string>();
             filePaths ??= new List<string>();
 
-            return new FirmwareCryptoKeyResource(id, name, resourceType, systemData, firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize, serializedAdditionalRawData: null);
+            return new FirmwareFirmwareCryptoKeyResourceData(id, name, resourceType, systemData, firmwareCryptoKeyId, keyType, keySize, keyAlgorithm, usage?.ToList(), filePaths?.ToList(), pairedKey, isShortKeySize, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CveResourceData"/>. </summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="properties">
         /// Properties of an analysis summary.
         /// Please note <see cref="SummaryResourceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.BinaryHardeningSummaryResourceInfo"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareCryptoCertificateSummaryResource"/>, <see cref="Models.FirmwareCryptoKeySummaryResource"/> and <see cref="Models.FirmwareSummary"/>.
+        /// The available derived classes include <see cref="Models.BinaryHardeningSummaryResourceInfo"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareFirmwareCryptoCertificateSummaryResourceInfo"/>, <see cref="Models.FirmwareFirmwareCryptoKeySummaryResourceInfo"/> and <see cref="Models.FirmwareSummary"/>.
         /// </param>
         /// <returns> A new <see cref="IotFirmwareDefense.SummaryResourceData"/> instance for mocking. </returns>
         public static SummaryResourceData SummaryResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SummaryResourceProperties properties = null)
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new BinaryHardeningSummaryResourceInfo(SummaryType.BinaryHardening, serializedAdditionalRawData: null, totalFiles, nx, pie, relro, canary, stripped);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoCertificateSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareFirmwareCryptoCertificateSummaryResourceInfo"/>. </summary>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>
@@ -298,22 +298,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
         /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
         /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        /// <returns> A new <see cref="Models.FirmwareCryptoCertificateSummaryResource"/> instance for mocking. </returns>
-        public static FirmwareCryptoCertificateSummaryResource FirmwareCryptoCertificateSummaryResource(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareFirmwareCryptoCertificateSummaryResourceInfo"/> instance for mocking. </returns>
+        public static FirmwareFirmwareCryptoCertificateSummaryResourceInfo FirmwareFirmwareCryptoCertificateSummaryResourceInfo(long? totalCertificates = null, long? pairedKeys = null, long? expired = null, long? expiringSoon = null, long? weakSignature = null, long? selfSigned = null, long? shortKeySize = null)
         {
-            return new FirmwareCryptoCertificateSummaryResource(SummaryType.FirmwareCryptoCertificate, serializedAdditionalRawData: null, totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
+            return new FirmwareFirmwareCryptoCertificateSummaryResourceInfo(SummaryType.FirmwareCryptoCertificate, serializedAdditionalRawData: null, totalCertificates, pairedKeys, expired, expiringSoon, weakSignature, selfSigned, shortKeySize);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FirmwareCryptoKeySummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FirmwareFirmwareCryptoKeySummaryResourceInfo"/>. </summary>
         /// <param name="totalKeys"> Total number of cryptographic keys found. </param>
         /// <param name="publicKeys"> Total number of (non-certificate) public keys found. </param>
         /// <param name="privateKeys"> Total number of private keys found. </param>
         /// <param name="pairedKeys"> Total number of keys found that have a matching paired key or certificate. </param>
         /// <param name="shortKeySize"> Total number of keys found that have an insecure key size for the algorithm. </param>
-        /// <returns> A new <see cref="Models.FirmwareCryptoKeySummaryResource"/> instance for mocking. </returns>
-        public static FirmwareCryptoKeySummaryResource FirmwareCryptoKeySummaryResource(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
+        /// <returns> A new <see cref="Models.FirmwareFirmwareCryptoKeySummaryResourceInfo"/> instance for mocking. </returns>
+        public static FirmwareFirmwareCryptoKeySummaryResourceInfo FirmwareFirmwareCryptoKeySummaryResourceInfo(long? totalKeys = null, long? publicKeys = null, long? privateKeys = null, long? pairedKeys = null, long? shortKeySize = null)
         {
-            return new FirmwareCryptoKeySummaryResource(SummaryType.FirmwareCryptoKey, serializedAdditionalRawData: null, totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
+            return new FirmwareFirmwareCryptoKeySummaryResourceInfo(SummaryType.FirmwareCryptoKey, serializedAdditionalRawData: null, totalKeys, publicKeys, privateKeys, pairedKeys, shortKeySize);
         }
     }
 }

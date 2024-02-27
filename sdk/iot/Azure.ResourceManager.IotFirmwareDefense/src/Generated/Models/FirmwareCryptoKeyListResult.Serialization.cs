@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareCryptoKeyResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<FirmwareFirmwareCryptoKeyResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IReadOnlyList<FirmwareCryptoKeyResource> value = default;
+            IReadOnlyList<FirmwareFirmwareCryptoKeyResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         continue;
                     }
-                    List<FirmwareCryptoKeyResource> array = new List<FirmwareCryptoKeyResource>();
+                    List<FirmwareFirmwareCryptoKeyResourceData> array = new List<FirmwareFirmwareCryptoKeyResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCryptoKeyResource.DeserializeFirmwareCryptoKeyResource(item, options));
+                        array.Add(FirmwareFirmwareCryptoKeyResourceData.DeserializeFirmwareFirmwareCryptoKeyResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeyListResult(value ?? new ChangeTrackingList<FirmwareCryptoKeyResource>(), nextLink.Value, serializedAdditionalRawData);
+            return new FirmwareCryptoKeyListResult(value ?? new ChangeTrackingList<FirmwareFirmwareCryptoKeyResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeyListResult>.Write(ModelReaderWriterOptions options)

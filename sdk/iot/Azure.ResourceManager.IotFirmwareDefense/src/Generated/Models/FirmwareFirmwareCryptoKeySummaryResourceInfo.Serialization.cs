@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoKeySummaryResource : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoKeySummaryResource>
+    public partial class FirmwareFirmwareCryptoKeySummaryResourceInfo : IUtf8JsonSerializable, IJsonModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoKeySummaryResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FirmwareCryptoKeySummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoKeySummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareCryptoKeySummaryResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoKeySummaryResourceInfo)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteEndObject();
         }
 
-        FirmwareCryptoKeySummaryResource IJsonModel<FirmwareCryptoKeySummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        FirmwareFirmwareCryptoKeySummaryResourceInfo IJsonModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoKeySummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirmwareCryptoKeySummaryResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoKeySummaryResourceInfo)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirmwareCryptoKeySummaryResource(document.RootElement, options);
+            return DeserializeFirmwareFirmwareCryptoKeySummaryResourceInfo(document.RootElement, options);
         }
 
-        internal static FirmwareCryptoKeySummaryResource DeserializeFirmwareCryptoKeySummaryResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static FirmwareFirmwareCryptoKeySummaryResourceInfo DeserializeFirmwareFirmwareCryptoKeySummaryResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -157,38 +157,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeySummaryResource(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize));
+            return new FirmwareFirmwareCryptoKeySummaryResourceInfo(summaryType, serializedAdditionalRawData, Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize));
         }
 
-        BinaryData IPersistableModel<FirmwareCryptoKeySummaryResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoKeySummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareCryptoKeySummaryResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoKeySummaryResourceInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        FirmwareCryptoKeySummaryResource IPersistableModel<FirmwareCryptoKeySummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        FirmwareFirmwareCryptoKeySummaryResourceInfo IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoKeySummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFirmwareCryptoKeySummaryResource(document.RootElement, options);
+                        return DeserializeFirmwareFirmwareCryptoKeySummaryResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirmwareCryptoKeySummaryResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirmwareFirmwareCryptoKeySummaryResourceInfo)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirmwareCryptoKeySummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FirmwareFirmwareCryptoKeySummaryResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

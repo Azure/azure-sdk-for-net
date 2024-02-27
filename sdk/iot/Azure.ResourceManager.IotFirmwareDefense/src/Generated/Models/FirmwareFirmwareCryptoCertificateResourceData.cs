@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Crypto certificate resource. </summary>
-    public partial class FirmwareCryptoCertificateResource : ResourceData
+    public partial class FirmwareFirmwareCryptoCertificateResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateResource"/>. </summary>
-        public FirmwareCryptoCertificateResource()
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoCertificateResourceData"/>. </summary>
+        public FirmwareFirmwareCryptoCertificateResourceData()
         {
             Usage = new ChangeTrackingList<string>();
             FilePaths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareFirmwareCryptoCertificateResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="isWeakSignature"> Indicates the signature algorithm used is insecure. </param>
         /// <param name="isShortKeySize"> Indicates the certificate's key size is considered too small to be secure for the key algorithm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoCertificateResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cryptoCertId, string namePropertiesName, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FirmwareFirmwareCryptoCertificateResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? cryptoCertId, string namePropertiesName, FirmwareCryptoCertificateEntity subject, FirmwareCryptoCertificateEntity issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, string role, string signatureAlgorithm, long? keySize, string keyAlgorithm, string encoding, string serialNumber, string fingerprint, IList<string> usage, IReadOnlyList<string> filePaths, PairedKey pairedKey, bool? isExpired, bool? isSelfSigned, bool? isWeakSignature, bool? isShortKeySize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CryptoCertId = cryptoCertId;
             NamePropertiesName = namePropertiesName;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> ID for the certificate result. </summary>
-        public string CryptoCertId { get; set; }
+        public Guid? CryptoCertId { get; set; }
         /// <summary> Name of the certificate. </summary>
         public string NamePropertiesName { get; set; }
         /// <summary> Subject information of the certificate. </summary>

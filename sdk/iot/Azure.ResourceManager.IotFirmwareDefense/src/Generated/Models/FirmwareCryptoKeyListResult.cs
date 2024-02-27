@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeyListResult"/>. </summary>
         internal FirmwareCryptoKeyListResult()
         {
-            Value = new ChangeTrackingList<FirmwareCryptoKeyResource>();
+            Value = new ChangeTrackingList<FirmwareFirmwareCryptoKeyResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareCryptoKeyListResult"/>. </summary>
         /// <param name="value"> The list of crypto key results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareCryptoKeyListResult(IReadOnlyList<FirmwareCryptoKeyResource> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareCryptoKeyListResult(IReadOnlyList<FirmwareFirmwareCryptoKeyResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The list of crypto key results. </summary>
-        public IReadOnlyList<FirmwareCryptoKeyResource> Value { get; }
+        public IReadOnlyList<FirmwareFirmwareCryptoKeyResourceData> Value { get; }
         /// <summary> The uri to fetch the next page of resources. </summary>
         public string NextLink { get; }
     }
