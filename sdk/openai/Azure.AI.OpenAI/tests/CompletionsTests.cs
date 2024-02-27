@@ -101,6 +101,7 @@ namespace Azure.AI.OpenAI.Tests
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.LegacyCompletions);
             string promptText = "Are bananas especially radioactive?";
+            string suffix = "<end>";
             var requestOptions = new CompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,
@@ -117,6 +118,7 @@ namespace Azure.AI.OpenAI.Tests
                     [40058] = -100, // ' Banana'
                     [15991] = -100, // 'anas'
                 },
+                Suffix = suffix,
             };
             Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
 
@@ -133,6 +135,7 @@ namespace Azure.AI.OpenAI.Tests
             string choiceText = choice.Text;
             Assert.That(choiceText, Is.Not.Null.Or.Empty);
             Assert.That(choiceText.ToLower().StartsWith(promptText.ToLower()), Is.False);
+            Assert.That(choiceText.ToLower().EndsWith(suffix), Is.False);
 
             Assert.That(choice.LogProbabilityModel, Is.Not.Null.Or.Empty);
             Assert.That(choice.LogProbabilityModel.Tokens, Is.Not.Null.Or.Empty);

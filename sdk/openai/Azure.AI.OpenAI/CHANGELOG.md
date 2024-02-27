@@ -27,6 +27,11 @@
 - New properties in `ChatCompletionsOptions`:
   - `EnableLogProbabilities`: Allows retrieval of log probabilities (REST: `logprobs`)
   - `LogProbabilitiesPerToken`: The number of most likely tokens to return per token (REST: `top_logprobs`)
+- Introduced a new property in `CompletionsOptions`:
+  - `Suffix`: Defines the suffix that follows the completion of inserted text (REST: `suffix`)
+- Image generation response now includes content filtering details (specific to Azure OpenAI endpoint):
+  - `ImageGenerationData.ContentFilterResults`: Information about the content filtering results. (REST: `content_filter_results`)
+  - `ImageGenerationData.PromptFilterResults`: Information about the content filtering category (REST: `prompt_filter_results`)
   
 ## 1.0.0-beta.13 (2024-02-01)
 
