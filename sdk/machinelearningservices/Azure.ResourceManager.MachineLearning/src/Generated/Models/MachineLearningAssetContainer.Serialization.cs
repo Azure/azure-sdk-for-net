@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<bool> isArchived = default;
-            Optional<string> latestVersion = default;
-            Optional<string> nextVersion = default;
-            Optional<string> description = default;
+            bool? isArchived = default;
+            string latestVersion = default;
+            string nextVersion = default;
+            string description = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningAssetContainer(
-                description.Value,
+                description,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(isArchived),
-                latestVersion.Value,
-                nextVersion.Value);
+                isArchived,
+                latestVersion,
+                nextVersion);
         }
 
         BinaryData IPersistableModel<MachineLearningAssetContainer>.Write(ModelReaderWriterOptions options)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             JobInputType jobInputType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownJobInput(description.Value, jobInputType, serializedAdditionalRawData);
+            return new UnknownJobInput(description, jobInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningJobInput>.Write(ModelReaderWriterOptions options)

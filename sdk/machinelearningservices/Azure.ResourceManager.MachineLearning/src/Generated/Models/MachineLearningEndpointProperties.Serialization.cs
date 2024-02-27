@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
             IDictionary<string, string> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningEndpointProperties(
                 authMode,
-                description.Value,
-                keys.Value,
+                description,
+                keys,
                 properties ?? new ChangeTrackingDictionary<string, string>(),
-                scoringUri.Value,
-                swaggerUri.Value,
+                scoringUri,
+                swaggerUri,
                 serializedAdditionalRawData);
         }
 

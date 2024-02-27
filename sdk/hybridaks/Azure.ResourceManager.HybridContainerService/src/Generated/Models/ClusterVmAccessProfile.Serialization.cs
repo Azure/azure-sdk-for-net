@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> authorizedIPRanges = default;
+            string authorizedIPRanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterVmAccessProfile(authorizedIPRanges.Value, serializedAdditionalRawData);
+            return new ClusterVmAccessProfile(authorizedIPRanges, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterVmAccessProfile>.Write(ModelReaderWriterOptions options)

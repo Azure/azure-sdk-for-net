@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> displayName = default;
-            Optional<MarketplaceSubscriptionState> state = default;
+            string id = default;
+            string subscriptionId = default;
+            string displayName = default;
+            MarketplaceSubscriptionState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MarketplaceSubscription(id.Value, subscriptionId.Value, displayName.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new MarketplaceSubscription(id, subscriptionId, displayName, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MarketplaceSubscription>.Write(ModelReaderWriterOptions options)

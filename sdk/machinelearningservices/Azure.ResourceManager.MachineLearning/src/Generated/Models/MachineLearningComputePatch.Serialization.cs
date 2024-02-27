@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ScaleSettingsInformation> properties = default;
+            ScaleSettingsInformation properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputePatch(properties.Value, serializedAdditionalRawData);
+            return new MachineLearningComputePatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputePatch>.Write(ModelReaderWriterOptions options)

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             string username = default;
-            Optional<string> password = default;
+            string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineCredential(username, password.Value, serializedAdditionalRawData);
+            return new LabVirtualMachineCredential(username, password, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineCredential>.Write(ModelReaderWriterOptions options)

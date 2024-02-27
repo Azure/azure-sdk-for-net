@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> sku = default;
-            Optional<string> licenseStatus = default;
+            string sku = default;
+            string licenseStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EsuKey(sku.Value, licenseStatus.Value, serializedAdditionalRawData);
+            return new EsuKey(sku, licenseStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EsuKey>.Write(ModelReaderWriterOptions options)

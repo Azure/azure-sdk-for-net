@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> helmPackageName = default;
-            Optional<string> helmPackageVersionRange = default;
+            string helmPackageName = default;
+            string helmPackageVersionRange = default;
             IList<string> registryValuesPaths = default;
             IList<string> imagePullSecretsValuesPaths = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmArtifactProfile(helmPackageName.Value, helmPackageVersionRange.Value, registryValuesPaths ?? new ChangeTrackingList<string>(), imagePullSecretsValuesPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HelmArtifactProfile(helmPackageName, helmPackageVersionRange, registryValuesPaths ?? new ChangeTrackingList<string>(), imagePullSecretsValuesPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmArtifactProfile>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IReadOnlyList<MachineLearningUsage> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListUsagesResult(value ?? new ChangeTrackingList<MachineLearningUsage>(), nextLink.Value, serializedAdditionalRawData);
+            return new ListUsagesResult(value ?? new ChangeTrackingList<MachineLearningUsage>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListUsagesResult>.Write(ModelReaderWriterOptions options)

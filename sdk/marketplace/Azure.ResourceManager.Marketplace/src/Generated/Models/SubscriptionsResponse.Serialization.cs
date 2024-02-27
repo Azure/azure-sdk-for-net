@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                 return null;
             }
             IReadOnlyList<MarketplaceSubscription> value = default;
-            Optional<string> skipToken = default;
-            Optional<long> count = default;
+            string skipToken = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionsResponse(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken.Value, Optional.ToNullable(count), serializedAdditionalRawData);
+            return new SubscriptionsResponse(value ?? new ChangeTrackingList<MarketplaceSubscription>(), skipToken, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionsResponse>.Write(ModelReaderWriterOptions options)

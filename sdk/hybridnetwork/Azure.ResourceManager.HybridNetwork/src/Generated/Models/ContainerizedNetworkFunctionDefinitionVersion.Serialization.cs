@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ContainerizedNetworkFunctionTemplate> networkFunctionTemplate = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
-            Optional<string> deployParameters = default;
+            ContainerizedNetworkFunctionTemplate networkFunctionTemplate = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
+            string deployParameters = default;
             NetworkFunctionType networkFunctionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,13 +150,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerizedNetworkFunctionDefinitionVersion(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(versionState),
-                description.Value,
-                deployParameters.Value,
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
                 networkFunctionType,
                 serializedAdditionalRawData,
-                networkFunctionTemplate.Value);
+                networkFunctionTemplate);
         }
 
         BinaryData IPersistableModel<ContainerizedNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricDimensionList(nextLink.Value, value ?? new ChangeTrackingList<string>());
+            return new MetricDimensionList(nextLink, value ?? new ChangeTrackingList<string>());
         }
     }
 }

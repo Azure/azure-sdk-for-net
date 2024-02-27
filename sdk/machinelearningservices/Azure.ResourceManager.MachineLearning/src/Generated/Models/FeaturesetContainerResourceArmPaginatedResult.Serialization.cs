@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<MachineLearningFeatureSetContainerData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FeaturesetContainerResourceArmPaginatedResult(nextLink.Value, value ?? new ChangeTrackingList<MachineLearningFeatureSetContainerData>(), serializedAdditionalRawData);
+            return new FeaturesetContainerResourceArmPaginatedResult(nextLink, value ?? new ChangeTrackingList<MachineLearningFeatureSetContainerData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FeaturesetContainerResourceArmPaginatedResult>.Write(ModelReaderWriterOptions options)

@@ -130,18 +130,18 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> summary = default;
-            Optional<string> description = default;
-            Optional<string> visibility = default;
-            Optional<string> trigger = default;
-            Optional<string> triggerHint = default;
-            Optional<bool> pageable = default;
-            Optional<LogicApiOperationAnnotation> annotation = default;
-            Optional<LogicApiReference> api = default;
-            Optional<SwaggerSchema> inputsDefinition = default;
+            string summary = default;
+            string description = default;
+            string visibility = default;
+            string trigger = default;
+            string triggerHint = default;
+            bool? pageable = default;
+            LogicApiOperationAnnotation annotation = default;
+            LogicApiReference api = default;
+            SwaggerSchema inputsDefinition = default;
             IDictionary<string, SwaggerSchema> responsesDefinition = default;
-            Optional<bool> isWebhook = default;
-            Optional<bool> isNotification = default;
+            bool? isWebhook = default;
+            bool? isNotification = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,18 +246,18 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LogicApiOperationProperties(
-                summary.Value,
-                description.Value,
-                visibility.Value,
-                trigger.Value,
-                triggerHint.Value,
-                Optional.ToNullable(pageable),
-                annotation.Value,
-                api.Value,
-                inputsDefinition.Value,
+                summary,
+                description,
+                visibility,
+                trigger,
+                triggerHint,
+                pageable,
+                annotation,
+                api,
+                inputsDefinition,
                 responsesDefinition ?? new ChangeTrackingDictionary<string, SwaggerSchema>(),
-                Optional.ToNullable(isWebhook),
-                Optional.ToNullable(isNotification),
+                isWebhook,
+                isNotification,
                 serializedAdditionalRawData);
         }
 

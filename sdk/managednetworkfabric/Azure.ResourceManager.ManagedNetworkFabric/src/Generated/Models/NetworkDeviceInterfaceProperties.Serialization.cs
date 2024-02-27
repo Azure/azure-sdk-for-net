@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> interfaceType = default;
+            string identifier = default;
+            string interfaceType = default;
             IList<SupportedConnectorProperties> supportedConnectorTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkDeviceInterfaceProperties(identifier.Value, interfaceType.Value, supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>(), serializedAdditionalRawData);
+            return new NetworkDeviceInterfaceProperties(identifier, interfaceType, supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkDeviceInterfaceProperties>.Write(ModelReaderWriterOptions options)
