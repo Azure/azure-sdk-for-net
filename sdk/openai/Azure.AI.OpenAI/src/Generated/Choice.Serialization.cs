@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI
             writer.WriteNumberValue(Index);
             if (ContentFilterResults != null)
             {
-                writer.WritePropertyName("contentFilterResults"u8);
+                writer.WritePropertyName("content_filter_results"u8);
                 writer.WriteObjectValue(ContentFilterResults);
             }
             if (LogProbabilityModel != null)
@@ -47,12 +47,12 @@ namespace Azure.AI.OpenAI
             }
             if (FinishReason != null)
             {
-                writer.WritePropertyName("finishReason"u8);
+                writer.WritePropertyName("finish_reason"u8);
                 writer.WriteStringValue(FinishReason.Value.ToString());
             }
             else
             {
-                writer.WriteNull("finishReason");
+                writer.WriteNull("finish_reason");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +111,7 @@ namespace Azure.AI.OpenAI
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("contentFilterResults"u8))
+                if (property.NameEquals("content_filter_results"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,7 +130,7 @@ namespace Azure.AI.OpenAI
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("finishReason"u8))
+                if (property.NameEquals("finish_reason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

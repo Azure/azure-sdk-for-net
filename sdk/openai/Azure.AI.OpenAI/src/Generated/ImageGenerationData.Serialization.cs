@@ -34,12 +34,12 @@ namespace Azure.AI.OpenAI
             }
             if (Base64Data != null)
             {
-                writer.WritePropertyName("base64Data"u8);
+                writer.WritePropertyName("b64_json"u8);
                 writer.WriteStringValue(Base64Data);
             }
             if (RevisedPrompt != null)
             {
-                writer.WritePropertyName("revisedPrompt"u8);
+                writer.WritePropertyName("revised_prompt"u8);
                 writer.WriteStringValue(RevisedPrompt);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +81,7 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             Optional<Uri> url = default;
-            Optional<string> base64Data = default;
+            Optional<string> b64Json = default;
             Optional<string> revisedPrompt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -96,12 +96,12 @@ namespace Azure.AI.OpenAI
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("base64Data"u8))
+                if (property.NameEquals("b64_json"u8))
                 {
-                    base64Data = property.Value.GetString();
+                    b64Json = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("revisedPrompt"u8))
+                if (property.NameEquals("revised_prompt"u8))
                 {
                     revisedPrompt = property.Value.GetString();
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImageGenerationData(url.Value, base64Data.Value, revisedPrompt.Value, serializedAdditionalRawData);
+            return new ImageGenerationData(url.Value, b64Json.Value, revisedPrompt.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImageGenerationData>.Write(ModelReaderWriterOptions options)

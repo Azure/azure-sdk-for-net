@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI
             }
             if (SelfHarm != null)
             {
-                writer.WritePropertyName("selfHarm"u8);
+                writer.WritePropertyName("self_harm"u8);
                 writer.WriteObjectValue(SelfHarm);
             }
             if (Profanity != null)
@@ -54,7 +54,7 @@ namespace Azure.AI.OpenAI
             }
             if (!(CustomBlocklists is ChangeTrackingList<ContentFilterBlocklistIdResult> collection && collection.IsUndefined))
             {
-                writer.WritePropertyName("customBlocklists"u8);
+                writer.WritePropertyName("custom_blocklists"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomBlocklists)
                 {
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
                     hate = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("selfHarm"u8))
+                if (property.NameEquals("self_harm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -167,7 +167,7 @@ namespace Azure.AI.OpenAI
                     profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customBlocklists"u8))
+                if (property.NameEquals("custom_blocklists"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

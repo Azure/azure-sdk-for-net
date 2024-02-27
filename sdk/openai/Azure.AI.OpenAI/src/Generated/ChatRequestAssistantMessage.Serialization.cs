@@ -43,7 +43,7 @@ namespace Azure.AI.OpenAI
             }
             if (!(ToolCalls is ChangeTrackingList<ChatCompletionsToolCall> collection && collection.IsUndefined))
             {
-                writer.WritePropertyName("toolCalls"u8);
+                writer.WritePropertyName("tool_calls"u8);
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI
             }
             if (FunctionCall != null)
             {
-                writer.WritePropertyName("functionCall"u8);
+                writer.WritePropertyName("function_call"u8);
                 writer.WriteObjectValue(FunctionCall);
             }
             writer.WritePropertyName("role"u8);
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolCalls"u8))
+                if (property.NameEquals("tool_calls"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -134,7 +134,7 @@ namespace Azure.AI.OpenAI
                     toolCalls = array;
                     continue;
                 }
-                if (property.NameEquals("functionCall"u8))
+                if (property.NameEquals("function_call"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

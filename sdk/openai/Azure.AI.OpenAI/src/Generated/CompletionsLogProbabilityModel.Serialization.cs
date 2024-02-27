@@ -34,7 +34,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("tokenLogprobs"u8);
+            writer.WritePropertyName("token_logprobs"u8);
             writer.WriteStartArray();
             foreach (var item in TokenLogProbabilities)
             {
@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteNumberValue(item.Value);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("topLogprobs"u8);
+            writer.WritePropertyName("top_logprobs"u8);
             writer.WriteStartArray();
             foreach (var item in TopLogProbabilities)
             {
@@ -69,7 +69,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteEndObject();
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("textOffset"u8);
+            writer.WritePropertyName("text_offset"u8);
             writer.WriteStartArray();
             foreach (var item in TextOffsets)
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("tokenLogprobs"u8))
+                if (property.NameEquals("token_logprobs"u8))
                 {
                     List<float?> array = new List<float?>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
                     tokenLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("topLogprobs"u8))
+                if (property.NameEquals("top_logprobs"u8))
                 {
                     List<IDictionary<string, float?>> array = new List<IDictionary<string, float?>>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -178,7 +178,7 @@ namespace Azure.AI.OpenAI
                     topLogprobs = array;
                     continue;
                 }
-                if (property.NameEquals("textOffset"u8))
+                if (property.NameEquals("text_offset"u8))
                 {
                     List<int> array = new List<int>();
                     foreach (var item in property.Value.EnumerateArray())

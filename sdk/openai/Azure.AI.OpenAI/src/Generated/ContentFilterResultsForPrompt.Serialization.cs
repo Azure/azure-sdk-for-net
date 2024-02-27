@@ -27,9 +27,9 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("promptIndex"u8);
+            writer.WritePropertyName("prompt_index"u8);
             writer.WriteNumberValue(PromptIndex);
-            writer.WritePropertyName("contentFilterResults"u8);
+            writer.WritePropertyName("content_filter_results"u8);
             writer.WriteObjectValue(ContentFilterResults);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,12 +75,12 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("promptIndex"u8))
+                if (property.NameEquals("prompt_index"u8))
                 {
                     promptIndex = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("contentFilterResults"u8))
+                if (property.NameEquals("content_filter_results"u8))
                 {
                     contentFilterResults = ContentFilterResultDetailsForPrompt.DeserializeContentFilterResultDetailsForPrompt(property.Value, options);
                     continue;

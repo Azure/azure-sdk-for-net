@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI
             {
                 writer.WriteNull("content");
             }
-            writer.WritePropertyName("toolCallId"u8);
+            writer.WritePropertyName("tool_call_id"u8);
             writer.WriteStringValue(ToolCallId);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
@@ -95,7 +95,7 @@ namespace Azure.AI.OpenAI
                     content = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("toolCallId"u8))
+                if (property.NameEquals("tool_call_id"u8))
                 {
                     toolCallId = property.Value.GetString();
                     continue;
