@@ -287,7 +287,7 @@ namespace Azure.Core
             {
                 return null;
             }
-            var lroDetails = ModelReaderWriter.Write(new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken, new ModelReaderWriterOptions("J")).ToObjectFromJson<Dictionary<string, string>>();
             return new RequestMethod(lroDetails["requestMethod"]);
         }
 
