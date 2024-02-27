@@ -2,10 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Buffers;
 
 namespace Azure
 {
@@ -13,23 +17,11 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : IDisposable
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        /// <summary>
-        /// Gets the HTTP status code.
-        /// </summary>
-        public abstract int Status { get; }
-
-        /// <summary>
-        /// Gets the HTTP reason phrase.
-        /// </summary>
-        public abstract string ReasonPhrase { get; }
-
-        /// <summary>
-        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-        /// </summary>
-        public abstract Stream? ContentStream { get; set; }
+        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+        private static readonly BinaryData s_EmptyBinaryData = new(Array.Empty<byte>());
 
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
@@ -39,58 +31,47 @@ namespace Azure
         /// <summary>
         /// Get the HTTP response headers.
         /// </summary>
-        public virtual ResponseHeaders Headers => new ResponseHeaders(this);
+        public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        protected override PipelineResponseHeaders HeadersCore
+            => throw new NotImplementedException("Subtypes must implement this method.");
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
         /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// Throws <see cref="InvalidOperationException"/> when content is not buffered.
         /// </remarks>
-        public virtual BinaryData Content
+        public override BinaryData Content
         {
             get
             {
-                if (ContentStream == null)
+                if (ContentStream is null || ContentStream is MemoryStream)
                 {
-                    return s_EmptyBinaryData;
+                    return BufferContent();
                 }
 
-                MemoryStream? memoryContent = ContentStream as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
+                throw new InvalidOperationException($"The response is not buffered.");
             }
         }
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
-
-        /// <summary>
-        /// Indicates whether the status code of the returned response is considered
-        /// an error code.
-        /// </summary>
-        public virtual bool IsError { get; internal set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
+        internal void SetIsError(bool value) => IsErrorCore = value;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        protected override bool IsErrorCore
+        {
+            get => base.IsErrorCore;
+            set => base.IsErrorCore = value;
+        }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
@@ -129,9 +110,7 @@ namespace Azure
         /// <param name="response">The HTTP response.</param>
         /// <returns>A new instance of <see cref="Response{T}"/> with the provided value and HTTP response.</returns>
         public static Response<T> FromValue<T>(T value, Response response)
-        {
-            return new ValueResponse<T>(response, value);
-        }
+            => new AzureCoreResponse<T>(value, response);
 
         /// <summary>
         /// Returns the string representation of this <see cref="Response"/>.
@@ -154,5 +133,149 @@ namespace Azure
                 stream = null;
             }
         }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+        {
+            // Derived types should provide an implementation that allows caching
+            // to improve performance.
+            if (ContentStream is null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            if (ContentStream is MemoryStream memoryStream)
+            {
+                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                    new BinaryData(segment.AsMemory()) :
+                    new BinaryData(memoryStream.ToArray());
+            }
+
+            BufferedContentStream bufferStream = new();
+
+            Stream? contentStream = ContentStream;
+            contentStream.CopyTo(bufferStream, cancellationToken);
+            contentStream.Dispose();
+
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+
+            BinaryData content = BinaryData.FromStream(bufferStream);
+            bufferStream.Position = 0;
+
+            return content;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+        {
+            // Derived types should provide an implementation that allows caching
+            // to improve performance.
+            if (ContentStream is null)
+            {
+                return s_EmptyBinaryData;
+            }
+
+            if (ContentStream is MemoryStream memoryStream)
+            {
+                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
+                    new BinaryData(segment.AsMemory()) :
+                    new BinaryData(memoryStream.ToArray());
+            }
+
+            BufferedContentStream bufferStream = new();
+
+            Stream? contentStream = ContentStream;
+            await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+            contentStream.Dispose();
+
+            bufferStream.Position = 0;
+            ContentStream = bufferStream;
+
+            BinaryData content = BinaryData.FromStream(bufferStream);
+            bufferStream.Position = 0;
+
+            return content;
+        }
+
+        private class BufferedContentStream : MemoryStream { }
+
+        #region Private implementation subtypes of abstract Response types
+
+        private class AzureCoreResponse<T> : Response<T>
+        {
+            public AzureCoreResponse(T value, Response response)
+                : base(value, response) { }
+        }
+
+        internal class AzureCoreDefaultResponse : Response
+        {
+            private readonly string DefaultMessage = "Types derived from abstract Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
+
+            public override string ClientRequestId
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override int Status => throw new NotSupportedException(DefaultMessage);
+
+            public override string ReasonPhrase => throw new NotSupportedException(DefaultMessage);
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected override PipelineResponseHeaders HeadersCore
+                => throw new NotSupportedException(DefaultMessage);
+
+            public override void Dispose()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool ContainsHeader(string name)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+        }
+        #endregion
     }
 }

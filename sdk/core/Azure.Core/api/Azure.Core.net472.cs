@@ -115,16 +115,17 @@ namespace Azure
         public Azure.ETag? IfMatch { get { throw null; } set { } }
         public Azure.ETag? IfNoneMatch { get { throw null; } set { } }
     }
-    public abstract partial class NullableResponse<T>
+    public abstract partial class NullableResponse<T> : System.ClientModel.ClientResult<T?>
     {
-        protected NullableResponse() { }
-        public abstract bool HasValue { get; }
-        public abstract T? Value { get; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        protected NullableResponse() : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        protected NullableResponse(T? value, Azure.Response response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public virtual bool HasValue { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public abstract Azure.Response GetRawResponse();
+        public virtual new Azure.Response GetRawResponse() { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Operation
@@ -238,18 +239,17 @@ namespace Azure
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Azure.Response? GetRawResponse() { throw null; }
     }
-    public abstract partial class Response : System.IDisposable
+    public abstract partial class Response : System.ClientModel.Primitives.PipelineResponse
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
-        public virtual Azure.Core.ResponseHeaders Headers { get { throw null; } }
-        public virtual bool IsError { get { throw null; } }
-        public abstract string ReasonPhrase { get; }
-        public abstract int Status { get; }
+        public override System.BinaryData Content { get { throw null; } }
+        public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
+        protected override System.ClientModel.Primitives.PipelineResponseHeaders HeadersCore { get { throw null; } }
+        protected override bool IsErrorCore { get { throw null; } set { } }
+        public override System.BinaryData BufferContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<System.BinaryData> BufferContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal abstract bool ContainsHeader(string name);
-        public abstract void Dispose();
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         public override string ToString() { throw null; }
@@ -265,7 +265,9 @@ namespace Azure
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
     {
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected Response() { }
+        protected Response(T value, Azure.Response response) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }

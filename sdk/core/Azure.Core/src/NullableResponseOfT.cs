@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
 using System.ComponentModel;
 
 namespace Azure
@@ -10,26 +11,50 @@ namespace Azure
     /// </summary>
     /// <typeparam name="T">The type of returned value.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public abstract class NullableResponse<T>
+    public abstract class NullableResponse<T> : ClientResult<T?>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private const string NoValue = "<null>";
 
-        /// <summary>
-        /// Gets a value indicating whether the current instance has a valid value of its underlying type.
-        /// </summary>
-        public abstract bool HasValue { get; }
+        private readonly T? _value;
+
+        internal static Response DefaultResponse = new Response.AzureCoreDefaultResponse();
 
         /// <summary>
-        /// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
+        /// TBD.
         /// </summary>
-        public abstract T? Value { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected NullableResponse() : base(default, DefaultResponse)
+        {
+            // Added for back-compat with GA APIs.  Any type that derives from
+            // Response<T> must provide an implementation for GetRawResponse that
+            // replaces DefaultResponse with the Response populated on HttpMessage
+            // during the call to pipeline.Send.
+
+            _value = default;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="response"></param>
+        protected NullableResponse(T? value, Response response)
+            : base(value,ReplaceWithDefaultIfNull(response))
+        {
+            _value = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current instance has a non-null value.
+        /// </summary>
+        public virtual bool HasValue => _value != null;
 
         /// <summary>
         /// Returns the HTTP response returned by the service.
         /// </summary>
         /// <returns>The HTTP response returned by the service.</returns>
-        public abstract Response GetRawResponse();
+        public new virtual Response GetRawResponse() => (Response)base.GetRawResponse();
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -40,6 +65,10 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         /// <inheritdoc />
-        public override string ToString() => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
+        public override string ToString()
+             => $"Status: {GetRawResponse()?.Status}, Value: {(HasValue ? Value : NoValue)}";
+
+        private static Response ReplaceWithDefaultIfNull(Response? response)
+            => response ?? DefaultResponse;
     }
 }
