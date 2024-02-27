@@ -184,12 +184,6 @@
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson @wangyuantao
 
-# PRLabel: %Cognitive - Anomaly Detector
-/sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
-
-# ServiceLabel: %Cognitive - Anomaly Detector
-# ServiceOwners:                                                   @yingqunpku @bowgong
-
 # PRLabel: %Cognitive - Content Safety
 /sdk/contentsafety/                                                @bowgong @mengaims @JieZhou000
 
