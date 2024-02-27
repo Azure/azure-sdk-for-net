@@ -541,7 +541,7 @@ namespace Azure.Core
     public abstract partial class Request : System.ClientModel.Primitives.PipelineRequest
     {
         protected Request() { }
-        public virtual string ClientRequestId { get { throw null; } set { } }
+        public abstract string ClientRequestId { get; set; }
         public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
         protected override System.ClientModel.BinaryContent? ContentCore { get { throw null; } set { } }
         public new Azure.Core.RequestHeaders Headers { get { throw null; } }
