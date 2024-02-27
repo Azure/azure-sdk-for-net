@@ -21,7 +21,6 @@ namespace Azure.Core
         private RequestUriBuilder? _uriBuilder;
         private string _method = RequestMethod.Get.Method;
         private RequestContent? _content;
-        private string? _clientRequestId;
 
         /// <summary>
         /// Gets or sets and instance of <see cref="RequestUriBuilder"/> used to create the Uri.
@@ -57,15 +56,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets or sets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
-        public virtual string ClientRequestId
-        {
-            get => _clientRequestId ??= Guid.NewGuid().ToString();
-            set
-            {
-                Argument.AssertNotNull(value, nameof(value));
-                _clientRequestId = value;
-            }
-        }
+        public abstract string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets the request HTTP headers.
