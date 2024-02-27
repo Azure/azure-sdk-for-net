@@ -18,18 +18,11 @@ namespace Azure.Core
     public abstract class Request : PipelineRequest
 #pragma warning restore AZC0012 // Avoid single word type names
     {
+        private string _method = RequestMethod.Get.Method;
         private RequestUriBuilder? _uriBuilder;
         private RequestContent? _content;
 
         private string? _clientRequestId;
-
-        /// <summary>
-        /// Creates a new instance of <see cref="Request"/>.
-        /// </summary>
-        protected Request()
-        {
-            MethodCore = RequestMethod.Get.Method;
-        }
 
         /// <summary>
         /// Gets or sets the request HTTP method.
@@ -86,7 +79,11 @@ namespace Azure.Core
         /// Gets or sets the value of <see cref="PipelineRequest.Method"/> on
         /// the base <see cref="PipelineRequest"/> type.
         /// </summary>
-        protected override string MethodCore { get; set; }
+        protected override string MethodCore
+        {
+            get => _method;
+            set => _method = value;
+        }
 
         /// <summary>
         /// Gets or sets the value of <see cref="PipelineRequest.Uri"/> on
