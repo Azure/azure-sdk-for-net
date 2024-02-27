@@ -42,9 +42,9 @@ This library interacts with the Azure Developer Signing service using two princi
 - `Code Signing Accounts` – Logical container holding certificate profiles and considered the Azure Developer Signing resource.
 - `Certificate Profile` – Template with the information that is used in the issued certificates, and a sub-resource to a Code Signing Account resource.
 
-Since the interaction of the client is at the certificate profile level, the client is designed to interact with this entity.
+Since the interaction of the client is at the certificate profile level, the client is designed to interact with this entity. A region must be provided to ensure the request is routed to the specific appropiate environment.
 
-```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient_Scenario
+```C# Snippet:Azure_Developer_Signing_CreateCertificateProfileClient
     var credential = new DefaultAzureCredential();
     var certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
 ```
@@ -68,31 +68,54 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/developer-signing/Azure.Developer.Signing/samples).
 
-### Sign bits
+### Signing bytes
 
-```C# Snippet:Azure_Developer_Signing_SigningASampleFile
-    var credential = new DefaultAzureCredential();
-    var signClient = new SigningClient(credential);
-    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
-    //Add Signing here...
+Sign the digest corresponding to a file using an algorithm.
+
+```C# Snippet:Azure_Developer_Signing_SigningBytes
+    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+
+    using RequestContent content = RequestContent.Create(new
+    {
+        signatureAlgorithm,
+        digest,
+    });
+
+    Operation<BinaryData> operation = certificateProfileClient.Sign(WaitUntil.Completed, accountName, profileName, content);
+    BinaryData responseData = operation.Value;
+
+    JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
 ```
 
 ### List Available customer EKUs
 
-```C# Snippet:Azure_Developer_Signing_ListAvailableCustomerEKUs
-    var credential = new DefaultAzureCredential();
-    var signClient = new SigningClient(credential);
-    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
-    //List Available customer EKUs here...
+Request all the available customer extended key usages from a certificate profile.
+
+```C# Snippet:Azure_Developer_Signing_GetExtendedKeyUsages
+    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+
+    //List of available customer EKUs...
+    List<string> ekus = new();
+
+    foreach (BinaryData item in certificateProfileClient.GetExtendedKeyUsages(accountName, profileName, null))
+    {
+        JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+        string eku = result.GetProperty("eku").ToString();
+
+        ekus.Add(eku);
+    }
 ```
 
 ### Download Root Certificate
 
-```C# Snippet:Azure_Developer_Signing_GetRootCertificate
-    var credential = new DefaultAzureCredential();
-    var signClient = new SigningClient(credential);
-    var CertificatProfileClient = signClient.GetCertificateProfileClient(region);
-    //Get Root Certificate here...
+Request the sign root certificate from a certificate profile.
+
+```C# Snippet:Azure_Developer_Signing_GetSignRootCertificate
+    CertificateProfile certificateProfileClient = new SigningClient(credential).GetCertificateProfileClient(region);
+
+    Response<BinaryData> response = certificateProfileClient.GetSignRootCertificate(accountName, profileName);
+
+    byte[] rootCertificate = response.Value.ToArray();
 ```
 
 ## Troubleshooting
