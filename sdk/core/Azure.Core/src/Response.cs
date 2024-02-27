@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Buffers;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
@@ -34,9 +35,11 @@ namespace Azure
         public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>
-        /// TBD.
+        /// Gets the value of <see cref="PipelineResponse.Headers"/> on
+        /// the base <see cref="PipelineResponse"/> type.
         /// </summary>
         protected override PipelineResponseHeaders HeadersCore
+            // TODO
             => throw new NotImplementedException("Subtypes must implement this method.");
 
         /// <summary>
@@ -63,15 +66,6 @@ namespace Azure
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         internal void SetIsError(bool value) => IsErrorCore = value;
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        protected override bool IsErrorCore
-        {
-            get => base.IsErrorCore;
-            set => base.IsErrorCore = value;
-        }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
@@ -134,50 +128,15 @@ namespace Azure
             }
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <inheritdoc/>
         public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-        {
-            // Derived types should provide an implementation that allows caching
-            // to improve performance.
-            if (ContentStream is null)
-            {
-                return s_EmptyBinaryData;
-            }
+            => BufferContentSyncOrAsync(cancellationToken, async: false).EnsureCompleted();
 
-            if (ContentStream is MemoryStream memoryStream)
-            {
-                return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
-                    new BinaryData(segment.AsMemory()) :
-                    new BinaryData(memoryStream.ToArray());
-            }
-
-            BufferedContentStream bufferStream = new();
-
-            Stream? contentStream = ContentStream;
-            contentStream.CopyTo(bufferStream, cancellationToken);
-            contentStream.Dispose();
-
-            bufferStream.Position = 0;
-            ContentStream = bufferStream;
-
-            BinaryData content = BinaryData.FromStream(bufferStream);
-            bufferStream.Position = 0;
-
-            return content;
-        }
-
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
+        /// <inheritdoc/>
         public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+            => await BufferContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+
+        private async ValueTask<BinaryData> BufferContentSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
             // Derived types should provide an implementation that allows caching
             // to improve performance.
@@ -196,7 +155,15 @@ namespace Azure
             BufferedContentStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
-            await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+            if (async)
+            {
+                await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                contentStream.CopyTo(bufferStream, cancellationToken);
+            }
+
             contentStream.Dispose();
 
             bufferStream.Position = 0;
@@ -210,14 +177,13 @@ namespace Azure
 
         private class BufferedContentStream : MemoryStream { }
 
-        #region Private implementation subtypes of abstract Response types
-
+        /// <summary>
+        /// Internal implementation of abstract <see cref="Response{T}"/>.
+        /// </summary>
         private class AzureCoreResponse<T> : Response<T>
         {
             public AzureCoreResponse(T value, Response response)
                 : base(value, response) { }
         }
-
-        #endregion
     }
 }
