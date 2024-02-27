@@ -26,6 +26,7 @@ namespace Azure.Core.Pipeline
             // Request or PipelineRequest.
 
             private readonly PipelineRequest _pipelineRequest;
+            private string? _clientRequestId;
 
             public HttpClientTransportRequest(PipelineRequest request)
             {
@@ -33,9 +34,22 @@ namespace Azure.Core.Pipeline
 
                 // Initialize duplicated properties on base type from adapted request.
                 base.MethodCore = request.Method;
+                base.ContentCore = request.Content;
 
-                // Uri and Content are initialized to null in constructor
-                // so don't need to be set here.
+                if (request.Uri is not null)
+                {
+                    base.UriCore = request.Uri;
+                }
+            }
+
+            public override string ClientRequestId
+            {
+                get => _clientRequestId ??= Guid.NewGuid().ToString();
+                set
+                {
+                    Argument.AssertNotNull(value, nameof(value));
+                    _clientRequestId = value;
+                }
             }
 
             #region Adapt PipelineResponse to inherit functional implementation from ClientModel
@@ -50,6 +64,7 @@ namespace Azure.Core.Pipeline
                     _pipelineRequest.Method = value;
                 }
             }
+
             protected override Uri? UriCore
             {
                 get
