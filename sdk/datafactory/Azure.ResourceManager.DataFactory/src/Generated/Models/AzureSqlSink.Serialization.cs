@@ -316,7 +316,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, sqlWriterStoredProcedureName.Value, sqlWriterTableType.Value, preCopyScript.Value, storedProcedureParameters.Value, storedProcedureTableTypeParameterName.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);
+            return new AzureSqlSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                sqlWriterStoredProcedureName.Value,
+                sqlWriterTableType.Value,
+                preCopyScript.Value,
+                storedProcedureParameters.Value,
+                storedProcedureTableTypeParameterName.Value,
+                tableOption.Value,
+                sqlWriterUseTableLock.Value,
+                writeBehavior.Value,
+                upsertSettings.Value);
         }
 
         BinaryData IPersistableModel<AzureSqlSink>.Write(ModelReaderWriterOptions options)

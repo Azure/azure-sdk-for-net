@@ -221,7 +221,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDeploymentResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, locations ?? new ChangeTrackingList<string>(), Optional.ToNullable(maxInstanceCount), properties ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new MachineLearningDeploymentResourceConfiguration(
+                Optional.ToNullable(instanceCount),
+                instanceType.Value,
+                locations ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(maxInstanceCount),
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDeploymentResourceConfiguration>.Write(ModelReaderWriterOptions options)

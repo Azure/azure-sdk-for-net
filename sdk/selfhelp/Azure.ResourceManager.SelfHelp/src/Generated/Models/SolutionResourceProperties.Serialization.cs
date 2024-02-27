@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SolutionResourceProperties(triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(), parameters ?? new ChangeTrackingDictionary<string, string>(), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, sections ?? new ChangeTrackingList<SelfHelpSection>(), serializedAdditionalRawData);
+            return new SolutionResourceProperties(
+                triggerCriteria ?? new ChangeTrackingList<TriggerCriterion>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                solutionId.Value,
+                Optional.ToNullable(provisioningState),
+                title.Value,
+                content.Value,
+                replacementMaps.Value,
+                sections ?? new ChangeTrackingList<SelfHelpSection>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)

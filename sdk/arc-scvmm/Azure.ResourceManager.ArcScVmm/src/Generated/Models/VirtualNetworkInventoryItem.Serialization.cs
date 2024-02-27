@@ -126,7 +126,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new VirtualNetworkInventoryItem(
+                inventoryType,
+                managedResourceId.Value,
+                uuid.Value,
+                inventoryItemName.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkInventoryItem>.Write(ModelReaderWriterOptions options)

@@ -260,7 +260,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRedshiftLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, server, username.Value, password, database, port.Value, encryptedCredential.Value);
+            return new AmazonRedshiftLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                username.Value,
+                password,
+                database,
+                port.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<AmazonRedshiftLinkedService>.Write(ModelReaderWriterOptions options)

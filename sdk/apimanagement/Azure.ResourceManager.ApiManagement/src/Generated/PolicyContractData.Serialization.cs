@@ -165,7 +165,14 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyContractData(id, name, type, systemData.Value, value.Value, Optional.ToNullable(format), serializedAdditionalRawData);
+            return new PolicyContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                value.Value,
+                Optional.ToNullable(format),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PolicyContractData>.Write(ModelReaderWriterOptions options)

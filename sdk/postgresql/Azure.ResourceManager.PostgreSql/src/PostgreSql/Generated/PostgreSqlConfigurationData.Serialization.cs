@@ -204,7 +204,18 @@ namespace Azure.ResourceManager.PostgreSql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlConfigurationData(id, name, type, systemData.Value, value.Value, description.Value, defaultValue.Value, dataType.Value, allowedValues.Value, source.Value, serializedAdditionalRawData);
+            return new PostgreSqlConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                value.Value,
+                description.Value,
+                defaultValue.Value,
+                dataType.Value,
+                allowedValues.Value,
+                source.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlConfigurationData>.Write(ModelReaderWriterOptions options)

@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkConnectionApprovalRequestInfo(id, name, type, systemData.Value, privateLinkServiceConnectionState.Value, kind.Value, serializedAdditionalRawData);
+            return new PrivateLinkConnectionApprovalRequestInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                privateLinkServiceConnectionState.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkConnectionApprovalRequestInfo>.Write(ModelReaderWriterOptions options)

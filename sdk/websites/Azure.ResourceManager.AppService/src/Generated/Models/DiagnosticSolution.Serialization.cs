@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticSolution(Optional.ToNullable(id), displayName.Value, Optional.ToNullable(order), description.Value, Optional.ToNullable(type), data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(), serializedAdditionalRawData);
+            return new DiagnosticSolution(
+                Optional.ToNullable(id),
+                displayName.Value,
+                Optional.ToNullable(order),
+                description.Value,
+                Optional.ToNullable(type),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                metadata ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticSolution>.Write(ModelReaderWriterOptions options)

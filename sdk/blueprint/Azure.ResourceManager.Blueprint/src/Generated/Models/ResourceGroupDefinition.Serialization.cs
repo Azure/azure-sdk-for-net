@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), dependsOn ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ResourceGroupDefinition(
+                name.Value,
+                Optional.ToNullable(location),
+                dependsOn ?? new ChangeTrackingList<string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                displayName.Value,
+                description.Value,
+                strongType.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupDefinition>.Write(ModelReaderWriterOptions options)

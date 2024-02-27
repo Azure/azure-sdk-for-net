@@ -382,7 +382,25 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudL2NetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, l2IsolationDomainId, Optional.ToNullable(provisioningState), virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new NetworkCloudL2NetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId.Value,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                Optional.ToNullable(hybridAksPluginType),
+                interfaceName.Value,
+                l2IsolationDomainId,
+                Optional.ToNullable(provisioningState),
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudL2NetworkData>.Write(ModelReaderWriterOptions options)

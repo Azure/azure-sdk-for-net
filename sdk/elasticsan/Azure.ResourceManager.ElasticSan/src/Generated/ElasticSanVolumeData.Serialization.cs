@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeData(id, name, type, systemData.Value, Optional.ToNullable(volumeId), creationData.Value, sizeGiB, storageTarget.Value, managedBy.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(volumeId),
+                creationData.Value,
+                sizeGiB,
+                storageTarget.Value,
+                managedBy.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeData>.Write(ModelReaderWriterOptions options)

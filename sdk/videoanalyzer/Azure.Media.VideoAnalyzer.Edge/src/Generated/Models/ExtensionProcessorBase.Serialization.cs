@@ -101,7 +101,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ExtensionProcessorBase(type, name, inputs, endpoint, image, samplingOptions.Value);
+            return new ExtensionProcessorBase(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions.Value);
         }
     }
 }

@@ -125,7 +125,19 @@ namespace Azure.Search.Documents.Models
             errors ??= new List<SearchIndexerError>();
             warnings ??= new List<SearchIndexerWarning>();
 
-            return new IndexerExecutionResult(status, statusDetail, currentState, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+            return new IndexerExecutionResult(
+                status,
+                statusDetail,
+                currentState,
+                errorMessage,
+                startTime,
+                endTime,
+                errors?.ToList(),
+                warnings?.ToList(),
+                itemCount,
+                failedItemCount,
+                initialTrackingState,
+                finalTrackingState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
@@ -189,7 +201,16 @@ namespace Azure.Search.Documents.Models
                 throw new ArgumentNullException(nameof(vectorIndexSizeCounter));
             }
 
-            return new SearchServiceCounters(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
+            return new SearchServiceCounters(
+                aliasCounter,
+                documentCounter,
+                indexCounter,
+                indexerCounter,
+                dataSourceCounter,
+                storageSizeCounter,
+                synonymMapCounter,
+                skillsetCounter,
+                vectorIndexSizeCounter);
         }
     }
 }

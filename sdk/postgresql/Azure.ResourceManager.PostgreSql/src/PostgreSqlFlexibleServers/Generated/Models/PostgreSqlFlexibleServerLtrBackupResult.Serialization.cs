@@ -223,7 +223,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerLtrBackupResult(Optional.ToNullable(datasourceSizeInBytes), Optional.ToNullable(dataTransferredInBytes), backupName.Value, backupMetadata.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(percentComplete), errorCode.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerLtrBackupResult(
+                Optional.ToNullable(datasourceSizeInBytes),
+                Optional.ToNullable(dataTransferredInBytes),
+                backupName.Value,
+                backupMetadata.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(percentComplete),
+                errorCode.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerLtrBackupResult>.Write(ModelReaderWriterOptions options)

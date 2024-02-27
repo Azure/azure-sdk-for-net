@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value, serializedAdditionalRawData);
+            return new AppServiceBillingMeter(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(meterId),
+                Optional.ToNullable(billingLocation),
+                shortName.Value,
+                friendlyName.Value,
+                osType.Value,
+                Optional.ToNullable(multiplier),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceBillingMeter>.Write(ModelReaderWriterOptions options)

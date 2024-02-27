@@ -220,7 +220,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityApplicationData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(sourceResourceType), conditionSets ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
+            return new SecurityApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(sourceResourceType),
+                conditionSets ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityApplicationData>.Write(ModelReaderWriterOptions options)

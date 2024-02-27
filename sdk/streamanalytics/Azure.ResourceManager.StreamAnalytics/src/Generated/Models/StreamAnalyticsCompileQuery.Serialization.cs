@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsCompileQuery(query, inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(), functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(), jobType, Optional.ToNullable(compatibilityLevel), serializedAdditionalRawData);
+            return new StreamAnalyticsCompileQuery(
+                query,
+                inputs ?? new ChangeTrackingList<StreamAnalyticsQueryInput>(),
+                functions ?? new ChangeTrackingList<StreamAnalyticsQueryFunction>(),
+                jobType,
+                Optional.ToNullable(compatibilityLevel),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsCompileQuery>.Write(ModelReaderWriterOptions options)

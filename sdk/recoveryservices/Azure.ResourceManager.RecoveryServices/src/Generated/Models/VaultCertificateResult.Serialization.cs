@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VaultCertificateResult(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new VaultCertificateResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VaultCertificateResult>.Write(ModelReaderWriterOptions options)

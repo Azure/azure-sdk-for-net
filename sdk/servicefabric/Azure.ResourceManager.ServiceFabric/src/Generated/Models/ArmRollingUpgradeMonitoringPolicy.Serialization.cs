@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout), serializedAdditionalRawData);
+            return new ArmRollingUpgradeMonitoringPolicy(
+                Optional.ToNullable(failureAction),
+                Optional.ToNullable(healthCheckWaitDuration),
+                Optional.ToNullable(healthCheckStableDuration),
+                Optional.ToNullable(healthCheckRetryTimeout),
+                Optional.ToNullable(upgradeTimeout),
+                Optional.ToNullable(upgradeDomainTimeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmRollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)

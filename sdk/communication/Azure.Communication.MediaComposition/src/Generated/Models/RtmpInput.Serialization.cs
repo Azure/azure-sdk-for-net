@@ -86,7 +86,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpInput(kind, placeholderImageUri.Value, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpInput(
+                kind,
+                placeholderImageUri.Value,
+                streamKey,
+                resolution,
+                streamUrl,
+                Optional.ToNullable(mode));
         }
     }
 }

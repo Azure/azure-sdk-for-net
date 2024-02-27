@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedManagedHsmProperties(managedHsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new DeletedManagedHsmProperties(
+                managedHsmId.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(deletionDate),
+                Optional.ToNullable(scheduledPurgeDate),
+                Optional.ToNullable(purgeProtectionEnabled),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedManagedHsmProperties>.Write(ModelReaderWriterOptions options)

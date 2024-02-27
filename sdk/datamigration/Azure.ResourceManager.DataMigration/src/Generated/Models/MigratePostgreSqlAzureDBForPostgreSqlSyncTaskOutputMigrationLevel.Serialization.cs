@@ -227,7 +227,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Optional.ToNullable(sourceServerType), Optional.ToNullable(targetServerType), Optional.ToNullable(state), Optional.ToNullable(databaseCount));
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(startedOn),
+                Optional.ToNullable(endedOn),
+                sourceServerVersion.Value,
+                sourceServer.Value,
+                targetServerVersion.Value,
+                targetServer.Value,
+                Optional.ToNullable(sourceServerType),
+                Optional.ToNullable(targetServerType),
+                Optional.ToNullable(state),
+                Optional.ToNullable(databaseCount));
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

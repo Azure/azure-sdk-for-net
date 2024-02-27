@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubEffectiveRoute(addressPrefixes ?? new ChangeTrackingList<string>(), nextHops ?? new ChangeTrackingList<string>(), nextHopType.Value, asPath.Value, routeOrigin.Value, serializedAdditionalRawData);
+            return new VirtualHubEffectiveRoute(
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                nextHops ?? new ChangeTrackingList<string>(),
+                nextHopType.Value,
+                asPath.Value,
+                routeOrigin.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualHubEffectiveRoute>.Write(ModelReaderWriterOptions options)

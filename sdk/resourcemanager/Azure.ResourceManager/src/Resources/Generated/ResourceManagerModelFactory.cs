@@ -45,7 +45,25 @@ namespace Azure.ResourceManager.Models
             resourceSelectors ??= new List<ResourceSelector>();
             overrides ??= new List<PolicyOverride>();
 
-            return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList(), resourceSelectors?.ToList(), overrides?.ToList(), serializedAdditionalRawData: null);
+            return new PolicyAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                managedIdentity,
+                displayName,
+                policyDefinitionId,
+                scope,
+                excludedScopes?.ToList(),
+                parameters,
+                description,
+                metadata,
+                enforcementMode,
+                nonComplianceMessages?.ToList(),
+                resourceSelectors?.ToList(),
+                overrides?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionData"/>. </summary>
@@ -65,7 +83,19 @@ namespace Azure.ResourceManager.Models
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
 
-            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters, serializedAdditionalRawData: null);
+            return new PolicyDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType,
+                mode,
+                displayName,
+                description,
+                policyRule,
+                metadata,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.PolicySetDefinitionData"/>. </summary>
@@ -87,7 +117,19 @@ namespace Azure.ResourceManager.Models
             policyDefinitions ??= new List<PolicyDefinitionReference>();
             policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
 
-            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList(), serializedAdditionalRawData: null);
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType,
+                displayName,
+                description,
+                metadata,
+                parameters,
+                policyDefinitions?.ToList(),
+                policyDefinitionGroups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.DataPolicyManifestData"/>. </summary>
@@ -113,7 +155,20 @@ namespace Azure.ResourceManager.Models
             standard ??= new List<string>();
             customDefinitions ??= new List<DataManifestCustomResourceFunctionDefinition>();
 
-            return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList(), serializedAdditionalRawData: null);
+            return new DataPolicyManifestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                namespaces?.ToList(),
+                policyMode,
+                isBuiltInOnly,
+                resourceTypeAliases?.ToList(),
+                effects?.ToList(),
+                fieldValues?.ToList(),
+                standard?.ToList(),
+                customDefinitions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliases"/>. </summary>
@@ -139,7 +194,14 @@ namespace Azure.ResourceManager.Models
         {
             paths ??= new List<ResourceTypeAliasPath>();
 
-            return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata, serializedAdditionalRawData: null);
+            return new ResourceTypeAlias(
+                name,
+                paths?.ToList(),
+                aliasType,
+                defaultPath,
+                defaultPattern,
+                defaultMetadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPath"/>. </summary>
@@ -209,7 +271,15 @@ namespace Azure.ResourceManager.Models
         {
             owners ??= new List<ManagementLockOwner>();
 
-            return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList(), serializedAdditionalRawData: null);
+            return new ManagementLockData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                level,
+                notes,
+                owners?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ResourceProviderData"/>. </summary>
@@ -224,7 +294,14 @@ namespace Azure.ResourceManager.Models
         {
             resourceTypes ??= new List<ProviderResourceType>();
 
-            return new ResourceProviderData(id, @namespace, registrationState, registrationPolicy, resourceTypes?.ToList(), providerAuthorizationConsentState, serializedAdditionalRawData: null);
+            return new ResourceProviderData(
+                id,
+                @namespace,
+                registrationState,
+                registrationPolicy,
+                resourceTypes?.ToList(),
+                providerAuthorizationConsentState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderResourceType"/>. </summary>
@@ -249,7 +326,18 @@ namespace Azure.ResourceManager.Models
             apiProfiles ??= new List<ApiProfile>();
             properties ??= new Dictionary<string, string>();
 
-            return new ProviderResourceType(resourceType, locations?.ToList(), locationMappings?.ToList(), aliases?.ToList(), apiVersions?.ToList(), defaultApiVersion, zoneMappings?.ToList(), apiProfiles?.ToList(), capabilities, properties, serializedAdditionalRawData: null);
+            return new ProviderResourceType(
+                resourceType,
+                locations?.ToList(),
+                locationMappings?.ToList(),
+                aliases?.ToList(),
+                apiVersions?.ToList(),
+                defaultApiVersion,
+                zoneMappings?.ToList(),
+                apiProfiles?.ToList(),
+                capabilities,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderExtendedLocation"/>. </summary>
@@ -307,7 +395,13 @@ namespace Azure.ResourceManager.Models
             permissions ??= new List<Permission>();
             scopes ??= new List<string>();
 
-            return new AzureRoleDefinition(id, name, isServiceRole, permissions?.ToList(), scopes?.ToList(), serializedAdditionalRawData: null);
+            return new AzureRoleDefinition(
+                id,
+                name,
+                isServiceRole,
+                permissions?.ToList(),
+                scopes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.Permission"/>. </summary>
@@ -359,7 +453,24 @@ namespace Azure.ResourceManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData: null, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
+            return new GenericResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                serializedAdditionalRawData: null,
+                plan,
+                properties,
+                kind,
+                managedBy,
+                sku,
+                identity,
+                createdOn,
+                changedOn,
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>
@@ -375,7 +486,15 @@ namespace Azure.ResourceManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TrackedResourceExtendedData(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData: null);
+            return new TrackedResourceExtendedData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ResourceGroupData"/>. </summary>
@@ -392,7 +511,16 @@ namespace Azure.ResourceManager.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ResourceGroupData(id, name, resourceType, systemData, tags, location, resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState, serializedAdditionalRawData: null) : null, managedBy, serializedAdditionalRawData: null);
+            return new ResourceGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState, serializedAdditionalRawData: null) : null,
+                managedBy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceGroupExportResult"/>. </summary>
@@ -447,7 +575,13 @@ namespace Azure.ResourceManager.Models
         {
             tagValues ??= new Dictionary<string, string>();
 
-            return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new TagResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tagValues != null ? new Tag(tagValues, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationExpanded"/>. </summary>
@@ -464,7 +598,16 @@ namespace Azure.ResourceManager.Models
         {
             availabilityZoneMappings ??= new List<AvailabilityZoneMappings>();
 
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList(), serializedAdditionalRawData: null);
+            return new LocationExpanded(
+                id,
+                subscriptionId,
+                name,
+                locationType,
+                displayName,
+                regionalDisplayName,
+                metadata,
+                availabilityZoneMappings?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationMetadata"/>. </summary>
@@ -482,7 +625,17 @@ namespace Azure.ResourceManager.Models
         {
             pairedRegions ??= new List<PairedRegion>();
 
-            return new LocationMetadata(regionType, regionCategory, geography, geographyGroup, longitude, latitude, physicalLocation, pairedRegions?.ToList(), homeLocation, serializedAdditionalRawData: null);
+            return new LocationMetadata(
+                regionType,
+                regionCategory,
+                geography,
+                geographyGroup,
+                longitude,
+                latitude,
+                physicalLocation,
+                pairedRegions?.ToList(),
+                homeLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.PairedRegion"/>. </summary>
@@ -520,7 +673,17 @@ namespace Azure.ResourceManager.Models
             managedByTenants ??= new List<ManagedByTenant>();
             tags ??= new Dictionary<string, string>();
 
-            return new SubscriptionData(id, subscriptionId, displayName, tenantId, state, subscriptionPolicies, authorizationSource, managedByTenants?.ToList(), tags, serializedAdditionalRawData: null);
+            return new SubscriptionData(
+                id,
+                subscriptionId,
+                displayName,
+                tenantId,
+                state,
+                subscriptionPolicies,
+                authorizationSource,
+                managedByTenants?.ToList(),
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.SubscriptionPolicies"/>. </summary>
@@ -557,7 +720,18 @@ namespace Azure.ResourceManager.Models
         {
             domains ??= new List<string>();
 
-            return new TenantData(id, tenantId, tenantCategory, country, countryCode, displayName, domains?.ToList(), defaultDomain, tenantType, tenantBrandingLogoUri, serializedAdditionalRawData: null);
+            return new TenantData(
+                id,
+                tenantId,
+                tenantCategory,
+                country,
+                countryCode,
+                displayName,
+                domains?.ToList(),
+                defaultDomain,
+                tenantType,
+                tenantBrandingLogoUri,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceNameValidationResult"/>. </summary>
@@ -579,7 +753,13 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="Resources.FeatureData"/> instance for mocking. </returns>
         public static FeatureData FeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string featureState = null)
         {
-            return new FeatureData(id, name, resourceType, systemData, featureState != null ? new FeatureProperties(featureState, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new FeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                featureState != null ? new FeatureProperties(featureState, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
     }
 }

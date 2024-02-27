@@ -171,7 +171,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeQuotaRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(provisioningState), Optional.ToNullable(quotaSizeInKiBs), Optional.ToNullable(quotaType), quotaTarget.Value, serializedAdditionalRawData);
+            return new NetAppVolumeQuotaRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(quotaSizeInKiBs),
+                Optional.ToNullable(quotaType),
+                quotaTarget.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeQuotaRulePatch>.Write(ModelReaderWriterOptions options)

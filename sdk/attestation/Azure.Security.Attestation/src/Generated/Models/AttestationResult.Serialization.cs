@@ -296,7 +296,41 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new AttestationResult(jti.Value, iss.Value, Optional.ToNullable(iat), Optional.ToNullable(exp), Optional.ToNullable(nbf), cnf.Value, nonce.Value, xMsVer.Value, xMsRuntime.Value, xMsInittime.Value, xMsPolicy.Value, xMsAttestationType.Value, xMsPolicySigner.Value, xMsPolicyHash.Value, Optional.ToNullable(xMsSgxIsDebuggable), Optional.ToNullable(xMsSgxProductId), xMsSgxMrenclave.Value, xMsSgxMrsigner.Value, Optional.ToNullable(xMsSgxSvn), xMsSgxEhd.Value, xMsSgxCollateral.Value, ver.Value, Optional.ToNullable(isDebuggable), maaAttestationcollateral.Value, aasEhd.Value, maaEhd.Value, Optional.ToNullable(productId), sgxMrenclave.Value, sgxMrsigner.Value, Optional.ToNullable(svn), tee.Value, policySigner.Value, policyHash.Value, rpData.Value);
+            return new AttestationResult(
+                jti.Value,
+                iss.Value,
+                Optional.ToNullable(iat),
+                Optional.ToNullable(exp),
+                Optional.ToNullable(nbf),
+                cnf.Value,
+                nonce.Value,
+                xMsVer.Value,
+                xMsRuntime.Value,
+                xMsInittime.Value,
+                xMsPolicy.Value,
+                xMsAttestationType.Value,
+                xMsPolicySigner.Value,
+                xMsPolicyHash.Value,
+                Optional.ToNullable(xMsSgxIsDebuggable),
+                Optional.ToNullable(xMsSgxProductId),
+                xMsSgxMrenclave.Value,
+                xMsSgxMrsigner.Value,
+                Optional.ToNullable(xMsSgxSvn),
+                xMsSgxEhd.Value,
+                xMsSgxCollateral.Value,
+                ver.Value,
+                Optional.ToNullable(isDebuggable),
+                maaAttestationcollateral.Value,
+                aasEhd.Value,
+                maaEhd.Value,
+                Optional.ToNullable(productId),
+                sgxMrenclave.Value,
+                sgxMrsigner.Value,
+                Optional.ToNullable(svn),
+                tee.Value,
+                policySigner.Value,
+                policyHash.Value,
+                rpData.Value);
         }
 
         internal partial class AttestationResultConverter : JsonConverter<AttestationResult>

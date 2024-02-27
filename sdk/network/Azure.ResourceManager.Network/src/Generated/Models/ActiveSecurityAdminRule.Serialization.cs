@@ -407,7 +407,27 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ActiveSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(), ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(), kind, serializedAdditionalRawData, description.Value, Optional.ToNullable(protocol), sources ?? new ChangeTrackingList<AddressPrefixItem>(), destinations ?? new ChangeTrackingList<AddressPrefixItem>(), sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            return new ActiveSecurityAdminRule(
+                id.Value,
+                Optional.ToNullable(commitTime),
+                region.Value,
+                configurationDescription.Value,
+                ruleCollectionDescription.Value,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData,
+                description.Value,
+                Optional.ToNullable(protocol),
+                sources ?? new ChangeTrackingList<AddressPrefixItem>(),
+                destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceGuid));
         }
 
         BinaryData IPersistableModel<ActiveSecurityAdminRule>.Write(ModelReaderWriterOptions options)

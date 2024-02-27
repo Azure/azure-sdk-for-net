@@ -257,7 +257,19 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsNetworkSecurityPerimeterConfiguration(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>(), networkSecurityPerimeter.Value, resourceAssociation.Value, profile.Value, serializedAdditionalRawData);
+            return new EventHubsNetworkSecurityPerimeterConfiguration(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                provisioningIssues ?? new ChangeTrackingList<EventHubsProvisioningIssue>(),
+                networkSecurityPerimeter.Value,
+                resourceAssociation.Value,
+                profile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeterConfiguration>.Write(ModelReaderWriterOptions options)

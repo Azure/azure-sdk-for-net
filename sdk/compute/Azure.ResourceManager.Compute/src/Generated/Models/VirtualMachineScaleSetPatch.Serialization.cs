@@ -342,7 +342,24 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, sku.Value, plan.Value, identity, upgradePolicy.Value, automaticRepairsPolicy.Value, virtualMachineProfile.Value, Optional.ToNullable(overprovision), Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms), Optional.ToNullable(singlePlacementGroup), additionalCapabilities.Value, scaleInPolicy.Value, proximityPlacementGroup, priorityMixPolicy.Value, spotRestorePolicy.Value, resiliencyPolicy.Value);
+            return new VirtualMachineScaleSetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku.Value,
+                plan.Value,
+                identity,
+                upgradePolicy.Value,
+                automaticRepairsPolicy.Value,
+                virtualMachineProfile.Value,
+                Optional.ToNullable(overprovision),
+                Optional.ToNullable(doNotRunExtensionsOnOverprovisionedVms),
+                Optional.ToNullable(singlePlacementGroup),
+                additionalCapabilities.Value,
+                scaleInPolicy.Value,
+                proximityPlacementGroup,
+                priorityMixPolicy.Value,
+                spotRestorePolicy.Value,
+                resiliencyPolicy.Value);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetPatch>.Write(ModelReaderWriterOptions options)

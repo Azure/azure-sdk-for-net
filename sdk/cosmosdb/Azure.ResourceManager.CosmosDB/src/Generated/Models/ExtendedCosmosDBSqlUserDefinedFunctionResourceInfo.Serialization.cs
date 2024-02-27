@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(id, body.Value, serializedAdditionalRawData, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(
+                id,
+                body.Value,
+                serializedAdditionalRawData,
+                rid.Value,
+                Optional.ToNullable(ts),
+                Optional.ToNullable(etag));
         }
 
         BinaryData IPersistableModel<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>.Write(ModelReaderWriterOptions options)

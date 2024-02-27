@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IstioPluginCertificateAuthority(keyVaultId.Value, certObjectName.Value, keyObjectName.Value, rootCertObjectName.Value, certChainObjectName.Value, serializedAdditionalRawData);
+            return new IstioPluginCertificateAuthority(
+                keyVaultId.Value,
+                certObjectName.Value,
+                keyObjectName.Value,
+                rootCertObjectName.Value,
+                certChainObjectName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IstioPluginCertificateAuthority>.Write(ModelReaderWriterOptions options)

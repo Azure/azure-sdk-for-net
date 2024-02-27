@@ -145,7 +145,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManualReclassifyExceptionAction(id.Value, kind, serializedAdditionalRawData, queueId.Value, Optional.ToNullable(priority), workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
+            return new ManualReclassifyExceptionAction(
+                id.Value,
+                kind,
+                serializedAdditionalRawData,
+                queueId.Value,
+                Optional.ToNullable(priority),
+                workerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>());
         }
 
         BinaryData IPersistableModel<ManualReclassifyExceptionAction>.Write(ModelReaderWriterOptions options)

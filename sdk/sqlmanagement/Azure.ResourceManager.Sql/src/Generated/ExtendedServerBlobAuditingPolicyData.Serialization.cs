@@ -317,7 +317,24 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedServerBlobAuditingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(isDevopsAuditEnabled), predicateExpression.Value, Optional.ToNullable(retentionDays), auditActionsAndGroups ?? new ChangeTrackingList<string>(), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), Optional.ToNullable(isManagedIdentityInUse), Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(storageAccountSubscriptionId), serializedAdditionalRawData);
+            return new ExtendedServerBlobAuditingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isDevopsAuditEnabled),
+                predicateExpression.Value,
+                Optional.ToNullable(retentionDays),
+                auditActionsAndGroups ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isStorageSecondaryKeyInUse),
+                Optional.ToNullable(isAzureMonitorTargetEnabled),
+                Optional.ToNullable(queueDelayMs),
+                Optional.ToNullable(isManagedIdentityInUse),
+                Optional.ToNullable(state),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(storageAccountSubscriptionId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedServerBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)

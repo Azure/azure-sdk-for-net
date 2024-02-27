@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
+            return new DelimitedTextSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                disableMetricsCollection.Value,
+                additionalProperties,
+                storeSettings.Value,
+                formatSettings.Value,
+                additionalColumns.Value);
         }
 
         BinaryData IPersistableModel<DelimitedTextSource>.Write(ModelReaderWriterOptions options)

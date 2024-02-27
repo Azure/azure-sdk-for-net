@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServersPrivateEndpointConnection(id, name, type, systemData.Value, groupIds ?? new ChangeTrackingList<string>(), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MySqlFlexibleServersPrivateEndpointConnection(
+                id,
+                name,
+                type,
+                systemData.Value,
+                groupIds ?? new ChangeTrackingList<string>(),
+                privateEndpoint,
+                privateLinkServiceConnectionState.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServersPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)

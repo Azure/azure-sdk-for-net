@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBMigrationSettings(Optional.ToNullable(boostRUs), databases, Optional.ToNullable(replication), source, target, throttling.Value, serializedAdditionalRawData);
+            return new MongoDBMigrationSettings(
+                Optional.ToNullable(boostRUs),
+                databases,
+                Optional.ToNullable(replication),
+                source,
+                target,
+                throttling.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBMigrationSettings>.Write(ModelReaderWriterOptions options)

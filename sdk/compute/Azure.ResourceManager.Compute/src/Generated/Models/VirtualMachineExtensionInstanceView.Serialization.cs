@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, substatuses ?? new ChangeTrackingList<InstanceViewStatus>(), statuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
+            return new VirtualMachineExtensionInstanceView(
+                name.Value,
+                type.Value,
+                typeHandlerVersion.Value,
+                substatuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionInstanceView>.Write(ModelReaderWriterOptions options)

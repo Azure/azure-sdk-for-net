@@ -147,7 +147,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, content, pages, paragraphs ?? new ChangeTrackingList<DocumentParagraph>(), tables ?? new ChangeTrackingList<DocumentTable>(), keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(), styles ?? new ChangeTrackingList<DocumentStyle>(), languages ?? new ChangeTrackingList<DocumentLanguage>(), documents ?? new ChangeTrackingList<AnalyzedDocument>());
+            return new AnalyzeResult(
+                apiVersion,
+                modelId,
+                stringIndexType,
+                content,
+                pages,
+                paragraphs ?? new ChangeTrackingList<DocumentParagraph>(),
+                tables ?? new ChangeTrackingList<DocumentTable>(),
+                keyValuePairs ?? new ChangeTrackingList<DocumentKeyValuePair>(),
+                styles ?? new ChangeTrackingList<DocumentStyle>(),
+                languages ?? new ChangeTrackingList<DocumentLanguage>(),
+                documents ?? new ChangeTrackingList<AnalyzedDocument>());
         }
     }
 }

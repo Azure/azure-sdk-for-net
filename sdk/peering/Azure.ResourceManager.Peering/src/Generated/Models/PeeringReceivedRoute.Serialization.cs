@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringReceivedRoute(prefix.Value, nextHop.Value, asPath.Value, originAsValidationState.Value, rpkiValidationState.Value, trustAnchor.Value, receivedTimestamp.Value, serializedAdditionalRawData);
+            return new PeeringReceivedRoute(
+                prefix.Value,
+                nextHop.Value,
+                asPath.Value,
+                originAsValidationState.Value,
+                rpkiValidationState.Value,
+                trustAnchor.Value,
+                receivedTimestamp.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringReceivedRoute>.Write(ModelReaderWriterOptions options)

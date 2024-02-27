@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuestAgentInstallStatus(vmUuid.Value, Optional.ToNullable(status), Optional.ToNullable(lastStatusChange), agentVersion.Value, errorDetails ?? new ChangeTrackingList<ResponseError>(), serializedAdditionalRawData);
+            return new GuestAgentInstallStatus(
+                vmUuid.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(lastStatusChange),
+                agentVersion.Value,
+                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuestAgentInstallStatus>.Write(ModelReaderWriterOptions options)

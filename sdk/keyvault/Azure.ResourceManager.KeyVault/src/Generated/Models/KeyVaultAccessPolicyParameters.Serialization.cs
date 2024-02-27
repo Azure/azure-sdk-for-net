@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultAccessPolicyParameters(id, name, type, systemData.Value, Optional.ToNullable(location), properties, serializedAdditionalRawData);
+            return new KeyVaultAccessPolicyParameters(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultAccessPolicyParameters>.Write(ModelReaderWriterOptions options)

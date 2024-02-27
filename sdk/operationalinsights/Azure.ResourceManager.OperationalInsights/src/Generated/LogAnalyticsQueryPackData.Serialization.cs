@@ -228,7 +228,18 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsQueryPackData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(queryPackId), Optional.ToNullable(timeCreated), Optional.ToNullable(timeModified), provisioningState.Value, serializedAdditionalRawData);
+            return new LogAnalyticsQueryPackData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(queryPackId),
+                Optional.ToNullable(timeCreated),
+                Optional.ToNullable(timeModified),
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogAnalyticsQueryPackData>.Write(ModelReaderWriterOptions options)

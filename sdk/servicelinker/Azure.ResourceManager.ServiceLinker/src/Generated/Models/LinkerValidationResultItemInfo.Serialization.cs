@@ -177,7 +177,13 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkerValidationResultItemInfo(name.Value, description.Value, Optional.ToNullable(result), errorMessage.Value, errorCode.Value, serializedAdditionalRawData);
+            return new LinkerValidationResultItemInfo(
+                name.Value,
+                description.Value,
+                Optional.ToNullable(result),
+                errorMessage.Value,
+                errorCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkerValidationResultItemInfo>.Write(ModelReaderWriterOptions options)

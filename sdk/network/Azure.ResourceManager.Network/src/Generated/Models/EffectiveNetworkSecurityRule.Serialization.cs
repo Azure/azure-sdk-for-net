@@ -339,7 +339,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, sourcePortRanges ?? new ChangeTrackingList<string>(), destinationPortRanges ?? new ChangeTrackingList<string>(), sourceAddressPrefix.Value, destinationAddressPrefix.Value, sourceAddressPrefixes ?? new ChangeTrackingList<string>(), destinationAddressPrefixes ?? new ChangeTrackingList<string>(), expandedSourceAddressPrefix ?? new ChangeTrackingList<string>(), expandedDestinationAddressPrefix ?? new ChangeTrackingList<string>(), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityRule(
+                name.Value,
+                Optional.ToNullable(protocol),
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix.Value,
+                destinationAddressPrefix.Value,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                expandedSourceAddressPrefix ?? new ChangeTrackingList<string>(),
+                expandedDestinationAddressPrefix ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

@@ -125,7 +125,13 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransliterableScript(code, name, nativeName, dir, serializedAdditionalRawData, toScripts);
+            return new TransliterableScript(
+                code,
+                name,
+                nativeName,
+                dir,
+                serializedAdditionalRawData,
+                toScripts);
         }
 
         BinaryData IPersistableModel<TransliterableScript>.Write(ModelReaderWriterOptions options)

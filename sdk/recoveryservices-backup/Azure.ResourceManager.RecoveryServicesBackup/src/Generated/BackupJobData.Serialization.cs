@@ -189,7 +189,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupJobData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new BackupJobData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupJobData>.Write(ModelReaderWriterOptions options)

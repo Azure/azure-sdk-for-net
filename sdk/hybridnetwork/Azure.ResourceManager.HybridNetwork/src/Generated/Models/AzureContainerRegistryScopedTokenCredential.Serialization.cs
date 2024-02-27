@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureContainerRegistryScopedTokenCredential(credentialType, serializedAdditionalRawData, username.Value, acrToken.Value, acrServerUrl.Value, repositories ?? new ChangeTrackingList<string>(), Optional.ToNullable(expiry));
+            return new AzureContainerRegistryScopedTokenCredential(
+                credentialType,
+                serializedAdditionalRawData,
+                username.Value,
+                acrToken.Value,
+                acrServerUrl.Value,
+                repositories ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(expiry));
         }
 
         BinaryData IPersistableModel<AzureContainerRegistryScopedTokenCredential>.Write(ModelReaderWriterOptions options)

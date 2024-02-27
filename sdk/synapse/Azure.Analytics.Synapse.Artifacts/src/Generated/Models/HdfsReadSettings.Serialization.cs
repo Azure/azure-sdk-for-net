@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HdfsReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value, distcpSettings.Value, deleteFilesAfterCompletion.Value);
+            return new HdfsReadSettings(
+                type,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                recursive.Value,
+                wildcardFolderPath.Value,
+                wildcardFileName.Value,
+                fileListPath.Value,
+                enablePartitionDiscovery.Value,
+                partitionRootPath.Value,
+                modifiedDatetimeStart.Value,
+                modifiedDatetimeEnd.Value,
+                distcpSettings.Value,
+                deleteFilesAfterCompletion.Value);
         }
 
         internal partial class HdfsReadSettingsConverter : JsonConverter<HdfsReadSettings>

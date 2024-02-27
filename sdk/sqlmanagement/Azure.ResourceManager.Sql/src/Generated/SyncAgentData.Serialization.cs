@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentData(id, name, type, systemData.Value, syncDatabaseId.Value, Optional.ToNullable(lastAliveTime), Optional.ToNullable(state), Optional.ToNullable(isUpToDate), Optional.ToNullable(expiryTime), version.Value, serializedAdditionalRawData);
+            return new SyncAgentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                syncDatabaseId.Value,
+                Optional.ToNullable(lastAliveTime),
+                Optional.ToNullable(state),
+                Optional.ToNullable(isUpToDate),
+                Optional.ToNullable(expiryTime),
+                version.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentData>.Write(ModelReaderWriterOptions options)

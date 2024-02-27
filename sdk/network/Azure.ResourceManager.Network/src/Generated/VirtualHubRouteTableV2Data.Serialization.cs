@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualHubRouteTableV2Data(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), routes ?? new ChangeTrackingList<VirtualHubRouteV2>(), attachedConnections ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState));
+            return new VirtualHubRouteTableV2Data(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                routes ?? new ChangeTrackingList<VirtualHubRouteV2>(),
+                attachedConnections ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<VirtualHubRouteTableV2Data>.Write(ModelReaderWriterOptions options)

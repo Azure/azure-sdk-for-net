@@ -196,7 +196,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), aggregatorOrSingleRackDefinition.Value, clusterLocation.Value, clusterServicePrincipal.Value, computeDeploymentThreshold.Value, computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(), serializedAdditionalRawData);
+            return new NetworkCloudClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                aggregatorOrSingleRackDefinition.Value,
+                clusterLocation.Value,
+                clusterServicePrincipal.Value,
+                computeDeploymentThreshold.Value,
+                computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterPatch>.Write(ModelReaderWriterOptions options)

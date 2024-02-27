@@ -226,7 +226,24 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, x5c ?? new ChangeTrackingList<string>(), y.Value);
+            return new JsonWebKey(
+                alg.Value,
+                crv.Value,
+                d.Value,
+                dp.Value,
+                dq.Value,
+                e.Value,
+                k.Value,
+                kid.Value,
+                kty,
+                n.Value,
+                p.Value,
+                q.Value,
+                qi.Value,
+                use.Value,
+                x.Value,
+                x5c ?? new ChangeTrackingList<string>(),
+                y.Value);
         }
     }
 }

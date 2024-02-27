@@ -195,7 +195,17 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, pairedRegion ?? new ChangeTrackingList<PairedRegion>(), homeLocation.Value, serializedAdditionalRawData);
+            return new LocationMetadata(
+                Optional.ToNullable(regionType),
+                Optional.ToNullable(regionCategory),
+                geography.Value,
+                geographyGroup.Value,
+                Optional.ToNullable(longitude),
+                Optional.ToNullable(latitude),
+                physicalLocation.Value,
+                pairedRegion ?? new ChangeTrackingList<PairedRegion>(),
+                homeLocation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocationMetadata>.Write(ModelReaderWriterOptions options)

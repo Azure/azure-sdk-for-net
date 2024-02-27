@@ -534,7 +534,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableParameterSubspace(booster.Value, boostingType.Value, growPolicy.Value, learningRate.Value, maxBin.Value, maxDepth.Value, maxLeaves.Value, minDataInLeaf.Value, minSplitGain.Value, modelName.Value, nEstimators.Value, numLeaves.Value, preprocessorName.Value, regAlpha.Value, regLambda.Value, subsample.Value, subsampleFreq.Value, treeMethod.Value, withMean.Value, withStd.Value, serializedAdditionalRawData);
+            return new TableParameterSubspace(
+                booster.Value,
+                boostingType.Value,
+                growPolicy.Value,
+                learningRate.Value,
+                maxBin.Value,
+                maxDepth.Value,
+                maxLeaves.Value,
+                minDataInLeaf.Value,
+                minSplitGain.Value,
+                modelName.Value,
+                nEstimators.Value,
+                numLeaves.Value,
+                preprocessorName.Value,
+                regAlpha.Value,
+                regLambda.Value,
+                subsample.Value,
+                subsampleFreq.Value,
+                treeMethod.Value,
+                withMean.Value,
+                withStd.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableParameterSubspace>.Write(ModelReaderWriterOptions options)

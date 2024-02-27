@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MyWorkbookResourceContent(identity.Value, id.Value, name.Value, type.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), etag ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new MyWorkbookResourceContent(
+                identity.Value,
+                id.Value,
+                name.Value,
+                type.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MyWorkbookResourceContent>.Write(ModelReaderWriterOptions options)

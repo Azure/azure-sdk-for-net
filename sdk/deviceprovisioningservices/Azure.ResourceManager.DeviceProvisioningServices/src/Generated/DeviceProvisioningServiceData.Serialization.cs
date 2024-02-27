@@ -190,7 +190,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceProvisioningServiceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(etag), properties, sku, serializedAdditionalRawData);
+            return new DeviceProvisioningServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(etag),
+                properties,
+                sku,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceProvisioningServiceData>.Write(ModelReaderWriterOptions options)

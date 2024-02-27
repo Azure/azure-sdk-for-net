@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsApplicationGroupData(id, name, type, systemData.Value, Optional.ToNullable(isEnabled), clientAppGroupIdentifier.Value, policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(), Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsApplicationGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isEnabled),
+                clientAppGroupIdentifier.Value,
+                policies ?? new ChangeTrackingList<EventHubsApplicationGroupPolicy>(),
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsApplicationGroupData>.Write(ModelReaderWriterOptions options)

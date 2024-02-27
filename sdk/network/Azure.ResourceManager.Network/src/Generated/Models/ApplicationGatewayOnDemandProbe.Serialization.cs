@@ -187,7 +187,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayOnDemandProbe(Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(timeout), Optional.ToNullable(pickHostNameFromBackendHttpSettings), match.Value, backendAddressPool, backendHttpSettings, serializedAdditionalRawData);
+            return new ApplicationGatewayOnDemandProbe(
+                Optional.ToNullable(protocol),
+                host.Value,
+                path.Value,
+                Optional.ToNullable(timeout),
+                Optional.ToNullable(pickHostNameFromBackendHttpSettings),
+                match.Value,
+                backendAddressPool,
+                backendHttpSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayOnDemandProbe>.Write(ModelReaderWriterOptions options)

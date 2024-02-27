@@ -330,7 +330,25 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, autoShutdownProfile.Value, connectionProfile.Value, virtualMachineProfile.Value, securityProfile.Value, rosterProfile.Value, labPlanId.Value, title.Value, description.Value, Optional.ToNullable(provisioningState), networkProfile.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new LabData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                autoShutdownProfile.Value,
+                connectionProfile.Value,
+                virtualMachineProfile.Value,
+                securityProfile.Value,
+                rosterProfile.Value,
+                labPlanId.Value,
+                title.Value,
+                description.Value,
+                Optional.ToNullable(provisioningState),
+                networkProfile.Value,
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabData>.Write(ModelReaderWriterOptions options)

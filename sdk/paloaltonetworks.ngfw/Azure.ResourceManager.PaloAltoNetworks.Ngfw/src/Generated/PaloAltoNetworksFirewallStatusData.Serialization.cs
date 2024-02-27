@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PaloAltoNetworksFirewallStatusData(id, name, type, systemData.Value, Optional.ToNullable(isPanoramaManaged), Optional.ToNullable(healthStatus), healthReason.Value, panoramaStatus.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new PaloAltoNetworksFirewallStatusData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(isPanoramaManaged),
+                Optional.ToNullable(healthStatus),
+                healthReason.Value,
+                panoramaStatus.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PaloAltoNetworksFirewallStatusData>.Write(ModelReaderWriterOptions options)

@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationEligibilityResultErrorInfo(code.Value, message.Value, possibleCauses.Value, recommendedAction.Value, status.Value, serializedAdditionalRawData);
+            return new ReplicationEligibilityResultErrorInfo(
+                code.Value,
+                message.Value,
+                possibleCauses.Value,
+                recommendedAction.Value,
+                status.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationEligibilityResultErrorInfo>.Write(ModelReaderWriterOptions options)

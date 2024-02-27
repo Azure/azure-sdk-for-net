@@ -207,7 +207,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterServiceConfigResult(serviceName.Value, fileName.Value, content.Value, componentName.Value, type.Value, path.Value, customKeys ?? new ChangeTrackingDictionary<string, string>(), defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(), serializedAdditionalRawData);
+            return new ClusterServiceConfigResult(
+                serviceName.Value,
+                fileName.Value,
+                content.Value,
+                componentName.Value,
+                type.Value,
+                path.Value,
+                customKeys ?? new ChangeTrackingDictionary<string, string>(),
+                defaultKeys ?? new ChangeTrackingDictionary<string, ClusterServiceConfigValueEntity>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterServiceConfigResult>.Write(ModelReaderWriterOptions options)

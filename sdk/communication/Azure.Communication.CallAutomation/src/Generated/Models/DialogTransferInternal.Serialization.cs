@@ -93,7 +93,17 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogTransferInternal(transferType.Value, transferDestination.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new DialogTransferInternal(
+                transferType.Value,
+                transferDestination.Value,
+                operationContext.Value,
+                resultInformation.Value,
+                Optional.ToNullable(dialogInputType),
+                dialogId.Value,
+                ivrContext.Value,
+                callConnectionId.Value,
+                serverCallId.Value,
+                correlationId.Value);
         }
     }
 }

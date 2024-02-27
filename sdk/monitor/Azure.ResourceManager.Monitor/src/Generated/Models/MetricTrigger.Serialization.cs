@@ -212,7 +212,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(), Optional.ToNullable(dividePerInstance), serializedAdditionalRawData);
+            return new MetricTrigger(
+                metricName,
+                metricNamespace.Value,
+                metricResourceUri,
+                Optional.ToNullable(metricResourceLocation),
+                timeGrain,
+                statistic,
+                timeWindow,
+                timeAggregation,
+                @operator,
+                threshold,
+                dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
+                Optional.ToNullable(dividePerInstance),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricTrigger>.Write(ModelReaderWriterOptions options)

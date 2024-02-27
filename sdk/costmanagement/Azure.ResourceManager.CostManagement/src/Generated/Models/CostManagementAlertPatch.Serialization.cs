@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertPatch(definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), serializedAdditionalRawData);
+            return new CostManagementAlertPatch(
+                definition.Value,
+                description.Value,
+                Optional.ToNullable(source),
+                details.Value,
+                costEntityId.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(closeTime),
+                Optional.ToNullable(modificationTime),
+                statusModificationUserName.Value,
+                Optional.ToNullable(statusModificationTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)

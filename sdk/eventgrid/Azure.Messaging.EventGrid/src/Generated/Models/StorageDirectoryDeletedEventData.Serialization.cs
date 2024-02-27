@@ -76,7 +76,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new StorageDirectoryDeletedEventData(api.Value, clientRequestId.Value, requestId.Value, url.Value, recursive.Value, sequencer.Value, identity.Value, storageDiagnostics.Value);
+            return new StorageDirectoryDeletedEventData(
+                api.Value,
+                clientRequestId.Value,
+                requestId.Value,
+                url.Value,
+                recursive.Value,
+                sequencer.Value,
+                identity.Value,
+                storageDiagnostics.Value);
         }
 
         internal partial class StorageDirectoryDeletedEventDataConverter : JsonConverter<StorageDirectoryDeletedEventData>

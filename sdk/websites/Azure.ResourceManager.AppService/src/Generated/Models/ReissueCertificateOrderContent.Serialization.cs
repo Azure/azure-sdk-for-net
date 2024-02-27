@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReissueCertificateOrderContent(id, name, type, systemData.Value, Optional.ToNullable(keySize), Optional.ToNullable(delayExistingRevokeInHours), csr.Value, Optional.ToNullable(isPrivateKeyExternal), kind.Value, serializedAdditionalRawData);
+            return new ReissueCertificateOrderContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(keySize),
+                Optional.ToNullable(delayExistingRevokeInHours),
+                csr.Value,
+                Optional.ToNullable(isPrivateKeyExternal),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReissueCertificateOrderContent>.Write(ModelReaderWriterOptions options)

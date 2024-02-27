@@ -387,7 +387,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMegaBytes), Optional.ToNullable(psDataInMegaBytes), Optional.ToNullable(targetDataInMegaBytes), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, Optional.ToNullable(secondsToTakeSwitchProvider), serializedAdditionalRawData);
+            return new InMageAzureV2ProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                protectionStage.Value,
+                healthErrorCode.Value,
+                Optional.ToNullable(rpoInSeconds),
+                resyncRequired.Value,
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resyncDurationInSeconds),
+                Optional.ToNullable(diskCapacityInBytes),
+                Optional.ToNullable(fileSystemCapacityInBytes),
+                Optional.ToNullable(sourceDataInMegaBytes),
+                Optional.ToNullable(psDataInMegaBytes),
+                Optional.ToNullable(targetDataInMegaBytes),
+                diskResized.Value,
+                Optional.ToNullable(lastRpoCalculatedTime),
+                Optional.ToNullable(resyncProcessedBytes),
+                Optional.ToNullable(resyncTotalTransferredBytes),
+                Optional.ToNullable(resyncLast15MinutesTransferredBytes),
+                Optional.ToNullable(resyncLastDataTransferTimeUTC),
+                Optional.ToNullable(resyncStartTime),
+                progressHealth.Value,
+                progressStatus.Value,
+                Optional.ToNullable(secondsToTakeSwitchProvider),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

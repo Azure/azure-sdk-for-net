@@ -342,7 +342,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAzureDataLakeGen2Datastore(description.Value, properties ?? new ChangeTrackingDictionary<string, string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault), accountName, endpoint.Value, filesystem, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity), resourceGroup.Value, subscriptionId.Value);
+            return new MachineLearningAzureDataLakeGen2Datastore(
+                description.Value,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty.Value,
+                Optional.ToNullable(isDefault),
+                accountName,
+                endpoint.Value,
+                filesystem,
+                protocol.Value,
+                Optional.ToNullable(serviceDataAccessAuthIdentity),
+                resourceGroup.Value,
+                subscriptionId.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>.Write(ModelReaderWriterOptions options)

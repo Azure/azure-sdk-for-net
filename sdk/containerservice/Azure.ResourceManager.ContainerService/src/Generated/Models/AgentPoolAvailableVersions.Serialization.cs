@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolAvailableVersions(id, name, type, systemData.Value, agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(), serializedAdditionalRawData);
+            return new AgentPoolAvailableVersions(
+                id,
+                name,
+                type,
+                systemData.Value,
+                agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolAvailableVersions>.Write(ModelReaderWriterOptions options)

@@ -225,7 +225,18 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentModelDetails(modelId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(buildMode), azureBlobSource.Value, azureBlobFileListSource.Value, docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(), serializedAdditionalRawData);
+            return new DocumentModelDetails(
+                modelId,
+                description.Value,
+                createdDateTime,
+                Optional.ToNullable(expirationDateTime),
+                apiVersion.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(buildMode),
+                azureBlobSource.Value,
+                azureBlobFileListSource.Value,
+                docTypes ?? new ChangeTrackingDictionary<string, DocumentTypeDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentModelDetails>.Write(ModelReaderWriterOptions options)

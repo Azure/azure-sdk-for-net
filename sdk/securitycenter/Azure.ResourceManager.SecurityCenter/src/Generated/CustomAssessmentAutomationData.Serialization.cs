@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomAssessmentAutomationData(id, name, type, systemData.Value, compressedQuery.Value, Optional.ToNullable(supportedCloud), Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value, assessmentKey.Value, serializedAdditionalRawData);
+            return new CustomAssessmentAutomationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                compressedQuery.Value,
+                Optional.ToNullable(supportedCloud),
+                Optional.ToNullable(severity),
+                displayName.Value,
+                description.Value,
+                remediationDescription.Value,
+                assessmentKey.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomAssessmentAutomationData>.Write(ModelReaderWriterOptions options)

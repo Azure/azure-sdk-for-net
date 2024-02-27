@@ -222,7 +222,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HopLink(nextHopId.Value, linkType.Value, issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(), context ?? new ChangeTrackingDictionary<string, string>(), resourceId.Value, Optional.ToNullable(roundTripTimeMin), Optional.ToNullable(roundTripTimeAvg), Optional.ToNullable(roundTripTimeMax), serializedAdditionalRawData);
+            return new HopLink(
+                nextHopId.Value,
+                linkType.Value,
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                context ?? new ChangeTrackingDictionary<string, string>(),
+                resourceId.Value,
+                Optional.ToNullable(roundTripTimeMin),
+                Optional.ToNullable(roundTripTimeAvg),
+                Optional.ToNullable(roundTripTimeMax),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HopLink>.Write(ModelReaderWriterOptions options)

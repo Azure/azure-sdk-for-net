@@ -57,7 +57,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerError(key.Value, errorMessage, statusCode, name.Value, details.Value, documentationLink.Value);
+            return new SearchIndexerError(
+                key.Value,
+                errorMessage,
+                statusCode,
+                name.Value,
+                details.Value,
+                documentationLink.Value);
         }
     }
 }

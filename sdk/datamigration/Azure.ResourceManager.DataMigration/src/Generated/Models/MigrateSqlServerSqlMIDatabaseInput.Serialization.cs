@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMIDatabaseInput(name, restoreDatabaseName, backupFileShare.Value, backupFilePaths ?? new ChangeTrackingList<string>(), id.Value, serializedAdditionalRawData);
+            return new MigrateSqlServerSqlMIDatabaseInput(
+                name,
+                restoreDatabaseName,
+                backupFileShare.Value,
+                backupFilePaths ?? new ChangeTrackingList<string>(),
+                id.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMIDatabaseInput>.Write(ModelReaderWriterOptions options)

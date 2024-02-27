@@ -340,7 +340,23 @@ namespace Azure.ResourceManager.CustomerInsights
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipLinkResourceFormatData(id, name, type, systemData.Value, displayName ?? new ChangeTrackingDictionary<string, string>(), description ?? new ChangeTrackingDictionary<string, string>(), interactionType.Value, linkName.Value, mappings ?? new ChangeTrackingList<RelationshipLinkFieldMapping>(), profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), Optional.ToNullable(provisioningState), relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(), relationshipName.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new RelationshipLinkResourceFormatData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                interactionType.Value,
+                linkName.Value,
+                mappings ?? new ChangeTrackingList<RelationshipLinkFieldMapping>(),
+                profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                Optional.ToNullable(provisioningState),
+                relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                relationshipName.Value,
+                relationshipGuidId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipLinkResourceFormatData>.Write(ModelReaderWriterOptions options)

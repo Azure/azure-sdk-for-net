@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseWorkspaceRepositoryConfiguration(type.Value, hostName.Value, accountName.Value, projectName.Value, repositoryName.Value, collaborationBranch.Value, rootFolder.Value, lastCommitId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new SynapseWorkspaceRepositoryConfiguration(
+                type.Value,
+                hostName.Value,
+                accountName.Value,
+                projectName.Value,
+                repositoryName.Value,
+                collaborationBranch.Value,
+                rootFolder.Value,
+                lastCommitId.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseWorkspaceRepositoryConfiguration>.Write(ModelReaderWriterOptions options)

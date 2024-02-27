@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformationPropertiesFormat(changeNumber.Value, region.Value, systemService.Value, addressPrefixes ?? new ChangeTrackingList<string>(), state.Value, serializedAdditionalRawData);
+            return new ServiceTagInformationPropertiesFormat(
+                changeNumber.Value,
+                region.Value,
+                systemService.Value,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                state.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformationPropertiesFormat>.Write(ModelReaderWriterOptions options)

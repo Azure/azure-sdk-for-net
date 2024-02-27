@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsTeamsChannelProperties(Optional.ToNullable(enableCalling), callingWebhook.Value, isEnabled, incomingCallRoute.Value, deploymentEnvironment.Value, Optional.ToNullable(acceptedTerms), serializedAdditionalRawData);
+            return new MsTeamsChannelProperties(
+                Optional.ToNullable(enableCalling),
+                callingWebhook.Value,
+                isEnabled,
+                incomingCallRoute.Value,
+                deploymentEnvironment.Value,
+                Optional.ToNullable(acceptedTerms),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsTeamsChannelProperties>.Write(ModelReaderWriterOptions options)

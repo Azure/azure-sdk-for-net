@@ -307,7 +307,23 @@ namespace Azure.ResourceManager.Workloads
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapDatabaseInstanceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>(), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
+            return new SapDatabaseInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                subnet.Value,
+                databaseSid.Value,
+                databaseType.Value,
+                ipAddress.Value,
+                loadBalancerDetails,
+                vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>(),
+                Optional.ToNullable(status),
+                Optional.ToNullable(provisioningState),
+                errors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDatabaseInstanceData>.Write(ModelReaderWriterOptions options)

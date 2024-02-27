@@ -483,7 +483,49 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactEnvelopeSettings(groupAssociationAssignedCode.Value, communicationAgreementId.Value, applyDelimiterStringAdvice, createGroupingSegments, enableDefaultGroupHeaders, recipientReferencePasswordValue.Value, recipientReferencePasswordQualifier.Value, applicationReferenceId.Value, processingPriorityCode.Value, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, interchangeControlNumberPrefix.Value, interchangeControlNumberSuffix.Value, senderReverseRoutingAddress.Value, receiverReverseRoutingAddress.Value, functionalGroupId.Value, groupControllingAgencyCode.Value, groupMessageVersion.Value, groupMessageRelease.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupControlNumberPrefix.Value, groupControlNumberSuffix.Value, groupApplicationReceiverQualifier.Value, groupApplicationReceiverId.Value, groupApplicationSenderQualifier.Value, groupApplicationSenderId.Value, groupApplicationPassword.Value, overwriteExistingTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, isTestInterchange, senderInternalIdentification.Value, senderInternalSubIdentification.Value, receiverInternalIdentification.Value, receiverInternalSubIdentification.Value, serializedAdditionalRawData);
+            return new EdifactEnvelopeSettings(
+                groupAssociationAssignedCode.Value,
+                communicationAgreementId.Value,
+                applyDelimiterStringAdvice,
+                createGroupingSegments,
+                enableDefaultGroupHeaders,
+                recipientReferencePasswordValue.Value,
+                recipientReferencePasswordQualifier.Value,
+                applicationReferenceId.Value,
+                processingPriorityCode.Value,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                interchangeControlNumberPrefix.Value,
+                interchangeControlNumberSuffix.Value,
+                senderReverseRoutingAddress.Value,
+                receiverReverseRoutingAddress.Value,
+                functionalGroupId.Value,
+                groupControllingAgencyCode.Value,
+                groupMessageVersion.Value,
+                groupMessageRelease.Value,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupControlNumberPrefix.Value,
+                groupControlNumberSuffix.Value,
+                groupApplicationReceiverQualifier.Value,
+                groupApplicationReceiverId.Value,
+                groupApplicationSenderQualifier.Value,
+                groupApplicationSenderId.Value,
+                groupApplicationPassword.Value,
+                overwriteExistingTransactionSetControlNumber,
+                transactionSetControlNumberPrefix.Value,
+                transactionSetControlNumberSuffix.Value,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                isTestInterchange,
+                senderInternalIdentification.Value,
+                senderInternalSubIdentification.Value,
+                receiverInternalIdentification.Value,
+                receiverInternalSubIdentification.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactEnvelopeSettings>.Write(ModelReaderWriterOptions options)

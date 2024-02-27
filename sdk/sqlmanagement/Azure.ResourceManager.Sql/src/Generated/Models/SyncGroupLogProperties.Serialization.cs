@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupLogProperties(Optional.ToNullable(timestamp), Optional.ToNullable(type), source.Value, details.Value, Optional.ToNullable(tracingId), operationStatus.Value, serializedAdditionalRawData);
+            return new SyncGroupLogProperties(
+                Optional.ToNullable(timestamp),
+                Optional.ToNullable(type),
+                source.Value,
+                details.Value,
+                Optional.ToNullable(tracingId),
+                operationStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupLogProperties>.Write(ModelReaderWriterOptions options)

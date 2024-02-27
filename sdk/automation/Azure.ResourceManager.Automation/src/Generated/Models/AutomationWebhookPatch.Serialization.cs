@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationWebhookPatch(name.Value, Optional.ToNullable(isEnabled), runOn.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), description.Value, serializedAdditionalRawData);
+            return new AutomationWebhookPatch(
+                name.Value,
+                Optional.ToNullable(isEnabled),
+                runOn.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationWebhookPatch>.Write(ModelReaderWriterOptions options)

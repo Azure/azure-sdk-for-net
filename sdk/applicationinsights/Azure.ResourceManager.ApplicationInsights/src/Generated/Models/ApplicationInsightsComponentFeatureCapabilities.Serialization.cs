@@ -298,7 +298,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentFeatureCapabilities(Optional.ToNullable(supportExportData), burstThrottlePolicy.Value, metadataClass.Value, Optional.ToNullable(liveStreamMetrics), Optional.ToNullable(applicationMap), Optional.ToNullable(workItemIntegration), Optional.ToNullable(powerBIIntegration), Optional.ToNullable(openSchema), Optional.ToNullable(proactiveDetection), Optional.ToNullable(analyticsIntegration), Optional.ToNullable(multipleStepWebTest), apiAccessLevel.Value, trackingType.Value, Optional.ToNullable(dailyCap), Optional.ToNullable(dailyCapResetTime), Optional.ToNullable(throttleRate), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentFeatureCapabilities(
+                Optional.ToNullable(supportExportData),
+                burstThrottlePolicy.Value,
+                metadataClass.Value,
+                Optional.ToNullable(liveStreamMetrics),
+                Optional.ToNullable(applicationMap),
+                Optional.ToNullable(workItemIntegration),
+                Optional.ToNullable(powerBIIntegration),
+                Optional.ToNullable(openSchema),
+                Optional.ToNullable(proactiveDetection),
+                Optional.ToNullable(analyticsIntegration),
+                Optional.ToNullable(multipleStepWebTest),
+                apiAccessLevel.Value,
+                trackingType.Value,
+                Optional.ToNullable(dailyCap),
+                Optional.ToNullable(dailyCapResetTime),
+                Optional.ToNullable(throttleRate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentFeatureCapabilities>.Write(ModelReaderWriterOptions options)

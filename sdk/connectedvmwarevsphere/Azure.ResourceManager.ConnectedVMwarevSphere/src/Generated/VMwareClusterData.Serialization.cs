@@ -416,7 +416,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareClusterData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, statuses ?? new ChangeTrackingList<VMwareResourceStatus>(), customResourceName.Value, Optional.ToNullable(usedMemoryGB), Optional.ToNullable(totalMemoryGB), Optional.ToNullable(usedCpuMHz), Optional.ToNullable(totalCpuMHz), datastoreIds ?? new ChangeTrackingList<string>(), networkIds ?? new ChangeTrackingList<string>(), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new VMwareClusterData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                kind.Value,
+                uuid.Value,
+                vCenterId.Value,
+                moRefId.Value,
+                inventoryItemId.Value,
+                moName.Value,
+                statuses ?? new ChangeTrackingList<VMwareResourceStatus>(),
+                customResourceName.Value,
+                Optional.ToNullable(usedMemoryGB),
+                Optional.ToNullable(totalMemoryGB),
+                Optional.ToNullable(usedCpuMHz),
+                Optional.ToNullable(totalCpuMHz),
+                datastoreIds ?? new ChangeTrackingList<string>(),
+                networkIds ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options)

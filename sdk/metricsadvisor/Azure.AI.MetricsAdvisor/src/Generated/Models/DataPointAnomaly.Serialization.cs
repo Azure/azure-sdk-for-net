@@ -84,7 +84,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataPointAnomaly(dataFeedId.Value, metricId.Value, anomalyDetectionConfigurationId.Value, timestamp, Optional.ToNullable(createdTime), Optional.ToNullable(modifiedTime), dimension, property);
+            return new DataPointAnomaly(
+                dataFeedId.Value,
+                metricId.Value,
+                anomalyDetectionConfigurationId.Value,
+                timestamp,
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(modifiedTime),
+                dimension,
+                property);
         }
     }
 }

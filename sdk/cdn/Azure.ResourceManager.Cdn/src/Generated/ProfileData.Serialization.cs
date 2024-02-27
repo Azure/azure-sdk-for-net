@@ -260,7 +260,20 @@ namespace Azure.ResourceManager.Cdn
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProfileData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, kind.Value, Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), Optional.ToNullable(frontDoorId), Optional.ToNullable(originResponseTimeoutSeconds), serializedAdditionalRawData);
+            return new ProfileData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                kind.Value,
+                Optional.ToNullable(resourceState),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(frontDoorId),
+                Optional.ToNullable(originResponseTimeoutSeconds),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options)

@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtTestMigrateContent(instanceType, serializedAdditionalRawData, recoveryPointId, networkId, vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(), osUpgradeVersion.Value);
+            return new VMwareCbtTestMigrateContent(
+                instanceType,
+                serializedAdditionalRawData,
+                recoveryPointId,
+                networkId,
+                vmNics ?? new ChangeTrackingList<VMwareCbtNicContent>(),
+                osUpgradeVersion.Value);
         }
 
         BinaryData IPersistableModel<VMwareCbtTestMigrateContent>.Write(ModelReaderWriterOptions options)

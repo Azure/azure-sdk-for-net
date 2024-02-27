@@ -88,7 +88,15 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallConnectionPropertiesInternal(callConnectionId.Value, serverCallId.Value, source.Value, targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(), Optional.ToNullable(callConnectionState), subject.Value, callbackUri.Value, mediaSubscriptionId.Value);
+            return new CallConnectionPropertiesInternal(
+                callConnectionId.Value,
+                serverCallId.Value,
+                source.Value,
+                targets ?? new ChangeTrackingList<CommunicationIdentifierModel>(),
+                Optional.ToNullable(callConnectionState),
+                subject.Value,
+                callbackUri.Value,
+                mediaSubscriptionId.Value);
         }
     }
 }

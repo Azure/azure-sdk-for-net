@@ -479,7 +479,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningWorkspaceDiagnoseProperties(applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(), containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(), dnsResolution ?? new ChangeTrackingDictionary<string, BinaryData>(), keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(), nsg ?? new ChangeTrackingDictionary<string, BinaryData>(), others ?? new ChangeTrackingDictionary<string, BinaryData>(), resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(), storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(), udr ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
+            return new MachineLearningWorkspaceDiagnoseProperties(
+                applicationInsights ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                containerRegistry ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                dnsResolution ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                keyVault ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                nsg ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                others ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                resourceLock ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                storageAccount ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                udr ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningWorkspaceDiagnoseProperties>.Write(ModelReaderWriterOptions options)

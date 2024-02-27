@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveEventPreview(endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value, serializedAdditionalRawData);
+            return new LiveEventPreview(
+                endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
+                accessControl.Value,
+                previewLocator.Value,
+                streamingPolicyName.Value,
+                alternativeMediaId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveEventPreview>.Write(ModelReaderWriterOptions options)

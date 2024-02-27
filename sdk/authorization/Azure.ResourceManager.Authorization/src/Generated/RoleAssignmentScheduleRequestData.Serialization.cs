@@ -464,7 +464,33 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentScheduleRequestData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), Optional.ToNullable(requestType), Optional.ToNullable(status), approvalId.Value, targetRoleAssignmentScheduleId.Value, targetRoleAssignmentScheduleInstanceId.Value, linkedRoleEligibilityScheduleId.Value, justification.Value, ticketInfo.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(requestorId), expandedProperties.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(type0), Optional.ToNullable(endDateTime), Optional.ToNullable(duration), serializedAdditionalRawData);
+            return new RoleAssignmentScheduleRequestData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scope.Value,
+                roleDefinitionId.Value,
+                Optional.ToNullable(principalId),
+                Optional.ToNullable(principalType),
+                Optional.ToNullable(requestType),
+                Optional.ToNullable(status),
+                approvalId.Value,
+                targetRoleAssignmentScheduleId.Value,
+                targetRoleAssignmentScheduleInstanceId.Value,
+                linkedRoleEligibilityScheduleId.Value,
+                justification.Value,
+                ticketInfo.Value,
+                condition.Value,
+                conditionVersion.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(requestorId),
+                expandedProperties.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(type0),
+                Optional.ToNullable(endDateTime),
+                Optional.ToNullable(duration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoleAssignmentScheduleRequestData>.Write(ModelReaderWriterOptions options)

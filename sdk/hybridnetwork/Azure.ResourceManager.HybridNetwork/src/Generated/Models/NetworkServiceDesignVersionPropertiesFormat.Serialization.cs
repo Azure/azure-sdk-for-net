@@ -193,7 +193,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkServiceDesignVersionPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(), nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(), resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(), serializedAdditionalRawData);
+            return new NetworkServiceDesignVersionPropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(versionState),
+                description.Value,
+                configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
+                resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>.Write(ModelReaderWriterOptions options)

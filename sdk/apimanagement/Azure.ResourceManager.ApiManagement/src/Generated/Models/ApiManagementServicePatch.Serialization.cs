@@ -731,7 +731,45 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServicePatch(id, name, type, systemData.Value, sku.Value, identity, Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), notificationSenderEmail.Value, provisioningState.Value, targetProvisioningState.Value, Optional.ToNullable(createdAtUtc), gatewayUri.Value, gatewayRegionalUri.Value, portalUri.Value, managementApiUri.Value, scmUri.Value, developerPortalUri.Value, hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(), publicIPAddresses ?? new ChangeTrackingList<IPAddress>(), privateIPAddresses ?? new ChangeTrackingList<IPAddress>(), publicIPAddressId.Value, Optional.ToNullable(publicNetworkAccess), virtualNetworkConfiguration.Value, additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(), customProperties ?? new ChangeTrackingDictionary<string, string>(), certificates ?? new ChangeTrackingList<CertificateConfiguration>(), Optional.ToNullable(enableClientCertificate), Optional.ToNullable(disableGateway), Optional.ToNullable(virtualNetworkType), apiVersionConstraint.Value, Optional.ToNullable(restore), privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(), Optional.ToNullable(platformVersion), publisherEmail.Value, publisherName.Value, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ApiManagementServicePatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                identity,
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                notificationSenderEmail.Value,
+                provisioningState.Value,
+                targetProvisioningState.Value,
+                Optional.ToNullable(createdAtUtc),
+                gatewayUri.Value,
+                gatewayRegionalUri.Value,
+                portalUri.Value,
+                managementApiUri.Value,
+                scmUri.Value,
+                developerPortalUri.Value,
+                hostnameConfigurations ?? new ChangeTrackingList<HostnameConfiguration>(),
+                publicIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                publicIPAddressId.Value,
+                Optional.ToNullable(publicNetworkAccess),
+                virtualNetworkConfiguration.Value,
+                additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
+                customProperties ?? new ChangeTrackingDictionary<string, string>(),
+                certificates ?? new ChangeTrackingList<CertificateConfiguration>(),
+                Optional.ToNullable(enableClientCertificate),
+                Optional.ToNullable(disableGateway),
+                Optional.ToNullable(virtualNetworkType),
+                apiVersionConstraint.Value,
+                Optional.ToNullable(restore),
+                privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
+                Optional.ToNullable(platformVersion),
+                publisherEmail.Value,
+                publisherName.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServicePatch>.Write(ModelReaderWriterOptions options)

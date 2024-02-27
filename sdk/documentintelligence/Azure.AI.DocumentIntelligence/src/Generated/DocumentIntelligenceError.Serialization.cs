@@ -142,7 +142,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentIntelligenceError(code, message, target.Value, details ?? new ChangeTrackingList<DocumentIntelligenceError>(), innererror.Value, serializedAdditionalRawData);
+            return new DocumentIntelligenceError(
+                code,
+                message,
+                target.Value,
+                details ?? new ChangeTrackingList<DocumentIntelligenceError>(),
+                innererror.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentIntelligenceError>.Write(ModelReaderWriterOptions options)

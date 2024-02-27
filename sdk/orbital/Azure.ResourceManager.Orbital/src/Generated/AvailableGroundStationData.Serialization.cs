@@ -236,7 +236,19 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableGroundStationData(id, name, type, systemData.Value, Optional.ToNullable(location), city.Value, providerName.Value, Optional.ToNullable(longitudeDegrees), Optional.ToNullable(latitudeDegrees), Optional.ToNullable(altitudeMeters), Optional.ToNullable(releaseMode), serializedAdditionalRawData);
+            return new AvailableGroundStationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                city.Value,
+                providerName.Value,
+                Optional.ToNullable(longitudeDegrees),
+                Optional.ToNullable(latitudeDegrees),
+                Optional.ToNullable(altitudeMeters),
+                Optional.ToNullable(releaseMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options)

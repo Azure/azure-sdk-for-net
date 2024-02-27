@@ -86,7 +86,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerState(Optional.ToNullable(mode), allDocsInitialChangeTrackingState.Value, allDocsFinalChangeTrackingState.Value, resetDocsInitialChangeTrackingState.Value, resetDocsFinalChangeTrackingState.Value, resetDocumentKeys ?? new ChangeTrackingList<string>(), resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
+            return new IndexerState(
+                Optional.ToNullable(mode),
+                allDocsInitialChangeTrackingState.Value,
+                allDocsFinalChangeTrackingState.Value,
+                resetDocsInitialChangeTrackingState.Value,
+                resetDocsFinalChangeTrackingState.Value,
+                resetDocumentKeys ?? new ChangeTrackingList<string>(),
+                resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
         }
     }
 }

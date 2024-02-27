@@ -317,7 +317,23 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceNetworkProfile(Optional.ToNullable(networkPlugin), Optional.ToNullable(networkPluginMode), Optional.ToNullable(networkPolicy), Optional.ToNullable(networkMode), Optional.ToNullable(networkDataplane), podCidr.Value, serviceCidr.Value, dnsServiceIP.Value, Optional.ToNullable(outboundType), Optional.ToNullable(loadBalancerSku), loadBalancerProfile.Value, natGatewayProfile.Value, podCidrs ?? new ChangeTrackingList<string>(), serviceCidrs ?? new ChangeTrackingList<string>(), ipFamilies ?? new ChangeTrackingList<IPFamily>(), serializedAdditionalRawData);
+            return new ContainerServiceNetworkProfile(
+                Optional.ToNullable(networkPlugin),
+                Optional.ToNullable(networkPluginMode),
+                Optional.ToNullable(networkPolicy),
+                Optional.ToNullable(networkMode),
+                Optional.ToNullable(networkDataplane),
+                podCidr.Value,
+                serviceCidr.Value,
+                dnsServiceIP.Value,
+                Optional.ToNullable(outboundType),
+                Optional.ToNullable(loadBalancerSku),
+                loadBalancerProfile.Value,
+                natGatewayProfile.Value,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                ipFamilies ?? new ChangeTrackingList<IPFamily>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceNetworkProfile>.Write(ModelReaderWriterOptions options)

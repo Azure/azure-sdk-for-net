@@ -128,7 +128,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseConfiguration(Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, instanceCount, diskConfiguration.Value, serializedAdditionalRawData);
+            return new DatabaseConfiguration(
+                Optional.ToNullable(databaseType),
+                subnetId,
+                virtualMachineConfiguration,
+                instanceCount,
+                diskConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseConfiguration>.Write(ModelReaderWriterOptions options)

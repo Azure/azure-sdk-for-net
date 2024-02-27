@@ -185,7 +185,15 @@ namespace Azure.ResourceManager.Authorization
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthorizationProviderOperationsMetadataData(id, name, type, systemData.Value, displayName.Value, resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>(), operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(), serializedAdditionalRawData);
+            return new AuthorizationProviderOperationsMetadataData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                resourceTypes ?? new ChangeTrackingList<AuthorizationProviderResourceType>(),
+                operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthorizationProviderOperationsMetadataData>.Write(ModelReaderWriterOptions options)

@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineAssessPatchesResult(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startDateTime), availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineAssessPatchesResult(
+                Optional.ToNullable(status),
+                assessmentActivityId.Value,
+                Optional.ToNullable(rebootPending),
+                Optional.ToNullable(criticalAndSecurityPatchCount),
+                Optional.ToNullable(otherPatchCount),
+                Optional.ToNullable(startDateTime),
+                availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)

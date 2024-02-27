@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value, serializedAdditionalRawData);
+            return new ContainerAppReplicaContainer(
+                name.Value,
+                containerId.Value,
+                Optional.ToNullable(ready),
+                Optional.ToNullable(started),
+                Optional.ToNullable(restartCount),
+                Optional.ToNullable(runningState),
+                runningStateDetails.Value,
+                logStreamEndpoint.Value,
+                execEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppReplicaContainer>.Write(ModelReaderWriterOptions options)

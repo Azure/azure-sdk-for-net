@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, transforms ?? new ChangeTrackingList<TransformType>(), serializedAdditionalRawData);
+            return new CustomRuleMatchCondition(
+                matchVariable,
+                selector.Value,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValue,
+                transforms ?? new ChangeTrackingList<TransformType>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRuleMatchCondition>.Write(ModelReaderWriterOptions options)

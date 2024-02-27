@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxContactDetails(contactName, phone, phoneExtension.Value, mobile.Value, emailList, notificationPreference ?? new ChangeTrackingList<NotificationPreference>(), serializedAdditionalRawData);
+            return new DataBoxContactDetails(
+                contactName,
+                phone,
+                phoneExtension.Value,
+                mobile.Value,
+                emailList,
+                notificationPreference ?? new ChangeTrackingList<NotificationPreference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxContactDetails>.Write(ModelReaderWriterOptions options)

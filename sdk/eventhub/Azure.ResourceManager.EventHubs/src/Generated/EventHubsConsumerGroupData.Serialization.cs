@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.EventHubs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsConsumerGroupData(id, name, type, systemData.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), userMetadata.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new EventHubsConsumerGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                userMetadata.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsConsumerGroupData>.Write(ModelReaderWriterOptions options)

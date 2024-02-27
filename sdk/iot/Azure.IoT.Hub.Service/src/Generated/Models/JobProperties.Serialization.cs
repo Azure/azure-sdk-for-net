@@ -225,7 +225,22 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new JobProperties(jobId.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(type), Optional.ToNullable(status), Optional.ToNullable(progress), inputBlobContainerUri.Value, inputBlobName.Value, outputBlobContainerUri.Value, outputBlobName.Value, Optional.ToNullable(excludeKeysInExport), Optional.ToNullable(storageAuthenticationType), failureReason.Value, Optional.ToNullable(includeConfigurations), configurationsBlobName.Value);
+            return new JobProperties(
+                jobId.Value,
+                Optional.ToNullable(startTimeUtc),
+                Optional.ToNullable(endTimeUtc),
+                Optional.ToNullable(type),
+                Optional.ToNullable(status),
+                Optional.ToNullable(progress),
+                inputBlobContainerUri.Value,
+                inputBlobName.Value,
+                outputBlobContainerUri.Value,
+                outputBlobName.Value,
+                Optional.ToNullable(excludeKeysInExport),
+                Optional.ToNullable(storageAuthenticationType),
+                failureReason.Value,
+                Optional.ToNullable(includeConfigurations),
+                configurationsBlobName.Value);
         }
     }
 }

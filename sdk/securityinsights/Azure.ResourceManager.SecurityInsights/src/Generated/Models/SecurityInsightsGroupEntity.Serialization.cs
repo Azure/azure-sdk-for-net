@@ -239,7 +239,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsGroupEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, distinguishedName.Value, Optional.ToNullable(objectGuid), sid.Value);
+            return new SecurityInsightsGroupEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                distinguishedName.Value,
+                Optional.ToNullable(objectGuid),
+                sid.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupEntity>.Write(ModelReaderWriterOptions options)

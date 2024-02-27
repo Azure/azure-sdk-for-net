@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementServiceBackupRestoreContent(storageAccount, containerName, backupName, Optional.ToNullable(accessType), accessKey.Value, clientId.Value, serializedAdditionalRawData);
+            return new ApiManagementServiceBackupRestoreContent(
+                storageAccount,
+                containerName,
+                backupName,
+                Optional.ToNullable(accessType),
+                accessKey.Value,
+                clientId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementServiceBackupRestoreContent>.Write(ModelReaderWriterOptions options)

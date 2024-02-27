@@ -457,7 +457,38 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MySqlDataFeed(dataSourceType, dataFeedId.Value, dataFeedName, dataFeedDescription.Value, granularityName, Optional.ToNullable(granularityAmount), metrics, dimension ?? new ChangeTrackingList<DataFeedDimension>(), timestampColumn.Value, dataStartFrom, Optional.ToNullable(startOffsetInSeconds), Optional.ToNullable(maxConcurrency), Optional.ToNullable(minRetryIntervalInSeconds), Optional.ToNullable(stopRetryAfterInSeconds), Optional.ToNullable(needRollup), Optional.ToNullable(rollUpMethod), rollUpColumns ?? new ChangeTrackingList<string>(), allUpIdentification.Value, Optional.ToNullable(fillMissingPointType), Optional.ToNullable(fillMissingPointValue), Optional.ToNullable(viewMode), admins ?? new ChangeTrackingList<string>(), viewers ?? new ChangeTrackingList<string>(), Optional.ToNullable(isAdmin), creator.Value, Optional.ToNullable(status), Optional.ToNullable(createdTime), actionLinkTemplate.Value, Optional.ToNullable(authenticationType), credentialId.Value, dataSourceParameter);
+            return new MySqlDataFeed(
+                dataSourceType,
+                dataFeedId.Value,
+                dataFeedName,
+                dataFeedDescription.Value,
+                granularityName,
+                Optional.ToNullable(granularityAmount),
+                metrics,
+                dimension ?? new ChangeTrackingList<DataFeedDimension>(),
+                timestampColumn.Value,
+                dataStartFrom,
+                Optional.ToNullable(startOffsetInSeconds),
+                Optional.ToNullable(maxConcurrency),
+                Optional.ToNullable(minRetryIntervalInSeconds),
+                Optional.ToNullable(stopRetryAfterInSeconds),
+                Optional.ToNullable(needRollup),
+                Optional.ToNullable(rollUpMethod),
+                rollUpColumns ?? new ChangeTrackingList<string>(),
+                allUpIdentification.Value,
+                Optional.ToNullable(fillMissingPointType),
+                Optional.ToNullable(fillMissingPointValue),
+                Optional.ToNullable(viewMode),
+                admins ?? new ChangeTrackingList<string>(),
+                viewers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(isAdmin),
+                creator.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(createdTime),
+                actionLinkTemplate.Value,
+                Optional.ToNullable(authenticationType),
+                credentialId.Value,
+                dataSourceParameter);
         }
     }
 }

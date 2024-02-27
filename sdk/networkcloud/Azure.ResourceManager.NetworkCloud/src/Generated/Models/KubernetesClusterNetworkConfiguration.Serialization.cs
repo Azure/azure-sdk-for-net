@@ -186,7 +186,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterNetworkConfiguration(attachedNetworkConfiguration.Value, bgpServiceLoadBalancerConfiguration.Value, cloudServicesNetworkId, cniNetworkId, dnsServiceIP.Value, podCidrs ?? new ChangeTrackingList<string>(), serviceCidrs ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new KubernetesClusterNetworkConfiguration(
+                attachedNetworkConfiguration.Value,
+                bgpServiceLoadBalancerConfiguration.Value,
+                cloudServicesNetworkId,
+                cniNetworkId,
+                dnsServiceIP.Value,
+                podCidrs ?? new ChangeTrackingList<string>(),
+                serviceCidrs ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterNetworkConfiguration>.Write(ModelReaderWriterOptions options)

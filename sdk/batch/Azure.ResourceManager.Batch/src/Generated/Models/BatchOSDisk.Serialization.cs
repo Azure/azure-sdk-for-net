@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchOSDisk(ephemeralOSDiskSettings.Value, Optional.ToNullable(caching), managedDisk.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(writeAcceleratorEnabled), serializedAdditionalRawData);
+            return new BatchOSDisk(
+                ephemeralOSDiskSettings.Value,
+                Optional.ToNullable(caching),
+                managedDisk.Value,
+                Optional.ToNullable(diskSizeGB),
+                Optional.ToNullable(writeAcceleratorEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchOSDisk>.Write(ModelReaderWriterOptions options)

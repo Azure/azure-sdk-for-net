@@ -256,7 +256,21 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncRegisteredServerCreateOrUpdateContent(id, name, type, systemData.Value, serverCertificate.Value, agentVersion.Value, serverOSVersion.Value, lastHeartbeat.Value, serverRole.Value, Optional.ToNullable(clusterId), clusterName.Value, Optional.ToNullable(serverId), friendlyName.Value, serializedAdditionalRawData);
+            return new StorageSyncRegisteredServerCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverCertificate.Value,
+                agentVersion.Value,
+                serverOSVersion.Value,
+                lastHeartbeat.Value,
+                serverRole.Value,
+                Optional.ToNullable(clusterId),
+                clusterName.Value,
+                Optional.ToNullable(serverId),
+                friendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncRegisteredServerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

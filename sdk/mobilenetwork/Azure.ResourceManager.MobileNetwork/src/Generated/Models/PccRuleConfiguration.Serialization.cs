@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates, serializedAdditionalRawData);
+            return new PccRuleConfiguration(
+                ruleName,
+                rulePrecedence,
+                ruleQosPolicy.Value,
+                Optional.ToNullable(trafficControl),
+                serviceDataFlowTemplates,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)

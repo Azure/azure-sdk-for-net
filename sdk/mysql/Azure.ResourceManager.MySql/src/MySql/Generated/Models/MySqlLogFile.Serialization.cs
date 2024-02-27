@@ -209,7 +209,17 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlLogFile(id, name, type, systemData.Value, Optional.ToNullable(sizeInKB), Optional.ToNullable(createdTime), Optional.ToNullable(lastModifiedTime), type0.Value, url.Value, serializedAdditionalRawData);
+            return new MySqlLogFile(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(sizeInKB),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(lastModifiedTime),
+                type0.Value,
+                url.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlLogFile>.Write(ModelReaderWriterOptions options)

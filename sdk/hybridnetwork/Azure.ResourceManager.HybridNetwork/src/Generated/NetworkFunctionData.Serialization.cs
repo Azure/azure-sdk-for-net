@@ -206,7 +206,17 @@ namespace Azure.ResourceManager.HybridNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkFunctionData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, Optional.ToNullable(etag), identity, serializedAdditionalRawData);
+            return new NetworkFunctionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                Optional.ToNullable(etag),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkFunctionData>.Write(ModelReaderWriterOptions options)

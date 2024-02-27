@@ -286,7 +286,21 @@ namespace Azure.ResourceManager.Consumption
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionBudgetData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(category),
+                Optional.ToNullable(amount),
+                Optional.ToNullable(timeGrain),
+                timePeriod.Value,
+                filter.Value,
+                currentSpend.Value,
+                notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
+                forecastSpend.Value,
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)

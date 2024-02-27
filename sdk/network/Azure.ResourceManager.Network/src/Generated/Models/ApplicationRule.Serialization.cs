@@ -344,7 +344,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, sourceAddresses ?? new ChangeTrackingList<string>(), destinationAddresses ?? new ChangeTrackingList<string>(), protocols ?? new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>(), targetFqdns ?? new ChangeTrackingList<string>(), targetUrls ?? new ChangeTrackingList<string>(), fqdnTags ?? new ChangeTrackingList<string>(), sourceIPGroups ?? new ChangeTrackingList<string>(), Optional.ToNullable(terminateTLS), webCategories ?? new ChangeTrackingList<string>(), httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());
+            return new ApplicationRule(
+                name.Value,
+                description.Value,
+                ruleType,
+                serializedAdditionalRawData,
+                sourceAddresses ?? new ChangeTrackingList<string>(),
+                destinationAddresses ?? new ChangeTrackingList<string>(),
+                protocols ?? new ChangeTrackingList<FirewallPolicyRuleApplicationProtocol>(),
+                targetFqdns ?? new ChangeTrackingList<string>(),
+                targetUrls ?? new ChangeTrackingList<string>(),
+                fqdnTags ?? new ChangeTrackingList<string>(),
+                sourceIPGroups ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(terminateTLS),
+                webCategories ?? new ChangeTrackingList<string>(),
+                httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());
         }
 
         BinaryData IPersistableModel<ApplicationRule>.Write(ModelReaderWriterOptions options)

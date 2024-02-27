@@ -218,7 +218,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), impacts ?? new ChangeTrackingList<EmergingIssueImpact>(), serializedAdditionalRawData);
+            return new EmergingIssueActiveEventType(
+                title.Value,
+                description.Value,
+                trackingId.Value,
+                Optional.ToNullable(startTime),
+                cloud.Value,
+                Optional.ToNullable(severity),
+                Optional.ToNullable(stage),
+                Optional.ToNullable(published),
+                Optional.ToNullable(lastModifiedTime),
+                impacts ?? new ChangeTrackingList<EmergingIssueImpact>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)

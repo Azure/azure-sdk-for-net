@@ -83,7 +83,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentenceSentiment(text, sentiment, confidenceScores, offset, length, targets ?? new ChangeTrackingList<SentenceTarget>(), assessments ?? new ChangeTrackingList<SentenceAssessment>());
+            return new SentenceSentiment(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
         }
     }
 }

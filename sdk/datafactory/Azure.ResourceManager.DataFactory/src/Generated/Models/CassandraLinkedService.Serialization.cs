@@ -267,7 +267,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CassandraLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, host, authenticationType.Value, port.Value, username.Value, password, encryptedCredential.Value);
+            return new CassandraLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                host,
+                authenticationType.Value,
+                port.Value,
+                username.Value,
+                password,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<CassandraLinkedService>.Write(ModelReaderWriterOptions options)

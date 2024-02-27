@@ -357,7 +357,28 @@ namespace Azure.ResourceManager.LabServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabVirtualMachineImageData(id, name, type, systemData.Value, Optional.ToNullable(enabledState), Optional.ToNullable(provisioningState), displayName.Value, description.Value, iconUrl.Value, author.Value, Optional.ToNullable(osType), plan.Value, Optional.ToNullable(termsStatus), offer.Value, publisher.Value, sku.Value, version.Value, sharedGalleryId.Value, availableRegions ?? new ChangeTrackingList<AzureLocation>(), Optional.ToNullable(osState), serializedAdditionalRawData);
+            return new LabVirtualMachineImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(enabledState),
+                Optional.ToNullable(provisioningState),
+                displayName.Value,
+                description.Value,
+                iconUrl.Value,
+                author.Value,
+                Optional.ToNullable(osType),
+                plan.Value,
+                Optional.ToNullable(termsStatus),
+                offer.Value,
+                publisher.Value,
+                sku.Value,
+                version.Value,
+                sharedGalleryId.Value,
+                availableRegions ?? new ChangeTrackingList<AzureLocation>(),
+                Optional.ToNullable(osState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabVirtualMachineImageData>.Write(ModelReaderWriterOptions options)

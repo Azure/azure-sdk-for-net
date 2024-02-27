@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.DefenderEasm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspaceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, Optional.ToNullable(provisioningState), dataPlaneEndpoint.Value, serializedAdditionalRawData);
+            return new EasmWorkspaceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                Optional.ToNullable(provisioningState),
+                dataPlaneEndpoint.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspaceData>.Write(ModelReaderWriterOptions options)

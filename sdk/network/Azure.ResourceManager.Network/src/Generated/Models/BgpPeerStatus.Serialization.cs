@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
+            return new BgpPeerStatus(
+                localAddress.Value,
+                neighbor.Value,
+                Optional.ToNullable(asn),
+                Optional.ToNullable(state),
+                Optional.ToNullable(connectedDuration),
+                Optional.ToNullable(routesReceived),
+                Optional.ToNullable(messagesSent),
+                Optional.ToNullable(messagesReceived),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatus>.Write(ModelReaderWriterOptions options)

@@ -459,7 +459,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecuteSsisPackageActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, packageLocation, runtime.Value, loggingLevel.Value, environmentPath.Value, executionCredential.Value, connectVia, projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(), packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(), projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(), packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(), propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(), logLocation.Value);
+            return new ExecuteSsisPackageActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                packageLocation,
+                runtime.Value,
+                loggingLevel.Value,
+                environmentPath.Value,
+                executionCredential.Value,
+                connectVia,
+                projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(),
+                logLocation.Value);
         }
 
         internal partial class ExecuteSsisPackageActivityConverter : JsonConverter<ExecuteSsisPackageActivity>

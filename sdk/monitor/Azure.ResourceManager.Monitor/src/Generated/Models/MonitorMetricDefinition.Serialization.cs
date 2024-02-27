@@ -279,7 +279,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(), metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(), id.Value, dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(), serializedAdditionalRawData);
+            return new MonitorMetricDefinition(
+                Optional.ToNullable(isDimensionRequired),
+                resourceId.Value,
+                @namespace.Value,
+                name.Value,
+                displayDescription.Value,
+                category.Value,
+                Optional.ToNullable(metricClass),
+                Optional.ToNullable(unit),
+                Optional.ToNullable(primaryAggregationType),
+                supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
+                id.Value,
+                dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)

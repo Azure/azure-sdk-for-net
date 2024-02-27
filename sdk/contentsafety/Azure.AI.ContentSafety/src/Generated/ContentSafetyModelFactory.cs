@@ -26,7 +26,13 @@ namespace Azure.AI.ContentSafety
             categories ??= new List<TextCategory>();
             blocklistNames ??= new List<string>();
 
-            return new AnalyzeTextOptions(text, categories?.ToList(), blocklistNames?.ToList(), haltOnBlocklistHit, outputType, serializedAdditionalRawData: null);
+            return new AnalyzeTextOptions(
+                text,
+                categories?.ToList(),
+                blocklistNames?.ToList(),
+                haltOnBlocklistHit,
+                outputType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContentSafety.AnalyzeTextResult"/>. </summary>

@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.ElasticSan
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(), serializedAdditionalRawData);
+            return new ElasticSanVolumeGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(protocolType),
+                Optional.ToNullable(encryption),
+                encryptionProperties.Value,
+                networkAcls.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeGroupData>.Write(ModelReaderWriterOptions options)

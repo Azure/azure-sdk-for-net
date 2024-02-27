@@ -323,7 +323,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, notificationEmailList ?? new ChangeTrackingList<string>(), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(), error.Value, serializedAdditionalRawData);
+            return new EdgeOrderItemDetails(
+                productDetails,
+                orderItemType,
+                currentStage.Value,
+                orderItemStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
+                preferences.Value,
+                forwardShippingDetails.Value,
+                reverseShippingDetails.Value,
+                notificationEmailList ?? new ChangeTrackingList<string>(),
+                cancellationReason.Value,
+                Optional.ToNullable(cancellationStatus),
+                Optional.ToNullable(deletionStatus),
+                returnReason.Value,
+                Optional.ToNullable(returnStatus),
+                managementRPDetails.Value,
+                managementRPDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>(),
+                error.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)

@@ -276,7 +276,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), defaultGroup.Value, encryptionConfig.Value, firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>(), virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), serializedAdditionalRawData);
+            return new DataLakeStoreAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultGroup.Value,
+                encryptionConfig.Value,
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>(),
+                virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(),
+                Optional.ToNullable(firewallState),
+                Optional.ToNullable(firewallAllowAzureIPs),
+                trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(),
+                Optional.ToNullable(trustedIdProviderState),
+                Optional.ToNullable(newTier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountPatch>.Write(ModelReaderWriterOptions options)

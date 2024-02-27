@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSigningKey(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion, serializedAdditionalRawData);
+            return new KeyVaultSigningKey(
+                typeName,
+                subscriptionId,
+                resourceGroupName,
+                vaultName,
+                secretName,
+                secretVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultSigningKey>.Write(ModelReaderWriterOptions options)

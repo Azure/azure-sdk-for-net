@@ -175,7 +175,14 @@ namespace Azure.ResourceManager.AppService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggeredJobHistoryData(id, name, type, systemData.Value, runs ?? new ChangeTrackingList<TriggeredJobRun>(), kind.Value, serializedAdditionalRawData);
+            return new TriggeredJobHistoryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                runs ?? new ChangeTrackingList<TriggeredJobRun>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggeredJobHistoryData>.Write(ModelReaderWriterOptions options)

@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteStringList(id, name, type, systemData.Value, properties ?? new ChangeTrackingList<string>(), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteStringList(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties ?? new ChangeTrackingList<string>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteStringList>.Write(ModelReaderWriterOptions options)

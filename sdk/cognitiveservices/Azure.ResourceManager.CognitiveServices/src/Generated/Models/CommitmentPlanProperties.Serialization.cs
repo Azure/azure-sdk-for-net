@@ -215,7 +215,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(commitmentPlanGuid), Optional.ToNullable(hostingModel), planType.Value, current.Value, Optional.ToNullable(autoRenew), next.Value, last.Value, provisioningIssues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new CommitmentPlanProperties(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(commitmentPlanGuid),
+                Optional.ToNullable(hostingModel),
+                planType.Value,
+                current.Value,
+                Optional.ToNullable(autoRenew),
+                next.Value,
+                last.Value,
+                provisioningIssues ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanProperties>.Write(ModelReaderWriterOptions options)

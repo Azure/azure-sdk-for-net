@@ -279,7 +279,23 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PremierAddOnOffer(id, name, type, systemData.Value, sku.Value, product.Value, vendor.Value, Optional.ToNullable(promoCodeRequired), Optional.ToNullable(quota), Optional.ToNullable(webHostingPlanRestrictions), privacyPolicyUrl.Value, legalTermsUrl.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value, serializedAdditionalRawData);
+            return new PremierAddOnOffer(
+                id,
+                name,
+                type,
+                systemData.Value,
+                sku.Value,
+                product.Value,
+                vendor.Value,
+                Optional.ToNullable(promoCodeRequired),
+                Optional.ToNullable(quota),
+                Optional.ToNullable(webHostingPlanRestrictions),
+                privacyPolicyUrl.Value,
+                legalTermsUrl.Value,
+                marketplacePublisher.Value,
+                marketplaceOffer.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PremierAddOnOffer>.Write(ModelReaderWriterOptions options)

@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureTestFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, recoveryPointId.Value, osUpgradeVersion.Value);
+            return new HyperVReplicaAzureTestFailoverContent(
+                instanceType,
+                serializedAdditionalRawData,
+                primaryKekCertificatePfx.Value,
+                secondaryKekCertificatePfx.Value,
+                recoveryPointId.Value,
+                osUpgradeVersion.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureTestFailoverContent>.Write(ModelReaderWriterOptions options)

@@ -276,7 +276,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlFlexibleServerConfigurationData(id, name, type, systemData.Value, value.Value, currentValue.Value, description.Value, documentationLink.Value, defaultValue.Value, dataType.Value, allowedValues.Value, Optional.ToNullable(source), Optional.ToNullable(isReadOnly), Optional.ToNullable(isConfigPendingRestart), Optional.ToNullable(isDynamicConfig), serializedAdditionalRawData);
+            return new MySqlFlexibleServerConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                value.Value,
+                currentValue.Value,
+                description.Value,
+                documentationLink.Value,
+                defaultValue.Value,
+                dataType.Value,
+                allowedValues.Value,
+                Optional.ToNullable(source),
+                Optional.ToNullable(isReadOnly),
+                Optional.ToNullable(isConfigPendingRestart),
+                Optional.ToNullable(isDynamicConfig),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlFlexibleServerConfigurationData>.Write(ModelReaderWriterOptions options)

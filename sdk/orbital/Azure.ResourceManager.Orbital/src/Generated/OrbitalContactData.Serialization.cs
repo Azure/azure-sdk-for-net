@@ -403,7 +403,30 @@ namespace Azure.ResourceManager.Orbital
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OrbitalContactData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(reservationStartTime), Optional.ToNullable(reservationEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile, serializedAdditionalRawData);
+            return new OrbitalContactData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                Optional.ToNullable(reservationStartTime),
+                Optional.ToNullable(reservationEndTime),
+                Optional.ToNullable(rxStartTime),
+                Optional.ToNullable(rxEndTime),
+                Optional.ToNullable(txStartTime),
+                Optional.ToNullable(txEndTime),
+                errorMessage.Value,
+                Optional.ToNullable(maximumElevationDegrees),
+                Optional.ToNullable(startAzimuthDegrees),
+                Optional.ToNullable(endAzimuthDegrees),
+                groundStationName.Value,
+                Optional.ToNullable(startElevationDegrees),
+                Optional.ToNullable(endElevationDegrees),
+                antennaConfiguration.Value,
+                contactProfile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options)

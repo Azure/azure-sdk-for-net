@@ -202,7 +202,17 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementGroupData(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(builtIn), Optional.ToNullable(type0), externalId.Value, serializedAdditionalRawData);
+            return new ApiManagementGroupData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                description.Value,
+                Optional.ToNullable(builtIn),
+                Optional.ToNullable(type0),
+                externalId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementGroupData>.Write(ModelReaderWriterOptions options)

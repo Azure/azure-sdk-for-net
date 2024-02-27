@@ -210,7 +210,17 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerAzureADAdministratorData(id, name, type, systemData.Value, Optional.ToNullable(administratorType), login.Value, Optional.ToNullable(sid), Optional.ToNullable(tenantId), Optional.ToNullable(azureADOnlyAuthentication), serializedAdditionalRawData);
+            return new SqlServerAzureADAdministratorData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(administratorType),
+                login.Value,
+                Optional.ToNullable(sid),
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(azureADOnlyAuthentication),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options)

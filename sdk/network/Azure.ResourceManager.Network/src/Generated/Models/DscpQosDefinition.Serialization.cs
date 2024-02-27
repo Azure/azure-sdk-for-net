@@ -214,7 +214,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscpQosDefinition(markings ?? new ChangeTrackingList<int>(), sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(), destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(), sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(), destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(), Optional.ToNullable(protocol), serializedAdditionalRawData);
+            return new DscpQosDefinition(
+                markings ?? new ChangeTrackingList<int>(),
+                sourceIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                destinationIPRanges ?? new ChangeTrackingList<QosIPRange>(),
+                sourcePortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                destinationPortRanges ?? new ChangeTrackingList<QosPortRange>(),
+                Optional.ToNullable(protocol),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscpQosDefinition>.Write(ModelReaderWriterOptions options)

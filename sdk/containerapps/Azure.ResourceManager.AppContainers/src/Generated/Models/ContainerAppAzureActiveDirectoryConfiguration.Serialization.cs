@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned), serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryConfiguration(
+                Optional.ToNullable(enabled),
+                registration.Value,
+                login.Value,
+                validation.Value,
+                Optional.ToNullable(isAutoProvisioned),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>.Write(ModelReaderWriterOptions options)

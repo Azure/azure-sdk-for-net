@@ -275,7 +275,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, activeBackupSets ?? new ChangeTrackingList<SqlBackupSetInfo>(), invalidFiles ?? new ChangeTrackingList<string>(), blobContainerName.Value, Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, fileUploadBlockingErrors ?? new ChangeTrackingList<string>(), currentRestoringFilename.Value, lastRestoredFilename.Value, Optional.ToNullable(pendingLogBackupsCount), serializedAdditionalRawData);
+            return new MigrationStatusDetails(
+                migrationState.Value,
+                fullBackupSetInfo.Value,
+                lastRestoredBackupSetInfo.Value,
+                activeBackupSets ?? new ChangeTrackingList<SqlBackupSetInfo>(),
+                invalidFiles ?? new ChangeTrackingList<string>(),
+                blobContainerName.Value,
+                Optional.ToNullable(isFullBackupRestored),
+                restoreBlockingReason.Value,
+                completeRestoreErrorMessage.Value,
+                fileUploadBlockingErrors ?? new ChangeTrackingList<string>(),
+                currentRestoringFilename.Value,
+                lastRestoredFilename.Value,
+                Optional.ToNullable(pendingLogBackupsCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationStatusDetails>.Write(ModelReaderWriterOptions options)

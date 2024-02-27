@@ -194,7 +194,14 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealTriggers(requests.Value, Optional.ToNullable(privateBytesInKB), statusCodes ?? new ChangeTrackingList<StatusCodesBasedTrigger>(), slowRequests.Value, slowRequestsWithPath ?? new ChangeTrackingList<SlowRequestsBasedTrigger>(), statusCodesRange ?? new ChangeTrackingList<StatusCodesRangeBasedTrigger>(), serializedAdditionalRawData);
+            return new AutoHealTriggers(
+                requests.Value,
+                Optional.ToNullable(privateBytesInKB),
+                statusCodes ?? new ChangeTrackingList<StatusCodesBasedTrigger>(),
+                slowRequests.Value,
+                slowRequestsWithPath ?? new ChangeTrackingList<SlowRequestsBasedTrigger>(),
+                statusCodesRange ?? new ChangeTrackingList<StatusCodesRangeBasedTrigger>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options)

@@ -153,7 +153,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete), serializedAdditionalRawData);
+            return new PrimingJob(
+                primingJobName,
+                primingManifestUrl,
+                primingJobId.Value,
+                Optional.ToNullable(primingJobState),
+                primingJobStatus.Value,
+                primingJobDetails.Value,
+                Optional.ToNullable(primingJobPercentComplete),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrimingJob>.Write(ModelReaderWriterOptions options)

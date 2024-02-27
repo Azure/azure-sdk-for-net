@@ -179,7 +179,16 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence, serializedAdditionalRawData);
+            return new DocumentStyle(
+                Optional.ToNullable(isHandwritten),
+                similarFontFamily.Value,
+                Optional.ToNullable(fontStyle),
+                Optional.ToNullable(fontWeight),
+                color.Value,
+                backgroundColor.Value,
+                spans,
+                confidence,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentStyle>.Write(ModelReaderWriterOptions options)

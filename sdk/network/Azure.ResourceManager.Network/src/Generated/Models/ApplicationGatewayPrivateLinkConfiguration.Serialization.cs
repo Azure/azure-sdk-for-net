@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayPrivateLinkConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), ipConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>(), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayPrivateLinkConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                ipConfigurations ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkIPConfiguration>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)

@@ -298,7 +298,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatabricksNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), dependsOn ?? new ChangeTrackingList<ActivityDependency>(), userProperties ?? new ChangeTrackingList<UserProperty>(), additionalProperties, linkedServiceName.Value, policy.Value, notebookPath, baseParameters ?? new ChangeTrackingDictionary<string, object>(), libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
+            return new DatabricksNotebookActivity(
+                name,
+                type,
+                description.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(onInactiveMarkAs),
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName.Value,
+                policy.Value,
+                notebookPath,
+                baseParameters ?? new ChangeTrackingDictionary<string, object>(),
+                libraries ?? new ChangeTrackingList<IDictionary<string, object>>());
         }
 
         internal partial class DatabricksNotebookActivityConverter : JsonConverter<DatabricksNotebookActivity>

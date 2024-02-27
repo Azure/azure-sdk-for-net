@@ -176,7 +176,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationDeployment(remediatedResourceId.Value, deploymentId.Value, status.Value, Optional.ToNullable(resourceLocation), error.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), serializedAdditionalRawData);
+            return new RemediationDeployment(
+                remediatedResourceId.Value,
+                deploymentId.Value,
+                status.Value,
+                Optional.ToNullable(resourceLocation),
+                error.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(lastUpdatedOn),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationDeployment>.Write(ModelReaderWriterOptions options)

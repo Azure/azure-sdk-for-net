@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComplianceResultData(id, name, type, systemData.Value, Optional.ToNullable(resourceStatus), serializedAdditionalRawData);
+            return new ComplianceResultData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(resourceStatus),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComplianceResultData>.Write(ModelReaderWriterOptions options)

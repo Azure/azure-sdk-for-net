@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerJobCredentialData(id, name, type, systemData.Value, username.Value, password.Value, serializedAdditionalRawData);
+            return new SqlServerJobCredentialData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                username.Value,
+                password.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerJobCredentialData>.Write(ModelReaderWriterOptions options)

@@ -498,7 +498,32 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubProperties(authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableDeviceSas), Optional.ToNullable(disableModuleSas), Optional.ToNullable(restrictOutboundNetworkAccess), allowedFqdnList ?? new ChangeTrackingList<string>(), Optional.ToNullable(publicNetworkAccess), ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(), networkRuleSets.Value, minTlsVersion.Value, privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(), provisioningState.Value, state.Value, hostName.Value, eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(), routing.Value, storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(), messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(), Optional.ToNullable(enableFileUploadNotifications), cloudToDevice.Value, comments.Value, Optional.ToNullable(features), locations ?? new ChangeTrackingList<IotHubLocationDescription>(), Optional.ToNullable(enableDataResidency), serializedAdditionalRawData);
+            return new IotHubProperties(
+                authorizationPolicies ?? new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>(),
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(disableDeviceSas),
+                Optional.ToNullable(disableModuleSas),
+                Optional.ToNullable(restrictOutboundNetworkAccess),
+                allowedFqdnList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(publicNetworkAccess),
+                ipFilterRules ?? new ChangeTrackingList<IotHubIPFilterRule>(),
+                networkRuleSets.Value,
+                minTlsVersion.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<IotHubPrivateEndpointConnectionData>(),
+                provisioningState.Value,
+                state.Value,
+                hostName.Value,
+                eventHubEndpoints ?? new ChangeTrackingDictionary<string, EventHubCompatibleEndpointProperties>(),
+                routing.Value,
+                storageEndpoints ?? new ChangeTrackingDictionary<string, IotHubStorageEndpointProperties>(),
+                messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpointProperties>(),
+                Optional.ToNullable(enableFileUploadNotifications),
+                cloudToDevice.Value,
+                comments.Value,
+                Optional.ToNullable(features),
+                locations ?? new ChangeTrackingList<IotHubLocationDescription>(),
+                Optional.ToNullable(enableDataResidency),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubProperties>.Write(ModelReaderWriterOptions options)

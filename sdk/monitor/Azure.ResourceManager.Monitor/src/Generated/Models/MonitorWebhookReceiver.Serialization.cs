@@ -161,7 +161,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorWebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new MonitorWebhookReceiver(
+                name,
+                serviceUri,
+                Optional.ToNullable(useCommonAlertSchema),
+                Optional.ToNullable(useAadAuth),
+                objectId.Value,
+                identifierUri.Value,
+                Optional.ToNullable(tenantId),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorWebhookReceiver>.Write(ModelReaderWriterOptions options)

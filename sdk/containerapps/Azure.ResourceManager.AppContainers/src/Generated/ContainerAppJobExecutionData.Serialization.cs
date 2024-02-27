@@ -199,7 +199,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value, serializedAdditionalRawData);
+            return new ContainerAppJobExecutionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(status),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                template.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppJobExecutionData>.Write(ModelReaderWriterOptions options)

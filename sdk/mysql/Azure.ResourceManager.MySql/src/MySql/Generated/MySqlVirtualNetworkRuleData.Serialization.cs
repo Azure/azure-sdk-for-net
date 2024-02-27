@@ -184,7 +184,15 @@ namespace Azure.ResourceManager.MySql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlVirtualNetworkRuleData(id, name, type, systemData.Value, virtualNetworkSubnetId.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), Optional.ToNullable(state), serializedAdditionalRawData);
+            return new MySqlVirtualNetworkRuleData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                virtualNetworkSubnetId.Value,
+                Optional.ToNullable(ignoreMissingVnetServiceEndpoint),
+                Optional.ToNullable(state),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlVirtualNetworkRuleData>.Write(ModelReaderWriterOptions options)

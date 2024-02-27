@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageQoSPolicy(name.Value, id.Value, Optional.ToNullable(iopsMaximum), Optional.ToNullable(iopsMinimum), Optional.ToNullable(bandwidthLimit), policyId.Value, serializedAdditionalRawData);
+            return new StorageQoSPolicy(
+                name.Value,
+                id.Value,
+                Optional.ToNullable(iopsMaximum),
+                Optional.ToNullable(iopsMinimum),
+                Optional.ToNullable(bandwidthLimit),
+                policyId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageQoSPolicy>.Write(ModelReaderWriterOptions options)

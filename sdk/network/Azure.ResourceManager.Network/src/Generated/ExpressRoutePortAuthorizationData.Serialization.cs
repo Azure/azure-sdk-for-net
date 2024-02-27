@@ -203,7 +203,16 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortAuthorizationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), authorizationKey.Value, Optional.ToNullable(authorizationUseStatus), circuitResourceUri.Value, Optional.ToNullable(provisioningState));
+            return new ExpressRoutePortAuthorizationData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                authorizationKey.Value,
+                Optional.ToNullable(authorizationUseStatus),
+                circuitResourceUri.Value,
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ExpressRoutePortAuthorizationData>.Write(ModelReaderWriterOptions options)

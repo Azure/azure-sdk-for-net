@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
+            return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                Optional.ToNullable(location),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Write(ModelReaderWriterOptions options)

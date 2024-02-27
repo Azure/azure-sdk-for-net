@@ -193,7 +193,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryRecurrenceSchedule(minutes ?? new ChangeTrackingList<int>(), hours ?? new ChangeTrackingList<int>(), weekDays ?? new ChangeTrackingList<DataFactoryDayOfWeek>(), monthDays ?? new ChangeTrackingList<int>(), monthlyOccurrences ?? new ChangeTrackingList<DataFactoryRecurrenceScheduleOccurrence>(), additionalProperties);
+            return new DataFactoryRecurrenceSchedule(
+                minutes ?? new ChangeTrackingList<int>(),
+                hours ?? new ChangeTrackingList<int>(),
+                weekDays ?? new ChangeTrackingList<DataFactoryDayOfWeek>(),
+                monthDays ?? new ChangeTrackingList<int>(),
+                monthlyOccurrences ?? new ChangeTrackingList<DataFactoryRecurrenceScheduleOccurrence>(),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryRecurrenceSchedule>.Write(ModelReaderWriterOptions options)

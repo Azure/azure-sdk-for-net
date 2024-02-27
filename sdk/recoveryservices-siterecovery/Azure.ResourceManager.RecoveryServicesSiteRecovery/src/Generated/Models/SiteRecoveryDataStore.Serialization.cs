@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value, serializedAdditionalRawData);
+            return new SiteRecoveryDataStore(
+                symbolicName.Value,
+                Optional.ToNullable(uuid),
+                capacity.Value,
+                freeSpace.Value,
+                type.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryDataStore>.Write(ModelReaderWriterOptions options)

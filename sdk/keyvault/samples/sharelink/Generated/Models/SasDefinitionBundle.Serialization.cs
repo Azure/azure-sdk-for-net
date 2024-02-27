@@ -81,7 +81,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new SasDefinitionBundle(id.Value, sid.Value, templateUri.Value, Optional.ToNullable(sasType), validityPeriod.Value, attributes.Value, tags ?? new ChangeTrackingDictionary<string, string>());
+            return new SasDefinitionBundle(
+                id.Value,
+                sid.Value,
+                templateUri.Value,
+                Optional.ToNullable(sasType),
+                validityPeriod.Value,
+                attributes.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

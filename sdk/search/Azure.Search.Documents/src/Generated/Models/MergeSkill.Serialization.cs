@@ -127,7 +127,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new MergeSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, insertPreTag.Value, insertPostTag.Value);
+            return new MergeSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                insertPreTag.Value,
+                insertPostTag.Value);
         }
     }
 }

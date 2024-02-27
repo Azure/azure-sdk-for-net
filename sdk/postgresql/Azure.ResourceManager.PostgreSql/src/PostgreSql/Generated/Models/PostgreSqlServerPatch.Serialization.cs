@@ -243,7 +243,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), storageProfile.Value, administratorLoginPassword.Value, Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(publicNetworkAccess), replicationRole.Value, serializedAdditionalRawData);
+            return new PostgreSqlServerPatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                storageProfile.Value,
+                administratorLoginPassword.Value,
+                Optional.ToNullable(version),
+                Optional.ToNullable(sslEnforcement),
+                Optional.ToNullable(minimalTlsVersion),
+                Optional.ToNullable(publicNetworkAccess),
+                replicationRole.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPatch>.Write(ModelReaderWriterOptions options)

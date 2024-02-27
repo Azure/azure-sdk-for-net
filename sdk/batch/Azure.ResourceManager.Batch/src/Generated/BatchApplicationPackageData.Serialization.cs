@@ -226,7 +226,18 @@ namespace Azure.ResourceManager.Batch
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchApplicationPackageData(id, name, type, systemData.Value, Optional.ToNullable(state), format.Value, storageUrl.Value, Optional.ToNullable(storageUrlExpiry), Optional.ToNullable(lastActivationTime), Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new BatchApplicationPackageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(state),
+                format.Value,
+                storageUrl.Value,
+                Optional.ToNullable(storageUrlExpiry),
+                Optional.ToNullable(lastActivationTime),
+                Optional.ToNullable(etag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchApplicationPackageData>.Write(ModelReaderWriterOptions options)

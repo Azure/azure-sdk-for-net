@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value, serializedAdditionalRawData);
+            return new UploadCertificateResponse(
+                Optional.ToNullable(authType),
+                resourceId.Value,
+                aadAuthority.Value,
+                Optional.ToNullable(aadTenantId),
+                Optional.ToNullable(servicePrincipalClientId),
+                Optional.ToNullable(servicePrincipalObjectId),
+                azureManagementEndpointAudience.Value,
+                aadAudience.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options)

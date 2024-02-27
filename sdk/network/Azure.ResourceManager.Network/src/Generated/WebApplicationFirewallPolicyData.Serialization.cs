@@ -349,7 +349,22 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebApplicationFirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), policySettings.Value, customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>(), applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>(), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceState), managedRules.Value, httpListeners ?? new ChangeTrackingList<WritableSubResource>(), pathBasedRules ?? new ChangeTrackingList<WritableSubResource>());
+            return new WebApplicationFirewallPolicyData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                policySettings.Value,
+                customRules ?? new ChangeTrackingList<WebApplicationFirewallCustomRule>(),
+                applicationGateways ?? new ChangeTrackingList<ApplicationGatewayData>(),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(resourceState),
+                managedRules.Value,
+                httpListeners ?? new ChangeTrackingList<WritableSubResource>(),
+                pathBasedRules ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)

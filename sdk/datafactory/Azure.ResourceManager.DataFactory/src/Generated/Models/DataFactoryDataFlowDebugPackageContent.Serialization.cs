@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryDataFlowDebugPackageContent(Optional.ToNullable(sessionId), dataFlow.Value, dataFlows ?? new ChangeTrackingList<DataFactoryDataFlowDebugInfo>(), datasets ?? new ChangeTrackingList<DataFactoryDatasetDebugInfo>(), linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>(), staging.Value, debugSettings.Value, additionalProperties);
+            return new DataFactoryDataFlowDebugPackageContent(
+                Optional.ToNullable(sessionId),
+                dataFlow.Value,
+                dataFlows ?? new ChangeTrackingList<DataFactoryDataFlowDebugInfo>(),
+                datasets ?? new ChangeTrackingList<DataFactoryDatasetDebugInfo>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceDebugInfo>(),
+                staging.Value,
+                debugSettings.Value,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryDataFlowDebugPackageContent>.Write(ModelReaderWriterOptions options)

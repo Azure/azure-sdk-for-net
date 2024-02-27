@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreValidateEnableBackupResult(Optional.ToNullable(status), errorCode.Value, errorMessage.Value, recommendation.Value, containerName.Value, protectedItemName.Value, serializedAdditionalRawData);
+            return new PreValidateEnableBackupResult(
+                Optional.ToNullable(status),
+                errorCode.Value,
+                errorMessage.Value,
+                recommendation.Value,
+                containerName.Value,
+                protectedItemName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PreValidateEnableBackupResult>.Write(ModelReaderWriterOptions options)

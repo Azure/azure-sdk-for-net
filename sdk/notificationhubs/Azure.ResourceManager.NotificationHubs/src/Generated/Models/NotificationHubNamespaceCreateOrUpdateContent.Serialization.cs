@@ -365,7 +365,29 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NotificationHubNamespaceCreateOrUpdateContent(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, name0.Value, provisioningState.Value, region.Value, metricId.Value, status.Value, Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), serviceBusEndpoint.Value, subscriptionId.Value, scaleUnit.Value, Optional.ToNullable(enabled), Optional.ToNullable(critical), dataCenter.Value, Optional.ToNullable(namespaceType), sku.Value, serializedAdditionalRawData);
+            return new NotificationHubNamespaceCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                name0.Value,
+                provisioningState.Value,
+                region.Value,
+                metricId.Value,
+                status.Value,
+                Optional.ToNullable(createdAt),
+                Optional.ToNullable(updatedAt),
+                serviceBusEndpoint.Value,
+                subscriptionId.Value,
+                scaleUnit.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(critical),
+                dataCenter.Value,
+                Optional.ToNullable(namespaceType),
+                sku.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NotificationHubNamespaceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

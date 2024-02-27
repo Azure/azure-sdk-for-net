@@ -207,7 +207,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpServiceCommunity(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, serviceName.Value, bgpCommunities ?? new ChangeTrackingList<BgpCommunity>());
+            return new BgpServiceCommunity(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                serviceName.Value,
+                bgpCommunities ?? new ChangeTrackingList<BgpCommunity>());
         }
 
         BinaryData IPersistableModel<BgpServiceCommunity>.Write(ModelReaderWriterOptions options)

@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancerProfile(managedOutboundIPs.Value, outboundIPPrefixes.Value, outboundIPs.Value, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), Optional.ToNullable(allocatedOutboundPorts), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableMultipleStandardLoadBalancers), Optional.ToNullable(backendPoolType), serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancerProfile(
+                managedOutboundIPs.Value,
+                outboundIPPrefixes.Value,
+                outboundIPs.Value,
+                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                Optional.ToNullable(allocatedOutboundPorts),
+                Optional.ToNullable(idleTimeoutInMinutes),
+                Optional.ToNullable(enableMultipleStandardLoadBalancers),
+                Optional.ToNullable(backendPoolType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfile>.Write(ModelReaderWriterOptions options)

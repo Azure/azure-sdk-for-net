@@ -258,7 +258,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new P2SConnectionConfiguration(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnClientAddressPool.Value, routingConfiguration.Value, Optional.ToNullable(enableInternetSecurity), configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>(), previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>(), Optional.ToNullable(provisioningState));
+            return new P2SConnectionConfiguration(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                vpnClientAddressPool.Value,
+                routingConfiguration.Value,
+                Optional.ToNullable(enableInternetSecurity),
+                configurationPolicyGroupAssociations ?? new ChangeTrackingList<WritableSubResource>(),
+                previousConfigurationPolicyGroupAssociations ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupData>(),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<P2SConnectionConfiguration>.Write(ModelReaderWriterOptions options)

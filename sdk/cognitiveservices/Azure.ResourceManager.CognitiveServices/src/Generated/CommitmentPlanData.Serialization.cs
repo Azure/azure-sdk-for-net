@@ -222,7 +222,18 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanData(id, name, type, systemData.Value, Optional.ToNullable(etag), kind.Value, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new CommitmentPlanData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(etag),
+                kind.Value,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(location),
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanData>.Write(ModelReaderWriterOptions options)

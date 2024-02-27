@@ -279,7 +279,18 @@ namespace Azure.ResourceManager.Network
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPGroupData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), ipAddresses ?? new ChangeTrackingList<string>(), firewalls ?? new ChangeTrackingList<WritableSubResource>(), firewallPolicies ?? new ChangeTrackingList<WritableSubResource>());
+            return new IPGroupData(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                Optional.ToNullable(provisioningState),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                firewalls ?? new ChangeTrackingList<WritableSubResource>(),
+                firewallPolicies ?? new ChangeTrackingList<WritableSubResource>());
         }
 
         BinaryData IPersistableModel<IPGroupData>.Write(ModelReaderWriterOptions options)

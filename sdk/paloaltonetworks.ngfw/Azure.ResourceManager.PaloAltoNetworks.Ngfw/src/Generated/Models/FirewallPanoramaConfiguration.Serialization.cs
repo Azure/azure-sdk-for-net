@@ -159,7 +159,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPanoramaConfiguration(configString, vmAuthKey.Value, panoramaServer.Value, panoramaServer2.Value, dgName.Value, tplName.Value, cgName.Value, hostName.Value, serializedAdditionalRawData);
+            return new FirewallPanoramaConfiguration(
+                configString,
+                vmAuthKey.Value,
+                panoramaServer.Value,
+                panoramaServer2.Value,
+                dgName.Value,
+                tplName.Value,
+                cgName.Value,
+                hostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPanoramaConfiguration>.Write(ModelReaderWriterOptions options)

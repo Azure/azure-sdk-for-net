@@ -154,7 +154,13 @@ namespace Azure.ResourceManager.Storage
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableServiceData(id, name, type, systemData.Value, cors.Value, serializedAdditionalRawData);
+            return new TableServiceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                cors.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableServiceData>.Write(ModelReaderWriterOptions options)

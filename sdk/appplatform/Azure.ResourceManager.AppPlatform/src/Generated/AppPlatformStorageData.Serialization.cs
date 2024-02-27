@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformStorageData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AppPlatformStorageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformStorageData>.Write(ModelReaderWriterOptions options)

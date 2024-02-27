@@ -418,7 +418,29 @@ namespace Azure.ResourceManager.CostManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementViewData(id, name, type, systemData.Value, displayName.Value, scope.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), dateRange.Value, currency.Value, Optional.ToNullable(chart), Optional.ToNullable(accumulated), Optional.ToNullable(metric), kpis ?? new ChangeTrackingList<ViewKpiProperties>(), pivots ?? new ChangeTrackingList<ViewPivotProperties>(), Optional.ToNullable(type0), Optional.ToNullable(timeframe), timePeriod.Value, dataSet.Value, Optional.ToNullable(includeMonetaryCommitment), Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new CostManagementViewData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                scope.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                dateRange.Value,
+                currency.Value,
+                Optional.ToNullable(chart),
+                Optional.ToNullable(accumulated),
+                Optional.ToNullable(metric),
+                kpis ?? new ChangeTrackingList<ViewKpiProperties>(),
+                pivots ?? new ChangeTrackingList<ViewPivotProperties>(),
+                Optional.ToNullable(type0),
+                Optional.ToNullable(timeframe),
+                timePeriod.Value,
+                dataSet.Value,
+                Optional.ToNullable(includeMonetaryCommitment),
+                Optional.ToNullable(eTag),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options)

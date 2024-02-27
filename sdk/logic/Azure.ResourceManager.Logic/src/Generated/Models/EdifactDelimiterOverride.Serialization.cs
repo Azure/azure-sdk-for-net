@@ -185,7 +185,20 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value, serializedAdditionalRawData);
+            return new EdifactDelimiterOverride(
+                messageId.Value,
+                messageVersion.Value,
+                messageRelease.Value,
+                dataElementSeparator,
+                componentSeparator,
+                segmentTerminator,
+                repetitionSeparator,
+                segmentTerminatorSuffix,
+                decimalPointIndicator,
+                releaseIndicator,
+                messageAssociationAssignedCode.Value,
+                targetNamespace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdifactDelimiterOverride>.Write(ModelReaderWriterOptions options)

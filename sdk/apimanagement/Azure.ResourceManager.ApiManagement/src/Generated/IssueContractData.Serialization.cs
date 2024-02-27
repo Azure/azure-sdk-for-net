@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IssueContractData(id, name, type, systemData.Value, Optional.ToNullable(createdDate), Optional.ToNullable(state), apiId.Value, title.Value, description.Value, userId.Value, serializedAdditionalRawData);
+            return new IssueContractData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(createdDate),
+                Optional.ToNullable(state),
+                apiId.Value,
+                title.Value,
+                description.Value,
+                userId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IssueContractData>.Write(ModelReaderWriterOptions options)

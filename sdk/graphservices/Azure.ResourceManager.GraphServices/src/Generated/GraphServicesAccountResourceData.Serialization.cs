@@ -166,7 +166,15 @@ namespace Azure.ResourceManager.GraphServices
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GraphServicesAccountResourceData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties, serializedAdditionalRawData);
+            return new GraphServicesAccountResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GraphServicesAccountResourceData>.Write(ModelReaderWriterOptions options)

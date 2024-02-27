@@ -203,7 +203,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterIPConfiguration(name, applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(), loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>(), subnet, Optional.ToNullable(privateIPAddressVersion), publicIPAddressConfiguration.Value, serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterIPConfiguration(
+                name,
+                applicationGatewayBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerBackendAddressPools ?? new ChangeTrackingList<WritableSubResource>(),
+                loadBalancerInboundNatPools ?? new ChangeTrackingList<WritableSubResource>(),
+                subnet,
+                Optional.ToNullable(privateIPAddressVersion),
+                publicIPAddressConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterIPConfiguration>.Write(ModelReaderWriterOptions options)

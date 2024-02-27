@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotServiceProviderProperties(id.Value, displayName.Value, serviceProviderName.Value, devPortalUrl.Value, iconUrl.Value, parameters ?? new ChangeTrackingList<BotServiceProviderParameter>(), serializedAdditionalRawData);
+            return new BotServiceProviderProperties(
+                id.Value,
+                displayName.Value,
+                serviceProviderName.Value,
+                devPortalUrl.Value,
+                iconUrl.Value,
+                parameters ?? new ChangeTrackingList<BotServiceProviderParameter>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotServiceProviderProperties>.Write(ModelReaderWriterOptions options)

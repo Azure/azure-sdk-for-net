@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings), serializedAdditionalRawData);
+            return new ConsumptionCalculatedSavingsProperties(
+                Optional.ToNullable(onDemandCost),
+                Optional.ToNullable(overageCost),
+                Optional.ToNullable(quantity),
+                Optional.ToNullable(reservationCost),
+                Optional.ToNullable(totalReservationCost),
+                Optional.ToNullable(reservedUnitCount),
+                Optional.ToNullable(savings),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionCalculatedSavingsProperties>.Write(ModelReaderWriterOptions options)

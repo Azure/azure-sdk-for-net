@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTritonModelJobOutput(description.Value, jobOutputType, serializedAdditionalRawData, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningTritonModelJobOutput(
+                description.Value,
+                jobOutputType,
+                serializedAdditionalRawData,
+                assetName.Value,
+                assetVersion.Value,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(mode),
+                uri.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningTritonModelJobOutput>.Write(ModelReaderWriterOptions options)

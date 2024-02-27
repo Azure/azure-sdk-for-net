@@ -342,7 +342,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new Workspace(id.Value, name.Value, type.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity.Value, defaultDataLakeStorage.Value, sqlAdministratorLoginPassword.Value, managedResourceGroupName.Value, provisioningState.Value, sqlAdministratorLogin.Value, virtualNetworkProfile.Value, connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(), managedVirtualNetwork.Value, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(), encryption.Value, Optional.ToNullable(workspaceUID), extraProperties ?? new ChangeTrackingDictionary<string, object>(), managedVirtualNetworkSettings.Value, workspaceRepositoryConfiguration.Value, purviewConfiguration.Value, adlaResourceId.Value);
+            return new Workspace(
+                id.Value,
+                name.Value,
+                type.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity.Value,
+                defaultDataLakeStorage.Value,
+                sqlAdministratorLoginPassword.Value,
+                managedResourceGroupName.Value,
+                provisioningState.Value,
+                sqlAdministratorLogin.Value,
+                virtualNetworkProfile.Value,
+                connectivityEndpoints ?? new ChangeTrackingDictionary<string, string>(),
+                managedVirtualNetwork.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnection>(),
+                encryption.Value,
+                Optional.ToNullable(workspaceUID),
+                extraProperties ?? new ChangeTrackingDictionary<string, object>(),
+                managedVirtualNetworkSettings.Value,
+                workspaceRepositoryConfiguration.Value,
+                purviewConfiguration.Value,
+                adlaResourceId.Value);
         }
 
         internal partial class WorkspaceConverter : JsonConverter<Workspace>

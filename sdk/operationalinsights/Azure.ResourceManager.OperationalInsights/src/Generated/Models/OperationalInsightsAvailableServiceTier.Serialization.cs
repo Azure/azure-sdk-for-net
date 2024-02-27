@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate), serializedAdditionalRawData);
+            return new OperationalInsightsAvailableServiceTier(
+                Optional.ToNullable(serviceTier),
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(minimumRetention),
+                Optional.ToNullable(maximumRetention),
+                Optional.ToNullable(defaultRetention),
+                Optional.ToNullable(capacityReservationLevel),
+                Optional.ToNullable(lastSkuUpdate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalInsightsAvailableServiceTier>.Write(ModelReaderWriterOptions options)

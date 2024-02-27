@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridComputeConnectionDetail(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value, serializedAdditionalRawData);
+            return new HybridComputeConnectionDetail(
+                id.Value,
+                privateIPAddress.Value,
+                linkIdentifier.Value,
+                groupId.Value,
+                memberName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridComputeConnectionDetail>.Write(ModelReaderWriterOptions options)

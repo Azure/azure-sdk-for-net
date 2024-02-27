@@ -153,7 +153,13 @@ namespace Azure.ResourceManager.DataLakeStore
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreTrustedIdProviderData(id, name, type, systemData.Value, idProvider.Value, serializedAdditionalRawData);
+            return new DataLakeStoreTrustedIdProviderData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                idProvider.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreTrustedIdProviderData>.Write(ModelReaderWriterOptions options)

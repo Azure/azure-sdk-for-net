@@ -261,7 +261,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBatchLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, accountName, accessKey, batchUri, poolName, linkedServiceName, encryptedCredential.Value, credential.Value);
+            return new AzureBatchLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                accountName,
+                accessKey,
+                batchUri,
+                poolName,
+                linkedServiceName,
+                encryptedCredential.Value,
+                credential.Value);
         }
 
         BinaryData IPersistableModel<AzureBatchLinkedService>.Write(ModelReaderWriterOptions options)

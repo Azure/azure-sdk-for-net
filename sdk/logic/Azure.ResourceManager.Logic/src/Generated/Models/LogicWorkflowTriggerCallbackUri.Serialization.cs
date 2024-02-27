@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowTriggerCallbackUri(value.Value, Optional.ToNullable(method), basePath.Value, relativePath.Value, relativePathParameters ?? new ChangeTrackingList<string>(), queries.Value, serializedAdditionalRawData);
+            return new LogicWorkflowTriggerCallbackUri(
+                value.Value,
+                Optional.ToNullable(method),
+                basePath.Value,
+                relativePath.Value,
+                relativePathParameters ?? new ChangeTrackingList<string>(),
+                queries.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowTriggerCallbackUri>.Write(ModelReaderWriterOptions options)

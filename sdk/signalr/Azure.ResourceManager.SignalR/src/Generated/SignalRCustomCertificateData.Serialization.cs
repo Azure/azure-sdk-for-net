@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRCustomCertificateData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion.Value, serializedAdditionalRawData);
+            return new SignalRCustomCertificateData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                keyVaultBaseUri,
+                keyVaultSecretName,
+                keyVaultSecretVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRCustomCertificateData>.Write(ModelReaderWriterOptions options)

@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.Synapse
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolBlobAuditingPolicyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), auditActionsAndGroups ?? new ChangeTrackingList<string>(), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), serializedAdditionalRawData);
+            return new SynapseSqlPoolBlobAuditingPolicyData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind.Value,
+                Optional.ToNullable(state),
+                storageEndpoint.Value,
+                storageAccountAccessKey.Value,
+                Optional.ToNullable(retentionDays),
+                auditActionsAndGroups ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(storageAccountSubscriptionId),
+                Optional.ToNullable(isStorageSecondaryKeyInUse),
+                Optional.ToNullable(isAzureMonitorTargetEnabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)

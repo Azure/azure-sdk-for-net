@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabUserIdentity(principalName.Value, principalId.Value, Optional.ToNullable(tenantId), objectId.Value, appId.Value, serializedAdditionalRawData);
+            return new DevTestLabUserIdentity(
+                principalName.Value,
+                principalId.Value,
+                Optional.ToNullable(tenantId),
+                objectId.Value,
+                appId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabUserIdentity>.Write(ModelReaderWriterOptions options)

@@ -287,7 +287,21 @@ namespace Azure.ResourceManager.Hci
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(), connectivityProperties.Value, serializedAdditionalRawData);
+            return new ArcSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                arcInstanceResourceGroup.Value,
+                Optional.ToNullable(arcApplicationClientId),
+                Optional.ToNullable(arcApplicationTenantId),
+                Optional.ToNullable(arcServicePrincipalObjectId),
+                Optional.ToNullable(arcApplicationObjectId),
+                Optional.ToNullable(aggregateState),
+                perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
+                connectivityProperties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options)

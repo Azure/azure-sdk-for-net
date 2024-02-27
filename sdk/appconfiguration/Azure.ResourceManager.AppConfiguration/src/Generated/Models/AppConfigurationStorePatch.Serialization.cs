@@ -206,7 +206,15 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationStorePatch(identity, sku.Value, tags ?? new ChangeTrackingDictionary<string, string>(), encryption.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enablePurgeProtection), serializedAdditionalRawData);
+            return new AppConfigurationStorePatch(
+                identity,
+                sku.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                encryption.Value,
+                Optional.ToNullable(disableLocalAuth),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(enablePurgeProtection),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppConfigurationStorePatch>.Write(ModelReaderWriterOptions options)

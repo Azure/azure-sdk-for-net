@@ -252,7 +252,19 @@ namespace Azure.ResourceManager.BotService
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), zones ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new BotData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties.Value,
+                sku.Value,
+                Optional.ToNullable(kind),
+                Optional.ToNullable(etag),
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotData>.Write(ModelReaderWriterOptions options)

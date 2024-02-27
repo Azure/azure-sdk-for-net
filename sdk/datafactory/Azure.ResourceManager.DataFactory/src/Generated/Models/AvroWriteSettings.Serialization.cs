@@ -129,7 +129,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AvroWriteSettings(type, additionalProperties, recordName.Value, recordNamespace.Value, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new AvroWriteSettings(
+                type,
+                additionalProperties,
+                recordName.Value,
+                recordNamespace.Value,
+                maxRowsPerFile.Value,
+                fileNamePrefix.Value);
         }
 
         BinaryData IPersistableModel<AvroWriteSettings>.Write(ModelReaderWriterOptions options)

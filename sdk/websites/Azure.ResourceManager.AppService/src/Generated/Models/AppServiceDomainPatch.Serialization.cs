@@ -471,7 +471,33 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), nameServers ?? new ChangeTrackingList<string>(), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(), consent.Value, domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceDomainPatch(
+                id,
+                name,
+                type,
+                systemData.Value,
+                contactAdmin.Value,
+                contactBilling.Value,
+                contactRegistrant.Value,
+                contactTech.Value,
+                Optional.ToNullable(registrationStatus),
+                Optional.ToNullable(provisioningState),
+                nameServers ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(privacy),
+                Optional.ToNullable(createdTime),
+                Optional.ToNullable(expirationTime),
+                Optional.ToNullable(lastRenewedTime),
+                Optional.ToNullable(autoRenew),
+                Optional.ToNullable(readyForDnsRecordManagement),
+                managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
+                consent.Value,
+                domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),
+                Optional.ToNullable(dnsType),
+                dnsZoneId.Value,
+                Optional.ToNullable(targetDnsType),
+                authCode.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceDomainPatch>.Write(ModelReaderWriterOptions options)

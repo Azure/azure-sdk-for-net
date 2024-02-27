@@ -245,7 +245,18 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HealthcareApisServiceProperties(Optional.ToNullable(provisioningState), accessPolicies ?? new ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry>(), cosmosDbConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), acrConfiguration.Value, importConfiguration.Value, serializedAdditionalRawData);
+            return new HealthcareApisServiceProperties(
+                Optional.ToNullable(provisioningState),
+                accessPolicies ?? new ChangeTrackingList<HealthcareApisServiceAccessPolicyEntry>(),
+                cosmosDbConfiguration.Value,
+                authenticationConfiguration.Value,
+                corsConfiguration.Value,
+                exportConfiguration.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                acrConfiguration.Value,
+                importConfiguration.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HealthcareApisServiceProperties>.Write(ModelReaderWriterOptions options)

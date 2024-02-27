@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.Relay.Models
         {
             rights ??= new List<RelayAccessRight>();
 
-            return new RelayAuthorizationRuleData(id, name, resourceType, systemData, rights?.ToList(), location, serializedAdditionalRawData: null);
+            return new RelayAuthorizationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                rights?.ToList(),
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelayAccessKeys"/>. </summary>
@@ -41,7 +48,13 @@ namespace Azure.ResourceManager.Relay.Models
         /// <returns> A new <see cref="Models.RelayAccessKeys"/> instance for mocking. </returns>
         public static RelayAccessKeys RelayAccessKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null)
         {
-            return new RelayAccessKeys(primaryConnectionString, secondaryConnectionString, primaryKey, secondaryKey, keyName, serializedAdditionalRawData: null);
+            return new RelayAccessKeys(
+                primaryConnectionString,
+                secondaryConnectionString,
+                primaryKey,
+                secondaryKey,
+                keyName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelayRegenerateAccessKeyContent"/>. </summary>
@@ -67,7 +80,18 @@ namespace Azure.ResourceManager.Relay.Models
         /// <returns> A new <see cref="Relay.RelayHybridConnectionData"/> instance for mocking. </returns>
         public static RelayHybridConnectionData RelayHybridConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, int? listenerCount = null, bool? isClientAuthorizationRequired = null, string userMetadata = null, AzureLocation? location = null)
         {
-            return new RelayHybridConnectionData(id, name, resourceType, systemData, createdOn, updatedOn, listenerCount, isClientAuthorizationRequired, userMetadata, location, serializedAdditionalRawData: null);
+            return new RelayHybridConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                updatedOn,
+                listenerCount,
+                isClientAuthorizationRequired,
+                userMetadata,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelayNameAvailabilityResult"/>. </summary>
@@ -102,7 +126,23 @@ namespace Azure.ResourceManager.Relay.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<RelayPrivateEndpointConnectionData>();
 
-            return new RelayNamespaceData(id, name, resourceType, systemData, tags, location, sku, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
+            return new RelayNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                provisioningState,
+                status,
+                createdOn,
+                updatedOn,
+                serviceBusEndpoint,
+                metricId,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateEndpointConnectionData"/>. </summary>
@@ -117,7 +157,16 @@ namespace Azure.ResourceManager.Relay.Models
         /// <returns> A new <see cref="Relay.RelayPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static RelayPrivateEndpointConnectionData RelayPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RelayPrivateLinkServiceConnectionState connectionState = null, RelayPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new RelayPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, connectionState, provisioningState, location, serializedAdditionalRawData: null);
+            return new RelayPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RelayNamespacePatch"/>. </summary>
@@ -141,7 +190,22 @@ namespace Azure.ResourceManager.Relay.Models
             privateEndpointConnections ??= new List<RelayPrivateEndpointConnectionData>();
             tags ??= new Dictionary<string, string>();
 
-            return new RelayNamespacePatch(id, name, resourceType, systemData, sku, provisioningState, status, createdOn, updatedOn, serviceBusEndpoint, metricId, privateEndpointConnections?.ToList(), publicNetworkAccess, tags, serializedAdditionalRawData: null);
+            return new RelayNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                provisioningState,
+                status,
+                createdOn,
+                updatedOn,
+                serviceBusEndpoint,
+                metricId,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayPrivateLinkResourceData"/>. </summary>
@@ -158,7 +222,15 @@ namespace Azure.ResourceManager.Relay.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new RelayPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new RelayPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.RelayNetworkRuleSetData"/>. </summary>
@@ -174,7 +246,15 @@ namespace Azure.ResourceManager.Relay.Models
         {
             ipRules ??= new List<RelayNetworkRuleSetIPRule>();
 
-            return new RelayNetworkRuleSetData(id, name, resourceType, systemData, defaultAction, publicNetworkAccess, ipRules?.ToList(), serializedAdditionalRawData: null);
+            return new RelayNetworkRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                defaultAction,
+                publicNetworkAccess,
+                ipRules?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Relay.WcfRelayData"/>. </summary>
@@ -194,7 +274,21 @@ namespace Azure.ResourceManager.Relay.Models
         /// <returns> A new <see cref="Relay.WcfRelayData"/> instance for mocking. </returns>
         public static WcfRelayData WcfRelayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDynamic = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, int? listenerCount = null, RelayType? relayType = null, bool? isClientAuthorizationRequired = null, bool? isTransportSecurityRequired = null, string userMetadata = null, AzureLocation? location = null)
         {
-            return new WcfRelayData(id, name, resourceType, systemData, isDynamic, createdOn, updatedOn, listenerCount, relayType, isClientAuthorizationRequired, isTransportSecurityRequired, userMetadata, location, serializedAdditionalRawData: null);
+            return new WcfRelayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isDynamic,
+                createdOn,
+                updatedOn,
+                listenerCount,
+                relayType,
+                isClientAuthorizationRequired,
+                isTransportSecurityRequired,
+                userMetadata,
+                location,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -70,7 +70,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventTrackDiscontinuityDetectedEventData(trackType.Value, trackName.Value, Optional.ToNullable(bitrate), previousTimestamp.Value, newTimestamp.Value, timescale.Value, discontinuityGap.Value);
+            return new MediaLiveEventTrackDiscontinuityDetectedEventData(
+                trackType.Value,
+                trackName.Value,
+                Optional.ToNullable(bitrate),
+                previousTimestamp.Value,
+                newTimestamp.Value,
+                timescale.Value,
+                discontinuityGap.Value);
         }
 
         internal partial class MediaLiveEventTrackDiscontinuityDetectedEventDataConverter : JsonConverter<MediaLiveEventTrackDiscontinuityDetectedEventData>

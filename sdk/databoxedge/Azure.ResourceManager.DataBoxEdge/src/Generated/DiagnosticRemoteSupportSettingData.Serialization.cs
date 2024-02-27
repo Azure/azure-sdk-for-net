@@ -164,7 +164,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticRemoteSupportSettingData(id, name, type, systemData.Value, remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>(), serializedAdditionalRawData);
+            return new DiagnosticRemoteSupportSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                remoteSupportSettingsList ?? new ChangeTrackingList<EdgeRemoteSupportSettings>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options)

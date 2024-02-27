@@ -242,7 +242,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(), vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(), kind.Value, serializedAdditionalRawData);
+            return new AppServiceEnvironmentAddressResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceIPAddress.Value,
+                internalIPAddress.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEnvironmentAddressResult>.Write(ModelReaderWriterOptions options)

@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.DataBoxEdge
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticProactiveLogCollectionSettingData(id, name, type, systemData.Value, userConsent, serializedAdditionalRawData);
+            return new DiagnosticProactiveLogCollectionSettingData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                userConsent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticProactiveLogCollectionSettingData>.Write(ModelReaderWriterOptions options)

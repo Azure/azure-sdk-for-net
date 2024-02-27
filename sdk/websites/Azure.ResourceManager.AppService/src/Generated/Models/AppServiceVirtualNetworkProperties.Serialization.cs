@@ -177,7 +177,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkProperties(vnetResourceId.Value, certThumbprint.Value, certBlob.Value, routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(), Optional.ToNullable(resyncRequired), dnsServers.Value, Optional.ToNullable(isSwift), serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkProperties(
+                vnetResourceId.Value,
+                certThumbprint.Value,
+                certBlob.Value,
+                routes ?? new ChangeTrackingList<AppServiceVirtualNetworkRoute>(),
+                Optional.ToNullable(resyncRequired),
+                dnsServers.Value,
+                Optional.ToNullable(isSwift),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)

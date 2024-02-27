@@ -325,7 +325,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesSourceControlConfigurationData(id, name, type, systemData.Value, repositoryUrl.Value, operatorNamespace.Value, operatorInstanceName.Value, Optional.ToNullable(operatorType), operatorParams.Value, configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(operatorScope), repositoryPublicKey.Value, sshKnownHostsContents.Value, Optional.ToNullable(enableHelmOperator), helmOperatorProperties.Value, Optional.ToNullable(provisioningState), complianceStatus.Value, serializedAdditionalRawData);
+            return new KubernetesSourceControlConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                repositoryUrl.Value,
+                operatorNamespace.Value,
+                operatorInstanceName.Value,
+                Optional.ToNullable(operatorType),
+                operatorParams.Value,
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(operatorScope),
+                repositoryPublicKey.Value,
+                sshKnownHostsContents.Value,
+                Optional.ToNullable(enableHelmOperator),
+                helmOperatorProperties.Value,
+                Optional.ToNullable(provisioningState),
+                complianceStatus.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesSourceControlConfigurationData>.Write(ModelReaderWriterOptions options)

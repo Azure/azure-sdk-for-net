@@ -154,7 +154,18 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12ValidationSettings(validateCharacterSet, checkDuplicateInterchangeControlNumber, interchangeControlNumberValidityDays, checkDuplicateGroupControlNumber, checkDuplicateTransactionSetControlNumber, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trimLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, serializedAdditionalRawData);
+            return new X12ValidationSettings(
+                validateCharacterSet,
+                checkDuplicateInterchangeControlNumber,
+                interchangeControlNumberValidityDays,
+                checkDuplicateGroupControlNumber,
+                checkDuplicateTransactionSetControlNumber,
+                validateEdiTypes,
+                validateXsdTypes,
+                allowLeadingAndTrailingSpacesAndZeroes,
+                trimLeadingAndTrailingSpacesAndZeroes,
+                trailingSeparatorPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12ValidationSettings>.Write(ModelReaderWriterOptions options)

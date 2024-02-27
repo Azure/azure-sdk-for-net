@@ -419,7 +419,27 @@ namespace Azure.ResourceManager.Avs
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(), hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), output ?? new ChangeTrackingList<string>(), namedOutputs.Value, information ?? new ChangeTrackingList<string>(), warnings ?? new ChangeTrackingList<string>(), errors ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ScriptExecutionData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                scriptCmdletId.Value,
+                parameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
+                hiddenParameters ?? new ChangeTrackingList<ScriptExecutionParameterDetails>(),
+                failureReason.Value,
+                timeout.Value,
+                retention.Value,
+                Optional.ToNullable(submittedAt),
+                Optional.ToNullable(startedAt),
+                Optional.ToNullable(finishedAt),
+                Optional.ToNullable(provisioningState),
+                output ?? new ChangeTrackingList<string>(),
+                namedOutputs.Value,
+                information ?? new ChangeTrackingList<string>(),
+                warnings ?? new ChangeTrackingList<string>(),
+                errors ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options)

@@ -206,7 +206,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesClusterExtensionPatch(Optional.ToNullable(autoUpgradeMinorVersion), releaseTrain.Value, version.Value, configurationSettings ?? new ChangeTrackingDictionary<string, string>(), configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new KubernetesClusterExtensionPatch(
+                Optional.ToNullable(autoUpgradeMinorVersion),
+                releaseTrain.Value,
+                version.Value,
+                configurationSettings ?? new ChangeTrackingDictionary<string, string>(),
+                configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesClusterExtensionPatch>.Write(ModelReaderWriterOptions options)

@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeploymentWithOSConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value, osSapConfiguration.Value);
+            return new DeploymentWithOSConfiguration(
+                configurationType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(appLocation),
+                infrastructureConfiguration.Value,
+                softwareConfiguration.Value,
+                osSapConfiguration.Value);
         }
 
         BinaryData IPersistableModel<DeploymentWithOSConfiguration>.Write(ModelReaderWriterOptions options)

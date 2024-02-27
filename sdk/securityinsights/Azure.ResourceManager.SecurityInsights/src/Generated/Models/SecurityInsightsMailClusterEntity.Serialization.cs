@@ -448,7 +448,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, networkMessageIds ?? new ChangeTrackingList<string>(), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, threats ?? new ChangeTrackingList<string>(), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
+            return new SecurityInsightsMailClusterEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                networkMessageIds ?? new ChangeTrackingList<string>(),
+                countByDeliveryStatus.Value,
+                countByThreatType.Value,
+                countByProtectionStatus.Value,
+                threats ?? new ChangeTrackingList<string>(),
+                query.Value,
+                Optional.ToNullable(queryTime),
+                Optional.ToNullable(mailCount),
+                Optional.ToNullable(isVolumeAnomaly),
+                source.Value,
+                clusterSourceIdentifier.Value,
+                clusterSourceType.Value,
+                Optional.ToNullable(clusterQueryStartTime),
+                Optional.ToNullable(clusterQueryEndTime),
+                clusterGroup.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)

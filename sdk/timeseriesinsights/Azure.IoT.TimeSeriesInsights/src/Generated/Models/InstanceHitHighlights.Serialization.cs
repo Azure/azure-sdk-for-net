@@ -115,7 +115,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InstanceHitHighlights(timeSeriesId ?? new ChangeTrackingList<string>(), typeName.Value, name.Value, description.Value, hierarchyIds ?? new ChangeTrackingList<string>(), hierarchyNames ?? new ChangeTrackingList<string>(), instanceFieldNames ?? new ChangeTrackingList<string>(), instanceFieldValues ?? new ChangeTrackingList<string>());
+            return new InstanceHitHighlights(
+                timeSeriesId ?? new ChangeTrackingList<string>(),
+                typeName.Value,
+                name.Value,
+                description.Value,
+                hierarchyIds ?? new ChangeTrackingList<string>(),
+                hierarchyNames ?? new ChangeTrackingList<string>(),
+                instanceFieldNames ?? new ChangeTrackingList<string>(),
+                instanceFieldValues ?? new ChangeTrackingList<string>());
         }
     }
 }

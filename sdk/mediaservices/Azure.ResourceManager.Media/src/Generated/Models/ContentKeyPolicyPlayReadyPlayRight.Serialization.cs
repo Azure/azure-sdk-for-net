@@ -241,7 +241,21 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl), serializedAdditionalRawData);
+            return new ContentKeyPolicyPlayReadyPlayRight(
+                Optional.ToNullable(firstPlayExpiration),
+                Optional.ToNullable(scmsRestriction),
+                Optional.ToNullable(agcAndColorStripeRestriction),
+                explicitAnalogTelevisionOutputRestriction.Value,
+                digitalVideoOnlyContentRestriction,
+                imageConstraintForAnalogComponentVideoRestriction,
+                imageConstraintForAnalogComputerMonitorRestriction,
+                allowPassingVideoContentToUnknownOutput,
+                Optional.ToNullable(uncompressedDigitalVideoOpl),
+                Optional.ToNullable(compressedDigitalVideoOpl),
+                Optional.ToNullable(analogVideoOpl),
+                Optional.ToNullable(compressedDigitalAudioOpl),
+                Optional.ToNullable(uncompressedDigitalAudioOpl),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.Write(ModelReaderWriterOptions options)

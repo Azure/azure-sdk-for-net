@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubStreamInputDataSource(type, serializedAdditionalRawData, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), eventHubName.Value, Optional.ToNullable(partitionCount), consumerGroupName.Value, Optional.ToNullable(prefetchCount));
+            return new EventHubStreamInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                serviceBusNamespace.Value,
+                sharedAccessPolicyName.Value,
+                sharedAccessPolicyKey.Value,
+                Optional.ToNullable(authenticationMode),
+                eventHubName.Value,
+                Optional.ToNullable(partitionCount),
+                consumerGroupName.Value,
+                Optional.ToNullable(prefetchCount));
         }
 
         BinaryData IPersistableModel<EventHubStreamInputDataSource>.Write(ModelReaderWriterOptions options)

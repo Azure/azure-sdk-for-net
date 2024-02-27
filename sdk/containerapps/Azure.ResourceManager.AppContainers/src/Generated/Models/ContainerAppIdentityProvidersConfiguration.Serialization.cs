@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIdentityProvidersConfiguration(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(), serializedAdditionalRawData);
+            return new ContainerAppIdentityProvidersConfiguration(
+                azureActiveDirectory.Value,
+                facebook.Value,
+                gitHub.Value,
+                google.Value,
+                twitter.Value,
+                apple.Value,
+                azureStaticWebApps.Value,
+                customOpenIdConnectProviders ?? new ChangeTrackingDictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIdentityProvidersConfiguration>.Write(ModelReaderWriterOptions options)

@@ -106,7 +106,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, headers ?? new ChangeTrackingDictionary<string, string>(), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(
+                endpoint,
+                username.Value,
+                password.Value,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                certificateKey.Value,
+                certificatePassword.Value);
         }
     }
 }

@@ -118,7 +118,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PathHierarchyTokenizer(odataType, name, Optional.ToNullable(delimiter), Optional.ToNullable(replacement), Optional.ToNullable(maxTokenLength), Optional.ToNullable(reverse), Optional.ToNullable(skip));
+            return new PathHierarchyTokenizer(
+                odataType,
+                name,
+                Optional.ToNullable(delimiter),
+                Optional.ToNullable(replacement),
+                Optional.ToNullable(maxTokenLength),
+                Optional.ToNullable(reverse),
+                Optional.ToNullable(skip));
         }
     }
 }

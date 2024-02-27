@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.Search
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedSearchServicePrivateLinkResourceData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new SharedSearchServicePrivateLinkResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options)

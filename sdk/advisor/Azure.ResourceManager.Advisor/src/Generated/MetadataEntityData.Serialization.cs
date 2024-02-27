@@ -225,7 +225,16 @@ namespace Azure.ResourceManager.Advisor
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataEntityData(id, name, type, systemData.Value, displayName.Value, dependsOn ?? new ChangeTrackingList<string>(), applicableScenarios ?? new ChangeTrackingList<Scenario>(), supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(), serializedAdditionalRawData);
+            return new MetadataEntityData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                displayName.Value,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                applicableScenarios ?? new ChangeTrackingList<Scenario>(),
+                supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataEntityData>.Write(ModelReaderWriterOptions options)

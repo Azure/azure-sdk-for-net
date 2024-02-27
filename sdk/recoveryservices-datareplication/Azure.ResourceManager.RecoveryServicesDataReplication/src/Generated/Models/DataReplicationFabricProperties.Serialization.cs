@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricProperties(Optional.ToNullable(provisioningState), serviceEndpoint.Value, serviceResourceId.Value, Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(), customProperties, serializedAdditionalRawData);
+            return new DataReplicationFabricProperties(
+                Optional.ToNullable(provisioningState),
+                serviceEndpoint.Value,
+                serviceResourceId.Value,
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricProperties>.Write(ModelReaderWriterOptions options)

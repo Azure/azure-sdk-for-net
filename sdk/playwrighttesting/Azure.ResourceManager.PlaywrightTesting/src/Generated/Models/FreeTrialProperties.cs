@@ -53,14 +53,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         /// <param name="usedValue"> The free-trial used value eg. used free minutes. </param>
         /// <param name="percentageUsed"> The free-trial percentage used. </param>
         /// <param name="state"> The free-trial state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountId"/> is null. </exception>
         public FreeTrialProperties(string accountId, DateTimeOffset createdOn, DateTimeOffset expiryOn, int allocatedValue, int usedValue, decimal percentageUsed, FreeTrialState state)
         {
-            if (accountId == null)
-            {
-                throw new ArgumentNullException(nameof(accountId));
-            }
-
             AccountId = accountId;
             CreatedOn = createdOn;
             ExpiryOn = expiryOn;

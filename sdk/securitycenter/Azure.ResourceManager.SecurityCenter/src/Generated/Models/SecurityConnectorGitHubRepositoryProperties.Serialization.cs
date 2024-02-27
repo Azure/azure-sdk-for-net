@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityConnectorGitHubRepositoryProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), repoId.Value, repoName.Value, repoFullName.Value, Optional.ToNullable(onboardingState), repoUrl.Value, parentOwnerName.Value, serializedAdditionalRawData);
+            return new SecurityConnectorGitHubRepositoryProperties(
+                provisioningStatusMessage.Value,
+                Optional.ToNullable(provisioningStatusUpdateTimeUtc),
+                Optional.ToNullable(provisioningState),
+                repoId.Value,
+                repoName.Value,
+                repoFullName.Value,
+                Optional.ToNullable(onboardingState),
+                repoUrl.Value,
+                parentOwnerName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityConnectorGitHubRepositoryProperties>.Write(ModelReaderWriterOptions options)

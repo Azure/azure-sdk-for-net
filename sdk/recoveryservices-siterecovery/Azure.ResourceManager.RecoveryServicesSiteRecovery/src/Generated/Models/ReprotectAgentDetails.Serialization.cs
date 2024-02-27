@@ -265,7 +265,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), Optional.ToNullable(protectedItemCount), accessibleDatastores ?? new ChangeTrackingList<string>(), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc), serializedAdditionalRawData);
+            return new ReprotectAgentDetails(
+                id.Value,
+                name.Value,
+                biosId.Value,
+                fabricObjectId.Value,
+                fqdn.Value,
+                version.Value,
+                Optional.ToNullable(lastHeartbeatUtc),
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                Optional.ToNullable(protectedItemCount),
+                accessibleDatastores ?? new ChangeTrackingList<string>(),
+                vCenterId.Value,
+                Optional.ToNullable(lastDiscoveryInUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReprotectAgentDetails>.Write(ModelReaderWriterOptions options)

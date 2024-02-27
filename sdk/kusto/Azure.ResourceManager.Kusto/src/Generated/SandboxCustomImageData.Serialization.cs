@@ -191,7 +191,16 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SandboxCustomImageData(id, name, type, systemData.Value, Optional.ToNullable(language), languageVersion.Value, requirementsFileContent.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new SandboxCustomImageData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(language),
+                languageVersion.Value,
+                requirementsFileContent.Value,
+                Optional.ToNullable(provisioningState),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SandboxCustomImageData>.Write(ModelReaderWriterOptions options)

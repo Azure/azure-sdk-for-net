@@ -223,7 +223,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaBluePolicyContent(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletion.Value, Optional.ToNullable(replicationFrequencyInSeconds));
+            return new HyperVReplicaBluePolicyContent(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPoints),
+                Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours),
+                compression.Value,
+                initialReplicationMethod.Value,
+                onlineReplicationStartTime.Value,
+                offlineReplicationImportPath.Value,
+                offlineReplicationExportPath.Value,
+                Optional.ToNullable(replicationPort),
+                Optional.ToNullable(allowedAuthenticationType),
+                replicaDeletion.Value,
+                Optional.ToNullable(replicationFrequencyInSeconds));
         }
 
         BinaryData IPersistableModel<HyperVReplicaBluePolicyContent>.Write(ModelReaderWriterOptions options)

@@ -526,7 +526,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureEnableProtectionContent(instanceType, serializedAdditionalRawData, hvHostVmId.Value, vmName.Value, osType.Value, vhdId.Value, targetStorageAccountId.Value, targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, disksToInclude ?? new ChangeTrackingList<string>(), targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, useManagedDisks.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, targetProximityPlacementGroupId.Value, useManagedDisksForReplication.Value, Optional.ToNullable(diskType), disksToIncludeForManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureDiskDetails>(), diskEncryptionSetId.Value, targetVmTags ?? new ChangeTrackingDictionary<string, string>(), seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(), targetNicTags ?? new ChangeTrackingDictionary<string, string>());
+            return new HyperVReplicaAzureEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                hvHostVmId.Value,
+                vmName.Value,
+                osType.Value,
+                vhdId.Value,
+                targetStorageAccountId.Value,
+                targetAzureNetworkId.Value,
+                targetAzureSubnetId.Value,
+                enableRdpOnTargetOption.Value,
+                targetAzureVmName.Value,
+                logStorageAccountId.Value,
+                disksToInclude ?? new ChangeTrackingList<string>(),
+                targetAzureV1ResourceGroupId.Value,
+                targetAzureV2ResourceGroupId.Value,
+                useManagedDisks.Value,
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(sqlServerLicenseType),
+                targetVmSize.Value,
+                targetProximityPlacementGroupId.Value,
+                useManagedDisksForReplication.Value,
+                Optional.ToNullable(diskType),
+                disksToIncludeForManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureDiskDetails>(),
+                diskEncryptionSetId.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureEnableProtectionContent>.Write(ModelReaderWriterOptions options)

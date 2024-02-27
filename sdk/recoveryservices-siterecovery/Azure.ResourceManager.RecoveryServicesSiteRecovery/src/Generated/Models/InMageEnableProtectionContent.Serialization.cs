@@ -195,7 +195,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageEnableProtectionContent(instanceType, serializedAdditionalRawData, vmFriendlyName.Value, masterTargetId, processServerId, retentionDrive, runAsAccountId.Value, multiVmGroupId, multiVmGroupName, datastoreName.Value, diskExclusionContent.Value, disksToInclude ?? new ChangeTrackingList<string>());
+            return new InMageEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                vmFriendlyName.Value,
+                masterTargetId,
+                processServerId,
+                retentionDrive,
+                runAsAccountId.Value,
+                multiVmGroupId,
+                multiVmGroupName,
+                datastoreName.Value,
+                diskExclusionContent.Value,
+                disksToInclude ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<InMageEnableProtectionContent>.Write(ModelReaderWriterOptions options)

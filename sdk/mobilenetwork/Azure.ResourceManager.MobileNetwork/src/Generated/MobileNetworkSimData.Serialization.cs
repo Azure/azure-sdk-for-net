@@ -310,7 +310,24 @@ namespace Azure.ResourceManager.MobileNetwork
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkSimData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(simState), siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(), internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier.Value, deviceType.Value, simPolicy, staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(), vendorName.Value, vendorKeyFingerprint.Value, authenticationKey.Value, operatorKeyCode.Value, serializedAdditionalRawData);
+            return new MobileNetworkSimData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(simState),
+                siteProvisioningState ?? new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>(),
+                internationalMobileSubscriberIdentity,
+                integratedCircuitCardIdentifier.Value,
+                deviceType.Value,
+                simPolicy,
+                staticIPConfiguration ?? new ChangeTrackingList<SimStaticIPProperties>(),
+                vendorName.Value,
+                vendorKeyFingerprint.Value,
+                authenticationKey.Value,
+                operatorKeyCode.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkSimData>.Write(ModelReaderWriterOptions options)

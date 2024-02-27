@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value, serializedAdditionalRawData);
+            return new DataBoxJobStage(
+                Optional.ToNullable(stageName),
+                displayName.Value,
+                Optional.ToNullable(stageStatus),
+                Optional.ToNullable(stageTime),
+                jobStageDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options)

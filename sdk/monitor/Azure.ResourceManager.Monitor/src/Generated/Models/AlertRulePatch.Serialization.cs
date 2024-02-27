@@ -233,7 +233,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRulePatch(tags ?? new ChangeTrackingDictionary<string, string>(), name.Value, description.Value, provisioningState.Value, Optional.ToNullable(isEnabled), condition.Value, action.Value, actions ?? new ChangeTrackingList<AlertRuleAction>(), Optional.ToNullable(lastUpdatedTime), serializedAdditionalRawData);
+            return new AlertRulePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                name.Value,
+                description.Value,
+                provisioningState.Value,
+                Optional.ToNullable(isEnabled),
+                condition.Value,
+                action.Value,
+                actions ?? new ChangeTrackingList<AlertRuleAction>(),
+                Optional.ToNullable(lastUpdatedTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRulePatch>.Write(ModelReaderWriterOptions options)

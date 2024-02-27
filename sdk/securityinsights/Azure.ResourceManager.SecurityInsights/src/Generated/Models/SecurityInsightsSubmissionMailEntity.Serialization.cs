@@ -333,7 +333,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
+            return new SecurityInsightsSubmissionMailEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                Optional.ToNullable(networkMessageId),
+                Optional.ToNullable(submissionId),
+                submitter.Value,
+                Optional.ToNullable(submissionDate),
+                Optional.ToNullable(timestamp),
+                recipient.Value,
+                sender.Value,
+                senderIP.Value,
+                subject.Value,
+                reportType.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsSubmissionMailEntity>.Write(ModelReaderWriterOptions options)

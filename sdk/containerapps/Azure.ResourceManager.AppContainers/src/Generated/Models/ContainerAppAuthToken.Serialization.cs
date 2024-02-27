@@ -198,7 +198,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAuthToken(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, token.Value, Optional.ToNullable(expires), serializedAdditionalRawData);
+            return new ContainerAppAuthToken(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                token.Value,
+                Optional.ToNullable(expires),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAuthToken>.Write(ModelReaderWriterOptions options)

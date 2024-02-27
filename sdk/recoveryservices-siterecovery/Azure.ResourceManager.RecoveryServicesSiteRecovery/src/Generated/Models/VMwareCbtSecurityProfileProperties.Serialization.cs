@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareCbtSecurityProfileProperties(Optional.ToNullable(targetVmSecurityType), isTargetVmSecureBootEnabled.Value, isTargetVmTpmEnabled.Value, isTargetVmIntegrityMonitoringEnabled.Value, isTargetVmConfidentialEncryptionEnabled.Value, serializedAdditionalRawData);
+            return new VMwareCbtSecurityProfileProperties(
+                Optional.ToNullable(targetVmSecurityType),
+                isTargetVmSecureBootEnabled.Value,
+                isTargetVmTpmEnabled.Value,
+                isTargetVmIntegrityMonitoringEnabled.Value,
+                isTargetVmConfidentialEncryptionEnabled.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareCbtSecurityProfileProperties>.Write(ModelReaderWriterOptions options)

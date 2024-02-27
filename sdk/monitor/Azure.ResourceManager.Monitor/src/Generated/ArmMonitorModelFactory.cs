@@ -40,7 +40,21 @@ namespace Azure.ResourceManager.Monitor.Models
             profiles ??= new List<AutoscaleProfile>();
             notifications ??= new List<AutoscaleNotification>();
 
-            return new AutoscaleSettingData(id, name, resourceType, systemData, tags, location, profiles?.ToList(), notifications?.ToList(), isEnabled, predictiveAutoscalePolicy, autoscaleSettingName, targetResourceId, targetResourceLocation, serializedAdditionalRawData: null);
+            return new AutoscaleSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                profiles?.ToList(),
+                notifications?.ToList(),
+                isEnabled,
+                predictiveAutoscalePolicy,
+                autoscaleSettingName,
+                targetResourceId,
+                targetResourceLocation,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutoscaleNotification"/>. </summary>
@@ -66,7 +80,13 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             data ??= new List<PredictiveValue>();
 
-            return new AutoscaleSettingPredicativeResult(timespan, interval, metricName, targetResourceId, data?.ToList(), serializedAdditionalRawData: null);
+            return new AutoscaleSettingPredicativeResult(
+                timespan,
+                interval,
+                metricName,
+                targetResourceId,
+                data?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PredictiveValue"/>. </summary>
@@ -87,7 +107,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MonitorIncident"/> instance for mocking. </returns>
         public static MonitorIncident MonitorIncident(string name = null, string ruleName = null, bool? isActive = null, DateTimeOffset? activatedOn = null, DateTimeOffset? resolvedOn = null)
         {
-            return new MonitorIncident(name, ruleName, isActive, activatedOn, resolvedOn, serializedAdditionalRawData: null);
+            return new MonitorIncident(
+                name,
+                ruleName,
+                isActive,
+                activatedOn,
+                resolvedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.AlertRuleData"/>. </summary>
@@ -123,7 +149,22 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new Dictionary<string, string>();
             actions ??= new List<AlertRuleAction>();
 
-            return new AlertRuleData(id, name, resourceType, systemData, tags, location, alertRuleName, description, provisioningState, isEnabled, condition, action, actions?.ToList(), lastUpdatedOn, serializedAdditionalRawData: null);
+            return new AlertRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                alertRuleName,
+                description,
+                provisioningState,
+                isEnabled,
+                condition,
+                action,
+                actions?.ToList(),
+                lastUpdatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AlertRulePatch"/>. </summary>
@@ -154,7 +195,17 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new Dictionary<string, string>();
             actions ??= new List<AlertRuleAction>();
 
-            return new AlertRulePatch(tags, name, description, provisioningState, isEnabled, condition, action, actions?.ToList(), lastUpdatedOn, serializedAdditionalRawData: null);
+            return new AlertRulePatch(
+                tags,
+                name,
+                description,
+                provisioningState,
+                isEnabled,
+                condition,
+                action,
+                actions?.ToList(),
+                lastUpdatedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.LogProfileData"/>. </summary>
@@ -176,7 +227,19 @@ namespace Azure.ResourceManager.Monitor.Models
             locations ??= new List<AzureLocation>();
             categories ??= new List<string>();
 
-            return new LogProfileData(id, name, resourceType, systemData, tags, location, storageAccountId, serviceBusRuleId, locations?.ToList(), categories?.ToList(), retentionPolicy, serializedAdditionalRawData: null);
+            return new LogProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                storageAccountId,
+                serviceBusRuleId,
+                locations?.ToList(),
+                categories?.ToList(),
+                retentionPolicy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingData"/>. </summary>
@@ -199,7 +262,21 @@ namespace Azure.ResourceManager.Monitor.Models
             metrics ??= new List<MetricSettings>();
             logs ??= new List<LogSettings>();
 
-            return new DiagnosticSettingData(id, name, resourceType, systemData, storageAccountId, serviceBusRuleId, eventHubAuthorizationRuleId, eventHubName, metrics?.ToList(), logs?.ToList(), workspaceId, marketplacePartnerId, logAnalyticsDestinationType, serializedAdditionalRawData: null);
+            return new DiagnosticSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountId,
+                serviceBusRuleId,
+                eventHubAuthorizationRuleId,
+                eventHubName,
+                metrics?.ToList(),
+                logs?.ToList(),
+                workspaceId,
+                marketplacePartnerId,
+                logAnalyticsDestinationType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingsCategoryData"/>. </summary>
@@ -214,7 +291,14 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             categoryGroups ??= new List<string>();
 
-            return new DiagnosticSettingsCategoryData(id, name, resourceType, systemData, categoryType, categoryGroups?.ToList(), serializedAdditionalRawData: null);
+            return new DiagnosticSettingsCategoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                categoryType,
+                categoryGroups?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.ActionGroupData"/>. </summary>
@@ -253,7 +337,27 @@ namespace Azure.ResourceManager.Monitor.Models
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
 
-            return new ActionGroupData(id, name, resourceType, systemData, tags, location, groupShortName, isEnabled, emailReceivers?.ToList(), smsReceivers?.ToList(), webhookReceivers?.ToList(), itsmReceivers?.ToList(), azureAppPushReceivers?.ToList(), automationRunbookReceivers?.ToList(), voiceReceivers?.ToList(), logicAppReceivers?.ToList(), azureFunctionReceivers?.ToList(), armRoleReceivers?.ToList(), eventHubReceivers?.ToList(), serializedAdditionalRawData: null);
+            return new ActionGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                groupShortName,
+                isEnabled,
+                emailReceivers?.ToList(),
+                smsReceivers?.ToList(),
+                webhookReceivers?.ToList(),
+                itsmReceivers?.ToList(),
+                azureAppPushReceivers?.ToList(),
+                automationRunbookReceivers?.ToList(),
+                voiceReceivers?.ToList(),
+                logicAppReceivers?.ToList(),
+                azureFunctionReceivers?.ToList(),
+                armRoleReceivers?.ToList(),
+                eventHubReceivers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorEmailReceiver"/>. </summary>
@@ -306,7 +410,20 @@ namespace Azure.ResourceManager.Monitor.Models
             armRoleReceivers ??= new List<MonitorArmRoleReceiver>();
             eventHubReceivers ??= new List<MonitorEventHubReceiver>();
 
-            return new NotificationContent(alertType, emailReceivers?.ToList(), smsReceivers?.ToList(), webhookReceivers?.ToList(), itsmReceivers?.ToList(), azureAppPushReceivers?.ToList(), automationRunbookReceivers?.ToList(), voiceReceivers?.ToList(), logicAppReceivers?.ToList(), azureFunctionReceivers?.ToList(), armRoleReceivers?.ToList(), eventHubReceivers?.ToList(), serializedAdditionalRawData: null);
+            return new NotificationContent(
+                alertType,
+                emailReceivers?.ToList(),
+                smsReceivers?.ToList(),
+                webhookReceivers?.ToList(),
+                itsmReceivers?.ToList(),
+                azureAppPushReceivers?.ToList(),
+                automationRunbookReceivers?.ToList(),
+                voiceReceivers?.ToList(),
+                logicAppReceivers?.ToList(),
+                azureFunctionReceivers?.ToList(),
+                armRoleReceivers?.ToList(),
+                eventHubReceivers?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationStatus"/>. </summary>
@@ -320,7 +437,13 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             actionDetails ??= new List<NotificationActionDetail>();
 
-            return new NotificationStatus(context, state, completedOn, createdOn, actionDetails?.ToList(), serializedAdditionalRawData: null);
+            return new NotificationStatus(
+                context,
+                state,
+                completedOn,
+                createdOn,
+                actionDetails?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotificationContext"/>. </summary>
@@ -342,7 +465,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.NotificationActionDetail"/> instance for mocking. </returns>
         public static NotificationActionDetail NotificationActionDetail(string mechanismType = null, string name = null, string status = null, string subState = null, DateTimeOffset? sendOn = null, string detail = null)
         {
-            return new NotificationActionDetail(mechanismType, name, status, subState, sendOn, detail, serializedAdditionalRawData: null);
+            return new NotificationActionDetail(
+                mechanismType,
+                name,
+                status,
+                subState,
+                sendOn,
+                detail,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EventDataInfo"/>. </summary>
@@ -376,7 +506,32 @@ namespace Azure.ResourceManager.Monitor.Models
             claims ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
 
-            return new EventDataInfo(authorization, claims, caller, description, id, eventDataId, correlationId, eventName, category, httpRequest, level, resourceGroupName, resourceProviderName, resourceId, resourceType, operationId, operationName, properties, status, subStatus, eventTimestamp, submissionTimestamp, subscriptionId, tenantId, serializedAdditionalRawData: null);
+            return new EventDataInfo(
+                authorization,
+                claims,
+                caller,
+                description,
+                id,
+                eventDataId,
+                correlationId,
+                eventName,
+                category,
+                httpRequest,
+                level,
+                resourceGroupName,
+                resourceProviderName,
+                resourceId,
+                resourceType,
+                operationId,
+                operationName,
+                properties,
+                status,
+                subStatus,
+                eventTimestamp,
+                submissionTimestamp,
+                subscriptionId,
+                tenantId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SenderAuthorization"/>. </summary>
@@ -430,7 +585,21 @@ namespace Azure.ResourceManager.Monitor.Models
             metricAvailabilities ??= new List<MonitorMetricAvailability>();
             dimensions ??= new List<MonitorLocalizableString>();
 
-            return new MonitorMetricDefinition(isDimensionRequired, resourceId, @namespace, name, displayDescription, category, metricClass, unit, primaryAggregationType, supportedAggregationTypes?.ToList(), metricAvailabilities?.ToList(), id, dimensions?.ToList(), serializedAdditionalRawData: null);
+            return new MonitorMetricDefinition(
+                isDimensionRequired,
+                resourceId,
+                @namespace,
+                name,
+                displayDescription,
+                category,
+                metricClass,
+                unit,
+                primaryAggregationType,
+                supportedAggregationTypes?.ToList(),
+                metricAvailabilities?.ToList(),
+                id,
+                dimensions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricAvailability"/>. </summary>
@@ -456,7 +625,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             timeseries ??= new List<MonitorTimeSeriesElement>();
 
-            return new SubscriptionMonitorMetric(id, subscriptionScopeMetricType, name, displayDescription, errorCode, errorMessage, unit, timeseries?.ToList(), serializedAdditionalRawData: null);
+            return new SubscriptionMonitorMetric(
+                id,
+                subscriptionScopeMetricType,
+                name,
+                displayDescription,
+                errorCode,
+                errorMessage,
+                unit,
+                timeseries?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorTimeSeriesElement"/>. </summary>
@@ -490,7 +668,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MonitorMetricValue"/> instance for mocking. </returns>
         public static MonitorMetricValue MonitorMetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
         {
-            return new MonitorMetricValue(timeStamp, average, minimum, maximum, total, count, serializedAdditionalRawData: null);
+            return new MonitorMetricValue(
+                timeStamp,
+                average,
+                minimum,
+                maximum,
+                total,
+                count,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorMetric"/>. </summary>
@@ -507,7 +692,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             timeseries ??= new List<MonitorTimeSeriesElement>();
 
-            return new MonitorMetric(id, metricType, name, displayDescription, errorCode, errorMessage, unit, timeseries?.ToList(), serializedAdditionalRawData: null);
+            return new MonitorMetric(
+                id,
+                metricType,
+                name,
+                displayDescription,
+                errorCode,
+                errorMessage,
+                unit,
+                timeseries?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleMetricBaseline"/>. </summary>
@@ -524,7 +718,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             baselines ??= new List<MonitorTimeSeriesBaseline>();
 
-            return new MonitorSingleMetricBaseline(id, name, resourceType, systemData, timespan, interval, @namespace, baselines?.ToList(), serializedAdditionalRawData: null);
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                resourceType,
+                systemData,
+                timespan,
+                interval,
+                @namespace,
+                baselines?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorTimeSeriesBaseline"/>. </summary>
@@ -541,7 +744,13 @@ namespace Azure.ResourceManager.Monitor.Models
             data ??= new List<MonitorSingleBaseline>();
             metadataValues ??= new List<MonitorBaselineMetadata>();
 
-            return new MonitorTimeSeriesBaseline(aggregation, dimensions?.ToList(), timestamps?.ToList(), data?.ToList(), metadataValues?.ToList(), serializedAdditionalRawData: null);
+            return new MonitorTimeSeriesBaseline(
+                aggregation,
+                dimensions?.ToList(),
+                timestamps?.ToList(),
+                data?.ToList(),
+                metadataValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricSingleDimension"/>. </summary>
@@ -606,7 +815,27 @@ namespace Azure.ResourceManager.Monitor.Models
             scopes ??= new List<string>();
             actions ??= new List<MetricAlertAction>();
 
-            return new MetricAlertData(id, name, resourceType, systemData, tags, location, description, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, actions?.ToList(), lastUpdatedOn, isMigrated, serializedAdditionalRawData: null);
+            return new MetricAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                severity,
+                isEnabled,
+                scopes?.ToList(),
+                evaluationFrequency,
+                windowSize,
+                targetResourceType,
+                targetResourceRegion,
+                criteria,
+                isAutoMitigateEnabled,
+                actions?.ToList(),
+                lastUpdatedOn,
+                isMigrated,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertPatch"/>. </summary>
@@ -635,7 +864,22 @@ namespace Azure.ResourceManager.Monitor.Models
             scopes ??= new List<string>();
             actions ??= new List<MetricAlertAction>();
 
-            return new MetricAlertPatch(tags, description, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, targetResourceType, targetResourceRegion, criteria, isAutoMitigateEnabled, actions?.ToList(), lastUpdatedOn, isMigrated, serializedAdditionalRawData: null);
+            return new MetricAlertPatch(
+                tags,
+                description,
+                severity,
+                isEnabled,
+                scopes?.ToList(),
+                evaluationFrequency,
+                windowSize,
+                targetResourceType,
+                targetResourceRegion,
+                criteria,
+                isAutoMitigateEnabled,
+                actions?.ToList(),
+                lastUpdatedOn,
+                isMigrated,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatus"/>. </summary>
@@ -647,7 +891,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MetricAlertStatus"/> instance for mocking. </returns>
         public static MetricAlertStatus MetricAlertStatus(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MetricAlertStatusProperties properties = null)
         {
-            return new MetricAlertStatus(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new MetricAlertStatus(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatusProperties"/>. </summary>
@@ -697,7 +947,34 @@ namespace Azure.ResourceManager.Monitor.Models
             targetResourceTypes ??= new List<string>();
             criteriaAllOf ??= new List<ScheduledQueryRuleCondition>();
 
-            return new ScheduledQueryRuleData(id, name, resourceType, systemData, tags, location, kind, etag, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList(), serializedAdditionalRawData: null) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate, serializedAdditionalRawData: null);
+            return new ScheduledQueryRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                etag,
+                createdWithApiVersion,
+                isLegacyLogAnalyticsRule,
+                description,
+                displayName,
+                severity,
+                isEnabled,
+                scopes?.ToList(),
+                evaluationFrequency,
+                windowSize,
+                overrideQueryTimeRange,
+                targetResourceTypes?.ToList(),
+                criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList(), serializedAdditionalRawData: null) : null,
+                muteActionsDuration,
+                actions,
+                isWorkspaceAlertsStorageConfigured,
+                checkWorkspaceAlertsStorageConfigured,
+                skipQueryValidation,
+                autoMitigate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduledQueryRulePatch"/>. </summary>
@@ -728,7 +1005,27 @@ namespace Azure.ResourceManager.Monitor.Models
             targetResourceTypes ??= new List<string>();
             criteriaAllOf ??= new List<ScheduledQueryRuleCondition>();
 
-            return new ScheduledQueryRulePatch(tags, createdWithApiVersion, isLegacyLogAnalyticsRule, description, displayName, severity, isEnabled, scopes?.ToList(), evaluationFrequency, windowSize, overrideQueryTimeRange, targetResourceTypes?.ToList(), criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList(), serializedAdditionalRawData: null) : null, muteActionsDuration, actions, isWorkspaceAlertsStorageConfigured, checkWorkspaceAlertsStorageConfigured, skipQueryValidation, autoMitigate, serializedAdditionalRawData: null);
+            return new ScheduledQueryRulePatch(
+                tags,
+                createdWithApiVersion,
+                isLegacyLogAnalyticsRule,
+                description,
+                displayName,
+                severity,
+                isEnabled,
+                scopes?.ToList(),
+                evaluationFrequency,
+                windowSize,
+                overrideQueryTimeRange,
+                targetResourceTypes?.ToList(),
+                criteriaAllOf != null ? new ScheduledQueryRuleCriteria(criteriaAllOf?.ToList(), serializedAdditionalRawData: null) : null,
+                muteActionsDuration,
+                actions,
+                isWorkspaceAlertsStorageConfigured,
+                checkWorkspaceAlertsStorageConfigured,
+                skipQueryValidation,
+                autoMitigate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricNamespace"/>. </summary>
@@ -741,7 +1038,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MonitorMetricNamespace"/> instance for mocking. </returns>
         public static MonitorMetricNamespace MonitorMetricNamespace(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitorNamespaceClassification? classification = null, string metricNamespaceNameValue = null)
         {
-            return new MonitorMetricNamespace(id, name, resourceType, systemData, classification, metricNamespaceNameValue != null ? new MetricNamespaceName(metricNamespaceNameValue, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new MonitorMetricNamespace(
+                id,
+                name,
+                resourceType,
+                systemData,
+                classification,
+                metricNamespaceNameValue != null ? new MetricNamespaceName(metricNamespaceNameValue, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.VmInsightsOnboardingStatusData"/>. </summary>
@@ -758,7 +1062,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             data ??= new List<DataContainer>();
 
-            return new VmInsightsOnboardingStatusData(id, name, resourceType, systemData, resourceId, onboardingStatus, dataStatus, data?.ToList(), serializedAdditionalRawData: null);
+            return new VmInsightsOnboardingStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId,
+                onboardingStatus,
+                dataStatus,
+                data?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataContainer"/>. </summary>
@@ -795,7 +1108,17 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MonitorPrivateEndpointConnectionData>();
 
-            return new MonitorPrivateLinkScopeData(id, name, resourceType, systemData, tags, location, provisioningState, privateEndpointConnections?.ToList(), accessModeSettings, serializedAdditionalRawData: null);
+            return new MonitorPrivateLinkScopeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                privateEndpointConnections?.ToList(),
+                accessModeSettings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateEndpointConnectionData"/>. </summary>
@@ -809,7 +1132,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, MonitorPrivateLinkServiceConnectionState connectionState = null, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
-            return new MonitorPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new MonitorPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorPrivateLinkScopeOperationStatus"/>. </summary>
@@ -822,7 +1153,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Models.MonitorPrivateLinkScopeOperationStatus"/> instance for mocking. </returns>
         public static MonitorPrivateLinkScopeOperationStatus MonitorPrivateLinkScopeOperationStatus(string id = null, string name = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string status = null, ResponseError error = null)
         {
-            return new MonitorPrivateLinkScopeOperationStatus(id, name, startOn, endOn, status, error, serializedAdditionalRawData: null);
+            return new MonitorPrivateLinkScopeOperationStatus(
+                id,
+                name,
+                startOn,
+                endOn,
+                status,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkResourceData"/>. </summary>
@@ -839,7 +1177,15 @@ namespace Azure.ResourceManager.Monitor.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new MonitorPrivateLinkResourceData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+            return new MonitorPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/>. </summary>
@@ -852,7 +1198,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
         public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier linkedResourceId = null, string provisioningState = null)
         {
-            return new MonitorPrivateLinkScopedResourceData(id, name, resourceType, systemData, linkedResourceId, provisioningState, serializedAdditionalRawData: null);
+            return new MonitorPrivateLinkScopedResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                linkedResourceId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.ActivityLogAlertData"/>. </summary>
@@ -875,7 +1228,19 @@ namespace Azure.ResourceManager.Monitor.Models
             conditionAllOf ??= new List<ActivityLogAlertAnyOfOrLeafCondition>();
             actionsActionGroups ??= new List<ActivityLogAlertActionGroup>();
 
-            return new ActivityLogAlertData(id, name, resourceType, systemData, tags, location, scopes?.ToList(), conditionAllOf != null ? new AlertRuleAllOfCondition(conditionAllOf?.ToList(), serializedAdditionalRawData: null) : null, actionsActionGroups != null ? new ActionList(actionsActionGroups?.ToList(), serializedAdditionalRawData: null) : null, isEnabled, description, serializedAdditionalRawData: null);
+            return new ActivityLogAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                scopes?.ToList(),
+                conditionAllOf != null ? new AlertRuleAllOfCondition(conditionAllOf?.ToList(), serializedAdditionalRawData: null) : null,
+                actionsActionGroups != null ? new ActionList(actionsActionGroups?.ToList(), serializedAdditionalRawData: null) : null,
+                isEnabled,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionEndpointData"/>. </summary>
@@ -904,7 +1269,27 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new Dictionary<string, string>();
             privateLinkScopedResources ??= new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
 
-            return new DataCollectionEndpointData(id, name, resourceType, systemData, tags, location, kind, identity, etag, description, immutableId, configurationAccessEndpoint != null ? new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, serializedAdditionalRawData: null) : null, logsIngestionEndpoint != null ? new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, serializedAdditionalRawData: null) : null, metricsIngestionEndpoint != null ? new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, serializedAdditionalRawData: null) : null, publicNetworkAccess != null ? new DataCollectionEndpointNetworkAcls(publicNetworkAccess, serializedAdditionalRawData: null) : null, provisioningState, privateLinkScopedResources?.ToList(), failoverConfiguration, metadata, serializedAdditionalRawData: null);
+            return new DataCollectionEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                identity,
+                etag,
+                description,
+                immutableId,
+                configurationAccessEndpoint != null ? new DataCollectionEndpointConfigurationAccess(configurationAccessEndpoint, serializedAdditionalRawData: null) : null,
+                logsIngestionEndpoint != null ? new DataCollectionEndpointLogsIngestion(logsIngestionEndpoint, serializedAdditionalRawData: null) : null,
+                metricsIngestionEndpoint != null ? new DataCollectionEndpointMetricsIngestion(metricsIngestionEndpoint, serializedAdditionalRawData: null) : null,
+                publicNetworkAccess != null ? new DataCollectionEndpointNetworkAcls(publicNetworkAccess, serializedAdditionalRawData: null) : null,
+                provisioningState,
+                privateLinkScopedResources?.ToList(),
+                failoverConfiguration,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRulePrivateLinkScopedResourceInfo"/>. </summary>
@@ -979,7 +1364,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
         public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, ResourceIdentifier dataCollectionRuleId = null, ResourceIdentifier dataCollectionEndpointId = null, DataCollectionRuleAssociationProvisioningState? provisioningState = null, DataCollectionRuleAssociationMetadata metadata = null)
         {
-            return new DataCollectionRuleAssociationData(id, name, resourceType, systemData, etag, description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata, serializedAdditionalRawData: null);
+            return new DataCollectionRuleAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                description,
+                dataCollectionRuleId,
+                dataCollectionEndpointId,
+                provisioningState,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleAssociationMetadata"/>. </summary>
@@ -1020,7 +1416,26 @@ namespace Azure.ResourceManager.Monitor.Models
             streamDeclarations ??= new Dictionary<string, DataStreamDeclaration>();
             dataFlows ??= new List<DataFlow>();
 
-            return new DataCollectionRuleData(id, name, resourceType, systemData, tags, location, kind, identity, etag, description, immutableId, dataCollectionEndpointId, metadata, streamDeclarations, dataSources, destinations, dataFlows?.ToList(), provisioningState, serializedAdditionalRawData: null);
+            return new DataCollectionRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                identity,
+                etag,
+                description,
+                immutableId,
+                dataCollectionEndpointId,
+                metadata,
+                streamDeclarations,
+                dataSources,
+                destinations,
+                dataFlows?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleMetadata"/>. </summary>
@@ -1078,7 +1493,21 @@ namespace Azure.ResourceManager.Monitor.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MonitorWorkspacePrivateEndpointConnection>();
 
-            return new MonitorWorkspaceResourceData(id, name, resourceType, systemData, tags, location, etag, accountId, metrics, provisioningState, defaultIngestionSettings, privateEndpointConnections?.ToList(), publicNetworkAccess, serializedAdditionalRawData: null);
+            return new MonitorWorkspaceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                accountId,
+                metrics,
+                provisioningState,
+                defaultIngestionSettings,
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorWorkspaceMetrics"/>. </summary>
@@ -1131,7 +1560,16 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             groupIds ??= new List<string>();
 
-            return new MonitorWorkspacePrivateEndpointConnection(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+            return new MonitorWorkspacePrivateEndpointConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupIds?.ToList(),
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
     }
 }

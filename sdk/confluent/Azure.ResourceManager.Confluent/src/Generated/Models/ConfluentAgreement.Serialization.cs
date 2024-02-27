@@ -234,7 +234,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfluentAgreement(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
+            return new ConfluentAgreement(
+                id,
+                name,
+                type,
+                systemData.Value,
+                publisher.Value,
+                product.Value,
+                plan.Value,
+                licenseTextLink.Value,
+                privacyPolicyLink.Value,
+                Optional.ToNullable(retrieveDatetime),
+                signature.Value,
+                Optional.ToNullable(accepted),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfluentAgreement>.Write(ModelReaderWriterOptions options)

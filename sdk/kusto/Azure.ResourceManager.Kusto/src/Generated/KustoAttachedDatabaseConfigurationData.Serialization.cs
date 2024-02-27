@@ -272,7 +272,21 @@ namespace Azure.ResourceManager.Kusto
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KustoAttachedDatabaseConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), databaseName.Value, clusterResourceId.Value, attachedDatabaseNames ?? new ChangeTrackingList<string>(), Optional.ToNullable(defaultPrincipalsModificationKind), tableLevelSharingProperties.Value, databaseNameOverride.Value, databaseNamePrefix.Value, serializedAdditionalRawData);
+            return new KustoAttachedDatabaseConfigurationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                Optional.ToNullable(provisioningState),
+                databaseName.Value,
+                clusterResourceId.Value,
+                attachedDatabaseNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(defaultPrincipalsModificationKind),
+                tableLevelSharingProperties.Value,
+                databaseNameOverride.Value,
+                databaseNamePrefix.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options)

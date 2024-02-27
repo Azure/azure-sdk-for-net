@@ -313,7 +313,25 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerOperationData(id, name, type, systemData.Value, operation.Value, operationFriendlyName.Value, Optional.ToNullable(percentComplete), serverName.Value, Optional.ToNullable(startTime), Optional.ToNullable(state), Optional.ToNullable(errorCode), errorDescription.Value, Optional.ToNullable(errorSeverity), Optional.ToNullable(isUserError), Optional.ToNullable(estimatedCompletionTime), description.Value, Optional.ToNullable(isCancellable), serializedAdditionalRawData);
+            return new ServerOperationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                operation.Value,
+                operationFriendlyName.Value,
+                Optional.ToNullable(percentComplete),
+                serverName.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(state),
+                Optional.ToNullable(errorCode),
+                errorDescription.Value,
+                Optional.ToNullable(errorSeverity),
+                Optional.ToNullable(isUserError),
+                Optional.ToNullable(estimatedCompletionTime),
+                description.Value,
+                Optional.ToNullable(isCancellable),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerOperationData>.Write(ModelReaderWriterOptions options)

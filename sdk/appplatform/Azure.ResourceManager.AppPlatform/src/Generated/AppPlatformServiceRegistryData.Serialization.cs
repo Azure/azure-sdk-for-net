@@ -139,7 +139,13 @@ namespace Azure.ResourceManager.AppPlatform
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceRegistryData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
+            return new AppPlatformServiceRegistryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                properties.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceRegistryData>.Write(ModelReaderWriterOptions options)

@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudTieringSpaceSavings(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(volumeSizeBytes), Optional.ToNullable(totalSizeCloudBytes), Optional.ToNullable(cachedSizeBytes), Optional.ToNullable(spaceSavingsPercent), Optional.ToNullable(spaceSavingsBytes), serializedAdditionalRawData);
+            return new CloudTieringSpaceSavings(
+                Optional.ToNullable(lastUpdatedTimestamp),
+                Optional.ToNullable(volumeSizeBytes),
+                Optional.ToNullable(totalSizeCloudBytes),
+                Optional.ToNullable(cachedSizeBytes),
+                Optional.ToNullable(spaceSavingsPercent),
+                Optional.ToNullable(spaceSavingsBytes),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudTieringSpaceSavings>.Write(ModelReaderWriterOptions options)

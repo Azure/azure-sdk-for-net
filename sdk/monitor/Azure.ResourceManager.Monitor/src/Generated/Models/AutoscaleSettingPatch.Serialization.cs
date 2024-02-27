@@ -252,7 +252,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoscaleSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), profiles ?? new ChangeTrackingList<AutoscaleProfile>(), notifications ?? new ChangeTrackingList<AutoscaleNotification>(), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation), serializedAdditionalRawData);
+            return new AutoscaleSettingPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                profiles ?? new ChangeTrackingList<AutoscaleProfile>(),
+                notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
+                Optional.ToNullable(enabled),
+                predictiveAutoscalePolicy.Value,
+                name.Value,
+                targetResourceUri.Value,
+                Optional.ToNullable(targetResourceLocation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoscaleSettingPatch>.Write(ModelReaderWriterOptions options)

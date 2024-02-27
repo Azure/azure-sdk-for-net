@@ -411,7 +411,31 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>(), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value, serializedAdditionalRawData);
+            return new ContainerAppManagedEnvironmentData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                kind.Value,
+                Optional.ToNullable(provisioningState),
+                daprAIInstrumentationKey.Value,
+                daprAIConnectionString.Value,
+                vnetConfiguration.Value,
+                deploymentErrors.Value,
+                defaultDomain.Value,
+                staticIP.Value,
+                appLogsConfiguration.Value,
+                Optional.ToNullable(zoneRedundant),
+                customDomainConfiguration.Value,
+                eventStreamEndpoint.Value,
+                workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>(),
+                kedaConfiguration.Value,
+                daprConfiguration.Value,
+                infrastructureResourceGroup.Value,
+                peerAuthentication.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppManagedEnvironmentData>.Write(ModelReaderWriterOptions options)

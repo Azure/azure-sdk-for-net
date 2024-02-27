@@ -422,7 +422,30 @@ namespace Azure.ResourceManager.ContainerRegistry
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), dataEndpointHostNames ?? new ChangeTrackingList<string>(), privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
+            return new ContainerRegistryData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                identity,
+                loginServer.Value,
+                Optional.ToNullable(creationDate),
+                Optional.ToNullable(provisioningState),
+                status.Value,
+                Optional.ToNullable(adminUserEnabled),
+                networkRuleSet.Value,
+                policies.Value,
+                encryption.Value,
+                Optional.ToNullable(dataEndpointEnabled),
+                dataEndpointHostNames ?? new ChangeTrackingList<string>(),
+                privateEndpointConnections ?? new ChangeTrackingList<ContainerRegistryPrivateEndpointConnectionData>(),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(networkRuleBypassOptions),
+                Optional.ToNullable(zoneRedundancy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryData>.Write(ModelReaderWriterOptions options)

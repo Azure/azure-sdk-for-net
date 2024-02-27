@@ -183,7 +183,13 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DocumentFigure(boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, elements ?? new ChangeTrackingList<string>(), caption.Value, footnotes ?? new ChangeTrackingList<DocumentFootnote>(), serializedAdditionalRawData);
+            return new DocumentFigure(
+                boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
+                spans,
+                elements ?? new ChangeTrackingList<string>(),
+                caption.Value,
+                footnotes ?? new ChangeTrackingList<DocumentFootnote>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentFigure>.Write(ModelReaderWriterOptions options)

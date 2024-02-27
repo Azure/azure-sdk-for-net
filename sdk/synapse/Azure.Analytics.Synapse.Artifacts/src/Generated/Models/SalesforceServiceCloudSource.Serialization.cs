@@ -138,7 +138,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, readBehavior.Value, additionalColumns.Value);
+            return new SalesforceServiceCloudSource(
+                type,
+                sourceRetryCount.Value,
+                sourceRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                query.Value,
+                readBehavior.Value,
+                additionalColumns.Value);
         }
 
         internal partial class SalesforceServiceCloudSourceConverter : JsonConverter<SalesforceServiceCloudSource>

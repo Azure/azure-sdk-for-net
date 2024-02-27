@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedApplicationData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, identity, provisioningState.Value, version.Value, parameters ?? new ChangeTrackingDictionary<string, string>(), upgradePolicy.Value, managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(), serializedAdditionalRawData);
+            return new ServiceFabricManagedApplicationData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                provisioningState.Value,
+                version.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                upgradePolicy.Value,
+                managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedApplicationData>.Write(ModelReaderWriterOptions options)

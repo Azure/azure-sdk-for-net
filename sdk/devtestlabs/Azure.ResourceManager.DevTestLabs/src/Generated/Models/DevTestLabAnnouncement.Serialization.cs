@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabAnnouncement(title.Value, markdown.Value, Optional.ToNullable(enabled), Optional.ToNullable(expirationDate), Optional.ToNullable(expired), provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
+            return new DevTestLabAnnouncement(
+                title.Value,
+                markdown.Value,
+                Optional.ToNullable(enabled),
+                Optional.ToNullable(expirationDate),
+                Optional.ToNullable(expired),
+                provisioningState.Value,
+                Optional.ToNullable(uniqueIdentifier),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabAnnouncement>.Write(ModelReaderWriterOptions options)

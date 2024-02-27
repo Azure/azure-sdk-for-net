@@ -347,7 +347,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlMigrationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, dbsToMigrate ?? new ChangeTrackingList<string>(), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(), Optional.ToNullable(cancel), dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(), Optional.ToNullable(migrationMode), serializedAdditionalRawData);
+            return new PostgreSqlMigrationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sourceDbServerResourceId.Value,
+                sourceDbServerFullyQualifiedDomainName.Value,
+                targetDbServerFullyQualifiedDomainName.Value,
+                secretParameters.Value,
+                dbsToMigrate ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded),
+                Optional.ToNullable(overwriteDbsInTarget),
+                Optional.ToNullable(migrationWindowStartTimeInUtc),
+                Optional.ToNullable(startDataMigration),
+                Optional.ToNullable(triggerCutover),
+                dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(cancel),
+                dbsToCancelMigrationOn ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(migrationMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationPatch>.Write(ModelReaderWriterOptions options)

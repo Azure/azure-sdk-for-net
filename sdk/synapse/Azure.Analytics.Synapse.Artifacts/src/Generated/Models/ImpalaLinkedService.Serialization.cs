@@ -303,7 +303,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ImpalaLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(), annotations ?? new ChangeTrackingList<object>(), additionalProperties, host, port.Value, authenticationType, username.Value, password.Value, enableSsl.Value, trustedCertPath.Value, useSystemTrustStore.Value, allowHostNameCNMismatch.Value, allowSelfSignedServerCert.Value, encryptedCredential.Value);
+            return new ImpalaLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                port.Value,
+                authenticationType,
+                username.Value,
+                password.Value,
+                enableSsl.Value,
+                trustedCertPath.Value,
+                useSystemTrustStore.Value,
+                allowHostNameCNMismatch.Value,
+                allowSelfSignedServerCert.Value,
+                encryptedCredential.Value);
         }
 
         internal partial class ImpalaLinkedServiceConverter : JsonConverter<ImpalaLinkedService>

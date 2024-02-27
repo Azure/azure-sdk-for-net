@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.Compute
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleInstanceData(id, name, type, systemData.Value, Optional.ToNullable(location), tags ?? new ChangeTrackingDictionary<string, string>(), sku.Value, networkProfile.Value, instanceView.Value, serializedAdditionalRawData);
+            return new CloudServiceRoleInstanceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(location),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                sku.Value,
+                networkProfile.Value,
+                instanceView.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options)

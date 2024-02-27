@@ -326,7 +326,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SquareLinkedService(type, connectVia.Value, description.Value, parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(), annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties, connectionProperties.Value, host.Value, clientId.Value, clientSecret, redirectUri.Value, useEncryptedEndpoints.Value, useHostVerification.Value, usePeerVerification.Value, encryptedCredential.Value);
+            return new SquareLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                connectionProperties.Value,
+                host.Value,
+                clientId.Value,
+                clientSecret,
+                redirectUri.Value,
+                useEncryptedEndpoints.Value,
+                useHostVerification.Value,
+                usePeerVerification.Value,
+                encryptedCredential.Value);
         }
 
         BinaryData IPersistableModel<SquareLinkedService>.Write(ModelReaderWriterOptions options)

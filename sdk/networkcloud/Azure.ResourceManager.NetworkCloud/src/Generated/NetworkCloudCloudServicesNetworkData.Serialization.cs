@@ -424,7 +424,26 @@ namespace Azure.ResourceManager.NetworkCloud
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudCloudServicesNetworkData(id, name, type, systemData.Value, tags ?? new ChangeTrackingDictionary<string, string>(), location, extendedLocation, additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(enableDefaultEgressEndpoints), enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), interfaceName.Value, Optional.ToNullable(provisioningState), virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                extendedLocation,
+                additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                clusterId.Value,
+                Optional.ToNullable(detailedStatus),
+                detailedStatusMessage.Value,
+                Optional.ToNullable(enableDefaultEgressEndpoints),
+                enabledEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(),
+                hybridAksClustersAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                interfaceName.Value,
+                Optional.ToNullable(provisioningState),
+                virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkData>.Write(ModelReaderWriterOptions options)
