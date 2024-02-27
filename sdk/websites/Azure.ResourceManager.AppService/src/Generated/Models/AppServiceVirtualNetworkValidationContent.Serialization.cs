@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetResourceGroup))
+            if (VnetResourceGroup != null)
             {
                 writer.WritePropertyName("vnetResourceGroup"u8);
                 writer.WriteStringValue(VnetResourceGroup);
             }
-            if (Optional.IsDefined(VnetName))
+            if (VnetName != null)
             {
                 writer.WritePropertyName("vnetName"u8);
                 writer.WriteStringValue(VnetName);
             }
-            if (Optional.IsDefined(VnetSubnetName))
+            if (VnetSubnetName != null)
             {
                 writer.WritePropertyName("vnetSubnetName"u8);
                 writer.WriteStringValue(VnetSubnetName);
             }
-            if (Optional.IsDefined(SubnetResourceId))
+            if (SubnetResourceId != null)
             {
                 writer.WritePropertyName("subnetResourceId"u8);
                 writer.WriteStringValue(SubnetResourceId);
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceVirtualNetworkValidationContent(id, name, type, systemData.Value, vnetResourceGroup.Value, vnetName.Value, vnetSubnetName.Value, subnetResourceId.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceVirtualNetworkValidationContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                vnetResourceGroup.Value,
+                vnetName.Value,
+                vnetSubnetName.Value,
+                subnetResourceId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceVirtualNetworkValidationContent>.Write(ModelReaderWriterOptions options)

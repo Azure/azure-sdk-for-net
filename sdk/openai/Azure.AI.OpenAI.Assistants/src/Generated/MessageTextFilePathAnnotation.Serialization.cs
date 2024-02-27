@@ -86,7 +86,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("file_path"u8))
                 {
-                    filePath = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(property.Value);
+                    filePath = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -115,7 +115,13 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTextFilePathAnnotation(type, text, startIndex, endIndex, serializedAdditionalRawData, filePath);
+            return new MessageTextFilePathAnnotation(
+                type,
+                text,
+                startIndex,
+                endIndex,
+                serializedAdditionalRawData,
+                filePath);
         }
 
         BinaryData IPersistableModel<MessageTextFilePathAnnotation>.Write(ModelReaderWriterOptions options)

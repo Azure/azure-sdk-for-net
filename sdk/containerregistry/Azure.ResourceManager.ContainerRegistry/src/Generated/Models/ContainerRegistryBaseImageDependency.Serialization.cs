@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DependencyType))
+            if (DependencyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DependencyType.Value.ToString());
             }
-            if (Optional.IsDefined(Registry))
+            if (Registry != null)
             {
                 writer.WritePropertyName("registry"u8);
                 writer.WriteStringValue(Registry);
             }
-            if (Optional.IsDefined(Repository))
+            if (Repository != null)
             {
                 writer.WritePropertyName("repository"u8);
                 writer.WriteStringValue(Repository);
             }
-            if (Optional.IsDefined(Tag))
+            if (Tag != null)
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (Optional.IsDefined(Digest))
+            if (Digest != null)
             {
                 writer.WritePropertyName("digest"u8);
                 writer.WriteStringValue(Digest);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryBaseImageDependency(Optional.ToNullable(type), registry.Value, repository.Value, tag.Value, digest.Value, serializedAdditionalRawData);
+            return new ContainerRegistryBaseImageDependency(
+                Optional.ToNullable(type),
+                registry.Value,
+                repository.Value,
+                tag.Value,
+                digest.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryBaseImageDependency>.Write(ModelReaderWriterOptions options)

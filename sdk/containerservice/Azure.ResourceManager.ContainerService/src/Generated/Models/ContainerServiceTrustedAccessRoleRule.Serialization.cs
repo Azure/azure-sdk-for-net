@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Verbs))
+            if (options.Format != "W" && !(Verbs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("verbs"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ApiGroups))
+            if (options.Format != "W" && !(ApiGroups is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("apiGroups"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
+            if (options.Format != "W" && !(Resources is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceNames))
+            if (options.Format != "W" && !(ResourceNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceNames"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NonResourceUrls))
+            if (options.Format != "W" && !(NonResourceUrls is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("nonResourceURLs"u8);
                 writer.WriteStartArray();
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> verbs = default;
-            Optional<IReadOnlyList<string>> apiGroups = default;
-            Optional<IReadOnlyList<string>> resources = default;
-            Optional<IReadOnlyList<string>> resourceNames = default;
-            Optional<IReadOnlyList<string>> nonResourceUrls = default;
+            IReadOnlyList<string> verbs = default;
+            IReadOnlyList<string> apiGroups = default;
+            IReadOnlyList<string> resources = default;
+            IReadOnlyList<string> resourceNames = default;
+            IReadOnlyList<string> nonResourceUrls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTrustedAccessRoleRule(Optional.ToList(verbs), Optional.ToList(apiGroups), Optional.ToList(resources), Optional.ToList(resourceNames), Optional.ToList(nonResourceUrls), serializedAdditionalRawData);
+            return new ContainerServiceTrustedAccessRoleRule(
+                verbs ?? new ChangeTrackingList<string>(),
+                apiGroups ?? new ChangeTrackingList<string>(),
+                resources ?? new ChangeTrackingList<string>(),
+                resourceNames ?? new ChangeTrackingList<string>(),
+                nonResourceUrls ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTrustedAccessRoleRule>.Write(ModelReaderWriterOptions options)

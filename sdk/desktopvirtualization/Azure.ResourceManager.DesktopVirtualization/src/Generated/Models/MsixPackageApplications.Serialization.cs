@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AppId))
+            if (AppId != null)
             {
                 writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AppUserModelId))
+            if (AppUserModelId != null)
             {
                 writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(IconImageName))
+            if (IconImageName != null)
             {
                 writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
-            if (Optional.IsDefined(RawIcon))
+            if (RawIcon != null)
             {
                 writer.WritePropertyName("rawIcon"u8);
 #if NET6_0_OR_GREATER
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(RawPng))
+            if (RawPng != null)
             {
                 writer.WritePropertyName("rawPng"u8);
 #if NET6_0_OR_GREATER
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value, serializedAdditionalRawData);
+            return new MsixPackageApplications(
+                appId.Value,
+                description.Value,
+                appUserModelId.Value,
+                friendlyName.Value,
+                iconImageName.Value,
+                rawIcon.Value,
+                rawPng.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MsixPackageApplications>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NetworkFunctionTemplate))
+            if (NetworkFunctionTemplate != null)
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
                 writer.WriteObjectValue(NetworkFunctionTemplate);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionState))
+            if (options.Format != "W" && VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DeployParameters))
+            if (DeployParameters != null)
             {
                 writer.WritePropertyName("deployParameters"u8);
                 writer.WriteStringValue(DeployParameters);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value);
+                    networkFunctionTemplate = ContainerizedNetworkFunctionTemplate.DeserializeContainerizedNetworkFunctionTemplate(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -149,7 +149,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerizedNetworkFunctionDefinitionVersion(Optional.ToNullable(provisioningState), Optional.ToNullable(versionState), description.Value, deployParameters.Value, networkFunctionType, serializedAdditionalRawData, networkFunctionTemplate.Value);
+            return new ContainerizedNetworkFunctionDefinitionVersion(
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(versionState),
+                description.Value,
+                deployParameters.Value,
+                networkFunctionType,
+                serializedAdditionalRawData,
+                networkFunctionTemplate.Value);
         }
 
         BinaryData IPersistableModel<ContainerizedNetworkFunctionDefinitionVersion>.Write(ModelReaderWriterOptions options)

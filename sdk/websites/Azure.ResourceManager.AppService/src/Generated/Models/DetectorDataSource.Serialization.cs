@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Instructions))
+            if (!(Instructions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataSourceUri))
+            if (!(DataSourceUri is ChangeTrackingList<AppServiceNameValuePair> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataSourceUri"u8);
                 writer.WriteStartArray();
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<IList<string>> instructions = default;
-            Optional<IList<AppServiceNameValuePair>> dataSourceUri = default;
+            IList<string> instructions = default;
+            IList<AppServiceNameValuePair> dataSourceUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item, options));
                     }
                     dataSourceUri = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetectorDataSource(Optional.ToList(instructions), Optional.ToList(dataSourceUri), serializedAdditionalRawData);
+            return new DetectorDataSource(instructions ?? new ChangeTrackingList<string>(), dataSourceUri ?? new ChangeTrackingList<AppServiceNameValuePair>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetectorDataSource>.Write(ModelReaderWriterOptions options)

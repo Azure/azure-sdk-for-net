@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(IsFailed))
+            if (IsFailed.HasValue)
             {
                 writer.WritePropertyName("failed"u8);
                 writer.WriteBooleanValue(IsFailed.Value);
             }
-            if (Optional.IsCollectionDefined(FailedTests))
+            if (!(FailedTests is ChangeTrackingList<VirtualNetworkValidationTestFailure> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("failedTests"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Warnings))
+            if (!(Warnings is ChangeTrackingList<VirtualNetworkValidationTestFailure> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> message = default;
             Optional<bool> failed = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> failedTests = default;
-            Optional<IList<VirtualNetworkValidationTestFailure>> warnings = default;
+            IList<VirtualNetworkValidationTestFailure> failedTests = default;
+            IList<VirtualNetworkValidationTestFailure> warnings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                             }
                             failedTests = array;
                             continue;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualNetworkValidationTestFailure> array = new List<VirtualNetworkValidationTestFailure>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item));
+                                array.Add(VirtualNetworkValidationTestFailure.DeserializeVirtualNetworkValidationTestFailure(item, options));
                             }
                             warnings = array;
                             continue;
@@ -225,7 +225,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkValidationFailureDetails(id, name, type, systemData.Value, message.Value, Optional.ToNullable(failed), Optional.ToList(failedTests), Optional.ToList(warnings), kind.Value, serializedAdditionalRawData);
+            return new VirtualNetworkValidationFailureDetails(
+                id,
+                name,
+                type,
+                systemData.Value,
+                message.Value,
+                Optional.ToNullable(failed),
+                failedTests ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                warnings ?? new ChangeTrackingList<VirtualNetworkValidationTestFailure>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkValidationFailureDetails>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVolumeId))
+            if (SourceVolumeId != null)
             {
                 writer.WritePropertyName("sourceVolumeId"u8);
                 writer.WriteStringValue(SourceVolumeId);

@@ -26,117 +26,117 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskName))
+            if (DiskName != null)
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (Optional.IsDefined(ProtectionStage))
+            if (ProtectionStage != null)
             {
                 writer.WritePropertyName("protectionStage"u8);
                 writer.WriteStringValue(ProtectionStage);
             }
-            if (Optional.IsDefined(HealthErrorCode))
+            if (HealthErrorCode != null)
             {
                 writer.WritePropertyName("healthErrorCode"u8);
                 writer.WriteStringValue(HealthErrorCode);
             }
-            if (Optional.IsDefined(RpoInSeconds))
+            if (RpoInSeconds.HasValue)
             {
                 writer.WritePropertyName("rpoInSeconds"u8);
                 writer.WriteNumberValue(RpoInSeconds.Value);
             }
-            if (Optional.IsDefined(ResyncRequired))
+            if (ResyncRequired != null)
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteStringValue(ResyncRequired);
             }
-            if (Optional.IsDefined(ResyncProgressPercentage))
+            if (ResyncProgressPercentage.HasValue)
             {
                 writer.WritePropertyName("resyncProgressPercentage"u8);
                 writer.WriteNumberValue(ResyncProgressPercentage.Value);
             }
-            if (Optional.IsDefined(ResyncDurationInSeconds))
+            if (ResyncDurationInSeconds.HasValue)
             {
                 writer.WritePropertyName("resyncDurationInSeconds"u8);
                 writer.WriteNumberValue(ResyncDurationInSeconds.Value);
             }
-            if (Optional.IsDefined(DiskCapacityInBytes))
+            if (DiskCapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("diskCapacityInBytes"u8);
                 writer.WriteNumberValue(DiskCapacityInBytes.Value);
             }
-            if (Optional.IsDefined(FileSystemCapacityInBytes))
+            if (FileSystemCapacityInBytes.HasValue)
             {
                 writer.WritePropertyName("fileSystemCapacityInBytes"u8);
                 writer.WriteNumberValue(FileSystemCapacityInBytes.Value);
             }
-            if (Optional.IsDefined(SourceDataInMegaBytes))
+            if (SourceDataInMegaBytes.HasValue)
             {
                 writer.WritePropertyName("sourceDataInMegaBytes"u8);
                 writer.WriteNumberValue(SourceDataInMegaBytes.Value);
             }
-            if (Optional.IsDefined(PSDataInMegaBytes))
+            if (PSDataInMegaBytes.HasValue)
             {
                 writer.WritePropertyName("psDataInMegaBytes"u8);
                 writer.WriteNumberValue(PSDataInMegaBytes.Value);
             }
-            if (Optional.IsDefined(TargetDataInMegaBytes))
+            if (TargetDataInMegaBytes.HasValue)
             {
                 writer.WritePropertyName("targetDataInMegaBytes"u8);
                 writer.WriteNumberValue(TargetDataInMegaBytes.Value);
             }
-            if (Optional.IsDefined(DiskResized))
+            if (DiskResized != null)
             {
                 writer.WritePropertyName("diskResized"u8);
                 writer.WriteStringValue(DiskResized);
             }
-            if (Optional.IsDefined(LastRpoCalculatedOn))
+            if (LastRpoCalculatedOn.HasValue)
             {
                 writer.WritePropertyName("lastRpoCalculatedTime"u8);
                 writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResyncProcessedBytes))
+            if (ResyncProcessedBytes.HasValue)
             {
                 writer.WritePropertyName("resyncProcessedBytes"u8);
                 writer.WriteNumberValue(ResyncProcessedBytes.Value);
             }
-            if (Optional.IsDefined(ResyncTotalTransferredBytes))
+            if (ResyncTotalTransferredBytes.HasValue)
             {
                 writer.WritePropertyName("resyncTotalTransferredBytes"u8);
                 writer.WriteNumberValue(ResyncTotalTransferredBytes.Value);
             }
-            if (Optional.IsDefined(ResyncLast15MinutesTransferredBytes))
+            if (ResyncLast15MinutesTransferredBytes.HasValue)
             {
                 writer.WritePropertyName("resyncLast15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(ResyncLast15MinutesTransferredBytes.Value);
             }
-            if (Optional.IsDefined(ResyncLastDataTransferOn))
+            if (ResyncLastDataTransferOn.HasValue)
             {
                 writer.WritePropertyName("resyncLastDataTransferTimeUTC"u8);
                 writer.WriteStringValue(ResyncLastDataTransferOn.Value, "O");
             }
-            if (Optional.IsDefined(ResyncStartOn))
+            if (ResyncStartOn.HasValue)
             {
                 writer.WritePropertyName("resyncStartTime"u8);
                 writer.WriteStringValue(ResyncStartOn.Value, "O");
             }
-            if (Optional.IsDefined(ProgressHealth))
+            if (ProgressHealth != null)
             {
                 writer.WritePropertyName("progressHealth"u8);
                 writer.WriteStringValue(ProgressHealth);
             }
-            if (Optional.IsDefined(ProgressStatus))
+            if (ProgressStatus != null)
             {
                 writer.WritePropertyName("progressStatus"u8);
                 writer.WriteStringValue(ProgressStatus);
             }
-            if (Optional.IsDefined(SecondsToTakeSwitchProvider))
+            if (SecondsToTakeSwitchProvider.HasValue)
             {
                 writer.WritePropertyName("secondsToTakeSwitchProvider"u8);
                 writer.WriteNumberValue(SecondsToTakeSwitchProvider.Value);
@@ -387,7 +387,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2ProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMegaBytes), Optional.ToNullable(psDataInMegaBytes), Optional.ToNullable(targetDataInMegaBytes), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value, Optional.ToNullable(secondsToTakeSwitchProvider), serializedAdditionalRawData);
+            return new InMageAzureV2ProtectedDiskDetails(
+                diskId.Value,
+                diskName.Value,
+                protectionStage.Value,
+                healthErrorCode.Value,
+                Optional.ToNullable(rpoInSeconds),
+                resyncRequired.Value,
+                Optional.ToNullable(resyncProgressPercentage),
+                Optional.ToNullable(resyncDurationInSeconds),
+                Optional.ToNullable(diskCapacityInBytes),
+                Optional.ToNullable(fileSystemCapacityInBytes),
+                Optional.ToNullable(sourceDataInMegaBytes),
+                Optional.ToNullable(psDataInMegaBytes),
+                Optional.ToNullable(targetDataInMegaBytes),
+                diskResized.Value,
+                Optional.ToNullable(lastRpoCalculatedTime),
+                Optional.ToNullable(resyncProcessedBytes),
+                Optional.ToNullable(resyncTotalTransferredBytes),
+                Optional.ToNullable(resyncLast15MinutesTransferredBytes),
+                Optional.ToNullable(resyncLastDataTransferTimeUTC),
+                Optional.ToNullable(resyncStartTime),
+                progressHealth.Value,
+                progressStatus.Value,
+                Optional.ToNullable(secondsToTakeSwitchProvider),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAzureV2ProtectedDiskDetails>.Write(ModelReaderWriterOptions options)

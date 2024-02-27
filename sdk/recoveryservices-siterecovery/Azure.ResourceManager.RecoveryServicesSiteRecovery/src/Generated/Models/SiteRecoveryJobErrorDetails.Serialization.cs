@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceErrorDetails))
+            if (ServiceErrorDetails != null)
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
                 writer.WriteObjectValue(ServiceErrorDetails);
             }
-            if (Optional.IsDefined(ProviderErrorDetails))
+            if (ProviderErrorDetails != null)
             {
                 writer.WritePropertyName("providerErrorDetails"u8);
                 writer.WriteObjectValue(ProviderErrorDetails);
             }
-            if (Optional.IsDefined(ErrorLevel))
+            if (ErrorLevel != null)
             {
                 writer.WritePropertyName("errorLevel"u8);
                 writer.WriteStringValue(ErrorLevel);
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(TaskId))
+            if (TaskId != null)
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value);
+                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerErrorDetails"u8))
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value);
+                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errorLevel"u8))
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobErrorDetails(serviceErrorDetails.Value, providerErrorDetails.Value, errorLevel.Value, Optional.ToNullable(creationTime), taskId.Value, serializedAdditionalRawData);
+            return new SiteRecoveryJobErrorDetails(
+                serviceErrorDetails.Value,
+                providerErrorDetails.Value,
+                errorLevel.Value,
+                Optional.ToNullable(creationTime),
+                taskId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobErrorDetails>.Write(ModelReaderWriterOptions options)

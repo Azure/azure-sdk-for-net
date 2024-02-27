@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Default": return MachineLearningDefaultScaleSettings.DeserializeMachineLearningDefaultScaleSettings(element);
-                    case "TargetUtilization": return MachineLearningTargetUtilizationScaleSettings.DeserializeMachineLearningTargetUtilizationScaleSettings(element);
+                    case "Default": return MachineLearningDefaultScaleSettings.DeserializeMachineLearningDefaultScaleSettings(element, options);
+                    case "TargetUtilization": return MachineLearningTargetUtilizationScaleSettings.DeserializeMachineLearningTargetUtilizationScaleSettings(element, options);
                 }
             }
-            return UnknownOnlineScaleSettings.DeserializeUnknownOnlineScaleSettings(element);
+            return UnknownOnlineScaleSettings.DeserializeUnknownOnlineScaleSettings(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningOnlineScaleSettings>.Write(ModelReaderWriterOptions options)

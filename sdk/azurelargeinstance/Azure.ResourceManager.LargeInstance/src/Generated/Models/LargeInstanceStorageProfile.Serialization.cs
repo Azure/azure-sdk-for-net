@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.LargeInstance.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NfsIPAddress))
+            if (options.Format != "W" && NfsIPAddress != null)
             {
                 writer.WritePropertyName("nfsIpAddress"u8);
                 writer.WriteStringValue(NfsIPAddress);
             }
-            if (Optional.IsCollectionDefined(OSDisks))
+            if (!(OSDisks is ChangeTrackingList<LargeInstanceDisk> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("osDisks"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 return null;
             }
             Optional<string> nfsIPAddress = default;
-            Optional<IReadOnlyList<LargeInstanceDisk>> osDisks = default;
+            IReadOnlyList<LargeInstanceDisk> osDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceDisk> array = new List<LargeInstanceDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item));
+                        array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item, options));
                     }
                     osDisks = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LargeInstanceStorageProfile(nfsIPAddress.Value, Optional.ToList(osDisks), serializedAdditionalRawData);
+            return new LargeInstanceStorageProfile(nfsIPAddress.Value, osDisks ?? new ChangeTrackingList<LargeInstanceDisk>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LargeInstanceStorageProfile>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MigrationSolutionId))
+            if (MigrationSolutionId != null)
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (Optional.IsDefined(VMwareToAzureProviderType))
+            if (VMwareToAzureProviderType != null)
             {
                 writer.WritePropertyName("vmwareToAzureProviderType"u8);
                 writer.WriteStringValue(VMwareToAzureProviderType);

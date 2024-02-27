@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DnsServers))
+            if (!(DnsServers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AppliedDnsServers))
+            if (options.Format != "W" && !(AppliedDnsServers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("appliedDnsServers"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InternalDnsNameLabel))
+            if (InternalDnsNameLabel != null)
             {
                 writer.WritePropertyName("internalDnsNameLabel"u8);
                 writer.WriteStringValue(InternalDnsNameLabel);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalFqdn))
+            if (options.Format != "W" && InternalFqdn != null)
             {
                 writer.WritePropertyName("internalFqdn"u8);
                 writer.WriteStringValue(InternalFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(InternalDomainNameSuffix))
+            if (options.Format != "W" && InternalDomainNameSuffix != null)
             {
                 writer.WritePropertyName("internalDomainNameSuffix"u8);
                 writer.WriteStringValue(InternalDomainNameSuffix);
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> dnsServers = default;
-            Optional<IReadOnlyList<string>> appliedDnsServers = default;
+            IList<string> dnsServers = default;
+            IReadOnlyList<string> appliedDnsServers = default;
             Optional<string> internalDnsNameLabel = default;
             Optional<string> internalFqdn = default;
             Optional<string> internalDomainNameSuffix = default;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceDnsSettings(Optional.ToList(dnsServers), Optional.ToList(appliedDnsServers), internalDnsNameLabel.Value, internalFqdn.Value, internalDomainNameSuffix.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceDnsSettings(
+                dnsServers ?? new ChangeTrackingList<string>(),
+                appliedDnsServers ?? new ChangeTrackingList<string>(),
+                internalDnsNameLabel.Value,
+                internalFqdn.Value,
+                internalDomainNameSuffix.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceDnsSettings>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,15 @@ namespace Azure.AI.OpenAI.Assistants
             fileIds ??= new List<string>();
             metadata ??= new Dictionary<string, string>();
 
-            return new AssistantCreationOptions(model, name, description, instructions, tools?.ToList(), fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
+            return new AssistantCreationOptions(
+                model,
+                name,
+                description,
+                instructions,
+                tools?.ToList(),
+                fileIds?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.ThreadInitializationMessage"/>. </summary>
@@ -64,7 +72,14 @@ namespace Azure.AI.OpenAI.Assistants
             overrideTools ??= new List<ToolDefinition>();
             metadata ??= new Dictionary<string, string>();
 
-            return new CreateRunOptions(assistantId, overrideModelName, overrideInstructions, additionalInstructions, overrideTools?.ToList(), metadata, serializedAdditionalRawData: null);
+            return new CreateRunOptions(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                overrideTools?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunError"/>. </summary>
@@ -89,7 +104,14 @@ namespace Azure.AI.OpenAI.Assistants
             overrideTools ??= new List<ToolDefinition>();
             metadata ??= new Dictionary<string, string>();
 
-            return new CreateAndRunThreadOptions(assistantId, thread, overrideModelName, overrideInstructions, overrideTools?.ToList(), metadata, serializedAdditionalRawData: null);
+            return new CreateAndRunThreadOptions(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools?.ToList(),
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>

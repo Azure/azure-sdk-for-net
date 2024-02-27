@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Input))
+            if (Input != null)
             {
                 writer.WritePropertyName("input"u8);
                 writer.WriteObjectValue(Input);
             }
-            if (Optional.IsDefined(CompatibilityLevel))
+            if (CompatibilityLevel != null)
             {
                 writer.WritePropertyName("compatibilityLevel"u8);
                 writer.WriteStringValue(CompatibilityLevel);
             }
-            if (Optional.IsDefined(EventsUri))
+            if (EventsUri != null)
             {
                 writer.WritePropertyName("eventsUri"u8);
                 writer.WriteStringValue(EventsUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(DataLocalion))
+            if (DataLocalion.HasValue)
             {
                 writer.WritePropertyName("dataLocale"u8);
                 writer.WriteStringValue(DataLocalion.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     {
                         continue;
                     }
-                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value);
+                    input = StreamingJobInputData.DeserializeStreamingJobInputData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("compatibilityLevel"u8))

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSize))
+            if (options.Format != "W" && DataSize != null)
             {
                 writer.WritePropertyName("dataSize"u8);
                 writer.WriteStringValue(DataSize);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataType))
+            if (options.Format != "W" && DataType != null)
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorId))
+            if (options.Format != "W" && ErrorId != null)
             {
                 writer.WritePropertyName("errorId"u8);
                 writer.WriteStringValue(ErrorId);
             }
-            if (options.Format != "W" && Optional.IsDefined(HasError))
+            if (options.Format != "W" && HasError.HasValue)
             {
                 writer.WritePropertyName("hasError"u8);
                 writer.WriteBooleanValue(HasError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPrimaryKey))
+            if (options.Format != "W" && IsPrimaryKey.HasValue)
             {
                 writer.WritePropertyName("isPrimaryKey"u8);
                 writer.WriteBooleanValue(IsPrimaryKey.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(QuotedName))
+            if (options.Format != "W" && QuotedName != null)
             {
                 writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value, serializedAdditionalRawData);
+            return new SyncFullSchemaTableColumn(
+                dataSize.Value,
+                dataType.Value,
+                errorId.Value,
+                Optional.ToNullable(hasError),
+                Optional.ToNullable(isPrimaryKey),
+                name.Value,
+                quotedName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncFullSchemaTableColumn>.Write(ModelReaderWriterOptions options)

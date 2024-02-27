@@ -26,8 +26,8 @@ namespace Azure.Containers.ContainerRegistry
             DateTimeOffset lastUpdateTime = default;
             Optional<ArtifactArchitecture?> architecture = default;
             Optional<ArtifactOperatingSystem?> os = default;
-            Optional<IReadOnlyList<ArtifactManifestPlatform>> references = default;
-            Optional<IReadOnlyList<string>> tags = default;
+            IReadOnlyList<ArtifactManifestPlatform> references = default;
+            IReadOnlyList<string> tags = default;
             Optional<bool> deleteEnabled = default;
             Optional<bool> writeEnabled = default;
             Optional<bool> listEnabled = default;
@@ -155,7 +155,19 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ManifestAttributesBase(digest, Optional.ToNullable(imageSize), createdTime, lastUpdateTime, Optional.ToNullable(architecture), Optional.ToNullable(os), Optional.ToList(references), Optional.ToList(tags), Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ManifestAttributesBase(
+                digest,
+                Optional.ToNullable(imageSize),
+                createdTime,
+                lastUpdateTime,
+                Optional.ToNullable(architecture),
+                Optional.ToNullable(os),
+                references ?? new ChangeTrackingList<ArtifactManifestPlatform>(),
+                tags ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(deleteEnabled),
+                Optional.ToNullable(writeEnabled),
+                Optional.ToNullable(listEnabled),
+                Optional.ToNullable(readEnabled));
         }
     }
 }

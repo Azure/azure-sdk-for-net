@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value);
+                    storageAccount = NginxStorageAccount.DeserializeNginxStorageAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

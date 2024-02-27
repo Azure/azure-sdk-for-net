@@ -26,34 +26,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BfdEnabled))
+            if (BfdEnabled.HasValue)
             {
                 writer.WritePropertyName("bfdEnabled"u8);
                 writer.WriteStringValue(BfdEnabled.Value.ToString());
             }
-            if (Optional.IsDefined(BgpMultiHop))
+            if (BgpMultiHop.HasValue)
             {
                 writer.WritePropertyName("bgpMultiHop"u8);
                 writer.WriteStringValue(BgpMultiHop.Value.ToString());
             }
-            if (Optional.IsDefined(HoldTime))
+            if (HoldTime != null)
             {
                 writer.WritePropertyName("holdTime"u8);
                 writer.WriteStringValue(HoldTime);
             }
-            if (Optional.IsDefined(KeepAliveTime))
+            if (KeepAliveTime != null)
             {
                 writer.WritePropertyName("keepAliveTime"u8);
                 writer.WriteStringValue(KeepAliveTime);
             }
-            if (Optional.IsDefined(MyAsn))
+            if (MyAsn.HasValue)
             {
                 writer.WritePropertyName("myAsn"u8);
                 writer.WriteNumberValue(MyAsn.Value);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(PeerAddress);
             writer.WritePropertyName("peerAsn"u8);
             writer.WriteNumberValue(PeerAsn);
-            if (Optional.IsDefined(PeerPort))
+            if (PeerPort.HasValue)
             {
                 writer.WritePropertyName("peerPort"u8);
                 writer.WriteNumberValue(PeerPort.Value);
@@ -191,7 +191,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceLoadBalancerBgpPeer(Optional.ToNullable(bfdEnabled), Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Optional.ToNullable(peerPort), serializedAdditionalRawData);
+            return new ServiceLoadBalancerBgpPeer(
+                Optional.ToNullable(bfdEnabled),
+                Optional.ToNullable(bgpMultiHop),
+                holdTime.Value,
+                keepAliveTime.Value,
+                Optional.ToNullable(myAsn),
+                name,
+                password.Value,
+                peerAddress,
+                peerAsn,
+                Optional.ToNullable(peerPort),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceLoadBalancerBgpPeer>.Write(ModelReaderWriterOptions options)

@@ -26,54 +26,54 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionName))
+            if (options.Format != "W" && PredictionName != null)
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PredictionGuidId))
+            if (options.Format != "W" && PredictionGuidId != null)
             {
                 writer.WritePropertyName("predictionGuidId"u8);
                 writer.WriteStringValue(PredictionGuidId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrainingSetCount))
+            if (options.Format != "W" && TrainingSetCount.HasValue)
             {
                 writer.WritePropertyName("trainingSetCount"u8);
                 writer.WriteNumberValue(TrainingSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TestSetCount))
+            if (options.Format != "W" && TestSetCount.HasValue)
             {
                 writer.WritePropertyName("testSetCount"u8);
                 writer.WriteNumberValue(TestSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidationSetCount))
+            if (options.Format != "W" && ValidationSetCount.HasValue)
             {
                 writer.WritePropertyName("validationSetCount"u8);
                 writer.WriteNumberValue(ValidationSetCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TrainingAccuracy))
+            if (options.Format != "W" && TrainingAccuracy.HasValue)
             {
                 writer.WritePropertyName("trainingAccuracy"u8);
                 writer.WriteNumberValue(TrainingAccuracy.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SignalsUsed))
+            if (options.Format != "W" && SignalsUsed.HasValue)
             {
                 writer.WritePropertyName("signalsUsed"u8);
                 writer.WriteNumberValue(SignalsUsed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ModelVersion))
+            if (options.Format != "W" && ModelVersion != null)
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
@@ -216,7 +216,19 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
+            return new PredictionModelStatus(
+                Optional.ToNullable(tenantId),
+                predictionName.Value,
+                predictionGuidId.Value,
+                status,
+                message.Value,
+                Optional.ToNullable(trainingSetCount),
+                Optional.ToNullable(testSetCount),
+                Optional.ToNullable(validationSetCount),
+                Optional.ToNullable(trainingAccuracy),
+                Optional.ToNullable(signalsUsed),
+                modelVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionModelStatus>.Write(ModelReaderWriterOptions options)

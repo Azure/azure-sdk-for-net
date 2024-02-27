@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(SkuAvailabilityType))
+            if (SkuAvailabilityType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SkuAvailabilityType);
             }
-            if (Optional.IsDefined(SkuName))
+            if (SkuName != null)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(IsSkuAvailable))
+            if (IsSkuAvailable.HasValue)
             {
                 writer.WritePropertyName("skuAvailable"u8);
                 writer.WriteBooleanValue(IsSkuAvailable.Value);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesSkuAvailabilityList(kind.Value, type.Value, skuName.Value, Optional.ToNullable(skuAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new CognitiveServicesSkuAvailabilityList(
+                kind.Value,
+                type.Value,
+                skuName.Value,
+                Optional.ToNullable(skuAvailable),
+                reason.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesSkuAvailabilityList>.Write(ModelReaderWriterOptions options)

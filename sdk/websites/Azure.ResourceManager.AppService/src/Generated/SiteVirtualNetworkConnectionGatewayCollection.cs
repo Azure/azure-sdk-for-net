@@ -79,8 +79,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteVirtualNetworkConnectionGatewayResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -128,8 +138,18 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteVirtualNetworkConnectionGatewayResource> CreateOrUpdate(WaitUntil waitUntil, string gatewayName, AppServiceVirtualNetworkGatewayData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.CreateOrUpdate");
             scope.Start();
@@ -175,7 +195,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
@@ -220,7 +247,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<SiteVirtualNetworkConnectionGatewayResource> Get(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.Get");
             scope.Start();
@@ -265,7 +299,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
@@ -308,7 +349,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual Response<bool> Exists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.Exists");
             scope.Start();
@@ -351,7 +399,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteVirtualNetworkConnectionGatewayResource>> GetIfExistsAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();
@@ -396,7 +451,14 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
         public virtual NullableResponse<SiteVirtualNetworkConnectionGatewayResource> GetIfExists(string gatewayName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(gatewayName, nameof(gatewayName));
+            if (gatewayName == null)
+            {
+                throw new ArgumentNullException(nameof(gatewayName));
+            }
+            if (gatewayName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(gatewayName));
+            }
 
             using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayCollection.GetIfExists");
             scope.Start();

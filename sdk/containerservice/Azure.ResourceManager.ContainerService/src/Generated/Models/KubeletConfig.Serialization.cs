@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CpuManagerPolicy))
+            if (CpuManagerPolicy != null)
             {
                 writer.WritePropertyName("cpuManagerPolicy"u8);
                 writer.WriteStringValue(CpuManagerPolicy);
             }
-            if (Optional.IsDefined(IsCpuCfsQuotaEnabled))
+            if (IsCpuCfsQuotaEnabled.HasValue)
             {
                 writer.WritePropertyName("cpuCfsQuota"u8);
                 writer.WriteBooleanValue(IsCpuCfsQuotaEnabled.Value);
             }
-            if (Optional.IsDefined(CpuCfsQuotaPeriod))
+            if (CpuCfsQuotaPeriod != null)
             {
                 writer.WritePropertyName("cpuCfsQuotaPeriod"u8);
                 writer.WriteStringValue(CpuCfsQuotaPeriod);
             }
-            if (Optional.IsDefined(ImageGcHighThreshold))
+            if (ImageGcHighThreshold.HasValue)
             {
                 writer.WritePropertyName("imageGcHighThreshold"u8);
                 writer.WriteNumberValue(ImageGcHighThreshold.Value);
             }
-            if (Optional.IsDefined(ImageGcLowThreshold))
+            if (ImageGcLowThreshold.HasValue)
             {
                 writer.WritePropertyName("imageGcLowThreshold"u8);
                 writer.WriteNumberValue(ImageGcLowThreshold.Value);
             }
-            if (Optional.IsDefined(TopologyManagerPolicy))
+            if (TopologyManagerPolicy != null)
             {
                 writer.WritePropertyName("topologyManagerPolicy"u8);
                 writer.WriteStringValue(TopologyManagerPolicy);
             }
-            if (Optional.IsCollectionDefined(AllowedUnsafeSysctls))
+            if (!(AllowedUnsafeSysctls is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedUnsafeSysctls"u8);
                 writer.WriteStartArray();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FailStartWithSwapOn))
+            if (FailStartWithSwapOn.HasValue)
             {
                 writer.WritePropertyName("failSwapOn"u8);
                 writer.WriteBooleanValue(FailStartWithSwapOn.Value);
             }
-            if (Optional.IsDefined(ContainerLogMaxSizeInMB))
+            if (ContainerLogMaxSizeInMB.HasValue)
             {
                 writer.WritePropertyName("containerLogMaxSizeMB"u8);
                 writer.WriteNumberValue(ContainerLogMaxSizeInMB.Value);
             }
-            if (Optional.IsDefined(ContainerLogMaxFiles))
+            if (ContainerLogMaxFiles.HasValue)
             {
                 writer.WritePropertyName("containerLogMaxFiles"u8);
                 writer.WriteNumberValue(ContainerLogMaxFiles.Value);
             }
-            if (Optional.IsDefined(PodMaxPids))
+            if (PodMaxPids.HasValue)
             {
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> imageGcHighThreshold = default;
             Optional<int> imageGcLowThreshold = default;
             Optional<string> topologyManagerPolicy = default;
-            Optional<IList<string>> allowedUnsafeSysctls = default;
+            IList<string> allowedUnsafeSysctls = default;
             Optional<bool> failSwapOn = default;
             Optional<int> containerLogMaxSizeMB = default;
             Optional<int> containerLogMaxFiles = default;
@@ -237,7 +237,19 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubeletConfig(cpuManagerPolicy.Value, Optional.ToNullable(cpuCfsQuota), cpuCfsQuotaPeriod.Value, Optional.ToNullable(imageGcHighThreshold), Optional.ToNullable(imageGcLowThreshold), topologyManagerPolicy.Value, Optional.ToList(allowedUnsafeSysctls), Optional.ToNullable(failSwapOn), Optional.ToNullable(containerLogMaxSizeMB), Optional.ToNullable(containerLogMaxFiles), Optional.ToNullable(podMaxPids), serializedAdditionalRawData);
+            return new KubeletConfig(
+                cpuManagerPolicy.Value,
+                Optional.ToNullable(cpuCfsQuota),
+                cpuCfsQuotaPeriod.Value,
+                Optional.ToNullable(imageGcHighThreshold),
+                Optional.ToNullable(imageGcLowThreshold),
+                topologyManagerPolicy.Value,
+                allowedUnsafeSysctls ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(failSwapOn),
+                Optional.ToNullable(containerLogMaxSizeMB),
+                Optional.ToNullable(containerLogMaxFiles),
+                Optional.ToNullable(podMaxPids),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubeletConfig>.Write(ModelReaderWriterOptions options)

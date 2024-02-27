@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ManifestId))
+            if (options.Format != "W" && ManifestId != null)
             {
                 writer.WritePropertyName("manifestId"u8);
                 writer.WriteStringValue(ManifestId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManifestVersion))
+            if (options.Format != "W" && ManifestVersion != null)
             {
                 writer.WritePropertyName("manifestVersion"u8);
                 writer.WriteStringValue(ManifestVersion);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Title))
+            if (options.Format != "W" && Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Optional.IsDefined(Order))
+            if (options.Format != "W" && Order.HasValue)
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteNumberValue(Order.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Industry))
+            if (options.Format != "W" && Industry != null)
             {
                 writer.WritePropertyName("industry"u8);
                 writer.WriteStringValue(Industry);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            if (options.Format != "W" && !(Locations is ChangeTrackingList<IotCentralAppTemplateLocation> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<int> order = default;
             Optional<string> description = default;
             Optional<string> industry = default;
-            Optional<IReadOnlyList<IotCentralAppTemplateLocation>> locations = default;
+            IReadOnlyList<IotCentralAppTemplateLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item));
+                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -180,7 +180,16 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralAppTemplate(manifestId.Value, manifestVersion.Value, name.Value, title.Value, Optional.ToNullable(order), description.Value, industry.Value, Optional.ToList(locations), serializedAdditionalRawData);
+            return new IotCentralAppTemplate(
+                manifestId.Value,
+                manifestVersion.Value,
+                name.Value,
+                title.Value,
+                Optional.ToNullable(order),
+                description.Value,
+                industry.Value,
+                locations ?? new ChangeTrackingList<IotCentralAppTemplateLocation>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralAppTemplate>.Write(ModelReaderWriterOptions options)

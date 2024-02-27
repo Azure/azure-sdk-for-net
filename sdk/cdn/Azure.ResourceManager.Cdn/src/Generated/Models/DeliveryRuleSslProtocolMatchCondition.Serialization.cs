@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(SslProtocolMatchConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(SslProtocolOperator.ToString());
-            if (Optional.IsDefined(NegateCondition))
+            if (NegateCondition.HasValue)
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (Optional.IsCollectionDefined(MatchValues))
+            if (!(MatchValues is ChangeTrackingList<DeliveryRuleSslProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Transforms))
+            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Cdn.Models
             SslProtocolMatchConditionType typeName = default;
             SslProtocolOperator @operator = default;
             Optional<bool> negateCondition = default;
-            Optional<IList<DeliveryRuleSslProtocol>> matchValues = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
+            IList<DeliveryRuleSslProtocol> matchValues = default;
+            IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeliveryRuleSslProtocolMatchCondition(typeName, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms), serializedAdditionalRawData);
+            return new DeliveryRuleSslProtocolMatchCondition(
+                typeName,
+                @operator,
+                Optional.ToNullable(negateCondition),
+                matchValues ?? new ChangeTrackingList<DeliveryRuleSslProtocol>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeliveryRuleSslProtocolMatchCondition>.Write(ModelReaderWriterOptions options)

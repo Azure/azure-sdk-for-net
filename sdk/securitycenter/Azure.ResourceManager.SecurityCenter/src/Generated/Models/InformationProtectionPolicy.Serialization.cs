@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && LastModifiedUtc.HasValue)
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedUtc.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingDictionary<string, SensitivityLabel> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(InformationTypes))
+            if (!(InformationTypes is ChangeTrackingDictionary<string, SecurityInformationTypeInfo> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("informationTypes"u8);
                 writer.WriteStartObject();
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> lastModifiedUtc = default;
             Optional<string> version = default;
-            Optional<IDictionary<string, SensitivityLabel>> labels = default;
-            Optional<IDictionary<string, SecurityInformationTypeInfo>> informationTypes = default;
+            IDictionary<string, SensitivityLabel> labels = default;
+            IDictionary<string, SecurityInformationTypeInfo> informationTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SensitivityLabel> dictionary = new Dictionary<string, SensitivityLabel>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value));
+                                dictionary.Add(property1.Name, SensitivityLabel.DeserializeSensitivityLabel(property1.Value, options));
                             }
                             labels = dictionary;
                             continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             Dictionary<string, SecurityInformationTypeInfo> dictionary = new Dictionary<string, SecurityInformationTypeInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value));
+                                dictionary.Add(property1.Name, SecurityInformationTypeInfo.DeserializeSecurityInformationTypeInfo(property1.Value, options));
                             }
                             informationTypes = dictionary;
                             continue;
@@ -216,7 +216,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InformationProtectionPolicy(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedUtc), version.Value, Optional.ToDictionary(labels), Optional.ToDictionary(informationTypes), serializedAdditionalRawData);
+            return new InformationProtectionPolicy(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(lastModifiedUtc),
+                version.Value,
+                labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(),
+                informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InformationProtectionPolicy>.Write(ModelReaderWriterOptions options)

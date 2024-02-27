@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ComputerName))
+            if (ComputerName != null)
             {
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(AdminUsername))
+            if (AdminUsername != null)
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (Optional.IsDefined(AdminPassword))
+            if (AdminPassword != null)
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (Optional.IsDefined(GuestId))
+            if (GuestId != null)
             {
                 writer.WritePropertyName("guestId"u8);
                 writer.WriteStringValue(GuestId);
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSSku))
+            if (options.Format != "W" && OSSku != null)
             {
                 writer.WritePropertyName("osSku"u8);
                 writer.WriteStringValue(OSSku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsRunningStatus))
+            if (options.Format != "W" && ToolsRunningStatus != null)
             {
                 writer.WritePropertyName("toolsRunningStatus"u8);
                 writer.WriteStringValue(ToolsRunningStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersionStatus))
+            if (options.Format != "W" && ToolsVersionStatus != null)
             {
                 writer.WritePropertyName("toolsVersionStatus"u8);
                 writer.WriteStringValue(ToolsVersionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(ToolsVersion))
+            if (options.Format != "W" && ToolsVersion != null)
             {
                 writer.WritePropertyName("toolsVersion"u8);
                 writer.WriteStringValue(ToolsVersion);
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSProfileForVmInstance(computerName.Value, adminUsername.Value, adminPassword.Value, guestId.Value, Optional.ToNullable(osType), osSku.Value, toolsRunningStatus.Value, toolsVersionStatus.Value, toolsVersion.Value, serializedAdditionalRawData);
+            return new OSProfileForVmInstance(
+                computerName.Value,
+                adminUsername.Value,
+                adminPassword.Value,
+                guestId.Value,
+                Optional.ToNullable(osType),
+                osSku.Value,
+                toolsRunningStatus.Value,
+                toolsVersionStatus.Value,
+                toolsVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)

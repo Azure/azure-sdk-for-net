@@ -42,64 +42,64 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerLocalPath))
+            if (ServerLocalPath != null)
             {
                 writer.WritePropertyName("serverLocalPath"u8);
                 writer.WriteStringValue(ServerLocalPath);
             }
-            if (Optional.IsDefined(CloudTiering))
+            if (CloudTiering.HasValue)
             {
                 writer.WritePropertyName("cloudTiering"u8);
                 writer.WriteStringValue(CloudTiering.Value.ToString());
             }
-            if (Optional.IsDefined(VolumeFreeSpacePercent))
+            if (VolumeFreeSpacePercent.HasValue)
             {
                 writer.WritePropertyName("volumeFreeSpacePercent"u8);
                 writer.WriteNumberValue(VolumeFreeSpacePercent.Value);
             }
-            if (Optional.IsDefined(TierFilesOlderThanDays))
+            if (TierFilesOlderThanDays.HasValue)
             {
                 writer.WritePropertyName("tierFilesOlderThanDays"u8);
                 writer.WriteNumberValue(TierFilesOlderThanDays.Value);
             }
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ServerResourceId))
+            if (ServerResourceId != null)
             {
                 writer.WritePropertyName("serverResourceId"u8);
                 writer.WriteStringValue(ServerResourceId);
             }
-            if (Optional.IsDefined(OfflineDataTransfer))
+            if (OfflineDataTransfer.HasValue)
             {
                 writer.WritePropertyName("offlineDataTransfer"u8);
                 writer.WriteStringValue(OfflineDataTransfer.Value.ToString());
             }
-            if (Optional.IsDefined(OfflineDataTransferShareName))
+            if (OfflineDataTransferShareName != null)
             {
                 writer.WritePropertyName("offlineDataTransferShareName"u8);
                 writer.WriteStringValue(OfflineDataTransferShareName);
             }
-            if (Optional.IsDefined(InitialDownloadPolicy))
+            if (InitialDownloadPolicy.HasValue)
             {
                 writer.WritePropertyName("initialDownloadPolicy"u8);
                 writer.WriteStringValue(InitialDownloadPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(LocalCacheMode))
+            if (LocalCacheMode.HasValue)
             {
                 writer.WritePropertyName("localCacheMode"u8);
                 writer.WriteStringValue(LocalCacheMode.Value.ToString());
             }
-            if (Optional.IsDefined(InitialUploadPolicy))
+            if (InitialUploadPolicy.HasValue)
             {
                 writer.WritePropertyName("initialUploadPolicy"u8);
                 writer.WriteStringValue(InitialUploadPolicy.Value.ToString());
@@ -291,7 +291,23 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageSyncServerEndpointCreateOrUpdateContent(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferShareName.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serializedAdditionalRawData);
+            return new StorageSyncServerEndpointCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serverLocalPath.Value,
+                Optional.ToNullable(cloudTiering),
+                Optional.ToNullable(volumeFreeSpacePercent),
+                Optional.ToNullable(tierFilesOlderThanDays),
+                friendlyName.Value,
+                serverResourceId.Value,
+                Optional.ToNullable(offlineDataTransfer),
+                offlineDataTransferShareName.Value,
+                Optional.ToNullable(initialDownloadPolicy),
+                Optional.ToNullable(localCacheMode),
+                Optional.ToNullable(initialUploadPolicy),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageSyncServerEndpointCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -26,24 +26,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactProfile))
+            if (ArtifactProfile != null)
             {
                 writer.WritePropertyName("artifactProfile"u8);
                 writer.WriteObjectValue(ArtifactProfile);
             }
-            if (Optional.IsDefined(DeployParametersMappingRuleProfile))
+            if (DeployParametersMappingRuleProfile != null)
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
                 writer.WriteObjectValue(DeployParametersMappingRuleProfile);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DependsOnProfile))
+            if (DependsOnProfile != null)
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
                 writer.WriteObjectValue(DependsOnProfile);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = AzureArcKubernetesArtifactProfile.DeserializeAzureArcKubernetesArtifactProfile(property.Value);
+                    artifactProfile = AzureArcKubernetesArtifactProfile.DeserializeAzureArcKubernetesArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deployParametersMappingRuleProfile"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureArcKubernetesDeployMappingRuleProfile.DeserializeAzureArcKubernetesDeployMappingRuleProfile(property.Value);
+                    deployParametersMappingRuleProfile = AzureArcKubernetesDeployMappingRuleProfile.DeserializeAzureArcKubernetesDeployMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactType"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureArcKubernetesHelmApplication(name.Value, dependsOnProfile.Value, serializedAdditionalRawData, artifactType, artifactProfile.Value, deployParametersMappingRuleProfile.Value);
+            return new AzureArcKubernetesHelmApplication(
+                name.Value,
+                dependsOnProfile.Value,
+                serializedAdditionalRawData,
+                artifactType,
+                artifactProfile.Value,
+                deployParametersMappingRuleProfile.Value);
         }
 
         BinaryData IPersistableModel<AzureArcKubernetesHelmApplication>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceDestinationType))
+            if (SourceDestinationType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
-            if (Optional.IsDefined(PrefixType))
+            if (PrefixType.HasValue)
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPPrefixValues))
+            if (!(IPPrefixValues is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPGroupNames))
+            if (!(IPGroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<SourceDestinationType> type = default;
             Optional<IPMatchConditionPrefixType> prefixType = default;
-            Optional<IList<string>> ipPrefixValues = default;
-            Optional<IList<string>> ipGroupNames = default;
+            IList<string> ipPrefixValues = default;
+            IList<string> ipGroupNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), Optional.ToList(ipPrefixValues), Optional.ToList(ipGroupNames), serializedAdditionalRawData);
+            return new IPMatchCondition(Optional.ToNullable(type), Optional.ToNullable(prefixType), ipPrefixValues ?? new ChangeTrackingList<string>(), ipGroupNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPMatchCondition>.Write(ModelReaderWriterOptions options)

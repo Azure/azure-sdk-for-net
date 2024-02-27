@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(EffectiveDiskEncryptionKeyUri))
+            if (EffectiveDiskEncryptionKeyUri != null)
             {
                 writer.WritePropertyName("effectiveDiskEncryptionKeyUrl"u8);
                 writer.WriteStringValue(EffectiveDiskEncryptionKeyUri.AbsoluteUri);

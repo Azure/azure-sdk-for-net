@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SqlDataSettings))
+            if (SqlDataSettings != null)
             {
                 writer.WritePropertyName("sqlDataSettings"u8);
                 writer.WriteObjectValue(SqlDataSettings);
             }
-            if (Optional.IsDefined(SqlLogSettings))
+            if (SqlLogSettings != null)
             {
                 writer.WritePropertyName("sqlLogSettings"u8);
                 writer.WriteObjectValue(SqlLogSettings);
             }
-            if (Optional.IsDefined(SqlTempDBSettings))
+            if (SqlTempDBSettings != null)
             {
                 writer.WritePropertyName("sqlTempDbSettings"u8);
                 writer.WriteObjectValue(SqlTempDBSettings);
             }
-            if (Optional.IsDefined(IsSqlSystemDBOnDataDisk))
+            if (IsSqlSystemDBOnDataDisk.HasValue)
             {
                 writer.WritePropertyName("sqlSystemDbOnDataDisk"u8);
                 writer.WriteBooleanValue(IsSqlSystemDBOnDataDisk.Value);
             }
-            if (Optional.IsDefined(DiskConfigurationType))
+            if (DiskConfigurationType.HasValue)
             {
                 writer.WritePropertyName("diskConfigurationType"u8);
                 writer.WriteStringValue(DiskConfigurationType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageWorkloadType))
+            if (StorageWorkloadType.HasValue)
             {
                 writer.WritePropertyName("storageWorkloadType"u8);
                 writer.WriteStringValue(StorageWorkloadType.Value.ToString());
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlDataSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlLogSettings"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value);
+                    sqlLogSettings = SqlStorageSettings.DeserializeSqlStorageSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlTempDbSettings"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     {
                         continue;
                     }
-                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value);
+                    sqlTempDBSettings = SqlTempDBSettings.DeserializeSqlTempDBSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sqlSystemDbOnDataDisk"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlVmStorageConfigurationSettings(sqlDataSettings.Value, sqlLogSettings.Value, sqlTempDBSettings.Value, Optional.ToNullable(sqlSystemDBOnDataDisk), Optional.ToNullable(diskConfigurationType), Optional.ToNullable(storageWorkloadType), serializedAdditionalRawData);
+            return new SqlVmStorageConfigurationSettings(
+                sqlDataSettings.Value,
+                sqlLogSettings.Value,
+                sqlTempDBSettings.Value,
+                Optional.ToNullable(sqlSystemDBOnDataDisk),
+                Optional.ToNullable(diskConfigurationType),
+                Optional.ToNullable(storageWorkloadType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlVmStorageConfigurationSettings>.Write(ModelReaderWriterOptions options)

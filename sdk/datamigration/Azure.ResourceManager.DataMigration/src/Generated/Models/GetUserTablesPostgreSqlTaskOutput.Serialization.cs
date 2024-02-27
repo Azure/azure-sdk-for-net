@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tables))
+            if (options.Format != "W" && !(Tables is ChangeTrackingList<DatabaseTable> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
+            if (options.Format != "W" && !(ValidationErrors is ChangeTrackingList<ReportableException> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             Optional<string> databaseName = default;
-            Optional<IReadOnlyList<DatabaseTable>> tables = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            IReadOnlyList<DatabaseTable> tables = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseTable> array = new List<DatabaseTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseTable.DeserializeDatabaseTable(item));
+                        array.Add(DatabaseTable.DeserializeDatabaseTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, Optional.ToList(tables), Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new GetUserTablesPostgreSqlTaskOutput(databaseName.Value, tables ?? new ChangeTrackingList<DatabaseTable>(), validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesPostgreSqlTaskOutput>.Write(ModelReaderWriterOptions options)

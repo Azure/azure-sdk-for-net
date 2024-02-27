@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(AzureFile))
+            if (AzureFile != null)
             {
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile);
             }
-            if (Optional.IsDefined(EmptyDir))
+            if (EmptyDir != null)
             {
                 writer.WritePropertyName("emptyDir"u8);
 #if NET6_0_OR_GREATER
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(Secret))
+            if (!(Secret is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(GitRepo))
+            if (GitRepo != null)
             {
                 writer.WritePropertyName("gitRepo"u8);
                 writer.WriteObjectValue(GitRepo);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             Optional<ContainerInstanceAzureFileVolume> azureFile = default;
             Optional<BinaryData> emptyDir = default;
-            Optional<IDictionary<string, string>> secret = default;
+            IDictionary<string, string> secret = default;
             Optional<ContainerInstanceGitRepoVolume> gitRepo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
+                    azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("emptyDir"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);
+                    gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +160,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value, serializedAdditionalRawData);
+            return new ContainerVolume(
+                name,
+                azureFile.Value,
+                emptyDir.Value,
+                secret ?? new ChangeTrackingDictionary<string, string>(),
+                gitRepo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)

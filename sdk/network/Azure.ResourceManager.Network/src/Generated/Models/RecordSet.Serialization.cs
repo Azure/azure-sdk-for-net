@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecordType))
+            if (RecordType != null)
             {
                 writer.WritePropertyName("recordType"u8);
                 writer.WriteStringValue(RecordType);
             }
-            if (Optional.IsDefined(RecordSetName))
+            if (RecordSetName != null)
             {
                 writer.WritePropertyName("recordSetName"u8);
                 writer.WriteStringValue(RecordSetName);
             }
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Ttl))
+            if (Ttl.HasValue)
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> fqdn = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> ttl = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecordSet(recordType.Value, recordSetName.Value, fqdn.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(ttl), Optional.ToList(ipAddresses), serializedAdditionalRawData);
+            return new RecordSet(
+                recordType.Value,
+                recordSetName.Value,
+                fqdn.Value,
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(ttl),
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecordSet>.Write(ModelReaderWriterOptions options)

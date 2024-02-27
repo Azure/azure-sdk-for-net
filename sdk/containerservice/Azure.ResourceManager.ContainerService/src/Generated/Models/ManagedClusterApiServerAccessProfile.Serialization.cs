@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AuthorizedIPRanges))
+            if (!(AuthorizedIPRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("authorizedIPRanges"u8);
                 writer.WriteStartArray();
@@ -36,22 +36,22 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnablePrivateCluster))
+            if (EnablePrivateCluster.HasValue)
             {
                 writer.WritePropertyName("enablePrivateCluster"u8);
                 writer.WriteBooleanValue(EnablePrivateCluster.Value);
             }
-            if (Optional.IsDefined(PrivateDnsZone))
+            if (PrivateDnsZone != null)
             {
                 writer.WritePropertyName("privateDNSZone"u8);
                 writer.WriteStringValue(PrivateDnsZone);
             }
-            if (Optional.IsDefined(EnablePrivateClusterPublicFqdn))
+            if (EnablePrivateClusterPublicFqdn.HasValue)
             {
                 writer.WritePropertyName("enablePrivateClusterPublicFQDN"u8);
                 writer.WriteBooleanValue(EnablePrivateClusterPublicFqdn.Value);
             }
-            if (Optional.IsDefined(DisableRunCommand))
+            if (DisableRunCommand.HasValue)
             {
                 writer.WritePropertyName("disableRunCommand"u8);
                 writer.WriteBooleanValue(DisableRunCommand.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<string>> authorizedIPRanges = default;
+            IList<string> authorizedIPRanges = default;
             Optional<bool> enablePrivateCluster = default;
             Optional<string> privateDnsZone = default;
             Optional<bool> enablePrivateClusterPublicFQDN = default;
@@ -155,7 +155,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterApiServerAccessProfile(Optional.ToList(authorizedIPRanges), Optional.ToNullable(enablePrivateCluster), privateDnsZone.Value, Optional.ToNullable(enablePrivateClusterPublicFQDN), Optional.ToNullable(disableRunCommand), serializedAdditionalRawData);
+            return new ManagedClusterApiServerAccessProfile(
+                authorizedIPRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(enablePrivateCluster),
+                privateDnsZone.Value,
+                Optional.ToNullable(enablePrivateClusterPublicFQDN),
+                Optional.ToNullable(disableRunCommand),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterApiServerAccessProfile>.Write(ModelReaderWriterOptions options)

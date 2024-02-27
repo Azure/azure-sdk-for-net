@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstStripeName))
+            if (options.Format != "W" && FirstStripeName != null)
             {
                 writer.WritePropertyName("firstStripeName"u8);
                 writer.WriteStringValue(FirstStripeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NumberOfStripes))
+            if (options.Format != "W" && NumberOfStripes.HasValue)
             {
                 writer.WritePropertyName("numberOfStripes"u8);
                 writer.WriteNumberValue(NumberOfStripes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupSizeInMB))
+            if (options.Format != "W" && BackupSizeInMB.HasValue)
             {
                 writer.WritePropertyName("backupSizeMB"u8);
                 writer.WriteNumberValue(BackupSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreStartedOn))
+            if (options.Format != "W" && RestoreStartedOn.HasValue)
             {
                 writer.WritePropertyName("restoreStartedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreFinishedOn))
+            if (options.Format != "W" && RestoreFinishedOn.HasValue)
             {
                 writer.WritePropertyName("restoreFinishedTimestampUtc"u8);
                 writer.WriteStringValue(RestoreFinishedOn.Value, "O");
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedDatabaseRestoreDetailBackupSetProperties(status.Value, firstStripeName.Value, Optional.ToNullable(numberOfStripes), Optional.ToNullable(backupSizeMB), Optional.ToNullable(restoreStartedTimestampUtc), Optional.ToNullable(restoreFinishedTimestampUtc), serializedAdditionalRawData);
+            return new ManagedDatabaseRestoreDetailBackupSetProperties(
+                status.Value,
+                firstStripeName.Value,
+                Optional.ToNullable(numberOfStripes),
+                Optional.ToNullable(backupSizeMB),
+                Optional.ToNullable(restoreStartedTimestampUtc),
+                Optional.ToNullable(restoreFinishedTimestampUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedDatabaseRestoreDetailBackupSetProperties>.Write(ModelReaderWriterOptions options)

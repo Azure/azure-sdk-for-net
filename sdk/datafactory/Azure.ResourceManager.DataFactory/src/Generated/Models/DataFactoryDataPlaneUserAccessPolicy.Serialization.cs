@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permissions))
+            if (Permissions != null)
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (Optional.IsDefined(AccessResourcePath))
+            if (AccessResourcePath != null)
             {
                 writer.WritePropertyName("accessResourcePath"u8);
                 writer.WriteStringValue(AccessResourcePath);
             }
-            if (Optional.IsDefined(ProfileName))
+            if (ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Optional.ToNullable(startTime), Optional.ToNullable(expireTime), serializedAdditionalRawData);
+            return new DataFactoryDataPlaneUserAccessPolicy(
+                permissions.Value,
+                accessResourcePath.Value,
+                profileName.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(expireTime),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryDataPlaneUserAccessPolicy>.Write(ModelReaderWriterOptions options)

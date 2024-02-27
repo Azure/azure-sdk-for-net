@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(InternalData))
+            if (InternalData != null)
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(InternalData);

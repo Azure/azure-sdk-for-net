@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MeshRevisions))
+            if (!(MeshRevisions is ChangeTrackingList<MeshRevision> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("meshRevisions"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<MeshRevision>> meshRevisions = default;
+            IList<MeshRevision> meshRevisions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<MeshRevision> array = new List<MeshRevision>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MeshRevision.DeserializeMeshRevision(item));
+                        array.Add(MeshRevision.DeserializeMeshRevision(item, options));
                     }
                     meshRevisions = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MeshRevisionProfileProperties(Optional.ToList(meshRevisions), serializedAdditionalRawData);
+            return new MeshRevisionProfileProperties(meshRevisions ?? new ChangeTrackingList<MeshRevision>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MeshRevisionProfileProperties>.Write(ModelReaderWriterOptions options)

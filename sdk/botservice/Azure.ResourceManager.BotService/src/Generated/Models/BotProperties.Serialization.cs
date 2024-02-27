@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(IconUri))
+            if (IconUri != null)
             {
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WriteNull("endpoint");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
+            if (options.Format != "W" && EndpointVersion != null)
             {
                 writer.WritePropertyName("endpointVersion"u8);
                 writer.WriteStringValue(EndpointVersion);
             }
-            if (Optional.IsCollectionDefined(AllSettings))
+            if (!(AllSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allSettings"u8);
                 writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -75,29 +75,29 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(ManifestUri))
+            if (ManifestUri != null)
             {
                 writer.WritePropertyName("manifestUrl"u8);
                 writer.WriteStringValue(ManifestUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(MsaAppType))
+            if (MsaAppType.HasValue)
             {
                 writer.WritePropertyName("msaAppType"u8);
                 writer.WriteStringValue(MsaAppType.Value.ToString());
             }
             writer.WritePropertyName("msaAppId"u8);
             writer.WriteStringValue(MsaAppId);
-            if (Optional.IsDefined(MsaAppTenantId))
+            if (MsaAppTenantId != null)
             {
                 writer.WritePropertyName("msaAppTenantId"u8);
                 writer.WriteStringValue(MsaAppTenantId);
             }
-            if (Optional.IsDefined(MsaAppMSIResourceId))
+            if (MsaAppMSIResourceId != null)
             {
                 writer.WritePropertyName("msaAppMSIResourceId"u8);
                 writer.WriteStringValue(MsaAppMSIResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredChannels))
+            if (options.Format != "W" && !(ConfiguredChannels is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("configuredChannels"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledChannels))
+            if (options.Format != "W" && !(EnabledChannels is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("enabledChannels"u8);
                 writer.WriteStartArray();
@@ -117,22 +117,22 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeveloperAppInsightKey))
+            if (DeveloperAppInsightKey != null)
             {
                 writer.WritePropertyName("developerAppInsightKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightKey);
             }
-            if (Optional.IsDefined(DeveloperAppInsightsApiKey))
+            if (DeveloperAppInsightsApiKey != null)
             {
                 writer.WritePropertyName("developerAppInsightsApiKey"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApiKey);
             }
-            if (Optional.IsDefined(DeveloperAppInsightsApplicationId))
+            if (DeveloperAppInsightsApplicationId != null)
             {
                 writer.WritePropertyName("developerAppInsightsApplicationId"u8);
                 writer.WriteStringValue(DeveloperAppInsightsApplicationId);
             }
-            if (Optional.IsCollectionDefined(LuisAppIds))
+            if (!(LuisAppIds is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("luisAppIds"u8);
                 writer.WriteStartArray();
@@ -142,57 +142,57 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LuisKey))
+            if (LuisKey != null)
             {
                 writer.WritePropertyName("luisKey"u8);
                 writer.WriteStringValue(LuisKey);
             }
-            if (Optional.IsDefined(IsCmekEnabled))
+            if (IsCmekEnabled.HasValue)
             {
                 writer.WritePropertyName("isCmekEnabled"u8);
                 writer.WriteBooleanValue(IsCmekEnabled.Value);
             }
-            if (Optional.IsDefined(CmekKeyVaultUri))
+            if (CmekKeyVaultUri != null)
             {
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
                 writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(CmekEncryptionStatus))
+            if (options.Format != "W" && CmekEncryptionStatus != null)
             {
                 writer.WritePropertyName("cmekEncryptionStatus"u8);
                 writer.WriteStringValue(CmekEncryptionStatus);
             }
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(IsStreamingSupported))
+            if (IsStreamingSupported.HasValue)
             {
                 writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeveloperAppInsightsApiKeySet))
+            if (options.Format != "W" && IsDeveloperAppInsightsApiKeySet.HasValue)
             {
                 writer.WritePropertyName("isDeveloperAppInsightsApiKeySet"u8);
                 writer.WriteBooleanValue(IsDeveloperAppInsightsApiKeySet.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationToken))
+            if (options.Format != "W" && MigrationToken != null)
             {
                 writer.WritePropertyName("migrationToken"u8);
                 writer.WriteStringValue(MigrationToken);
             }
-            if (Optional.IsDefined(IsLocalAuthDisabled))
+            if (IsLocalAuthDisabled.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(SchemaTransformationVersion))
+            if (SchemaTransformationVersion != null)
             {
                 if (SchemaTransformationVersion != null)
                 {
@@ -204,12 +204,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("schemaTransformationVersion");
                 }
             }
-            if (Optional.IsDefined(StorageResourceId))
+            if (StorageResourceId != null)
             {
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<BotServicePrivateEndpointConnectionData> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
@@ -219,22 +219,22 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OpenWithHint))
+            if (OpenWithHint != null)
             {
                 writer.WritePropertyName("openWithHint"u8);
                 writer.WriteStringValue(OpenWithHint);
             }
-            if (Optional.IsDefined(AppPasswordHint))
+            if (AppPasswordHint != null)
             {
                 writer.WritePropertyName("appPasswordHint"u8);
                 writer.WriteStringValue(AppPasswordHint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Optional.IsDefined(PublishingCredentials))
+            if (PublishingCredentials != null)
             {
                 writer.WritePropertyName("publishingCredentials"u8);
                 writer.WriteStringValue(PublishingCredentials);
@@ -282,19 +282,19 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<Uri> iconUrl = default;
             Uri endpoint = default;
             Optional<string> endpointVersion = default;
-            Optional<IDictionary<string, string>> allSettings = default;
-            Optional<IDictionary<string, string>> parameters = default;
+            IDictionary<string, string> allSettings = default;
+            IDictionary<string, string> parameters = default;
             Optional<Uri> manifestUrl = default;
             Optional<BotMsaAppType> msaAppType = default;
             string msaAppId = default;
             Optional<string> msaAppTenantId = default;
             Optional<ResourceIdentifier> msaAppMSIResourceId = default;
-            Optional<IReadOnlyList<string>> configuredChannels = default;
-            Optional<IReadOnlyList<string>> enabledChannels = default;
+            IReadOnlyList<string> configuredChannels = default;
+            IReadOnlyList<string> enabledChannels = default;
             Optional<string> developerAppInsightKey = default;
             Optional<string> developerAppInsightsApiKey = default;
             Optional<string> developerAppInsightsApplicationId = default;
-            Optional<IList<string>> luisAppIds = default;
+            IList<string> luisAppIds = default;
             Optional<string> luisKey = default;
             Optional<bool> isCmekEnabled = default;
             Optional<Uri> cmekKeyVaultUrl = default;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.BotService.Models
             Optional<bool> disableLocalAuth = default;
             Optional<string> schemaTransformationVersion = default;
             Optional<ResourceIdentifier> storageResourceId = default;
-            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
             Optional<string> openWithHint = default;
             Optional<string> appPasswordHint = default;
             Optional<string> provisioningState = default;
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServicePrivateEndpointConnectionData> array = new List<BotServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item));
+                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -609,7 +609,43 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Optional.ToList(configuredChannels), Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Optional.ToList(luisAppIds), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value, serializedAdditionalRawData);
+            return new BotProperties(
+                displayName,
+                description.Value,
+                iconUrl.Value,
+                endpoint,
+                endpointVersion.Value,
+                allSettings ?? new ChangeTrackingDictionary<string, string>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                manifestUrl.Value,
+                Optional.ToNullable(msaAppType),
+                msaAppId,
+                msaAppTenantId.Value,
+                msaAppMSIResourceId.Value,
+                configuredChannels ?? new ChangeTrackingList<string>(),
+                enabledChannels ?? new ChangeTrackingList<string>(),
+                developerAppInsightKey.Value,
+                developerAppInsightsApiKey.Value,
+                developerAppInsightsApplicationId.Value,
+                luisAppIds ?? new ChangeTrackingList<string>(),
+                luisKey.Value,
+                Optional.ToNullable(isCmekEnabled),
+                cmekKeyVaultUrl.Value,
+                cmekEncryptionStatus.Value,
+                Optional.ToNullable(tenantId),
+                Optional.ToNullable(publicNetworkAccess),
+                Optional.ToNullable(isStreamingSupported),
+                Optional.ToNullable(isDeveloperAppInsightsApiKeySet),
+                migrationToken.Value,
+                Optional.ToNullable(disableLocalAuth),
+                schemaTransformationVersion.Value,
+                storageResourceId.Value,
+                privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
+                openWithHint.Value,
+                appPasswordHint.Value,
+                provisioningState.Value,
+                publishingCredentials.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotProperties>.Write(ModelReaderWriterOptions options)

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "OperationJobExtendedInfo": return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element);
+                    case "OperationJobExtendedInfo": return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element, options);
                 }
             }
-            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element);
+            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionOperationExtendedInfo>.Write(ModelReaderWriterOptions options)

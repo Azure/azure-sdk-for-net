@@ -430,7 +430,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkResource>> UpdateAsync(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            if (networkTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(networkTagsObject));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
             scope.Start();
@@ -472,7 +475,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="networkTagsObject"/> is null. </exception>
         public virtual Response<VirtualNetworkResource> Update(NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
+            if (networkTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(networkTagsObject));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.Update");
             scope.Start();
@@ -516,7 +522,10 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurationsAsync(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
@@ -550,7 +559,10 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="EffectiveConnectivityConfiguration"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EffectiveConnectivityConfiguration> GetNetworkManagerEffectiveConnectivityConfigurations(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EffectiveConnectivityConfiguration.DeserializeEffectiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveConnectivityConfigurations", "value", null, cancellationToken);
@@ -584,7 +596,10 @@ namespace Azure.ResourceManager.Network
         /// <returns> An async collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRulesAsync(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
@@ -618,7 +633,10 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="EffectiveBaseSecurityAdminRule"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EffectiveBaseSecurityAdminRule> GetNetworkManagerEffectiveSecurityAdminRules(NetworkManagementQueryContent content, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListNetworkManagerEffectiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EffectiveBaseSecurityAdminRule.DeserializeEffectiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "VirtualNetworkResource.GetNetworkManagerEffectiveSecurityAdminRules", "value", null, cancellationToken);
@@ -650,7 +668,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public virtual async Task<Response<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityAsync(string ipAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddress));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.CheckIPAddressAvailability");
             scope.Start();
@@ -692,7 +713,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
         public virtual Response<IPAddressAvailabilityResult> CheckIPAddressAvailability(string ipAddress, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+            if (ipAddress == null)
+            {
+                throw new ArgumentNullException(nameof(ipAddress));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.CheckIPAddressAvailability");
             scope.Start();
@@ -795,8 +819,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.AddTag");
             scope.Start();
@@ -857,8 +887,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VirtualNetworkResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.AddTag");
             scope.Start();
@@ -918,7 +954,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.SetTags");
             scope.Start();
@@ -975,7 +1014,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VirtualNetworkResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.SetTags");
             scope.Start();
@@ -1032,7 +1074,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VirtualNetworkResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.RemoveTag");
             scope.Start();
@@ -1092,7 +1137,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VirtualNetworkResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _virtualNetworkClientDiagnostics.CreateScope("VirtualNetworkResource.RemoveTag");
             scope.Start();

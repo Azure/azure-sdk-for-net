@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryConnectionString))
+            if (options.Format != "W" && PrimaryConnectionString != null)
             {
                 writer.WritePropertyName("primaryConnectionString"u8);
                 writer.WriteStringValue(PrimaryConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryConnectionString))
+            if (options.Format != "W" && SecondaryConnectionString != null)
             {
                 writer.WritePropertyName("secondaryConnectionString"u8);
                 writer.WriteStringValue(SecondaryConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(AliasPrimaryConnectionString))
+            if (options.Format != "W" && AliasPrimaryConnectionString != null)
             {
                 writer.WritePropertyName("aliasPrimaryConnectionString"u8);
                 writer.WriteStringValue(AliasPrimaryConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(AliasSecondaryConnectionString))
+            if (options.Format != "W" && AliasSecondaryConnectionString != null)
             {
                 writer.WritePropertyName("aliasSecondaryConnectionString"u8);
                 writer.WriteStringValue(AliasSecondaryConnectionString);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            if (options.Format != "W" && KeyName != null)
             {
                 writer.WritePropertyName("keyName"u8);
                 writer.WriteStringValue(KeyName);
@@ -151,7 +151,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubsAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
+            return new EventHubsAccessKeys(
+                primaryConnectionString.Value,
+                secondaryConnectionString.Value,
+                aliasPrimaryConnectionString.Value,
+                aliasSecondaryConnectionString.Value,
+                primaryKey.Value,
+                secondaryKey.Value,
+                keyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubsAccessKeys>.Write(ModelReaderWriterOptions options)

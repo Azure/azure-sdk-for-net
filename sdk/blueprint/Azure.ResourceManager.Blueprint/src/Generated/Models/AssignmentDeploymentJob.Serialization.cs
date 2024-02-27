@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(JobId))
+            if (JobId != null)
             {
                 writer.WritePropertyName("jobId"u8);
                 writer.WriteStringValue(JobId);
             }
-            if (Optional.IsDefined(JobState))
+            if (JobState != null)
             {
                 writer.WritePropertyName("jobState"u8);
                 writer.WriteStringValue(JobState);
             }
-            if (Optional.IsDefined(Result))
+            if (Result != null)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteObjectValue(Result);
             }
-            if (Optional.IsCollectionDefined(History))
+            if (!(History is ChangeTrackingList<AssignmentDeploymentJobResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RequestUri))
+            if (RequestUri != null)
             {
                 writer.WritePropertyName("requestUri"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<string> jobId = default;
             Optional<string> jobState = default;
             Optional<AssignmentDeploymentJobResult> result = default;
-            Optional<IList<AssignmentDeploymentJobResult>> history = default;
+            IList<AssignmentDeploymentJobResult> history = default;
             Optional<Uri> requestUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value);
+                    result = AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("history"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<AssignmentDeploymentJobResult> array = new List<AssignmentDeploymentJobResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(item));
+                        array.Add(AssignmentDeploymentJobResult.DeserializeAssignmentDeploymentJobResult(item, options));
                     }
                     history = array;
                     continue;
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssignmentDeploymentJob(kind.Value, action.Value, jobId.Value, jobState.Value, result.Value, Optional.ToList(history), requestUri.Value, serializedAdditionalRawData);
+            return new AssignmentDeploymentJob(
+                kind.Value,
+                action.Value,
+                jobId.Value,
+                jobState.Value,
+                result.Value,
+                history ?? new ChangeTrackingList<AssignmentDeploymentJobResult>(),
+                requestUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignmentDeploymentJob>.Write(ModelReaderWriterOptions options)

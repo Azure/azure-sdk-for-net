@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteObjectValue(Message);
             }
             writer.WritePropertyName("route"u8);
             writer.WriteObjectValue(Route);
-            if (Optional.IsDefined(Twin))
+            if (Twin != null)
             {
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin);
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    message = RoutingMessage.DeserializeRoutingMessage(property.Value);
+                    message = RoutingMessage.DeserializeRoutingMessage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("route"u8))
                 {
-                    route = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value);
+                    route = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("twin"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value);
+                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

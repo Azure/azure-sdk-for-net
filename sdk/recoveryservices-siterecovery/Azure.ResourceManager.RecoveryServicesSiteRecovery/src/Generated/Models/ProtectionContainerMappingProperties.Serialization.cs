@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetProtectionContainerId))
+            if (TargetProtectionContainerId != null)
             {
                 writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
-            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
+            if (TargetProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("targetProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(TargetProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
             }
-            if (Optional.IsDefined(Health))
+            if (Health != null)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health);
             }
-            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();
@@ -56,32 +56,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
+            if (SourceProtectionContainerFriendlyName != null)
             {
                 writer.WritePropertyName("sourceProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(SourceProtectionContainerFriendlyName);
             }
-            if (Optional.IsDefined(SourceFabricFriendlyName))
+            if (SourceFabricFriendlyName != null)
             {
                 writer.WritePropertyName("sourceFabricFriendlyName"u8);
                 writer.WriteStringValue(SourceFabricFriendlyName);
             }
-            if (Optional.IsDefined(TargetFabricFriendlyName))
+            if (TargetFabricFriendlyName != null)
             {
                 writer.WritePropertyName("targetFabricFriendlyName"u8);
                 writer.WriteStringValue(TargetFabricFriendlyName);
             }
-            if (Optional.IsDefined(PolicyFriendlyName))
+            if (PolicyFriendlyName != null)
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> targetProtectionContainerFriendlyName = default;
             Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
             Optional<string> health = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrorDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
             Optional<ResourceIdentifier> policyId = default;
             Optional<string> state = default;
             Optional<string> sourceProtectionContainerFriendlyName = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value);
+                    providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrorDetails = array;
                     continue;
@@ -221,7 +221,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value, serializedAdditionalRawData);
+            return new ProtectionContainerMappingProperties(
+                targetProtectionContainerId.Value,
+                targetProtectionContainerFriendlyName.Value,
+                providerSpecificDetails.Value,
+                health.Value,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId.Value,
+                state.Value,
+                sourceProtectionContainerFriendlyName.Value,
+                sourceFabricFriendlyName.Value,
+                targetFabricFriendlyName.Value,
+                policyFriendlyName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)

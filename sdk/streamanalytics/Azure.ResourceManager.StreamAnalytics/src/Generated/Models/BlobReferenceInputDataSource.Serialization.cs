@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(ReferenceInputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(StorageAccounts))
+            if (!(StorageAccounts is ChangeTrackingList<StreamAnalyticsStorageAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("storageAccounts"u8);
                 writer.WriteStartArray();
@@ -40,52 +40,52 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Container))
+            if (Container != null)
             {
                 writer.WritePropertyName("container"u8);
                 writer.WriteStringValue(Container);
             }
-            if (Optional.IsDefined(PathPattern))
+            if (PathPattern != null)
             {
                 writer.WritePropertyName("pathPattern"u8);
                 writer.WriteStringValue(PathPattern);
             }
-            if (Optional.IsDefined(DateFormat))
+            if (DateFormat != null)
             {
                 writer.WritePropertyName("dateFormat"u8);
                 writer.WriteStringValue(DateFormat);
             }
-            if (Optional.IsDefined(TimeFormat))
+            if (TimeFormat != null)
             {
                 writer.WritePropertyName("timeFormat"u8);
                 writer.WriteStringValue(TimeFormat);
             }
-            if (Optional.IsDefined(AuthenticationMode))
+            if (AuthenticationMode.HasValue)
             {
                 writer.WritePropertyName("authenticationMode"u8);
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
-            if (Optional.IsDefined(BlobName))
+            if (BlobName != null)
             {
                 writer.WritePropertyName("blobName"u8);
                 writer.WriteStringValue(BlobName);
             }
-            if (Optional.IsDefined(DeltaPathPattern))
+            if (DeltaPathPattern != null)
             {
                 writer.WritePropertyName("deltaPathPattern"u8);
                 writer.WriteStringValue(DeltaPathPattern);
             }
-            if (Optional.IsDefined(SourcePartitionCount))
+            if (SourcePartitionCount.HasValue)
             {
                 writer.WritePropertyName("sourcePartitionCount"u8);
                 writer.WriteNumberValue(SourcePartitionCount.Value);
             }
-            if (Optional.IsDefined(FullSnapshotRefreshInterval))
+            if (FullSnapshotRefreshInterval.HasValue)
             {
                 writer.WritePropertyName("fullSnapshotRefreshRate"u8);
                 writer.WriteStringValue(FullSnapshotRefreshInterval.Value, "T");
             }
-            if (Optional.IsDefined(DeltaSnapshotRefreshInterval))
+            if (DeltaSnapshotRefreshInterval.HasValue)
             {
                 writer.WritePropertyName("deltaSnapshotRefreshRate"u8);
                 writer.WriteStringValue(DeltaSnapshotRefreshInterval.Value, "T");
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
+            IList<StreamAnalyticsStorageAccount> storageAccounts = default;
             Optional<string> container = default;
             Optional<string> pathPattern = default;
             Optional<string> dateFormat = default;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -248,7 +248,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceInputDataSource(type, serializedAdditionalRawData, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), blobName.Value, deltaPathPattern.Value, Optional.ToNullable(sourcePartitionCount), Optional.ToNullable(fullSnapshotRefreshRate), Optional.ToNullable(deltaSnapshotRefreshRate));
+            return new BlobReferenceInputDataSource(
+                type,
+                serializedAdditionalRawData,
+                storageAccounts ?? new ChangeTrackingList<StreamAnalyticsStorageAccount>(),
+                container.Value,
+                pathPattern.Value,
+                dateFormat.Value,
+                timeFormat.Value,
+                Optional.ToNullable(authenticationMode),
+                blobName.Value,
+                deltaPathPattern.Value,
+                Optional.ToNullable(sourcePartitionCount),
+                Optional.ToNullable(fullSnapshotRefreshRate),
+                Optional.ToNullable(deltaSnapshotRefreshRate));
         }
 
         BinaryData IPersistableModel<BlobReferenceInputDataSource>.Write(ModelReaderWriterOptions options)

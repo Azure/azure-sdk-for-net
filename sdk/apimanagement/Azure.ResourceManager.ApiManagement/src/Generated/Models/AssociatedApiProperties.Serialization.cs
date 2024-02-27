@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Protocols))
+            if (!(Protocols is ChangeTrackingList<ApiOperationInvokableProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protocols"u8);
                 writer.WriteStartArray();
@@ -56,77 +56,77 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(AuthenticationSettings))
+            if (AuthenticationSettings != null)
             {
                 writer.WritePropertyName("authenticationSettings"u8);
                 writer.WriteObjectValue(AuthenticationSettings);
             }
-            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            if (SubscriptionKeyParameterNames != null)
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
                 writer.WriteObjectValue(SubscriptionKeyParameterNames);
             }
-            if (Optional.IsDefined(ApiType))
+            if (ApiType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiType.Value.ToString());
             }
-            if (Optional.IsDefined(ApiRevision))
+            if (ApiRevision != null)
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (ApiVersion != null)
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (Optional.IsDefined(IsCurrent))
+            if (IsCurrent.HasValue)
             {
                 writer.WritePropertyName("isCurrent"u8);
                 writer.WriteBooleanValue(IsCurrent.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsOnline))
+            if (options.Format != "W" && IsOnline.HasValue)
             {
                 writer.WritePropertyName("isOnline"u8);
                 writer.WriteBooleanValue(IsOnline.Value);
             }
-            if (Optional.IsDefined(ApiRevisionDescription))
+            if (ApiRevisionDescription != null)
             {
                 writer.WritePropertyName("apiRevisionDescription"u8);
                 writer.WriteStringValue(ApiRevisionDescription);
             }
-            if (Optional.IsDefined(ApiVersionDescription))
+            if (ApiVersionDescription != null)
             {
                 writer.WritePropertyName("apiVersionDescription"u8);
                 writer.WriteStringValue(ApiVersionDescription);
             }
-            if (Optional.IsDefined(ApiVersionSetId))
+            if (ApiVersionSetId != null)
             {
                 writer.WritePropertyName("apiVersionSetId"u8);
                 writer.WriteStringValue(ApiVersionSetId);
             }
-            if (Optional.IsDefined(IsSubscriptionRequired))
+            if (IsSubscriptionRequired.HasValue)
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (Optional.IsDefined(TermsOfServiceUri))
+            if (TermsOfServiceUri != null)
             {
                 writer.WritePropertyName("termsOfServiceUrl"u8);
                 writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Contact))
+            if (Contact != null)
             {
                 writer.WritePropertyName("contact"u8);
                 writer.WriteObjectValue(Contact);
             }
-            if (Optional.IsDefined(License))
+            if (License != null)
             {
                 writer.WritePropertyName("license"u8);
                 writer.WriteObjectValue(License);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<string> name = default;
             Optional<Uri> serviceUri = default;
             Optional<string> path = default;
-            Optional<IReadOnlyList<ApiOperationInvokableProtocol>> protocols = default;
+            IReadOnlyList<ApiOperationInvokableProtocol> protocols = default;
             Optional<string> description = default;
             Optional<AuthenticationSettingsContract> authenticationSettings = default;
             Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
+                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionKeyParameterNames"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);
+                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value);
+                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("license"u8))
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value);
+                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -352,7 +352,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
+            return new AssociatedApiProperties(
+                description.Value,
+                authenticationSettings.Value,
+                subscriptionKeyParameterNames.Value,
+                Optional.ToNullable(type),
+                apiRevision.Value,
+                apiVersion.Value,
+                Optional.ToNullable(isCurrent),
+                Optional.ToNullable(isOnline),
+                apiRevisionDescription.Value,
+                apiVersionDescription.Value,
+                apiVersionSetId.Value,
+                Optional.ToNullable(subscriptionRequired),
+                termsOfServiceUri.Value,
+                contact.Value,
+                license.Value,
+                serializedAdditionalRawData,
+                id.Value,
+                name.Value,
+                serviceUri.Value,
+                path.Value,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
         }
 
         BinaryData IPersistableModel<AssociatedApiProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreprocessingComponentId))
+            if (PreprocessingComponentId != null)
             {
                 if (PreprocessingComponentId != null)
                 {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(WindowEnd, "O");
             writer.WritePropertyName("windowStart"u8);
             writer.WriteStringValue(WindowStart, "O");
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Columns != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
+            if (DataContext != null)
             {
                 if (DataContext != null)
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> preprocessingComponentId = default;
             DateTimeOffset windowEnd = default;
             DateTimeOffset windowStart = default;
-            Optional<IDictionary<string, string>> columns = default;
+            IDictionary<string, string> columns = default;
             Optional<string> dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticInputData(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri, serializedAdditionalRawData, preprocessingComponentId.Value, windowEnd, windowStart);
+            return new StaticInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext.Value,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData,
+                preprocessingComponentId.Value,
+                windowEnd,
+                windowStart);
         }
 
         BinaryData IPersistableModel<StaticInputData>.Write(ModelReaderWriterOptions options)

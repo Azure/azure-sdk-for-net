@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKeyLastUpdatedOn))
+            if (options.Format != "W" && PrimaryKeyLastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("primaryKeyLastUpdated"u8);
                 writer.WriteStringValue(PrimaryKeyLastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKeyLastUpdatedOn))
+            if (options.Format != "W" && SecondaryKeyLastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("secondaryKeyLastUpdated"u8);
                 writer.WriteStringValue(SecondaryKeyLastUpdatedOn.Value, "O");

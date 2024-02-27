@@ -49,8 +49,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public TaskStatusClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -79,7 +85,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/TaskStatusClient.xml" path="doc/members/member[@name='UpdateAsync(Guid,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TaskStatusClient.Update");
             scope.Start();
@@ -114,7 +123,10 @@ namespace Azure.Analytics.Purview.Workflows
         /// <include file="Docs/TaskStatusClient.xml" path="doc/members/member[@name='Update(Guid,RequestContent,RequestContext)']/*" />
         public virtual Response Update(Guid taskId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("TaskStatusClient.Update");
             scope.Start();

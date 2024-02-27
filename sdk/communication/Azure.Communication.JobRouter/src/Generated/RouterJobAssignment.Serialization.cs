@@ -32,19 +32,19 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("assignmentId"u8);
                 writer.WriteStringValue(AssignmentId);
             }
-            if (Optional.IsDefined(WorkerId))
+            if (WorkerId != null)
             {
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
             writer.WritePropertyName("assignedAt"u8);
             writer.WriteStringValue(AssignedAt, "O");
-            if (Optional.IsDefined(CompletedAt))
+            if (CompletedAt.HasValue)
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (Optional.IsDefined(ClosedAt))
+            if (ClosedAt.HasValue)
             {
                 writer.WritePropertyName("closedAt"u8);
                 writer.WriteStringValue(ClosedAt.Value, "O");
@@ -135,7 +135,13 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Optional.ToNullable(completedAt), Optional.ToNullable(closedAt), serializedAdditionalRawData);
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId.Value,
+                assignedAt,
+                Optional.ToNullable(completedAt),
+                Optional.ToNullable(closedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouterJobAssignment>.Write(ModelReaderWriterOptions options)

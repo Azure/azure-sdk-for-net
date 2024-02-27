@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LinkedServices))
+            if (!(LinkedServices is ChangeTrackingList<DataFactoryLinkedServiceReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("linkedServices"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Datasets))
+            if (!(Datasets is ChangeTrackingList<DatasetReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("datasets"u8);
                 writer.WriteStartArray();
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Optional<IList<DatasetReference>> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
+            IList<DatasetReference> datasets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        array.Add(DatasetReference.DeserializeDatasetReference(item, options));
                     }
                     datasets = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomActivityReferenceObject(Optional.ToList(linkedServices), Optional.ToList(datasets), serializedAdditionalRawData);
+            return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomActivityReferenceObject>.Write(ModelReaderWriterOptions options)

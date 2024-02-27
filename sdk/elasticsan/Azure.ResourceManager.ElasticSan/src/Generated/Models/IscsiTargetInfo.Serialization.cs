@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TargetIqn))
+            if (options.Format != "W" && TargetIqn != null)
             {
                 writer.WritePropertyName("targetIqn"u8);
                 writer.WriteStringValue(TargetIqn);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetPortalHostname))
+            if (options.Format != "W" && TargetPortalHostname != null)
             {
                 writer.WritePropertyName("targetPortalHostname"u8);
                 writer.WriteStringValue(TargetPortalHostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetPortalPort))
+            if (options.Format != "W" && TargetPortalPort.HasValue)
             {
                 writer.WritePropertyName("targetPortalPort"u8);
                 writer.WriteNumberValue(TargetPortalPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new IscsiTargetInfo(
+                targetIqn.Value,
+                targetPortalHostname.Value,
+                Optional.ToNullable(targetPortalPort),
+                Optional.ToNullable(provisioningState),
+                Optional.ToNullable(status),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IscsiTargetInfo>.Write(ModelReaderWriterOptions options)

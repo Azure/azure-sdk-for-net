@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Configurations))
+            if (!(Configurations is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Configurations != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("configurations");
                 }
             }
-            if (Optional.IsDefined(EntryScript))
+            if (EntryScript != null)
             {
                 if (EntryScript != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("entryScript");
                 }
             }
-            if (Optional.IsDefined(LivenessRoute))
+            if (LivenessRoute != null)
             {
                 if (LivenessRoute != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("livenessRoute");
                 }
             }
-            if (Optional.IsDefined(ReadinessRoute))
+            if (ReadinessRoute != null)
             {
                 if (ReadinessRoute != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("readinessRoute");
                 }
             }
-            if (Optional.IsDefined(ScoringRoute))
+            if (ScoringRoute != null)
             {
                 if (ScoringRoute != null)
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> configurations = default;
+            IDictionary<string, string> configurations = default;
             Optional<string> entryScript = default;
             Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
             Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         livenessRoute = null;
                         continue;
                     }
-                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessRoute"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         readinessRoute = null;
                         continue;
                     }
-                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scoringRoute"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         scoringRoute = null;
                         continue;
                     }
-                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OnlineInferenceConfiguration(Optional.ToDictionary(configurations), entryScript.Value, livenessRoute.Value, readinessRoute.Value, scoringRoute.Value, serializedAdditionalRawData);
+            return new OnlineInferenceConfiguration(
+                configurations ?? new ChangeTrackingDictionary<string, string>(),
+                entryScript.Value,
+                livenessRoute.Value,
+                readinessRoute.Value,
+                scoringRoute.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OnlineInferenceConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DailySchedule))
+            if (DailySchedule != null)
             {
                 writer.WritePropertyName("dailySchedule"u8);
                 writer.WriteObjectValue(DailySchedule);
             }
-            if (Optional.IsDefined(WeeklySchedule))
+            if (WeeklySchedule != null)
             {
                 writer.WritePropertyName("weeklySchedule"u8);
                 writer.WriteObjectValue(WeeklySchedule);
             }
-            if (Optional.IsDefined(MonthlySchedule))
+            if (MonthlySchedule != null)
             {
                 writer.WritePropertyName("monthlySchedule"u8);
                 writer.WriteObjectValue(MonthlySchedule);
             }
-            if (Optional.IsDefined(YearlySchedule))
+            if (YearlySchedule != null)
             {
                 writer.WritePropertyName("yearlySchedule"u8);
                 writer.WriteObjectValue(YearlySchedule);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value);
+                    dailySchedule = DailyRetentionSchedule.DeserializeDailyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weeklySchedule"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value);
+                    weeklySchedule = WeeklyRetentionSchedule.DeserializeWeeklyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monthlySchedule"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value);
+                    monthlySchedule = MonthlyRetentionSchedule.DeserializeMonthlyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("yearlySchedule"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value);
+                    yearlySchedule = YearlyRetentionSchedule.DeserializeYearlyRetentionSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicyType"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicy(retentionPolicyType, serializedAdditionalRawData, dailySchedule.Value, weeklySchedule.Value, monthlySchedule.Value, yearlySchedule.Value);
+            return new LongTermRetentionPolicy(
+                retentionPolicyType,
+                serializedAdditionalRawData,
+                dailySchedule.Value,
+                weeklySchedule.Value,
+                monthlySchedule.Value,
+                yearlySchedule.Value);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicy>.Write(ModelReaderWriterOptions options)

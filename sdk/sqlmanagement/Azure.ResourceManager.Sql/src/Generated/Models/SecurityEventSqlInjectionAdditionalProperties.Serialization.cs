@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ThreatId))
+            if (options.Format != "W" && ThreatId != null)
             {
                 writer.WritePropertyName("threatId"u8);
                 writer.WriteStringValue(ThreatId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Statement))
+            if (options.Format != "W" && Statement != null)
             {
                 writer.WritePropertyName("statement"u8);
                 writer.WriteStringValue(Statement);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatementHighlightOffset))
+            if (options.Format != "W" && StatementHighlightOffset.HasValue)
             {
                 writer.WritePropertyName("statementHighlightOffset"u8);
                 writer.WriteNumberValue(StatementHighlightOffset.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatementHighlightLength))
+            if (options.Format != "W" && StatementHighlightLength.HasValue)
             {
                 writer.WritePropertyName("statementHighlightLength"u8);
                 writer.WriteNumberValue(StatementHighlightLength.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            if (options.Format != "W" && ErrorCode.HasValue)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorSeverity))
+            if (options.Format != "W" && ErrorSeverity.HasValue)
             {
                 writer.WritePropertyName("errorSeverity"u8);
                 writer.WriteNumberValue(ErrorSeverity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityEventSqlInjectionAdditionalProperties(threatId.Value, statement.Value, Optional.ToNullable(statementHighlightOffset), Optional.ToNullable(statementHighlightLength), Optional.ToNullable(errorCode), Optional.ToNullable(errorSeverity), errorMessage.Value, serializedAdditionalRawData);
+            return new SecurityEventSqlInjectionAdditionalProperties(
+                threatId.Value,
+                statement.Value,
+                Optional.ToNullable(statementHighlightOffset),
+                Optional.ToNullable(statementHighlightLength),
+                Optional.ToNullable(errorCode),
+                Optional.ToNullable(errorSeverity),
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Write(ModelReaderWriterOptions options)

@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> Returns a <see cref="LargeInstanceResource"/> object. </returns>
         public static LargeInstanceResource GetLargeInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableLargeInstanceArmClient(client).GetLargeInstanceResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> Returns a <see cref="LargeStorageInstanceResource"/> object. </returns>
         public static LargeStorageInstanceResource GetLargeStorageInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableLargeInstanceArmClient(client).GetLargeStorageInstanceResource(id);
         }
@@ -84,7 +90,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> An object representing collection of LargeInstanceResources and their operations over a LargeInstanceResource. </returns>
         public static LargeInstanceCollection GetLargeInstances(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeInstances();
         }
@@ -123,7 +132,10 @@ namespace Azure.ResourceManager.LargeInstance
         [ForwardsClientCalls]
         public static async Task<Response<LargeInstanceResource>> GetLargeInstanceAsync(this ResourceGroupResource resourceGroupResource, string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeInstanceAsync(azureLargeInstanceName, cancellationToken).ConfigureAwait(false);
         }
@@ -162,7 +174,10 @@ namespace Azure.ResourceManager.LargeInstance
         [ForwardsClientCalls]
         public static Response<LargeInstanceResource> GetLargeInstance(this ResourceGroupResource resourceGroupResource, string azureLargeInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeInstance(azureLargeInstanceName, cancellationToken);
         }
@@ -179,7 +194,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> An object representing collection of LargeStorageInstanceResources and their operations over a LargeStorageInstanceResource. </returns>
         public static LargeStorageInstanceCollection GetLargeStorageInstances(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeStorageInstances();
         }
@@ -218,7 +236,10 @@ namespace Azure.ResourceManager.LargeInstance
         [ForwardsClientCalls]
         public static async Task<Response<LargeStorageInstanceResource>> GetLargeStorageInstanceAsync(this ResourceGroupResource resourceGroupResource, string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeStorageInstanceAsync(azureLargeStorageInstanceName, cancellationToken).ConfigureAwait(false);
         }
@@ -257,7 +278,10 @@ namespace Azure.ResourceManager.LargeInstance
         [ForwardsClientCalls]
         public static Response<LargeStorageInstanceResource> GetLargeStorageInstance(this ResourceGroupResource resourceGroupResource, string azureLargeStorageInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableLargeInstanceResourceGroupResource(resourceGroupResource).GetLargeStorageInstance(azureLargeStorageInstanceName, cancellationToken);
         }
@@ -294,7 +318,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> An async collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LargeInstanceResource> GetLargeInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableLargeInstanceSubscriptionResource(subscriptionResource).GetLargeInstancesAsync(cancellationToken);
         }
@@ -331,7 +358,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> A collection of <see cref="LargeInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LargeInstanceResource> GetLargeInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableLargeInstanceSubscriptionResource(subscriptionResource).GetLargeInstances(cancellationToken);
         }
@@ -368,7 +398,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> An async collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LargeStorageInstanceResource> GetLargeStorageInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableLargeInstanceSubscriptionResource(subscriptionResource).GetLargeStorageInstancesAsync(cancellationToken);
         }
@@ -405,7 +438,10 @@ namespace Azure.ResourceManager.LargeInstance
         /// <returns> A collection of <see cref="LargeStorageInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LargeStorageInstanceResource> GetLargeStorageInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableLargeInstanceSubscriptionResource(subscriptionResource).GetLargeStorageInstances(cancellationToken);
         }

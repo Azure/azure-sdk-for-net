@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<BgpPeerStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BgpPeerStatus>> value = default;
+            IReadOnlyList<BgpPeerStatus> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<BgpPeerStatus> array = new List<BgpPeerStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item));
+                        array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BgpPeerStatusListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new BgpPeerStatusListResult(value ?? new ChangeTrackingList<BgpPeerStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BgpPeerStatusListResult>.Write(ModelReaderWriterOptions options)

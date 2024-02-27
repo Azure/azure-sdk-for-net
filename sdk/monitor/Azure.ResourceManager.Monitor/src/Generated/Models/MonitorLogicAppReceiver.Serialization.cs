@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("callbackUrl"u8);
             writer.WriteStringValue(CallbackUri.AbsoluteUri);
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);

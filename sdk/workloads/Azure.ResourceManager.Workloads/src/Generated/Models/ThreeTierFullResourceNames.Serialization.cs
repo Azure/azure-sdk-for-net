@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CentralServer))
+            if (CentralServer != null)
             {
                 writer.WritePropertyName("centralServer"u8);
                 writer.WriteObjectValue(CentralServer);
             }
-            if (Optional.IsDefined(ApplicationServer))
+            if (ApplicationServer != null)
             {
                 writer.WritePropertyName("applicationServer"u8);
                 writer.WriteObjectValue(ApplicationServer);
             }
-            if (Optional.IsDefined(DatabaseServer))
+            if (DatabaseServer != null)
             {
                 writer.WritePropertyName("databaseServer"u8);
                 writer.WriteObjectValue(DatabaseServer);
             }
-            if (Optional.IsDefined(SharedStorage))
+            if (SharedStorage != null)
             {
                 writer.WritePropertyName("sharedStorage"u8);
                 writer.WriteObjectValue(SharedStorage);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value);
+                    centralServer = CentralServerFullResourceNames.DeserializeCentralServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value);
+                    applicationServer = ApplicationServerFullResourceNames.DeserializeApplicationServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseServer"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value);
+                    databaseServer = DatabaseServerFullResourceNames.DeserializeDatabaseServerFullResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sharedStorage"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value);
+                    sharedStorage = SharedStorageResourceNames.DeserializeSharedStorageResourceNames(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("namingPatternType"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreeTierFullResourceNames(namingPatternType, serializedAdditionalRawData, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value);
+            return new ThreeTierFullResourceNames(
+                namingPatternType,
+                serializedAdditionalRawData,
+                centralServer.Value,
+                applicationServer.Value,
+                databaseServer.Value,
+                sharedStorage.Value);
         }
 
         BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options)

@@ -25,11 +25,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<float> height = default;
             Optional<V3LengthUnit> unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            IReadOnlyList<DocumentWord> words = default;
+            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<DocumentLine> lines = default;
+            IReadOnlyList<DocumentBarcode> barcodes = default;
+            IReadOnlyList<DocumentFormula> formulas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"u8))
@@ -154,7 +154,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas));
+            return new DocumentPage(
+                pageNumber,
+                Optional.ToNullable(angle),
+                Optional.ToNullable(width),
+                Optional.ToNullable(height),
+                Optional.ToNullable(unit),
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>());
         }
     }
 }

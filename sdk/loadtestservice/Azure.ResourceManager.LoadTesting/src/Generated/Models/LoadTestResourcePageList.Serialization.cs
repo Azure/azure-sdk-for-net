@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<LoadTestingResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<LoadTestingResourceData>> value = default;
+            IReadOnlyList<LoadTestingResourceData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingResourceData> array = new List<LoadTestingResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingResourceData.DeserializeLoadTestingResourceData(item));
+                        array.Add(LoadTestingResourceData.DeserializeLoadTestingResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadTestResourcePageList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new LoadTestResourcePageList(value ?? new ChangeTrackingList<LoadTestingResourceData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadTestResourcePageList>.Write(ModelReaderWriterOptions options)

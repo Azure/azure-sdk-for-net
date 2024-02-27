@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -53,9 +52,18 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
         public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
         {
-            Argument.AssertNotNull(keyVaultUri, nameof(keyVaultUri));
-            Argument.AssertNotNull(keyName, nameof(keyName));
-            Argument.AssertNotNull(keyVaultResourceId, nameof(keyVaultResourceId));
+            if (keyVaultUri == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultUri));
+            }
+            if (keyName == null)
+            {
+                throw new ArgumentNullException(nameof(keyName));
+            }
+            if (keyVaultResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(keyVaultResourceId));
+            }
 
             KeyVaultUri = keyVaultUri;
             KeyName = keyName;

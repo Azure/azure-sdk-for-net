@@ -53,8 +53,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> or <paramref name="profiles"/> is null. </exception>
         public NetworkConfigurationDiagnosticContent(ResourceIdentifier targetResourceId, IEnumerable<NetworkConfigurationDiagnosticProfile> profiles)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
-            Argument.AssertNotNull(profiles, nameof(profiles));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
+            if (profiles == null)
+            {
+                throw new ArgumentNullException(nameof(profiles));
+            }
 
             TargetResourceId = targetResourceId;
             Profiles = profiles.ToList();

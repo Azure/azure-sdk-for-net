@@ -36,7 +36,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            if (Optional.IsDefined(KnowledgeGraphLastUpdateDate))
+            if (KnowledgeGraphLastUpdateDate.HasValue)
             {
                 writer.WritePropertyName("knowledgeGraphLastUpdateDate"u8);
                 writer.WriteStringValue(KnowledgeGraphLastUpdateDate.Value, "D");
@@ -91,7 +91,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherPatientResult> array = new List<TrialMatcherPatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item));
+                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item, options));
                     }
                     patients = array;
                     continue;

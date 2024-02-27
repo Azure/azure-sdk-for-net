@@ -152,7 +152,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIngestHeartbeatEventData(trackType.Value, trackName.Value, transcriptionLanguage.Value, transcriptionState.Value, Optional.ToNullable(bitrate), Optional.ToNullable(incomingBitrate), ingestDriftValue.Value, Optional.ToNullable(lastFragmentArrivalTime), lastTimestamp.Value, timescale.Value, Optional.ToNullable(overlapCount), Optional.ToNullable(discontinuityCount), Optional.ToNullable(nonincreasingCount), Optional.ToNullable(unexpectedBitrate), state.Value, Optional.ToNullable(healthy));
+            return new MediaLiveEventIngestHeartbeatEventData(
+                trackType.Value,
+                trackName.Value,
+                transcriptionLanguage.Value,
+                transcriptionState.Value,
+                Optional.ToNullable(bitrate),
+                Optional.ToNullable(incomingBitrate),
+                ingestDriftValue.Value,
+                Optional.ToNullable(lastFragmentArrivalTime),
+                lastTimestamp.Value,
+                timescale.Value,
+                Optional.ToNullable(overlapCount),
+                Optional.ToNullable(discontinuityCount),
+                Optional.ToNullable(nonincreasingCount),
+                Optional.ToNullable(unexpectedBitrate),
+                state.Value,
+                Optional.ToNullable(healthy));
         }
 
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>

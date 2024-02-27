@@ -26,61 +26,61 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id.HasValue)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id.Value);
             }
-            if (Optional.IsDefined(ConnectionString))
+            if (ConnectionString != null)
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(Endpoint))
+            if (Endpoint != null)
             {
                 writer.WritePropertyName("endpointUri"u8);
                 writer.WriteStringValue(Endpoint);
             }
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType.HasValue)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(SubscriptionId))
+            if (SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Optional.IsDefined(ResourceGroup))
+            if (ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (Optional.IsDefined(FileNameFormat))
+            if (FileNameFormat != null)
             {
                 writer.WritePropertyName("fileNameFormat"u8);
                 writer.WriteStringValue(FileNameFormat);
             }
-            if (Optional.IsDefined(BatchFrequencyInSeconds))
+            if (BatchFrequencyInSeconds.HasValue)
             {
                 writer.WritePropertyName("batchFrequencyInSeconds"u8);
                 writer.WriteNumberValue(BatchFrequencyInSeconds.Value);
             }
-            if (Optional.IsDefined(MaxChunkSizeInBytes))
+            if (MaxChunkSizeInBytes.HasValue)
             {
                 writer.WritePropertyName("maxChunkSizeInBytes"u8);
                 writer.WriteNumberValue(MaxChunkSizeInBytes.Value);
             }
-            if (Optional.IsDefined(Encoding))
+            if (Encoding.HasValue)
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -235,7 +235,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding), serializedAdditionalRawData);
+            return new RoutingStorageContainerProperties(
+                Optional.ToNullable(id),
+                connectionString.Value,
+                endpointUri.Value,
+                Optional.ToNullable(authenticationType),
+                identity.Value,
+                name,
+                subscriptionId.Value,
+                resourceGroup.Value,
+                containerName,
+                fileNameFormat.Value,
+                Optional.ToNullable(batchFrequencyInSeconds),
+                Optional.ToNullable(maxChunkSizeInBytes),
+                Optional.ToNullable(encoding),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingStorageContainerProperties>.Write(ModelReaderWriterOptions options)

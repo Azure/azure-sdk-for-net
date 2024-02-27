@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(SourcePortRange))
+            if (SourcePortRange != null)
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
             }
-            if (Optional.IsDefined(DestinationPortRange))
+            if (DestinationPortRange != null)
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Optional.IsCollectionDefined(SourcePortRanges))
+            if (!(SourcePortRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sourcePortRanges"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            if (!(DestinationPortRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("destinationPortRanges"u8);
                 writer.WriteStartArray();
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SourceAddressPrefix))
+            if (SourceAddressPrefix != null)
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Optional.IsDefined(DestinationAddressPrefix))
+            if (DestinationAddressPrefix != null)
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            if (!(SourceAddressPrefixes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("sourceAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            if (!(DestinationAddressPrefixes is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("destinationAddressPrefixes"u8);
                 writer.WriteStartArray();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpandedSourceAddressPrefix))
+            if (!(ExpandedSourceAddressPrefix is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("expandedSourceAddressPrefix"u8);
                 writer.WriteStartArray();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExpandedDestinationAddressPrefix))
+            if (!(ExpandedDestinationAddressPrefix is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("expandedDestinationAddressPrefix"u8);
                 writer.WriteStartArray();
@@ -116,17 +116,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Access))
+            if (Access.HasValue)
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Direction))
+            if (Direction.HasValue)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
@@ -173,14 +173,14 @@ namespace Azure.ResourceManager.Network.Models
             Optional<EffectiveSecurityRuleProtocol> protocol = default;
             Optional<string> sourcePortRange = default;
             Optional<string> destinationPortRange = default;
-            Optional<IReadOnlyList<string>> sourcePortRanges = default;
-            Optional<IReadOnlyList<string>> destinationPortRanges = default;
+            IReadOnlyList<string> sourcePortRanges = default;
+            IReadOnlyList<string> destinationPortRanges = default;
             Optional<string> sourceAddressPrefix = default;
             Optional<string> destinationAddressPrefix = default;
-            Optional<IReadOnlyList<string>> sourceAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> destinationAddressPrefixes = default;
-            Optional<IReadOnlyList<string>> expandedSourceAddressPrefix = default;
-            Optional<IReadOnlyList<string>> expandedDestinationAddressPrefix = default;
+            IReadOnlyList<string> sourceAddressPrefixes = default;
+            IReadOnlyList<string> destinationAddressPrefixes = default;
+            IReadOnlyList<string> expandedSourceAddressPrefix = default;
+            IReadOnlyList<string> expandedDestinationAddressPrefix = default;
             Optional<SecurityRuleAccess> access = default;
             Optional<int> priority = default;
             Optional<SecurityRuleDirection> direction = default;
@@ -339,7 +339,23 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), serializedAdditionalRawData);
+            return new EffectiveNetworkSecurityRule(
+                name.Value,
+                Optional.ToNullable(protocol),
+                sourcePortRange.Value,
+                destinationPortRange.Value,
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                sourceAddressPrefix.Value,
+                destinationAddressPrefix.Value,
+                sourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                destinationAddressPrefixes ?? new ChangeTrackingList<string>(),
+                expandedSourceAddressPrefix ?? new ChangeTrackingList<string>(),
+                expandedDestinationAddressPrefix ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(access),
+                Optional.ToNullable(priority),
+                Optional.ToNullable(direction),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)

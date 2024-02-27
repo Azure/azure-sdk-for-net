@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (RelativePath != null)
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
             }
-            if (Optional.IsDefined(ContentVersion))
+            if (ContentVersion != null)
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (Optional.IsDefined(QueryString))
+            if (QueryString != null)
             {
                 writer.WritePropertyName("queryString"u8);
                 writer.WriteStringValue(QueryString);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArmDeploymentTemplateLink(uri.Value, id.Value, relativePath.Value, contentVersion.Value, queryString.Value, serializedAdditionalRawData);
+            return new ArmDeploymentTemplateLink(
+                uri.Value,
+                id.Value,
+                relativePath.Value,
+                contentVersion.Value,
+                queryString.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentTemplateLink>.Write(ModelReaderWriterOptions options)

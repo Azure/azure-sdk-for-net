@@ -7,7 +7,6 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -19,7 +18,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(TasksStateTasks tasks)
         {
-            Argument.AssertNotNull(tasks, nameof(tasks));
+            if (tasks == null)
+            {
+                throw new ArgumentNullException(nameof(tasks));
+            }
 
             Tasks = tasks;
         }

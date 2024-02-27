@@ -26,87 +26,87 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BalanceSimilarNodeGroups))
+            if (BalanceSimilarNodeGroups != null)
             {
                 writer.WritePropertyName("balance-similar-node-groups"u8);
                 writer.WriteStringValue(BalanceSimilarNodeGroups);
             }
-            if (Optional.IsDefined(Expander))
+            if (Expander.HasValue)
             {
                 writer.WritePropertyName("expander"u8);
                 writer.WriteStringValue(Expander.Value.ToString());
             }
-            if (Optional.IsDefined(MaxEmptyBulkDelete))
+            if (MaxEmptyBulkDelete != null)
             {
                 writer.WritePropertyName("max-empty-bulk-delete"u8);
                 writer.WriteStringValue(MaxEmptyBulkDelete);
             }
-            if (Optional.IsDefined(MaxGracefulTerminationSec))
+            if (MaxGracefulTerminationSec != null)
             {
                 writer.WritePropertyName("max-graceful-termination-sec"u8);
                 writer.WriteStringValue(MaxGracefulTerminationSec);
             }
-            if (Optional.IsDefined(MaxNodeProvisionTime))
+            if (MaxNodeProvisionTime != null)
             {
                 writer.WritePropertyName("max-node-provision-time"u8);
                 writer.WriteStringValue(MaxNodeProvisionTime);
             }
-            if (Optional.IsDefined(MaxTotalUnreadyPercentage))
+            if (MaxTotalUnreadyPercentage != null)
             {
                 writer.WritePropertyName("max-total-unready-percentage"u8);
                 writer.WriteStringValue(MaxTotalUnreadyPercentage);
             }
-            if (Optional.IsDefined(NewPodScaleUpDelay))
+            if (NewPodScaleUpDelay != null)
             {
                 writer.WritePropertyName("new-pod-scale-up-delay"u8);
                 writer.WriteStringValue(NewPodScaleUpDelay);
             }
-            if (Optional.IsDefined(OkTotalUnreadyCount))
+            if (OkTotalUnreadyCount != null)
             {
                 writer.WritePropertyName("ok-total-unready-count"u8);
                 writer.WriteStringValue(OkTotalUnreadyCount);
             }
-            if (Optional.IsDefined(ScanIntervalInSeconds))
+            if (ScanIntervalInSeconds != null)
             {
                 writer.WritePropertyName("scan-interval"u8);
                 writer.WriteStringValue(ScanIntervalInSeconds);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterAdd))
+            if (ScaleDownDelayAfterAdd != null)
             {
                 writer.WritePropertyName("scale-down-delay-after-add"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterAdd);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterDelete))
+            if (ScaleDownDelayAfterDelete != null)
             {
                 writer.WritePropertyName("scale-down-delay-after-delete"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterDelete);
             }
-            if (Optional.IsDefined(ScaleDownDelayAfterFailure))
+            if (ScaleDownDelayAfterFailure != null)
             {
                 writer.WritePropertyName("scale-down-delay-after-failure"u8);
                 writer.WriteStringValue(ScaleDownDelayAfterFailure);
             }
-            if (Optional.IsDefined(ScaleDownUnneededTime))
+            if (ScaleDownUnneededTime != null)
             {
                 writer.WritePropertyName("scale-down-unneeded-time"u8);
                 writer.WriteStringValue(ScaleDownUnneededTime);
             }
-            if (Optional.IsDefined(ScaleDownUnreadyTime))
+            if (ScaleDownUnreadyTime != null)
             {
                 writer.WritePropertyName("scale-down-unready-time"u8);
                 writer.WriteStringValue(ScaleDownUnreadyTime);
             }
-            if (Optional.IsDefined(ScaleDownUtilizationThreshold))
+            if (ScaleDownUtilizationThreshold != null)
             {
                 writer.WritePropertyName("scale-down-utilization-threshold"u8);
                 writer.WriteStringValue(ScaleDownUtilizationThreshold);
             }
-            if (Optional.IsDefined(SkipNodesWithLocalStorage))
+            if (SkipNodesWithLocalStorage != null)
             {
                 writer.WritePropertyName("skip-nodes-with-local-storage"u8);
                 writer.WriteStringValue(SkipNodesWithLocalStorage);
             }
-            if (Optional.IsDefined(SkipNodesWithSystemPods))
+            if (SkipNodesWithSystemPods != null)
             {
                 writer.WritePropertyName("skip-nodes-with-system-pods"u8);
                 writer.WriteStringValue(SkipNodesWithSystemPods);
@@ -265,7 +265,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
+            return new ManagedClusterAutoScalerProfile(
+                balanceSimilarNodeGroups.Value,
+                Optional.ToNullable(expander),
+                maxEmptyBulkDelete.Value,
+                maxGracefulTerminationSec.Value,
+                maxNodeProvisionTime.Value,
+                maxTotalUnreadyPercentage.Value,
+                newPodScaleUpDelay.Value,
+                okTotalUnreadyCount.Value,
+                scanInterval.Value,
+                scaleDownDelayAfterAdd.Value,
+                scaleDownDelayAfterDelete.Value,
+                scaleDownDelayAfterFailure.Value,
+                scaleDownUnneededTime.Value,
+                scaleDownUnreadyTime.Value,
+                scaleDownUtilizationThreshold.Value,
+                skipNodesWithLocalStorage.Value,
+                skipNodesWithSystemPods.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)

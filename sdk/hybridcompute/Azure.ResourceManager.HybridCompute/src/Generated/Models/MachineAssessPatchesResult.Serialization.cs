@@ -27,52 +27,52 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AssessmentActivityId))
+            if (options.Format != "W" && AssessmentActivityId.HasValue)
             {
                 writer.WritePropertyName("assessmentActivityId"u8);
                 writer.WriteStringValue(AssessmentActivityId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsRebootPending))
+            if (options.Format != "W" && IsRebootPending.HasValue)
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(IsRebootPending.Value);
             }
-            if (Optional.IsDefined(AvailablePatchCountByClassification))
+            if (AvailablePatchCountByClassification != null)
             {
                 writer.WritePropertyName("availablePatchCountByClassification"u8);
                 writer.WriteObjectValue(AvailablePatchCountByClassification);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            if (options.Format != "W" && StartedBy.HasValue)
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PatchServiceUsed))
+            if (options.Format != "W" && PatchServiceUsed.HasValue)
             {
                 writer.WritePropertyName("patchServiceUsed"u8);
                 writer.WriteStringValue(PatchServiceUsed.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            if (options.Format != "W" && ErrorDetails != null)
             {
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value);
+                    availablePatchCountByClassification = AvailablePatchCountByClassification.DeserializeAvailablePatchCountByClassification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startDateTime"u8))
@@ -225,7 +225,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineAssessPatchesResult(Optional.ToNullable(status), Optional.ToNullable(assessmentActivityId), Optional.ToNullable(rebootPending), availablePatchCountByClassification.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value, serializedAdditionalRawData);
+            return new MachineAssessPatchesResult(
+                Optional.ToNullable(status),
+                Optional.ToNullable(assessmentActivityId),
+                Optional.ToNullable(rebootPending),
+                availablePatchCountByClassification.Value,
+                Optional.ToNullable(startDateTime),
+                Optional.ToNullable(lastModifiedDateTime),
+                Optional.ToNullable(startedBy),
+                Optional.ToNullable(patchServiceUsed),
+                Optional.ToNullable(osType),
+                errorDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)

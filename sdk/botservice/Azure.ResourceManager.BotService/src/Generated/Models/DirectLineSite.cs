@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -21,7 +20,10 @@ namespace Azure.ResourceManager.BotService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
         public DirectLineSite(string siteName, bool isEnabled) : base(siteName, isEnabled)
         {
-            Argument.AssertNotNull(siteName, nameof(siteName));
+            if (siteName == null)
+            {
+                throw new ArgumentNullException(nameof(siteName));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="DirectLineSite"/>. </summary>

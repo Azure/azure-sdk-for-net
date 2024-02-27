@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TokenFilters))
+            if (!(TokenFilters is ChangeTrackingList<TokenFilterName> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CharFilters))
+            if (!(CharFilters is ChangeTrackingList<CharFilterName> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
@@ -49,8 +49,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<IList<TokenFilterName>> tokenFilters = default;
-            Optional<IList<CharFilterName>> charFilters = default;
+            IList<TokenFilterName> tokenFilters = default;
+            IList<CharFilterName> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new CustomNormalizer(odataType, name, Optional.ToList(tokenFilters), Optional.ToList(charFilters));
+            return new CustomNormalizer(odataType, name, tokenFilters ?? new ChangeTrackingList<TokenFilterName>(), charFilters ?? new ChangeTrackingList<CharFilterName>());
         }
     }
 }

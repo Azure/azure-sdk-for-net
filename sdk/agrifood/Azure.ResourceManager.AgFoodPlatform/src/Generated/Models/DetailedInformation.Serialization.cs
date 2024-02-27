@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApiName))
+            if (ApiName != null)
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (Optional.IsCollectionDefined(CustomParameters))
+            if (!(CustomParameters is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("customParameters"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PlatformParameters))
+            if (!(PlatformParameters is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("platformParameters"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UnitsSupported))
+            if (UnitsSupported != null)
             {
                 writer.WritePropertyName("unitsSupported"u8);
                 writer.WriteObjectValue(UnitsSupported);
             }
-            if (Optional.IsCollectionDefined(ApiInputParameters))
+            if (!(ApiInputParameters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("apiInputParameters"u8);
                 writer.WriteStartArray();
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 return null;
             }
             Optional<string> apiName = default;
-            Optional<IReadOnlyList<string>> customParameters = default;
-            Optional<IReadOnlyList<string>> platformParameters = default;
+            IReadOnlyList<string> customParameters = default;
+            IReadOnlyList<string> platformParameters = default;
             Optional<UnitSystemsInfo> unitsSupported = default;
-            Optional<IReadOnlyList<string>> apiInputParameters = default;
+            IReadOnlyList<string> apiInputParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value);
+                    unitsSupported = UnitSystemsInfo.DeserializeUnitSystemsInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("apiInputParameters"u8))
@@ -175,7 +175,13 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DetailedInformation(apiName.Value, Optional.ToList(customParameters), Optional.ToList(platformParameters), unitsSupported.Value, Optional.ToList(apiInputParameters), serializedAdditionalRawData);
+            return new DetailedInformation(
+                apiName.Value,
+                customParameters ?? new ChangeTrackingList<string>(),
+                platformParameters ?? new ChangeTrackingList<string>(),
+                unitsSupported.Value,
+                apiInputParameters ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DetailedInformation>.Write(ModelReaderWriterOptions options)

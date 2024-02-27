@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(LoginType))
+            if (options.Format != "W" && LoginType.HasValue)
             {
                 writer.WritePropertyName("loginType"u8);
                 writer.WriteStringValue(LoginType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultDatabase))
+            if (options.Format != "W" && DefaultDatabase != null)
             {
                 writer.WritePropertyName("defaultDatabase"u8);
                 writer.WriteStringValue(DefaultDatabase);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && IsEnabled.HasValue)
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
+            if (options.Format != "W" && MigrationEligibility != null)
             {
                 writer.WritePropertyName("migrationEligibility"u8);
                 writer.WriteObjectValue(MigrationEligibility);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value);
+                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -160,7 +160,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, Optional.ToNullable(loginType), defaultDatabase.Value, Optional.ToNullable(isEnabled), migrationEligibility.Value);
+            return new ConnectToSourceSqlServerTaskOutputLoginLevel(
+                id.Value,
+                resultType,
+                serializedAdditionalRawData,
+                name.Value,
+                Optional.ToNullable(loginType),
+                defaultDatabase.Value,
+                Optional.ToNullable(isEnabled),
+                migrationEligibility.Value);
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)

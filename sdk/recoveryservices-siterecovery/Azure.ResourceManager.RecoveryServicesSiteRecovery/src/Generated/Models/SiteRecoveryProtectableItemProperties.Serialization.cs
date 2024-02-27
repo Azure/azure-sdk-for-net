@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FriendlyName))
+            if (FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Optional.IsDefined(ProtectionStatus))
+            if (ProtectionStatus != null)
             {
                 writer.WritePropertyName("protectionStatus"u8);
                 writer.WriteStringValue(ProtectionStatus);
             }
-            if (Optional.IsDefined(ReplicationProtectedItemId))
+            if (ReplicationProtectedItemId != null)
             {
                 writer.WritePropertyName("replicationProtectedItemId"u8);
                 writer.WriteStringValue(ReplicationProtectedItemId);
             }
-            if (Optional.IsDefined(RecoveryServicesProviderId))
+            if (RecoveryServicesProviderId != null)
             {
                 writer.WritePropertyName("recoveryServicesProviderId"u8);
                 writer.WriteStringValue(RecoveryServicesProviderId);
             }
-            if (Optional.IsCollectionDefined(ProtectionReadinessErrors))
+            if (!(ProtectionReadinessErrors is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("protectionReadinessErrors"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SupportedReplicationProviders))
+            if (!(SupportedReplicationProviders is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedReplicationProviders"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> protectionStatus = default;
             Optional<ResourceIdentifier> replicationProtectedItemId = default;
             Optional<ResourceIdentifier> recoveryServicesProviderId = default;
-            Optional<IReadOnlyList<string>> protectionReadinessErrors = default;
-            Optional<IReadOnlyList<string>> supportedReplicationProviders = default;
+            IReadOnlyList<string> protectionReadinessErrors = default;
+            IReadOnlyList<string> supportedReplicationProviders = default;
             Optional<SiteRecoveryReplicationProviderSettings> customDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value);
+                    customDetails = SiteRecoveryReplicationProviderSettings.DeserializeSiteRecoveryReplicationProviderSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +191,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryProtectableItemProperties(friendlyName.Value, protectionStatus.Value, replicationProtectedItemId.Value, recoveryServicesProviderId.Value, Optional.ToList(protectionReadinessErrors), Optional.ToList(supportedReplicationProviders), customDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryProtectableItemProperties(
+                friendlyName.Value,
+                protectionStatus.Value,
+                replicationProtectedItemId.Value,
+                recoveryServicesProviderId.Value,
+                protectionReadinessErrors ?? new ChangeTrackingList<string>(),
+                supportedReplicationProviders ?? new ChangeTrackingList<string>(),
+                customDetails.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryProtectableItemProperties>.Write(ModelReaderWriterOptions options)

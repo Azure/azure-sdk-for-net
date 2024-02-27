@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationValue))
+            if (ConfigurationValue != null)
             {
                 writer.WritePropertyName("configurationValue"u8);
                 writer.WriteStringValue(ConfigurationValue);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (options.Format != "W" && PublisherScope.HasValue)
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaName))
+            if (options.Format != "W" && ConfigurationGroupSchemaName != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaName"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationGroupSchemaOfferingLocation))
+            if (options.Format != "W" && ConfigurationGroupSchemaOfferingLocation != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaOfferingLocation"u8);
                 writer.WriteStringValue(ConfigurationGroupSchemaOfferingLocation);
             }
-            if (Optional.IsDefined(ConfigurationGroupSchemaResourceReference))
+            if (ConfigurationGroupSchemaResourceReference != null)
             {
                 writer.WritePropertyName("configurationGroupSchemaResourceReference"u8);
                 writer.WriteObjectValue(ConfigurationGroupSchemaResourceReference);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))
@@ -171,7 +171,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationValueWithoutSecrets(Optional.ToNullable(provisioningState), publisherName.Value, Optional.ToNullable(publisherScope), configurationGroupSchemaName.Value, configurationGroupSchemaOfferingLocation.Value, configurationGroupSchemaResourceReference.Value, configurationType, serializedAdditionalRawData, configurationValue.Value);
+            return new ConfigurationValueWithoutSecrets(
+                Optional.ToNullable(provisioningState),
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                configurationGroupSchemaName.Value,
+                configurationGroupSchemaOfferingLocation.Value,
+                configurationGroupSchemaResourceReference.Value,
+                configurationType,
+                serializedAdditionalRawData,
+                configurationValue.Value);
         }
 
         BinaryData IPersistableModel<ConfigurationValueWithoutSecrets>.Write(ModelReaderWriterOptions options)

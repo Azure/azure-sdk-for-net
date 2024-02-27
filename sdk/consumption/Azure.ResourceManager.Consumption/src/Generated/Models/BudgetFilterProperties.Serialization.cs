@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Dimensions))
+            if (Dimensions != null)
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteObjectValue(Dimensions);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteObjectValue(Tags);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

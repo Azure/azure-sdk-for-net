@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity != null)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value);
+                    capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value);
+                    sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

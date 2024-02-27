@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteObjectValue(ConnectionType);
-            if (Optional.IsCollectionDefined(FieldDefinitionValues))
+            if (!(FieldDefinitionValues is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldDefinitionValues"u8);
                 writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
             string name = default;
             Optional<string> description = default;
             ConnectionTypeAssociationProperty connectionType = default;
-            Optional<IDictionary<string, string>> fieldDefinitionValues = default;
+            IDictionary<string, string> fieldDefinitionValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Automation.Models
                         }
                         if (property0.NameEquals("connectionType"u8))
                         {
-                            connectionType = ConnectionTypeAssociationProperty.DeserializeConnectionTypeAssociationProperty(property0.Value);
+                            connectionType = ConnectionTypeAssociationProperty.DeserializeConnectionTypeAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fieldDefinitionValues"u8))
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionCreateOrUpdateContent(name, description.Value, connectionType, Optional.ToDictionary(fieldDefinitionValues), serializedAdditionalRawData);
+            return new AutomationConnectionCreateOrUpdateContent(name, description.Value, connectionType, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

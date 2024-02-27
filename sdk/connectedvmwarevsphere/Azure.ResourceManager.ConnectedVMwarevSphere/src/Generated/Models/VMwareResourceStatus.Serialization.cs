@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceStatusType))
+            if (options.Format != "W" && ResourceStatusType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceStatusType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            if (options.Format != "W" && LastUpdatedOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedAt"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareResourceStatus(type.Value, status.Value, reason.Value, message.Value, severity.Value, Optional.ToNullable(lastUpdatedAt), serializedAdditionalRawData);
+            return new VMwareResourceStatus(
+                type.Value,
+                status.Value,
+                reason.Value,
+                message.Value,
+                severity.Value,
+                Optional.ToNullable(lastUpdatedAt),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareResourceStatus>.Write(ModelReaderWriterOptions options)

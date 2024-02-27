@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MigrationState))
+            if (options.Format != "W" && MigrationState != null)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteStringValue(MigrationState);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
+            if (options.Format != "W" && FullBackupSetInfo != null)
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
                 writer.WriteObjectValue(FullBackupSetInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
+            if (options.Format != "W" && LastRestoredBackupSetInfo != null)
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
                 writer.WriteObjectValue(LastRestoredBackupSetInfo);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
+            if (options.Format != "W" && !(ActiveBackupSets is ChangeTrackingList<SqlBackupSetInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InvalidFiles))
+            if (options.Format != "W" && !(InvalidFiles is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("invalidFiles"u8);
                 writer.WriteStartArray();
@@ -61,27 +61,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobContainerName))
+            if (options.Format != "W" && BlobContainerName != null)
             {
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFullBackupRestored))
+            if (options.Format != "W" && IsFullBackupRestored.HasValue)
             {
                 writer.WritePropertyName("isFullBackupRestored"u8);
                 writer.WriteBooleanValue(IsFullBackupRestored.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RestoreBlockingReason))
+            if (options.Format != "W" && RestoreBlockingReason != null)
             {
                 writer.WritePropertyName("restoreBlockingReason"u8);
                 writer.WriteStringValue(RestoreBlockingReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(CompleteRestoreErrorMessage))
+            if (options.Format != "W" && CompleteRestoreErrorMessage != null)
             {
                 writer.WritePropertyName("completeRestoreErrorMessage"u8);
                 writer.WriteStringValue(CompleteRestoreErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FileUploadBlockingErrors))
+            if (options.Format != "W" && !(FileUploadBlockingErrors is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("fileUploadBlockingErrors"u8);
                 writer.WriteStartArray();
@@ -91,17 +91,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentRestoringFilename))
+            if (options.Format != "W" && CurrentRestoringFilename != null)
             {
                 writer.WritePropertyName("currentRestoringFilename"u8);
                 writer.WriteStringValue(CurrentRestoringFilename);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRestoredFilename))
+            if (options.Format != "W" && LastRestoredFilename != null)
             {
                 writer.WritePropertyName("lastRestoredFilename"u8);
                 writer.WriteStringValue(LastRestoredFilename);
             }
-            if (options.Format != "W" && Optional.IsDefined(PendingLogBackupsCount))
+            if (options.Format != "W" && PendingLogBackupsCount.HasValue)
             {
                 writer.WritePropertyName("pendingLogBackupsCount"u8);
                 writer.WriteNumberValue(PendingLogBackupsCount.Value);
@@ -147,13 +147,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> migrationState = default;
             Optional<SqlBackupSetInfo> fullBackupSetInfo = default;
             Optional<SqlBackupSetInfo> lastRestoredBackupSetInfo = default;
-            Optional<IReadOnlyList<SqlBackupSetInfo>> activeBackupSets = default;
-            Optional<IReadOnlyList<string>> invalidFiles = default;
+            IReadOnlyList<SqlBackupSetInfo> activeBackupSets = default;
+            IReadOnlyList<string> invalidFiles = default;
             Optional<string> blobContainerName = default;
             Optional<bool> isFullBackupRestored = default;
             Optional<string> restoreBlockingReason = default;
             Optional<string> completeRestoreErrorMessage = default;
-            Optional<IReadOnlyList<string>> fileUploadBlockingErrors = default;
+            IReadOnlyList<string> fileUploadBlockingErrors = default;
             Optional<string> currentRestoringFilename = default;
             Optional<string> lastRestoredFilename = default;
             Optional<int> pendingLogBackupsCount = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
+                    fullBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value);
+                    lastRestoredBackupSetInfo = SqlBackupSetInfo.DeserializeSqlBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupSetInfo> array = new List<SqlBackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item));
+                        array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
@@ -275,7 +275,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), Optional.ToList(invalidFiles), blobContainerName.Value, Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, Optional.ToList(fileUploadBlockingErrors), currentRestoringFilename.Value, lastRestoredFilename.Value, Optional.ToNullable(pendingLogBackupsCount), serializedAdditionalRawData);
+            return new MigrationStatusDetails(
+                migrationState.Value,
+                fullBackupSetInfo.Value,
+                lastRestoredBackupSetInfo.Value,
+                activeBackupSets ?? new ChangeTrackingList<SqlBackupSetInfo>(),
+                invalidFiles ?? new ChangeTrackingList<string>(),
+                blobContainerName.Value,
+                Optional.ToNullable(isFullBackupRestored),
+                restoreBlockingReason.Value,
+                completeRestoreErrorMessage.Value,
+                fileUploadBlockingErrors ?? new ChangeTrackingList<string>(),
+                currentRestoringFilename.Value,
+                lastRestoredFilename.Value,
+                Optional.ToNullable(pendingLogBackupsCount),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationStatusDetails>.Write(ModelReaderWriterOptions options)

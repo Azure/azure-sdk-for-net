@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="wordList"/> is null. </exception>
         public DictionaryDecompounderTokenFilter(string name, IEnumerable<string> wordList) : base(name)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(wordList, nameof(wordList));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (wordList == null)
+            {
+                throw new ArgumentNullException(nameof(wordList));
+            }
 
             WordList = wordList.ToList();
             ODataType = "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter";

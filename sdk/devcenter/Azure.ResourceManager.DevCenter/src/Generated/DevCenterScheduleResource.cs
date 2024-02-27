@@ -288,7 +288,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterScheduleResource>> UpdateAsync(WaitUntil waitUntil, DevCenterSchedulePatch patch, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _devCenterScheduleSchedulesClientDiagnostics.CreateScope("DevCenterScheduleResource.Update");
             scope.Start();
@@ -335,7 +338,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DevCenterScheduleResource> Update(WaitUntil waitUntil, DevCenterSchedulePatch patch, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _devCenterScheduleSchedulesClientDiagnostics.CreateScope("DevCenterScheduleResource.Update");
             scope.Start();

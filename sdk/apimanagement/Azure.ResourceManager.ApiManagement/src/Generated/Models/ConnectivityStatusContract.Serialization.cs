@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
@@ -133,7 +133,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityStatusContract(name, status, error.Value, lastUpdated, lastStatusChange, resourceType, isOptional, serializedAdditionalRawData);
+            return new ConnectivityStatusContract(
+                name,
+                status,
+                error.Value,
+                lastUpdated,
+                lastStatusChange,
+                resourceType,
+                isOptional,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityStatusContract>.Write(ModelReaderWriterOptions options)

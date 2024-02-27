@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Remediation))
+            if (options.Format != "W" && Remediation != null)
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStringValue(Remediation);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPass))
+            if (options.Format != "W" && IsPass.HasValue)
             {
                 writer.WritePropertyName("isPass"u8);
                 writer.WriteStringValue(IsPass.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyId))
+            if (options.Format != "W" && PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceList))
+            if (options.Format != "W" && !(ResourceList is ChangeTrackingList<AssessmentResourceContent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceList"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Optional<string> remediation = default;
             Optional<IsPass> isPass = default;
             Optional<string> policyId = default;
-            Optional<IReadOnlyList<AssessmentResourceContent>> resourceList = default;
+            IReadOnlyList<AssessmentResourceContent> resourceList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<AssessmentResourceContent> array = new List<AssessmentResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item));
+                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item, options));
                     }
                     resourceList = array;
                     continue;
@@ -173,7 +173,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, Optional.ToList(resourceList), serializedAdditionalRawData);
+            return new Assessment(
+                name.Value,
+                Optional.ToNullable(severity),
+                description.Value,
+                remediation.Value,
+                Optional.ToNullable(isPass),
+                policyId.Value,
+                resourceList ?? new ChangeTrackingList<AssessmentResourceContent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Assessment>.Write(ModelReaderWriterOptions options)

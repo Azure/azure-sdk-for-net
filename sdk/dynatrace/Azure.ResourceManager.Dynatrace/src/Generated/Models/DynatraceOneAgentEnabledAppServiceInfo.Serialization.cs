@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(MonitoringType))
+            if (MonitoringType.HasValue)
             {
                 writer.WritePropertyName("monitoringType"u8);
                 writer.WriteStringValue(MonitoringType.Value.ToString());
             }
-            if (Optional.IsDefined(AutoUpdateSetting))
+            if (AutoUpdateSetting.HasValue)
             {
                 writer.WritePropertyName("autoUpdateSetting"u8);
                 writer.WriteStringValue(AutoUpdateSetting.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateStatus))
+            if (UpdateStatus.HasValue)
             {
                 writer.WritePropertyName("updateStatus"u8);
                 writer.WriteStringValue(UpdateStatus.Value.ToString());
             }
-            if (Optional.IsDefined(AvailabilityState))
+            if (AvailabilityState.HasValue)
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToString());
             }
-            if (Optional.IsDefined(LogModule))
+            if (LogModule.HasValue)
             {
                 writer.WritePropertyName("logModule"u8);
                 writer.WriteStringValue(LogModule.Value.ToString());
             }
-            if (Optional.IsDefined(HostGroup))
+            if (HostGroup != null)
             {
                 writer.WritePropertyName("hostGroup"u8);
                 writer.WriteStringValue(HostGroup);
             }
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceOneAgentEnabledAppServiceInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value, serializedAdditionalRawData);
+            return new DynatraceOneAgentEnabledAppServiceInfo(
+                resourceId.Value,
+                version.Value,
+                Optional.ToNullable(monitoringType),
+                Optional.ToNullable(autoUpdateSetting),
+                Optional.ToNullable(updateStatus),
+                Optional.ToNullable(availabilityState),
+                Optional.ToNullable(logModule),
+                hostGroup.Value,
+                hostName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceOneAgentEnabledAppServiceInfo>.Write(ModelReaderWriterOptions options)

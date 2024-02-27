@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedEditions))
+            if (options.Format != "W" && !(SupportedEditions is ChangeTrackingList<EditionCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedEditions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedElasticPoolEditions))
+            if (options.Format != "W" && !(SupportedElasticPoolEditions is ChangeTrackingList<ElasticPoolEditionCapability> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedElasticPoolEditions"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IReadOnlyList<EditionCapability>> supportedEditions = default;
-            Optional<IReadOnlyList<ElasticPoolEditionCapability>> supportedElasticPoolEditions = default;
+            IReadOnlyList<EditionCapability> supportedEditions = default;
+            IReadOnlyList<ElasticPoolEditionCapability> supportedElasticPoolEditions = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<EditionCapability> array = new List<EditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EditionCapability.DeserializeEditionCapability(item));
+                        array.Add(EditionCapability.DeserializeEditionCapability(item, options));
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolEditionCapability> array = new List<ElasticPoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item));
+                        array.Add(ElasticPoolEditionCapability.DeserializeElasticPoolEditionCapability(item, options));
                     }
                     supportedElasticPoolEditions = array;
                     continue;
@@ -161,7 +161,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServerVersionCapability(name.Value, Optional.ToList(supportedEditions), Optional.ToList(supportedElasticPoolEditions), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
+            return new SqlServerVersionCapability(
+                name.Value,
+                supportedEditions ?? new ChangeTrackingList<EditionCapability>(),
+                supportedElasticPoolEditions ?? new ChangeTrackingList<ElasticPoolEditionCapability>(),
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServerVersionCapability>.Write(ModelReaderWriterOptions options)

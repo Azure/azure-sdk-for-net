@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NodeName))
+            if (options.Format != "W" && NodeName != null)
             {
                 writer.WritePropertyName("nodeName"u8);
                 writer.WriteStringValue(NodeName);
             }
-            if (options.Format != "W" && Optional.IsDefined(MachineName))
+            if (options.Format != "W" && MachineName != null)
             {
                 writer.WritePropertyName("machineName"u8);
                 writer.WriteStringValue(MachineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
+            if (options.Format != "W" && HostServiceUri != null)
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            if (options.Format != "W" && !(Capabilities is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartObject();
@@ -57,67 +57,67 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionStatus))
+            if (options.Format != "W" && VersionStatus != null)
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(RegisterOn))
+            if (options.Format != "W" && RegisterOn.HasValue)
             {
                 writer.WritePropertyName("registerTime"u8);
                 writer.WriteStringValue(RegisterOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectedOn))
+            if (options.Format != "W" && LastConnectedOn.HasValue)
             {
                 writer.WritePropertyName("lastConnectTime"u8);
                 writer.WriteStringValue(LastConnectedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStartedOn))
+            if (options.Format != "W" && LastStartedOn.HasValue)
             {
                 writer.WritePropertyName("lastStartTime"u8);
                 writer.WriteStringValue(LastStartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStopOn))
+            if (options.Format != "W" && LastStopOn.HasValue)
             {
                 writer.WritePropertyName("lastStopTime"u8);
                 writer.WriteStringValue(LastStopOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateResult))
+            if (options.Format != "W" && LastUpdateResult.HasValue)
             {
                 writer.WritePropertyName("lastUpdateResult"u8);
                 writer.WriteStringValue(LastUpdateResult.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStartUpdateOn))
+            if (options.Format != "W" && LastStartUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastStartUpdateTime"u8);
                 writer.WriteStringValue(LastStartUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastEndUpdateOn))
+            if (options.Format != "W" && LastEndUpdateOn.HasValue)
             {
                 writer.WritePropertyName("lastEndUpdateTime"u8);
                 writer.WriteStringValue(LastEndUpdateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsActiveDispatcher))
+            if (options.Format != "W" && IsActiveDispatcher.HasValue)
             {
                 writer.WritePropertyName("isActiveDispatcher"u8);
                 writer.WriteBooleanValue(IsActiveDispatcher.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConcurrentJobsLimit))
+            if (options.Format != "W" && ConcurrentJobsLimit.HasValue)
             {
                 writer.WritePropertyName("concurrentJobsLimit"u8);
                 writer.WriteNumberValue(ConcurrentJobsLimit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxConcurrentJobs))
+            if (options.Format != "W" && MaxConcurrentJobs.HasValue)
             {
                 writer.WritePropertyName("maxConcurrentJobs"u8);
                 writer.WriteNumberValue(MaxConcurrentJobs.Value);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<string> machineName = default;
             Optional<Uri> hostServiceUri = default;
             Optional<SynapseSelfHostedIntegrationRuntimeNodeStatus> status = default;
-            Optional<IReadOnlyDictionary<string, string>> capabilities = default;
+            IReadOnlyDictionary<string, string> capabilities = default;
             Optional<string> versionStatus = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> registerTime = default;
@@ -333,7 +333,26 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseSelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
+            return new SynapseSelfHostedIntegrationRuntimeNode(
+                nodeName.Value,
+                machineName.Value,
+                hostServiceUri.Value,
+                Optional.ToNullable(status),
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                versionStatus.Value,
+                version.Value,
+                Optional.ToNullable(registerTime),
+                Optional.ToNullable(lastConnectTime),
+                Optional.ToNullable(expiryTime),
+                Optional.ToNullable(lastStartTime),
+                Optional.ToNullable(lastStopTime),
+                Optional.ToNullable(lastUpdateResult),
+                Optional.ToNullable(lastStartUpdateTime),
+                Optional.ToNullable(lastEndUpdateTime),
+                Optional.ToNullable(isActiveDispatcher),
+                Optional.ToNullable(concurrentJobsLimit),
+                Optional.ToNullable(maxConcurrentJobs),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)

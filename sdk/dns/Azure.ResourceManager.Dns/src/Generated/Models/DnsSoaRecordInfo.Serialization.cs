@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.Dns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber.HasValue)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (Optional.IsDefined(RefreshTimeInSeconds))
+            if (RefreshTimeInSeconds.HasValue)
             {
                 writer.WritePropertyName("refreshTime"u8);
                 writer.WriteNumberValue(RefreshTimeInSeconds.Value);
             }
-            if (Optional.IsDefined(RetryTimeInSeconds))
+            if (RetryTimeInSeconds.HasValue)
             {
                 writer.WritePropertyName("retryTime"u8);
                 writer.WriteNumberValue(RetryTimeInSeconds.Value);
             }
-            if (Optional.IsDefined(ExpireTimeInSeconds))
+            if (ExpireTimeInSeconds.HasValue)
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteNumberValue(ExpireTimeInSeconds.Value);
             }
-            if (Optional.IsDefined(MinimumTtlInSeconds))
+            if (MinimumTtlInSeconds.HasValue)
             {
                 writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
@@ -171,7 +171,15 @@ namespace Azure.ResourceManager.Dns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTTL), serializedAdditionalRawData);
+            return new DnsSoaRecordInfo(
+                host.Value,
+                email.Value,
+                Optional.ToNullable(serialNumber),
+                Optional.ToNullable(refreshTime),
+                Optional.ToNullable(retryTime),
+                Optional.ToNullable(expireTime),
+                Optional.ToNullable(minimumTTL),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)

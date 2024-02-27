@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.IotCentral.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplyToDevices))
+            if (ApplyToDevices.HasValue)
             {
                 writer.WritePropertyName("applyToDevices"u8);
                 writer.WriteBooleanValue(ApplyToDevices.Value);
             }
-            if (Optional.IsDefined(ApplyToIotCentral))
+            if (ApplyToIotCentral.HasValue)
             {
                 writer.WritePropertyName("applyToIoTCentral"u8);
                 writer.WriteBooleanValue(ApplyToIotCentral.Value);
             }
-            if (Optional.IsDefined(DefaultAction))
+            if (DefaultAction.HasValue)
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (!(IPRules is ChangeTrackingList<IotCentralNetworkRuleSetIPRule> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             Optional<bool> applyToDevices = default;
             Optional<bool> applyToIoTCentral = default;
             Optional<IotCentralNetworkAction> defaultAction = default;
-            Optional<IList<IotCentralNetworkRuleSetIPRule>> ipRules = default;
+            IList<IotCentralNetworkRuleSetIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralNetworkRuleSetIPRule> array = new List<IotCentralNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item));
+                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), Optional.ToList(ipRules), serializedAdditionalRawData);
+            return new IotCentralNetworkRuleSets(Optional.ToNullable(applyToDevices), Optional.ToNullable(applyToIoTCentral), Optional.ToNullable(defaultAction), ipRules ?? new ChangeTrackingList<IotCentralNetworkRuleSetIPRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralNetworkRuleSets>.Write(ModelReaderWriterOptions options)

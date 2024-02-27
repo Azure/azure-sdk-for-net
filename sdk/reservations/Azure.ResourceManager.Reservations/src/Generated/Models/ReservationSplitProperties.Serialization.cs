@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SplitDestinations))
+            if (!(SplitDestinations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("splitDestinations"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SplitSource))
+            if (SplitSource != null)
             {
                 writer.WritePropertyName("splitSource"u8);
                 writer.WriteStringValue(SplitSource);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> splitDestinations = default;
+            IReadOnlyList<string> splitDestinations = default;
             Optional<string> splitSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSplitProperties(Optional.ToList(splitDestinations), splitSource.Value, serializedAdditionalRawData);
+            return new ReservationSplitProperties(splitDestinations ?? new ChangeTrackingList<string>(), splitSource.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSplitProperties>.Write(ModelReaderWriterOptions options)

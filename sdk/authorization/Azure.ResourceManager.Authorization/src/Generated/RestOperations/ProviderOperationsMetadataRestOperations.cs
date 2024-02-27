@@ -64,7 +64,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public async Task<Response<AuthorizationProviderOperationsMetadataData>> GetAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -91,7 +94,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
         public Response<AuthorizationProviderOperationsMetadataData> Get(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            if (resourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException(nameof(resourceProviderNamespace));
+            }
 
             using var message = CreateGetRequest(resourceProviderNamespace, expand);
             _pipeline.Send(message, cancellationToken);
@@ -193,7 +199,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<AuthorizationProviderOperationsMetadataListResult>> ListNextPageAsync(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -218,7 +227,10 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<AuthorizationProviderOperationsMetadataListResult> ListNextPage(string nextLink, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
 
             using var message = CreateListNextPageRequest(nextLink, expand);
             _pipeline.Send(message, cancellationToken);

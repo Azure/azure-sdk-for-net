@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCores))
+            if (options.Format != "W" && VCores.HasValue)
             {
                 writer.WritePropertyName("vCores"u8);
                 writer.WriteNumberValue(VCores.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
+            if (options.Format != "W" && SupportedIops.HasValue)
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVCoreMB))
+            if (options.Format != "W" && SupportedMemoryPerVCoreMB.HasValue)
             {
                 writer.WritePropertyName("supportedMemoryPerVCoreMB"u8);
                 writer.WriteNumberValue(SupportedMemoryPerVCoreMB.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            if (options.Format != "W" && !(SupportedZones is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedZones"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedHAMode))
+            if (options.Format != "W" && !(SupportedHAMode is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("supportedHAMode"u8);
                 writer.WriteStartArray();
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<long> vCores = default;
             Optional<long> supportedIops = default;
             Optional<long> supportedMemoryPerVCoreMB = default;
-            Optional<IReadOnlyList<string>> supportedZones = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
+            IReadOnlyList<string> supportedZones = default;
+            IReadOnlyList<string> supportedHAMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuCapabilityV2(name.Value, Optional.ToNullable(vCores), Optional.ToNullable(supportedIops), Optional.ToNullable(supportedMemoryPerVCoreMB), Optional.ToList(supportedZones), Optional.ToList(supportedHAMode), serializedAdditionalRawData);
+            return new SkuCapabilityV2(
+                name.Value,
+                Optional.ToNullable(vCores),
+                Optional.ToNullable(supportedIops),
+                Optional.ToNullable(supportedMemoryPerVCoreMB),
+                supportedZones ?? new ChangeTrackingList<string>(),
+                supportedHAMode ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuCapabilityV2>.Write(ModelReaderWriterOptions options)

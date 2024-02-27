@@ -18,17 +18,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint);
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(CertificateKey))
+            if (CertificateKey != null)
             {
                 writer.WritePropertyName("certificateKey"u8);
                 writer.WriteStringValue(CertificateKey);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
@@ -61,7 +61,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             string endpoint = default;
             Optional<string> username = default;
             Optional<string> password = default;
-            Optional<IDictionary<string, string>> headers = default;
+            IDictionary<string, string> headers = default;
             Optional<string> certificateKey = default;
             Optional<string> certificatePassword = default;
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,13 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(
+                endpoint,
+                username.Value,
+                password.Value,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                certificateKey.Value,
+                certificatePassword.Value);
         }
     }
 }

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupType))
+            if (options.Format != "W" && BackupType.HasValue)
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFiles))
+            if (options.Format != "W" && !(BackupFiles is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backupFiles"u8);
                 writer.WriteStartArray();
@@ -46,27 +46,27 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Position))
+            if (options.Format != "W" && Position.HasValue)
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDamaged))
+            if (options.Format != "W" && IsDamaged.HasValue)
             {
                 writer.WritePropertyName("isDamaged"u8);
                 writer.WriteBooleanValue(IsDamaged.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsCompressed))
+            if (options.Format != "W" && IsCompressed.HasValue)
             {
                 writer.WritePropertyName("isCompressed"u8);
                 writer.WriteBooleanValue(IsCompressed.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FamilyCount))
+            if (options.Format != "W" && FamilyCount.HasValue)
             {
                 writer.WritePropertyName("familyCount"u8);
                 writer.WriteNumberValue(FamilyCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
+            if (options.Format != "W" && BackupFinishOn.HasValue)
             {
                 writer.WritePropertyName("backupFinishDate"u8);
                 writer.WriteStringValue(BackupFinishOn.Value, "O");
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             Optional<string> databaseName = default;
             Optional<BackupType> backupType = default;
-            Optional<IReadOnlyList<string>> backupFiles = default;
+            IReadOnlyList<string> backupFiles = default;
             Optional<int> position = default;
             Optional<bool> isDamaged = default;
             Optional<bool> isCompressed = default;
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
+            return new DatabaseBackupInfo(
+                databaseName.Value,
+                Optional.ToNullable(backupType),
+                backupFiles ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(position),
+                Optional.ToNullable(isDamaged),
+                Optional.ToNullable(isCompressed),
+                Optional.ToNullable(familyCount),
+                Optional.ToNullable(backupFinishDate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseBackupInfo>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Notification))
+            if (Notification != null)
             {
                 if (Notification != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notification");
                 }
             }
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 if (Resource != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resource");
                 }
             }
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 if (Schedule != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Optional.IsCollectionDefined(SparkConfiguration))
+            if (!(SparkConfiguration is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (SparkConfiguration != null)
                 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("sparkConfiguration");
                 }
             }
-            if (Optional.IsDefined(StoreType))
+            if (StoreType.HasValue)
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<NotificationSetting> notification = default;
             Optional<MaterializationComputeResource> resource = default;
             Optional<MachineLearningRecurrenceTrigger> schedule = default;
-            Optional<IDictionary<string, string>> sparkConfiguration = default;
+            IDictionary<string, string> sparkConfiguration = default;
             Optional<MaterializationStoreType> storeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         notification = null;
                         continue;
                     }
-                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    notification = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resource"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resource = null;
                         continue;
                     }
-                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value);
+                    resource = MaterializationComputeResource.DeserializeMaterializationComputeResource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("schedule"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value);
+                    schedule = MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkConfiguration"u8))
@@ -192,7 +192,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaterializationSettings(notification.Value, resource.Value, schedule.Value, Optional.ToDictionary(sparkConfiguration), Optional.ToNullable(storeType), serializedAdditionalRawData);
+            return new MaterializationSettings(
+                notification.Value,
+                resource.Value,
+                schedule.Value,
+                sparkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(storeType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaterializationSettings>.Write(ModelReaderWriterOptions options)

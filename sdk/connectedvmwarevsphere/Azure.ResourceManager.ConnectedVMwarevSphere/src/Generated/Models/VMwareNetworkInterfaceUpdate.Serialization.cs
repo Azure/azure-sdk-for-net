@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(NetworkId))
+            if (NetworkId != null)
             {
                 writer.WritePropertyName("networkId"u8);
                 writer.WriteStringValue(NetworkId);
             }
-            if (Optional.IsDefined(NicType))
+            if (NicType.HasValue)
             {
                 writer.WritePropertyName("nicType"u8);
                 writer.WriteStringValue(NicType.Value.ToString());
             }
-            if (Optional.IsDefined(PowerOnBoot))
+            if (PowerOnBoot.HasValue)
             {
                 writer.WritePropertyName("powerOnBoot"u8);
                 writer.WriteStringValue(PowerOnBoot.Value.ToString());
             }
-            if (Optional.IsDefined(DeviceKey))
+            if (DeviceKey.HasValue)
             {
                 writer.WritePropertyName("deviceKey"u8);
                 writer.WriteNumberValue(DeviceKey.Value);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VMwareNetworkInterfaceUpdate(name.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), Optional.ToNullable(deviceKey), serializedAdditionalRawData);
+            return new VMwareNetworkInterfaceUpdate(
+                name.Value,
+                networkId.Value,
+                Optional.ToNullable(nicType),
+                Optional.ToNullable(powerOnBoot),
+                Optional.ToNullable(deviceKey),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VMwareNetworkInterfaceUpdate>.Write(ModelReaderWriterOptions options)

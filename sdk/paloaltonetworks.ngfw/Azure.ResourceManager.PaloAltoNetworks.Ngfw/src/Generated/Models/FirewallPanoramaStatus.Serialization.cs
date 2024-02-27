@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServerStatus))
+            if (options.Format != "W" && PanoramaServerStatus.HasValue)
             {
                 writer.WritePropertyName("panoramaServerStatus"u8);
                 writer.WriteStringValue(PanoramaServerStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PanoramaServer2Status))
+            if (options.Format != "W" && PanoramaServer2Status.HasValue)
             {
                 writer.WritePropertyName("panoramaServer2Status"u8);
                 writer.WriteStringValue(PanoramaServer2Status.Value.ToString());

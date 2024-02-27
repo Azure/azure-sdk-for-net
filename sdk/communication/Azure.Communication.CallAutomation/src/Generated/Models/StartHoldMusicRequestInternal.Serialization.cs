@@ -19,12 +19,12 @@ namespace Azure.Communication.CallAutomation
             writer.WriteObjectValue(TargetParticipant);
             writer.WritePropertyName("playSourceInfo"u8);
             writer.WriteObjectValue(PlaySourceInfo);
-            if (Optional.IsDefined(Loop))
+            if (Loop.HasValue)
             {
                 writer.WritePropertyName("loop"u8);
                 writer.WriteBooleanValue(Loop.Value);
             }
-            if (Optional.IsDefined(OperationContext))
+            if (OperationContext != null)
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

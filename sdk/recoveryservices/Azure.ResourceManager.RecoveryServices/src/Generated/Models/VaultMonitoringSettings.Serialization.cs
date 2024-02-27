@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AzureMonitorAlertSettings))
+            if (AzureMonitorAlertSettings != null)
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
-            if (Optional.IsDefined(ClassicAlertSettings))
+            if (ClassicAlertSettings != null)
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
                 writer.WriteObjectValue(ClassicAlertSettings);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value);
+                    azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("classicAlertSettings"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    classicAlertSettings = ClassicAlertSettings.DeserializeClassicAlertSettings(property.Value);
+                    classicAlertSettings = ClassicAlertSettings.DeserializeClassicAlertSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

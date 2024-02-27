@@ -28,32 +28,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("fabricObjectId"u8);
             writer.WriteStringValue(FabricObjectId);
-            if (Optional.IsDefined(RecoveryContainerId))
+            if (RecoveryContainerId != null)
             {
                 writer.WritePropertyName("recoveryContainerId"u8);
                 writer.WriteStringValue(RecoveryContainerId);
             }
-            if (Optional.IsDefined(RecoveryResourceGroupId))
+            if (RecoveryResourceGroupId != null)
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (Optional.IsDefined(RecoveryCloudServiceId))
+            if (RecoveryCloudServiceId != null)
             {
                 writer.WritePropertyName("recoveryCloudServiceId"u8);
                 writer.WriteStringValue(RecoveryCloudServiceId);
             }
-            if (Optional.IsDefined(RecoveryAvailabilitySetId))
+            if (RecoveryAvailabilitySetId != null)
             {
                 writer.WritePropertyName("recoveryAvailabilitySetId"u8);
                 writer.WriteStringValue(RecoveryAvailabilitySetId);
             }
-            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
+            if (RecoveryProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
             }
-            if (Optional.IsCollectionDefined(VmDisks))
+            if (!(VmDisks is ChangeTrackingList<A2AVmDiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VmManagedDisks))
+            if (!(VmManagedDisks is ChangeTrackingList<A2AVmManagedDiskDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
@@ -73,55 +73,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(MultiVmGroupName))
+            if (MultiVmGroupName != null)
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (Optional.IsDefined(MultiVmGroupId))
+            if (MultiVmGroupId != null)
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
-            if (Optional.IsDefined(RecoveryBootDiagStorageAccountId))
+            if (RecoveryBootDiagStorageAccountId != null)
             {
                 writer.WritePropertyName("recoveryBootDiagStorageAccountId"u8);
                 writer.WriteStringValue(RecoveryBootDiagStorageAccountId);
             }
-            if (Optional.IsDefined(DiskEncryptionInfo))
+            if (DiskEncryptionInfo != null)
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
                 writer.WriteObjectValue(DiskEncryptionInfo);
             }
-            if (Optional.IsDefined(RecoveryAvailabilityZone))
+            if (RecoveryAvailabilityZone != null)
             {
                 writer.WritePropertyName("recoveryAvailabilityZone"u8);
                 writer.WriteStringValue(RecoveryAvailabilityZone);
             }
-            if (Optional.IsDefined(RecoveryExtendedLocation))
+            if (RecoveryExtendedLocation != null)
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
                 writer.WriteObjectValue(RecoveryExtendedLocation);
             }
-            if (Optional.IsDefined(RecoveryAzureNetworkId))
+            if (RecoveryAzureNetworkId != null)
             {
                 writer.WritePropertyName("recoveryAzureNetworkId"u8);
                 writer.WriteStringValue(RecoveryAzureNetworkId);
             }
-            if (Optional.IsDefined(RecoverySubnetName))
+            if (RecoverySubnetName != null)
             {
                 writer.WritePropertyName("recoverySubnetName"u8);
                 writer.WriteStringValue(RecoverySubnetName);
             }
-            if (Optional.IsDefined(RecoveryVirtualMachineScaleSetId))
+            if (RecoveryVirtualMachineScaleSetId != null)
             {
                 writer.WritePropertyName("recoveryVirtualMachineScaleSetId"u8);
                 writer.WriteStringValue(RecoveryVirtualMachineScaleSetId);
             }
-            if (Optional.IsDefined(RecoveryCapacityReservationGroupId))
+            if (RecoveryCapacityReservationGroupId != null)
             {
                 writer.WritePropertyName("recoveryCapacityReservationGroupId"u8);
                 writer.WriteStringValue(RecoveryCapacityReservationGroupId);
+            }
+            if (AutoProtectionOfDataDisk.HasValue)
+            {
+                writer.WritePropertyName("autoProtectionOfDataDisk"u8);
+                writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -169,8 +174,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoveryCloudServiceId = default;
             Optional<ResourceIdentifier> recoveryAvailabilitySetId = default;
             Optional<ResourceIdentifier> recoveryProximityPlacementGroupId = default;
-            Optional<IList<A2AVmDiskDetails>> vmDisks = default;
-            Optional<IList<A2AVmManagedDiskDetails>> vmManagedDisks = default;
+            IList<A2AVmDiskDetails> vmDisks = default;
+            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> multiVmGroupId = default;
             Optional<ResourceIdentifier> recoveryBootDiagStorageAccountId = default;
@@ -181,6 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> recoverySubnetName = default;
             Optional<ResourceIdentifier> recoveryVirtualMachineScaleSetId = default;
             Optional<ResourceIdentifier> recoveryCapacityReservationGroupId = default;
+            Optional<AutoProtectionOfDataDisk> autoProtectionOfDataDisk = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -241,7 +247,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmDiskDetails> array = new List<A2AVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item));
+                        array.Add(A2AVmDiskDetails.DeserializeA2AVmDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;
@@ -255,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmManagedDiskDetails> array = new List<A2AVmManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item));
+                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
@@ -285,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAvailabilityZone"u8))
@@ -299,7 +305,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAzureNetworkId"u8))
@@ -334,6 +340,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("autoProtectionOfDataDisk"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -345,7 +360,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2AEnableProtectionContent(instanceType, serializedAdditionalRawData, fabricObjectId, recoveryContainerId.Value, recoveryResourceGroupId.Value, recoveryCloudServiceId.Value, recoveryAvailabilitySetId.Value, recoveryProximityPlacementGroupId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccountId.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryExtendedLocation.Value, recoveryAzureNetworkId.Value, recoverySubnetName.Value, recoveryVirtualMachineScaleSetId.Value, recoveryCapacityReservationGroupId.Value);
+            return new A2AEnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                fabricObjectId,
+                recoveryContainerId.Value,
+                recoveryResourceGroupId.Value,
+                recoveryCloudServiceId.Value,
+                recoveryAvailabilitySetId.Value,
+                recoveryProximityPlacementGroupId.Value,
+                vmDisks ?? new ChangeTrackingList<A2AVmDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                multiVmGroupName.Value,
+                multiVmGroupId.Value,
+                recoveryBootDiagStorageAccountId.Value,
+                diskEncryptionInfo.Value,
+                recoveryAvailabilityZone.Value,
+                recoveryExtendedLocation.Value,
+                recoveryAzureNetworkId.Value,
+                recoverySubnetName.Value,
+                recoveryVirtualMachineScaleSetId.Value,
+                recoveryCapacityReservationGroupId.Value,
+                Optional.ToNullable(autoProtectionOfDataDisk));
         }
 
         BinaryData IPersistableModel<A2AEnableProtectionContent>.Write(ModelReaderWriterOptions options)

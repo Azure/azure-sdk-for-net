@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (CustomerManagedKeyEncryption != null)
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = RedisEnterpriseCustomerManagedKeyEncryption.DeserializeRedisEnterpriseCustomerManagedKeyEncryption(property.Value);
+                    customerManagedKeyEncryption = RedisEnterpriseCustomerManagedKeyEncryption.DeserializeRedisEnterpriseCustomerManagedKeyEncryption(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

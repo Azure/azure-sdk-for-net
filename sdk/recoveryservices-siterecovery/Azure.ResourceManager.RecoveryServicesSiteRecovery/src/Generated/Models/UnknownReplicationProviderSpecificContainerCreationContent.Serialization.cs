@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
+            return DeserializeReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
         }
 
         internal static UnknownReplicationProviderSpecificContainerCreationContent DeserializeUnknownReplicationProviderSpecificContainerCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
+                        return DeserializeReplicationProviderSpecificContainerCreationContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ReplicationProviderSpecificContainerCreationContent)} does not support '{options.Format}' format.");

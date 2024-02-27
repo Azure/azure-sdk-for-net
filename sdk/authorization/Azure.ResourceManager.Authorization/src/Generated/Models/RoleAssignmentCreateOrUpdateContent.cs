@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public RoleAssignmentCreateOrUpdateContent(ResourceIdentifier roleDefinitionId, Guid principalId)
         {
-            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
+            if (roleDefinitionId == null)
+            {
+                throw new ArgumentNullException(nameof(roleDefinitionId));
+            }
 
             RoleDefinitionId = roleDefinitionId;
             PrincipalId = principalId;

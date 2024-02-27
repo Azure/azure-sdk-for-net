@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(NewPlansNotifications))
+            if (!(NewPlansNotifications is ChangeTrackingList<NewPlanNotification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("newPlansNotifications"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NewPlanNotification>> newPlansNotifications = default;
+            IReadOnlyList<NewPlanNotification> newPlansNotifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item, options));
                     }
                     newPlansNotifications = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewPlanNotificationListResult(Optional.ToList(newPlansNotifications), serializedAdditionalRawData);
+            return new NewPlanNotificationListResult(newPlansNotifications ?? new ChangeTrackingList<NewPlanNotification>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewPlanNotificationListResult>.Write(ModelReaderWriterOptions options)

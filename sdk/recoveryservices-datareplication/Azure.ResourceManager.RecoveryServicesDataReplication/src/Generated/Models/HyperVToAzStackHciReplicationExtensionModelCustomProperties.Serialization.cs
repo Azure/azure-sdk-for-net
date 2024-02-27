@@ -28,74 +28,74 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVFabricArmId"u8);
             writer.WriteStringValue(HyperVFabricArmId);
-            if (options.Format != "W" && Optional.IsDefined(HyperVSiteId))
+            if (options.Format != "W" && HyperVSiteId != null)
             {
                 writer.WritePropertyName("hyperVSiteId"u8);
                 writer.WriteStringValue(HyperVSiteId);
             }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
             writer.WriteStringValue(AzStackHciFabricArmId);
-            if (options.Format != "W" && Optional.IsDefined(AzStackHciSiteId))
+            if (options.Format != "W" && AzStackHciSiteId != null)
             {
                 writer.WritePropertyName("azStackHciSiteId"u8);
                 writer.WriteStringValue(AzStackHciSiteId);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(StorageAccountSasSecretName))
+            if (StorageAccountSasSecretName != null)
             {
                 writer.WritePropertyName("storageAccountSasSecretName"u8);
                 writer.WriteStringValue(StorageAccountSasSecretName);
             }
-            if (options.Format != "W" && Optional.IsDefined(AsrServiceUri))
+            if (options.Format != "W" && AsrServiceUri != null)
             {
                 writer.WritePropertyName("asrServiceUri"u8);
                 writer.WriteStringValue(AsrServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(RcmServiceUri))
+            if (options.Format != "W" && RcmServiceUri != null)
             {
                 writer.WritePropertyName("rcmServiceUri"u8);
                 writer.WriteStringValue(RcmServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(GatewayServiceUri))
+            if (options.Format != "W" && GatewayServiceUri != null)
             {
                 writer.WritePropertyName("gatewayServiceUri"u8);
                 writer.WriteStringValue(GatewayServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceGatewayServiceId))
+            if (options.Format != "W" && SourceGatewayServiceId != null)
             {
                 writer.WritePropertyName("sourceGatewayServiceId"u8);
                 writer.WriteStringValue(SourceGatewayServiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetGatewayServiceId))
+            if (options.Format != "W" && TargetGatewayServiceId != null)
             {
                 writer.WritePropertyName("targetGatewayServiceId"u8);
                 writer.WriteStringValue(TargetGatewayServiceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceStorageContainerName))
+            if (options.Format != "W" && SourceStorageContainerName != null)
             {
                 writer.WritePropertyName("sourceStorageContainerName"u8);
                 writer.WriteStringValue(SourceStorageContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetStorageContainerName))
+            if (options.Format != "W" && TargetStorageContainerName != null)
             {
                 writer.WritePropertyName("targetStorageContainerName"u8);
                 writer.WriteStringValue(TargetStorageContainerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceLocation))
+            if (options.Format != "W" && ResourceLocation != null)
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId != null)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
@@ -272,7 +272,25 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(instanceType, serializedAdditionalRawData, hyperVFabricArmId, hyperVSiteId.Value, azStackHciFabricArmId, azStackHciSiteId.Value, storageAccountId.Value, storageAccountSasSecretName.Value, asrServiceUri.Value, rcmServiceUri.Value, gatewayServiceUri.Value, sourceGatewayServiceId.Value, targetGatewayServiceId.Value, sourceStorageContainerName.Value, targetStorageContainerName.Value, resourceLocation.Value, subscriptionId.Value, resourceGroup.Value);
+            return new HyperVToAzStackHciReplicationExtensionModelCustomProperties(
+                instanceType,
+                serializedAdditionalRawData,
+                hyperVFabricArmId,
+                hyperVSiteId.Value,
+                azStackHciFabricArmId,
+                azStackHciSiteId.Value,
+                storageAccountId.Value,
+                storageAccountSasSecretName.Value,
+                asrServiceUri.Value,
+                rcmServiceUri.Value,
+                gatewayServiceUri.Value,
+                sourceGatewayServiceId.Value,
+                targetGatewayServiceId.Value,
+                sourceStorageContainerName.Value,
+                targetStorageContainerName.Value,
+                resourceLocation.Value,
+                subscriptionId.Value,
+                resourceGroup.Value);
         }
 
         BinaryData IPersistableModel<HyperVToAzStackHciReplicationExtensionModelCustomProperties>.Write(ModelReaderWriterOptions options)

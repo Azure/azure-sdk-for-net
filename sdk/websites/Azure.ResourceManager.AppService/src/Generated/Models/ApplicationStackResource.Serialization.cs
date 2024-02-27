@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,29 +47,29 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StackName))
+            if (StackName != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(StackName);
             }
-            if (Optional.IsDefined(Display))
+            if (Display != null)
             {
                 writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
-            if (Optional.IsDefined(Dependency))
+            if (Dependency != null)
             {
                 writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
-            if (Optional.IsCollectionDefined(MajorVersions))
+            if (!(MajorVersions is ChangeTrackingList<StackMajorVersion> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Frameworks))
+            if (!(Frameworks is ChangeTrackingList<ApplicationStack> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IsDeprecated))
+            if (!(IsDeprecated is ChangeTrackingList<ApplicationStack> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name0 = default;
             Optional<string> display = default;
             Optional<string> dependency = default;
-            Optional<IList<StackMajorVersion>> majorVersions = default;
-            Optional<IList<ApplicationStack>> frameworks = default;
-            Optional<IList<ApplicationStack>> isDeprecated = default;
+            IList<StackMajorVersion> majorVersions = default;
+            IList<ApplicationStack> frameworks = default;
+            IList<ApplicationStack> isDeprecated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<StackMajorVersion> array = new List<StackMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StackMajorVersion.DeserializeStackMajorVersion(item));
+                                array.Add(StackMajorVersion.DeserializeStackMajorVersion(item, options));
                             }
                             majorVersions = array;
                             continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ApplicationStack> array = new List<ApplicationStack>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationStack.DeserializeApplicationStack(item));
+                                array.Add(ApplicationStack.DeserializeApplicationStack(item, options));
                             }
                             frameworks = array;
                             continue;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ApplicationStack> array = new List<ApplicationStack>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationStack.DeserializeApplicationStack(item));
+                                array.Add(ApplicationStack.DeserializeApplicationStack(item, options));
                             }
                             isDeprecated = array;
                             continue;
@@ -257,7 +257,19 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationStackResource(id, name, type, systemData.Value, name0.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), kind.Value, serializedAdditionalRawData);
+            return new ApplicationStackResource(
+                id,
+                name,
+                type,
+                systemData.Value,
+                name0.Value,
+                display.Value,
+                dependency.Value,
+                majorVersions ?? new ChangeTrackingList<StackMajorVersion>(),
+                frameworks ?? new ChangeTrackingList<ApplicationStack>(),
+                isDeprecated ?? new ChangeTrackingList<ApplicationStack>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationStackResource>.Write(ModelReaderWriterOptions options)

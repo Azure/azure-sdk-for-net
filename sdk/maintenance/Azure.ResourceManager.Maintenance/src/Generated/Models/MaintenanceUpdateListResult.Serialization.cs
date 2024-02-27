@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MaintenanceUpdate> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MaintenanceUpdate>> value = default;
+            IReadOnlyList<MaintenanceUpdate> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item));
+                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MaintenanceUpdateListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MaintenanceUpdateListResult(value ?? new ChangeTrackingList<MaintenanceUpdate>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceUpdateListResult>.Write(ModelReaderWriterOptions options)

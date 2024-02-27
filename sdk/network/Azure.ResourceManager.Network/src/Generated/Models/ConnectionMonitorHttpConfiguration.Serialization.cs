@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(Method))
+            if (Method.HasValue)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(RequestHeaders))
+            if (!(RequestHeaders is ChangeTrackingList<NetworkWatcherHttpHeader> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
+            if (!(ValidStatusCodeRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PreferHttps))
+            if (PreferHttps.HasValue)
             {
                 writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> port = default;
             Optional<NetworkHttpConfigurationMethod> method = default;
             Optional<string> path = default;
-            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
-            Optional<IList<string>> validStatusCodeRanges = default;
+            IList<NetworkWatcherHttpHeader> requestHeaders = default;
+            IList<string> validStatusCodeRanges = default;
             Optional<bool> preferHTTPS = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item, options));
                     }
                     requestHeaders = array;
                     continue;
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorHttpConfiguration(Optional.ToNullable(port), Optional.ToNullable(method), path.Value, Optional.ToList(requestHeaders), Optional.ToList(validStatusCodeRanges), Optional.ToNullable(preferHTTPS), serializedAdditionalRawData);
+            return new ConnectionMonitorHttpConfiguration(
+                Optional.ToNullable(port),
+                Optional.ToNullable(method),
+                path.Value,
+                requestHeaders ?? new ChangeTrackingList<NetworkWatcherHttpHeader>(),
+                validStatusCodeRanges ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(preferHTTPS),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorHttpConfiguration>.Write(ModelReaderWriterOptions options)

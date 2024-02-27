@@ -26,29 +26,29 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 if (DisplayName != null)
                 {
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Children))
+            if (options.Format != "W" && !(Children is ChangeTrackingList<ManagementGroupChildOptions> collection && collection.IsUndefined))
             {
                 if (Children != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             Optional<Guid> tenantId = default;
             Optional<string> displayName = default;
             Optional<CreateManagementGroupDetails> details = default;
-            Optional<IReadOnlyList<ManagementGroupChildOptions>> children = default;
+            IReadOnlyList<ManagementGroupChildOptions> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             {
                                 continue;
                             }
-                            details = CreateManagementGroupDetails.DeserializeCreateManagementGroupDetails(property0.Value);
+                            details = CreateManagementGroupDetails.DeserializeCreateManagementGroupDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             List<ManagementGroupChildOptions> array = new List<ManagementGroupChildOptions>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item));
+                                array.Add(ManagementGroupChildOptions.DeserializeManagementGroupChildOptions(item, options));
                             }
                             children = array;
                             continue;
@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementGroupCreateOrUpdateContent(id.Value, Optional.ToNullable(type), name.Value, Optional.ToNullable(tenantId), displayName.Value, details.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new ManagementGroupCreateOrUpdateContent(
+                id.Value,
+                Optional.ToNullable(type),
+                name.Value,
+                Optional.ToNullable(tenantId),
+                displayName.Value,
+                details.Value,
+                children ?? new ChangeTrackingList<ManagementGroupChildOptions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

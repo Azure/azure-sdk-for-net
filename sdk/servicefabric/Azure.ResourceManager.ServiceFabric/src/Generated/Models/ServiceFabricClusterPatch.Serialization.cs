@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AddOnFeatures))
+            if (!(AddOnFeatures is ChangeTrackingList<ClusterAddOnFeature> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("addOnFeatures"u8);
                 writer.WriteStartArray();
@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteObjectValue(Certificate);
             }
-            if (Optional.IsDefined(CertificateCommonNames))
+            if (CertificateCommonNames != null)
             {
                 writer.WritePropertyName("certificateCommonNames"u8);
                 writer.WriteObjectValue(CertificateCommonNames);
             }
-            if (Optional.IsCollectionDefined(ClientCertificateCommonNames))
+            if (!(ClientCertificateCommonNames is ChangeTrackingList<ClusterClientCertificateCommonName> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateCommonNames"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClientCertificateThumbprints))
+            if (!(ClientCertificateThumbprints is ChangeTrackingList<ClusterClientCertificateThumbprint> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("clientCertificateThumbprints"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ClusterCodeVersion))
+            if (ClusterCodeVersion != null)
             {
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Optional.IsDefined(IsEventStoreServiceEnabled))
+            if (IsEventStoreServiceEnabled.HasValue)
             {
                 writer.WritePropertyName("eventStoreServiceEnabled"u8);
                 writer.WriteBooleanValue(IsEventStoreServiceEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(FabricSettings))
+            if (!(FabricSettings is ChangeTrackingList<SettingsSectionDescription> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("fabricSettings"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NodeTypes))
+            if (!(NodeTypes is ChangeTrackingList<ClusterNodeTypeDescription> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("nodeTypes"u8);
                 writer.WriteStartArray();
@@ -109,67 +109,67 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReliabilityLevel))
+            if (ReliabilityLevel.HasValue)
             {
                 writer.WritePropertyName("reliabilityLevel"u8);
                 writer.WriteStringValue(ReliabilityLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ReverseProxyCertificate))
+            if (ReverseProxyCertificate != null)
             {
                 writer.WritePropertyName("reverseProxyCertificate"u8);
                 writer.WriteObjectValue(ReverseProxyCertificate);
             }
-            if (Optional.IsDefined(UpgradeDescription))
+            if (UpgradeDescription != null)
             {
                 writer.WritePropertyName("upgradeDescription"u8);
                 writer.WriteObjectValue(UpgradeDescription);
             }
-            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            if (ApplicationTypeVersionsCleanupPolicy != null)
             {
                 writer.WritePropertyName("applicationTypeVersionsCleanupPolicy"u8);
                 writer.WriteObjectValue(ApplicationTypeVersionsCleanupPolicy);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (UpgradeMode.HasValue)
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(SfZonalUpgradeMode))
+            if (SfZonalUpgradeMode.HasValue)
             {
                 writer.WritePropertyName("sfZonalUpgradeMode"u8);
                 writer.WriteStringValue(SfZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(VmssZonalUpgradeMode))
+            if (VmssZonalUpgradeMode.HasValue)
             {
                 writer.WritePropertyName("vmssZonalUpgradeMode"u8);
                 writer.WriteStringValue(VmssZonalUpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(IsInfrastructureServiceManagerEnabled))
+            if (IsInfrastructureServiceManagerEnabled.HasValue)
             {
                 writer.WritePropertyName("infrastructureServiceManager"u8);
                 writer.WriteBooleanValue(IsInfrastructureServiceManagerEnabled.Value);
             }
-            if (Optional.IsDefined(UpgradeWave))
+            if (UpgradeWave.HasValue)
             {
                 writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartOn))
+            if (UpgradePauseStartOn.HasValue)
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndOn))
+            if (UpgradePauseEndOn.HasValue)
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
                 writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
             }
-            if (Optional.IsDefined(IsWaveUpgradePaused))
+            if (IsWaveUpgradePaused.HasValue)
             {
                 writer.WritePropertyName("waveUpgradePaused"u8);
                 writer.WriteBooleanValue(IsWaveUpgradePaused.Value);
             }
-            if (Optional.IsCollectionDefined(Notifications))
+            if (!(Notifications is ChangeTrackingList<ClusterNotification> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("notifications"u8);
                 writer.WriteStartArray();
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            if (IsHttpGatewayExclusiveAuthModeEnabled.HasValue)
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
                 writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
@@ -223,16 +223,16 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IList<ClusterAddOnFeature>> addOnFeatures = default;
+            IDictionary<string, string> tags = default;
+            IList<ClusterAddOnFeature> addOnFeatures = default;
             Optional<ClusterCertificateDescription> certificate = default;
             Optional<ClusterServerCertificateCommonNames> certificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateCommonName>> clientCertificateCommonNames = default;
-            Optional<IList<ClusterClientCertificateThumbprint>> clientCertificateThumbprints = default;
+            IList<ClusterClientCertificateCommonName> clientCertificateCommonNames = default;
+            IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints = default;
             Optional<string> clusterCodeVersion = default;
             Optional<bool> eventStoreServiceEnabled = default;
-            Optional<IList<SettingsSectionDescription>> fabricSettings = default;
-            Optional<IList<ClusterNodeTypeDescription>> nodeTypes = default;
+            IList<SettingsSectionDescription> fabricSettings = default;
+            IList<ClusterNodeTypeDescription> nodeTypes = default;
             Optional<ClusterReliabilityLevel> reliabilityLevel = default;
             Optional<ClusterCertificateDescription> reverseProxyCertificate = default;
             Optional<ClusterUpgradePolicy> upgradeDescription = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<DateTimeOffset> upgradePauseStartTimestampUtc = default;
             Optional<DateTimeOffset> upgradePauseEndTimestampUtc = default;
             Optional<bool> waveUpgradePaused = default;
-            Optional<IList<ClusterNotification>> notifications = default;
+            IList<ClusterNotification> notifications = default;
             Optional<bool> enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            certificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("certificateCommonNames"u8))
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value);
+                            certificateCommonNames = ClusterServerCertificateCommonNames.DeserializeClusterServerCertificateCommonNames(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientCertificateCommonNames"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateCommonName> array = new List<ClusterClientCertificateCommonName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item));
+                                array.Add(ClusterClientCertificateCommonName.DeserializeClusterClientCertificateCommonName(item, options));
                             }
                             clientCertificateCommonNames = array;
                             continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterClientCertificateThumbprint> array = new List<ClusterClientCertificateThumbprint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item));
+                                array.Add(ClusterClientCertificateThumbprint.DeserializeClusterClientCertificateThumbprint(item, options));
                             }
                             clientCertificateThumbprints = array;
                             continue;
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<SettingsSectionDescription> array = new List<SettingsSectionDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item));
+                                array.Add(SettingsSectionDescription.DeserializeSettingsSectionDescription(item, options));
                             }
                             fabricSettings = array;
                             continue;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNodeTypeDescription> array = new List<ClusterNodeTypeDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item));
+                                array.Add(ClusterNodeTypeDescription.DeserializeClusterNodeTypeDescription(item, options));
                             }
                             nodeTypes = array;
                             continue;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value);
+                            reverseProxyCertificate = ClusterCertificateDescription.DeserializeClusterCertificateDescription(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeDescription"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
+                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("applicationTypeVersionsCleanupPolicy"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             {
                                 continue;
                             }
-                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value);
+                            applicationTypeVersionsCleanupPolicy = ApplicationTypeVersionsCleanupPolicy.DeserializeApplicationTypeVersionsCleanupPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("upgradeMode"u8))
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ClusterNotification> array = new List<ClusterNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterNotification.DeserializeClusterNotification(item));
+                                array.Add(ClusterNotification.DeserializeClusterNotification(item, options));
                             }
                             notifications = array;
                             continue;
@@ -516,7 +516,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricClusterPatch(Optional.ToDictionary(tags), Optional.ToList(addOnFeatures), certificate.Value, certificateCommonNames.Value, Optional.ToList(clientCertificateCommonNames), Optional.ToList(clientCertificateThumbprints), clusterCodeVersion.Value, Optional.ToNullable(eventStoreServiceEnabled), Optional.ToList(fabricSettings), Optional.ToList(nodeTypes), Optional.ToNullable(reliabilityLevel), reverseProxyCertificate.Value, upgradeDescription.Value, applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(sfZonalUpgradeMode), Optional.ToNullable(vmssZonalUpgradeMode), Optional.ToNullable(infrastructureServiceManager), Optional.ToNullable(upgradeWave), Optional.ToNullable(upgradePauseStartTimestampUtc), Optional.ToNullable(upgradePauseEndTimestampUtc), Optional.ToNullable(waveUpgradePaused), Optional.ToList(notifications), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), serializedAdditionalRawData);
+            return new ServiceFabricClusterPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>(),
+                certificate.Value,
+                certificateCommonNames.Value,
+                clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>(),
+                clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>(),
+                clusterCodeVersion.Value,
+                Optional.ToNullable(eventStoreServiceEnabled),
+                fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>(),
+                nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>(),
+                Optional.ToNullable(reliabilityLevel),
+                reverseProxyCertificate.Value,
+                upgradeDescription.Value,
+                applicationTypeVersionsCleanupPolicy.Value,
+                Optional.ToNullable(upgradeMode),
+                Optional.ToNullable(sfZonalUpgradeMode),
+                Optional.ToNullable(vmssZonalUpgradeMode),
+                Optional.ToNullable(infrastructureServiceManager),
+                Optional.ToNullable(upgradeWave),
+                Optional.ToNullable(upgradePauseStartTimestampUtc),
+                Optional.ToNullable(upgradePauseEndTimestampUtc),
+                Optional.ToNullable(waveUpgradePaused),
+                notifications ?? new ChangeTrackingList<ClusterNotification>(),
+                Optional.ToNullable(enableHttpGatewayExclusiveAuthMode),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricClusterPatch>.Write(ModelReaderWriterOptions options)

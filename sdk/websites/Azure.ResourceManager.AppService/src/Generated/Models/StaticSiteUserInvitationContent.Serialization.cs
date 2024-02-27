@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(UserDetails))
+            if (UserDetails != null)
             {
                 writer.WritePropertyName("userDetails"u8);
                 writer.WriteStringValue(UserDetails);
             }
-            if (Optional.IsDefined(Roles))
+            if (Roles != null)
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStringValue(Roles);
             }
-            if (Optional.IsDefined(NumHoursToExpiration))
+            if (NumHoursToExpiration.HasValue)
             {
                 writer.WritePropertyName("numHoursToExpiration"u8);
                 writer.WriteNumberValue(NumHoursToExpiration.Value);
@@ -208,7 +208,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticSiteUserInvitationContent(id, name, type, systemData.Value, domain.Value, provider.Value, userDetails.Value, roles.Value, Optional.ToNullable(numHoursToExpiration), kind.Value, serializedAdditionalRawData);
+            return new StaticSiteUserInvitationContent(
+                id,
+                name,
+                type,
+                systemData.Value,
+                domain.Value,
+                provider.Value,
+                userDetails.Value,
+                roles.Value,
+                Optional.ToNullable(numHoursToExpiration),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StaticSiteUserInvitationContent>.Write(ModelReaderWriterOptions options)

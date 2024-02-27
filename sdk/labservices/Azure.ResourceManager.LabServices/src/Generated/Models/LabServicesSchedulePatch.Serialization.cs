@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(StopOn))
+            if (StopOn.HasValue)
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (Optional.IsDefined(RecurrencePattern))
+            if (RecurrencePattern != null)
             {
                 writer.WritePropertyName("recurrencePattern"u8);
                 writer.WriteObjectValue(RecurrencePattern);
             }
-            if (Optional.IsDefined(TimeZoneId))
+            if (TimeZoneId != null)
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value);
+                            recurrencePattern = LabServicesRecurrencePattern.DeserializeLabServicesRecurrencePattern(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -167,7 +167,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesSchedulePatch(Optional.ToNullable(startAt), Optional.ToNullable(stopAt), recurrencePattern.Value, timeZoneId.Value, notes.Value, serializedAdditionalRawData);
+            return new LabServicesSchedulePatch(
+                Optional.ToNullable(startAt),
+                Optional.ToNullable(stopAt),
+                recurrencePattern.Value,
+                timeZoneId.Value,
+                notes.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesSchedulePatch>.Write(ModelReaderWriterOptions options)

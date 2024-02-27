@@ -23,8 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             Optional<string> queueId = default;
-            Optional<IReadOnlyDictionary<string, string>> labels = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> labels = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<string> jobId = default;
             Optional<string> channelReference = default;
             Optional<string> channelId = default;
@@ -79,7 +79,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterJobDeletedEventData(jobId.Value, channelReference.Value, channelId.Value, queueId.Value, Optional.ToDictionary(labels), Optional.ToDictionary(tags));
+            return new AcsRouterJobDeletedEventData(
+                jobId.Value,
+                channelReference.Value,
+                channelId.Value,
+                queueId.Value,
+                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class AcsRouterJobDeletedEventDataConverter : JsonConverter<AcsRouterJobDeletedEventData>

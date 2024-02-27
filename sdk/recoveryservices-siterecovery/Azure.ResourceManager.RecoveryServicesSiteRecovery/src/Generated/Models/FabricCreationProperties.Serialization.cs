@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomDetails))
+            if (CustomDetails != null)
             {
                 writer.WritePropertyName("customDetails"u8);
                 writer.WriteObjectValue(CustomDetails);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    customDetails = FabricSpecificCreationContent.DeserializeFabricSpecificCreationContent(property.Value);
+                    customDetails = FabricSpecificCreationContent.DeserializeFabricSpecificCreationContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCodec(document.RootElement, options);
+            return DeserializeMediaCodecBase(document.RootElement, options);
         }
 
         internal static UnknownCodec DeserializeUnknownCodec(JsonElement element, ModelReaderWriterOptions options = null)
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCodec(document.RootElement, options);
+                        return DeserializeMediaCodecBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaCodecBase)} does not support '{options.Format}' format.");

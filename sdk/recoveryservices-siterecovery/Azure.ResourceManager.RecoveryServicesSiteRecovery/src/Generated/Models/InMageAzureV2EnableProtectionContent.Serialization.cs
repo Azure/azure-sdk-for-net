@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MasterTargetId))
+            if (MasterTargetId != null)
             {
                 writer.WritePropertyName("masterTargetId"u8);
                 writer.WriteStringValue(MasterTargetId);
             }
-            if (Optional.IsDefined(ProcessServerId))
+            if (ProcessServerId.HasValue)
             {
                 writer.WritePropertyName("processServerId"u8);
                 writer.WriteStringValue(ProcessServerId.Value);
             }
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Optional.IsDefined(RunAsAccountId))
+            if (RunAsAccountId != null)
             {
                 writer.WritePropertyName("runAsAccountId"u8);
                 writer.WriteStringValue(RunAsAccountId);
             }
-            if (Optional.IsDefined(MultiVmGroupId))
+            if (MultiVmGroupId != null)
             {
                 writer.WritePropertyName("multiVmGroupId"u8);
                 writer.WriteStringValue(MultiVmGroupId);
             }
-            if (Optional.IsDefined(MultiVmGroupName))
+            if (MultiVmGroupName != null)
             {
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
-            if (Optional.IsCollectionDefined(DisksToInclude))
+            if (!(DisksToInclude is ChangeTrackingList<InMageAzureV2DiskDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("disksToInclude"u8);
                 writer.WriteStartArray();
@@ -66,82 +66,82 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetAzureNetworkId))
+            if (TargetAzureNetworkId != null)
             {
                 writer.WritePropertyName("targetAzureNetworkId"u8);
                 writer.WriteStringValue(TargetAzureNetworkId);
             }
-            if (Optional.IsDefined(TargetAzureSubnetId))
+            if (TargetAzureSubnetId != null)
             {
                 writer.WritePropertyName("targetAzureSubnetId"u8);
                 writer.WriteStringValue(TargetAzureSubnetId);
             }
-            if (Optional.IsDefined(EnableRdpOnTargetOption))
+            if (EnableRdpOnTargetOption != null)
             {
                 writer.WritePropertyName("enableRdpOnTargetOption"u8);
                 writer.WriteStringValue(EnableRdpOnTargetOption);
             }
-            if (Optional.IsDefined(TargetAzureVmName))
+            if (TargetAzureVmName != null)
             {
                 writer.WritePropertyName("targetAzureVmName"u8);
                 writer.WriteStringValue(TargetAzureVmName);
             }
-            if (Optional.IsDefined(LogStorageAccountId))
+            if (LogStorageAccountId != null)
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (Optional.IsDefined(TargetAzureV1ResourceGroupId))
+            if (TargetAzureV1ResourceGroupId != null)
             {
                 writer.WritePropertyName("targetAzureV1ResourceGroupId"u8);
                 writer.WriteStringValue(TargetAzureV1ResourceGroupId);
             }
-            if (Optional.IsDefined(TargetAzureV2ResourceGroupId))
+            if (TargetAzureV2ResourceGroupId != null)
             {
                 writer.WritePropertyName("targetAzureV2ResourceGroupId"u8);
                 writer.WriteStringValue(TargetAzureV2ResourceGroupId);
             }
-            if (Optional.IsDefined(DiskType))
+            if (DiskType.HasValue)
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetAvailabilitySetId))
+            if (TargetAvailabilitySetId != null)
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (Optional.IsDefined(TargetAvailabilityZone))
+            if (TargetAvailabilityZone != null)
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            if (TargetProximityPlacementGroupId != null)
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (Optional.IsDefined(LicenseType))
+            if (LicenseType.HasValue)
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(SqlServerLicenseType))
+            if (SqlServerLicenseType.HasValue)
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetVmSize))
+            if (TargetVmSize != null)
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (Optional.IsDefined(DiskEncryptionSetId))
+            if (DiskEncryptionSetId != null)
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (Optional.IsCollectionDefined(TargetVmTags))
+            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            if (!(SeedManagedDiskTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("seedManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            if (!(TargetManagedDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("targetManagedDiskTags"u8);
                 writer.WriteStartObject();
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(TargetNicTags))
+            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> runAsAccountId = default;
             Optional<string> multiVmGroupId = default;
             Optional<string> multiVmGroupName = default;
-            Optional<IList<InMageAzureV2DiskDetails>> disksToInclude = default;
+            IList<InMageAzureV2DiskDetails> disksToInclude = default;
             Optional<ResourceIdentifier> targetAzureNetworkId = default;
             Optional<ResourceIdentifier> targetAzureSubnetId = default;
             Optional<string> enableRdpOnTargetOption = default;
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
             Optional<string> targetVmSize = default;
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<IDictionary<string, string>> targetVmTags = default;
-            Optional<IDictionary<string, string>> seedManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetManagedDiskTags = default;
-            Optional<IDictionary<string, string>> targetNicTags = default;
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> seedManagedDiskTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageAzureV2DiskDetails> array = new List<InMageAzureV2DiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item));
+                        array.Add(InMageAzureV2DiskDetails.DeserializeInMageAzureV2DiskDetails(item, options));
                     }
                     disksToInclude = array;
                     continue;
@@ -494,7 +494,35 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAzureV2EnableProtectionContent(instanceType, serializedAdditionalRawData, masterTargetId.Value, Optional.ToNullable(processServerId), storageAccountId.Value, runAsAccountId.Value, multiVmGroupId.Value, multiVmGroupName.Value, Optional.ToList(disksToInclude), targetAzureNetworkId.Value, targetAzureSubnetId.Value, enableRdpOnTargetOption.Value, targetAzureVmName.Value, logStorageAccountId.Value, targetAzureV1ResourceGroupId.Value, targetAzureV2ResourceGroupId.Value, Optional.ToNullable(diskType), targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, Optional.ToNullable(licenseType), Optional.ToNullable(sqlServerLicenseType), targetVmSize.Value, diskEncryptionSetId.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags));
+            return new InMageAzureV2EnableProtectionContent(
+                instanceType,
+                serializedAdditionalRawData,
+                masterTargetId.Value,
+                Optional.ToNullable(processServerId),
+                storageAccountId.Value,
+                runAsAccountId.Value,
+                multiVmGroupId.Value,
+                multiVmGroupName.Value,
+                disksToInclude ?? new ChangeTrackingList<InMageAzureV2DiskDetails>(),
+                targetAzureNetworkId.Value,
+                targetAzureSubnetId.Value,
+                enableRdpOnTargetOption.Value,
+                targetAzureVmName.Value,
+                logStorageAccountId.Value,
+                targetAzureV1ResourceGroupId.Value,
+                targetAzureV2ResourceGroupId.Value,
+                Optional.ToNullable(diskType),
+                targetAvailabilitySetId.Value,
+                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId.Value,
+                Optional.ToNullable(licenseType),
+                Optional.ToNullable(sqlServerLicenseType),
+                targetVmSize.Value,
+                diskEncryptionSetId.Value,
+                targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
+                seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
+                targetNicTags ?? new ChangeTrackingDictionary<string, string>());
         }
 
         BinaryData IPersistableModel<InMageAzureV2EnableProtectionContent>.Write(ModelReaderWriterOptions options)

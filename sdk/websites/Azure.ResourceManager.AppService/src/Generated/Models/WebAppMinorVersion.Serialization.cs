@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayText))
+            if (options.Format != "W" && DisplayText != null)
             {
                 writer.WritePropertyName("displayText"u8);
                 writer.WriteStringValue(DisplayText);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StackSettings))
+            if (options.Format != "W" && StackSettings != null)
             {
                 writer.WritePropertyName("stackSettings"u8);
                 writer.WriteObjectValue(StackSettings);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    stackSettings = WebAppRuntimes.DeserializeWebAppRuntimes(property.Value);
+                    stackSettings = WebAppRuntimes.DeserializeWebAppRuntimes(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

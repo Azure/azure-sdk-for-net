@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CurrentValue))
+            if (CurrentValue.HasValue)
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Optional.IsDefined(Limit))
+            if (Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
+                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabServicesUsage(Optional.ToNullable(currentValue), Optional.ToNullable(limit), Optional.ToNullable(unit), name.Value, id.Value, serializedAdditionalRawData);
+            return new LabServicesUsage(
+                Optional.ToNullable(currentValue),
+                Optional.ToNullable(limit),
+                Optional.ToNullable(unit),
+                name.Value,
+                id.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabServicesUsage>.Write(ModelReaderWriterOptions options)

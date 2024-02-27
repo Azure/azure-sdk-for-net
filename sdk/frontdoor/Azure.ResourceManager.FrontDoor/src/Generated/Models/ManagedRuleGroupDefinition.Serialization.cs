@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleGroupName))
+            if (options.Format != "W" && RuleGroupName != null)
             {
                 writer.WritePropertyName("ruleGroupName"u8);
                 writer.WriteStringValue(RuleGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Rules))
+            if (options.Format != "W" && !(Rules is ChangeTrackingList<ManagedRuleDefinition> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             Optional<string> ruleGroupName = default;
             Optional<string> description = default;
-            Optional<IReadOnlyList<ManagedRuleDefinition>> rules = default;
+            IReadOnlyList<ManagedRuleDefinition> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleDefinition> array = new List<ManagedRuleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item));
+                        array.Add(ManagedRuleDefinition.DeserializeManagedRuleDefinition(item, options));
                     }
                     rules = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ManagedRuleGroupDefinition(ruleGroupName.Value, description.Value, rules ?? new ChangeTrackingList<ManagedRuleDefinition>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleGroupDefinition>.Write(ModelReaderWriterOptions options)

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(ActionableMessage))
+            if (ActionableMessage != null)
             {
                 writer.WritePropertyName("actionableMessage"u8);
                 writer.WriteStringValue(ActionableMessage);
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (Optional.IsDefined(LineNumber))
+            if (LineNumber != null)
             {
                 writer.WritePropertyName("lineNumber"u8);
                 writer.WriteStringValue(LineNumber);
             }
-            if (Optional.IsDefined(HResult))
+            if (HResult.HasValue)
             {
                 writer.WritePropertyName("hResult"u8);
                 writer.WriteNumberValue(HResult.Value);
             }
-            if (Optional.IsDefined(StackTrace))
+            if (StackTrace != null)
             {
                 writer.WritePropertyName("stackTrace"u8);
                 writer.WriteStringValue(StackTrace);
@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportableException(message.Value, actionableMessage.Value, filePath.Value, lineNumber.Value, Optional.ToNullable(hResult), stackTrace.Value, serializedAdditionalRawData);
+            return new ReportableException(
+                message.Value,
+                actionableMessage.Value,
+                filePath.Value,
+                lineNumber.Value,
+                Optional.ToNullable(hResult),
+                stackTrace.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportableException>.Write(ModelReaderWriterOptions options)

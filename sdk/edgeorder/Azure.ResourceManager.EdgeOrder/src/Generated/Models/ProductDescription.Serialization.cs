@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DescriptionType))
+            if (options.Format != "W" && DescriptionType.HasValue)
             {
                 writer.WritePropertyName("descriptionType"u8);
                 writer.WriteStringValue(DescriptionType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ShortDescription))
+            if (options.Format != "W" && ShortDescription != null)
             {
                 writer.WritePropertyName("shortDescription"u8);
                 writer.WriteStringValue(ShortDescription);
             }
-            if (options.Format != "W" && Optional.IsDefined(LongDescription))
+            if (options.Format != "W" && LongDescription != null)
             {
                 writer.WritePropertyName("longDescription"u8);
                 writer.WriteStringValue(LongDescription);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Keywords))
+            if (options.Format != "W" && !(Keywords is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("keywords"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Attributes))
+            if (options.Format != "W" && !(Attributes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            if (options.Format != "W" && !(Links is ChangeTrackingList<ProductLink> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ProductDescriptionType> descriptionType = default;
             Optional<string> shortDescription = default;
             Optional<string> longDescription = default;
-            Optional<IReadOnlyList<string>> keywords = default;
-            Optional<IReadOnlyList<string>> attributes = default;
-            Optional<IReadOnlyList<ProductLink>> links = default;
+            IReadOnlyList<string> keywords = default;
+            IReadOnlyList<string> attributes = default;
+            IReadOnlyList<ProductLink> links = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductLink> array = new List<ProductLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductLink.DeserializeProductLink(item));
+                        array.Add(ProductLink.DeserializeProductLink(item, options));
                     }
                     links = array;
                     continue;
@@ -186,7 +186,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ProductDescription(Optional.ToNullable(descriptionType), shortDescription.Value, longDescription.Value, Optional.ToList(keywords), Optional.ToList(attributes), Optional.ToList(links), serializedAdditionalRawData);
+            return new ProductDescription(
+                Optional.ToNullable(descriptionType),
+                shortDescription.Value,
+                longDescription.Value,
+                keywords ?? new ChangeTrackingList<string>(),
+                attributes ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<ProductLink>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProductDescription>.Write(ModelReaderWriterOptions options)

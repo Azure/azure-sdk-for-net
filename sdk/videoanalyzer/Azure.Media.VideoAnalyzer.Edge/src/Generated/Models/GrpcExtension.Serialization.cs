@@ -18,7 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataTransfer"u8);
             writer.WriteObjectValue(DataTransfer);
-            if (Optional.IsDefined(ExtensionConfiguration))
+            if (ExtensionConfiguration != null)
             {
                 writer.WritePropertyName("extensionConfiguration"u8);
                 writer.WriteStringValue(ExtensionConfiguration);
@@ -27,7 +27,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteObjectValue(Endpoint);
             writer.WritePropertyName("image"u8);
             writer.WriteObjectValue(Image);
-            if (Optional.IsDefined(SamplingOptions))
+            if (SamplingOptions != null)
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -112,7 +112,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new GrpcExtension(type, name, inputs, endpoint, image, samplingOptions.Value, dataTransfer, extensionConfiguration.Value);
+            return new GrpcExtension(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions.Value,
+                dataTransfer,
+                extensionConfiguration.Value);
         }
     }
 }

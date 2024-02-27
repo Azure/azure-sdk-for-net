@@ -19,12 +19,12 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> questions = default;
+            IReadOnlyList<string> questions = default;
             Optional<string> answer = default;
             Optional<double> confidenceScore = default;
             Optional<int> id = default;
             Optional<string> source = default;
-            Optional<IReadOnlyDictionary<string, string>> metadata = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             Optional<KnowledgeBaseAnswerDialog> dialog = default;
             Optional<AnswerSpan> answerSpan = default;
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,15 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new KnowledgeBaseAnswer(Optional.ToList(questions), answer.Value, Optional.ToNullable(confidenceScore), Optional.ToNullable(id), source.Value, Optional.ToDictionary(metadata), dialog.Value, answerSpan.Value);
+            return new KnowledgeBaseAnswer(
+                questions ?? new ChangeTrackingList<string>(),
+                answer.Value,
+                Optional.ToNullable(confidenceScore),
+                Optional.ToNullable(id),
+                source.Value,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                dialog.Value,
+                answerSpan.Value);
         }
     }
 }

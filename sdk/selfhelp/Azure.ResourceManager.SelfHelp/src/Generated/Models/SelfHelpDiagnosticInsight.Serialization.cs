@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Title))
+            if (Title != null)
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Results))
+            if (Results != null)
             {
                 writer.WritePropertyName("results"u8);
                 writer.WriteStringValue(Results);
             }
-            if (Optional.IsDefined(InsightImportanceLevel))
+            if (InsightImportanceLevel.HasValue)
             {
                 writer.WritePropertyName("importanceLevel"u8);
                 writer.WriteStringValue(InsightImportanceLevel.Value.ToString());

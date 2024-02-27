@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (Optional.IsDefined(AuthenticationType))
+            if (AuthenticationType != null)
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType);
             }
-            if (Optional.IsDefined(NetworkIsolation))
+            if (NetworkIsolation != null)
             {
                 writer.WritePropertyName("networkIsolation"u8);
                 writer.WriteObjectValue(NetworkIsolation);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value);
+                    networkIsolation = NetworkIsolationSettings.DeserializeNetworkIsolationSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,15 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseExportDefinition(storageKeyType, storageKey, storageUri, administratorLogin, administratorLoginPassword, authenticationType.Value, networkIsolation.Value, serializedAdditionalRawData);
+            return new DatabaseExportDefinition(
+                storageKeyType,
+                storageKey,
+                storageUri,
+                administratorLogin,
+                administratorLoginPassword,
+                authenticationType.Value,
+                networkIsolation.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseExportDefinition>.Write(ModelReaderWriterOptions options)

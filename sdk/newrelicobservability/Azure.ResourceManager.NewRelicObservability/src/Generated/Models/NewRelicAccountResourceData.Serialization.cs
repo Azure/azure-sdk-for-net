@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrganizationId))
+            if (OrganizationId != null)
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (Optional.IsDefined(AccountId))
+            if (AccountId != null)
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (Optional.IsDefined(AccountName))
+            if (AccountName != null)
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (Optional.IsDefined(Region))
+            if (Region.HasValue)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region.Value);
@@ -186,7 +186,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NewRelicAccountResourceData(id, name, type, systemData.Value, organizationId.Value, accountId.Value, accountName.Value, Optional.ToNullable(region), serializedAdditionalRawData);
+            return new NewRelicAccountResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                organizationId.Value,
+                accountId.Value,
+                accountName.Value,
+                Optional.ToNullable(region),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NewRelicAccountResourceData>.Write(ModelReaderWriterOptions options)

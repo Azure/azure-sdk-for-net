@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SourceControlSyncJob> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SourceControlSyncJob>> value = default;
+            IReadOnlyList<SourceControlSyncJob> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SourceControlSyncJob> array = new List<SourceControlSyncJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceControlSyncJob.DeserializeSourceControlSyncJob(item));
+                        array.Add(SourceControlSyncJob.DeserializeSourceControlSyncJob(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobListResult(value ?? new ChangeTrackingList<SourceControlSyncJob>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobListResult>.Write(ModelReaderWriterOptions options)

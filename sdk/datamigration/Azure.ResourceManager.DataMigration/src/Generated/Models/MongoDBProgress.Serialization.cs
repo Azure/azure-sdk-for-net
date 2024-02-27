@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteNumberValue(EventsPending);
             writer.WritePropertyName("eventsReplayed"u8);
             writer.WriteNumberValue(EventsReplayed);
-            if (Optional.IsDefined(LastEventOn))
+            if (LastEventOn.HasValue)
             {
                 writer.WritePropertyName("lastEventTime"u8);
                 writer.WriteStringValue(LastEventOn.Value, "O");
             }
-            if (Optional.IsDefined(LastReplayOn))
+            if (LastReplayOn.HasValue)
             {
                 writer.WritePropertyName("lastReplayTime"u8);
                 writer.WriteStringValue(LastReplayOn.Value, "O");
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(QualifiedName))
+            if (QualifiedName != null)
             {
                 writer.WritePropertyName("qualifiedName"u8);
                 writer.WriteStringValue(QualifiedName);
@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element);
-                    case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element);
-                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element);
+                    case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element, options);
+                    case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
+                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                 }
             }
-            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element);
+            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);
         }
 
         BinaryData IPersistableModel<MongoDBProgress>.Write(ModelReaderWriterOptions options)

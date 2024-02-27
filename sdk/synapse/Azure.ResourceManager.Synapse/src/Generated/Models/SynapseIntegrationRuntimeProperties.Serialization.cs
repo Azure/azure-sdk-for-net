@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return SynapseManagedIntegrationRuntime.DeserializeSynapseManagedIntegrationRuntime(element);
-                    case "SelfHosted": return SynapseSelfHostedIntegrationRuntime.DeserializeSynapseSelfHostedIntegrationRuntime(element);
+                    case "Managed": return SynapseManagedIntegrationRuntime.DeserializeSynapseManagedIntegrationRuntime(element, options);
+                    case "SelfHosted": return SynapseSelfHostedIntegrationRuntime.DeserializeSynapseSelfHostedIntegrationRuntime(element, options);
                 }
             }
-            return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element);
+            return UnknownIntegrationRuntime.DeserializeUnknownIntegrationRuntime(element, options);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeProperties>.Write(ModelReaderWriterOptions options)

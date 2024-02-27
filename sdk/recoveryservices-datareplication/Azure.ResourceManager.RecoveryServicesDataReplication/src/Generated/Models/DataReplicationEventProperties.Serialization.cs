@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceName))
+            if (options.Format != "W" && ResourceName != null)
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventType))
+            if (options.Format != "W" && EventType != null)
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && Optional.IsDefined(EventName))
+            if (options.Format != "W" && EventName != null)
             {
                 writer.WritePropertyName("eventName"u8);
                 writer.WriteStringValue(EventName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OccurredOn))
+            if (options.Format != "W" && OccurredOn.HasValue)
             {
                 writer.WritePropertyName("timeOfOccurrence"u8);
                 writer.WriteStringValue(OccurredOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Severity))
+            if (options.Format != "W" && Severity != null)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteStringValue(Severity);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            if (options.Format != "W" && CorrelationId != null)
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> severity = default;
             Optional<string> description = default;
             Optional<string> correlationId = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,14 +187,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value);
+                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationEventProperties(Optional.ToNullable(resourceType), resourceName.Value, eventType.Value, eventName.Value, Optional.ToNullable(timeOfOccurrence), severity.Value, description.Value, correlationId.Value, Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationEventProperties(
+                Optional.ToNullable(resourceType),
+                resourceName.Value,
+                eventType.Value,
+                eventName.Value,
+                Optional.ToNullable(timeOfOccurrence),
+                severity.Value,
+                description.Value,
+                correlationId.Value,
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEventProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PasswordHashId))
+            if (PasswordHashId != null)
             {
                 if (PasswordHashId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("passwordHashId");
                 }
             }
-            if (Optional.IsDefined(FilePath))
+            if (FilePath != null)
             {
                 if (FilePath != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("filePath");
                 }
             }
-            if (Optional.IsDefined(Salt))
+            if (Salt != null)
             {
                 if (Salt != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("salt");
                 }
             }
-            if (Optional.IsDefined(Hash))
+            if (Hash != null)
             {
                 if (Hash != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("hash");
                 }
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 if (Context != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("context");
                 }
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 if (Username != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     writer.WriteNull("username");
                 }
             }
-            if (Optional.IsDefined(Algorithm))
+            if (Algorithm != null)
             {
                 if (Algorithm != null)
                 {
@@ -235,7 +235,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PasswordHash(passwordHashId.Value, filePath.Value, salt.Value, hash.Value, context.Value, username.Value, algorithm.Value, serializedAdditionalRawData);
+            return new PasswordHash(
+                passwordHashId.Value,
+                filePath.Value,
+                salt.Value,
+                hash.Value,
+                context.Value,
+                username.Value,
+                algorithm.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PasswordHash>.Write(ModelReaderWriterOptions options)

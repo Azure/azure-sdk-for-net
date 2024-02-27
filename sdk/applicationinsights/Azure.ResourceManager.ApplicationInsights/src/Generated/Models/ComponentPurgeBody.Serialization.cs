@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ComponentPurgeBodyFilters> array = new List<ComponentPurgeBodyFilters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentPurgeBodyFilters.DeserializeComponentPurgeBodyFilters(item));
+                        array.Add(ComponentPurgeBodyFilters.DeserializeComponentPurgeBodyFilters(item, options));
                     }
                     filters = array;
                     continue;

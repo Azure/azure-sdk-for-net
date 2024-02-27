@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
+                    connectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedSchemas"u8))

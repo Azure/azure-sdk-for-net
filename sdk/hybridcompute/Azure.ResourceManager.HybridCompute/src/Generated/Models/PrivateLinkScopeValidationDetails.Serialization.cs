@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ConnectionDetails))
+            if (!(ConnectionDetails is ChangeTrackingList<HybridComputeConnectionDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("connectionDetails"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             Optional<ResourceIdentifier> id = default;
             Optional<HybridComputePublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IReadOnlyList<HybridComputeConnectionDetail>> connectionDetails = default;
+            IReadOnlyList<HybridComputeConnectionDetail> connectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item, options));
                     }
                     connectionDetails = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(connectionDetails), serializedAdditionalRawData);
+            return new PrivateLinkScopeValidationDetails(id.Value, Optional.ToNullable(publicNetworkAccess), connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopeValidationDetails>.Write(ModelReaderWriterOptions options)

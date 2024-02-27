@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(BaseEnvironmentSource))
+            if (options.Format != "W" && BaseEnvironmentSource != null)
             {
                 if (BaseEnvironmentSource != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("baseEnvironmentSource");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(BuildId))
+            if (options.Format != "W" && BuildId != null)
             {
                 if (BuildId != null)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("buildId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(BuildState))
+            if (options.Format != "W" && BuildState.HasValue)
             {
                 writer.WritePropertyName("buildState"u8);
                 writer.WriteStringValue(BuildState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnvironmentVariables))
+            if (options.Format != "W" && !(EnvironmentVariables is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (EnvironmentVariables != null)
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("environmentVariables");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(InferencingServer))
+            if (options.Format != "W" && InferencingServer != null)
             {
                 if (InferencingServer != null)
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inferencingServer");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
+            if (options.Format != "W" && !(Inputs is ChangeTrackingList<ModelPackageInput> collection0 && collection0.IsUndefined))
             {
                 if (Inputs != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inputs");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(LogUri))
+            if (options.Format != "W" && LogUri != null)
             {
                 if (LogUri != null)
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("logUrl");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(ModelConfiguration))
+            if (options.Format != "W" && ModelConfiguration != null)
             {
                 if (ModelConfiguration != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelConfiguration");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && !(Tags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetEnvironmentId))
+            if (options.Format != "W" && TargetEnvironmentId != null)
             {
                 if (TargetEnvironmentId != null)
                 {
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<BaseEnvironmentSource> baseEnvironmentSource = default;
             Optional<string> buildId = default;
             Optional<PackageBuildState> buildState = default;
-            Optional<IReadOnlyDictionary<string, string>> environmentVariables = default;
+            IReadOnlyDictionary<string, string> environmentVariables = default;
             Optional<InferencingServer> inferencingServer = default;
-            Optional<IReadOnlyList<ModelPackageInput>> inputs = default;
+            IReadOnlyList<ModelPackageInput> inputs = default;
             Optional<Uri> logUrl = default;
             Optional<ModelConfiguration> modelConfiguration = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IReadOnlyDictionary<string, string> tags = default;
             Optional<string> targetEnvironmentId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         baseEnvironmentSource = null;
                         continue;
                     }
-                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value);
+                    baseEnvironmentSource = BaseEnvironmentSource.DeserializeBaseEnvironmentSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("buildId"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inferencingServer = null;
                         continue;
                     }
-                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value);
+                    inferencingServer = InferencingServer.DeserializeInferencingServer(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inputs"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ModelPackageInput> array = new List<ModelPackageInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item));
+                        array.Add(ModelPackageInput.DeserializeModelPackageInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         modelConfiguration = null;
                         continue;
                     }
-                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value);
+                    modelConfiguration = ModelConfiguration.DeserializeModelConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -328,7 +328,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPackageResult(baseEnvironmentSource.Value, buildId.Value, Optional.ToNullable(buildState), Optional.ToDictionary(environmentVariables), inferencingServer.Value, Optional.ToList(inputs), logUrl.Value, modelConfiguration.Value, Optional.ToDictionary(tags), targetEnvironmentId.Value, serializedAdditionalRawData);
+            return new ModelPackageResult(
+                baseEnvironmentSource.Value,
+                buildId.Value,
+                Optional.ToNullable(buildState),
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                inferencingServer.Value,
+                inputs ?? new ChangeTrackingList<ModelPackageInput>(),
+                logUrl.Value,
+                modelConfiguration.Value,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetEnvironmentId.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ModelPackageResult>.Write(ModelReaderWriterOptions options)

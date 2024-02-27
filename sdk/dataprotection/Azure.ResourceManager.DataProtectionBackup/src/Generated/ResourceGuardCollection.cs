@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceGuardResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceGuardsName, ResourceGuardData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceGuardResource> CreateOrUpdate(WaitUntil waitUntil, string resourceGuardsName, ResourceGuardData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardResource>> GetAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual Response<ResourceGuardResource> Get(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceGuardResource>> GetIfExistsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
         public virtual NullableResponse<ResourceGuardResource> GetIfExists(string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+            if (resourceGuardsName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardsName));
+            }
+            if (resourceGuardsName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardsName));
+            }
 
             using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.GetIfExists");
             scope.Start();

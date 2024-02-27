@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AllOf))
+            if (!(AllOf is ChangeTrackingList<MultiMetricCriteria> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IList<MultiMetricCriteria>> allOf = default;
+            IList<MultiMetricCriteria> allOf = default;
             MonitorOdataType odataType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MultiMetricCriteria> array = new List<MultiMetricCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MultiMetricCriteria.DeserializeMultiMetricCriteria(item));
+                        array.Add(MultiMetricCriteria.DeserializeMultiMetricCriteria(item, options));
                     }
                     allOf = array;
                     continue;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MetricAlertMultipleResourceMultipleMetricCriteria(odataType, additionalProperties, Optional.ToList(allOf));
+            return new MetricAlertMultipleResourceMultipleMetricCriteria(odataType, additionalProperties, allOf ?? new ChangeTrackingList<MultiMetricCriteria>());
         }
 
         BinaryData IPersistableModel<MetricAlertMultipleResourceMultipleMetricCriteria>.Write(ModelReaderWriterOptions options)

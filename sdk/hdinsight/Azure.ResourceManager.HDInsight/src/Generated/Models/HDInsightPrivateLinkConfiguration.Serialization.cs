@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartObject();
             writer.WritePropertyName("groupId"u8);
             writer.WriteStringValue(GroupId);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                             List<HDInsightIPConfiguration> array = new List<HDInsightIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item));
+                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightPrivateLinkConfiguration(id.Value, name, Optional.ToNullable(type), groupId, Optional.ToNullable(provisioningState), ipConfigurations, serializedAdditionalRawData);
+            return new HDInsightPrivateLinkConfiguration(
+                id.Value,
+                name,
+                Optional.ToNullable(type),
+                groupId,
+                Optional.ToNullable(provisioningState),
+                ipConfigurations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightPrivateLinkConfiguration>.Write(ModelReaderWriterOptions options)

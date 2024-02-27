@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BandwidthInMbps))
+            if (BandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedBandwidthInMbps))
+            if (options.Format != "W" && ProvisionedBandwidthInMbps.HasValue)
             {
                 writer.WritePropertyName("provisionedBandwidthInMbps"u8);
                 writer.WriteNumberValue(ProvisionedBandwidthInMbps.Value);
             }
-            if (Optional.IsDefined(SessionAddressProvider))
+            if (SessionAddressProvider.HasValue)
             {
                 writer.WritePropertyName("sessionAddressProvider"u8);
                 writer.WriteStringValue(SessionAddressProvider.Value.ToString());
             }
-            if (Optional.IsDefined(UseForPeeringService))
+            if (UseForPeeringService.HasValue)
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MicrosoftTrackingId))
+            if (options.Format != "W" && MicrosoftTrackingId != null)
             {
                 writer.WritePropertyName("microsoftTrackingId"u8);
                 writer.WriteStringValue(MicrosoftTrackingId);
             }
-            if (Optional.IsDefined(PeeringDBFacilityId))
+            if (PeeringDBFacilityId.HasValue)
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
+            if (options.Format != "W" && ConnectionState.HasValue)
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (Optional.IsDefined(BgpSession))
+            if (BgpSession != null)
             {
                 writer.WritePropertyName("bgpSession"u8);
                 writer.WriteObjectValue(BgpSession);
             }
-            if (Optional.IsDefined(ConnectionIdentifier))
+            if (ConnectionIdentifier != null)
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            if (options.Format != "W" && ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value);
+                    bgpSession = PeeringBgpSession.DeserializePeeringBgpSession(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("connectionIdentifier"u8))
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value, serializedAdditionalRawData);
+            return new PeeringDirectConnection(
+                Optional.ToNullable(bandwidthInMbps),
+                Optional.ToNullable(provisionedBandwidthInMbps),
+                Optional.ToNullable(sessionAddressProvider),
+                Optional.ToNullable(useForPeeringService),
+                microsoftTrackingId.Value,
+                Optional.ToNullable(peeringDBFacilityId),
+                Optional.ToNullable(connectionState),
+                bgpSession.Value,
+                connectionIdentifier.Value,
+                errorMessage.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringDirectConnection>.Write(ModelReaderWriterOptions options)

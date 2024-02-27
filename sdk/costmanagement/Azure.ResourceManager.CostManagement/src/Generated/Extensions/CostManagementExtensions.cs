@@ -43,7 +43,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
         public static CostManagementExportCollection GetCostManagementExports(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementExports(scope);
         }
@@ -83,7 +86,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).GetCostManagementExportAsync(scope, exportName, expand, cancellationToken).ConfigureAwait(false);
         }
@@ -123,7 +129,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementExportResource> GetCostManagementExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementExport(scope, exportName, expand, cancellationToken);
         }
@@ -141,7 +150,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
         public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetAllCostManagementViews(scope);
         }
@@ -180,7 +192,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).GetCostManagementViewsAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
         }
@@ -219,7 +234,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementViews(scope, viewName, cancellationToken);
         }
@@ -237,7 +255,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
         public static CostManagementAlertCollection GetCostManagementAlerts(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementAlerts(scope);
         }
@@ -275,7 +296,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).GetCostManagementAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
@@ -313,7 +337,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementAlertResource> GetCostManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementAlert(scope, alertId, cancellationToken);
         }
@@ -331,7 +358,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
         public static ScheduledActionCollection GetScheduledActions(this ArmClient client, ResourceIdentifier scope)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetScheduledActions(scope);
         }
@@ -370,7 +400,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).GetScheduledActionAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
@@ -409,7 +442,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<ScheduledActionResource> GetScheduledAction(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetScheduledAction(scope, name, cancellationToken);
         }
@@ -444,7 +480,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetBenefitRecommendationsAsync(scope, filter, orderby, expand, cancellationToken);
         }
@@ -479,7 +518,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<BenefitRecommendationModel> GetBenefitRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetBenefitRecommendations(scope, filter, orderby, expand, cancellationToken);
         }
@@ -513,7 +555,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> UsageForecastAsync(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).UsageForecastAsync(scope, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
@@ -547,7 +592,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> UsageForecast(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).UsageForecast(scope, forecastDefinition, filter, cancellationToken);
         }
@@ -583,7 +631,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static AsyncPageable<CostManagementDimension> GetDimensionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetDimensionsAsync(scope, filter, expand, skiptoken, top, cancellationToken);
         }
@@ -619,7 +670,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Pageable<CostManagementDimension> GetDimensions(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetDimensions(scope, filter, expand, skiptoken, top, cancellationToken);
         }
@@ -652,7 +706,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageQueryAsync(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).UsageQueryAsync(scope, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
@@ -685,7 +742,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageQuery(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).UsageQuery(scope, queryDefinition, cancellationToken);
         }
@@ -718,7 +778,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return await GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
@@ -751,7 +814,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> or <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledAction(scope, content, cancellationToken);
         }
@@ -770,7 +836,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementExportResource"/> object. </returns>
         public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementExportResource(id);
         }
@@ -789,7 +858,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="TenantsCostManagementViewsResource"/> object. </returns>
         public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetTenantsCostManagementViewsResource(id);
         }
@@ -808,7 +880,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementViewsResource"/> object. </returns>
         public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementViewsResource(id);
         }
@@ -827,7 +902,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementAlertResource"/> object. </returns>
         public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetCostManagementAlertResource(id);
         }
@@ -846,7 +924,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="TenantScheduledActionResource"/> object. </returns>
         public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetTenantScheduledActionResource(id);
         }
@@ -865,7 +946,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="ScheduledActionResource"/> object. </returns>
         public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableCostManagementArmClient(client).GetScheduledActionResource(id);
         }
@@ -882,7 +966,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
         public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetAllTenantsCostManagementViews();
         }
@@ -920,7 +1007,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViewsAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
@@ -958,7 +1048,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViews(viewName, cancellationToken);
         }
@@ -975,7 +1068,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
         public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActions();
         }
@@ -1013,7 +1109,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
         }
@@ -1051,7 +1150,10 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledAction(name, cancellationToken);
         }
@@ -1087,7 +1189,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
         }
@@ -1123,7 +1228,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
         }
@@ -1160,7 +1268,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
@@ -1197,7 +1308,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
@@ -1233,7 +1347,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
@@ -1269,7 +1386,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
@@ -1306,7 +1426,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
@@ -1343,7 +1466,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
@@ -1378,7 +1504,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1413,7 +1542,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
         }
@@ -1449,7 +1581,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1485,7 +1620,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
         }
@@ -1520,7 +1658,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1555,7 +1696,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
         }
@@ -1591,7 +1735,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1627,7 +1774,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
         }
@@ -1662,7 +1812,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1697,7 +1850,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
         }
@@ -1733,7 +1889,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -1769,7 +1928,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
         }
@@ -1808,7 +1970,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
@@ -1847,7 +2012,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="CostManagementAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementAlertResource> GetCostManagementAlerts(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
@@ -1883,7 +2051,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
@@ -1919,7 +2090,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> ExternalCloudProviderUsageForecast(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
         }
@@ -1952,7 +2126,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
         }
@@ -1985,7 +2162,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="CostManagementDimension"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
         }
@@ -2020,7 +2200,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
@@ -2055,7 +2238,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageByExternalCloudProviderTypeQuery(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
         }
@@ -2091,7 +2277,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
@@ -2127,7 +2316,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
         }
@@ -2164,7 +2356,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
@@ -2201,7 +2396,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
         }
@@ -2237,7 +2435,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
         }
@@ -2273,7 +2474,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadPriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
         }
@@ -2308,7 +2512,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
         }
@@ -2343,7 +2550,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
         }
@@ -2375,7 +2585,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return await GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
         }
@@ -2407,7 +2620,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+            if (tenantResource == null)
+            {
+                throw new ArgumentNullException(nameof(tenantResource));
+            }
 
             return GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
         }

@@ -197,7 +197,10 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CurrentQuotaLimitBaseResource>> UpdateAsync(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();
@@ -245,7 +248,10 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CurrentQuotaLimitBaseResource> Update(WaitUntil waitUntil, CurrentQuotaLimitBaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _currentQuotaLimitBaseQuotaClientDiagnostics.CreateScope("CurrentQuotaLimitBaseResource.Update");
             scope.Start();

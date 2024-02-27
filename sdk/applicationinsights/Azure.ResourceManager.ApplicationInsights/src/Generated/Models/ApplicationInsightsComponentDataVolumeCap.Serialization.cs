@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cap))
+            if (Cap.HasValue)
             {
                 writer.WritePropertyName("Cap"u8);
                 writer.WriteNumberValue(Cap.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResetTime))
+            if (options.Format != "W" && ResetTime.HasValue)
             {
                 writer.WritePropertyName("ResetTime"u8);
                 writer.WriteNumberValue(ResetTime.Value);
             }
-            if (Optional.IsDefined(WarningThreshold))
+            if (WarningThreshold.HasValue)
             {
                 writer.WritePropertyName("WarningThreshold"u8);
                 writer.WriteNumberValue(WarningThreshold.Value);
             }
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitThreshold))
+            if (IsStopSendNotificationWhenHitThreshold.HasValue)
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitThreshold"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitThreshold.Value);
             }
-            if (Optional.IsDefined(IsStopSendNotificationWhenHitCap))
+            if (IsStopSendNotificationWhenHitCap.HasValue)
             {
                 writer.WritePropertyName("StopSendNotificationWhenHitCap"u8);
                 writer.WriteBooleanValue(IsStopSendNotificationWhenHitCap.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxHistoryCap))
+            if (options.Format != "W" && MaxHistoryCap.HasValue)
             {
                 writer.WritePropertyName("MaxHistoryCap"u8);
                 writer.WriteNumberValue(MaxHistoryCap.Value);
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationInsightsComponentDataVolumeCap(Optional.ToNullable(cap), Optional.ToNullable(resetTime), Optional.ToNullable(warningThreshold), Optional.ToNullable(stopSendNotificationWhenHitThreshold), Optional.ToNullable(stopSendNotificationWhenHitCap), Optional.ToNullable(maxHistoryCap), serializedAdditionalRawData);
+            return new ApplicationInsightsComponentDataVolumeCap(
+                Optional.ToNullable(cap),
+                Optional.ToNullable(resetTime),
+                Optional.ToNullable(warningThreshold),
+                Optional.ToNullable(stopSendNotificationWhenHitThreshold),
+                Optional.ToNullable(stopSendNotificationWhenHitCap),
+                Optional.ToNullable(maxHistoryCap),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentDataVolumeCap>.Write(ModelReaderWriterOptions options)

@@ -17,14 +17,14 @@ namespace Azure.AI.Translation.Document
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl"u8);
             writer.WriteStringValue(TargetUri.AbsoluteUri);
-            if (Optional.IsDefined(CategoryId))
+            if (CategoryId != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(CategoryId);
             }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(LanguageCode);
-            if (Optional.IsCollectionDefined(Glossaries))
+            if (!(Glossaries is ChangeTrackingList<TranslationGlossary> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("glossaries"u8);
                 writer.WriteStartArray();
@@ -34,7 +34,7 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StorageSource))
+            if (StorageSource != null)
             {
                 writer.WritePropertyName("storageSource"u8);
                 writer.WriteStringValue(StorageSource);

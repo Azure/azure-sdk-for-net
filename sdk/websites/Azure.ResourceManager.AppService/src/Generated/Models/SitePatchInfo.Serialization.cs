@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HostNames))
+            if (options.Format != "W" && !(HostNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("hostNames"u8);
                 writer.WriteStartArray();
@@ -74,22 +74,22 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RepositorySiteName))
+            if (options.Format != "W" && RepositorySiteName != null)
             {
                 writer.WritePropertyName("repositorySiteName"u8);
                 writer.WriteStringValue(RepositorySiteName);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageState))
+            if (options.Format != "W" && UsageState.HasValue)
             {
                 writer.WritePropertyName("usageState"u8);
                 writer.WriteStringValue(UsageState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledHostNames))
+            if (options.Format != "W" && !(EnabledHostNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("enabledHostNames"u8);
                 writer.WriteStartArray();
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityState))
+            if (options.Format != "W" && AvailabilityState.HasValue)
             {
                 writer.WritePropertyName("availabilityState"u8);
                 writer.WriteStringValue(AvailabilityState.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(HostNameSslStates))
+            if (!(HostNameSslStates is ChangeTrackingList<HostNameSslState> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("hostNameSslStates"u8);
                 writer.WriteStartArray();
@@ -114,37 +114,37 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ServerFarmId))
+            if (ServerFarmId != null)
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(IsReserved))
+            if (IsReserved.HasValue)
             {
                 writer.WritePropertyName("reserved"u8);
                 writer.WriteBooleanValue(IsReserved.Value);
             }
-            if (Optional.IsDefined(IsXenon))
+            if (IsXenon.HasValue)
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(IsHyperV))
+            if (IsHyperV.HasValue)
             {
                 writer.WritePropertyName("hyperV"u8);
                 writer.WriteBooleanValue(IsHyperV.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            if (options.Format != "W" && LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(SiteConfig))
+            if (SiteConfig != null)
             {
                 writer.WritePropertyName("siteConfig"u8);
                 writer.WriteObjectValue(SiteConfig);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
+            if (options.Format != "W" && !(TrafficManagerHostNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("trafficManagerHostNames"u8);
                 writer.WriteStartArray();
@@ -154,132 +154,132 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsScmSiteAlsoStopped))
+            if (IsScmSiteAlsoStopped.HasValue)
             {
                 writer.WritePropertyName("scmSiteAlsoStopped"u8);
                 writer.WriteBooleanValue(IsScmSiteAlsoStopped.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetSwapSlot))
+            if (options.Format != "W" && TargetSwapSlot != null)
             {
                 writer.WritePropertyName("targetSwapSlot"u8);
                 writer.WriteStringValue(TargetSwapSlot);
             }
-            if (Optional.IsDefined(HostingEnvironmentProfile))
+            if (HostingEnvironmentProfile != null)
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
                 writer.WriteObjectValue(HostingEnvironmentProfile);
             }
-            if (Optional.IsDefined(IsClientAffinityEnabled))
+            if (IsClientAffinityEnabled.HasValue)
             {
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientCertEnabled))
+            if (IsClientCertEnabled.HasValue)
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
                 writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
-            if (Optional.IsDefined(ClientCertMode))
+            if (ClientCertMode.HasValue)
             {
                 writer.WritePropertyName("clientCertMode"u8);
                 writer.WriteStringValue(ClientCertMode.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ClientCertExclusionPaths))
+            if (ClientCertExclusionPaths != null)
             {
                 writer.WritePropertyName("clientCertExclusionPaths"u8);
                 writer.WriteStringValue(ClientCertExclusionPaths);
             }
-            if (Optional.IsDefined(IsHostNameDisabled))
+            if (IsHostNameDisabled.HasValue)
             {
                 writer.WritePropertyName("hostNamesDisabled"u8);
                 writer.WriteBooleanValue(IsHostNameDisabled.Value);
             }
-            if (Optional.IsDefined(CustomDomainVerificationId))
+            if (CustomDomainVerificationId != null)
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
                 writer.WriteStringValue(CustomDomainVerificationId);
             }
-            if (options.Format != "W" && Optional.IsDefined(OutboundIPAddresses))
+            if (options.Format != "W" && OutboundIPAddresses != null)
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStringValue(OutboundIPAddresses);
             }
-            if (options.Format != "W" && Optional.IsDefined(PossibleOutboundIPAddresses))
+            if (options.Format != "W" && PossibleOutboundIPAddresses != null)
             {
                 writer.WritePropertyName("possibleOutboundIpAddresses"u8);
                 writer.WriteStringValue(PossibleOutboundIPAddresses);
             }
-            if (Optional.IsDefined(ContainerSize))
+            if (ContainerSize.HasValue)
             {
                 writer.WritePropertyName("containerSize"u8);
                 writer.WriteNumberValue(ContainerSize.Value);
             }
-            if (Optional.IsDefined(DailyMemoryTimeQuota))
+            if (DailyMemoryTimeQuota.HasValue)
             {
                 writer.WritePropertyName("dailyMemoryTimeQuota"u8);
                 writer.WriteNumberValue(DailyMemoryTimeQuota.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SuspendOn))
+            if (options.Format != "W" && SuspendOn.HasValue)
             {
                 writer.WritePropertyName("suspendedTill"u8);
                 writer.WriteStringValue(SuspendOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfWorkers))
+            if (options.Format != "W" && MaxNumberOfWorkers.HasValue)
             {
                 writer.WritePropertyName("maxNumberOfWorkers"u8);
                 writer.WriteNumberValue(MaxNumberOfWorkers.Value);
             }
-            if (Optional.IsDefined(CloningInfo))
+            if (CloningInfo != null)
             {
                 writer.WritePropertyName("cloningInfo"u8);
                 writer.WriteObjectValue(CloningInfo);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            if (options.Format != "W" && ResourceGroup != null)
             {
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDefaultContainer))
+            if (options.Format != "W" && IsDefaultContainer.HasValue)
             {
                 writer.WritePropertyName("isDefaultContainer"u8);
                 writer.WriteBooleanValue(IsDefaultContainer.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultHostName))
+            if (options.Format != "W" && DefaultHostName != null)
             {
                 writer.WritePropertyName("defaultHostName"u8);
                 writer.WriteStringValue(DefaultHostName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
+            if (options.Format != "W" && SlotSwapStatus != null)
             {
                 writer.WritePropertyName("slotSwapStatus"u8);
                 writer.WriteObjectValue(SlotSwapStatus);
             }
-            if (Optional.IsDefined(IsHttpsOnly))
+            if (IsHttpsOnly.HasValue)
             {
                 writer.WritePropertyName("httpsOnly"u8);
                 writer.WriteBooleanValue(IsHttpsOnly.Value);
             }
-            if (Optional.IsDefined(RedundancyMode))
+            if (RedundancyMode.HasValue)
             {
                 writer.WritePropertyName("redundancyMode"u8);
                 writer.WriteStringValue(RedundancyMode.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(InProgressOperationId))
+            if (options.Format != "W" && InProgressOperationId.HasValue)
             {
                 writer.WritePropertyName("inProgressOperationId"u8);
                 writer.WriteStringValue(InProgressOperationId.Value);
             }
-            if (Optional.IsDefined(IsStorageAccountRequired))
+            if (IsStorageAccountRequired.HasValue)
             {
                 writer.WritePropertyName("storageAccountRequired"u8);
                 writer.WriteBooleanValue(IsStorageAccountRequired.Value);
             }
-            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            if (KeyVaultReferenceIdentity != null)
             {
                 writer.WritePropertyName("keyVaultReferenceIdentity"u8);
                 writer.WriteStringValue(KeyVaultReferenceIdentity);
             }
-            if (Optional.IsDefined(VirtualNetworkSubnetId))
+            if (VirtualNetworkSubnetId != null)
             {
                 writer.WritePropertyName("virtualNetworkSubnetId"u8);
                 writer.WriteStringValue(VirtualNetworkSubnetId);
@@ -330,20 +330,20 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> state = default;
-            Optional<IReadOnlyList<string>> hostNames = default;
+            IReadOnlyList<string> hostNames = default;
             Optional<string> repositorySiteName = default;
             Optional<AppServiceUsageState> usageState = default;
             Optional<bool> enabled = default;
-            Optional<IReadOnlyList<string>> enabledHostNames = default;
+            IReadOnlyList<string> enabledHostNames = default;
             Optional<WebSiteAvailabilityState> availabilityState = default;
-            Optional<IList<HostNameSslState>> hostNameSslStates = default;
+            IList<HostNameSslState> hostNameSslStates = default;
             Optional<ResourceIdentifier> serverFarmId = default;
             Optional<bool> reserved = default;
             Optional<bool> isXenon = default;
             Optional<bool> hyperV = default;
             Optional<DateTimeOffset> lastModifiedTimeUtc = default;
             Optional<SiteConfigProperties> siteConfig = default;
-            Optional<IReadOnlyList<string>> trafficManagerHostNames = default;
+            IReadOnlyList<string> trafficManagerHostNames = default;
             Optional<bool> scmSiteAlsoStopped = default;
             Optional<string> targetSwapSlot = default;
             Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<HostNameSslState> array = new List<HostNameSslState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                array.Add(HostNameSslState.DeserializeHostNameSslState(item, options));
                             }
                             hostNameSslStates = array;
                             continue;
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value);
+                            siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trafficManagerHostNames"u8))
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clientAffinityEnabled"u8))
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value);
+                            cloningInfo = CloningInfo.DeserializeCloningInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"u8))
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value);
+                            slotSwapStatus = SlotSwapStatus.DeserializeSlotSwapStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpsOnly"u8))
@@ -779,7 +779,55 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SitePatchInfo(id, name, type, systemData.Value, identity, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value, serializedAdditionalRawData);
+            return new SitePatchInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity,
+                state.Value,
+                hostNames ?? new ChangeTrackingList<string>(),
+                repositorySiteName.Value,
+                Optional.ToNullable(usageState),
+                Optional.ToNullable(enabled),
+                enabledHostNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(availabilityState),
+                hostNameSslStates ?? new ChangeTrackingList<HostNameSslState>(),
+                serverFarmId.Value,
+                Optional.ToNullable(reserved),
+                Optional.ToNullable(isXenon),
+                Optional.ToNullable(hyperV),
+                Optional.ToNullable(lastModifiedTimeUtc),
+                siteConfig.Value,
+                trafficManagerHostNames ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(scmSiteAlsoStopped),
+                targetSwapSlot.Value,
+                hostingEnvironmentProfile.Value,
+                Optional.ToNullable(clientAffinityEnabled),
+                Optional.ToNullable(clientCertEnabled),
+                Optional.ToNullable(clientCertMode),
+                clientCertExclusionPaths.Value,
+                Optional.ToNullable(hostNamesDisabled),
+                customDomainVerificationId.Value,
+                outboundIPAddresses.Value,
+                possibleOutboundIPAddresses.Value,
+                Optional.ToNullable(containerSize),
+                Optional.ToNullable(dailyMemoryTimeQuota),
+                Optional.ToNullable(suspendedTill),
+                Optional.ToNullable(maxNumberOfWorkers),
+                cloningInfo.Value,
+                resourceGroup.Value,
+                Optional.ToNullable(isDefaultContainer),
+                defaultHostName.Value,
+                slotSwapStatus.Value,
+                Optional.ToNullable(httpsOnly),
+                Optional.ToNullable(redundancyMode),
+                Optional.ToNullable(inProgressOperationId),
+                Optional.ToNullable(storageAccountRequired),
+                keyVaultReferenceIdentity.Value,
+                virtualNetworkSubnetId.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SitePatchInfo>.Write(ModelReaderWriterOptions options)

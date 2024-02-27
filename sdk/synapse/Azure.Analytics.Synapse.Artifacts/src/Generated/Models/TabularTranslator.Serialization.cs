@@ -19,37 +19,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ColumnMappings))
+            if (ColumnMappings != null)
             {
                 writer.WritePropertyName("columnMappings"u8);
                 writer.WriteObjectValue(ColumnMappings);
             }
-            if (Optional.IsDefined(SchemaMapping))
+            if (SchemaMapping != null)
             {
                 writer.WritePropertyName("schemaMapping"u8);
                 writer.WriteObjectValue(SchemaMapping);
             }
-            if (Optional.IsDefined(CollectionReference))
+            if (CollectionReference != null)
             {
                 writer.WritePropertyName("collectionReference"u8);
                 writer.WriteObjectValue(CollectionReference);
             }
-            if (Optional.IsDefined(MapComplexValuesToString))
+            if (MapComplexValuesToString != null)
             {
                 writer.WritePropertyName("mapComplexValuesToString"u8);
                 writer.WriteObjectValue(MapComplexValuesToString);
             }
-            if (Optional.IsDefined(Mappings))
+            if (Mappings != null)
             {
                 writer.WritePropertyName("mappings"u8);
                 writer.WriteObjectValue(Mappings);
             }
-            if (Optional.IsDefined(TypeConversion))
+            if (TypeConversion != null)
             {
                 writer.WritePropertyName("typeConversion"u8);
                 writer.WriteObjectValue(TypeConversion);
             }
-            if (Optional.IsDefined(TypeConversionSettings))
+            if (TypeConversionSettings != null)
             {
                 writer.WritePropertyName("typeConversionSettings"u8);
                 writer.WriteObjectValue(TypeConversionSettings);
@@ -153,7 +153,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TabularTranslator(type, additionalProperties, columnMappings.Value, schemaMapping.Value, collectionReference.Value, mapComplexValuesToString.Value, mappings.Value, typeConversion.Value, typeConversionSettings.Value);
+            return new TabularTranslator(
+                type,
+                additionalProperties,
+                columnMappings.Value,
+                schemaMapping.Value,
+                collectionReference.Value,
+                mapComplexValuesToString.Value,
+                mappings.Value,
+                typeConversion.Value,
+                typeConversionSettings.Value);
         }
 
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>

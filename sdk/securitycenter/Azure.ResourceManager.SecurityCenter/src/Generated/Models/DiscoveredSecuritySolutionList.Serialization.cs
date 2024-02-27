@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DiscoveredSecuritySolution> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DiscoveredSecuritySolution>> value = default;
+            IReadOnlyList<DiscoveredSecuritySolution> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<DiscoveredSecuritySolution> array = new List<DiscoveredSecuritySolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(item));
+                        array.Add(DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveredSecuritySolutionList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DiscoveredSecuritySolutionList(value ?? new ChangeTrackingList<DiscoveredSecuritySolution>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoveredSecuritySolutionList>.Write(ModelReaderWriterOptions options)

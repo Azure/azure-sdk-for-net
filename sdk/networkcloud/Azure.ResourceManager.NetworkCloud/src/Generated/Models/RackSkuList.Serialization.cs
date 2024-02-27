@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudRackSkuData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudRackSkuData>> value = default;
+            IReadOnlyList<NetworkCloudRackSkuData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudRackSkuData> array = new List<NetworkCloudRackSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(item));
+                        array.Add(NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RackSkuList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new RackSkuList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudRackSkuData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RackSkuList>.Write(ModelReaderWriterOptions options)

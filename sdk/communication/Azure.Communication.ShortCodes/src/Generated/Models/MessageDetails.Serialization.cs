@@ -16,7 +16,7 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SupportedProtocols))
+            if (!(SupportedProtocols is ChangeTrackingList<MessageProtocol> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedProtocols"u8);
                 writer.WriteStartArray();
@@ -26,42 +26,42 @@ namespace Azure.Communication.ShortCodes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Recurrence))
+            if (Recurrence.HasValue)
             {
                 writer.WritePropertyName("recurrence"u8);
                 writer.WriteStringValue(Recurrence.Value.ToString());
             }
-            if (Optional.IsDefined(HelpMessage))
+            if (HelpMessage != null)
             {
                 writer.WritePropertyName("helpMessage"u8);
                 writer.WriteStringValue(HelpMessage);
             }
-            if (Optional.IsDefined(OptOutMessage))
+            if (OptOutMessage != null)
             {
                 writer.WritePropertyName("optOutMessage"u8);
                 writer.WriteStringValue(OptOutMessage);
             }
-            if (Optional.IsDefined(OptInMessage))
+            if (OptInMessage != null)
             {
                 writer.WritePropertyName("optInMessage"u8);
                 writer.WriteStringValue(OptInMessage);
             }
-            if (Optional.IsDefined(OptInReply))
+            if (OptInReply != null)
             {
                 writer.WritePropertyName("optInReply"u8);
                 writer.WriteStringValue(OptInReply);
             }
-            if (Optional.IsDefined(ConfirmationMessage))
+            if (ConfirmationMessage != null)
             {
                 writer.WritePropertyName("confirmationMessage"u8);
                 writer.WriteStringValue(ConfirmationMessage);
             }
-            if (Optional.IsDefined(Directionality))
+            if (Directionality.HasValue)
             {
                 writer.WritePropertyName("directionality"u8);
                 writer.WriteStringValue(Directionality.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(UseCases))
+            if (!(UseCases is ChangeTrackingList<UseCase> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("useCases"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageProtocol>> supportedProtocols = default;
+            IList<MessageProtocol> supportedProtocols = default;
             Optional<MessageRecurrence> recurrence = default;
             Optional<string> helpMessage = default;
             Optional<string> optOutMessage = default;
@@ -88,7 +88,7 @@ namespace Azure.Communication.ShortCodes.Models
             Optional<string> optInReply = default;
             Optional<string> confirmationMessage = default;
             Optional<MessageDirectionality> directionality = default;
-            Optional<IList<UseCase>> useCases = default;
+            IList<UseCase> useCases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProtocols"u8))
@@ -163,7 +163,16 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases));
+            return new MessageDetails(
+                supportedProtocols ?? new ChangeTrackingList<MessageProtocol>(),
+                Optional.ToNullable(recurrence),
+                helpMessage.Value,
+                optOutMessage.Value,
+                optInMessage.Value,
+                optInReply.Value,
+                confirmationMessage.Value,
+                Optional.ToNullable(directionality),
+                useCases ?? new ChangeTrackingList<UseCase>());
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Translation))
+            if (!(Translation is ChangeTrackingDictionary<string, TranslationLanguage> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("translation"u8);
                 writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Transliteration))
+            if (!(Transliteration is ChangeTrackingDictionary<string, TransliterationLanguage> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("transliteration"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Text
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Dictionary))
+            if (!(Dictionary is ChangeTrackingDictionary<string, SourceDictionaryLanguage> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dictionary"u8);
                 writer.WriteStartObject();
@@ -98,9 +98,9 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, TranslationLanguage>> translation = default;
-            Optional<IReadOnlyDictionary<string, TransliterationLanguage>> transliteration = default;
-            Optional<IReadOnlyDictionary<string, SourceDictionaryLanguage>> dictionary = default;
+            IReadOnlyDictionary<string, TranslationLanguage> translation = default;
+            IReadOnlyDictionary<string, TransliterationLanguage> transliteration = default;
+            IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value, options));
                     }
                     translation = dictionary0;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value, options));
                     }
                     transliteration = dictionary0;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value));
+                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value, options));
                     }
                     dictionary = dictionary0;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetLanguagesResult(Optional.ToDictionary(translation), Optional.ToDictionary(transliteration), Optional.ToDictionary(dictionary), serializedAdditionalRawData);
+            return new GetLanguagesResult(translation ?? new ChangeTrackingDictionary<string, TranslationLanguage>(), transliteration ?? new ChangeTrackingDictionary<string, TransliterationLanguage>(), dictionary ?? new ChangeTrackingDictionary<string, SourceDictionaryLanguage>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetLanguagesResult>.Write(ModelReaderWriterOptions options)

@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.LabServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.LabServices.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConnectionProfile))
+            if (DefaultConnectionProfile != null)
             {
                 writer.WritePropertyName("defaultConnectionProfile"u8);
                 writer.WriteObjectValue(DefaultConnectionProfile);
             }
-            if (Optional.IsDefined(DefaultAutoShutdownProfile))
+            if (DefaultAutoShutdownProfile != null)
             {
                 writer.WritePropertyName("defaultAutoShutdownProfile"u8);
                 writer.WriteObjectValue(DefaultAutoShutdownProfile);
             }
-            if (Optional.IsDefined(DefaultNetworkProfile))
+            if (DefaultNetworkProfile != null)
             {
                 writer.WritePropertyName("defaultNetworkProfile"u8);
                 writer.WriteObjectValue(DefaultNetworkProfile);
             }
-            if (Optional.IsCollectionDefined(AllowedRegions))
+            if (!(AllowedRegions is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("allowedRegions"u8);
                 writer.WriteStartArray();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SharedGalleryId))
+            if (SharedGalleryId != null)
             {
                 writer.WritePropertyName("sharedGalleryId"u8);
                 writer.WriteStringValue(SharedGalleryId);
             }
-            if (Optional.IsDefined(SupportInfo))
+            if (SupportInfo != null)
             {
                 writer.WritePropertyName("supportInfo"u8);
                 writer.WriteObjectValue(SupportInfo);
             }
-            if (Optional.IsDefined(LinkedLmsInstance))
+            if (LinkedLmsInstance != null)
             {
                 writer.WritePropertyName("linkedLmsInstance"u8);
                 writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.LabServices.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IList<string>> tags = default;
+            IList<string> tags = default;
             Optional<LabConnectionProfile> defaultConnectionProfile = default;
             Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
-            Optional<IList<AzureLocation>> allowedRegions = default;
+            IList<AzureLocation> allowedRegions = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<LabPlanSupportInfo> supportInfo = default;
             Optional<Uri> linkedLmsInstance = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value);
+                            defaultNetworkProfile = LabPlanNetworkProfile.DeserializeLabPlanNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allowedRegions"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.LabServices.Models
                             {
                                 continue;
                             }
-                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"u8))
@@ -245,7 +245,17 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabPlanPatch(Optional.ToList(tags), serializedAdditionalRawData, identity, defaultConnectionProfile.Value, defaultAutoShutdownProfile.Value, defaultNetworkProfile.Value, Optional.ToList(allowedRegions), sharedGalleryId.Value, supportInfo.Value, linkedLmsInstance.Value);
+            return new LabPlanPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                identity,
+                defaultConnectionProfile.Value,
+                defaultAutoShutdownProfile.Value,
+                defaultNetworkProfile.Value,
+                allowedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                sharedGalleryId.Value,
+                supportInfo.Value,
+                linkedLmsInstance.Value);
         }
 
         BinaryData IPersistableModel<LabPlanPatch>.Write(ModelReaderWriterOptions options)

@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Activities))
+            if (!(Activities is ChangeTrackingList<Activity> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Variables))
+            if (!(Variables is ChangeTrackingDictionary<string, VariableSpecification> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("variables"u8);
                 writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Concurrency))
+            if (Concurrency.HasValue)
             {
                 writer.WritePropertyName("concurrency"u8);
                 writer.WriteNumberValue(Concurrency.Value);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RunDimensions))
+            if (!(RunDimensions is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("runDimensions"u8);
                 writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Folder))
+            if (Folder != null)
             {
                 writer.WritePropertyName("folder"u8);
                 writer.WriteObjectValue(Folder);
@@ -119,12 +119,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> name = default;
             Optional<string> type = default;
             Optional<string> description = default;
-            Optional<IList<Activity>> activities = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IDictionary<string, VariableSpecification>> variables = default;
+            IList<Activity> activities = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IDictionary<string, VariableSpecification> variables = default;
             Optional<int> concurrency = default;
-            Optional<IList<object>> annotations = default;
-            Optional<IDictionary<string, object>> runDimensions = default;
+            IList<object> annotations = default;
+            IDictionary<string, object> runDimensions = default;
             Optional<PipelineFolder> folder = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -272,7 +272,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineResource(id.Value, name.Value, type.Value, etag.Value, description.Value, Optional.ToList(activities), Optional.ToDictionary(parameters), Optional.ToDictionary(variables), Optional.ToNullable(concurrency), Optional.ToList(annotations), Optional.ToDictionary(runDimensions), folder.Value, additionalProperties);
+            return new PipelineResource(
+                id.Value,
+                name.Value,
+                type.Value,
+                etag.Value,
+                description.Value,
+                activities ?? new ChangeTrackingList<Activity>(),
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                variables ?? new ChangeTrackingDictionary<string, VariableSpecification>(),
+                Optional.ToNullable(concurrency),
+                annotations ?? new ChangeTrackingList<object>(),
+                runDimensions ?? new ChangeTrackingDictionary<string, object>(),
+                folder.Value,
+                additionalProperties);
         }
 
         internal partial class PipelineResourceConverter : JsonConverter<PipelineResource>

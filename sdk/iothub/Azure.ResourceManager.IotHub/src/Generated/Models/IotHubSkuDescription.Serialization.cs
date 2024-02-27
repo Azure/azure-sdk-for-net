@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value);
+                    sku = IotHubSkuInfo.DeserializeIotHubSkuInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value);
+                    capacity = IotHubCapacity.DeserializeIotHubCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

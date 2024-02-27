@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfigType))
+            if (options.Format != "W" && LoadBalancerConfigType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LoadBalancerConfigType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);

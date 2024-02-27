@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiscoveryLogs))
+            if (DiscoveryLogs != null)
             {
                 writer.WritePropertyName("discoveryLogs"u8);
                 writer.WriteObjectValue(DiscoveryLogs);
             }
-            if (Optional.IsDefined(Alerts))
+            if (Alerts != null)
             {
                 writer.WritePropertyName("alerts"u8);
                 writer.WriteObjectValue(Alerts);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
+                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alerts"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value);
+                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

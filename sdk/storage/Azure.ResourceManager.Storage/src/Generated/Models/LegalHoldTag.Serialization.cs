@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Tag))
+            if (options.Format != "W" && Tag != null)
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
             }
-            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            if (options.Format != "W" && Timestamp.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ObjectIdentifier))
+            if (options.Format != "W" && ObjectIdentifier != null)
             {
                 writer.WritePropertyName("objectIdentifier"u8);
                 writer.WriteStringValue(ObjectIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            if (options.Format != "W" && TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Upn))
+            if (options.Format != "W" && Upn != null)
             {
                 writer.WritePropertyName("upn"u8);
                 writer.WriteStringValue(Upn);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LegalHoldTag(tag.Value, Optional.ToNullable(timestamp), objectIdentifier.Value, Optional.ToNullable(tenantId), upn.Value, serializedAdditionalRawData);
+            return new LegalHoldTag(
+                tag.Value,
+                Optional.ToNullable(timestamp),
+                objectIdentifier.Value,
+                Optional.ToNullable(tenantId),
+                upn.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LegalHoldTag>.Write(ModelReaderWriterOptions options)

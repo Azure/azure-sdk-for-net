@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
+            if (options.Format != "W" && SupportedIops.HasValue)
             {
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageSizeInMB))
+            if (options.Format != "W" && StorageSizeInMB.HasValue)
             {
                 writer.WritePropertyName("storageSizeMb"u8);
                 writer.WriteNumberValue(StorageSizeInMB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultIopsTier))
+            if (options.Format != "W" && DefaultIopsTier != null)
             {
                 writer.WritePropertyName("defaultIopsTier"u8);
                 writer.WriteStringValue(DefaultIopsTier);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedIopsTiers))
+            if (options.Format != "W" && !(SupportedIopsTiers is ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedIopsTiers"u8);
                 writer.WriteStartArray();
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && CapabilityStatus.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<long> supportedIops = default;
             Optional<long> storageSizeMb = default;
             Optional<string> defaultIopsTier = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedIopsTiers = default;
+            IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerStorageTierCapability> array = new List<PostgreSqlFlexibleServerStorageTierCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerStorageTierCapability.DeserializePostgreSqlFlexibleServerStorageTierCapability(item));
+                        array.Add(PostgreSqlFlexibleServerStorageTierCapability.DeserializePostgreSqlFlexibleServerStorageTierCapability(item, options));
                     }
                     supportedIopsTiers = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorageCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMb), defaultIopsTier.Value, Optional.ToList(supportedIopsTiers));
+            return new PostgreSqlFlexibleServerStorageCapability(
+                Optional.ToNullable(status),
+                reason.Value,
+                serializedAdditionalRawData,
+                Optional.ToNullable(supportedIops),
+                Optional.ToNullable(storageSizeMb),
+                defaultIopsTier.Value,
+                supportedIopsTiers ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageTierCapability>());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerStorageCapability>.Write(ModelReaderWriterOptions options)

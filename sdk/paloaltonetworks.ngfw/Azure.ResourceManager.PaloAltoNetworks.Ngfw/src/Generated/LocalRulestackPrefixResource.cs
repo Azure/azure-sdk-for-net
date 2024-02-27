@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<LocalRulestackPrefixResource>> UpdateAsync(WaitUntil waitUntil, LocalRulestackPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<LocalRulestackPrefixResource> Update(WaitUntil waitUntil, LocalRulestackPrefixData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _localRulestackPrefixPrefixListLocalRulestackClientDiagnostics.CreateScope("LocalRulestackPrefixResource.Update");
             scope.Start();

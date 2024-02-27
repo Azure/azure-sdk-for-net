@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InsightsToExtract))
+            if (InsightsToExtract.HasValue)
             {
                 writer.WritePropertyName("insightsToExtract"u8);
                 writer.WriteStringValue(InsightsToExtract.Value.ToString());
             }
-            if (Optional.IsDefined(AudioLanguage))
+            if (AudioLanguage != null)
             {
                 writer.WritePropertyName("audioLanguage"u8);
                 writer.WriteStringValue(AudioLanguage);
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            if (!(ExperimentalOptions is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("experimentalOptions"u8);
                 writer.WriteStartObject();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<InsightsType> insightsToExtract = default;
             Optional<string> audioLanguage = default;
             Optional<AudioAnalysisMode> mode = default;
-            Optional<IDictionary<string, string>> experimentalOptions = default;
+            IDictionary<string, string> experimentalOptions = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VideoAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions), Optional.ToNullable(insightsToExtract));
+            return new VideoAnalyzerPreset(
+                odataType,
+                serializedAdditionalRawData,
+                audioLanguage.Value,
+                Optional.ToNullable(mode),
+                experimentalOptions ?? new ChangeTrackingDictionary<string, string>(),
+                Optional.ToNullable(insightsToExtract));
         }
 
         BinaryData IPersistableModel<VideoAnalyzerPreset>.Write(ModelReaderWriterOptions options)

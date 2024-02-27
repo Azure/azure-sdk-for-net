@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RevisionSuffix))
+            if (RevisionSuffix != null)
             {
                 writer.WritePropertyName("revisionSuffix"u8);
                 writer.WriteStringValue(RevisionSuffix);
             }
-            if (Optional.IsDefined(TerminationGracePeriodSeconds))
+            if (TerminationGracePeriodSeconds.HasValue)
             {
                 writer.WritePropertyName("terminationGracePeriodSeconds"u8);
                 writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
             }
-            if (Optional.IsCollectionDefined(InitContainers))
+            if (!(InitContainers is ChangeTrackingList<ContainerAppInitContainer> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initContainers"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Containers))
+            if (!(Containers is ChangeTrackingList<ContainerAppContainer> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containers"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Scale))
+            if (Scale != null)
             {
                 writer.WritePropertyName("scale"u8);
                 writer.WriteObjectValue(Scale);
             }
-            if (Optional.IsCollectionDefined(Volumes))
+            if (!(Volumes is ChangeTrackingList<ContainerAppVolume> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceBinds))
+            if (!(ServiceBinds is ChangeTrackingList<ContainerAppServiceBind> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("serviceBinds"u8);
                 writer.WriteStartArray();
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<string> revisionSuffix = default;
             Optional<long> terminationGracePeriodSeconds = default;
-            Optional<IList<ContainerAppInitContainer>> initContainers = default;
-            Optional<IList<ContainerAppContainer>> containers = default;
+            IList<ContainerAppInitContainer> initContainers = default;
+            IList<ContainerAppContainer> containers = default;
             Optional<ContainerAppScale> scale = default;
-            Optional<IList<ContainerAppVolume>> volumes = default;
-            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
+            IList<ContainerAppVolume> volumes = default;
+            IList<ContainerAppServiceBind> serviceBinds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item, options));
                     }
                     initContainers = array;
                     continue;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value);
+                    scale = ContainerAppScale.DeserializeContainerAppScale(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumes"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppServiceBind> array = new List<ContainerAppServiceBind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item));
+                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item, options));
                     }
                     serviceBinds = array;
                     continue;
@@ -215,7 +215,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes), Optional.ToList(serviceBinds), serializedAdditionalRawData);
+            return new ContainerAppTemplate(
+                revisionSuffix.Value,
+                Optional.ToNullable(terminationGracePeriodSeconds),
+                initContainers ?? new ChangeTrackingList<ContainerAppInitContainer>(),
+                containers ?? new ChangeTrackingList<ContainerAppContainer>(),
+                scale.Value,
+                volumes ?? new ChangeTrackingList<ContainerAppVolume>(),
+                serviceBinds ?? new ChangeTrackingList<ContainerAppServiceBind>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTemplate>.Write(ModelReaderWriterOptions options)

@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DesiredNumberOfContainers))
+            if (DesiredNumberOfContainers.HasValue)
             {
                 writer.WritePropertyName("desired"u8);
                 writer.WriteNumberValue(DesiredNumberOfContainers.Value);
             }
-            if (Optional.IsDefined(ReadyNumberOfContainers))
+            if (ReadyNumberOfContainers.HasValue)
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteNumberValue(ReadyNumberOfContainers.Value);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Events))
+            if (!(Events is ChangeTrackingList<PodEvent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<int> ready = default;
             Optional<PodStatus> status = default;
             Optional<DateTimeOffset> creationTime = default;
-            Optional<IReadOnlyList<PodEvent>> events = default;
+            IReadOnlyList<PodEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<PodEvent> array = new List<PodEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PodEvent.DeserializePodEvent(item));
+                        array.Add(PodEvent.DeserializePodEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -181,7 +181,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events), serializedAdditionalRawData);
+            return new KubernetesPod(
+                name.Value,
+                @namespace.Value,
+                Optional.ToNullable(desired),
+                Optional.ToNullable(ready),
+                Optional.ToNullable(status),
+                Optional.ToNullable(creationTime),
+                events ?? new ChangeTrackingList<PodEvent>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)

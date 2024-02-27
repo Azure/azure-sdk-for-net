@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,7 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
-            Argument.AssertNotNull(userId, nameof(userId));
+            if (userId == null)
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
 
             UserId = userId;
         }

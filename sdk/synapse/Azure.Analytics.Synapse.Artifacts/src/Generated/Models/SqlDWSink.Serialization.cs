@@ -19,59 +19,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PreCopyScript))
+            if (PreCopyScript != null)
             {
                 writer.WritePropertyName("preCopyScript"u8);
                 writer.WriteObjectValue(PreCopyScript);
             }
-            if (Optional.IsDefined(AllowPolyBase))
+            if (AllowPolyBase != null)
             {
                 writer.WritePropertyName("allowPolyBase"u8);
                 writer.WriteObjectValue(AllowPolyBase);
             }
-            if (Optional.IsDefined(PolyBaseSettings))
+            if (PolyBaseSettings != null)
             {
                 writer.WritePropertyName("polyBaseSettings"u8);
                 writer.WriteObjectValue(PolyBaseSettings);
             }
-            if (Optional.IsDefined(AllowCopyCommand))
+            if (AllowCopyCommand != null)
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
                 writer.WriteObjectValue(AllowCopyCommand);
             }
-            if (Optional.IsDefined(CopyCommandSettings))
+            if (CopyCommandSettings != null)
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
                 writer.WriteObjectValue(CopyCommandSettings);
             }
-            if (Optional.IsDefined(TableOption))
+            if (TableOption != null)
             {
                 writer.WritePropertyName("tableOption"u8);
                 writer.WriteObjectValue(TableOption);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(WriteBatchSize))
+            if (WriteBatchSize != null)
             {
                 writer.WritePropertyName("writeBatchSize"u8);
                 writer.WriteObjectValue(WriteBatchSize);
             }
-            if (Optional.IsDefined(WriteBatchTimeout))
+            if (WriteBatchTimeout != null)
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
                 writer.WriteObjectValue(WriteBatchTimeout);
             }
-            if (Optional.IsDefined(SinkRetryCount))
+            if (SinkRetryCount != null)
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
                 writer.WriteObjectValue(SinkRetryCount);
             }
-            if (Optional.IsDefined(SinkRetryWait))
+            if (SinkRetryWait != null)
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
                 writer.WriteObjectValue(SinkRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
@@ -213,7 +213,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDWSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, preCopyScript.Value, allowPolyBase.Value, polyBaseSettings.Value, allowCopyCommand.Value, copyCommandSettings.Value, tableOption.Value);
+            return new SqlDWSink(
+                type,
+                writeBatchSize.Value,
+                writeBatchTimeout.Value,
+                sinkRetryCount.Value,
+                sinkRetryWait.Value,
+                maxConcurrentConnections.Value,
+                additionalProperties,
+                preCopyScript.Value,
+                allowPolyBase.Value,
+                polyBaseSettings.Value,
+                allowCopyCommand.Value,
+                copyCommandSettings.Value,
+                tableOption.Value);
         }
 
         internal partial class SqlDWSinkConverter : JsonConverter<SqlDWSink>

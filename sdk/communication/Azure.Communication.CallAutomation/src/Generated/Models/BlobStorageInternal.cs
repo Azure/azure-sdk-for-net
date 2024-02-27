@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,10 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
         public BlobStorageInternal(string containerUri)
         {
-            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            if (containerUri == null)
+            {
+                throw new ArgumentNullException(nameof(containerUri));
+            }
 
             ContainerUri = containerUri;
         }

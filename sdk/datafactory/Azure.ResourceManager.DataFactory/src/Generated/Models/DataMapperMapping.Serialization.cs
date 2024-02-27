@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetEntityName))
+            if (TargetEntityName != null)
             {
                 writer.WritePropertyName("targetEntityName"u8);
                 writer.WriteStringValue(TargetEntityName);
             }
-            if (Optional.IsDefined(SourceEntityName))
+            if (SourceEntityName != null)
             {
                 writer.WritePropertyName("sourceEntityName"u8);
                 writer.WriteStringValue(SourceEntityName);
             }
-            if (Optional.IsDefined(SourceConnectionReference))
+            if (SourceConnectionReference != null)
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
                 writer.WriteObjectValue(SourceConnectionReference);
             }
-            if (Optional.IsDefined(AttributeMappingInfo))
+            if (AttributeMappingInfo != null)
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
                 writer.WriteObjectValue(AttributeMappingInfo);
             }
-            if (Optional.IsDefined(SourceDenormalizeInfo))
+            if (SourceDenormalizeInfo != null)
             {
                 writer.WritePropertyName("sourceDenormalizeInfo"u8);
 #if NET6_0_OR_GREATER
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
+                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeMappingInfo"u8))
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value);
+                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDenormalizeInfo"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value, serializedAdditionalRawData);
+            return new DataMapperMapping(
+                targetEntityName.Value,
+                sourceEntityName.Value,
+                sourceConnectionReference.Value,
+                attributeMappingInfo.Value,
+                sourceDenormalizeInfo.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataMapperMapping>.Write(ModelReaderWriterOptions options)

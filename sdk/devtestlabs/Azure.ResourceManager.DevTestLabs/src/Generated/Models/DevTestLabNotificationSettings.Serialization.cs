@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(TimeInMinutes))
+            if (TimeInMinutes.HasValue)
             {
                 writer.WritePropertyName("timeInMinutes"u8);
                 writer.WriteNumberValue(TimeInMinutes.Value);
             }
-            if (Optional.IsDefined(WebhookUri))
+            if (WebhookUri != null)
             {
                 writer.WritePropertyName("webhookUrl"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(EmailRecipient))
+            if (EmailRecipient != null)
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (Optional.IsDefined(NotificationLocale))
+            if (NotificationLocale != null)
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabNotificationSettings(Optional.ToNullable(status), Optional.ToNullable(timeInMinutes), webhookUrl.Value, emailRecipient.Value, notificationLocale.Value, serializedAdditionalRawData);
+            return new DevTestLabNotificationSettings(
+                Optional.ToNullable(status),
+                Optional.ToNullable(timeInMinutes),
+                webhookUrl.Value,
+                emailRecipient.Value,
+                notificationLocale.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabNotificationSettings>.Write(ModelReaderWriterOptions options)

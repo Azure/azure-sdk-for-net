@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VirtualHubResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualHubName, VirtualHubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VirtualHubResource> CreateOrUpdate(WaitUntil waitUntil, string virtualHubName, VirtualHubData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual async Task<Response<VirtualHubResource>> GetAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual Response<VirtualHubResource> Get(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualHubResource>> GetIfExistsAsync(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="virtualHubName"/> is null. </exception>
         public virtual NullableResponse<VirtualHubResource> GetIfExists(string virtualHubName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualHubName, nameof(virtualHubName));
+            if (virtualHubName == null)
+            {
+                throw new ArgumentNullException(nameof(virtualHubName));
+            }
+            if (virtualHubName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualHubName));
+            }
 
             using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubCollection.GetIfExists");
             scope.Start();

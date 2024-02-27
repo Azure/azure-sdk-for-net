@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
+            if (CrossSubscriptionRestoreSettings != null)
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
             }
-            if (Optional.IsDefined(CrossRegionRestoreSettings))
+            if (CrossRegionRestoreSettings != null)
             {
                 writer.WritePropertyName("crossRegionRestoreSettings"u8);
                 writer.WriteObjectValue(CrossRegionRestoreSettings);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value);
+                    crossSubscriptionRestoreSettings = CrossSubscriptionRestoreSettings.DeserializeCrossSubscriptionRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("crossRegionRestoreSettings"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value);
+                    crossRegionRestoreSettings = CrossRegionRestoreSettings.DeserializeCrossRegionRestoreSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

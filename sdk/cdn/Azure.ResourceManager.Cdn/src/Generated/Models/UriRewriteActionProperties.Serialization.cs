@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(SourcePattern);
             writer.WritePropertyName("destination"u8);
             writer.WriteStringValue(Destination);
-            if (Optional.IsDefined(PreserveUnmatchedPath))
+            if (PreserveUnmatchedPath.HasValue)
             {
                 writer.WritePropertyName("preserveUnmatchedPath"u8);
                 writer.WriteBooleanValue(PreserveUnmatchedPath.Value);

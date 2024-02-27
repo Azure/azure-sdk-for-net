@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(SizeInGB))
+            if (SizeInGB.HasValue)
             {
                 writer.WritePropertyName("sizeGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

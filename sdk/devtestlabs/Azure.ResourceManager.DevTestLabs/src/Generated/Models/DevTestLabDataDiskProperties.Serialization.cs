@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AttachNewDataDiskOptions))
+            if (AttachNewDataDiskOptions != null)
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
                 writer.WriteObjectValue(AttachNewDataDiskOptions);
             }
-            if (Optional.IsDefined(ExistingLabDiskId))
+            if (ExistingLabDiskId != null)
             {
                 writer.WritePropertyName("existingLabDiskId"u8);
                 writer.WriteStringValue(ExistingLabDiskId);
             }
-            if (Optional.IsDefined(HostCaching))
+            if (HostCaching.HasValue)
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
+                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("existingLabDiskId"u8))

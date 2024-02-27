@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteNumberValue(RateLimitDurationInMinutes);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
+                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
+            return new RateLimitRule(
+                name,
+                Optional.ToNullable(enabledState),
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData,
+                rateLimitThreshold,
+                rateLimitDurationInMinutes);
         }
 
         BinaryData IPersistableModel<RateLimitRule>.Write(ModelReaderWriterOptions options)

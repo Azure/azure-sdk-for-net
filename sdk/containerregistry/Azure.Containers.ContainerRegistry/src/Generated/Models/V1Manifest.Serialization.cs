@@ -22,9 +22,9 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
-            Optional<IReadOnlyList<FsLayer>> fsLayers = default;
-            Optional<IReadOnlyList<History>> history = default;
-            Optional<IReadOnlyList<ImageSignature>> signatures = default;
+            IReadOnlyList<FsLayer> fsLayers = default;
+            IReadOnlyList<History> history = default;
+            IReadOnlyList<ImageSignature> signatures = default;
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,14 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new V1Manifest(Optional.ToNullable(schemaVersion), architecture.Value, name.Value, tag.Value, Optional.ToList(fsLayers), Optional.ToList(history), Optional.ToList(signatures));
+            return new V1Manifest(
+                Optional.ToNullable(schemaVersion),
+                architecture.Value,
+                name.Value,
+                tag.Value,
+                fsLayers ?? new ChangeTrackingList<FsLayer>(),
+                history ?? new ChangeTrackingList<History>(),
+                signatures ?? new ChangeTrackingList<ImageSignature>());
         }
     }
 }

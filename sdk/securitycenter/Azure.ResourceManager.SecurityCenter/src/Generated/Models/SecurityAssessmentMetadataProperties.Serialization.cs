@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (options.Format != "W" && Optional.IsDefined(PolicyDefinitionId))
+            if (options.Format != "W" && PolicyDefinitionId != null)
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(RemediationDescription))
+            if (RemediationDescription != null)
             {
                 writer.WritePropertyName("remediationDescription"u8);
                 writer.WriteStringValue(RemediationDescription);
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<SecurityAssessmentResourceCategory> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("severity"u8);
             writer.WriteStringValue(Severity.ToString());
-            if (Optional.IsDefined(UserImpact))
+            if (UserImpact.HasValue)
             {
                 writer.WritePropertyName("userImpact"u8);
                 writer.WriteStringValue(UserImpact.Value.ToString());
             }
-            if (Optional.IsDefined(ImplementationEffort))
+            if (ImplementationEffort.HasValue)
             {
                 writer.WritePropertyName("implementationEffort"u8);
                 writer.WriteStringValue(ImplementationEffort.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Threats))
+            if (!(Threats is ChangeTrackingList<SecurityThreat> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPreview))
+            if (IsPreview.HasValue)
             {
                 writer.WritePropertyName("preview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
             writer.WritePropertyName("assessmentType"u8);
             writer.WriteStringValue(AssessmentType.ToString());
-            if (Optional.IsDefined(PartnerData))
+            if (PartnerData != null)
             {
                 writer.WritePropertyName("partnerData"u8);
                 writer.WriteObjectValue(PartnerData);
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<ResourceIdentifier> policyDefinitionId = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            IList<SecurityAssessmentResourceCategory> categories = default;
             SecurityAssessmentSeverity severity = default;
             Optional<SecurityAssessmentUserImpact> userImpact = default;
             Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
+            IList<SecurityThreat> threats = default;
             Optional<bool> preview = default;
             SecurityAssessmentType assessmentType = default;
             Optional<SecurityAssessmentMetadataPartner> partnerData = default;
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value);
+                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId.Value,
+                description.Value,
+                remediationDescription.Value,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                Optional.ToNullable(userImpact),
+                Optional.ToNullable(implementationEffort),
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                Optional.ToNullable(preview),
+                assessmentType,
+                partnerData.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)

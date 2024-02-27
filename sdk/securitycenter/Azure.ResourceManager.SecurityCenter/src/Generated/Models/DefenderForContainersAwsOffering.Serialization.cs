@@ -26,69 +26,69 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KubernetesService))
+            if (KubernetesService != null)
             {
                 writer.WritePropertyName("kubernetesService"u8);
                 writer.WriteObjectValue(KubernetesService);
             }
-            if (Optional.IsDefined(KubernetesScubaReader))
+            if (KubernetesScubaReader != null)
             {
                 writer.WritePropertyName("kubernetesScubaReader"u8);
                 writer.WriteObjectValue(KubernetesScubaReader);
             }
-            if (Optional.IsDefined(CloudWatchToKinesis))
+            if (CloudWatchToKinesis != null)
             {
                 writer.WritePropertyName("cloudWatchToKinesis"u8);
                 writer.WriteObjectValue(CloudWatchToKinesis);
             }
-            if (Optional.IsDefined(KinesisToS3))
+            if (KinesisToS3 != null)
             {
                 writer.WritePropertyName("kinesisToS3"u8);
                 writer.WriteObjectValue(KinesisToS3);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessment))
+            if (ContainerVulnerabilityAssessment != null)
             {
                 writer.WritePropertyName("containerVulnerabilityAssessment"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessment);
             }
-            if (Optional.IsDefined(ContainerVulnerabilityAssessmentTask))
+            if (ContainerVulnerabilityAssessmentTask != null)
             {
                 writer.WritePropertyName("containerVulnerabilityAssessmentTask"u8);
                 writer.WriteObjectValue(ContainerVulnerabilityAssessmentTask);
             }
-            if (Optional.IsDefined(IsContainerVulnerabilityAssessmentEnabled))
+            if (IsContainerVulnerabilityAssessmentEnabled.HasValue)
             {
                 writer.WritePropertyName("enableContainerVulnerabilityAssessment"u8);
                 writer.WriteBooleanValue(IsContainerVulnerabilityAssessmentEnabled.Value);
             }
-            if (Optional.IsDefined(IsAutoProvisioningEnabled))
+            if (IsAutoProvisioningEnabled.HasValue)
             {
                 writer.WritePropertyName("autoProvisioning"u8);
                 writer.WriteBooleanValue(IsAutoProvisioningEnabled.Value);
             }
-            if (Optional.IsDefined(KubeAuditRetentionTime))
+            if (KubeAuditRetentionTime.HasValue)
             {
                 writer.WritePropertyName("kubeAuditRetentionTime"u8);
                 writer.WriteNumberValue(KubeAuditRetentionTime.Value);
             }
-            if (Optional.IsDefined(ScubaExternalId))
+            if (ScubaExternalId != null)
             {
                 writer.WritePropertyName("scubaExternalId"u8);
                 writer.WriteStringValue(ScubaExternalId);
             }
-            if (Optional.IsDefined(MdcContainersImageAssessment))
+            if (MdcContainersImageAssessment != null)
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
                 writer.WriteObjectValue(MdcContainersImageAssessment);
             }
-            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            if (MdcContainersAgentlessDiscoveryK8S != null)
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
                 writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(property.Value);
+                    kubernetesService = DefenderForContainersAwsOfferingKubernetesService.DeserializeDefenderForContainersAwsOfferingKubernetesService(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubernetesScubaReader"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kubernetesScubaReader = DefenderForContainersAwsOfferingKubernetesScubaReader.DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(property.Value);
+                    kubernetesScubaReader = DefenderForContainersAwsOfferingKubernetesScubaReader.DeserializeDefenderForContainersAwsOfferingKubernetesScubaReader(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cloudWatchToKinesis"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(property.Value);
+                    cloudWatchToKinesis = DefenderForContainersAwsOfferingCloudWatchToKinesis.DeserializeDefenderForContainersAwsOfferingCloudWatchToKinesis(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kinesisToS3"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(property.Value);
+                    kinesisToS3 = DefenderForContainersAwsOfferingKinesisToS3.DeserializeDefenderForContainersAwsOfferingKinesisToS3(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerVulnerabilityAssessment"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessment = DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessment(property.Value);
+                    containerVulnerabilityAssessment = DefenderForContainersAwsOfferingContainerVulnerabilityAssessment.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerVulnerabilityAssessmentTask"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    containerVulnerabilityAssessmentTask = DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(property.Value);
+                    containerVulnerabilityAssessmentTask = DefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask.DeserializeDefenderForContainersAwsOfferingContainerVulnerabilityAssessmentTask(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableContainerVulnerabilityAssessment"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(property.Value);
+                    mdcContainersImageAssessment = DefenderForContainersAwsOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersAwsOfferingMdcContainersImageAssessment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -269,7 +269,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefenderForContainersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, kubernetesService.Value, kubernetesScubaReader.Value, cloudWatchToKinesis.Value, kinesisToS3.Value, containerVulnerabilityAssessment.Value, containerVulnerabilityAssessmentTask.Value, Optional.ToNullable(enableContainerVulnerabilityAssessment), Optional.ToNullable(autoProvisioning), Optional.ToNullable(kubeAuditRetentionTime), scubaExternalId.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
+            return new DefenderForContainersAwsOffering(
+                offeringType,
+                description.Value,
+                serializedAdditionalRawData,
+                kubernetesService.Value,
+                kubernetesScubaReader.Value,
+                cloudWatchToKinesis.Value,
+                kinesisToS3.Value,
+                containerVulnerabilityAssessment.Value,
+                containerVulnerabilityAssessmentTask.Value,
+                Optional.ToNullable(enableContainerVulnerabilityAssessment),
+                Optional.ToNullable(autoProvisioning),
+                Optional.ToNullable(kubeAuditRetentionTime),
+                scubaExternalId.Value,
+                mdcContainersImageAssessment.Value,
+                mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
         BinaryData IPersistableModel<DefenderForContainersAwsOffering>.Write(ModelReaderWriterOptions options)

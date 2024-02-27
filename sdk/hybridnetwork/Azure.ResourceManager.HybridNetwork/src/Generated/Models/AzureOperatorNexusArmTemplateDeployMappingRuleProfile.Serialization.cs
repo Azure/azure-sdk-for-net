@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TemplateMappingRuleProfile))
+            if (TemplateMappingRuleProfile != null)
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
                 writer.WriteObjectValue(TemplateMappingRuleProfile);
             }
-            if (Optional.IsDefined(ApplicationEnablement))
+            if (ApplicationEnablement.HasValue)
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    templateMappingRuleProfile = ArmTemplateMappingRuleProfile.DeserializeArmTemplateMappingRuleProfile(property.Value);
+                    templateMappingRuleProfile = ArmTemplateMappingRuleProfile.DeserializeArmTemplateMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

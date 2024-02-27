@@ -27,52 +27,52 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            if (ManagedResourceGroupConfiguration != null)
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
-            if (Optional.IsDefined(SiteReference))
+            if (SiteReference != null)
             {
                 writer.WritePropertyName("siteReference"u8);
                 JsonSerializer.Serialize(writer, SiteReference);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherName))
+            if (options.Format != "W" && PublisherName != null)
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
+            if (options.Format != "W" && PublisherScope.HasValue)
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignGroupName))
+            if (options.Format != "W" && NetworkServiceDesignGroupName != null)
             {
                 writer.WritePropertyName("networkServiceDesignGroupName"u8);
                 writer.WriteStringValue(NetworkServiceDesignGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignVersionName))
+            if (options.Format != "W" && NetworkServiceDesignVersionName != null)
             {
                 writer.WritePropertyName("networkServiceDesignVersionName"u8);
                 writer.WriteStringValue(NetworkServiceDesignVersionName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignVersionOfferingLocation))
+            if (options.Format != "W" && NetworkServiceDesignVersionOfferingLocation != null)
             {
                 writer.WritePropertyName("networkServiceDesignVersionOfferingLocation"u8);
                 writer.WriteStringValue(NetworkServiceDesignVersionOfferingLocation);
             }
-            if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
+            if (NetworkServiceDesignVersionResourceReference != null)
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
                 writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference);
             }
-            if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
+            if (!(DesiredStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("desiredStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStateNetworkServiceDesignVersionName))
+            if (options.Format != "W" && LastStateNetworkServiceDesignVersionName != null)
             {
                 writer.WritePropertyName("lastStateNetworkServiceDesignVersionName"u8);
                 writer.WriteStringValue(LastStateNetworkServiceDesignVersionName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(LastStateConfigurationGroupValueReferences))
+            if (options.Format != "W" && !(LastStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("lastStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> networkServiceDesignVersionName = default;
             Optional<string> networkServiceDesignVersionOfferingLocation = default;
             Optional<DeploymentResourceIdReference> networkServiceDesignVersionResourceReference = default;
-            Optional<IDictionary<string, WritableSubResource>> desiredStateConfigurationGroupValueReferences = default;
+            IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences = default;
             Optional<string> lastStateNetworkServiceDesignVersionName = default;
-            Optional<IReadOnlyDictionary<string, WritableSubResource>> lastStateConfigurationGroupValueReferences = default;
+            IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property.Value);
+                    managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("siteReference"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkServiceDesignVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    networkServiceDesignVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("desiredStateConfigurationGroupValueReferences"u8))
@@ -257,7 +257,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteNetworkServicePropertiesFormat(Optional.ToNullable(provisioningState), managedResourceGroupConfiguration.Value, siteReference, publisherName.Value, Optional.ToNullable(publisherScope), networkServiceDesignGroupName.Value, networkServiceDesignVersionName.Value, networkServiceDesignVersionOfferingLocation.Value, networkServiceDesignVersionResourceReference.Value, Optional.ToDictionary(desiredStateConfigurationGroupValueReferences), lastStateNetworkServiceDesignVersionName.Value, Optional.ToDictionary(lastStateConfigurationGroupValueReferences), serializedAdditionalRawData);
+            return new SiteNetworkServicePropertiesFormat(
+                Optional.ToNullable(provisioningState),
+                managedResourceGroupConfiguration.Value,
+                siteReference,
+                publisherName.Value,
+                Optional.ToNullable(publisherScope),
+                networkServiceDesignGroupName.Value,
+                networkServiceDesignVersionName.Value,
+                networkServiceDesignVersionOfferingLocation.Value,
+                networkServiceDesignVersionResourceReference.Value,
+                desiredStateConfigurationGroupValueReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                lastStateNetworkServiceDesignVersionName.Value,
+                lastStateConfigurationGroupValueReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteNetworkServicePropertiesFormat>.Write(ModelReaderWriterOptions options)

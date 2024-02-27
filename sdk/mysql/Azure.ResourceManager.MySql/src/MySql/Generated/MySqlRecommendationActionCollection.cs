@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual async Task<Response<MySqlRecommendationActionResource>> GetAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual Response<MySqlRecommendationActionResource> Get(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual Response<bool> Exists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlRecommendationActionResource>> GetIfExistsAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
         public virtual NullableResponse<MySqlRecommendationActionResource> GetIfExists(string recommendedActionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(recommendedActionName, nameof(recommendedActionName));
+            if (recommendedActionName == null)
+            {
+                throw new ArgumentNullException(nameof(recommendedActionName));
+            }
+            if (recommendedActionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(recommendedActionName));
+            }
 
             using var scope = _mySqlRecommendationActionRecommendedActionsClientDiagnostics.CreateScope("MySqlRecommendationActionCollection.GetIfExists");
             scope.Start();

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<AvailableCognitiveServicesSku> array = new List<AvailableCognitiveServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item));
+                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item, options));
                     }
                     value = array;
                     continue;

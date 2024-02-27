@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServiceToken))
+            if (options.Format != "W" && ServiceToken != null)
             {
                 writer.WritePropertyName("serviceToken"u8);
                 writer.WriteStringValue(ServiceToken);
             }
-            if (options.Format != "W" && Optional.IsDefined(IdentityCertThumbprint))
+            if (options.Format != "W" && IdentityCertThumbprint != null)
             {
                 writer.WritePropertyName("identityCertThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +43,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(HostServiceUri))
+            if (options.Format != "W" && HostServiceUri != null)
             {
                 writer.WritePropertyName("hostServiceUri"u8);
                 writer.WriteStringValue(HostServiceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Version))
+            if (options.Format != "W" && Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicKey))
+            if (options.Format != "W" && PublicKey != null)
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsIdentityCertExprired))
+            if (options.Format != "W" && IsIdentityCertExprired.HasValue)
             {
                 writer.WritePropertyName("isIdentityCertExprired"u8);
                 writer.WriteBooleanValue(IsIdentityCertExprired.Value);
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeConnectionInfo(serviceToken.Value, identityCertThumbprint.Value, hostServiceUri.Value, version.Value, publicKey.Value, Optional.ToNullable(isIdentityCertExprired), additionalProperties);
+            return new SynapseIntegrationRuntimeConnectionInfo(
+                serviceToken.Value,
+                identityCertThumbprint.Value,
+                hostServiceUri.Value,
+                version.Value,
+                publicKey.Value,
+                Optional.ToNullable(isIdentityCertExprired),
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeConnectionInfo>.Write(ModelReaderWriterOptions options)

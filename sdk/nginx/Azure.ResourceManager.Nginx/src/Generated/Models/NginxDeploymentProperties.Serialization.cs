@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.Nginx.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(NginxVersion))
+            if (options.Format != "W" && NginxVersion != null)
             {
                 writer.WritePropertyName("nginxVersion"u8);
                 writer.WriteStringValue(NginxVersion);
             }
-            if (Optional.IsDefined(ManagedResourceGroup))
+            if (ManagedResourceGroup != null)
             {
                 writer.WritePropertyName("managedResourceGroup"u8);
                 writer.WriteStringValue(ManagedResourceGroup);
             }
-            if (Optional.IsDefined(NetworkProfile))
+            if (NetworkProfile != null)
             {
                 writer.WritePropertyName("networkProfile"u8);
                 writer.WriteObjectValue(NetworkProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(EnableDiagnosticsSupport))
+            if (EnableDiagnosticsSupport.HasValue)
             {
                 writer.WritePropertyName("enableDiagnosticsSupport"u8);
                 writer.WriteBooleanValue(EnableDiagnosticsSupport.Value);
             }
-            if (Optional.IsDefined(Logging))
+            if (Logging != null)
             {
                 writer.WritePropertyName("logging"u8);
                 writer.WriteObjectValue(Logging);
             }
-            if (Optional.IsDefined(ScalingProperties))
+            if (ScalingProperties != null)
             {
                 writer.WritePropertyName("scalingProperties"u8);
                 writer.WriteObjectValue(ScalingProperties);
             }
-            if (Optional.IsDefined(UserProfile))
+            if (UserProfile != null)
             {
                 writer.WritePropertyName("userProfile"u8);
                 writer.WriteObjectValue(UserProfile);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    networkProfile = NginxNetworkProfile.DeserializeNginxNetworkProfile(property.Value);
+                    networkProfile = NginxNetworkProfile.DeserializeNginxNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    logging = NginxLogging.DeserializeNginxLogging(property.Value);
+                    logging = NginxLogging.DeserializeNginxLogging(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scalingProperties"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value);
+                    scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userProfile"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     {
                         continue;
                     }
-                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value);
+                    userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,17 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NginxDeploymentProperties(Optional.ToNullable(provisioningState), nginxVersion.Value, managedResourceGroup.Value, networkProfile.Value, ipAddress.Value, Optional.ToNullable(enableDiagnosticsSupport), logging.Value, scalingProperties.Value, userProfile.Value, serializedAdditionalRawData);
+            return new NginxDeploymentProperties(
+                Optional.ToNullable(provisioningState),
+                nginxVersion.Value,
+                managedResourceGroup.Value,
+                networkProfile.Value,
+                ipAddress.Value,
+                Optional.ToNullable(enableDiagnosticsSupport),
+                logging.Value,
+                scalingProperties.Value,
+                userProfile.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NginxDeploymentProperties>.Write(ModelReaderWriterOptions options)

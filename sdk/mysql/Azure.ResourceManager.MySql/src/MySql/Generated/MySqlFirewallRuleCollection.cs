@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MySqlFirewallRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string firewallRuleName, MySqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MySqlFirewallRuleResource> CreateOrUpdate(WaitUntil waitUntil, string firewallRuleName, MySqlFirewallRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<MySqlFirewallRuleResource>> GetAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<MySqlFirewallRuleResource> Get(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlFirewallRuleResource>> GetIfExistsAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         public virtual NullableResponse<MySqlFirewallRuleResource> GetIfExists(string firewallRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
+            if (firewallRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(firewallRuleName));
+            }
+            if (firewallRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(firewallRuleName));
+            }
 
             using var scope = _mySqlFirewallRuleFirewallRulesClientDiagnostics.CreateScope("MySqlFirewallRuleCollection.GetIfExists");
             scope.Start();

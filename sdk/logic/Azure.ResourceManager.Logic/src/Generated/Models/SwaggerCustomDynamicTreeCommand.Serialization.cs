@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationId))
+            if (OperationId != null)
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(ItemsPath))
+            if (ItemsPath != null)
             {
                 writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
-            if (Optional.IsDefined(ItemValuePath))
+            if (ItemValuePath != null)
             {
                 writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
-            if (Optional.IsDefined(ItemTitlePath))
+            if (ItemTitlePath != null)
             {
                 writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
-            if (Optional.IsDefined(ItemFullTitlePath))
+            if (ItemFullTitlePath != null)
             {
                 writer.WritePropertyName("itemFullTitlePath"u8);
                 writer.WriteStringValue(ItemFullTitlePath);
             }
-            if (Optional.IsDefined(ItemIsParent))
+            if (ItemIsParent != null)
             {
                 writer.WritePropertyName("itemIsParent"u8);
                 writer.WriteStringValue(ItemIsParent);
             }
-            if (Optional.IsDefined(SelectableFilter))
+            if (SelectableFilter != null)
             {
                 writer.WritePropertyName("selectableFilter"u8);
                 writer.WriteStringValue(SelectableFilter);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> itemFullTitlePath = default;
             Optional<string> itemIsParent = default;
             Optional<string> selectableFilter = default;
-            Optional<IDictionary<string, SwaggerCustomDynamicTreeParameterInfo>> parameters = default;
+            IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerCustomDynamicTreeParameterInfo> dictionary = new Dictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameterInfo.DeserializeSwaggerCustomDynamicTreeParameterInfo(property0.Value));
+                        dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameterInfo.DeserializeSwaggerCustomDynamicTreeParameterInfo(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -177,7 +177,16 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SwaggerCustomDynamicTreeCommand(operationId.Value, itemsPath.Value, itemValuePath.Value, itemTitlePath.Value, itemFullTitlePath.Value, itemIsParent.Value, selectableFilter.Value, Optional.ToDictionary(parameters), serializedAdditionalRawData);
+            return new SwaggerCustomDynamicTreeCommand(
+                operationId.Value,
+                itemsPath.Value,
+                itemValuePath.Value,
+                itemTitlePath.Value,
+                itemFullTitlePath.Value,
+                itemIsParent.Value,
+                selectableFilter.Value,
+                parameters ?? new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeCommand>.Write(ModelReaderWriterOptions options)

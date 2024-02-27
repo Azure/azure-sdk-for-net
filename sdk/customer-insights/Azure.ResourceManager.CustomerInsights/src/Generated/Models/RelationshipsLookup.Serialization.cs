@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProfileName))
+            if (options.Format != "W" && ProfileName != null)
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProfilePropertyReferences))
+            if (options.Format != "W" && !(ProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("profilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(RelatedProfileName))
+            if (options.Format != "W" && RelatedProfileName != null)
             {
                 writer.WritePropertyName("relatedProfileName"u8);
                 writer.WriteStringValue(RelatedProfileName);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RelatedProfilePropertyReferences))
+            if (options.Format != "W" && !(RelatedProfilePropertyReferences is ChangeTrackingList<ParticipantProfilePropertyReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("relatedProfilePropertyReferences"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ExistingRelationshipName))
+            if (options.Format != "W" && ExistingRelationshipName != null)
             {
                 writer.WritePropertyName("existingRelationshipName"u8);
                 writer.WriteStringValue(ExistingRelationshipName);
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             Optional<string> profileName = default;
-            Optional<IReadOnlyList<ParticipantProfilePropertyReference>> profilePropertyReferences = default;
+            IReadOnlyList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
             Optional<string> relatedProfileName = default;
-            Optional<IReadOnlyList<ParticipantProfilePropertyReference>> relatedProfilePropertyReferences = default;
+            IReadOnlyList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
             Optional<string> existingRelationshipName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                     }
                     profilePropertyReferences = array;
                     continue;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item, options));
                     }
                     relatedProfilePropertyReferences = array;
                     continue;
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RelationshipsLookup(profileName.Value, Optional.ToList(profilePropertyReferences), relatedProfileName.Value, Optional.ToList(relatedProfilePropertyReferences), existingRelationshipName.Value, serializedAdditionalRawData);
+            return new RelationshipsLookup(
+                profileName.Value,
+                profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                relatedProfileName.Value,
+                relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
+                existingRelationshipName.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RelationshipsLookup>.Write(ModelReaderWriterOptions options)

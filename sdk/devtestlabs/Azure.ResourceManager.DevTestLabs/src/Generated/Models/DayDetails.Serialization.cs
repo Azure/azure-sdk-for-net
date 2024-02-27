@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Time))
+            if (Time != null)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Configurations))
+            if (Configurations != null)
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteObjectValue(Configurations);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value);
+                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetName"u8))

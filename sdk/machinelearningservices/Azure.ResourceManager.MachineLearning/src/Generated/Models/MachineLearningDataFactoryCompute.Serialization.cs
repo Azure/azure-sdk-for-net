@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());
-            if (Optional.IsDefined(ComputeLocation))
+            if (ComputeLocation != null)
             {
                 writer.WritePropertyName("computeLocation"u8);
                 writer.WriteStringValue(ComputeLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            if (options.Format != "W" && ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 if (ResourceId != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningErrors))
+            if (options.Format != "W" && !(ProvisioningErrors is ChangeTrackingList<MachineLearningError> collection && collection.IsUndefined))
             {
                 if (ProvisioningErrors != null)
                 {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("provisioningErrors");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAttachedCompute))
+            if (options.Format != "W" && IsAttachedCompute.HasValue)
             {
                 writer.WritePropertyName("isAttachedCompute"u8);
                 writer.WriteBooleanValue(IsAttachedCompute.Value);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (DisableLocalAuth.HasValue)
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<DateTimeOffset> createdOn = default;
             Optional<DateTimeOffset> modifiedOn = default;
             Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<MachineLearningError>> provisioningErrors = default;
+            IReadOnlyList<MachineLearningError> provisioningErrors = default;
             Optional<bool> isAttachedCompute = default;
             Optional<bool> disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     provisioningErrors = array;
                     continue;
@@ -247,7 +247,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningDataFactoryCompute(computeType, computeLocation.Value, Optional.ToNullable(provisioningState), description.Value, Optional.ToNullable(createdOn), Optional.ToNullable(modifiedOn), resourceId.Value, Optional.ToList(provisioningErrors), Optional.ToNullable(isAttachedCompute), Optional.ToNullable(disableLocalAuth), serializedAdditionalRawData);
+            return new MachineLearningDataFactoryCompute(
+                computeType,
+                computeLocation.Value,
+                Optional.ToNullable(provisioningState),
+                description.Value,
+                Optional.ToNullable(createdOn),
+                Optional.ToNullable(modifiedOn),
+                resourceId.Value,
+                provisioningErrors ?? new ChangeTrackingList<MachineLearningError>(),
+                Optional.ToNullable(isAttachedCompute),
+                Optional.ToNullable(disableLocalAuth),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningDataFactoryCompute>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
             }
-            if (Optional.IsDefined(NetPayable))
+            if (NetPayable != null)
             {
                 writer.WritePropertyName("netPayable"u8);
                 writer.WriteObjectValue(NetPayable);
             }
-            if (Optional.IsDefined(RefundsTotal))
+            if (RefundsTotal != null)
             {
                 writer.WritePropertyName("refundsTotal"u8);
                 writer.WriteObjectValue(RefundsTotal);
             }
-            if (Optional.IsDefined(PurchasesTotal))
+            if (PurchasesTotal != null)
             {
                 writer.WritePropertyName("purchasesTotal"u8);
                 writer.WriteObjectValue(PurchasesTotal);
             }
-            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            if (!(ReservationsToPurchase is ChangeTrackingList<ReservationToPurchaseCalculateExchange> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToPurchase"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            if (!(SavingsPlansToPurchase is ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("savingsPlansToPurchase"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            if (!(ReservationsToExchange is ChangeTrackingList<ReservationToExchange> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("reservationsToExchange"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PolicyResult))
+            if (PolicyResult != null)
             {
                 writer.WritePropertyName("policyResult"u8);
                 writer.WriteObjectValue(PolicyResult);
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<PurchasePrice> netPayable = default;
             Optional<PurchasePrice> refundsTotal = default;
             Optional<PurchasePrice> purchasesTotal = default;
-            Optional<IReadOnlyList<ReservationToPurchaseCalculateExchange>> reservationsToPurchase = default;
-            Optional<IReadOnlyList<SavingsPlanToPurchaseCalculateExchange>> savingsPlansToPurchase = default;
-            Optional<IReadOnlyList<ReservationToExchange>> reservationsToExchange = default;
+            IReadOnlyList<ReservationToPurchaseCalculateExchange> reservationsToPurchase = default;
+            IReadOnlyList<SavingsPlanToPurchaseCalculateExchange> savingsPlansToPurchase = default;
+            IReadOnlyList<ReservationToExchange> reservationsToExchange = default;
             Optional<ExchangePolicyErrors> policyResult = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("refundsTotal"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("purchasesTotal"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reservationsToPurchase"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToPurchaseCalculateExchange> array = new List<ReservationToPurchaseCalculateExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToPurchaseCalculateExchange.DeserializeReservationToPurchaseCalculateExchange(item));
+                        array.Add(ReservationToPurchaseCalculateExchange.DeserializeReservationToPurchaseCalculateExchange(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanToPurchaseCalculateExchange> array = new List<SavingsPlanToPurchaseCalculateExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanToPurchaseCalculateExchange.DeserializeSavingsPlanToPurchaseCalculateExchange(item));
+                        array.Add(SavingsPlanToPurchaseCalculateExchange.DeserializeSavingsPlanToPurchaseCalculateExchange(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToExchange> array = new List<ReservationToExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToExchange.DeserializeReservationToExchange(item));
+                        array.Add(ReservationToExchange.DeserializeReservationToExchange(item, options));
                     }
                     reservationsToExchange = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value);
+                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -224,7 +224,16 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CalculateExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value, serializedAdditionalRawData);
+            return new CalculateExchangeResultProperties(
+                Optional.ToNullable(sessionId),
+                netPayable.Value,
+                refundsTotal.Value,
+                purchasesTotal.Value,
+                reservationsToPurchase ?? new ChangeTrackingList<ReservationToPurchaseCalculateExchange>(),
+                savingsPlansToPurchase ?? new ChangeTrackingList<SavingsPlanToPurchaseCalculateExchange>(),
+                reservationsToExchange ?? new ChangeTrackingList<ReservationToExchange>(),
+                policyResult.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CalculateExchangeResultProperties>.Write(ModelReaderWriterOptions options)

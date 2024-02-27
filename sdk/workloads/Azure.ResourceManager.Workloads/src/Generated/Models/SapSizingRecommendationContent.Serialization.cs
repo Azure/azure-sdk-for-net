@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(DBScaleMethod))
+            if (DBScaleMethod.HasValue)
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (Optional.IsDefined(HighAvailabilityType))
+            if (HighAvailabilityType.HasValue)
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSizingRecommendationContent(appLocation, environment, sapProduct, deploymentType, saps, dbMemory, databaseType, Optional.ToNullable(dbScaleMethod), Optional.ToNullable(highAvailabilityType), serializedAdditionalRawData);
+            return new SapSizingRecommendationContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                saps,
+                dbMemory,
+                databaseType,
+                Optional.ToNullable(dbScaleMethod),
+                Optional.ToNullable(highAvailabilityType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationContent>.Write(ModelReaderWriterOptions options)

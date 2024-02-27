@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServiceIPAddress))
+            if (ServiceIPAddress != null)
             {
                 writer.WritePropertyName("serviceIpAddress"u8);
                 writer.WriteStringValue(ServiceIPAddress.ToString());
             }
-            if (Optional.IsDefined(InternalIPAddress))
+            if (InternalIPAddress != null)
             {
                 writer.WritePropertyName("internalIpAddress"u8);
                 writer.WriteStringValue(InternalIPAddress.ToString());
             }
-            if (Optional.IsCollectionDefined(OutboundIPAddresses))
+            if (!(OutboundIPAddresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("outboundIpAddresses"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VirtualIPMappings))
+            if (!(VirtualIPMappings is ChangeTrackingList<VirtualIPMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("vipMappings"u8);
                 writer.WriteStartArray();
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<IPAddress> serviceIPAddress = default;
             Optional<IPAddress> internalIPAddress = default;
-            Optional<IList<IPAddress>> outboundIPAddresses = default;
-            Optional<IList<VirtualIPMapping>> vipMappings = default;
+            IList<IPAddress> outboundIPAddresses = default;
+            IList<VirtualIPMapping> vipMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<VirtualIPMapping> array = new List<VirtualIPMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualIPMapping.DeserializeVirtualIPMapping(item));
+                                array.Add(VirtualIPMapping.DeserializeVirtualIPMapping(item, options));
                             }
                             vipMappings = array;
                             continue;
@@ -242,7 +242,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceEnvironmentAddressResult(id, name, type, systemData.Value, serviceIPAddress.Value, internalIPAddress.Value, Optional.ToList(outboundIPAddresses), Optional.ToList(vipMappings), kind.Value, serializedAdditionalRawData);
+            return new AppServiceEnvironmentAddressResult(
+                id,
+                name,
+                type,
+                systemData.Value,
+                serviceIPAddress.Value,
+                internalIPAddress.Value,
+                outboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vipMappings ?? new ChangeTrackingList<VirtualIPMapping>(),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceEnvironmentAddressResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SnapshotTakenOn))
+            if (options.Format != "W" && SnapshotTakenOn.HasValue)
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(SnapshotTakenOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SnapshotId))
+            if (options.Format != "W" && SnapshotId.HasValue)
             {
                 writer.WritePropertyName("snapshotId"u8);
                 writer.WriteNumberValue(SnapshotId.Value);
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteConfigurationSnapshotInfo(id, name, type, systemData.Value, Optional.ToNullable(time), Optional.ToNullable(snapshotId), kind.Value, serializedAdditionalRawData);
+            return new SiteConfigurationSnapshotInfo(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(time),
+                Optional.ToNullable(snapshotId),
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteConfigurationSnapshotInfo>.Write(ModelReaderWriterOptions options)

@@ -22,9 +22,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="masterTargetId"/>, <paramref name="retentionDrive"/> or <paramref name="profileId"/> is null. </exception>
         public InMageReprotectContent(string masterTargetId, Guid processServerId, string retentionDrive, string profileId)
         {
-            Argument.AssertNotNull(masterTargetId, nameof(masterTargetId));
-            Argument.AssertNotNull(retentionDrive, nameof(retentionDrive));
-            Argument.AssertNotNull(profileId, nameof(profileId));
+            if (masterTargetId == null)
+            {
+                throw new ArgumentNullException(nameof(masterTargetId));
+            }
+            if (retentionDrive == null)
+            {
+                throw new ArgumentNullException(nameof(retentionDrive));
+            }
+            if (profileId == null)
+            {
+                throw new ArgumentNullException(nameof(profileId));
+            }
 
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;

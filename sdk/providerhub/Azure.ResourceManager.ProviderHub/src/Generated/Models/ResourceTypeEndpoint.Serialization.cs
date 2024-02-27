@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsCollectionDefined(ApiVersions))
+            if (!(ApiVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RequiredFeatures))
+            if (!(RequiredFeatures is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FeaturesRule))
+            if (FeaturesRule != null)
             {
                 writer.WritePropertyName("featuresRule"u8);
                 writer.WriteObjectValue(FeaturesRule);
             }
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<ResourceTypeExtension> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
@@ -120,11 +120,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             Optional<bool> enabled = default;
-            Optional<IList<string>> apiVersions = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> requiredFeatures = default;
+            IList<string> apiVersions = default;
+            IList<AzureLocation> locations = default;
+            IList<string> requiredFeatures = default;
             Optional<FeaturesRule> featuresRule = default;
-            Optional<IList<ResourceTypeExtension>> extensions = default;
+            IList<ResourceTypeExtension> extensions = default;
             Optional<TimeSpan> timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeExtension> array = new List<ResourceTypeExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item));
+                        array.Add(ResourceTypeExtension.DeserializeResourceTypeExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -219,7 +219,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToList(extensions), Optional.ToNullable(timeout), serializedAdditionalRawData);
+            return new ResourceTypeEndpoint(
+                Optional.ToNullable(enabled),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                featuresRule.Value,
+                extensions ?? new ChangeTrackingList<ResourceTypeExtension>(),
+                Optional.ToNullable(timeout),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeEndpoint>.Write(ModelReaderWriterOptions options)

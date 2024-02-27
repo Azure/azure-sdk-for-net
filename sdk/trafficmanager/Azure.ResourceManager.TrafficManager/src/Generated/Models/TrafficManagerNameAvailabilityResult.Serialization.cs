@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ResourceType))
+            if (ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(IsNameAvailable))
+            if (IsNameAvailable.HasValue)
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (Optional.IsDefined(UnavailableReason))
+            if (UnavailableReason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(UnavailableReason);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerNameAvailabilityResult(name.Value, Optional.ToNullable(type), Optional.ToNullable(nameAvailable), reason.Value, message.Value, serializedAdditionalRawData);
+            return new TrafficManagerNameAvailabilityResult(
+                name.Value,
+                Optional.ToNullable(type),
+                Optional.ToNullable(nameAvailable),
+                reason.Value,
+                message.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

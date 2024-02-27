@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationInputRequest(document.RootElement, options);
+            return DeserializeDataBoxValidationInputContent(document.RootElement, options);
         }
 
         internal static UnknownValidationInputRequest DeserializeUnknownValidationInputRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownValidationInputRequest(document.RootElement, options);
+                        return DeserializeDataBoxValidationInputContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support '{options.Format}' format.");

@@ -28,27 +28,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(CustomData))
+            if (CustomData != null)
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<MongoDBRole> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Mechanisms))
+            if (Mechanisms != null)
             {
                 writer.WritePropertyName("mechanisms"u8);
                 writer.WriteStringValue(Mechanisms);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> password = default;
             Optional<string> databaseName = default;
             Optional<string> customData = default;
-            Optional<IList<MongoDBRole>> roles = default;
+            IList<MongoDBRole> roles = default;
             Optional<string> mechanisms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
                             }
                             roles = array;
                             continue;
@@ -169,7 +169,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBUserDefinitionCreateOrUpdateContent(userName.Value, password.Value, databaseName.Value, customData.Value, Optional.ToList(roles), mechanisms.Value, serializedAdditionalRawData);
+            return new MongoDBUserDefinitionCreateOrUpdateContent(
+                userName.Value,
+                password.Value,
+                databaseName.Value,
+                customData.Value,
+                roles ?? new ChangeTrackingList<MongoDBRole>(),
+                mechanisms.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBUserDefinitionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

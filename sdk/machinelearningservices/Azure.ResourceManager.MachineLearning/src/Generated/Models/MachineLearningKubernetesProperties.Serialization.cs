@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RelayConnectionString))
+            if (RelayConnectionString != null)
             {
                 if (RelayConnectionString != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("relayConnectionString");
                 }
             }
-            if (Optional.IsDefined(ServiceBusConnectionString))
+            if (ServiceBusConnectionString != null)
             {
                 if (ServiceBusConnectionString != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("serviceBusConnectionString");
                 }
             }
-            if (Optional.IsDefined(ExtensionPrincipalId))
+            if (ExtensionPrincipalId != null)
             {
                 if (ExtensionPrincipalId != null)
                 {
@@ -62,27 +62,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("extensionPrincipalId");
                 }
             }
-            if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
+            if (ExtensionInstanceReleaseTrain != null)
             {
                 writer.WritePropertyName("extensionInstanceReleaseTrain"u8);
                 writer.WriteStringValue(ExtensionInstanceReleaseTrain);
             }
-            if (Optional.IsDefined(VcName))
+            if (VcName != null)
             {
                 writer.WritePropertyName("vcName"u8);
                 writer.WriteStringValue(VcName);
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(DefaultInstanceType))
+            if (DefaultInstanceType != null)
             {
                 writer.WritePropertyName("defaultInstanceType"u8);
                 writer.WriteStringValue(DefaultInstanceType);
             }
-            if (Optional.IsCollectionDefined(InstanceTypes))
+            if (!(InstanceTypes is ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("instanceTypes"u8);
                 writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> vcName = default;
             Optional<string> @namespace = default;
             Optional<string> defaultInstanceType = default;
-            Optional<IDictionary<string, MachineLearningInstanceTypeSchema>> instanceTypes = default;
+            IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value, options));
                     }
                     instanceTypes = dictionary;
                     continue;
@@ -213,7 +213,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), serializedAdditionalRawData);
+            return new MachineLearningKubernetesProperties(
+                relayConnectionString.Value,
+                serviceBusConnectionString.Value,
+                extensionPrincipalId.Value,
+                extensionInstanceReleaseTrain.Value,
+                vcName.Value,
+                @namespace.Value,
+                defaultInstanceType.Value,
+                instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)

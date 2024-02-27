@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssetName))
+            if (AssetName != null)
             {
                 if (AssetName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetName");
                 }
             }
-            if (Optional.IsDefined(AssetVersion))
+            if (AssetVersion != null)
             {
                 if (AssetVersion != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetVersion");
                 }
             }
-            if (Optional.IsDefined(AutoDeleteSetting))
+            if (AutoDeleteSetting != null)
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 if (Uri != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -212,7 +212,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, serializedAdditionalRawData, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningCustomModelJobOutput(
+                description.Value,
+                jobOutputType,
+                serializedAdditionalRawData,
+                assetName.Value,
+                assetVersion.Value,
+                autoDeleteSetting.Value,
+                Optional.ToNullable(mode),
+                uri.Value);
         }
 
         BinaryData IPersistableModel<MachineLearningCustomModelJobOutput>.Write(ModelReaderWriterOptions options)

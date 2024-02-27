@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("ssh"u8))
                 {
-                    ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value);
+                    ssh = ContainerServiceSshConfiguration.DeserializeContainerServiceSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enable"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(Name))
+            if (Name.HasValue)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Optional.IsDefined(TrackingGranularityInDays))
+            if (TrackingGranularityInDays.HasValue)
             {
                 writer.WritePropertyName("trackingGranularityInDays"u8);
                 writer.WriteNumberValue(TrackingGranularityInDays.Value);
             }
-            if (Optional.IsCollectionDefined(BlobType))
+            if (!(BlobType is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("blobType"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool enable = default;
             Optional<LastAccessTimeTrackingPolicyName> name = default;
             Optional<int> trackingGranularityInDays = default;
-            Optional<IList<string>> blobType = default;
+            IList<string> blobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastAccessTimeTrackingPolicy(enable, Optional.ToNullable(name), Optional.ToNullable(trackingGranularityInDays), Optional.ToList(blobType), serializedAdditionalRawData);
+            return new LastAccessTimeTrackingPolicy(enable, Optional.ToNullable(name), Optional.ToNullable(trackingGranularityInDays), blobType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastAccessTimeTrackingPolicy>.Write(ModelReaderWriterOptions options)

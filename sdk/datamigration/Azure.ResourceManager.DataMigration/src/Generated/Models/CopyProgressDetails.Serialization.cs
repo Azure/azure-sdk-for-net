@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TableName))
+            if (options.Format != "W" && TableName != null)
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ParallelCopyType))
+            if (options.Format != "W" && ParallelCopyType != null)
             {
                 writer.WritePropertyName("parallelCopyType"u8);
                 writer.WriteStringValue(ParallelCopyType);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsedParallelCopies))
+            if (options.Format != "W" && UsedParallelCopies.HasValue)
             {
                 writer.WritePropertyName("usedParallelCopies"u8);
                 writer.WriteNumberValue(UsedParallelCopies.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataRead))
+            if (options.Format != "W" && DataRead.HasValue)
             {
                 writer.WritePropertyName("dataRead"u8);
                 writer.WriteNumberValue(DataRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataWritten))
+            if (options.Format != "W" && DataWritten.HasValue)
             {
                 writer.WritePropertyName("dataWritten"u8);
                 writer.WriteNumberValue(DataWritten.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RowsRead))
+            if (options.Format != "W" && RowsRead.HasValue)
             {
                 writer.WritePropertyName("rowsRead"u8);
                 writer.WriteNumberValue(RowsRead.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
+            if (options.Format != "W" && RowsCopied.HasValue)
             {
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyStart))
+            if (options.Format != "W" && CopyStart.HasValue)
             {
                 writer.WritePropertyName("copyStart"u8);
                 writer.WriteStringValue(CopyStart.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
+            if (options.Format != "W" && CopyThroughput.HasValue)
             {
                 writer.WritePropertyName("copyThroughput"u8);
                 writer.WriteNumberValue(CopyThroughput.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
+            if (options.Format != "W" && CopyDuration.HasValue)
             {
                 writer.WritePropertyName("copyDuration"u8);
                 writer.WriteNumberValue(CopyDuration.Value);
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), serializedAdditionalRawData);
+            return new CopyProgressDetails(
+                tableName.Value,
+                status.Value,
+                parallelCopyType.Value,
+                Optional.ToNullable(usedParallelCopies),
+                Optional.ToNullable(dataRead),
+                Optional.ToNullable(dataWritten),
+                Optional.ToNullable(rowsRead),
+                Optional.ToNullable(rowsCopied),
+                Optional.ToNullable(copyStart),
+                Optional.ToNullable(copyThroughput),
+                Optional.ToNullable(copyDuration),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyProgressDetails>.Write(ModelReaderWriterOptions options)

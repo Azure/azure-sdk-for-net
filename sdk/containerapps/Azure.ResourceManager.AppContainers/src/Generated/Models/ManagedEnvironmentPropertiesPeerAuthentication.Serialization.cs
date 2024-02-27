@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mtls))
+            if (Mtls != null)
             {
                 writer.WritePropertyName("mtls"u8);
                 writer.WriteObjectValue(Mtls);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    mtls = Mtls.DeserializeMtls(property.Value);
+                    mtls = Mtls.DeserializeMtls(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

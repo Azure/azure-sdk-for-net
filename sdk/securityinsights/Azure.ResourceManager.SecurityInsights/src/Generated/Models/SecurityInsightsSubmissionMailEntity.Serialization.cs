@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -75,57 +75,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            if (options.Format != "W" && FriendlyName != null)
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && Optional.IsDefined(NetworkMessageId))
+            if (options.Format != "W" && NetworkMessageId.HasValue)
             {
                 writer.WritePropertyName("networkMessageId"u8);
                 writer.WriteStringValue(NetworkMessageId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubmissionId))
+            if (options.Format != "W" && SubmissionId.HasValue)
             {
                 writer.WritePropertyName("submissionId"u8);
                 writer.WriteStringValue(SubmissionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Submitter))
+            if (options.Format != "W" && Submitter != null)
             {
                 writer.WritePropertyName("submitter"u8);
                 writer.WriteStringValue(Submitter);
             }
-            if (options.Format != "W" && Optional.IsDefined(SubmitOn))
+            if (options.Format != "W" && SubmitOn.HasValue)
             {
                 writer.WritePropertyName("submissionDate"u8);
                 writer.WriteStringValue(SubmitOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(MessageReceivedOn))
+            if (options.Format != "W" && MessageReceivedOn.HasValue)
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(MessageReceivedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Recipient))
+            if (options.Format != "W" && Recipient != null)
             {
                 writer.WritePropertyName("recipient"u8);
                 writer.WriteStringValue(Recipient);
             }
-            if (options.Format != "W" && Optional.IsDefined(Sender))
+            if (options.Format != "W" && Sender != null)
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
-            if (options.Format != "W" && Optional.IsDefined(SenderIP))
+            if (options.Format != "W" && SenderIP != null)
             {
                 writer.WritePropertyName("senderIp"u8);
                 writer.WriteStringValue(SenderIP.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Subject))
+            if (options.Format != "W" && Subject != null)
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReportType))
+            if (options.Format != "W" && ReportType != null)
             {
                 writer.WritePropertyName("reportType"u8);
                 writer.WriteStringValue(ReportType);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> additionalData = default;
+            IReadOnlyDictionary<string, BinaryData> additionalData = default;
             Optional<string> friendlyName = default;
             Optional<Guid> networkMessageId = default;
             Optional<Guid> submissionId = default;
@@ -333,7 +333,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsSubmissionMailEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToNullable(networkMessageId), Optional.ToNullable(submissionId), submitter.Value, Optional.ToNullable(submissionDate), Optional.ToNullable(timestamp), recipient.Value, sender.Value, senderIP.Value, subject.Value, reportType.Value);
+            return new SecurityInsightsSubmissionMailEntity(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData,
+                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                friendlyName.Value,
+                Optional.ToNullable(networkMessageId),
+                Optional.ToNullable(submissionId),
+                submitter.Value,
+                Optional.ToNullable(submissionDate),
+                Optional.ToNullable(timestamp),
+                recipient.Value,
+                sender.Value,
+                senderIP.Value,
+                subject.Value,
+                reportType.Value);
         }
 
         BinaryData IPersistableModel<SecurityInsightsSubmissionMailEntity>.Write(ModelReaderWriterOptions options)

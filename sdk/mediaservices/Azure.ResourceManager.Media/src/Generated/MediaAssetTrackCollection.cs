@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MediaAssetTrackResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trackName, MediaAssetTrackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MediaAssetTrackResource> CreateOrUpdate(WaitUntil waitUntil, string trackName, MediaAssetTrackData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual async Task<Response<MediaAssetTrackResource>> GetAsync(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual Response<MediaAssetTrackResource> Get(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual Response<bool> Exists(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual async Task<NullableResponse<MediaAssetTrackResource>> GetIfExistsAsync(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
         public virtual NullableResponse<MediaAssetTrackResource> GetIfExists(string trackName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trackName, nameof(trackName));
+            if (trackName == null)
+            {
+                throw new ArgumentNullException(nameof(trackName));
+            }
+            if (trackName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trackName));
+            }
 
             using var scope = _mediaAssetTrackTracksClientDiagnostics.CreateScope("MediaAssetTrackCollection.GetIfExists");
             scope.Start();

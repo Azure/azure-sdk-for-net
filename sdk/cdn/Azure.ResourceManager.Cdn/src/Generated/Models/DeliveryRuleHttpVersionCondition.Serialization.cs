@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = HttpVersionMatchCondition.DeserializeHttpVersionMatchCondition(property.Value);
+                    parameters = HttpVersionMatchCondition.DeserializeHttpVersionMatchCondition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

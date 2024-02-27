@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -19,8 +18,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
         public VectorSearchProfile(string name, string algorithmConfigurationName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            if (algorithmConfigurationName == null)
+            {
+                throw new ArgumentNullException(nameof(algorithmConfigurationName));
+            }
 
             Name = name;
             AlgorithmConfigurationName = algorithmConfigurationName;

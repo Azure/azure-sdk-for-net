@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Search.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<QuotaUsageResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaUsageResult>> value = default;
+            IReadOnlyList<QuotaUsageResult> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<QuotaUsageResult> array = new List<QuotaUsageResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaUsageResult.DeserializeQuotaUsageResult(item));
+                        array.Add(QuotaUsageResult.DeserializeQuotaUsageResult(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaUsagesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaUsagesListResult(value ?? new ChangeTrackingList<QuotaUsageResult>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaUsagesListResult>.Write(ModelReaderWriterOptions options)

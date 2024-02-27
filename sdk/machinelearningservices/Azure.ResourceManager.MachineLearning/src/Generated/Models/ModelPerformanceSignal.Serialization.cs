@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSegment))
+            if (DataSegment != null)
             {
                 if (DataSegment != null)
                 {
@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData);
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IList<MonitoringInputDataBase> productionData = default;
             MonitoringInputDataBase referenceData = default;
             Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dataSegment = null;
                         continue;
                     }
-                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value);
+                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricThreshold"u8))
                 {
-                    metricThreshold = ModelPerformanceMetricThresholdBase.DeserializeModelPerformanceMetricThresholdBase(property.Value);
+                    metricThreshold = ModelPerformanceMetricThresholdBase.DeserializeModelPerformanceMetricThresholdBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
@@ -143,14 +143,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -188,7 +188,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ModelPerformanceSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, metricThreshold, productionData, referenceData);
+            return new ModelPerformanceSignal(
+                Optional.ToNullable(mode),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                dataSegment.Value,
+                metricThreshold,
+                productionData,
+                referenceData);
         }
 
         BinaryData IPersistableModel<ModelPerformanceSignal>.Write(ModelReaderWriterOptions options)

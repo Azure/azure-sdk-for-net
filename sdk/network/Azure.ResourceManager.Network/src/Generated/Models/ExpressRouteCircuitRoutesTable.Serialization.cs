@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Network))
+            if (Network != null)
             {
                 writer.WritePropertyName("network"u8);
                 writer.WriteStringValue(Network);
             }
-            if (Optional.IsDefined(NextHop))
+            if (NextHop != null)
             {
                 writer.WritePropertyName("nextHop"u8);
                 writer.WriteStringValue(NextHop);
             }
-            if (Optional.IsDefined(LocPrf))
+            if (LocPrf != null)
             {
                 writer.WritePropertyName("locPrf"u8);
                 writer.WriteStringValue(LocPrf);
             }
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Optional.ToNullable(weight), path.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitRoutesTable(
+                network.Value,
+                nextHop.Value,
+                locPrf.Value,
+                Optional.ToNullable(weight),
+                path.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTable>.Write(ModelReaderWriterOptions options)

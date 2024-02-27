@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Current))
+            if (options.Format != "W" && Current.HasValue)
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(Current.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Default))
+            if (options.Format != "W" && Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
@@ -168,7 +168,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppSubscriptionQuotaItem(id, name, type, systemData.Value, Optional.ToNullable(current), Optional.ToNullable(@default), serializedAdditionalRawData);
+            return new NetAppSubscriptionQuotaItem(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(current),
+                Optional.ToNullable(@default),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppSubscriptionQuotaItem>.Write(ModelReaderWriterOptions options)

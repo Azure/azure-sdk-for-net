@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomLocationPropertiesAuthenticationType))
+            if (CustomLocationPropertiesAuthenticationType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(CustomLocationPropertiesAuthenticationType);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);

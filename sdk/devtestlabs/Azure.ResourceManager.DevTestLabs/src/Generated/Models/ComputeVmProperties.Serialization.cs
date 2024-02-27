@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Statuses))
+            if (!(Statuses is ChangeTrackingList<ComputeVmInstanceViewStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(OSType))
+            if (OSType != null)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (Optional.IsDefined(VmSize))
+            if (VmSize != null)
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize);
             }
-            if (Optional.IsDefined(NetworkInterfaceId))
+            if (NetworkInterfaceId != null)
             {
                 writer.WritePropertyName("networkInterfaceId"u8);
                 writer.WriteStringValue(NetworkInterfaceId);
             }
-            if (Optional.IsDefined(OSDiskId))
+            if (OSDiskId != null)
             {
                 writer.WritePropertyName("osDiskId"u8);
                 writer.WriteStringValue(OSDiskId);
             }
-            if (Optional.IsCollectionDefined(DataDiskIds))
+            if (!(DataDiskIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dataDiskIds"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            if (!(DataDisks is ChangeTrackingList<ComputeDataDisk> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputeVmInstanceViewStatus>> statuses = default;
+            IReadOnlyList<ComputeVmInstanceViewStatus> statuses = default;
             Optional<string> osType = default;
             Optional<string> vmSize = default;
             Optional<string> networkInterfaceId = default;
             Optional<string> osDiskId = default;
-            Optional<IReadOnlyList<string>> dataDiskIds = default;
-            Optional<IReadOnlyList<ComputeDataDisk>> dataDisks = default;
+            IReadOnlyList<string> dataDiskIds = default;
+            IReadOnlyList<ComputeDataDisk> dataDisks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeVmInstanceViewStatus> array = new List<ComputeVmInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item));
+                        array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeDataDisk> array = new List<ComputeDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item));
+                        array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -193,7 +193,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeVmProperties(Optional.ToList(statuses), osType.Value, vmSize.Value, networkInterfaceId.Value, osDiskId.Value, Optional.ToList(dataDiskIds), Optional.ToList(dataDisks), serializedAdditionalRawData);
+            return new ComputeVmProperties(
+                statuses ?? new ChangeTrackingList<ComputeVmInstanceViewStatus>(),
+                osType.Value,
+                vmSize.Value,
+                networkInterfaceId.Value,
+                osDiskId.Value,
+                dataDiskIds ?? new ChangeTrackingList<string>(),
+                dataDisks ?? new ChangeTrackingList<ComputeDataDisk>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeVmProperties>.Write(ModelReaderWriterOptions options)

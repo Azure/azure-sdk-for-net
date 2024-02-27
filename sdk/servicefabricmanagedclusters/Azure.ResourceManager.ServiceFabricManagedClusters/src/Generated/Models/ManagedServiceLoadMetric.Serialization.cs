@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteStringValue(Weight.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryDefaultLoad))
+            if (PrimaryDefaultLoad.HasValue)
             {
                 writer.WritePropertyName("primaryDefaultLoad"u8);
                 writer.WriteNumberValue(PrimaryDefaultLoad.Value);
             }
-            if (Optional.IsDefined(SecondaryDefaultLoad))
+            if (SecondaryDefaultLoad.HasValue)
             {
                 writer.WritePropertyName("secondaryDefaultLoad"u8);
                 writer.WriteNumberValue(SecondaryDefaultLoad.Value);
             }
-            if (Optional.IsDefined(DefaultLoad))
+            if (DefaultLoad.HasValue)
             {
                 writer.WritePropertyName("defaultLoad"u8);
                 writer.WriteNumberValue(DefaultLoad.Value);
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedServiceLoadMetric(name, Optional.ToNullable(weight), Optional.ToNullable(primaryDefaultLoad), Optional.ToNullable(secondaryDefaultLoad), Optional.ToNullable(defaultLoad), serializedAdditionalRawData);
+            return new ManagedServiceLoadMetric(
+                name,
+                Optional.ToNullable(weight),
+                Optional.ToNullable(primaryDefaultLoad),
+                Optional.ToNullable(secondaryDefaultLoad),
+                Optional.ToNullable(defaultLoad),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedServiceLoadMetric>.Write(ModelReaderWriterOptions options)

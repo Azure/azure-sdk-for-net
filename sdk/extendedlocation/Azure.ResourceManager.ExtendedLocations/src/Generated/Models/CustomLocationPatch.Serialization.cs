@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsCollectionDefined(ClusterExtensionIds))
+            if (!(ClusterExtensionIds is ChangeTrackingList<ResourceIdentifier> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("clusterExtensionIds"u8);
                 writer.WriteStartArray();
@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(HostResourceId))
+            if (HostResourceId != null)
             {
                 writer.WritePropertyName("hostResourceId"u8);
                 writer.WriteStringValue(HostResourceId);
             }
-            if (Optional.IsDefined(HostType))
+            if (HostType.HasValue)
             {
                 writer.WritePropertyName("hostType"u8);
                 writer.WriteStringValue(HostType.Value.ToString());
             }
-            if (Optional.IsDefined(Namespace))
+            if (Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<CustomLocationAuthentication> authentication = default;
-            Optional<IList<ResourceIdentifier>> clusterExtensionIds = default;
+            IList<ResourceIdentifier> clusterExtensionIds = default;
             Optional<string> displayName = default;
             Optional<ResourceIdentifier> hostResourceId = default;
             Optional<CustomLocationHostType> hostType = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                             {
                                 continue;
                             }
-                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value);
+                            authentication = CustomLocationAuthentication.DeserializeCustomLocationAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterExtensionIds"u8))
@@ -246,7 +246,17 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomLocationPatch(identity, Optional.ToDictionary(tags), authentication.Value, Optional.ToList(clusterExtensionIds), displayName.Value, hostResourceId.Value, Optional.ToNullable(hostType), @namespace.Value, provisioningState.Value, serializedAdditionalRawData);
+            return new CustomLocationPatch(
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                authentication.Value,
+                clusterExtensionIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                displayName.Value,
+                hostResourceId.Value,
+                Optional.ToNullable(hostType),
+                @namespace.Value,
+                provisioningState.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomLocationPatch>.Write(ModelReaderWriterOptions options)

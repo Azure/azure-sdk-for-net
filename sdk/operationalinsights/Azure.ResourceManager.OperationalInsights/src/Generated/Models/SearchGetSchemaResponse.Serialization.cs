@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteObjectValue(Metadata);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<OperationalInsightsSearchSchemaValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             Optional<SearchMetadata> metadata = default;
-            Optional<IReadOnlyList<OperationalInsightsSearchSchemaValue>> value = default;
+            IReadOnlyList<OperationalInsightsSearchSchemaValue> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    metadata = SearchMetadata.DeserializeSearchMetadata(property.Value);
+                    metadata = SearchMetadata.DeserializeSearchMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsSearchSchemaValue> array = new List<OperationalInsightsSearchSchemaValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(item));
+                        array.Add(OperationalInsightsSearchSchemaValue.DeserializeOperationalInsightsSearchSchemaValue(item, options));
                     }
                     value = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SearchGetSchemaResponse(metadata.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new SearchGetSchemaResponse(metadata.Value, value ?? new ChangeTrackingList<OperationalInsightsSearchSchemaValue>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SearchGetSchemaResponse>.Write(ModelReaderWriterOptions options)

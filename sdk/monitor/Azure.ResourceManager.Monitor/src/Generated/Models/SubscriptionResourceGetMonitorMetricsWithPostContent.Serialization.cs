@@ -26,62 +26,62 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timespan))
+            if (Timespan.HasValue)
             {
                 writer.WritePropertyName("timespan"u8);
                 writer.WriteStringValue(Timespan.Value, "T");
             }
-            if (Optional.IsDefined(Interval))
+            if (Interval.HasValue)
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
-            if (Optional.IsDefined(MetricNames))
+            if (MetricNames != null)
             {
                 writer.WritePropertyName("metricNames"u8);
                 writer.WriteStringValue(MetricNames);
             }
-            if (Optional.IsDefined(Aggregation))
+            if (Aggregation != null)
             {
                 writer.WritePropertyName("aggregation"u8);
                 writer.WriteStringValue(Aggregation);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Top))
+            if (Top.HasValue)
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
             }
-            if (Optional.IsDefined(OrderBy))
+            if (OrderBy != null)
             {
                 writer.WritePropertyName("orderBy"u8);
                 writer.WriteStringValue(OrderBy);
             }
-            if (Optional.IsDefined(RollUpBy))
+            if (RollUpBy != null)
             {
                 writer.WritePropertyName("rollUpBy"u8);
                 writer.WriteStringValue(RollUpBy);
             }
-            if (Optional.IsDefined(ResultType))
+            if (ResultType.HasValue)
             {
                 writer.WritePropertyName("resultType"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
             }
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
-            if (Optional.IsDefined(AutoAdjustTimegrain))
+            if (AutoAdjustTimegrain.HasValue)
             {
                 writer.WritePropertyName("autoAdjustTimegrain"u8);
                 writer.WriteBooleanValue(AutoAdjustTimegrain.Value);
             }
-            if (Optional.IsDefined(ValidateDimensions))
+            if (ValidateDimensions.HasValue)
             {
                 writer.WritePropertyName("validateDimensions"u8);
                 writer.WriteBooleanValue(ValidateDimensions.Value);
@@ -230,7 +230,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionResourceGetMonitorMetricsWithPostContent(Optional.ToNullable(timespan), Optional.ToNullable(interval), metricNames.Value, aggregation.Value, filter.Value, Optional.ToNullable(top), orderBy.Value, rollUpBy.Value, Optional.ToNullable(resultType), metricNamespace.Value, Optional.ToNullable(autoAdjustTimegrain), Optional.ToNullable(validateDimensions), serializedAdditionalRawData);
+            return new SubscriptionResourceGetMonitorMetricsWithPostContent(
+                Optional.ToNullable(timespan),
+                Optional.ToNullable(interval),
+                metricNames.Value,
+                aggregation.Value,
+                filter.Value,
+                Optional.ToNullable(top),
+                orderBy.Value,
+                rollUpBy.Value,
+                Optional.ToNullable(resultType),
+                metricNamespace.Value,
+                Optional.ToNullable(autoAdjustTimegrain),
+                Optional.ToNullable(validateDimensions),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionResourceGetMonitorMetricsWithPostContent>.Write(ModelReaderWriterOptions options)

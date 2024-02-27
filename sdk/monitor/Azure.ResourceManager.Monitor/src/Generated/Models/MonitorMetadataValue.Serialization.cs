@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("value"u8))

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RebootType))
+            if (RebootType.HasValue)
             {
                 writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());
             }
-            if (Optional.IsDefined(ShardId))
+            if (ShardId.HasValue)
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (Optional.IsCollectionDefined(Ports))
+            if (!(Ports is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
             Optional<RedisRebootType> rebootType = default;
             Optional<int> shardId = default;
-            Optional<IList<int>> ports = default;
+            IList<int> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisRebootContent(Optional.ToNullable(rebootType), Optional.ToNullable(shardId), Optional.ToList(ports), serializedAdditionalRawData);
+            return new RedisRebootContent(Optional.ToNullable(rebootType), Optional.ToNullable(shardId), ports ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisRebootContent>.Write(ModelReaderWriterOptions options)

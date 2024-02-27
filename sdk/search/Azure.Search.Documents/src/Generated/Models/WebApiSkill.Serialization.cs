@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri);
-            if (Optional.IsCollectionDefined(HttpHeaders))
+            if (!(HttpHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (HttpHeaders != null)
                 {
@@ -37,12 +37,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("httpHeaders");
                 }
             }
-            if (Optional.IsDefined(HttpMethod))
+            if (HttpMethod != null)
             {
                 writer.WritePropertyName("httpMethod"u8);
                 writer.WriteStringValue(HttpMethod);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout.HasValue)
             {
                 if (Timeout != null)
                 {
@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("timeout");
                 }
             }
-            if (Optional.IsDefined(BatchSize))
+            if (BatchSize.HasValue)
             {
                 if (BatchSize != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("batchSize");
                 }
             }
-            if (Optional.IsDefined(DegreeOfParallelism))
+            if (DegreeOfParallelism.HasValue)
             {
                 if (DegreeOfParallelism != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("degreeOfParallelism");
                 }
             }
-            if (Optional.IsDefined(AuthResourceId))
+            if (AuthResourceId != null)
             {
                 if (AuthResourceId != null)
                 {
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("authResourceId");
                 }
             }
-            if (Optional.IsDefined(AuthIdentity))
+            if (AuthIdentity != null)
             {
                 if (AuthIdentity != null)
                 {
@@ -104,17 +104,17 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Context))
+            if (Context != null)
             {
                 writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string uri = default;
-            Optional<IDictionary<string, string>> httpHeaders = default;
+            IDictionary<string, string> httpHeaders = default;
             Optional<string> httpMethod = default;
             Optional<TimeSpan?> timeout = default;
             Optional<int?> batchSize = default;
@@ -274,7 +274,21 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new WebApiSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, uri, Optional.ToDictionary(httpHeaders), httpMethod.Value, Optional.ToNullable(timeout), Optional.ToNullable(batchSize), Optional.ToNullable(degreeOfParallelism), authResourceId.Value, authIdentity.Value);
+            return new WebApiSkill(
+                odataType,
+                name.Value,
+                description.Value,
+                context.Value,
+                inputs,
+                outputs,
+                uri,
+                httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                httpMethod.Value,
+                Optional.ToNullable(timeout),
+                Optional.ToNullable(batchSize),
+                Optional.ToNullable(degreeOfParallelism),
+                authResourceId.Value,
+                authIdentity.Value);
         }
     }
 }

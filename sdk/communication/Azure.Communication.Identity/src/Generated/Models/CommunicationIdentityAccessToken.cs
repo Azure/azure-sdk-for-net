@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.Identity
 {
@@ -19,7 +18,10 @@ namespace Azure.Communication.Identity
         /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal CommunicationIdentityAccessToken(string token, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNull(token, nameof(token));
+            if (token == null)
+            {
+                throw new ArgumentNullException(nameof(token));
+            }
 
             Token = token;
             ExpiresOn = expiresOn;

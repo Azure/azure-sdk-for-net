@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ResourceProperties))
+            if (ResourceProperties != null)
             {
                 if (ResourceProperties != null)
                 {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         resourceProperties = null;
                         continue;
                     }
-                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value);
+                    resourceProperties = AzureResourceBaseProperties.DeserializeAzureResourceBaseProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

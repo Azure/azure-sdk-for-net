@@ -21,17 +21,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, ParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -61,47 +61,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue(Domain);
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteObjectValue(AccessToken);
             }
-            if (Optional.IsDefined(Authentication))
+            if (Authentication != null)
             {
                 writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteObjectValue(WorkspaceResourceId);
             }
-            if (Optional.IsDefined(ExistingClusterId))
+            if (ExistingClusterId != null)
             {
                 writer.WritePropertyName("existingClusterId"u8);
                 writer.WriteObjectValue(ExistingClusterId);
             }
-            if (Optional.IsDefined(InstancePoolId))
+            if (InstancePoolId != null)
             {
                 writer.WritePropertyName("instancePoolId"u8);
                 writer.WriteObjectValue(InstancePoolId);
             }
-            if (Optional.IsDefined(NewClusterVersion))
+            if (NewClusterVersion != null)
             {
                 writer.WritePropertyName("newClusterVersion"u8);
                 writer.WriteObjectValue(NewClusterVersion);
             }
-            if (Optional.IsDefined(NewClusterNumOfWorker))
+            if (NewClusterNumOfWorker != null)
             {
                 writer.WritePropertyName("newClusterNumOfWorker"u8);
                 writer.WriteObjectValue(NewClusterNumOfWorker);
             }
-            if (Optional.IsDefined(NewClusterNodeType))
+            if (NewClusterNodeType != null)
             {
                 writer.WritePropertyName("newClusterNodeType"u8);
                 writer.WriteObjectValue(NewClusterNodeType);
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkConf))
+            if (!(NewClusterSparkConf is ChangeTrackingDictionary<string, object> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkConf"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterSparkEnvVars))
+            if (!(NewClusterSparkEnvVars is ChangeTrackingDictionary<string, object> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("newClusterSparkEnvVars"u8);
                 writer.WriteStartObject();
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(NewClusterCustomTags))
+            if (!(NewClusterCustomTags is ChangeTrackingDictionary<string, object> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("newClusterCustomTags"u8);
                 writer.WriteStartObject();
@@ -149,37 +149,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(NewClusterLogDestination))
+            if (NewClusterLogDestination != null)
             {
                 writer.WritePropertyName("newClusterLogDestination"u8);
                 writer.WriteObjectValue(NewClusterLogDestination);
             }
-            if (Optional.IsDefined(NewClusterDriverNodeType))
+            if (NewClusterDriverNodeType != null)
             {
                 writer.WritePropertyName("newClusterDriverNodeType"u8);
                 writer.WriteObjectValue(NewClusterDriverNodeType);
             }
-            if (Optional.IsDefined(NewClusterInitScripts))
+            if (NewClusterInitScripts != null)
             {
                 writer.WritePropertyName("newClusterInitScripts"u8);
                 writer.WriteObjectValue(NewClusterInitScripts);
             }
-            if (Optional.IsDefined(NewClusterEnableElasticDisk))
+            if (NewClusterEnableElasticDisk != null)
             {
                 writer.WritePropertyName("newClusterEnableElasticDisk"u8);
                 writer.WriteObjectValue(NewClusterEnableElasticDisk);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteObjectValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(PolicyId))
+            if (PolicyId != null)
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteObjectValue(PolicyId);
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -202,8 +202,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object domain = default;
             Optional<SecretBase> accessToken = default;
             Optional<object> authentication = default;
@@ -213,9 +213,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> newClusterVersion = default;
             Optional<object> newClusterNumOfWorker = default;
             Optional<object> newClusterNodeType = default;
-            Optional<IDictionary<string, object>> newClusterSparkConf = default;
-            Optional<IDictionary<string, object>> newClusterSparkEnvVars = default;
-            Optional<IDictionary<string, object>> newClusterCustomTags = default;
+            IDictionary<string, object> newClusterSparkConf = default;
+            IDictionary<string, object> newClusterSparkEnvVars = default;
+            IDictionary<string, object> newClusterCustomTags = default;
             Optional<object> newClusterLogDestination = default;
             Optional<object> newClusterDriverNodeType = default;
             Optional<object> newClusterInitScripts = default;
@@ -499,7 +499,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, domain, accessToken.Value, authentication.Value, workspaceResourceId.Value, existingClusterId.Value, instancePoolId.Value, newClusterVersion.Value, newClusterNumOfWorker.Value, newClusterNodeType.Value, Optional.ToDictionary(newClusterSparkConf), Optional.ToDictionary(newClusterSparkEnvVars), Optional.ToDictionary(newClusterCustomTags), newClusterLogDestination.Value, newClusterDriverNodeType.Value, newClusterInitScripts.Value, newClusterEnableElasticDisk.Value, encryptedCredential.Value, policyId.Value, credential.Value);
+            return new AzureDatabricksLinkedService(
+                type,
+                connectVia.Value,
+                description.Value,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                domain,
+                accessToken.Value,
+                authentication.Value,
+                workspaceResourceId.Value,
+                existingClusterId.Value,
+                instancePoolId.Value,
+                newClusterVersion.Value,
+                newClusterNumOfWorker.Value,
+                newClusterNodeType.Value,
+                newClusterSparkConf ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterSparkEnvVars ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterCustomTags ?? new ChangeTrackingDictionary<string, object>(),
+                newClusterLogDestination.Value,
+                newClusterDriverNodeType.Value,
+                newClusterInitScripts.Value,
+                newClusterEnableElasticDisk.Value,
+                encryptedCredential.Value,
+                policyId.Value,
+                credential.Value);
         }
 
         internal partial class AzureDatabricksLinkedServiceConverter : JsonConverter<AzureDatabricksLinkedService>

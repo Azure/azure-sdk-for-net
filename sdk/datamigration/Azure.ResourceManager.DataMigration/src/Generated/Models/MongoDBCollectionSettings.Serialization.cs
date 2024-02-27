@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CanDelete))
+            if (CanDelete.HasValue)
             {
                 writer.WritePropertyName("canDelete"u8);
                 writer.WriteBooleanValue(CanDelete.Value);
             }
-            if (Optional.IsDefined(ShardKey))
+            if (ShardKey != null)
             {
                 writer.WritePropertyName("shardKey"u8);
                 writer.WriteObjectValue(ShardKey);
             }
-            if (Optional.IsDefined(TargetRUs))
+            if (TargetRUs.HasValue)
             {
                 writer.WritePropertyName("targetRUs"u8);
                 writer.WriteNumberValue(TargetRUs.Value);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value);
+                    shardKey = MongoDBShardKeySetting.DeserializeMongoDBShardKeySetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetRUs"u8))

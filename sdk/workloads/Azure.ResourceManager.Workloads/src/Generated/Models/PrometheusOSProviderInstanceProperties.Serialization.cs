@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrometheusUri))
+            if (PrometheusUri != null)
             {
                 writer.WritePropertyName("prometheusUrl"u8);
                 writer.WriteStringValue(PrometheusUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SslPreference))
+            if (SslPreference.HasValue)
             {
                 writer.WritePropertyName("sslPreference"u8);
                 writer.WriteStringValue(SslPreference.Value.ToString());
             }
-            if (Optional.IsDefined(SslCertificateUri))
+            if (SslCertificateUri != null)
             {
                 writer.WritePropertyName("sslCertificateUri"u8);
                 writer.WriteStringValue(SslCertificateUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(SapSid))
+            if (SapSid != null)
             {
                 writer.WritePropertyName("sapSid"u8);
                 writer.WriteStringValue(SapSid);
@@ -138,7 +138,13 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrometheusOSProviderInstanceProperties(providerType, serializedAdditionalRawData, prometheusUrl.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value, sapSid.Value);
+            return new PrometheusOSProviderInstanceProperties(
+                providerType,
+                serializedAdditionalRawData,
+                prometheusUrl.Value,
+                Optional.ToNullable(sslPreference),
+                sslCertificateUri.Value,
+                sapSid.Value);
         }
 
         BinaryData IPersistableModel<PrometheusOSProviderInstanceProperties>.Write(ModelReaderWriterOptions options)

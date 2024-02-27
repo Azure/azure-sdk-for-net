@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSynchronizationSetting(document.RootElement, options);
+            return DeserializeDataShareSynchronizationSettingData(document.RootElement, options);
         }
 
         internal static UnknownSynchronizationSetting DeserializeUnknownSynchronizationSetting(JsonElement element, ModelReaderWriterOptions options = null)
@@ -132,7 +132,13 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownSynchronizationSetting(id, name, type, systemData.Value, kind, serializedAdditionalRawData);
+            return new UnknownSynchronizationSetting(
+                id,
+                name,
+                type,
+                systemData.Value,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataShareSynchronizationSettingData>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSynchronizationSetting(document.RootElement, options);
+                        return DeserializeDataShareSynchronizationSettingData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataShareSynchronizationSettingData)} does not support '{options.Format}' format.");

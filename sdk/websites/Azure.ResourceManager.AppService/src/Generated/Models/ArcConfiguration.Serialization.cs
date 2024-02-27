@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArtifactsStorageType))
+            if (ArtifactsStorageType.HasValue)
             {
                 writer.WritePropertyName("artifactsStorageType"u8);
                 writer.WriteStringValue(ArtifactsStorageType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ArtifactStorageClassName))
+            if (ArtifactStorageClassName != null)
             {
                 writer.WritePropertyName("artifactStorageClassName"u8);
                 writer.WriteStringValue(ArtifactStorageClassName);
             }
-            if (Optional.IsDefined(ArtifactStorageMountPath))
+            if (ArtifactStorageMountPath != null)
             {
                 writer.WritePropertyName("artifactStorageMountPath"u8);
                 writer.WriteStringValue(ArtifactStorageMountPath);
             }
-            if (Optional.IsDefined(ArtifactStorageNodeName))
+            if (ArtifactStorageNodeName != null)
             {
                 writer.WritePropertyName("artifactStorageNodeName"u8);
                 writer.WriteStringValue(ArtifactStorageNodeName);
             }
-            if (Optional.IsDefined(ArtifactStorageAccessMode))
+            if (ArtifactStorageAccessMode != null)
             {
                 writer.WritePropertyName("artifactStorageAccessMode"u8);
                 writer.WriteStringValue(ArtifactStorageAccessMode);
             }
-            if (Optional.IsDefined(FrontEndServiceConfiguration))
+            if (FrontEndServiceConfiguration != null)
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
                 writer.WriteObjectValue(FrontEndServiceConfiguration);
             }
-            if (Optional.IsDefined(KubeConfig))
+            if (KubeConfig != null)
             {
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value);
+                    frontEndServiceConfiguration = FrontEndConfiguration.DeserializeFrontEndConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kubeConfig"u8))
@@ -159,7 +159,15 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcConfiguration(Optional.ToNullable(artifactsStorageType), artifactStorageClassName.Value, artifactStorageMountPath.Value, artifactStorageNodeName.Value, artifactStorageAccessMode.Value, frontEndServiceConfiguration.Value, kubeConfig.Value, serializedAdditionalRawData);
+            return new ArcConfiguration(
+                Optional.ToNullable(artifactsStorageType),
+                artifactStorageClassName.Value,
+                artifactStorageMountPath.Value,
+                artifactStorageNodeName.Value,
+                artifactStorageAccessMode.Value,
+                frontEndServiceConfiguration.Value,
+                kubeConfig.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)

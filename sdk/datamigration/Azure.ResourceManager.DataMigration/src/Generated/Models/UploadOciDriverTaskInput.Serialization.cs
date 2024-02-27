@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DriverShare))
+            if (DriverShare != null)
             {
                 writer.WritePropertyName("driverShare"u8);
                 writer.WriteObjectValue(DriverShare);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    driverShare = FileShare.DeserializeFileShare(property.Value);
+                    driverShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

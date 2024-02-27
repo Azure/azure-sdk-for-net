@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountId))
+            if (StorageAccountId != null)
             {
                 if (StorageAccountId != null)
                 {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("storageAccountId");
                 }
             }
-            if (Optional.IsDefined(ServiceBusRuleId))
+            if (ServiceBusRuleId != null)
             {
                 if (ServiceBusRuleId != null)
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("serviceBusRuleId");
                 }
             }
-            if (Optional.IsCollectionDefined(Locations))
+            if (!(Locations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Categories))
+            if (!(Categories is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ResourceIdentifier> serviceBusRuleId = default;
-            Optional<IList<AzureLocation>> locations = default;
-            Optional<IList<string>> categories = default;
+            IList<AzureLocation> locations = default;
+            IList<string> categories = default;
             Optional<RetentionPolicy> retentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value);
+                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -226,7 +226,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogProfilePatch(Optional.ToDictionary(tags), storageAccountId.Value, serviceBusRuleId.Value, Optional.ToList(locations), Optional.ToList(categories), retentionPolicy.Value, serializedAdditionalRawData);
+            return new LogProfilePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                storageAccountId.Value,
+                serviceBusRuleId.Value,
+                locations ?? new ChangeTrackingList<AzureLocation>(),
+                categories ?? new ChangeTrackingList<string>(),
+                retentionPolicy.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogProfilePatch>.Write(ModelReaderWriterOptions options)

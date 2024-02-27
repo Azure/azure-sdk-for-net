@@ -27,42 +27,42 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Canary))
+            if (Canary != null)
             {
                 writer.WritePropertyName("canary"u8);
                 writer.WriteObjectValue(Canary);
             }
-            if (Optional.IsDefined(LowTraffic))
+            if (LowTraffic != null)
             {
                 writer.WritePropertyName("lowTraffic"u8);
                 writer.WriteObjectValue(LowTraffic);
             }
-            if (Optional.IsDefined(MediumTraffic))
+            if (MediumTraffic != null)
             {
                 writer.WritePropertyName("mediumTraffic"u8);
                 writer.WriteObjectValue(MediumTraffic);
             }
-            if (Optional.IsDefined(HighTraffic))
+            if (HighTraffic != null)
             {
                 writer.WritePropertyName("highTraffic"u8);
                 writer.WriteObjectValue(HighTraffic);
             }
-            if (Optional.IsDefined(RestOfTheWorldGroupOne))
+            if (RestOfTheWorldGroupOne != null)
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupOne);
             }
-            if (Optional.IsDefined(RestOfTheWorldGroupTwo))
+            if (RestOfTheWorldGroupTwo != null)
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
                 writer.WriteObjectValue(RestOfTheWorldGroupTwo);
             }
-            if (Optional.IsDefined(ProviderRegistration))
+            if (ProviderRegistration != null)
             {
                 writer.WritePropertyName("providerRegistration"u8);
                 writer.WriteObjectValue(ProviderRegistration);
             }
-            if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
+            if (!(ResourceTypeRegistrations is ChangeTrackingList<ResourceTypeRegistrationData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resourceTypeRegistrations"u8);
                 writer.WriteStartArray();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
             Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
             Optional<ProviderRegistrationData> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value);
+                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lowTraffic"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mediumTraffic"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("highTraffic"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupOne"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupTwo"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
@@ -205,7 +205,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations), serializedAdditionalRawData);
+            return new DefaultRolloutSpecification(
+                canary.Value,
+                lowTraffic.Value,
+                mediumTraffic.Value,
+                highTraffic.Value,
+                restOfTheWorldGroupOne.Value,
+                restOfTheWorldGroupTwo.Value,
+                providerRegistration.Value,
+                resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options)

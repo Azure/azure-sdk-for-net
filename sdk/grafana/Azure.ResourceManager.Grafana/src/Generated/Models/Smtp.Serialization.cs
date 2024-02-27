@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(User))
+            if (User != null)
             {
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(FromAddress))
+            if (FromAddress != null)
             {
                 writer.WritePropertyName("fromAddress"u8);
                 writer.WriteStringValue(FromAddress);
             }
-            if (Optional.IsDefined(FromName))
+            if (FromName != null)
             {
                 writer.WritePropertyName("fromName"u8);
                 writer.WriteStringValue(FromName);
             }
-            if (Optional.IsDefined(StartTLSPolicy))
+            if (StartTLSPolicy.HasValue)
             {
                 writer.WritePropertyName("startTLSPolicy"u8);
                 writer.WriteStringValue(StartTLSPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(SkipVerify))
+            if (SkipVerify.HasValue)
             {
                 writer.WritePropertyName("skipVerify"u8);
                 writer.WriteBooleanValue(SkipVerify.Value);
@@ -174,7 +174,16 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Smtp(Optional.ToNullable(enabled), host.Value, user.Value, password.Value, fromAddress.Value, fromName.Value, Optional.ToNullable(startTLSPolicy), Optional.ToNullable(skipVerify), serializedAdditionalRawData);
+            return new Smtp(
+                Optional.ToNullable(enabled),
+                host.Value,
+                user.Value,
+                password.Value,
+                fromAddress.Value,
+                fromName.Value,
+                Optional.ToNullable(startTLSPolicy),
+                Optional.ToNullable(skipVerify),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Smtp>.Write(ModelReaderWriterOptions options)

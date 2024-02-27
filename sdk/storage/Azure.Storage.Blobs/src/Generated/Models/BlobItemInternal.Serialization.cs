@@ -74,7 +74,17 @@ namespace Azure.Storage.Blobs.Models
                 }
                 orMetadata = dictionary;
             }
-            return new BlobItemInternal(name, deleted, snapshot, versionId, isCurrentVersion, properties, metadata, blobTags, hasVersionsOnly, orMetadata);
+            return new BlobItemInternal(
+                name,
+                deleted,
+                snapshot,
+                versionId,
+                isCurrentVersion,
+                properties,
+                metadata,
+                blobTags,
+                hasVersionsOnly,
+                orMetadata);
         }
     }
 }

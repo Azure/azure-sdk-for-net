@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkFabricL2IsolationDomainData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricL2IsolationDomainData>> value = default;
+            IReadOnlyList<NetworkFabricL2IsolationDomainData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricL2IsolationDomainData> array = new List<NetworkFabricL2IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(item));
+                        array.Add(NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new L2IsolationDomainsListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new L2IsolationDomainsListResult(value ?? new ChangeTrackingList<NetworkFabricL2IsolationDomainData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<L2IsolationDomainsListResult>.Write(ModelReaderWriterOptions options)

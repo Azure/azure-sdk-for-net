@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            if (options.Format != "W" && Minimum.HasValue)
             {
                 writer.WritePropertyName("minimum"u8);
                 writer.WriteNumberValue(Minimum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            if (options.Format != "W" && Maximum.HasValue)
             {
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteNumberValue(Maximum.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Default))
+            if (options.Format != "W" && Default.HasValue)
             {
                 writer.WritePropertyName("default"u8);
                 writer.WriteNumberValue(Default.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedValues))
+            if (options.Format != "W" && !(AllowedValues is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allowedValues"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ScaleType))
+            if (options.Format != "W" && ScaleType.HasValue)
             {
                 writer.WritePropertyName("scaleType"u8);
                 writer.WriteStringValue(ScaleType.Value.ToString());
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Optional<int> minimum = default;
             Optional<int> maximum = default;
             Optional<int> @default = default;
-            Optional<IReadOnlyList<int>> allowedValues = default;
+            IReadOnlyList<int> allowedValues = default;
             Optional<WebPubSubScaleType> scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebPubSubSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new WebPubSubSkuCapacity(
+                Optional.ToNullable(minimum),
+                Optional.ToNullable(maximum),
+                Optional.ToNullable(@default),
+                allowedValues ?? new ChangeTrackingList<int>(),
+                Optional.ToNullable(scaleType),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebPubSubSkuCapacity>.Write(ModelReaderWriterOptions options)

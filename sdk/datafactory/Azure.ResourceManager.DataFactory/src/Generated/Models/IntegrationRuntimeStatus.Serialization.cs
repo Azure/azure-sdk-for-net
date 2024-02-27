@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RuntimeType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(DataFactoryName))
+            if (options.Format != "W" && DataFactoryName != null)
             {
                 writer.WritePropertyName("dataFactoryName"u8);
                 writer.WriteStringValue(DataFactoryName);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Managed": return ManagedIntegrationRuntimeStatus.DeserializeManagedIntegrationRuntimeStatus(element);
-                    case "SelfHosted": return SelfHostedIntegrationRuntimeStatus.DeserializeSelfHostedIntegrationRuntimeStatus(element);
+                    case "Managed": return ManagedIntegrationRuntimeStatus.DeserializeManagedIntegrationRuntimeStatus(element, options);
+                    case "SelfHosted": return SelfHostedIntegrationRuntimeStatus.DeserializeSelfHostedIntegrationRuntimeStatus(element, options);
                 }
             }
-            return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element);
+            return UnknownIntegrationRuntimeStatus.DeserializeUnknownIntegrationRuntimeStatus(element, options);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)

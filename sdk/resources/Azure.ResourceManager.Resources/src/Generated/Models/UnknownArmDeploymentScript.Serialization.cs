@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+            return DeserializeArmDeploymentScriptData(document.RootElement, options);
         }
 
         internal static UnknownArmDeploymentScript DeserializeUnknownArmDeploymentScript(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ScriptType kind = "Unknown";
             ResourceIdentifier id = default;
             string name = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))
@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownArmDeploymentScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, serializedAdditionalRawData);
+            return new UnknownArmDeploymentScript(
+                id,
+                name,
+                type,
+                systemData.Value,
+                identity.Value,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArmDeploymentScriptData>.Write(ModelReaderWriterOptions options)
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+                        return DeserializeArmDeploymentScriptData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentScriptData)} does not support '{options.Format}' format.");

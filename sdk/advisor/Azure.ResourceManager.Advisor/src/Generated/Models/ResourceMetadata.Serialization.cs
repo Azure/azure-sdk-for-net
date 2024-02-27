@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Advisor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(Source))
+            if (Source != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (Optional.IsCollectionDefined(Action))
+            if (!(Action is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStartObject();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Singular))
+            if (Singular != null)
             {
                 writer.WritePropertyName("singular"u8);
                 writer.WriteStringValue(Singular);
             }
-            if (Optional.IsDefined(Plural))
+            if (Plural != null)
             {
                 writer.WritePropertyName("plural"u8);
                 writer.WriteStringValue(Plural);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             Optional<string> resourceId = default;
             Optional<string> source = default;
-            Optional<IDictionary<string, BinaryData>> action = default;
+            IDictionary<string, BinaryData> action = default;
             Optional<string> singular = default;
             Optional<string> plural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -163,7 +163,13 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceMetadata(resourceId.Value, source.Value, Optional.ToDictionary(action), singular.Value, plural.Value, serializedAdditionalRawData);
+            return new ResourceMetadata(
+                resourceId.Value,
+                source.Value,
+                action ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                singular.Value,
+                plural.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)

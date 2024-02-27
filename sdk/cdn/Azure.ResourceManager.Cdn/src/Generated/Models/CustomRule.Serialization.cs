@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
+                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData);
+            return new CustomRule(
+                name,
+                Optional.ToNullable(enabledState),
+                priority,
+                matchConditions,
+                action,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRule>.Write(ModelReaderWriterOptions options)

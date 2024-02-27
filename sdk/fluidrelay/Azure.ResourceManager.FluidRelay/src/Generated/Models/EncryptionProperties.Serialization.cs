@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomerManagedKeyEncryption))
+            if (CustomerManagedKeyEncryption != null)
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
                 writer.WriteObjectValue(CustomerManagedKeyEncryption);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    customerManagedKeyEncryption = CmkEncryptionProperties.DeserializeCmkEncryptionProperties(property.Value);
+                    customerManagedKeyEncryption = CmkEncryptionProperties.DeserializeCmkEncryptionProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

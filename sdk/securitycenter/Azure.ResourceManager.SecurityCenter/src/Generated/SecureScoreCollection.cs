@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual async Task<Response<SecureScoreResource>> GetAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual Response<SecureScoreResource> Get(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Get");
             scope.Start();
@@ -231,7 +245,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
             scope.Start();
@@ -274,7 +295,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual Response<bool> Exists(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.Exists");
             scope.Start();
@@ -317,7 +345,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecureScoreResource>> GetIfExistsAsync(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
             scope.Start();
@@ -362,7 +397,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="secureScoreName"/> is null. </exception>
         public virtual NullableResponse<SecureScoreResource> GetIfExists(string secureScoreName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(secureScoreName, nameof(secureScoreName));
+            if (secureScoreName == null)
+            {
+                throw new ArgumentNullException(nameof(secureScoreName));
+            }
+            if (secureScoreName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(secureScoreName));
+            }
 
             using var scope = _secureScoreClientDiagnostics.CreateScope("SecureScoreCollection.GetIfExists");
             scope.Start();

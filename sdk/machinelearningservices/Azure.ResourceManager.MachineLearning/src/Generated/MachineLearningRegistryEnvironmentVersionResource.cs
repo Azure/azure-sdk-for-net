@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MachineLearningRegistryEnvironmentVersionResource>> UpdateAsync(WaitUntil waitUntil, MachineLearningEnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningRegistryEnvironmentVersionRegistryEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentVersionResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.MachineLearning
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MachineLearningRegistryEnvironmentVersionResource> Update(WaitUntil waitUntil, MachineLearningEnvironmentVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _machineLearningRegistryEnvironmentVersionRegistryEnvironmentVersionsClientDiagnostics.CreateScope("MachineLearningRegistryEnvironmentVersionResource.Update");
             scope.Start();

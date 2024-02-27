@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(ManifestHash);
             writer.WritePropertyName("bitLockerKey"u8);
             writer.WriteStringValue(BitLockerKey);
-            if (options.Format != "W" && Optional.IsDefined(BackupManifestCloudPath))
+            if (options.Format != "W" && BackupManifestCloudPath != null)
             {
                 writer.WritePropertyName("backupManifestCloudPath"u8);
                 writer.WriteStringValue(BackupManifestCloudPath);

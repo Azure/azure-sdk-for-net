@@ -17,12 +17,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(SeverityLevel))
+            if (SeverityLevel.HasValue)
             {
                 writer.WritePropertyName("severityLevel"u8);
                 writer.WriteStringValue(SeverityLevel.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Measurements))
+            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();

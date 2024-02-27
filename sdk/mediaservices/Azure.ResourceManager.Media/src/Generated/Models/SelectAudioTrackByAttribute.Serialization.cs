@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Attribute.ToString());
             writer.WritePropertyName("filter"u8);
             writer.WriteStringValue(Filter.ToString());
-            if (Optional.IsDefined(FilterValue))
+            if (FilterValue != null)
             {
                 writer.WritePropertyName("filterValue"u8);
                 writer.WriteStringValue(FilterValue);
             }
-            if (Optional.IsDefined(ChannelMapping))
+            if (ChannelMapping.HasValue)
             {
                 writer.WritePropertyName("channelMapping"u8);
                 writer.WriteStringValue(ChannelMapping.Value.ToString());
@@ -124,7 +124,13 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SelectAudioTrackByAttribute(odataType, serializedAdditionalRawData, Optional.ToNullable(channelMapping), attribute, filter, filterValue.Value);
+            return new SelectAudioTrackByAttribute(
+                odataType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(channelMapping),
+                attribute,
+                filter,
+                filterValue.Value);
         }
 
         BinaryData IPersistableModel<SelectAudioTrackByAttribute>.Write(ModelReaderWriterOptions options)

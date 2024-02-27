@@ -18,21 +18,21 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("dataSourceName"u8);
             writer.WriteStringValue(DataSourceName);
-            if (Optional.IsDefined(SkillsetName))
+            if (SkillsetName != null)
             {
                 writer.WritePropertyName("skillsetName"u8);
                 writer.WriteStringValue(SkillsetName);
             }
             writer.WritePropertyName("targetIndexName"u8);
             writer.WriteStringValue(TargetIndexName);
-            if (Optional.IsDefined(Schedule))
+            if (Schedule != null)
             {
                 if (Schedule != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("schedule");
                 }
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 if (Parameters != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("parameters");
                 }
             }
-            if (Optional.IsCollectionDefined(FieldMappings))
+            if (!(FieldMappings is ChangeTrackingList<FieldMapping> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("fieldMappings"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OutputFieldMappings))
+            if (!(OutputFieldMappings is ChangeTrackingList<FieldMapping> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("outputFieldMappings"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDisabled))
+            if (IsDisabled.HasValue)
             {
                 if (IsDisabled != null)
                 {
@@ -88,12 +88,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("disabled");
                 }
             }
-            if (Optional.IsDefined(_etag))
+            if (_etag != null)
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (Optional.IsDefined(EncryptionKey))
+            if (EncryptionKey != null)
             {
                 if (EncryptionKey != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Optional.IsDefined(Cache))
+            if (Cache != null)
             {
                 if (Cache != null)
                 {
@@ -133,8 +133,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string targetIndexName = default;
             Optional<IndexingSchedule> schedule = default;
             Optional<IndexingParameters> parameters = default;
-            Optional<IList<FieldMapping>> fieldMappings = default;
-            Optional<IList<FieldMapping>> outputFieldMappings = default;
+            IList<FieldMapping> fieldMappings = default;
+            IList<FieldMapping> outputFieldMappings = default;
             Optional<bool?> disabled = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
@@ -250,7 +250,20 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value, cache.Value);
+            return new SearchIndexer(
+                name,
+                description.Value,
+                dataSourceName,
+                skillsetName.Value,
+                targetIndexName,
+                schedule.Value,
+                parameters.Value,
+                fieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                Optional.ToNullable(disabled),
+                odataEtag.Value,
+                encryptionKey.Value,
+                cache.Value);
         }
     }
 }

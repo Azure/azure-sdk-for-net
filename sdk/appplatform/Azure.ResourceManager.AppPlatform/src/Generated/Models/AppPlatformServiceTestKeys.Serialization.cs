@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKey))
+            if (PrimaryKey != null)
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (Optional.IsDefined(SecondaryKey))
+            if (SecondaryKey != null)
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(PrimaryTestEndpoint))
+            if (PrimaryTestEndpoint != null)
             {
                 writer.WritePropertyName("primaryTestEndpoint"u8);
                 writer.WriteStringValue(PrimaryTestEndpoint);
             }
-            if (Optional.IsDefined(SecondaryTestEndpoint))
+            if (SecondaryTestEndpoint != null)
             {
                 writer.WritePropertyName("secondaryTestEndpoint"u8);
                 writer.WriteStringValue(SecondaryTestEndpoint);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceTestKeys(primaryKey.Value, secondaryKey.Value, primaryTestEndpoint.Value, secondaryTestEndpoint.Value, Optional.ToNullable(enabled), serializedAdditionalRawData);
+            return new AppPlatformServiceTestKeys(
+                primaryKey.Value,
+                secondaryKey.Value,
+                primaryTestEndpoint.Value,
+                secondaryTestEndpoint.Value,
+                Optional.ToNullable(enabled),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceTestKeys>.Write(ModelReaderWriterOptions options)

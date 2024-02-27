@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encryption))
+            if (Encryption != null)
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption);
             }
-            if (Optional.IsDefined(SourceDiskRestorePoint))
+            if (SourceDiskRestorePoint != null)
             {
                 writer.WritePropertyName("sourceDiskRestorePoint"u8);
                 JsonSerializer.Serialize(writer, SourceDiskRestorePoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value);
+                    encryption = RestorePointEncryption.DeserializeRestorePointEncryption(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDiskRestorePoint"u8))

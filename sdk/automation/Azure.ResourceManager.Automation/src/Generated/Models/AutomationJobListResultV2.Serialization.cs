@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AutomationJobCollectionItemData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationJobCollectionItemData>> value = default;
+            IReadOnlyList<AutomationJobCollectionItemData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationJobCollectionItemData> array = new List<AutomationJobCollectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(item));
+                        array.Add(AutomationJobCollectionItemData.DeserializeAutomationJobCollectionItemData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationJobListResultV2(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AutomationJobListResultV2(value ?? new ChangeTrackingList<AutomationJobCollectionItemData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationJobListResultV2>.Write(ModelReaderWriterOptions options)

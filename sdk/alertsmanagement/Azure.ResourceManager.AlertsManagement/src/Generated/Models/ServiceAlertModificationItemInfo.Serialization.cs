@@ -26,37 +26,37 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ModificationEvent))
+            if (ModificationEvent.HasValue)
             {
                 writer.WritePropertyName("modificationEvent"u8);
                 writer.WriteStringValue(ModificationEvent.Value.ToSerialString());
             }
-            if (Optional.IsDefined(OldValue))
+            if (OldValue != null)
             {
                 writer.WritePropertyName("oldValue"u8);
                 writer.WriteStringValue(OldValue);
             }
-            if (Optional.IsDefined(NewValue))
+            if (NewValue != null)
             {
                 writer.WritePropertyName("newValue"u8);
                 writer.WriteStringValue(NewValue);
             }
-            if (Optional.IsDefined(ModifiedAt))
+            if (ModifiedAt != null)
             {
                 writer.WritePropertyName("modifiedAt"u8);
                 writer.WriteStringValue(ModifiedAt);
             }
-            if (Optional.IsDefined(ModifiedBy))
+            if (ModifiedBy != null)
             {
                 writer.WritePropertyName("modifiedBy"u8);
                 writer.WriteStringValue(ModifiedBy);
             }
-            if (Optional.IsDefined(Comments))
+            if (Comments != null)
             {
                 writer.WritePropertyName("comments"u8);
                 writer.WriteStringValue(Comments);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModificationItemInfo(Optional.ToNullable(modificationEvent), oldValue.Value, newValue.Value, modifiedAt.Value, modifiedBy.Value, comments.Value, description.Value, serializedAdditionalRawData);
+            return new ServiceAlertModificationItemInfo(
+                Optional.ToNullable(modificationEvent),
+                oldValue.Value,
+                newValue.Value,
+                modifiedAt.Value,
+                modifiedBy.Value,
+                comments.Value,
+                description.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModificationItemInfo>.Write(ModelReaderWriterOptions options)

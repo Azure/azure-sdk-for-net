@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
+            if (Text != null)
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (Optional.IsDefined(Payload))
+            if (Payload != null)
             {
                 writer.WritePropertyName("payload"u8);
                 writer.WriteStringValue(Payload);

@@ -18,34 +18,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaLinkedService))
+            if (SchemaLinkedService != null)
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
                 writer.WriteObjectValue(SchemaLinkedService);
             }
-            if (Optional.IsDefined(RejectedDataLinkedService))
+            if (RejectedDataLinkedService != null)
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
                 writer.WriteObjectValue(RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Dataset))
+            if (Dataset != null)
             {
                 writer.WritePropertyName("dataset"u8);
                 writer.WriteObjectValue(Dataset);
             }
-            if (Optional.IsDefined(LinkedService))
+            if (LinkedService != null)
             {
                 writer.WritePropertyName("linkedService"u8);
                 writer.WriteObjectValue(LinkedService);
             }
-            if (Optional.IsDefined(Flowlet))
+            if (Flowlet != null)
             {
                 writer.WritePropertyName("flowlet"u8);
                 writer.WriteObjectValue(Flowlet);
@@ -124,7 +124,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value, rejectedDataLinkedService.Value);
+            return new DataFlowSink(
+                name,
+                description.Value,
+                dataset.Value,
+                linkedService.Value,
+                flowlet.Value,
+                schemaLinkedService.Value,
+                rejectedDataLinkedService.Value);
         }
 
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>

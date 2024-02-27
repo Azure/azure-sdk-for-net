@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(Author))
+            if (options.Format != "W" && Author != null)
             {
                 writer.WritePropertyName("author"u8);
                 writer.WriteStringValue(Author);
             }
-            if (options.Format != "W" && Optional.IsDefined(Category))
+            if (options.Format != "W" && Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(SupportTopicList))
+            if (!(SupportTopicList is ChangeTrackingList<ContainerAppDiagnosticSupportTopic> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportTopicList"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AnalysisTypes))
+            if (!(AnalysisTypes is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("analysisTypes"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Score))
+            if (options.Format != "W" && Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -128,8 +128,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> description = default;
             Optional<string> author = default;
             Optional<string> category = default;
-            Optional<IList<ContainerAppDiagnosticSupportTopic>> supportTopicList = default;
-            Optional<IList<string>> analysisTypes = default;
+            IList<ContainerAppDiagnosticSupportTopic> supportTopicList = default;
+            IList<string> analysisTypes = default;
             Optional<float> score = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticSupportTopic> array = new List<ContainerAppDiagnosticSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item));
+                        array.Add(ContainerAppDiagnosticSupportTopic.DeserializeContainerAppDiagnosticSupportTopic(item, options));
                     }
                     supportTopicList = array;
                     continue;
@@ -221,7 +221,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppDiagnosticsMetadata(id, name, type, systemData.Value, description.Value, author.Value, category.Value, Optional.ToList(supportTopicList), Optional.ToList(analysisTypes), Optional.ToNullable(score), serializedAdditionalRawData);
+            return new ContainerAppDiagnosticsMetadata(
+                id,
+                name,
+                type,
+                systemData.Value,
+                description.Value,
+                author.Value,
+                category.Value,
+                supportTopicList ?? new ChangeTrackingList<ContainerAppDiagnosticSupportTopic>(),
+                analysisTypes ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(score),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppDiagnosticsMetadata>.Write(ModelReaderWriterOptions options)

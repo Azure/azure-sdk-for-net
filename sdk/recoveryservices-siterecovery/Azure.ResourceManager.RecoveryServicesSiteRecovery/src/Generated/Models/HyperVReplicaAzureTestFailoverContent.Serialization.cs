@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrimaryKekCertificatePfx))
+            if (PrimaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(SecondaryKekCertificatePfx))
+            if (SecondaryKekCertificatePfx != null)
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (Optional.IsDefined(RecoveryPointId))
+            if (RecoveryPointId != null)
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Optional.IsDefined(OSUpgradeVersion))
+            if (OSUpgradeVersion != null)
             {
                 writer.WritePropertyName("osUpgradeVersion"u8);
                 writer.WriteStringValue(OSUpgradeVersion);
@@ -130,7 +130,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HyperVReplicaAzureTestFailoverContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx.Value, secondaryKekCertificatePfx.Value, recoveryPointId.Value, osUpgradeVersion.Value);
+            return new HyperVReplicaAzureTestFailoverContent(
+                instanceType,
+                serializedAdditionalRawData,
+                primaryKekCertificatePfx.Value,
+                secondaryKekCertificatePfx.Value,
+                recoveryPointId.Value,
+                osUpgradeVersion.Value);
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureTestFailoverContent>.Write(ModelReaderWriterOptions options)

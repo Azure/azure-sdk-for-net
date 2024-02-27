@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationMode))
+            if (OperationMode.HasValue)
             {
                 writer.WritePropertyName("operationMode"u8);
                 writer.WriteStringValue(OperationMode.Value.ToString());
             }
-            if (Optional.IsDefined(StorageKeyType))
+            if (StorageKeyType.HasValue)
             {
                 writer.WritePropertyName("storageKeyType"u8);
                 writer.WriteStringValue(StorageKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageKey))
+            if (StorageKey != null)
             {
                 writer.WritePropertyName("storageKey"u8);
                 writer.WriteStringValue(StorageKey);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (StorageUri != null)
             {
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseExtension(id, name, type, systemData.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value, serializedAdditionalRawData);
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(operationMode),
+                Optional.ToNullable(storageKeyType),
+                storageKey.Value,
+                storageUri.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseExtension>.Write(ModelReaderWriterOptions options)

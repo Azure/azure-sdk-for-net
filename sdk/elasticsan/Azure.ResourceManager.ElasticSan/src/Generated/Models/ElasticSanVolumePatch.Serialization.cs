@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SizeGiB))
+            if (SizeGiB.HasValue)
             {
                 writer.WritePropertyName("sizeGiB"u8);
                 writer.WriteNumberValue(SizeGiB.Value);
             }
-            if (Optional.IsDefined(ManagedBy))
+            if (ManagedBy != null)
             {
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteObjectValue(ManagedBy);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value);
+                            managedBy = ManagedByInfo.DeserializeManagedByInfo(property0.Value, options);
                             continue;
                         }
                     }

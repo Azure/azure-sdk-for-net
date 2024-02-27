@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DiskSerialNumber))
+            if (options.Format != "W" && DiskSerialNumber != null)
             {
                 writer.WritePropertyName("diskSerialNumber"u8);
                 writer.WriteStringValue(DiskSerialNumber);
             }
-            if (options.Format != "W" && Optional.IsDefined(ErrorLogLink))
+            if (options.Format != "W" && ErrorLogLink != null)
             {
                 writer.WritePropertyName("errorLogLink"u8);
                 writer.WriteStringValue(ErrorLogLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(VerboseLogLink))
+            if (options.Format != "W" && VerboseLogLink != null)
             {
                 writer.WritePropertyName("verboseLogLink"u8);
                 writer.WriteStringValue(VerboseLogLink);

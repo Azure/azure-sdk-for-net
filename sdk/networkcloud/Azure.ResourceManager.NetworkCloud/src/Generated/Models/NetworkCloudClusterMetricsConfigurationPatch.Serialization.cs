@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CollectionInterval))
+            if (CollectionInterval.HasValue)
             {
                 writer.WritePropertyName("collectionInterval"u8);
                 writer.WriteNumberValue(CollectionInterval.Value);
             }
-            if (Optional.IsCollectionDefined(EnabledMetrics))
+            if (!(EnabledMetrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("enabledMetrics"u8);
                 writer.WriteStartArray();
@@ -93,9 +93,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             Optional<long> collectionInterval = default;
-            Optional<IList<string>> enabledMetrics = default;
+            IList<string> enabledMetrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudClusterMetricsConfigurationPatch(Optional.ToDictionary(tags), Optional.ToNullable(collectionInterval), Optional.ToList(enabledMetrics), serializedAdditionalRawData);
+            return new NetworkCloudClusterMetricsConfigurationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), Optional.ToNullable(collectionInterval), enabledMetrics ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudClusterMetricsConfigurationPatch>.Write(ModelReaderWriterOptions options)

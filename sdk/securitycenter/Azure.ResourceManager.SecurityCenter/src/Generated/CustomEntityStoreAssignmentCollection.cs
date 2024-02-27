@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CustomEntityStoreAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string customEntityStoreAssignmentName, CustomEntityStoreAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CustomEntityStoreAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string customEntityStoreAssignmentName, CustomEntityStoreAssignmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual async Task<Response<CustomEntityStoreAssignmentResource>> GetAsync(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual Response<CustomEntityStoreAssignmentResource> Get(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.Get");
             scope.Start();
@@ -330,7 +364,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.Exists");
             scope.Start();
@@ -373,7 +414,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual Response<bool> Exists(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.Exists");
             scope.Start();
@@ -416,7 +464,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual async Task<NullableResponse<CustomEntityStoreAssignmentResource>> GetIfExistsAsync(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.GetIfExists");
             scope.Start();
@@ -461,7 +516,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="customEntityStoreAssignmentName"/> is null. </exception>
         public virtual NullableResponse<CustomEntityStoreAssignmentResource> GetIfExists(string customEntityStoreAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(customEntityStoreAssignmentName, nameof(customEntityStoreAssignmentName));
+            if (customEntityStoreAssignmentName == null)
+            {
+                throw new ArgumentNullException(nameof(customEntityStoreAssignmentName));
+            }
+            if (customEntityStoreAssignmentName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(customEntityStoreAssignmentName));
+            }
 
             using var scope = _customEntityStoreAssignmentClientDiagnostics.CreateScope("CustomEntityStoreAssignmentCollection.GetIfExists");
             scope.Start();

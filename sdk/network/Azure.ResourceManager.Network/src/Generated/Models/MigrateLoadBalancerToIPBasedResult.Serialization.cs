@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MigratedPools))
+            if (!(MigratedPools is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("migratedPools"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> migratedPools = default;
+            IReadOnlyList<string> migratedPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateLoadBalancerToIPBasedResult(Optional.ToList(migratedPools), serializedAdditionalRawData);
+            return new MigrateLoadBalancerToIPBasedResult(migratedPools ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrateLoadBalancerToIPBasedResult>.Write(ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -42,22 +42,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Notes))
+            if (Notes != null)
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(CreatedBy))
+            if (CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(Created))
+            if (Created.HasValue)
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ConfigMergeRule))
+            if (!(ConfigMergeRule is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("configMergeRule"u8);
                 writer.WriteStartObject();
@@ -79,11 +79,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             Optional<string> description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
+            IList<string> annotations = default;
             Optional<string> notes = default;
             Optional<string> createdBy = default;
             Optional<DateTimeOffset> created = default;
-            Optional<IDictionary<string, string>> configMergeRule = default;
+            IDictionary<string, string> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -149,7 +149,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfiguration(description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule));
+            return new SparkConfiguration(
+                description.Value,
+                configs,
+                annotations ?? new ChangeTrackingList<string>(),
+                notes.Value,
+                createdBy.Value,
+                Optional.ToNullable(created),
+                configMergeRule ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>

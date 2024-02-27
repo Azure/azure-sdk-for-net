@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> runGroupId = default;
             Optional<bool> isLatest = default;
             Optional<string> pipelineName = default;
-            Optional<IReadOnlyDictionary<string, string>> parameters = default;
+            IReadOnlyDictionary<string, string> parameters = default;
             Optional<PipelineRunInvokedBy> invokedBy = default;
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<DateTimeOffset> runStart = default;
@@ -135,7 +135,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineRun(runId.Value, runGroupId.Value, Optional.ToNullable(isLatest), pipelineName.Value, Optional.ToDictionary(parameters), invokedBy.Value, Optional.ToNullable(lastUpdated), Optional.ToNullable(runStart), Optional.ToNullable(runEnd), Optional.ToNullable(durationInMs), status.Value, message.Value, additionalProperties);
+            return new PipelineRun(
+                runId.Value,
+                runGroupId.Value,
+                Optional.ToNullable(isLatest),
+                pipelineName.Value,
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                invokedBy.Value,
+                Optional.ToNullable(lastUpdated),
+                Optional.ToNullable(runStart),
+                Optional.ToNullable(runEnd),
+                Optional.ToNullable(durationInMs),
+                status.Value,
+                message.Value,
+                additionalProperties);
         }
 
         internal partial class PipelineRunConverter : JsonConverter<PipelineRun>

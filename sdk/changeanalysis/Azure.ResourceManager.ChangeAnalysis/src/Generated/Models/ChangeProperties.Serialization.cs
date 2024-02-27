@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ChangeDetectedOn))
+            if (ChangeDetectedOn.HasValue)
             {
                 writer.WritePropertyName("timeStamp"u8);
                 writer.WriteStringValue(ChangeDetectedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(InitiatedByList))
+            if (!(InitiatedByList is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("initiatedByList"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ChangeType))
+            if (ChangeType.HasValue)
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(PropertyChanges))
+            if (!(PropertyChanges is ChangeTrackingList<PropertyChange> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("propertyChanges"u8);
                 writer.WriteStartArray();
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<DateTimeOffset> timeStamp = default;
-            Optional<IReadOnlyList<string>> initiatedByList = default;
+            IReadOnlyList<string> initiatedByList = default;
             Optional<ChangeType> changeType = default;
-            Optional<IReadOnlyList<PropertyChange>> propertyChanges = default;
+            IReadOnlyList<PropertyChange> propertyChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<PropertyChange> array = new List<PropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PropertyChange.DeserializePropertyChange(item));
+                        array.Add(PropertyChange.DeserializePropertyChange(item, options));
                     }
                     propertyChanges = array;
                     continue;
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), Optional.ToList(initiatedByList), Optional.ToNullable(changeType), Optional.ToList(propertyChanges), serializedAdditionalRawData);
+            return new ChangeProperties(
+                resourceId.Value,
+                Optional.ToNullable(timeStamp),
+                initiatedByList ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(changeType),
+                propertyChanges ?? new ChangeTrackingList<PropertyChange>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChangeProperties>.Write(ModelReaderWriterOptions options)

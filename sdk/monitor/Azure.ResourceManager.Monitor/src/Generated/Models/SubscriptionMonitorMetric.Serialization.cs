@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(SubscriptionScopeMetricType);
             writer.WritePropertyName("name"u8);
             writer.WriteObjectValue(Name);
-            if (Optional.IsDefined(DisplayDescription))
+            if (DisplayDescription != null)
             {
                 writer.WritePropertyName("displayDescription"u8);
                 writer.WriteStringValue(DisplayDescription);
             }
-            if (Optional.IsDefined(ErrorCode))
+            if (ErrorCode != null)
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (Optional.IsDefined(ErrorMessage))
+            if (ErrorMessage != null)
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("displayDescription"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorTimeSeriesElement> array = new List<MonitorTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item));
+                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item, options));
                     }
                     timeseries = array;
                     continue;
@@ -157,7 +157,16 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionMonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
+            return new SubscriptionMonitorMetric(
+                id,
+                type,
+                name,
+                displayDescription.Value,
+                errorCode.Value,
+                errorMessage.Value,
+                unit,
+                timeseries,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionMonitorMetric>.Write(ModelReaderWriterOptions options)

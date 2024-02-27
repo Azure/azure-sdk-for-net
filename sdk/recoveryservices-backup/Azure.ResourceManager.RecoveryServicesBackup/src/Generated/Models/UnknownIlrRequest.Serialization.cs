@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownIlrRequest(document.RootElement, options);
+            return DeserializeIlrContent(document.RootElement, options);
         }
 
         internal static UnknownIlrRequest DeserializeUnknownIlrRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownIlrRequest(document.RootElement, options);
+                        return DeserializeIlrContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(IlrContent)} does not support '{options.Format}' format.");

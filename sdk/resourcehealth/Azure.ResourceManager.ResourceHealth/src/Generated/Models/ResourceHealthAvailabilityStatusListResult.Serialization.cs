@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthAvailabilityStatus> array = new List<ResourceHealthAvailabilityStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(item));
+                        array.Add(ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(item, options));
                     }
                     value = array;
                     continue;

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.FluidRelay.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrimaryKey))
+            if (options.Format != "W" && PrimaryKey != null)
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryKey))
+            if (options.Format != "W" && SecondaryKey != null)
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(SecondaryKey);

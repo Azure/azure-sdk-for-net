@@ -15,32 +15,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encoding))
+            if (Encoding.HasValue)
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Optional.IsDefined(Quality))
+            if (Quality.HasValue)
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Optional.IsDefined(Resolution))
+            if (Resolution != null)
             {
                 writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
-            if (Optional.IsDefined(RateControl))
+            if (RateControl != null)
             {
                 writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
-            if (Optional.IsDefined(H264))
+            if (H264 != null)
             {
                 writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
-            if (Optional.IsDefined(Mpeg4))
+            if (Mpeg4 != null)
             {
                 writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
@@ -117,7 +117,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoEncoderConfiguration(Optional.ToNullable(encoding), Optional.ToNullable(quality), resolution.Value, rateControl.Value, h264.Value, mpeg4.Value);
+            return new VideoEncoderConfiguration(
+                Optional.ToNullable(encoding),
+                Optional.ToNullable(quality),
+                resolution.Value,
+                rateControl.Value,
+                h264.Value,
+                mpeg4.Value);
         }
     }
 }

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
+            if (options.Format != "W" && ServiceEndpoint != null)
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
+            if (options.Format != "W" && ServiceResourceId != null)
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(HealthErrors))
+            if (options.Format != "W" && !(HealthErrors is ChangeTrackingList<DataReplicationHealthErrorInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<string> serviceEndpoint = default;
             Optional<ResourceIdentifier> serviceResourceId = default;
             Optional<DataReplicationHealthStatus> health = default;
-            Optional<IReadOnlyList<DataReplicationHealthErrorInfo>> healthErrors = default;
+            IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
             FabricModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -147,14 +147,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = FabricModelCustomProperties.DeserializeFabricModelCustomProperties(property.Value);
+                    customProperties = FabricModelCustomProperties.DeserializeFabricModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataReplicationFabricProperties(Optional.ToNullable(provisioningState), serviceEndpoint.Value, serviceResourceId.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), customProperties, serializedAdditionalRawData);
+            return new DataReplicationFabricProperties(
+                Optional.ToNullable(provisioningState),
+                serviceEndpoint.Value,
+                serviceResourceId.Value,
+                Optional.ToNullable(health),
+                healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
+                customProperties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationFabricProperties>.Write(ModelReaderWriterOptions options)

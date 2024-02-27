@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(AssetName);
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
             }
-            if (Optional.IsDefined(PresetOverride))
+            if (PresetOverride != null)
             {
                 writer.WritePropertyName("presetOverride"u8);
                 writer.WriteObjectValue(PresetOverride);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Progress))
+            if (options.Format != "W" && Progress.HasValue)
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteNumberValue(Progress.Value);
             }
-            if (Optional.IsDefined(Label))
+            if (Label != null)
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 if (StartOn != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Media.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 if (EndOn != null)
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -207,7 +207,17 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaJobOutputAsset(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, assetName);
+            return new MediaJobOutputAsset(
+                odataType,
+                error.Value,
+                presetOverride.Value,
+                Optional.ToNullable(state),
+                Optional.ToNullable(progress),
+                label.Value,
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                serializedAdditionalRawData,
+                assetName);
         }
 
         BinaryData IPersistableModel<MediaJobOutputAsset>.Write(ModelReaderWriterOptions options)

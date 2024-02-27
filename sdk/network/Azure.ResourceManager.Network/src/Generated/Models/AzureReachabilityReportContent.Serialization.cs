@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation"u8);
             writer.WriteObjectValue(ProviderLocation);
-            if (Optional.IsCollectionDefined(Providers))
+            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AzureLocations))
+            if (!(AzureLocations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AzureReachabilityReportLocation providerLocation = default;
-            Optional<IList<string>> providers = default;
-            Optional<IList<AzureLocation>> azureLocations = default;
+            IList<string> providers = default;
+            IList<AzureLocation> azureLocations = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("providerLocation"u8))
                 {
-                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value);
+                    providerLocation = AzureReachabilityReportLocation.DeserializeAzureReachabilityReportLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providers"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureReachabilityReportContent(providerLocation, Optional.ToList(providers), Optional.ToList(azureLocations), startTime, endTime, serializedAdditionalRawData);
+            return new AzureReachabilityReportContent(
+                providerLocation,
+                providers ?? new ChangeTrackingList<string>(),
+                azureLocations ?? new ChangeTrackingList<AzureLocation>(),
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureReachabilityReportContent>.Write(ModelReaderWriterOptions options)

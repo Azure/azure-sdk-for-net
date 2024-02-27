@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RegistryInfo))
+            if (RegistryInfo != null)
             {
                 writer.WritePropertyName("registryInfo"u8);
                 writer.WriteObjectValue(RegistryInfo);
             }
-            if (Optional.IsDefined(AzureCredentials))
+            if (AzureCredentials != null)
             {
                 writer.WritePropertyName("azureCredentials"u8);
                 writer.WriteObjectValue(AzureCredentials);
             }
-            if (Optional.IsDefined(ContextPath))
+            if (ContextPath != null)
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(GitHubPersonalAccessToken))
+            if (GitHubPersonalAccessToken != null)
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
                 writer.WriteStringValue(GitHubPersonalAccessToken);
             }
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(PublishType))
+            if (PublishType != null)
             {
                 writer.WritePropertyName("publishType"u8);
                 writer.WriteStringValue(PublishType);
             }
-            if (Optional.IsDefined(OS))
+            if (OS != null)
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS);
             }
-            if (Optional.IsDefined(RuntimeStack))
+            if (RuntimeStack != null)
             {
                 writer.WritePropertyName("runtimeStack"u8);
                 writer.WriteStringValue(RuntimeStack);
             }
-            if (Optional.IsDefined(RuntimeVersion))
+            if (RuntimeVersion != null)
             {
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
+                    registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureCredentials"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);
+                    azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contextPath"u8))
@@ -181,7 +181,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, gitHubPersonalAccessToken.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value, serializedAdditionalRawData);
+            return new ContainerAppGitHubActionConfiguration(
+                registryInfo.Value,
+                azureCredentials.Value,
+                contextPath.Value,
+                gitHubPersonalAccessToken.Value,
+                image.Value,
+                publishType.Value,
+                os.Value,
+                runtimeStack.Value,
+                runtimeVersion.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppGitHubActionConfiguration>.Write(ModelReaderWriterOptions options)

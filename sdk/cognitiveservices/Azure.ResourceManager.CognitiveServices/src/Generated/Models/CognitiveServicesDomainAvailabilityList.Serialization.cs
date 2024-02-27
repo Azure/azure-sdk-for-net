@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSubdomainAvailable))
+            if (IsSubdomainAvailable.HasValue)
             {
                 writer.WritePropertyName("isSubdomainAvailable"u8);
                 writer.WriteBooleanValue(IsSubdomainAvailable.Value);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(SubdomainName))
+            if (SubdomainName != null)
             {
                 writer.WritePropertyName("subdomainName"u8);
                 writer.WriteStringValue(SubdomainName);
             }
-            if (Optional.IsDefined(DomainAvailabilityType))
+            if (DomainAvailabilityType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DomainAvailabilityType);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesDomainAvailabilityList(Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value, serializedAdditionalRawData);
+            return new CognitiveServicesDomainAvailabilityList(
+                Optional.ToNullable(isSubdomainAvailable),
+                reason.Value,
+                subdomainName.Value,
+                type.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesDomainAvailabilityList>.Write(ModelReaderWriterOptions options)

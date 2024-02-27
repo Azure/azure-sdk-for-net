@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Available))
+            if (Available.HasValue)
             {
                 writer.WritePropertyName("available"u8);
                 writer.WriteBooleanValue(Available.Value);

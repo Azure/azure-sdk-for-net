@@ -74,10 +74,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailabilityGroupListenerData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -108,10 +136,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailabilityGroupListenerData> Get(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -168,11 +224,42 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -197,11 +284,42 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, AvailabilityGroupListenerData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName, data);
             _pipeline.Send(message, cancellationToken);
@@ -246,10 +364,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -274,10 +420,38 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlVmGroupName"/> or <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string sqlVmGroupName, string availabilityGroupListenerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
-            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
+            if (availabilityGroupListenerName == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityGroupListenerName));
+            }
+            if (availabilityGroupListenerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(availabilityGroupListenerName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlVmGroupName, availabilityGroupListenerName);
             _pipeline.Send(message, cancellationToken);
@@ -322,9 +496,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupAsync(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
 
             using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -351,9 +546,30 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailabilityGroupListenerListResult> ListByGroup(string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
 
             using var message = CreateListByGroupRequest(subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -395,10 +611,34 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AvailabilityGroupListenerListResult>> ListByGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
 
             using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -426,10 +666,34 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlVmGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AvailabilityGroupListenerListResult> ListByGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sqlVmGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlVmGroupName, nameof(sqlVmGroupName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (sqlVmGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(sqlVmGroupName));
+            }
+            if (sqlVmGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sqlVmGroupName));
+            }
 
             using var message = CreateListByGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, sqlVmGroupName);
             _pipeline.Send(message, cancellationToken);

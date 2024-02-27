@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
-            if (Optional.IsCollectionDefined(ContainerImageNames))
+            if (!(ContainerImageNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("containerImageNames"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ContainerRegistries))
+            if (!(ContainerRegistries is ChangeTrackingList<BatchVmContainerRegistry> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("containerRegistries"u8);
                 writer.WriteStartArray();
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchVmContainerType type = default;
-            Optional<IList<string>> containerImageNames = default;
-            Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
+            IList<string> containerImageNames = default;
+            IList<BatchVmContainerRegistry> containerRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item, options));
                     }
                     containerRegistries = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmContainerConfiguration(type, Optional.ToList(containerImageNames), Optional.ToList(containerRegistries), serializedAdditionalRawData);
+            return new BatchVmContainerConfiguration(type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<BatchVmContainerRegistry>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmContainerConfiguration>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
+            if (options.Format != "W" && !(Diagnostics is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("diagnostics"u8);
                 writer.WriteStartArray();
@@ -41,34 +41,34 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(EventsDownloadUri))
+            if (options.Format != "W" && EventsDownloadUri != null)
             {
                 writer.WritePropertyName("eventsDownloadUrl"u8);
                 writer.WriteStringValue(EventsDownloadUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastArrivedOn))
+            if (options.Format != "W" && LastArrivedOn.HasValue)
             {
                 writer.WritePropertyName("lastArrivalTime"u8);
                 writer.WriteStringValue(LastArrivedOn.Value, "O");
             }
             writer.WritePropertyName("error"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<StreamAnalyticsErrorDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             Optional<StreamAnalyticsSampleInputResultStatus> status = default;
-            Optional<IReadOnlyList<string>> diagnostics = default;
+            IReadOnlyList<string> diagnostics = default;
             Optional<Uri> eventsDownloadUrl = default;
             Optional<DateTimeOffset> lastArrivalTime = default;
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> target = default;
-            Optional<IReadOnlyList<StreamAnalyticsErrorDetails>> details = default;
+            IReadOnlyList<StreamAnalyticsErrorDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item));
+                                array.Add(StreamAnalyticsErrorDetails.DeserializeStreamAnalyticsErrorDetails(item, options));
                             }
                             details = array;
                             continue;
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsSampleInputResult(code.Value, message.Value, target.Value, Optional.ToList(details), serializedAdditionalRawData, Optional.ToNullable(status), Optional.ToList(diagnostics), eventsDownloadUrl.Value, Optional.ToNullable(lastArrivalTime));
+            return new StreamAnalyticsSampleInputResult(
+                code.Value,
+                message.Value,
+                target.Value,
+                details ?? new ChangeTrackingList<StreamAnalyticsErrorDetails>(),
+                serializedAdditionalRawData,
+                Optional.ToNullable(status),
+                diagnostics ?? new ChangeTrackingList<string>(),
+                eventsDownloadUrl.Value,
+                Optional.ToNullable(lastArrivalTime));
         }
 
         BinaryData IPersistableModel<StreamAnalyticsSampleInputResult>.Write(ModelReaderWriterOptions options)

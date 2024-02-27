@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Note))
+            if (Note != null)
             {
                 writer.WritePropertyName("note"u8);
                 writer.WriteStringValue(Note);
             }
-            if (Optional.IsCollectionDefined(Identities))
+            if (!(Identities is ChangeTrackingList<UserIdentityContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("identities"u8);
                 writer.WriteStartArray();
@@ -48,32 +48,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(FirstName))
+            if (FirstName != null)
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (LastName != null)
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(AppType))
+            if (AppType.HasValue)
             {
                 writer.WritePropertyName("appType"u8);
                 writer.WriteStringValue(AppType.Value.ToString());
             }
-            if (Optional.IsDefined(Confirmation))
+            if (Confirmation.HasValue)
             {
                 writer.WritePropertyName("confirmation"u8);
                 writer.WriteStringValue(Confirmation.Value.ToString());
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             Optional<ApiManagementUserState> state = default;
             Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
+            IList<UserIdentityContract> identities = default;
             Optional<string> email = default;
             Optional<string> firstName = default;
             Optional<string> lastName = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<UserIdentityContract> array = new List<UserIdentityContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item, options));
                             }
                             identities = array;
                             continue;
@@ -214,7 +214,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementUserCreateOrUpdateContent(Optional.ToNullable(state), note.Value, Optional.ToList(identities), email.Value, firstName.Value, lastName.Value, password.Value, Optional.ToNullable(appType), Optional.ToNullable(confirmation), serializedAdditionalRawData);
+            return new ApiManagementUserCreateOrUpdateContent(
+                Optional.ToNullable(state),
+                note.Value,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                email.Value,
+                firstName.Value,
+                lastName.Value,
+                password.Value,
+                Optional.ToNullable(appType),
+                Optional.ToNullable(confirmation),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementUserCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

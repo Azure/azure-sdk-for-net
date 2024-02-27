@@ -26,52 +26,52 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Access))
+            if (Access != null)
             {
                 writer.WritePropertyName("access"u8);
                 writer.WriteStringValue(Access);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DestinationAddressPrefix))
+            if (DestinationAddressPrefix != null)
             {
                 writer.WritePropertyName("destinationAddressPrefix"u8);
                 writer.WriteStringValue(DestinationAddressPrefix);
             }
-            if (Optional.IsDefined(DestinationPortRange))
+            if (DestinationPortRange != null)
             {
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteStringValue(DestinationPortRange);
             }
-            if (Optional.IsDefined(Direction))
+            if (Direction != null)
             {
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction);
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol != null)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
             }
-            if (Optional.IsDefined(SourceAddressPrefix))
+            if (SourceAddressPrefix != null)
             {
                 writer.WritePropertyName("sourceAddressPrefix"u8);
                 writer.WriteStringValue(SourceAddressPrefix);
             }
-            if (Optional.IsDefined(SourcePortRange))
+            if (SourcePortRange != null)
             {
                 writer.WritePropertyName("sourcePortRange"u8);
                 writer.WriteStringValue(SourcePortRange);
@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupSecurityRule(name.Value, access.Value, description.Value, destinationAddressPrefix.Value, destinationPortRange.Value, direction.Value, Optional.ToNullable(priority), protocol.Value, sourceAddressPrefix.Value, sourcePortRange.Value, serializedAdditionalRawData);
+            return new NetworkSecurityGroupSecurityRule(
+                name.Value,
+                access.Value,
+                description.Value,
+                destinationAddressPrefix.Value,
+                destinationPortRange.Value,
+                direction.Value,
+                Optional.ToNullable(priority),
+                protocol.Value,
+                sourceAddressPrefix.Value,
+                sourcePortRange.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupSecurityRule>.Write(ModelReaderWriterOptions options)

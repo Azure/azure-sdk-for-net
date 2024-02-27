@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableDroppedManagedDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableDroppedManagedDatabaseData>> value = default;
+            IReadOnlyList<RestorableDroppedManagedDatabaseData> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RestorableDroppedManagedDatabaseData> array = new List<RestorableDroppedManagedDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(item));
+                        array.Add(RestorableDroppedManagedDatabaseData.DeserializeRestorableDroppedManagedDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableDroppedManagedDatabaseListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new RestorableDroppedManagedDatabaseListResult(value ?? new ChangeTrackingList<RestorableDroppedManagedDatabaseData>(), nextLink.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableDroppedManagedDatabaseListResult>.Write(ModelReaderWriterOptions options)

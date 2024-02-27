@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(SchemaOwners))
+            if (!(SchemaOwners is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("schemaOwners"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ManifestOwners))
+            if (!(ManifestOwners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("manifestOwners"u8);
                 writer.WriteStartArray();
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IncidentRoutingService))
+            if (IncidentRoutingService != null)
             {
                 writer.WritePropertyName("incidentRoutingService"u8);
                 writer.WriteStringValue(IncidentRoutingService);
             }
-            if (Optional.IsDefined(IncidentRoutingTeam))
+            if (IncidentRoutingTeam != null)
             {
                 writer.WritePropertyName("incidentRoutingTeam"u8);
                 writer.WriteStringValue(IncidentRoutingTeam);
             }
-            if (Optional.IsDefined(IncidentContactEmail))
+            if (IncidentContactEmail != null)
             {
                 writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
+            if (!(ServiceTreeInfos is ChangeTrackingList<ServiceTreeInfo> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("serviceTreeInfos"u8);
                 writer.WriteStartArray();
@@ -71,12 +71,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ResourceAccessPolicy))
+            if (ResourceAccessPolicy.HasValue)
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
                 writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
             }
-            if (Optional.IsCollectionDefined(ResourceAccessRoles))
+            if (!(ResourceAccessRoles is ChangeTrackingList<BinaryData> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("resourceAccessRoles"u8);
                 writer.WriteStartArray();
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IList<string>> schemaOwners = default;
-            Optional<IList<string>> manifestOwners = default;
+            IList<string> schemaOwners = default;
+            IList<string> manifestOwners = default;
             Optional<string> incidentRoutingService = default;
             Optional<string> incidentRoutingTeam = default;
             Optional<string> incidentContactEmail = default;
-            Optional<IList<ServiceTreeInfo>> serviceTreeInfos = default;
+            IList<ServiceTreeInfo> serviceTreeInfos = default;
             Optional<ResourceAccessPolicy> resourceAccessPolicy = default;
-            Optional<IList<BinaryData>> resourceAccessRoles = default;
+            IList<BinaryData> resourceAccessRoles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item));
+                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
                     }
                     serviceTreeInfos = array;
                     continue;
@@ -241,7 +241,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceProviderManagement(Optional.ToList(schemaOwners), Optional.ToList(manifestOwners), incidentRoutingService.Value, incidentRoutingTeam.Value, incidentContactEmail.Value, Optional.ToList(serviceTreeInfos), Optional.ToNullable(resourceAccessPolicy), Optional.ToList(resourceAccessRoles), serializedAdditionalRawData);
+            return new ResourceProviderManagement(
+                schemaOwners ?? new ChangeTrackingList<string>(),
+                manifestOwners ?? new ChangeTrackingList<string>(),
+                incidentRoutingService.Value,
+                incidentRoutingTeam.Value,
+                incidentContactEmail.Value,
+                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
+                Optional.ToNullable(resourceAccessPolicy),
+                resourceAccessRoles ?? new ChangeTrackingList<BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceProviderManagement>.Write(ModelReaderWriterOptions options)

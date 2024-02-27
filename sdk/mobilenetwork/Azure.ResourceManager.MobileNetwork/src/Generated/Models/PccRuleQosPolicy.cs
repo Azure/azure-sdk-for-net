@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
@@ -19,7 +18,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="maximumBitRate"/> is null. </exception>
         public PccRuleQosPolicy(Ambr maximumBitRate) : base(maximumBitRate)
         {
-            Argument.AssertNotNull(maximumBitRate, nameof(maximumBitRate));
+            if (maximumBitRate == null)
+            {
+                throw new ArgumentNullException(nameof(maximumBitRate));
+            }
         }
 
         /// <summary> Initializes a new instance of <see cref="PccRuleQosPolicy"/>. </summary>

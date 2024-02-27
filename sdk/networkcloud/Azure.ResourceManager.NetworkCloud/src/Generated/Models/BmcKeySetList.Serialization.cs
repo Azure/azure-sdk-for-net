@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<NetworkCloudBmcKeySetData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudBmcKeySetData>> value = default;
+            IReadOnlyList<NetworkCloudBmcKeySetData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudBmcKeySetData> array = new List<NetworkCloudBmcKeySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item));
+                        array.Add(NetworkCloudBmcKeySetData.DeserializeNetworkCloudBmcKeySetData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BmcKeySetList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new BmcKeySetList(nextLink.Value, value ?? new ChangeTrackingList<NetworkCloudBmcKeySetData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BmcKeySetList>.Write(ModelReaderWriterOptions options)

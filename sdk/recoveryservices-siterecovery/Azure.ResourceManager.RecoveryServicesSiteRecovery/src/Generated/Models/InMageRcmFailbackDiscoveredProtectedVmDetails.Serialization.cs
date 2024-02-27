@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VCenterId))
+            if (options.Format != "W" && VCenterId != null)
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VCenterFqdn))
+            if (options.Format != "W" && VCenterFqdn != null)
             {
                 writer.WritePropertyName("vCenterFqdn"u8);
                 writer.WriteStringValue(VCenterFqdn);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Datastores))
+            if (options.Format != "W" && !(Datastores is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
+            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -62,42 +62,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VMwareToolsStatus))
+            if (options.Format != "W" && VMwareToolsStatus != null)
             {
                 writer.WritePropertyName("vmwareToolsStatus"u8);
                 writer.WriteStringValue(VMwareToolsStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerStatus))
+            if (options.Format != "W" && PowerStatus != null)
             {
                 writer.WritePropertyName("powerStatus"u8);
                 writer.WriteStringValue(PowerStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(VmFqdn))
+            if (options.Format != "W" && VmFqdn != null)
             {
                 writer.WritePropertyName("vmFqdn"u8);
                 writer.WriteStringValue(VmFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && UpdatedOn.HasValue)
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
+            if (options.Format != "W" && IsDeleted.HasValue)
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastDiscoveredOn))
+            if (options.Format != "W" && LastDiscoveredOn.HasValue)
             {
                 writer.WritePropertyName("lastDiscoveryTimeInUtc"u8);
                 writer.WriteStringValue(LastDiscoveredOn.Value, "O");
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             Optional<string> vCenterId = default;
             Optional<string> vCenterFqdn = default;
-            Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
+            IReadOnlyList<string> datastores = default;
+            IReadOnlyList<IPAddress> ipAddresses = default;
             Optional<string> vmwareToolsStatus = default;
             Optional<string> powerStatus = default;
             Optional<string> vmFqdn = default;
@@ -263,7 +263,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageRcmFailbackDiscoveredProtectedVmDetails(vCenterId.Value, vCenterFqdn.Value, Optional.ToList(datastores), Optional.ToList(ipAddresses), vmwareToolsStatus.Value, powerStatus.Value, vmFqdn.Value, osName.Value, Optional.ToNullable(createdTimestamp), Optional.ToNullable(updatedTimestamp), Optional.ToNullable(isDeleted), Optional.ToNullable(lastDiscoveryTimeInUtc), serializedAdditionalRawData);
+            return new InMageRcmFailbackDiscoveredProtectedVmDetails(
+                vCenterId.Value,
+                vCenterFqdn.Value,
+                datastores ?? new ChangeTrackingList<string>(),
+                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                vmwareToolsStatus.Value,
+                powerStatus.Value,
+                vmFqdn.Value,
+                osName.Value,
+                Optional.ToNullable(createdTimestamp),
+                Optional.ToNullable(updatedTimestamp),
+                Optional.ToNullable(isDeleted),
+                Optional.ToNullable(lastDiscoveryTimeInUtc),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)

@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsAofEnabled))
+            if (IsAofEnabled.HasValue)
             {
                 writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
-            if (Optional.IsDefined(IsRdbEnabled))
+            if (IsRdbEnabled.HasValue)
             {
                 writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
-            if (Optional.IsDefined(AofFrequency))
+            if (AofFrequency.HasValue)
             {
                 writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
-            if (Optional.IsDefined(RdbFrequency))
+            if (RdbFrequency.HasValue)
             {
                 writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DiskExclusionProperties))
+            if (DiskExclusionProperties != null)
             {
                 writer.WritePropertyName("diskExclusionProperties"u8);
                 writer.WriteObjectValue(DiskExclusionProperties);
             }
-            if (Optional.IsDefined(LinuxVmApplicationName))
+            if (LinuxVmApplicationName != null)
             {
                 writer.WritePropertyName("linuxVmApplicationName"u8);
                 writer.WriteStringValue(LinuxVmApplicationName);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value);
+                    diskExclusionProperties = DiskExclusionProperties.DeserializeDiskExclusionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxVmApplicationName"u8))

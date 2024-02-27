@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
 
+/// <summary>
+/// A <see cref="PipelinePolicy"/> that uses an <see cref="ApiKeyCredential"/>
+/// to set a value on a <see cref="PipelineRequest"/> to authenticate with the
+/// cloud service.
+/// </summary>
 public class ApiKeyAuthenticationPolicy : PipelinePolicy
 {
     private readonly string _name;
@@ -15,15 +20,19 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
     private readonly ApiKeyCredential _credential;
 
     /// <summary>
-    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/> class, where the
-    /// credential value will be specified in a request header.
+    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/>
+    /// class, where the credential value will be specified in a request header.
     /// </summary>
-    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to authenticate requests.</param>
-    /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
-    /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
-    /// If provided, the prefix string will be followed by a space and then the credential string.
-    /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
-    /// being set fo "SharedAccessKey {credential.Key}".</param>
+    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to
+    /// authenticate requests.</param>
+    /// <param name="headerName">The name of the request header used to send
+    /// the key credential in the request.</param>
+    /// <param name="keyPrefix">A prefix to prepend before the key credential in
+    /// the header value.
+    /// If provided, the prefix string will be followed by a space and then the
+    /// credential string.  For example, setting <c>valuePrefix</c> to
+    /// "SharedAccessKey" will result in the header value being set to
+    /// "SharedAccessKey {credential.Key}".</param>
     public static ApiKeyAuthenticationPolicy CreateHeaderApiKeyPolicy(ApiKeyCredential credential, string headerName, string? keyPrefix = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
@@ -32,6 +41,13 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         return new ApiKeyAuthenticationPolicy(credential, headerName, KeyLocation.Header, keyPrefix);
     }
 
+    /// <summary>
+    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/>
+    /// class, where the credential value will be set in the <c>Authorization</c>
+    /// header on the <see cref="PipelineRequest"/> with a <c>Basic</c> prefix.
+    /// </summary>
+    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to
+    /// authenticate requests.</param>
     public static ApiKeyAuthenticationPolicy CreateBasicAuthorizationPolicy(ApiKeyCredential credential)
     {
         Argument.AssertNotNull(credential, nameof(credential));
@@ -39,6 +55,13 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         return new ApiKeyAuthenticationPolicy(credential, "Authorization", KeyLocation.Header, "Basic");
     }
 
+    /// <summary>
+    /// Create a new instance of the <see cref="ApiKeyAuthenticationPolicy"/>
+    /// class, where the credential value will be set in the <c>Authorization</c>
+    /// header on the <see cref="PipelineRequest"/> with a <c>Bearer</c> prefix.
+    /// </summary>
+    /// <param name="credential">The <see cref="ApiKeyCredential"/> used to
+    /// authenticate requests.</param>
     public static ApiKeyAuthenticationPolicy CreateBearerAuthorizationPolicy(ApiKeyCredential credential)
     {
         Argument.AssertNotNull(credential, nameof(credential));
@@ -58,6 +81,7 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         _keyPrefix = keyPrefix;
     }
 
+    /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         SetKey(message);
@@ -65,6 +89,7 @@ public class ApiKeyAuthenticationPolicy : PipelinePolicy
         ProcessNext(message, pipeline, currentIndex);
     }
 
+    /// <inheritdoc/>
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         SetKey(message);

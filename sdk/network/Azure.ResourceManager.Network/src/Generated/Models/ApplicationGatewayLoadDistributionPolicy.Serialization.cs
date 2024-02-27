@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(LoadDistributionTargets))
+            if (!(LoadDistributionTargets is ChangeTrackingList<ApplicationGatewayLoadDistributionTarget> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("loadDistributionTargets"u8);
                 writer.WriteStartArray();
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LoadDistributionAlgorithm))
+            if (LoadDistributionAlgorithm.HasValue)
             {
                 writer.WritePropertyName("loadDistributionAlgorithm"u8);
                 writer.WriteStringValue(LoadDistributionAlgorithm.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
-            Optional<IList<ApplicationGatewayLoadDistributionTarget>> loadDistributionTargets = default;
+            IList<ApplicationGatewayLoadDistributionTarget> loadDistributionTargets = default;
             Optional<ApplicationGatewayLoadDistributionAlgorithm> loadDistributionAlgorithm = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayLoadDistributionTarget> array = new List<ApplicationGatewayLoadDistributionTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayLoadDistributionTarget.DeserializeApplicationGatewayLoadDistributionTarget(item));
+                                array.Add(ApplicationGatewayLoadDistributionTarget.DeserializeApplicationGatewayLoadDistributionTarget(item, options));
                             }
                             loadDistributionTargets = array;
                             continue;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayLoadDistributionPolicy(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(loadDistributionTargets), Optional.ToNullable(loadDistributionAlgorithm), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayLoadDistributionPolicy(
+                id.Value,
+                name.Value,
+                Optional.ToNullable(type),
+                serializedAdditionalRawData,
+                Optional.ToNullable(etag),
+                loadDistributionTargets ?? new ChangeTrackingList<ApplicationGatewayLoadDistributionTarget>(),
+                Optional.ToNullable(loadDistributionAlgorithm),
+                Optional.ToNullable(provisioningState));
         }
 
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionPolicy>.Write(ModelReaderWriterOptions options)

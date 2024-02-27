@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format.HasValue)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteObjectValue(DeliveryInfo);
             writer.WritePropertyName("definition"u8);
             writer.WriteObjectValue(Definition);
-            if (Optional.IsDefined(RunHistory))
+            if (RunHistory != null)
             {
                 writer.WritePropertyName("runHistory"u8);
                 writer.WriteObjectValue(RunHistory);
             }
-            if (Optional.IsDefined(PartitionData))
+            if (PartitionData.HasValue)
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
+            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("deliveryInfo"u8))
                 {
-                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value);
+                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ExportDefinition.DeserializeExportDefinition(property.Value);
+                    definition = ExportDefinition.DeserializeExportDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("runHistory"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value);
+                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionData"u8))
@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), serializedAdditionalRawData);
+            return new CommonExportProperties(
+                Optional.ToNullable(format),
+                deliveryInfo,
+                definition,
+                runHistory.Value,
+                Optional.ToNullable(partitionData),
+                Optional.ToNullable(nextRunTimeEstimate),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)

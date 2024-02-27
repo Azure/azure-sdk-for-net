@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RxBytes))
+            if (RxBytes.HasValue)
             {
                 writer.WritePropertyName("rxBytes"u8);
                 writer.WriteNumberValue(RxBytes.Value);
             }
-            if (Optional.IsDefined(RxPackets))
+            if (RxPackets.HasValue)
             {
                 writer.WritePropertyName("rxPackets"u8);
                 writer.WriteNumberValue(RxPackets.Value);
             }
-            if (Optional.IsDefined(RxErrors))
+            if (RxErrors.HasValue)
             {
                 writer.WritePropertyName("rxErrors"u8);
                 writer.WriteNumberValue(RxErrors.Value);
             }
-            if (Optional.IsDefined(RxDropped))
+            if (RxDropped.HasValue)
             {
                 writer.WritePropertyName("rxDropped"u8);
                 writer.WriteNumberValue(RxDropped.Value);
             }
-            if (Optional.IsDefined(TxBytes))
+            if (TxBytes.HasValue)
             {
                 writer.WritePropertyName("txBytes"u8);
                 writer.WriteNumberValue(TxBytes.Value);
             }
-            if (Optional.IsDefined(TxPackets))
+            if (TxPackets.HasValue)
             {
                 writer.WritePropertyName("txPackets"u8);
                 writer.WriteNumberValue(TxPackets.Value);
             }
-            if (Optional.IsDefined(TxErrors))
+            if (TxErrors.HasValue)
             {
                 writer.WritePropertyName("txErrors"u8);
                 writer.WriteNumberValue(TxErrors.Value);
             }
-            if (Optional.IsDefined(TxDropped))
+            if (TxDropped.HasValue)
             {
                 writer.WritePropertyName("txDropped"u8);
                 writer.WriteNumberValue(TxDropped.Value);
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterfaceStatistics(Optional.ToNullable(rxBytes), Optional.ToNullable(rxPackets), Optional.ToNullable(rxErrors), Optional.ToNullable(rxDropped), Optional.ToNullable(txBytes), Optional.ToNullable(txPackets), Optional.ToNullable(txErrors), Optional.ToNullable(txDropped), serializedAdditionalRawData);
+            return new ContainerNetworkInterfaceStatistics(
+                Optional.ToNullable(rxBytes),
+                Optional.ToNullable(rxPackets),
+                Optional.ToNullable(rxErrors),
+                Optional.ToNullable(rxDropped),
+                Optional.ToNullable(txBytes),
+                Optional.ToNullable(txPackets),
+                Optional.ToNullable(txErrors),
+                Optional.ToNullable(txDropped),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterfaceStatistics>.Write(ModelReaderWriterOptions options)

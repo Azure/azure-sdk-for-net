@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = IotHubPrivateLinkServiceConnectionState.DeserializeIotHubPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = IotHubPrivateLinkServiceConnectionState.DeserializeIotHubPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

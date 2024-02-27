@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointThresholdInMinutes))
+            if (RecoveryPointThresholdInMinutes.HasValue)
             {
                 writer.WritePropertyName("recoveryPointThresholdInMinutes"u8);
                 writer.WriteNumberValue(RecoveryPointThresholdInMinutes.Value);
             }
-            if (Optional.IsDefined(RecoveryPointHistory))
+            if (RecoveryPointHistory.HasValue)
             {
                 writer.WritePropertyName("recoveryPointHistory"u8);
                 writer.WriteNumberValue(RecoveryPointHistory.Value);
             }
-            if (Optional.IsDefined(AppConsistentFrequencyInMinutes))
+            if (AppConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("appConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(AppConsistentFrequencyInMinutes.Value);
             }
-            if (Optional.IsDefined(MultiVmSyncStatus))
+            if (MultiVmSyncStatus != null)
             {
                 writer.WritePropertyName("multiVmSyncStatus"u8);
                 writer.WriteStringValue(MultiVmSyncStatus);
             }
-            if (Optional.IsDefined(CrashConsistentFrequencyInMinutes))
+            if (CrashConsistentFrequencyInMinutes.HasValue)
             {
                 writer.WritePropertyName("crashConsistentFrequencyInMinutes"u8);
                 writer.WriteNumberValue(CrashConsistentFrequencyInMinutes.Value);
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2APolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointThresholdInMinutes), Optional.ToNullable(recoveryPointHistory), Optional.ToNullable(appConsistentFrequencyInMinutes), multiVmSyncStatus.Value, Optional.ToNullable(crashConsistentFrequencyInMinutes));
+            return new A2APolicyDetails(
+                instanceType,
+                serializedAdditionalRawData,
+                Optional.ToNullable(recoveryPointThresholdInMinutes),
+                Optional.ToNullable(recoveryPointHistory),
+                Optional.ToNullable(appConsistentFrequencyInMinutes),
+                multiVmSyncStatus.Value,
+                Optional.ToNullable(crashConsistentFrequencyInMinutes));
         }
 
         BinaryData IPersistableModel<A2APolicyDetails>.Write(ModelReaderWriterOptions options)

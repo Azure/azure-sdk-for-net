@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InfrastructureVpnConfiguration))
+            if (InfrastructureVpnConfiguration != null)
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
                 writer.WriteObjectValue(InfrastructureVpnConfiguration);
             }
-            if (Optional.IsDefined(WorkloadVpnConfiguration))
+            if (WorkloadVpnConfiguration != null)
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
                 writer.WriteObjectValue(WorkloadVpnConfiguration);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    infrastructureVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadVpnConfiguration"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value);
+                    workloadVpnConfiguration = VpnConfigurationPatchableProperties.DeserializeVpnConfigurationPatchableProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

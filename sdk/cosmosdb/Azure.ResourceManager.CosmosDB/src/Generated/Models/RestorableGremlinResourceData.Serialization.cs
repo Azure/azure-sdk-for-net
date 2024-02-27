@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsCollectionDefined(GraphNames))
+            if (!(GraphNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("graphNames"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             Optional<string> databaseName = default;
-            Optional<IReadOnlyList<string>> graphNames = default;
+            IReadOnlyList<string> graphNames = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -159,7 +159,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableGremlinResourceData(id, name, type, systemData.Value, databaseName.Value, Optional.ToList(graphNames), serializedAdditionalRawData);
+            return new RestorableGremlinResourceData(
+                id,
+                name,
+                type,
+                systemData.Value,
+                databaseName.Value,
+                graphNames ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableGremlinResourceData>.Write(ModelReaderWriterOptions options)

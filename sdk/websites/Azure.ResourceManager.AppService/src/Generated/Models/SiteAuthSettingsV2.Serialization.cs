@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,34 +47,34 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Platform))
+            if (Platform != null)
             {
                 writer.WritePropertyName("platform"u8);
                 writer.WriteObjectValue(Platform);
             }
-            if (Optional.IsDefined(GlobalValidation))
+            if (GlobalValidation != null)
             {
                 writer.WritePropertyName("globalValidation"u8);
                 writer.WriteObjectValue(GlobalValidation);
             }
-            if (Optional.IsDefined(IdentityProviders))
+            if (IdentityProviders != null)
             {
                 writer.WritePropertyName("identityProviders"u8);
                 writer.WriteObjectValue(IdentityProviders);
             }
-            if (Optional.IsDefined(Login))
+            if (Login != null)
             {
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
-            if (Optional.IsDefined(HttpSettings))
+            if (HttpSettings != null)
             {
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value);
+                            platform = AuthPlatform.DeserializeAuthPlatform(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            globalValidation = GlobalValidation.DeserializeGlobalValidation(property0.Value);
+                            globalValidation = GlobalValidation.DeserializeGlobalValidation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("identityProviders"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            identityProviders = AppServiceIdentityProviders.DeserializeAppServiceIdentityProviders(property0.Value);
+                            identityProviders = AppServiceIdentityProviders.DeserializeAppServiceIdentityProviders(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            login = WebAppLoginInfo.DeserializeWebAppLoginInfo(property0.Value);
+                            login = WebAppLoginInfo.DeserializeWebAppLoginInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            httpSettings = AppServiceHttpSettings.DeserializeAppServiceHttpSettings(property0.Value);
+                            httpSettings = AppServiceHttpSettings.DeserializeAppServiceHttpSettings(property0.Value, options);
                             continue;
                         }
                     }
@@ -224,7 +224,18 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteAuthSettingsV2(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, kind.Value, serializedAdditionalRawData);
+            return new SiteAuthSettingsV2(
+                id,
+                name,
+                type,
+                systemData.Value,
+                platform.Value,
+                globalValidation.Value,
+                identityProviders.Value,
+                login.Value,
+                httpSettings.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteAuthSettingsV2>.Write(ModelReaderWriterOptions options)

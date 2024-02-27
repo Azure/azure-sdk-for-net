@@ -26,47 +26,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(PrimaryNetworkFriendlyName))
+            if (PrimaryNetworkFriendlyName != null)
             {
                 writer.WritePropertyName("primaryNetworkFriendlyName"u8);
                 writer.WriteStringValue(PrimaryNetworkFriendlyName);
             }
-            if (Optional.IsDefined(PrimaryNetworkId))
+            if (PrimaryNetworkId != null)
             {
                 writer.WritePropertyName("primaryNetworkId"u8);
                 writer.WriteStringValue(PrimaryNetworkId);
             }
-            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            if (PrimaryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("primaryFabricFriendlyName"u8);
                 writer.WriteStringValue(PrimaryFabricFriendlyName);
             }
-            if (Optional.IsDefined(RecoveryNetworkFriendlyName))
+            if (RecoveryNetworkFriendlyName != null)
             {
                 writer.WritePropertyName("recoveryNetworkFriendlyName"u8);
                 writer.WriteStringValue(RecoveryNetworkFriendlyName);
             }
-            if (Optional.IsDefined(RecoveryNetworkId))
+            if (RecoveryNetworkId != null)
             {
                 writer.WritePropertyName("recoveryNetworkId"u8);
                 writer.WriteStringValue(RecoveryNetworkId);
             }
-            if (Optional.IsDefined(RecoveryFabricArmId))
+            if (RecoveryFabricArmId != null)
             {
                 writer.WritePropertyName("recoveryFabricArmId"u8);
                 writer.WriteStringValue(RecoveryFabricArmId);
             }
-            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            if (RecoveryFabricFriendlyName != null)
             {
                 writer.WritePropertyName("recoveryFabricFriendlyName"u8);
                 writer.WriteStringValue(RecoveryFabricFriendlyName);
             }
-            if (Optional.IsDefined(FabricSpecificSettings))
+            if (FabricSpecificSettings != null)
             {
                 writer.WritePropertyName("fabricSpecificSettings"u8);
                 writer.WriteObjectValue(FabricSpecificSettings);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value);
+                    fabricSpecificSettings = NetworkMappingFabricSpecificSettings.DeserializeNetworkMappingFabricSpecificSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryNetworkMappingProperties(state.Value, primaryNetworkFriendlyName.Value, primaryNetworkId.Value, primaryFabricFriendlyName.Value, recoveryNetworkFriendlyName.Value, recoveryNetworkId.Value, recoveryFabricArmId.Value, recoveryFabricFriendlyName.Value, fabricSpecificSettings.Value, serializedAdditionalRawData);
+            return new SiteRecoveryNetworkMappingProperties(
+                state.Value,
+                primaryNetworkFriendlyName.Value,
+                primaryNetworkId.Value,
+                primaryFabricFriendlyName.Value,
+                recoveryNetworkFriendlyName.Value,
+                recoveryNetworkId.Value,
+                recoveryFabricArmId.Value,
+                recoveryFabricFriendlyName.Value,
+                fabricSpecificSettings.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryNetworkMappingProperties>.Write(ModelReaderWriterOptions options)

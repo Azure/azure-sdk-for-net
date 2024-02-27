@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TemplateParameters))
+            if (!(TemplateParameters is ChangeTrackingList<ParameterContract> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("templateParameters"u8);
                 writer.WriteStartArray();
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Request))
+            if (Request != null)
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteObjectValue(Request);
             }
-            if (Optional.IsCollectionDefined(Responses))
+            if (!(Responses is ChangeTrackingList<ResponseContract> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("responses"u8);
                 writer.WriteStartArray();
@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Policies))
+            if (Policies != null)
             {
                 writer.WritePropertyName("policies"u8);
                 writer.WriteStringValue(Policies);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Method))
+            if (Method != null)
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (Optional.IsDefined(UriTemplate))
+            if (UriTemplate != null)
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IList<ParameterContract>> templateParameters = default;
+            IList<ParameterContract> templateParameters = default;
             Optional<string> description = default;
             Optional<RequestContract> request = default;
-            Optional<IList<ResponseContract>> responses = default;
+            IList<ResponseContract> responses = default;
             Optional<string> policies = default;
             Optional<string> displayName = default;
             Optional<string> method = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ParameterContract> array = new List<ParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                                array.Add(ParameterContract.DeserializeParameterContract(item, options));
                             }
                             templateParameters = array;
                             continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            request = RequestContract.DeserializeRequestContract(property0.Value);
+                            request = RequestContract.DeserializeRequestContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("responses"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<ResponseContract> array = new List<ResponseContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                                array.Add(ResponseContract.DeserializeResponseContract(item, options));
                             }
                             responses = array;
                             continue;
@@ -209,7 +209,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiOperationPatch(Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
+            return new ApiOperationPatch(
+                templateParameters ?? new ChangeTrackingList<ParameterContract>(),
+                description.Value,
+                request.Value,
+                responses ?? new ChangeTrackingList<ResponseContract>(),
+                policies.Value,
+                displayName.Value,
+                method.Value,
+                uriTemplate.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)

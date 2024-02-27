@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,44 +47,44 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Level))
+            if (options.Format != "W" && Level != null)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
             }
-            if (options.Format != "W" && Optional.IsDefined(SettingType))
+            if (options.Format != "W" && SettingType != null)
             {
                 writer.WritePropertyName("settingType"u8);
                 writer.WriteStringValue(SettingType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiffRule))
+            if (options.Format != "W" && DiffRule != null)
             {
                 writer.WritePropertyName("diffRule"u8);
                 writer.WriteStringValue(DiffRule);
             }
-            if (options.Format != "W" && Optional.IsDefined(SettingName))
+            if (options.Format != "W" && SettingName != null)
             {
                 writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueInCurrentSlot))
+            if (options.Format != "W" && ValueInCurrentSlot != null)
             {
                 writer.WritePropertyName("valueInCurrentSlot"u8);
                 writer.WriteStringValue(ValueInCurrentSlot);
             }
-            if (options.Format != "W" && Optional.IsDefined(ValueInTargetSlot))
+            if (options.Format != "W" && ValueInTargetSlot != null)
             {
                 writer.WritePropertyName("valueInTargetSlot"u8);
                 writer.WriteStringValue(ValueInTargetSlot);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -226,7 +226,20 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SlotDifference(id, name, type, systemData.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value, kind.Value, serializedAdditionalRawData);
+            return new SlotDifference(
+                id,
+                name,
+                type,
+                systemData.Value,
+                level.Value,
+                settingType.Value,
+                diffRule.Value,
+                settingName.Value,
+                valueInCurrentSlot.Value,
+                valueInTargetSlot.Value,
+                description.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SlotDifference>.Write(ModelReaderWriterOptions options)

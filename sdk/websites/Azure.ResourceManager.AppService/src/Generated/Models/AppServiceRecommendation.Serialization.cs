@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,59 +47,59 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(RecommendationId))
+            if (RecommendationId.HasValue)
             {
                 writer.WritePropertyName("recommendationId"u8);
                 writer.WriteStringValue(RecommendationId.Value);
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ResourceScope))
+            if (ResourceScope.HasValue)
             {
                 writer.WritePropertyName("resourceScope"u8);
                 writer.WriteStringValue(ResourceScope.Value.ToString());
             }
-            if (Optional.IsDefined(RuleName))
+            if (RuleName != null)
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(Level))
+            if (Level.HasValue)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Channels))
+            if (Channels.HasValue)
             {
                 writer.WritePropertyName("channels"u8);
                 writer.WriteStringValue(Channels.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(CategoryTags))
+            if (options.Format != "W" && !(CategoryTags is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("categoryTags"u8);
                 writer.WriteStartArray();
@@ -109,17 +109,17 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ActionName))
+            if (ActionName != null)
             {
                 writer.WritePropertyName("actionName"u8);
                 writer.WriteStringValue(ActionName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteNumberValue(Enabled.Value);
             }
-            if (Optional.IsCollectionDefined(States))
+            if (!(States is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
@@ -129,52 +129,52 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartOn))
+            if (StartOn.HasValue)
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (EndOn.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(NextNotificationOn))
+            if (NextNotificationOn.HasValue)
             {
                 writer.WritePropertyName("nextNotificationTime"u8);
                 writer.WriteStringValue(NextNotificationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationExpirationOn))
+            if (NotificationExpirationOn.HasValue)
             {
                 writer.WritePropertyName("notificationExpirationTime"u8);
                 writer.WriteStringValue(NotificationExpirationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotifiedOn))
+            if (NotifiedOn.HasValue)
             {
                 writer.WritePropertyName("notifiedTime"u8);
                 writer.WriteStringValue(NotifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(Score))
+            if (Score.HasValue)
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
-            if (Optional.IsDefined(IsDynamic))
+            if (IsDynamic.HasValue)
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
             }
-            if (Optional.IsDefined(ExtensionName))
+            if (ExtensionName != null)
             {
                 writer.WritePropertyName("extensionName"u8);
                 writer.WriteStringValue(ExtensionName);
             }
-            if (Optional.IsDefined(BladeName))
+            if (BladeName != null)
             {
                 writer.WritePropertyName("bladeName"u8);
                 writer.WriteStringValue(BladeName);
             }
-            if (Optional.IsDefined(ForwardLink))
+            if (ForwardLink != null)
             {
                 writer.WritePropertyName("forwardLink"u8);
                 writer.WriteStringValue(ForwardLink);
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> message = default;
             Optional<NotificationLevel> level = default;
             Optional<RecommendationChannel> channels = default;
-            Optional<IReadOnlyList<string>> categoryTags = default;
+            IReadOnlyList<string> categoryTags = default;
             Optional<string> actionName = default;
             Optional<int> enabled = default;
-            Optional<IList<string>> states = default;
+            IList<string> states = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<DateTimeOffset> nextNotificationTime = default;
@@ -486,7 +486,36 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceRecommendation(id, name, type, systemData.Value, Optional.ToNullable(creationTime), Optional.ToNullable(recommendationId), resourceId.Value, Optional.ToNullable(resourceScope), ruleName.Value, displayName.Value, message.Value, Optional.ToNullable(level), Optional.ToNullable(channels), Optional.ToList(categoryTags), actionName.Value, Optional.ToNullable(enabled), Optional.ToList(states), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(nextNotificationTime), Optional.ToNullable(notificationExpirationTime), Optional.ToNullable(notifiedTime), Optional.ToNullable(score), Optional.ToNullable(isDynamic), extensionName.Value, bladeName.Value, forwardLink.Value, kind.Value, serializedAdditionalRawData);
+            return new AppServiceRecommendation(
+                id,
+                name,
+                type,
+                systemData.Value,
+                Optional.ToNullable(creationTime),
+                Optional.ToNullable(recommendationId),
+                resourceId.Value,
+                Optional.ToNullable(resourceScope),
+                ruleName.Value,
+                displayName.Value,
+                message.Value,
+                Optional.ToNullable(level),
+                Optional.ToNullable(channels),
+                categoryTags ?? new ChangeTrackingList<string>(),
+                actionName.Value,
+                Optional.ToNullable(enabled),
+                states ?? new ChangeTrackingList<string>(),
+                Optional.ToNullable(startTime),
+                Optional.ToNullable(endTime),
+                Optional.ToNullable(nextNotificationTime),
+                Optional.ToNullable(notificationExpirationTime),
+                Optional.ToNullable(notifiedTime),
+                Optional.ToNullable(score),
+                Optional.ToNullable(isDynamic),
+                extensionName.Value,
+                bladeName.Value,
+                forwardLink.Value,
+                kind.Value,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceRecommendation>.Write(ModelReaderWriterOptions options)

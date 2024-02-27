@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ContinuationToken))
+            if (ContinuationToken != null)
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPipelineRunInfo> array = new List<DataFactoryPipelineRunInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item));
+                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item, options));
                     }
                     value = array;
                     continue;

@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SslPort))
+            if (options.Format != "W" && SslPort.HasValue)
             {
                 writer.WritePropertyName("sslPort"u8);
                 writer.WriteNumberValue(SslPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NonSslPort))
+            if (options.Format != "W" && NonSslPort.HasValue)
             {
                 writer.WritePropertyName("nonSslPort"u8);
                 writer.WriteNumberValue(NonSslPort.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Zone))
+            if (options.Format != "W" && Zone != null)
             {
                 writer.WritePropertyName("zone"u8);
                 writer.WriteStringValue(Zone);
             }
-            if (options.Format != "W" && Optional.IsDefined(ShardId))
+            if (options.Format != "W" && ShardId.HasValue)
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsMaster))
+            if (options.Format != "W" && IsMaster.HasValue)
             {
                 writer.WritePropertyName("isMaster"u8);
                 writer.WriteBooleanValue(IsMaster.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsPrimary))
+            if (options.Format != "W" && IsPrimary.HasValue)
             {
                 writer.WritePropertyName("isPrimary"u8);
                 writer.WriteBooleanValue(IsPrimary.Value);
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
+            return new RedisInstanceDetails(
+                Optional.ToNullable(sslPort),
+                Optional.ToNullable(nonSslPort),
+                zone.Value,
+                Optional.ToNullable(shardId),
+                Optional.ToNullable(isMaster),
+                Optional.ToNullable(isPrimary),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisInstanceDetails>.Write(ModelReaderWriterOptions options)

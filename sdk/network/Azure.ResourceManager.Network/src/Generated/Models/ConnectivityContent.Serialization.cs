@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (Optional.IsDefined(Protocol))
+            if (Protocol.HasValue)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (Optional.IsDefined(ProtocolConfiguration))
+            if (ProtocolConfiguration != null)
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
                 writer.WriteObjectValue(ProtocolConfiguration);
             }
-            if (Optional.IsDefined(PreferredIPVersion))
+            if (PreferredIPVersion.HasValue)
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
                 writer.WriteStringValue(PreferredIPVersion.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value);
+                    source = ConnectivitySource.DeserializeConnectivitySource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value);
+                    destination = ConnectivityDestination.DeserializeConnectivityDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value);
+                    protocolConfiguration = ProtocolConfiguration.DeserializeProtocolConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityContent(source, destination, Optional.ToNullable(protocol), protocolConfiguration.Value, Optional.ToNullable(preferredIPVersion), serializedAdditionalRawData);
+            return new ConnectivityContent(
+                source,
+                destination,
+                Optional.ToNullable(protocol),
+                protocolConfiguration.Value,
+                Optional.ToNullable(preferredIPVersion),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityContent>.Write(ModelReaderWriterOptions options)

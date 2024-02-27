@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
+            if (options.Format != "W" && AggregatedState.HasValue)
             {
                 writer.WritePropertyName("aggregatedState"u8);
                 writer.WriteStringValue(AggregatedState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Summary))
+            if (options.Format != "W" && !(Summary is ChangeTrackingList<RegionalReplicationStatus> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             Optional<AggregatedReplicationState> aggregatedState = default;
-            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
+            IReadOnlyList<RegionalReplicationStatus> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item, options));
                     }
                     summary = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary), serializedAdditionalRawData);
+            return new ReplicationStatus(Optional.ToNullable(aggregatedState), summary ?? new ChangeTrackingList<RegionalReplicationStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationStatus>.Write(ModelReaderWriterOptions options)

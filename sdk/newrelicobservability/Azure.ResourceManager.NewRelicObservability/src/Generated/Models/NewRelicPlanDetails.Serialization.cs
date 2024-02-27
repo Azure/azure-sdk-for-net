@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsageType))
+            if (UsageType.HasValue)
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType.Value.ToString());
             }
-            if (Optional.IsDefined(BillingCycle))
+            if (BillingCycle.HasValue)
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle.Value.ToString());
             }
-            if (Optional.IsDefined(PlanDetails))
+            if (PlanDetails != null)
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (Optional.IsDefined(EffectiveOn))
+            if (EffectiveOn.HasValue)
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
