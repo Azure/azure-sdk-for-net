@@ -46,6 +46,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndArray();
             }
+            if (!(Compressions is ChangeTrackingList<VectorSearchCompressionConfiguration> collection2 && collection2.IsUndefined))
+            {
+                writer.WritePropertyName("compressions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Compressions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -58,6 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<VectorSearchProfile>> profiles = default;
             Optional<IList<VectorSearchAlgorithmConfiguration>> algorithms = default;
             Optional<IList<VectorSearchVectorizer>> vectorizers = default;
+            Optional<IList<VectorSearchCompressionConfiguration>> compressions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profiles"u8))
@@ -102,8 +113,22 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorizers = array;
                     continue;
                 }
+                if (property.NameEquals("compressions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VectorSearchCompressionConfiguration> array = new List<VectorSearchCompressionConfiguration>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorSearchCompressionConfiguration.DeserializeVectorSearchCompressionConfiguration(item));
+                    }
+                    compressions = array;
+                    continue;
+                }
             }
-            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers));
+            return new VectorSearch(Optional.ToList(profiles), Optional.ToList(algorithms), Optional.ToList(vectorizers), Optional.ToList(compressions));
         }
     }
 }

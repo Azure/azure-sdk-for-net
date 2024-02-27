@@ -30,6 +30,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("retrievable"u8);
                 writer.WriteBooleanValue(IsRetrievable.Value);
             }
+            if (IsStored.HasValue)
+            {
+                writer.WritePropertyName("stored"u8);
+                writer.WriteBooleanValue(IsStored.Value);
+            }
             if (IsSearchable.HasValue)
             {
                 writer.WritePropertyName("searchable"u8);
@@ -155,6 +160,7 @@ namespace Azure.Search.Documents.Indexes.Models
             SearchFieldDataType type = default;
             Optional<bool> key = default;
             Optional<bool> retrievable = default;
+            Optional<bool> stored = default;
             Optional<bool> searchable = default;
             Optional<bool> filterable = default;
             Optional<bool> sortable = default;
@@ -195,6 +201,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     retrievable = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("stored"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stored = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("searchable"u8))
@@ -322,7 +337,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
+            return new SearchField(name, type, Optional.ToNullable(key), Optional.ToNullable(retrievable), Optional.ToNullable(stored), Optional.ToNullable(searchable), Optional.ToNullable(filterable), Optional.ToNullable(sortable), Optional.ToNullable(facetable), Optional.ToNullable(analyzer), Optional.ToNullable(searchAnalyzer), Optional.ToNullable(indexAnalyzer), Optional.ToNullable(normalizer), Optional.ToNullable(dimensions), vectorSearchProfile.Value, Optional.ToList(synonymMaps), Optional.ToList(fields));
         }
     }
 }
