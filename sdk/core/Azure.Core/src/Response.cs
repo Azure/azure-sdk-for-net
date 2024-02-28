@@ -108,7 +108,7 @@ namespace Azure
             => await BufferContentSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
         /// <summary>
-        /// Provide a default implementation of the
+        /// Provide a default implementation of the abstract
         /// <see cref="BufferContent(CancellationToken)"/> method inherited from
         /// <see cref="PipelineResponse"/>. This is used by any types derived
         /// from <see cref="Response"/> that don't override the BufferContent
