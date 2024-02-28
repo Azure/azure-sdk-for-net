@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<JobStepOutputType> type = default;
-            Optional<Guid> subscriptionId = default;
-            Optional<string> resourceGroupName = default;
+            JobStepOutputType? type = default;
+            Guid? subscriptionId = default;
+            string resourceGroupName = default;
             string serverName = default;
             string databaseName = default;
-            Optional<string> schemaName = default;
+            string schemaName = default;
             string tableName = default;
             string credential = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,12 +159,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new JobStepOutput(
-                Optional.ToNullable(type),
-                Optional.ToNullable(subscriptionId),
-                resourceGroupName.Value,
+                type,
+                subscriptionId,
+                resourceGroupName,
                 serverName,
                 databaseName,
-                schemaName.Value,
+                schemaName,
                 tableName,
                 credential,
                 serializedAdditionalRawData);

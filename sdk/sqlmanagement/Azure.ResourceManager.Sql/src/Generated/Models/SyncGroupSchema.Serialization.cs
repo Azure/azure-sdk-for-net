@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IList<SyncGroupSchemaTable> tables = default;
-            Optional<string> masterSyncMemberName = default;
+            string masterSyncMemberName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName.Value, serializedAdditionalRawData);
+            return new SyncGroupSchema(tables ?? new ChangeTrackingList<SyncGroupSchemaTable>(), masterSyncMemberName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncGroupSchema>.Write(ModelReaderWriterOptions options)

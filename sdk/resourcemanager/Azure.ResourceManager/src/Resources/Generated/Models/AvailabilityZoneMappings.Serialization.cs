@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> logicalZone = default;
-            Optional<string> physicalZone = default;
+            string logicalZone = default;
+            string physicalZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailabilityZoneMappings(logicalZone.Value, physicalZone.Value, serializedAdditionalRawData);
+            return new AvailabilityZoneMappings(logicalZone, physicalZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailabilityZoneMappings>.Write(ModelReaderWriterOptions options)

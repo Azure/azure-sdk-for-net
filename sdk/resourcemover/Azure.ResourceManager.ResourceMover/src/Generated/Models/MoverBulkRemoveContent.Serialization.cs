@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<bool> validateOnly = default;
+            bool? validateOnly = default;
             IList<ResourceIdentifier> moveResources = default;
-            Optional<MoverResourceInputType> moveResourceInputType = default;
+            MoverResourceInputType? moveResourceInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoverBulkRemoveContent(Optional.ToNullable(validateOnly), moveResources ?? new ChangeTrackingList<ResourceIdentifier>(), Optional.ToNullable(moveResourceInputType), serializedAdditionalRawData);
+            return new MoverBulkRemoveContent(validateOnly, moveResources ?? new ChangeTrackingList<ResourceIdentifier>(), moveResourceInputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoverBulkRemoveContent>.Write(ModelReaderWriterOptions options)

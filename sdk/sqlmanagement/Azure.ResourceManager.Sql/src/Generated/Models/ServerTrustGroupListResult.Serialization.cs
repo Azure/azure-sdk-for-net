@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             IReadOnlyList<SqlServerTrustGroupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServerTrustGroupListResult(value ?? new ChangeTrackingList<SqlServerTrustGroupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new ServerTrustGroupListResult(value ?? new ChangeTrackingList<SqlServerTrustGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServerTrustGroupListResult>.Write(ModelReaderWriterOptions options)

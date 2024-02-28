@@ -19,9 +19,9 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
+            string code = default;
+            string message = default;
+            string target = default;
             IReadOnlyList<ErrorDetail> details = default;
             IReadOnlyList<ErrorAdditionalInfo> additionalInfo = default;
             foreach (var property in element.EnumerateObject())
@@ -70,7 +70,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code.Value, message.Value, target.Value, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
+            return new ErrorDetail(code, message, target, details ?? new ChangeTrackingList<ErrorDetail>(), additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>());
         }
     }
 }

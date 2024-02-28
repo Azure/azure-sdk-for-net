@@ -119,17 +119,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<string> diskUuid = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmFailbackSyncDetails> irDetails = default;
-            Optional<InMageRcmFailbackSyncDetails> resyncDetails = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            string diskUuid = default;
+            double? dataPendingInLogDataStoreInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string isInitialReplicationComplete = default;
+            InMageRcmFailbackSyncDetails irDetails = default;
+            InMageRcmFailbackSyncDetails resyncDetails = default;
+            DateTimeOffset? lastSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -220,17 +220,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InMageRcmFailbackProtectedDiskDetails(
-                diskId.Value,
-                diskName.Value,
-                isOSDisk.Value,
-                Optional.ToNullable(capacityInBytes),
-                diskUuid.Value,
-                Optional.ToNullable(dataPendingInLogDataStoreInMB),
-                Optional.ToNullable(dataPendingAtSourceAgentInMB),
-                isInitialReplicationComplete.Value,
-                irDetails.Value,
-                resyncDetails.Value,
-                Optional.ToNullable(lastSyncTime),
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                diskUuid,
+                dataPendingInLogDataStoreInMB,
+                dataPendingAtSourceAgentInMB,
+                isInitialReplicationComplete,
+                irDetails,
+                resyncDetails,
+                lastSyncTime,
                 serializedAdditionalRawData);
         }
 

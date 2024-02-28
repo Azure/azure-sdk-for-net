@@ -192,17 +192,17 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> workspace = default;
-            Optional<string> displayName = default;
-            Optional<SecuritySolutionStatus> status = default;
+            SystemData systemData = default;
+            string workspace = default;
+            string displayName = default;
+            SecuritySolutionStatus? status = default;
             IList<IotSecuritySolutionExportOption> export = default;
             IList<IotSecuritySolutionDataSource> disabledDataSources = default;
             IList<string> iotHubs = default;
-            Optional<UserDefinedResourcesProperties> userDefinedResources = default;
+            UserDefinedResourcesProperties userDefinedResources = default;
             IReadOnlyList<string> autoDiscoveredResources = default;
             IList<RecommendationConfigurationProperties> recommendationsConfiguration = default;
-            Optional<UnmaskedIPLoggingStatus> unmaskedIPLoggingStatus = default;
+            UnmaskedIPLoggingStatus? unmaskedIPLoggingStatus = default;
             IList<AdditionalWorkspacesProperties> additionalWorkspaces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -394,19 +394,19 @@ namespace Azure.ResourceManager.SecurityCenter
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                workspace.Value,
-                displayName.Value,
-                Optional.ToNullable(status),
+                workspace,
+                displayName,
+                status,
                 export ?? new ChangeTrackingList<IotSecuritySolutionExportOption>(),
                 disabledDataSources ?? new ChangeTrackingList<IotSecuritySolutionDataSource>(),
                 iotHubs ?? new ChangeTrackingList<string>(),
-                userDefinedResources.Value,
+                userDefinedResources,
                 autoDiscoveredResources ?? new ChangeTrackingList<string>(),
                 recommendationsConfiguration ?? new ChangeTrackingList<RecommendationConfigurationProperties>(),
-                Optional.ToNullable(unmaskedIPLoggingStatus),
+                unmaskedIPLoggingStatus,
                 additionalWorkspaces ?? new ChangeTrackingList<AdditionalWorkspacesProperties>(),
                 serializedAdditionalRawData);
         }

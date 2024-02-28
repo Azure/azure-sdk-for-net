@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> clientId = default;
-            Optional<Guid> tenantId = default;
-            Optional<SqlServicePrincipalType> type = default;
+            Guid? principalId = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
+            SqlServicePrincipalType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlServicePrincipal(Optional.ToNullable(principalId), Optional.ToNullable(clientId), Optional.ToNullable(tenantId), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new SqlServicePrincipal(principalId, clientId, tenantId, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlServicePrincipal>.Write(ModelReaderWriterOptions options)

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
             string storageAccountName = default;
             string protectedAccountKeyName = default;
-            Optional<string> protectedAccountKeyName2 = default;
+            string protectedAccountKeyName2 = default;
             Uri blobEndpoint = default;
             Uri queueEndpoint = default;
             Uri tableEndpoint = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new DiagnosticsStorageAccountConfig(
                 storageAccountName,
                 protectedAccountKeyName,
-                protectedAccountKeyName2.Value,
+                protectedAccountKeyName2,
                 blobEndpoint,
                 queueEndpoint,
                 tableEndpoint,

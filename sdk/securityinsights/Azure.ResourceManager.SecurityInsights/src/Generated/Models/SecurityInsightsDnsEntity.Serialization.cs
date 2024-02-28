@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> dnsServerIPEntityId = default;
-            Optional<string> domainName = default;
-            Optional<string> hostIPAddressEntityId = default;
+            string friendlyName = default;
+            string dnsServerIPEntityId = default;
+            string domainName = default;
+            string hostIPAddressEntityId = default;
             IReadOnlyList<string> ipAddressEntityIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                dnsServerIPEntityId.Value,
-                domainName.Value,
-                hostIPAddressEntityId.Value,
+                friendlyName,
+                dnsServerIPEntityId,
+                domainName,
+                hostIPAddressEntityId,
                 ipAddressEntityIds ?? new ChangeTrackingList<string>());
         }
 

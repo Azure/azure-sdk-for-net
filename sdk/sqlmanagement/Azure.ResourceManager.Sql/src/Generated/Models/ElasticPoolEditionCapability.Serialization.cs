@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            bool? zoneRedundant = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ElasticPoolEditionCapability(
-                name.Value,
+                name,
                 supportedElasticPoolPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>(),
-                Optional.ToNullable(zoneRedundant),
-                Optional.ToNullable(status),
-                reason.Value,
+                zoneRedundant,
+                status,
+                reason,
                 serializedAdditionalRawData);
         }
 

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<RecoveryPointSyncType> recoveryPointSyncType = default;
+            RecoveryPointSyncType? recoveryPointSyncType = default;
             IReadOnlyList<string> disks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointSyncType), disks ?? new ChangeTrackingList<string>());
+            return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, recoveryPointSyncType, disks ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<A2ARecoveryPointDetails>.Write(ModelReaderWriterOptions options)

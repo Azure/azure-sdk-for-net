@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<string> agentUpdateStatus = default;
-            Optional<string> postUpdateRebootStatus = default;
-            Optional<DateTimeOffset> agentExpireOn = default;
+            string agentVersion = default;
+            string agentUpdateStatus = default;
+            string postUpdateRebootStatus = default;
+            DateTimeOffset? agentExpireOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InMageAgentDetails(agentVersion.Value, agentUpdateStatus.Value, postUpdateRebootStatus.Value, Optional.ToNullable(agentExpireOn), serializedAdditionalRawData);
+            return new InMageAgentDetails(agentVersion, agentUpdateStatus, postUpdateRebootStatus, agentExpireOn, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InMageAgentDetails>.Write(ModelReaderWriterOptions options)

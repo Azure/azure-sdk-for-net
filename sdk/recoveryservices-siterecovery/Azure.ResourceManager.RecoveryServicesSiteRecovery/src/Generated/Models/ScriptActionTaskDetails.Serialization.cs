@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> path = default;
-            Optional<string> output = default;
-            Optional<bool> isPrimarySideScript = default;
+            string name = default;
+            string path = default;
+            string output = default;
+            bool? isPrimarySideScript = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ScriptActionTaskDetails(
                 instanceType,
                 serializedAdditionalRawData,
-                name.Value,
-                path.Value,
-                output.Value,
-                Optional.ToNullable(isPrimarySideScript));
+                name,
+                path,
+                output,
+                isPrimarySideScript);
         }
 
         BinaryData IPersistableModel<ScriptActionTaskDetails>.Write(ModelReaderWriterOptions options)

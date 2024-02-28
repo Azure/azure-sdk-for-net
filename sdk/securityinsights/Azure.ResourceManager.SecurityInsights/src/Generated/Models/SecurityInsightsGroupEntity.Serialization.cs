@@ -137,12 +137,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            Optional<string> friendlyName = default;
-            Optional<string> distinguishedName = default;
-            Optional<Guid> objectGuid = default;
-            Optional<string> sid = default;
+            string friendlyName = default;
+            string distinguishedName = default;
+            Guid? objectGuid = default;
+            string sid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName.Value,
-                distinguishedName.Value,
-                Optional.ToNullable(objectGuid),
-                sid.Value);
+                friendlyName,
+                distinguishedName,
+                objectGuid,
+                sid);
         }
 
         BinaryData IPersistableModel<SecurityInsightsGroupEntity>.Write(ModelReaderWriterOptions options)

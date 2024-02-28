@@ -106,12 +106,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<BackupWorkloadType> workLoadType = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<VaultRetentionPolicy> vaultRetentionPolicy = default;
-            Optional<string> timeZone = default;
-            Optional<int> protectedItemsCount = default;
+            BackupWorkloadType? workLoadType = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            VaultRetentionPolicy vaultRetentionPolicy = default;
+            string timeZone = default;
+            int? protectedItemsCount = default;
             string backupManagementType = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -194,15 +194,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new FileShareProtectionPolicy(
-                Optional.ToNullable(protectedItemsCount),
+                protectedItemsCount,
                 backupManagementType,
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData,
-                Optional.ToNullable(workLoadType),
-                schedulePolicy.Value,
-                retentionPolicy.Value,
-                vaultRetentionPolicy.Value,
-                timeZone.Value);
+                workLoadType,
+                schedulePolicy,
+                retentionPolicy,
+                vaultRetentionPolicy,
+                timeZone);
         }
 
         BinaryData IPersistableModel<FileShareProtectionPolicy>.Write(ModelReaderWriterOptions options)

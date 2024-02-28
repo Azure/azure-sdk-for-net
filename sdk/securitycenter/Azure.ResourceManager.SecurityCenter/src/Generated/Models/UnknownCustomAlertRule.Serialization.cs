@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string description = default;
             bool isEnabled = default;
             string ruleType = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCustomAlertRule(displayName.Value, description.Value, isEnabled, ruleType, serializedAdditionalRawData);
+            return new UnknownCustomAlertRule(displayName, description, isEnabled, ruleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomAlertRule>.Write(ModelReaderWriterOptions options)

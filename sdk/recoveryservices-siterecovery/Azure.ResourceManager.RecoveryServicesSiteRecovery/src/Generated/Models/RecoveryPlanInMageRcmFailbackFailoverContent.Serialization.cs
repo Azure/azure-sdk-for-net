@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             InMageRcmFailbackRecoveryPointType recoveryPointType = default;
-            Optional<string> useMultiVmSyncPoint = default;
+            string useMultiVmSyncPoint = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanInMageRcmFailbackFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint.Value);
+            return new RecoveryPlanInMageRcmFailbackFailoverContent(instanceType, serializedAdditionalRawData, recoveryPointType, useMultiVmSyncPoint);
         }
 
         BinaryData IPersistableModel<RecoveryPlanInMageRcmFailbackFailoverContent>.Write(ModelReaderWriterOptions options)

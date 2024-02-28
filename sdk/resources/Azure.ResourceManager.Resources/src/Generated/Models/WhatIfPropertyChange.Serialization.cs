@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Resources.Models
             }
             string path = default;
             WhatIfPropertyChangeType propertyChangeType = default;
-            Optional<BinaryData> before = default;
-            Optional<BinaryData> after = default;
+            BinaryData before = default;
+            BinaryData after = default;
             IReadOnlyList<WhatIfPropertyChange> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfPropertyChange(
                 path,
                 propertyChangeType,
-                before.Value,
-                after.Value,
+                before,
+                after,
                 children ?? new ChangeTrackingList<WhatIfPropertyChange>(),
                 serializedAdditionalRawData);
         }

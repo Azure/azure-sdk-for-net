@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Models
             {
                 return null;
             }
-            Optional<string> keyIdentifier = default;
-            Optional<string> identity = default;
+            string keyIdentifier = default;
+            string identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyIdentifier"u8))
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new KeyVaultProperties(keyIdentifier.Value, identity.Value);
+            return new KeyVaultProperties(keyIdentifier, identity);
         }
 
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)

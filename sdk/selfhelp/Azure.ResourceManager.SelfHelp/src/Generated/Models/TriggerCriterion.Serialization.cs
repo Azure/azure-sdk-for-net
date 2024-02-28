@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<SelfHelpName> name = default;
-            Optional<string> value = default;
+            SelfHelpName? name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerCriterion(Optional.ToNullable(name), value.Value, serializedAdditionalRawData);
+            return new TriggerCriterion(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerCriterion>.Write(ModelReaderWriterOptions options)

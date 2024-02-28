@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> ga = default;
+            string ga = default;
             string @public = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentPublishDates(ga.Value, @public, serializedAdditionalRawData);
+            return new SecurityAssessmentPublishDates(ga, @public, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentPublishDates>.Write(ModelReaderWriterOptions options)

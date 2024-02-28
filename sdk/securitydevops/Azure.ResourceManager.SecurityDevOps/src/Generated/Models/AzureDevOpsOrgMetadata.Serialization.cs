@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
+            string name = default;
+            AutoDiscovery? autoDiscovery = default;
             IList<AzureDevOpsProjectMetadata> projects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDevOpsOrgMetadata(name.Value, Optional.ToNullable(autoDiscovery), projects ?? new ChangeTrackingList<AzureDevOpsProjectMetadata>(), serializedAdditionalRawData);
+            return new AzureDevOpsOrgMetadata(name, autoDiscovery, projects ?? new ChangeTrackingList<AzureDevOpsProjectMetadata>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureDevOpsOrgMetadata>.Write(ModelReaderWriterOptions options)
