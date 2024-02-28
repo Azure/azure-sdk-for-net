@@ -198,6 +198,7 @@ namespace Azure.Communication.JobRouter
             IReadOnlyList<RouterWorkerAssignment> assignedJobs = default;
             double? loadRatio = default;
             bool? availableForOffers = default;
+            int? maxConcurrentOffers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -374,6 +375,7 @@ namespace Azure.Communication.JobRouter
                 assignedJobs ?? new ChangeTrackingList<RouterWorkerAssignment>(),
                 loadRatio,
                 availableForOffers,
+                maxConcurrentOffers,
                 serializedAdditionalRawData);
         }
 
