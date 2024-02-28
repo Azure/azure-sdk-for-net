@@ -67,6 +67,7 @@ namespace Azure
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
         #region Abstract header methods
+
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
@@ -95,39 +96,10 @@ namespace Azure
         /// </summary>
         /// <returns>The <see cref="IEnumerable{T}"/> enumerating <see cref="HttpHeader"/> in the response.</returns>
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
         #endregion
 
-        /// <summary>
-        /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
-        /// </summary>
-        /// <typeparam name="T">The type of the value.</typeparam>
-        /// <param name="value">The value.</param>
-        /// <param name="response">The HTTP response.</param>
-        /// <returns>A new instance of <see cref="Response{T}"/> with the provided value and HTTP response.</returns>
-        public static Response<T> FromValue<T>(T value, Response response)
-            => new AzureCoreResponse<T>(value, response);
-
-        /// <summary>
-        /// Returns the string representation of this <see cref="Response"/>.
-        /// </summary>
-        /// <returns>The string representation of this <see cref="Response"/></returns>
-        public override string ToString()
-        {
-            return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
-        }
-
-        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
-        {
-            // We want to keep the ContentStream readable
-            // even after the response is disposed but only if it's a
-            // buffered memory stream otherwise we can leave a network
-            // connection hanging open
-            if (stream is not MemoryStream)
-            {
-                stream?.Dispose();
-                stream = null;
-            }
-        }
+        #region BufferContent implementation
 
         /// <inheritdoc/>
         public override BinaryData BufferContent(CancellationToken cancellationToken = default)
@@ -203,6 +175,40 @@ namespace Azure
                     new BinaryData(stream.ToArray());
 
             public BinaryData Content => FromBuffer(this);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Creates a new instance of <see cref="Response{T}"/> with the provided value and HTTP response.
+        /// </summary>
+        /// <typeparam name="T">The type of the value.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <returns>A new instance of <see cref="Response{T}"/> with the provided value and HTTP response.</returns>
+        public static Response<T> FromValue<T>(T value, Response response)
+            => new AzureCoreResponse<T>(value, response);
+
+        /// <summary>
+        /// Returns the string representation of this <see cref="Response"/>.
+        /// </summary>
+        /// <returns>The string representation of this <see cref="Response"/></returns>
+        public override string ToString()
+        {
+            return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
+        }
+
+        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
+        {
+            // We want to keep the ContentStream readable
+            // even after the response is disposed but only if it's a
+            // buffered memory stream otherwise we can leave a network
+            // connection hanging open
+            if (stream is not MemoryStream)
+            {
+                stream?.Dispose();
+                stream = null;
+            }
         }
 
         /// <summary>
