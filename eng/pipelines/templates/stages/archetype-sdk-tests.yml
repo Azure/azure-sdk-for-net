@@ -144,7 +144,7 @@ extends:
             - stage: ${{ cloud.key }}
               dependsOn: []
               variables:
-                - template: ../variables/globals.yml@self
+                - template: /eng/pipelines/templates/variables/globals.yml@self
               jobs:
                 - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml@self
                   parameters:
