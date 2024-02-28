@@ -84,6 +84,10 @@ namespace Azure.Core
             {
                 throw new ArgumentNullException(nameof(content));
             }
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(name));
@@ -106,9 +110,17 @@ namespace Azure.Core
             {
                 throw new ArgumentNullException(nameof(content));
             }
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Value cannot be empty or contain only white-space characters.", nameof(name));
+            }
+            if (fileName is null)
+            {
+                throw new ArgumentNullException(nameof(fileName));
             }
             if (string.IsNullOrWhiteSpace(fileName))
             {
