@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 return null;
             }
-            Optional<DevCenterHealthCheckStatus> status = default;
-            Optional<string> displayName = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<string> errorType = default;
-            Optional<string> recommendedAction = default;
-            Optional<string> additionalDetails = default;
+            DevCenterHealthCheckStatus? status = default;
+            string displayName = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            string errorType = default;
+            string recommendedAction = default;
+            string additionalDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DevCenterHealthCheck(
-                Optional.ToNullable(status),
-                displayName.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(endDateTime),
-                errorType.Value,
-                recommendedAction.Value,
-                additionalDetails.Value,
+                status,
+                displayName,
+                startDateTime,
+                endDateTime,
+                errorType,
+                recommendedAction,
+                additionalDetails,
                 serializedAdditionalRawData);
         }
 

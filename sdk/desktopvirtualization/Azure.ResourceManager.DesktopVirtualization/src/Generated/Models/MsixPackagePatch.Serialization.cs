@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isActive = default;
-            Optional<bool> isRegularRegistration = default;
-            Optional<string> displayName = default;
+            SystemData systemData = default;
+            bool? isActive = default;
+            bool? isRegularRegistration = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(isActive),
-                Optional.ToNullable(isRegularRegistration),
-                displayName.Value,
+                systemData,
+                isActive,
+                isRegularRegistration,
+                displayName,
                 serializedAdditionalRawData);
         }
 

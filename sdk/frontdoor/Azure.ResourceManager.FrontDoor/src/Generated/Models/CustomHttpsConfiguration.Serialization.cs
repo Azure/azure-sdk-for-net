@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             FrontDoorCertificateSource certificateSource = default;
             FrontDoorTlsProtocolType protocolType = default;
             FrontDoorRequiredMinimumTlsVersion minimumTlsVersion = default;
-            Optional<FrontDoorEndpointConnectionCertificateType> certificateType = default;
-            Optional<WritableSubResource> vault = default;
-            Optional<string> secretName = default;
-            Optional<string> secretVersion = default;
+            FrontDoorEndpointConnectionCertificateType? certificateType = default;
+            WritableSubResource vault = default;
+            string secretName = default;
+            string secretVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 certificateSource,
                 protocolType,
                 minimumTlsVersion,
-                Optional.ToNullable(certificateType),
+                certificateType,
                 vault,
-                secretName.Value,
-                secretVersion.Value,
+                secretName,
+                secretVersion,
                 serializedAdditionalRawData);
         }
 

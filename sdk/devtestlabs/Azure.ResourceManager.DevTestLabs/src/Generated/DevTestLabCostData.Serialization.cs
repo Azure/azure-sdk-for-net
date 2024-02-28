@@ -167,17 +167,17 @@ namespace Azure.ResourceManager.DevTestLabs
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevTestLabTargetCost> targetCost = default;
-            Optional<LabCostSummaryProperties> labCostSummary = default;
+            SystemData systemData = default;
+            DevTestLabTargetCost targetCost = default;
+            LabCostSummaryProperties labCostSummary = default;
             IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
             IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
-            Optional<string> currencyCode = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> endDateTime = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<string> provisioningState = default;
-            Optional<Guid> uniqueIdentifier = default;
+            string currencyCode = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? createdDate = default;
+            string provisioningState = default;
+            Guid? uniqueIdentifier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -339,19 +339,19 @@ namespace Azure.ResourceManager.DevTestLabs
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost.Value,
-                labCostSummary.Value,
+                targetCost,
+                labCostSummary,
                 labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(),
                 resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(),
-                currencyCode.Value,
-                Optional.ToNullable(startDateTime),
-                Optional.ToNullable(endDateTime),
-                Optional.ToNullable(createdDate),
-                provisioningState.Value,
-                Optional.ToNullable(uniqueIdentifier),
+                currencyCode,
+                startDateTime,
+                endDateTime,
+                createdDate,
+                provisioningState,
+                uniqueIdentifier,
                 serializedAdditionalRawData);
         }
 

@@ -22,15 +22,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<int> priority = default;
+            int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> attachedWorkerSelectors = default;
             IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors = default;
-            Optional<string> queueId = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("priority"u8))
@@ -120,13 +120,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterJobQueuedEventData(
-                jobId.Value,
-                channelReference.Value,
-                channelId.Value,
-                queueId.Value,
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(priority),
+                priority,
                 attachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
                 requestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }

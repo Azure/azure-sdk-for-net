@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<SaasSubscriptionDetails> saasSubscriptionDetails = default;
-            Optional<MarketplaceTrialQuota> marketplaceTrialQuota = default;
+            SaasSubscriptionDetails saasSubscriptionDetails = default;
+            MarketplaceTrialQuota marketplaceTrialQuota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnterpriseDetails(saasSubscriptionDetails.Value, marketplaceTrialQuota.Value, serializedAdditionalRawData);
+            return new EnterpriseDetails(saasSubscriptionDetails, marketplaceTrialQuota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnterpriseDetails>.Write(ModelReaderWriterOptions options)

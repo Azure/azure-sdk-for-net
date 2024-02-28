@@ -142,14 +142,14 @@ namespace Azure.ResourceManager.FrontDoor
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<FrontDoorExperimentEndpointProperties> endpointA = default;
-            Optional<FrontDoorExperimentEndpointProperties> endpointB = default;
-            Optional<FrontDoorExperimentState> enabledState = default;
-            Optional<NetworkExperimentResourceState> resourceState = default;
-            Optional<string> status = default;
-            Optional<Uri> scriptFileUri = default;
+            SystemData systemData = default;
+            string description = default;
+            FrontDoorExperimentEndpointProperties endpointA = default;
+            FrontDoorExperimentEndpointProperties endpointB = default;
+            FrontDoorExperimentState? enabledState = default;
+            NetworkExperimentResourceState? resourceState = default;
+            string status = default;
+            Uri scriptFileUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,16 +274,16 @@ namespace Azure.ResourceManager.FrontDoor
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                description.Value,
-                endpointA.Value,
-                endpointB.Value,
-                Optional.ToNullable(enabledState),
-                Optional.ToNullable(resourceState),
-                status.Value,
-                scriptFileUri.Value,
+                description,
+                endpointA,
+                endpointB,
+                enabledState,
+                resourceState,
+                status,
+                scriptFileUri,
                 serializedAdditionalRawData);
         }
 

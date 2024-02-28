@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.EventHubs
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> updatedAtUtc = default;
-            Optional<DateTimeOffset> createdAtUtc = default;
-            Optional<ETag> eTag = default;
+            SystemData systemData = default;
+            DateTimeOffset? updatedAtUtc = default;
+            DateTimeOffset? createdAtUtc = default;
+            ETag? eTag = default;
             IDictionary<string, string> groupProperties = default;
-            Optional<EventHubsSchemaCompatibility> schemaCompatibility = default;
-            Optional<EventHubsSchemaType> schemaType = default;
+            EventHubsSchemaCompatibility? schemaCompatibility = default;
+            EventHubsSchemaType? schemaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.EventHubs
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(updatedAtUtc),
-                Optional.ToNullable(createdAtUtc),
-                Optional.ToNullable(eTag),
+                systemData,
+                updatedAtUtc,
+                createdAtUtc,
+                eTag,
                 groupProperties ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(schemaCompatibility),
-                Optional.ToNullable(schemaType),
-                Optional.ToNullable(location),
+                schemaCompatibility,
+                schemaType,
+                location,
                 serializedAdditionalRawData);
         }
 

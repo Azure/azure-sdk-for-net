@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             IList<string> groupIds = default;
-            Optional<string> requestMessage = default;
+            string requestMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkServiceConnection(name.Value, groupIds ?? new ChangeTrackingList<string>(), requestMessage.Value, serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkServiceConnection(name, groupIds ?? new ChangeTrackingList<string>(), requestMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)

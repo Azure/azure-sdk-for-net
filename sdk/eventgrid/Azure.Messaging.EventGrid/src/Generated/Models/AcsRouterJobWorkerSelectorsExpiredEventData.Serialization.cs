@@ -24,12 +24,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default;
             IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default;
-            Optional<string> queueId = default;
+            string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
-            Optional<string> jobId = default;
-            Optional<string> channelReference = default;
-            Optional<string> channelId = default;
+            string jobId = default;
+            string channelReference = default;
+            string channelId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expiredRequestedWorkerSelectors"u8))
@@ -110,10 +110,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             return new AcsRouterJobWorkerSelectorsExpiredEventData(
-                jobId.Value,
-                channelReference.Value,
-                channelId.Value,
-                queueId.Value,
+                jobId,
+                channelReference,
+                channelId,
+                queueId,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 expiredRequestedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>(),
