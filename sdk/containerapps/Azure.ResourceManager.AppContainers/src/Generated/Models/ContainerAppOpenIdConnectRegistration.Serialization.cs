@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<ContainerAppOpenIdConnectClientCredential> clientCredential = default;
-            Optional<ContainerAppOpenIdConnectConfig> openIdConnectConfiguration = default;
+            string clientId = default;
+            ContainerAppOpenIdConnectClientCredential clientCredential = default;
+            ContainerAppOpenIdConnectConfig openIdConnectConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppOpenIdConnectRegistration(clientId.Value, clientCredential.Value, openIdConnectConfiguration.Value, serializedAdditionalRawData);
+            return new ContainerAppOpenIdConnectRegistration(clientId, clientCredential, openIdConnectConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppOpenIdConnectRegistration>.Write(ModelReaderWriterOptions options)

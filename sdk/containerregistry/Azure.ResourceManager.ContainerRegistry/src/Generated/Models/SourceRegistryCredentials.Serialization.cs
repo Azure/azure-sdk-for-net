@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryLoginMode> loginMode = default;
+            SourceRegistryLoginMode? loginMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceRegistryCredentials(Optional.ToNullable(loginMode), serializedAdditionalRawData);
+            return new SourceRegistryCredentials(loginMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceRegistryCredentials>.Write(ModelReaderWriterOptions options)

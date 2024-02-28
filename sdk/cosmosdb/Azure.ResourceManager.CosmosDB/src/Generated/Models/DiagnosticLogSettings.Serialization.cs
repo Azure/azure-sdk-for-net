@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<EnableFullTextQuery> enableFullTextQuery = default;
+            EnableFullTextQuery? enableFullTextQuery = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticLogSettings(Optional.ToNullable(enableFullTextQuery), serializedAdditionalRawData);
+            return new DiagnosticLogSettings(enableFullTextQuery, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticLogSettings>.Write(ModelReaderWriterOptions options)

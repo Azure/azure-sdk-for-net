@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<string> startedOn = default;
+            string startedOn = default;
             IList<string> selectedLogins = default;
             IList<string> selectedAgentJobs = default;
-            Optional<FileShare> backupFileShare = default;
+            FileShare backupFileShare = default;
             BlobShare backupBlobShare = default;
-            Optional<BackupMode> backupMode = default;
-            Optional<string> aadDomainName = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            BackupMode? backupMode = default;
+            string aadDomainName = default;
+            string encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 targetConnectionInfo,
                 serializedAdditionalRawData,
                 selectedDatabases,
-                startedOn.Value,
+                startedOn,
                 selectedLogins ?? new ChangeTrackingList<string>(),
                 selectedAgentJobs ?? new ChangeTrackingList<string>(),
-                backupFileShare.Value,
+                backupFileShare,
                 backupBlobShare,
-                Optional.ToNullable(backupMode),
-                aadDomainName.Value,
-                encryptedKeyForSecureFields.Value);
+                backupMode,
+                aadDomainName,
+                encryptedKeyForSecureFields);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)

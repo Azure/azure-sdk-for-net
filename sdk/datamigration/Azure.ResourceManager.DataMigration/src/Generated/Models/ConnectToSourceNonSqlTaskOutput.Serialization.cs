@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<ServerProperties> serverProperties = default;
+            string id = default;
+            string sourceServerBrandVersion = default;
+            ServerProperties serverProperties = default;
             IReadOnlyList<string> databases = default;
             IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ConnectToSourceNonSqlTaskOutput(
-                id.Value,
-                sourceServerBrandVersion.Value,
-                serverProperties.Value,
+                id,
+                sourceServerBrandVersion,
+                serverProperties,
                 databases ?? new ChangeTrackingList<string>(),
                 validationErrors ?? new ChangeTrackingList<ReportableException>(),
                 serializedAdditionalRawData);

@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             ResourceIdentifier policyId = default;
-            Optional<string> policyVersion = default;
-            Optional<BackupInstancePolicySettings> policyParameters = default;
+            string policyVersion = default;
+            BackupInstancePolicySettings policyParameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupInstancePolicyInfo(policyId, policyVersion.Value, policyParameters.Value, serializedAdditionalRawData);
+            return new BackupInstancePolicyInfo(policyId, policyVersion, policyParameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupInstancePolicyInfo>.Write(ModelReaderWriterOptions options)

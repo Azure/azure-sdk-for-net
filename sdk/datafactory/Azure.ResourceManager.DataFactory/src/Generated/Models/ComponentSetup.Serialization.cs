@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string type = default;
             string componentName = default;
-            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
+            DataFactorySecretBaseDefinition licenseKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

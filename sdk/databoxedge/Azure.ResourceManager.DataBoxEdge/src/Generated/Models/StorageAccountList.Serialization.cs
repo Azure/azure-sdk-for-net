@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 return null;
             }
             IReadOnlyList<DataBoxEdgeStorageAccountData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountList(value ?? new ChangeTrackingList<DataBoxEdgeStorageAccountData>(), nextLink.Value, serializedAdditionalRawData);
+            return new StorageAccountList(value ?? new ChangeTrackingList<DataBoxEdgeStorageAccountData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountList>.Write(ModelReaderWriterOptions options)

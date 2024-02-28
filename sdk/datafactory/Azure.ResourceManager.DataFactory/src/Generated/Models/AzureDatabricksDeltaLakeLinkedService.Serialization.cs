@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> domain = default;
-            Optional<DataFactorySecretBaseDefinition> accessToken = default;
-            Optional<DataFactoryElement<string>> clusterId = default;
-            Optional<string> encryptedCredential = default;
-            Optional<DataFactoryCredentialReference> credential = default;
-            Optional<DataFactoryElement<string>> workspaceResourceId = default;
+            DataFactorySecretBaseDefinition accessToken = default;
+            DataFactoryElement<string> clusterId = default;
+            string encryptedCredential = default;
+            DataFactoryCredentialReference credential = default;
+            DataFactoryElement<string> workspaceResourceId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,17 +269,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureDatabricksDeltaLakeLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 domain,
                 accessToken,
-                clusterId.Value,
-                encryptedCredential.Value,
-                credential.Value,
-                workspaceResourceId.Value);
+                clusterId,
+                encryptedCredential,
+                credential,
+                workspaceResourceId);
         }
 
         BinaryData IPersistableModel<AzureDatabricksDeltaLakeLinkedService>.Write(ModelReaderWriterOptions options)

@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             string diskId = default;
-            Optional<int> lun = default;
+            int? lun = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataDisksToAttach(diskId, Optional.ToNullable(lun), serializedAdditionalRawData);
+            return new DataDisksToAttach(diskId, lun, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataDisksToAttach>.Write(ModelReaderWriterOptions options)

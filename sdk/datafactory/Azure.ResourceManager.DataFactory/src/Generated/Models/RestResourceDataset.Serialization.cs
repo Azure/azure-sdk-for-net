@@ -184,16 +184,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
-            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<DataFactoryElement<string>> relativeUrl = default;
-            Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> requestBody = default;
+            DatasetFolder folder = default;
+            DataFactoryElement<string> relativeUrl = default;
+            DataFactoryElement<string> requestMethod = default;
+            DataFactoryElement<string> requestBody = default;
             IDictionary<string, BinaryData> additionalHeaders = default;
             IDictionary<string, BinaryData> paginationRules = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -363,17 +363,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RestResourceDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                relativeUrl.Value,
-                requestMethod.Value,
-                requestBody.Value,
+                relativeUrl,
+                requestMethod,
+                requestBody,
                 additionalHeaders ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 paginationRules ?? new ChangeTrackingDictionary<string, BinaryData>());
         }

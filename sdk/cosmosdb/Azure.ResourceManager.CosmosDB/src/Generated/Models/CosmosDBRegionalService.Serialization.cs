@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<CosmosDBServiceStatus> status = default;
+            string name = default;
+            AzureLocation? location = default;
+            CosmosDBServiceStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBRegionalService(name.Value, Optional.ToNullable(location), Optional.ToNullable(status), serializedAdditionalRawData);
+            return new CosmosDBRegionalService(name, location, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBRegionalService>.Write(ModelReaderWriterOptions options)

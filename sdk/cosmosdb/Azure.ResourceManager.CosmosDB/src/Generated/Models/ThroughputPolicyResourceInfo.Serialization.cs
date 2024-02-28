@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<bool> isEnabled = default;
-            Optional<int> incrementPercent = default;
+            bool? isEnabled = default;
+            int? incrementPercent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPolicyResourceInfo(Optional.ToNullable(isEnabled), Optional.ToNullable(incrementPercent), serializedAdditionalRawData);
+            return new ThroughputPolicyResourceInfo(isEnabled, incrementPercent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThroughputPolicyResourceInfo>.Write(ModelReaderWriterOptions options)

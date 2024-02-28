@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> name = default;
-            Optional<DataFactoryElement<string>> type = default;
+            DataFactoryElement<string> name = default;
+            DataFactoryElement<string> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatasetDataElement(name.Value, type.Value, serializedAdditionalRawData);
+            return new DatasetDataElement(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatasetDataElement>.Write(ModelReaderWriterOptions options)

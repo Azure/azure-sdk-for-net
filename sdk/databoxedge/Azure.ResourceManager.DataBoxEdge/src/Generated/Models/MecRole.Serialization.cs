@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AsymmetricEncryptedSecret> connectionString = default;
-            Optional<string> controllerEndpoint = default;
-            Optional<string> resourceUniqueId = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            AsymmetricEncryptedSecret connectionString = default;
+            string controllerEndpoint = default;
+            string resourceUniqueId = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                connectionString.Value,
-                controllerEndpoint.Value,
-                resourceUniqueId.Value,
-                Optional.ToNullable(roleStatus));
+                connectionString,
+                controllerEndpoint,
+                resourceUniqueId,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<MecRole>.Write(ModelReaderWriterOptions options)

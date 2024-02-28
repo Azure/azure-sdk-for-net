@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> precedence = default;
-            Optional<string> name = default;
-            Optional<DataSourceType> dataSourceType = default;
-            Optional<Status> status = default;
-            Optional<int> id = default;
-            Optional<string> dataSourceReferenceId = default;
+            int? precedence = default;
+            string name = default;
+            DataSourceType? dataSourceType = default;
+            Status? status = default;
+            int? id = default;
+            string dataSourceReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,12 +172,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new DataSourcePrecedence(
-                Optional.ToNullable(precedence),
-                name.Value,
-                Optional.ToNullable(dataSourceType),
-                Optional.ToNullable(status),
-                Optional.ToNullable(id),
-                dataSourceReferenceId.Value,
+                precedence,
+                name,
+                dataSourceType,
+                status,
+                id,
+                dataSourceReferenceId,
                 serializedAdditionalRawData);
         }
 

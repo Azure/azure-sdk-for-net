@@ -148,20 +148,20 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ContainerAppJobProvisioningState> provisioningState = default;
-            Optional<string> environmentId = default;
-            Optional<string> workloadProfileName = default;
-            Optional<ContainerAppJobConfiguration> configuration = default;
-            Optional<ContainerAppJobTemplate> template = default;
+            SystemData systemData = default;
+            ContainerAppJobProvisioningState? provisioningState = default;
+            string environmentId = default;
+            string workloadProfileName = default;
+            ContainerAppJobConfiguration configuration = default;
+            ContainerAppJobTemplate template = default;
             IReadOnlyList<string> outboundIPAddresses = default;
-            Optional<string> eventStreamEndpoint = default;
+            string eventStreamEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -297,17 +297,17 @@ namespace Azure.ResourceManager.AppContainers
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(provisioningState),
-                environmentId.Value,
-                workloadProfileName.Value,
-                configuration.Value,
-                template.Value,
+                provisioningState,
+                environmentId,
+                workloadProfileName,
+                configuration,
+                template,
                 outboundIPAddresses ?? new ChangeTrackingList<string>(),
-                eventStreamEndpoint.Value,
+                eventStreamEndpoint,
                 serializedAdditionalRawData);
         }
 

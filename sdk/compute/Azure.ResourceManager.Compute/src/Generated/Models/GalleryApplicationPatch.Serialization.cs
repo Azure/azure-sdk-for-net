@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.Compute.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<SupportedOperatingSystemType> supportedOSType = default;
+            SystemData systemData = default;
+            string description = default;
+            string eula = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
+            DateTimeOffset? endOfLifeDate = default;
+            SupportedOperatingSystemType? supportedOSType = default;
             IList<GalleryApplicationCustomAction> customActions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -275,13 +275,13 @@ namespace Azure.ResourceManager.Compute.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                eula.Value,
-                privacyStatementUri.Value,
-                releaseNoteUri.Value,
-                Optional.ToNullable(endOfLifeDate),
-                Optional.ToNullable(supportedOSType),
+                systemData,
+                description,
+                eula,
+                privacyStatementUri,
+                releaseNoteUri,
+                endOfLifeDate,
+                supportedOSType,
                 customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

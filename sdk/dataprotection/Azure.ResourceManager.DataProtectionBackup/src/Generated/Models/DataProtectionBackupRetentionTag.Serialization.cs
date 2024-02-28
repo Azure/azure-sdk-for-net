@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
-            Optional<string> id = default;
+            ETag? eTag = default;
+            string id = default;
             string tagName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionBackupRetentionTag(Optional.ToNullable(eTag), id.Value, tagName, serializedAdditionalRawData);
+            return new DataProtectionBackupRetentionTag(eTag, id, tagName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionBackupRetentionTag>.Write(ModelReaderWriterOptions options)

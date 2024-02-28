@@ -171,22 +171,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryElement<string> command = default;
-            Optional<DataFactoryLinkedServiceReference> resourceLinkedService = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<CustomActivityReferenceObject> referenceObjects = default;
+            DataFactoryLinkedServiceReference resourceLinkedService = default;
+            DataFactoryElement<string> folderPath = default;
+            CustomActivityReferenceObject referenceObjects = default;
             IDictionary<string, BinaryData> extendedProperties = default;
-            Optional<BinaryData> retentionTimeInDays = default;
-            Optional<DataFactoryElement<string>> autoUserSpecification = default;
+            BinaryData retentionTimeInDays = default;
+            DataFactoryElement<string> autoUserSpecification = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -359,21 +359,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new CustomActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy.Value,
+                policy,
                 command,
                 resourceLinkedService,
-                folderPath.Value,
-                referenceObjects.Value,
+                folderPath,
+                referenceObjects,
                 extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                retentionTimeInDays.Value,
-                autoUserSpecification.Value);
+                retentionTimeInDays,
+                autoUserSpecification);
         }
 
         BinaryData IPersistableModel<CustomActivity>.Write(ModelReaderWriterOptions options)

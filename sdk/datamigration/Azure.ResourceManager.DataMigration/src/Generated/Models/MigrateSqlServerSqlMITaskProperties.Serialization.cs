@@ -137,15 +137,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrateSqlServerSqlMITaskInput> input = default;
+            MigrateSqlServerSqlMITaskInput input = default;
             IReadOnlyList<MigrateSqlServerSqlMITaskOutput> output = default;
-            Optional<string> taskId = default;
-            Optional<string> createdOn = default;
-            Optional<string> parentTaskId = default;
-            Optional<bool> isCloneable = default;
+            string taskId = default;
+            string createdOn = default;
+            string parentTaskId = default;
+            bool? isCloneable = default;
             TaskType taskType = default;
             IReadOnlyList<ODataError> errors = default;
-            Optional<TaskState> state = default;
+            TaskState? state = default;
             IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -264,16 +264,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMITaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<ODataError>(),
-                Optional.ToNullable(state),
+                state,
                 commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                input.Value,
+                input,
                 output ?? new ChangeTrackingList<MigrateSqlServerSqlMITaskOutput>(),
-                taskId.Value,
-                createdOn.Value,
-                parentTaskId.Value,
-                Optional.ToNullable(isCloneable));
+                taskId,
+                createdOn,
+                parentTaskId,
+                isCloneable);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskProperties>.Write(ModelReaderWriterOptions options)

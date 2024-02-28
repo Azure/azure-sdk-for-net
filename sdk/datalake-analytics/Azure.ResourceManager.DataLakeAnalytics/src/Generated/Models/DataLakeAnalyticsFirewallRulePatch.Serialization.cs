@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             {
                 return null;
             }
-            Optional<IPAddress> startIPAddress = default;
-            Optional<IPAddress> endIPAddress = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsFirewallRulePatch(startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new DataLakeAnalyticsFirewallRulePatch(startIPAddress, endIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsFirewallRulePatch>.Write(ModelReaderWriterOptions options)

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<string> entityType = default;
-            Optional<string> entityTypeName = default;
-            Optional<string> relativePath = default;
+            string entityType = default;
+            string entityTypeName = default;
+            string relativePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetImageUploadUrlInput(entityType.Value, entityTypeName.Value, relativePath.Value, serializedAdditionalRawData);
+            return new GetImageUploadUrlInput(entityType, entityTypeName, relativePath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetImageUploadUrlInput>.Write(ModelReaderWriterOptions options)

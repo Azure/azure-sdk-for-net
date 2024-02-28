@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<long> folderId = default;
-            Optional<long> projectVersion = default;
-            Optional<long> projectId = default;
+            long? folderId = default;
+            long? projectVersion = default;
+            long? projectId = default;
             IReadOnlyList<SsisParameterInfo> parameters = default;
             SsisObjectMetadataType type = default;
-            Optional<long> id = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
+            long? id = default;
+            string name = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,13 +191,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SsisPackage(
                 type,
-                Optional.ToNullable(id),
-                name.Value,
-                description.Value,
+                id,
+                name,
+                description,
                 serializedAdditionalRawData,
-                Optional.ToNullable(folderId),
-                Optional.ToNullable(projectVersion),
-                Optional.ToNullable(projectId),
+                folderId,
+                projectVersion,
+                projectId,
                 parameters ?? new ChangeTrackingList<SsisParameterInfo>());
         }
 

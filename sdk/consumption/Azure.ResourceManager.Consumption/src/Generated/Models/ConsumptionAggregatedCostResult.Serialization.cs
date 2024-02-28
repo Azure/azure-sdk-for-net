@@ -170,19 +170,19 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<string> currency = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? marketplaceCharges = default;
+            decimal? chargesBilledSeparately = default;
+            string currency = default;
             IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
             IReadOnlyList<string> includedSubscriptions = default;
             IReadOnlyList<string> excludedSubscriptions = default;
@@ -356,18 +356,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                billingPeriodId.Value,
-                Optional.ToNullable(usageStart),
-                Optional.ToNullable(usageEnd),
-                Optional.ToNullable(azureCharges),
-                Optional.ToNullable(marketplaceCharges),
-                Optional.ToNullable(chargesBilledSeparately),
-                currency.Value,
+                systemData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                marketplaceCharges,
+                chargesBilledSeparately,
+                currency,
                 children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
                 includedSubscriptions ?? new ChangeTrackingList<string>(),
                 excludedSubscriptions ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(etag),
+                etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

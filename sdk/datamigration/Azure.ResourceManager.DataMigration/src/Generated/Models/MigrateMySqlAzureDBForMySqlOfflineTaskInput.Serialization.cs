@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             MySqlConnectionInfo sourceConnectionInfo = default;
             MySqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases = default;
-            Optional<bool> makeSourceServerReadOnly = default;
-            Optional<DateTimeOffset> startedOn = default;
+            bool? makeSourceServerReadOnly = default;
+            DateTimeOffset? startedOn = default;
             IDictionary<string, string> optionalAgentSettings = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceConnectionInfo,
                 targetConnectionInfo,
                 selectedDatabases,
-                Optional.ToNullable(makeSourceServerReadOnly),
-                Optional.ToNullable(startedOn),
+                makeSourceServerReadOnly,
+                startedOn,
                 optionalAgentSettings ?? new ChangeTrackingDictionary<string, string>(),
-                encryptedKeyForSecureFields.Value,
+                encryptedKeyForSecureFields,
                 serializedAdditionalRawData);
         }
 

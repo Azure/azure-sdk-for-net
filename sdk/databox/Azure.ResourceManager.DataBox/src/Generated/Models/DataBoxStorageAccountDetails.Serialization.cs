@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             ResourceIdentifier storageAccountId = default;
             DataAccountType dataAccountType = default;
-            Optional<string> sharePassword = default;
+            string sharePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword.Value, serializedAdditionalRawData, storageAccountId);
+            return new DataBoxStorageAccountDetails(dataAccountType, sharePassword, serializedAdditionalRawData, storageAccountId);
         }
 
         BinaryData IPersistableModel<DataBoxStorageAccountDetails>.Write(ModelReaderWriterOptions options)

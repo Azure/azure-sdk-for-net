@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, string> description = default;
-            Optional<string> interactionType = default;
-            Optional<string> linkName = default;
+            string interactionType = default;
+            string linkName = default;
             IList<RelationshipLinkFieldMapping> mappings = default;
             IList<ParticipantProfilePropertyReference> profilePropertyReferences = default;
-            Optional<ProvisioningState> provisioningState = default;
+            ProvisioningState? provisioningState = default;
             IList<ParticipantProfilePropertyReference> relatedProfilePropertyReferences = default;
-            Optional<string> relationshipName = default;
-            Optional<string> relationshipGuidId = default;
-            Optional<Guid> tenantId = default;
+            string relationshipName = default;
+            string relationshipGuidId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -344,18 +344,18 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
-                interactionType.Value,
-                linkName.Value,
+                interactionType,
+                linkName,
                 mappings ?? new ChangeTrackingList<RelationshipLinkFieldMapping>(),
                 profilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 relatedProfilePropertyReferences ?? new ChangeTrackingList<ParticipantProfilePropertyReference>(),
-                relationshipName.Value,
-                relationshipGuidId.Value,
-                Optional.ToNullable(tenantId),
+                relationshipName,
+                relationshipGuidId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 

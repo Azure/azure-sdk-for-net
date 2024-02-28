@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> offset = default;
-            Optional<string> size = default;
+            string offset = default;
+            string size = default;
             DataFactoryTriggerReference referenceTrigger = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TumblingWindowTriggerDependencyReference(type, serializedAdditionalRawData, referenceTrigger, offset.Value, size.Value);
+            return new TumblingWindowTriggerDependencyReference(type, serializedAdditionalRawData, referenceTrigger, offset, size);
         }
 
         BinaryData IPersistableModel<TumblingWindowTriggerDependencyReference>.Write(ModelReaderWriterOptions options)
