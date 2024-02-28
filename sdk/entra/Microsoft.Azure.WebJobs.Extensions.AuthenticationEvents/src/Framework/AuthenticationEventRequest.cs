@@ -47,7 +47,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
-                    Response.MarkAsUnauthorized();
+                    // Set response as unauthorized when token is invalid
+                    Response.StatusCode = System.Net.HttpStatusCode.Unauthorized;
+                    Response.ReasonPhrase = string.Empty;
+                    Response.Body = string.Empty;
                 }
             }
             catch (Exception ex)

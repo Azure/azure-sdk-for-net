@@ -102,13 +102,5 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         {
             Helpers.ValidateGraph(this);
         }
-
-        /// <summary>Marking response as unauthorized.</summary>
-        internal void MarkAsUnauthorized()
-        {
-            StatusCode = System.Net.HttpStatusCode.Unauthorized;
-            ReasonPhrase = String.Empty;
-            Body = String.Empty;
-        }
     }
 }
