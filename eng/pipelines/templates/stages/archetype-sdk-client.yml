@@ -101,7 +101,7 @@ extends:
     stages:
       - stage: Build
         jobs:
-          - template: /eng/pipelines/templates/jobs/ci.yml
+          - template: /eng/pipelines/templates/jobs/ci.yml@self
             parameters:
               SDKType: ${{ parameters.SDKType }}
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -129,12 +129,12 @@ extends:
               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
         variables:
-          - template: ../variables/globals.yml
+          - template: ../variables/globals.yml@self
 
       # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
       - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
 
-        - template: archetype-net-release.yml
+        - template: archetype-net-release.yml@self
           parameters:
             SDKType: ${{ parameters.SDKType }}
             ServiceDirectory: ${{ parameters.ServiceDirectory }}

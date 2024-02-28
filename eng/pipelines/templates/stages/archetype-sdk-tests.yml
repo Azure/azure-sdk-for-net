@@ -144,9 +144,9 @@ extends:
             - stage: ${{ cloud.key }}
               dependsOn: []
               variables:
-                - template: ../variables/globals.yml
+                - template: ../variables/globals.yml@self
               jobs:
-                - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+                - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml@self
                   parameters:
                     SparseCheckoutPaths:
                       - sdk/${{ parameters.ServiceDirectory }}/**/*.json
