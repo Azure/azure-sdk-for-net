@@ -87,14 +87,22 @@ namespace Azure
         private static Response ReplaceWithDefaultIfNull(Response? response)
             => response ?? DefaultRawResponse;
 
-        // This nested type enables back-compatibility with the protected
-        // parameterless contructor on NullableResponse<T>.  It implements
-        // Response so that a non-null PipelineResponse can be passed to the
-        // base ClientResult<T> constructor to prevent an ArgumentNullException
-        // from being thrown. Any caller that accesses this Response via
-        // GetRawResponse on the NullableResponse<T> instance will get an
-        // exception saying that the derived type has been implemented
-        // incorrectly.
+        // This type exists because of the following reasons:
+        //   1. The base ClientResult constructor requires a non-null instance
+        //      of PipelineResponse.
+        //   2. NullableResponse<T> was GA'ed with a protected parameterless
+        //      default constructor before inheriting from the base
+        //      ClientResult class.
+        //   3. The new implementation of the default constructor must pass an
+        //      instance of this dummy type to the base constructor.
+        //
+        // Because the intent of NullableResponse<T> and Response<T> is to
+        // always return a Response value from GetRawResponse, it is incorrect
+        // for types derived from them to return null from GetRawResponse, and
+        // instances of this type should only be created when the derived type
+        // has been implemented incorrectly.  If an instance of this type is
+        // returned from GetRawResponse, callers who access its properties will
+        // get a NotSupportedException.
         private class DefaultResponse : Response
         {
             private readonly string ExceptionMessage = "Types derived from abstract NullableResponse<T> or Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
