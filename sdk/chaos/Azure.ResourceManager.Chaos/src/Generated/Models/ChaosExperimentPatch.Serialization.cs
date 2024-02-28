@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosExperimentPatch(identity, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ChaosExperimentPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChaosExperimentPatch>.Write(ModelReaderWriterOptions options)
