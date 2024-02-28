@@ -188,7 +188,7 @@ namespace Azure.Storage.Tests
         }
 
         [Test]
-        public void BadStreamMissingStreamFooter()
+        public void BadStreamWrongStreamFooter()
         {
             const int segmentLength = 256;
             Random r = new();
@@ -240,6 +240,20 @@ namespace Azure.Storage.Tests
                 new Span<byte>(encodedData, V1_0.StreamHeaderLength + V1_0.SegmentHeaderNumOffset, 2), 123);
 
             Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(encodedData));
+            Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
+        }
+
+        [Test]
+        public void BadStreamMissingExpectedStreamFooter()
+        {
+            byte[] originalData = new byte[1024];
+            new Random().NextBytes(originalData);
+            byte[] encodedData = StructuredMessageHelper.MakeEncodedData(originalData, 256, Flags.StorageCrc64);
+
+            byte[] brokenData = new byte[encodedData.Length - Crc64Length];
+            new Span<byte>(encodedData, 0, encodedData.Length - Crc64Length).CopyTo(brokenData);
+
+            Stream decodingStream = new StructuredMessageDecodingStream(new MemoryStream(brokenData));
             Assert.That(async () => await CopyStream(decodingStream, Stream.Null), Throws.InnerException.TypeOf<InvalidDataException>());
         }
 
