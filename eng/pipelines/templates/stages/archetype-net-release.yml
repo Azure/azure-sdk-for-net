@@ -93,7 +93,7 @@ stages:
                             pwsh: true
                             arguments: >
                               -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed" -Artifact ${{artifact.name}}
-                          condition: and(succeeded(),ne(${{ artifact.skipPublishPackage }}', 'true'))
+                          condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
                           displayName: Verify Package Installation
                         - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
                           parameters:
