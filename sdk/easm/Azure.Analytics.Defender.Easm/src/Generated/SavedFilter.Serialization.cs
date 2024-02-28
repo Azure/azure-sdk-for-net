@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -37,17 +37,17 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -90,11 +90,11 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> displayName = default;
-            Optional<string> filter = default;
-            Optional<string> description = default;
+            string displayName = default;
+            string filter = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavedFilter(id.Value, name, displayName.Value, filter.Value, description.Value, serializedAdditionalRawData);
+            return new SavedFilter(
+                id,
+                name,
+                displayName,
+                filter,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavedFilter>.Write(ModelReaderWriterOptions options)

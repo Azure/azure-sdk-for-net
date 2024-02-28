@@ -27,52 +27,52 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (UpdatedAt.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (Optional.IsDefined(MetricCategory))
+            if (MetricCategory != null)
             {
                 writer.WritePropertyName("metricCategory"u8);
                 writer.WriteStringValue(MetricCategory);
             }
-            if (Optional.IsDefined(Metric))
+            if (Metric != null)
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Optional.IsDefined(Filter))
+            if (Filter != null)
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Link))
+            if (Link != null)
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
             }
-            if (Optional.IsCollectionDefined(Children))
+            if (!(Children is ChangeTrackingList<AssetSummaryResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("children"u8);
                 writer.WriteStartArray();
@@ -120,16 +120,16 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> metricCategory = default;
-            Optional<string> metric = default;
-            Optional<string> filter = default;
-            Optional<string> labelName = default;
-            Optional<long> count = default;
-            Optional<string> link = default;
-            Optional<IReadOnlyList<AssetSummaryResult>> children = default;
+            string displayName = default;
+            string description = default;
+            DateTimeOffset? updatedAt = default;
+            string metricCategory = default;
+            string metric = default;
+            string filter = default;
+            string labelName = default;
+            long? count = default;
+            string link = default;
+            IReadOnlyList<AssetSummaryResult> children = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AssetSummaryResult> array = new List<AssetSummaryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAssetSummaryResult(item));
+                        array.Add(DeserializeAssetSummaryResult(item, options));
                     }
                     children = array;
                     continue;
@@ -207,7 +207,18 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetSummaryResult(displayName.Value, description.Value, Optional.ToNullable(updatedAt), metricCategory.Value, metric.Value, filter.Value, labelName.Value, Optional.ToNullable(count), link.Value, Optional.ToList(children), serializedAdditionalRawData);
+            return new AssetSummaryResult(
+                displayName,
+                description,
+                updatedAt,
+                metricCategory,
+                metric,
+                filter,
+                labelName,
+                count,
+                link,
+                children ?? new ChangeTrackingList<AssetSummaryResult>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetSummaryResult>.Write(ModelReaderWriterOptions options)

@@ -27,57 +27,57 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CountryCode))
+            if (CountryCode != null)
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (Optional.IsDefined(CountryName))
+            if (CountryName != null)
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (Optional.IsDefined(Region))
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(RegionName))
+            if (RegionName != null)
             {
                 writer.WritePropertyName("regionName"u8);
                 writer.WriteStringValue(RegionName);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(AreaCode))
+            if (AreaCode.HasValue)
             {
                 writer.WritePropertyName("areaCode"u8);
                 writer.WriteNumberValue(AreaCode.Value);
             }
-            if (Optional.IsDefined(PostalCode))
+            if (PostalCode != null)
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (Optional.IsDefined(Latitude))
+            if (Latitude.HasValue)
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (Optional.IsDefined(Longitude))
+            if (Longitude.HasValue)
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (Optional.IsDefined(DmaCode))
+            if (DmaCode.HasValue)
             {
                 writer.WritePropertyName("dmaCode"u8);
                 writer.WriteNumberValue(DmaCode.Value);
             }
-            if (Optional.IsDefined(MetroCodeId))
+            if (MetroCodeId.HasValue)
             {
                 writer.WritePropertyName("metroCodeId"u8);
                 writer.WriteNumberValue(MetroCodeId.Value);
@@ -120,17 +120,17 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> countryCode = default;
-            Optional<string> countryName = default;
-            Optional<string> region = default;
-            Optional<string> regionName = default;
-            Optional<string> city = default;
-            Optional<int> areaCode = default;
-            Optional<string> postalCode = default;
-            Optional<float> latitude = default;
-            Optional<float> longitude = default;
-            Optional<int> dmaCode = default;
-            Optional<int> metroCodeId = default;
+            string countryCode = default;
+            string countryName = default;
+            string region = default;
+            string regionName = default;
+            string city = default;
+            int? areaCode = default;
+            string postalCode = default;
+            float? latitude = default;
+            float? longitude = default;
+            int? dmaCode = default;
+            int? metroCodeId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,19 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObservedLocationDetails(countryCode.Value, countryName.Value, region.Value, regionName.Value, city.Value, Optional.ToNullable(areaCode), postalCode.Value, Optional.ToNullable(latitude), Optional.ToNullable(longitude), Optional.ToNullable(dmaCode), Optional.ToNullable(metroCodeId), serializedAdditionalRawData);
+            return new ObservedLocationDetails(
+                countryCode,
+                countryName,
+                region,
+                regionName,
+                city,
+                areaCode,
+                postalCode,
+                latitude,
+                longitude,
+                dmaCode,
+                metroCodeId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ObservedLocationDetails>.Write(ModelReaderWriterOptions options)

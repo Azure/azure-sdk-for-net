@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Type != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsCollectionDefined(RuleId))
+            if (!(RuleId is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStartArray();
@@ -52,22 +52,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(Cve))
+            if (!(Cve is ChangeTrackingList<CveDetails> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("cve"u8);
                 writer.WriteStartArray();
@@ -77,17 +77,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EndOfLife))
+            if (EndOfLife.HasValue)
             {
                 writer.WritePropertyName("endOfLife"u8);
                 writer.WriteNumberValue(EndOfLife.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsCollectionDefined(Ports))
+            if (!(Ports is ChangeTrackingList<PortDetails> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Service))
+            if (Service != null)
             {
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
@@ -150,19 +150,19 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> version = default;
-            Optional<IReadOnlyList<string>> ruleId = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<IReadOnlyList<CveDetails>> cve = default;
-            Optional<long> endOfLife = default;
-            Optional<bool> recent = default;
-            Optional<IReadOnlyList<PortDetails>> ports = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
-            Optional<string> service = default;
+            string name = default;
+            string type = default;
+            string version = default;
+            IReadOnlyList<string> ruleId = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            IReadOnlyList<CveDetails> cve = default;
+            long? endOfLife = default;
+            bool? recent = default;
+            IReadOnlyList<PortDetails> ports = default;
+            IReadOnlyList<SourceDetails> sources = default;
+            string service = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<CveDetails> array = new List<CveDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveDetails.DeserializeCveDetails(item));
+                        array.Add(CveDetails.DeserializeCveDetails(item, options));
                     }
                     cve = array;
                     continue;
@@ -264,7 +264,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<PortDetails> array = new List<PortDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortDetails.DeserializePortDetails(item));
+                        array.Add(PortDetails.DeserializePortDetails(item, options));
                     }
                     ports = array;
                     continue;
@@ -278,7 +278,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -294,7 +294,21 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebComponent(name.Value, type.Value, version.Value, Optional.ToList(ruleId), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(cve), Optional.ToNullable(endOfLife), Optional.ToNullable(recent), Optional.ToList(ports), Optional.ToList(sources), service.Value, serializedAdditionalRawData);
+            return new WebComponent(
+                name,
+                type,
+                version,
+                ruleId ?? new ChangeTrackingList<string>(),
+                firstSeen,
+                lastSeen,
+                count,
+                cve ?? new ChangeTrackingList<CveDetails>(),
+                endOfLife,
+                recent,
+                ports ?? new ChangeTrackingList<PortDetails>(),
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                service,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebComponent>.Write(ModelReaderWriterOptions options)

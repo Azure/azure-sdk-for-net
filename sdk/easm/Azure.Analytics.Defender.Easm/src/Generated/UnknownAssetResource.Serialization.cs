@@ -34,42 +34,42 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Uuid.HasValue)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (CreatedDate.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedDate))
+            if (UpdatedDate.HasValue)
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (ExternalId != null)
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Wildcard))
+            if (Wildcard.HasValue)
             {
                 writer.WritePropertyName("wildcard"u8);
                 writer.WriteBooleanValue(Wildcard.Value);
             }
-            if (Optional.IsDefined(DiscoGroupName))
+            if (DiscoGroupName != null)
             {
                 writer.WritePropertyName("discoGroupName"u8);
                 writer.WriteStringValue(DiscoGroupName);
             }
-            if (Optional.IsCollectionDefined(AuditTrail))
+            if (!(AuditTrail is ChangeTrackingList<AuditTrailItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("auditTrail"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAssetResource(document.RootElement, options);
+            return DeserializeAssetResource(document.RootElement, options);
         }
 
         internal static UnknownAssetResource DeserializeUnknownAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -144,18 +144,18 @@ namespace Azure.Analytics.Defender.Easm
             }
             string kind = "Unknown";
             string id = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<Guid> uuid = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> updatedDate = default;
-            Optional<AssetState> state = default;
-            Optional<string> externalId = default;
-            Optional<IReadOnlyList<string>> labels = default;
-            Optional<bool> wildcard = default;
-            Optional<string> discoGroupName = default;
-            Optional<IReadOnlyList<AuditTrailItem>> auditTrail = default;
-            Optional<string> reason = default;
+            string name = default;
+            string displayName = default;
+            Guid? uuid = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? updatedDate = default;
+            AssetState? state = default;
+            string externalId = default;
+            IReadOnlyList<string> labels = default;
+            bool? wildcard = default;
+            string discoGroupName = default;
+            IReadOnlyList<AuditTrailItem> auditTrail = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AuditTrailItem> array = new List<AuditTrailItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuditTrailItem.DeserializeAuditTrailItem(item));
+                        array.Add(AuditTrailItem.DeserializeAuditTrailItem(item, options));
                     }
                     auditTrail = array;
                     continue;
@@ -274,7 +274,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownAssetResource(kind, id, name.Value, displayName.Value, Optional.ToNullable(uuid), Optional.ToNullable(createdDate), Optional.ToNullable(updatedDate), Optional.ToNullable(state), externalId.Value, Optional.ToList(labels), Optional.ToNullable(wildcard), discoGroupName.Value, Optional.ToList(auditTrail), reason.Value, serializedAdditionalRawData);
+            return new UnknownAssetResource(
+                kind,
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels ?? new ChangeTrackingList<string>(),
+                wildcard,
+                discoGroupName,
+                auditTrail ?? new ChangeTrackingList<AuditTrailItem>(),
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetResource>.Write(ModelReaderWriterOptions options)
@@ -299,7 +314,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAssetResource(document.RootElement, options);
+                        return DeserializeAssetResource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AssetResource)} does not support '{options.Format}' format.");

@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalElements))
+            if (TotalElements.HasValue)
             {
                 writer.WritePropertyName("totalElements"u8);
                 writer.WriteNumberValue(TotalElements.Value);
             }
-            if (Optional.IsDefined(Mark))
+            if (Mark != null)
             {
                 writer.WritePropertyName("mark"u8);
                 writer.WriteStringValue(Mark);
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AssetResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -90,10 +90,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<long> totalElements = default;
-            Optional<string> mark = default;
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<AssetResource>> value = default;
+            long? totalElements = default;
+            string mark = default;
+            string nextLink = default;
+            IReadOnlyList<AssetResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AssetResource> array = new List<AssetResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetResource.DeserializeAssetResource(item));
+                        array.Add(AssetResource.DeserializeAssetResource(item, options));
                     }
                     value = array;
                     continue;
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetPageResult(Optional.ToNullable(totalElements), mark.Value, nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new AssetPageResult(totalElements, mark, nextLink, value ?? new ChangeTrackingList<AssetResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetPageResult>.Write(ModelReaderWriterOptions options)

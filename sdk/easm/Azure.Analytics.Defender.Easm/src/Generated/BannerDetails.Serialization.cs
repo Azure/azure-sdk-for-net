@@ -27,52 +27,52 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(BannerName))
+            if (BannerName != null)
             {
                 writer.WritePropertyName("banner"u8);
                 writer.WriteStringValue(BannerName);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(ScanType))
+            if (ScanType != null)
             {
                 writer.WritePropertyName("scanType"u8);
                 writer.WriteStringValue(ScanType);
             }
-            if (Optional.IsDefined(BannerMetadata))
+            if (BannerMetadata != null)
             {
                 writer.WritePropertyName("bannerMetadata"u8);
                 writer.WriteStringValue(BannerMetadata);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsDefined(Sha256))
+            if (Sha256 != null)
             {
                 writer.WritePropertyName("sha256"u8);
                 writer.WriteStringValue(Sha256);
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -120,16 +120,16 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<string> banner = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<string> scanType = default;
-            Optional<string> bannerMetadata = default;
-            Optional<bool> recent = default;
-            Optional<string> sha256 = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            int? port = default;
+            string banner = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            string scanType = default;
+            string bannerMetadata = default;
+            bool? recent = default;
+            string sha256 = default;
+            IReadOnlyList<SourceDetails> sources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -219,7 +219,18 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BannerDetails(Optional.ToNullable(port), banner.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), scanType.Value, bannerMetadata.Value, Optional.ToNullable(recent), sha256.Value, Optional.ToList(sources), serializedAdditionalRawData);
+            return new BannerDetails(
+                port,
+                banner,
+                firstSeen,
+                lastSeen,
+                count,
+                scanType,
+                bannerMetadata,
+                recent,
+                sha256,
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BannerDetails>.Write(ModelReaderWriterOptions options)

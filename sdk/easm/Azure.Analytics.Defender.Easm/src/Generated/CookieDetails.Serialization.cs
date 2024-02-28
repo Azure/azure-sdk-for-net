@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CookieName))
+            if (CookieName != null)
             {
                 writer.WritePropertyName("cookieName"u8);
                 writer.WriteStringValue(CookieName);
             }
-            if (Optional.IsDefined(CookieDomain))
+            if (CookieDomain != null)
             {
                 writer.WritePropertyName("cookieDomain"u8);
                 writer.WriteStringValue(CookieDomain);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsDefined(CookieExpiryDate))
+            if (CookieExpiryDate.HasValue)
             {
                 writer.WritePropertyName("cookieExpiryDate"u8);
                 writer.WriteStringValue(CookieExpiryDate.Value, "O");
@@ -100,13 +100,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> cookieName = default;
-            Optional<string> cookieDomain = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
-            Optional<DateTimeOffset> cookieExpiryDate = default;
+            string cookieName = default;
+            string cookieDomain = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
+            DateTimeOffset? cookieExpiryDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,15 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CookieDetails(cookieName.Value, cookieDomain.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), Optional.ToNullable(cookieExpiryDate), serializedAdditionalRawData);
+            return new CookieDetails(
+                cookieName,
+                cookieDomain,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                cookieExpiryDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CookieDetails>.Write(ModelReaderWriterOptions options)

@@ -27,32 +27,32 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AlexaRank))
+            if (AlexaRank.HasValue)
             {
                 writer.WritePropertyName("alexaRank"u8);
                 writer.WriteNumberValue(AlexaRank.Value);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -95,12 +95,12 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<long> alexaRank = default;
-            Optional<string> category = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
+            long? alexaRank = default;
+            string category = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlexaInfo(Optional.ToNullable(alexaRank), category.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), serializedAdditionalRawData);
+            return new AlexaInfo(
+                alexaRank,
+                category,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlexaInfo>.Write(ModelReaderWriterOptions options)

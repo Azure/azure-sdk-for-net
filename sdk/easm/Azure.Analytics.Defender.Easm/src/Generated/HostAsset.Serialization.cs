@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (!(IpAddresses is ChangeTrackingList<ObservedString> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(WebComponents))
+            if (!(WebComponents is ChangeTrackingList<WebComponent> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<ObservedHeader> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Attributes))
+            if (!(Attributes is ChangeTrackingList<AttributeDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("attributes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Cookies))
+            if (!(Cookies is ChangeTrackingList<CookieDetails> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("cookies"u8);
                 writer.WriteStartArray();
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslCerts))
+            if (!(SslCerts is ChangeTrackingList<SslCertAsset> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ParentHosts))
+            if (!(ParentHosts is ChangeTrackingList<ObservedString> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("parentHosts"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ChildHosts))
+            if (!(ChildHosts is ChangeTrackingList<ObservedString> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("childHosts"u8);
                 writer.WriteStartArray();
@@ -117,12 +117,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HostCore))
+            if (HostCore != null)
             {
                 writer.WritePropertyName("hostCore"u8);
                 writer.WriteObjectValue(HostCore);
             }
-            if (Optional.IsCollectionDefined(Services))
+            if (!(Services is ChangeTrackingList<AssetService> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("services"u8);
                 writer.WriteStartArray();
@@ -132,7 +132,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Cnames))
+            if (!(Cnames is ChangeTrackingList<ObservedString> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("cnames"u8);
                 writer.WriteStartArray();
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -152,22 +152,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(ResourceUrls))
+            if (!(ResourceUrls is ChangeTrackingList<ResourceUri> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("resourceUrls"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ScanMetadata))
+            if (!(ScanMetadata is ChangeTrackingList<ScanMetadata> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("scanMetadata"u8);
                 writer.WriteStartArray();
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Asns))
+            if (!(Asns is ChangeTrackingList<ObservedLong> collection12 && collection12.IsUndefined))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpBlocks))
+            if (!(IpBlocks is ChangeTrackingList<IpBlock> collection13 && collection13.IsUndefined))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ResponseBodies))
+            if (!(ResponseBodies is ChangeTrackingList<ObservedString> collection14 && collection14.IsUndefined))
             {
                 writer.WritePropertyName("responseBodies"u8);
                 writer.WriteStartArray();
@@ -217,12 +217,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DomainAsset))
+            if (DomainAsset != null)
             {
                 writer.WritePropertyName("domainAsset"u8);
                 writer.WriteObjectValue(DomainAsset);
             }
-            if (Optional.IsCollectionDefined(NsRecord))
+            if (!(NsRecord is ChangeTrackingList<ObservedBoolean> collection15 && collection15.IsUndefined))
             {
                 writer.WritePropertyName("nsRecord"u8);
                 writer.WriteStartArray();
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MxRecord))
+            if (!(MxRecord is ChangeTrackingList<ObservedBoolean> collection16 && collection16.IsUndefined))
             {
                 writer.WritePropertyName("mxRecord"u8);
                 writer.WriteStartArray();
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Webserver))
+            if (!(Webserver is ChangeTrackingList<ObservedBoolean> collection17 && collection17.IsUndefined))
             {
                 writer.WritePropertyName("webserver"u8);
                 writer.WriteStartArray();
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Location))
+            if (!(Location is ChangeTrackingList<ObservedLocation> collection18 && collection18.IsUndefined))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
@@ -262,7 +262,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Nxdomain))
+            if (!(Nxdomain is ChangeTrackingList<ObservedBoolean> collection19 && collection19.IsUndefined))
             {
                 writer.WritePropertyName("nxdomain"u8);
                 writer.WriteStartArray();
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslServerConfig))
+            if (!(SslServerConfig is ChangeTrackingList<SslServerConfig> collection20 && collection20.IsUndefined))
             {
                 writer.WritePropertyName("sslServerConfig"u8);
                 writer.WriteStartArray();
@@ -282,7 +282,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IsWildcard))
+            if (!(IsWildcard is ChangeTrackingList<ObservedBoolean> collection21 && collection21.IsUndefined))
             {
                 writer.WritePropertyName("isWildcard"u8);
                 writer.WriteStartArray();
@@ -292,7 +292,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Banners))
+            if (!(Banners is ChangeTrackingList<BannerDetails> collection22 && collection22.IsUndefined))
             {
                 writer.WritePropertyName("banners"u8);
                 writer.WriteStartArray();
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv4))
+            if (!(Ipv4 is ChangeTrackingList<ObservedBoolean> collection23 && collection23.IsUndefined))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteStartArray();
@@ -312,7 +312,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6))
+            if (!(Ipv6 is ChangeTrackingList<ObservedBoolean> collection24 && collection24.IsUndefined))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteStartArray();
@@ -360,39 +360,39 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<string> domain = default;
-            Optional<IReadOnlyList<ObservedString>> ipAddresses = default;
-            Optional<IReadOnlyList<WebComponent>> webComponents = default;
-            Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
-            Optional<IReadOnlyList<CookieDetails>> cookies = default;
-            Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<ObservedString>> parentHosts = default;
-            Optional<IReadOnlyList<ObservedString>> childHosts = default;
-            Optional<HostCore> hostCore = default;
-            Optional<IReadOnlyList<AssetService>> services = default;
-            Optional<IReadOnlyList<ObservedString>> cnames = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<IReadOnlyList<ResourceUri>> resourceUrls = default;
-            Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
-            Optional<IReadOnlyList<ObservedLong>> asns = default;
-            Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
-            Optional<IReadOnlyList<ObservedString>> responseBodies = default;
-            Optional<DomainAsset> domainAsset = default;
-            Optional<IReadOnlyList<ObservedBoolean>> nsRecord = default;
-            Optional<IReadOnlyList<ObservedBoolean>> mxRecord = default;
-            Optional<IReadOnlyList<ObservedBoolean>> webserver = default;
-            Optional<IReadOnlyList<ObservedLocation>> location = default;
-            Optional<IReadOnlyList<ObservedBoolean>> nxdomain = default;
-            Optional<IReadOnlyList<SslServerConfig>> sslServerConfig = default;
-            Optional<IReadOnlyList<ObservedBoolean>> isWildcard = default;
-            Optional<IReadOnlyList<BannerDetails>> banners = default;
-            Optional<IReadOnlyList<ObservedBoolean>> ipv4 = default;
-            Optional<IReadOnlyList<ObservedBoolean>> ipv6 = default;
+            string host = default;
+            string domain = default;
+            IReadOnlyList<ObservedString> ipAddresses = default;
+            IReadOnlyList<WebComponent> webComponents = default;
+            IReadOnlyList<ObservedHeader> headers = default;
+            IReadOnlyList<AttributeDetails> attributes = default;
+            IReadOnlyList<CookieDetails> cookies = default;
+            IReadOnlyList<SslCertAsset> sslCerts = default;
+            IReadOnlyList<ObservedString> parentHosts = default;
+            IReadOnlyList<ObservedString> childHosts = default;
+            HostCore hostCore = default;
+            IReadOnlyList<AssetService> services = default;
+            IReadOnlyList<ObservedString> cnames = default;
+            IReadOnlyList<SourceDetails> sources = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            IReadOnlyList<ResourceUri> resourceUrls = default;
+            IReadOnlyList<ScanMetadata> scanMetadata = default;
+            IReadOnlyList<ObservedLong> asns = default;
+            IReadOnlyList<IpBlock> ipBlocks = default;
+            IReadOnlyList<ObservedString> responseBodies = default;
+            DomainAsset domainAsset = default;
+            IReadOnlyList<ObservedBoolean> nsRecord = default;
+            IReadOnlyList<ObservedBoolean> mxRecord = default;
+            IReadOnlyList<ObservedBoolean> webserver = default;
+            IReadOnlyList<ObservedLocation> location = default;
+            IReadOnlyList<ObservedBoolean> nxdomain = default;
+            IReadOnlyList<SslServerConfig> sslServerConfig = default;
+            IReadOnlyList<ObservedBoolean> isWildcard = default;
+            IReadOnlyList<BannerDetails> banners = default;
+            IReadOnlyList<ObservedBoolean> ipv4 = default;
+            IReadOnlyList<ObservedBoolean> ipv6 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -416,7 +416,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     ipAddresses = array;
                     continue;
@@ -430,7 +430,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<WebComponent> array = new List<WebComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebComponent.DeserializeWebComponent(item));
+                        array.Add(WebComponent.DeserializeWebComponent(item, options));
                     }
                     webComponents = array;
                     continue;
@@ -444,7 +444,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedHeader> array = new List<ObservedHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedHeader.DeserializeObservedHeader(item));
+                        array.Add(ObservedHeader.DeserializeObservedHeader(item, options));
                     }
                     headers = array;
                     continue;
@@ -458,7 +458,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item, options));
                     }
                     attributes = array;
                     continue;
@@ -472,7 +472,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CookieDetails.DeserializeCookieDetails(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item, options));
                     }
                     cookies = array;
                     continue;
@@ -486,7 +486,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SslCertAsset> array = new List<SslCertAsset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SslCertAsset.DeserializeSslCertAsset(item));
+                        array.Add(SslCertAsset.DeserializeSslCertAsset(item, options));
                     }
                     sslCerts = array;
                     continue;
@@ -500,7 +500,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     parentHosts = array;
                     continue;
@@ -514,7 +514,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     childHosts = array;
                     continue;
@@ -525,7 +525,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    hostCore = HostCore.DeserializeHostCore(property.Value);
+                    hostCore = HostCore.DeserializeHostCore(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("services"u8))
@@ -537,7 +537,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetService.DeserializeAssetService(item));
+                        array.Add(AssetService.DeserializeAssetService(item, options));
                     }
                     services = array;
                     continue;
@@ -551,7 +551,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     cnames = array;
                     continue;
@@ -565,7 +565,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -606,7 +606,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ResourceUri> array = new List<ResourceUri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUri.DeserializeResourceUri(item));
+                        array.Add(ResourceUri.DeserializeResourceUri(item, options));
                     }
                     resourceUrls = array;
                     continue;
@@ -620,7 +620,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ScanMetadata> array = new List<ScanMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Easm.ScanMetadata.DeserializeScanMetadata(item));
+                        array.Add(Easm.ScanMetadata.DeserializeScanMetadata(item, options));
                     }
                     scanMetadata = array;
                     continue;
@@ -634,7 +634,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLong> array = new List<ObservedLong>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item));
+                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     asns = array;
                     continue;
@@ -648,7 +648,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<IpBlock> array = new List<IpBlock>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item));
+                        array.Add(IpBlock.DeserializeIpBlock(item, options));
                     }
                     ipBlocks = array;
                     continue;
@@ -662,7 +662,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     responseBodies = array;
                     continue;
@@ -673,7 +673,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    domainAsset = DomainAsset.DeserializeDomainAsset(property.Value);
+                    domainAsset = DomainAsset.DeserializeDomainAsset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nsRecord"u8))
@@ -685,7 +685,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     nsRecord = array;
                     continue;
@@ -699,7 +699,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     mxRecord = array;
                     continue;
@@ -713,7 +713,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     webserver = array;
                     continue;
@@ -727,7 +727,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLocation> array = new List<ObservedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLocation.DeserializeObservedLocation(item));
+                        array.Add(ObservedLocation.DeserializeObservedLocation(item, options));
                     }
                     location = array;
                     continue;
@@ -741,7 +741,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     nxdomain = array;
                     continue;
@@ -755,7 +755,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SslServerConfig> array = new List<SslServerConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Easm.SslServerConfig.DeserializeSslServerConfig(item));
+                        array.Add(Easm.SslServerConfig.DeserializeSslServerConfig(item, options));
                     }
                     sslServerConfig = array;
                     continue;
@@ -769,7 +769,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     isWildcard = array;
                     continue;
@@ -783,7 +783,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<BannerDetails> array = new List<BannerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BannerDetails.DeserializeBannerDetails(item));
+                        array.Add(BannerDetails.DeserializeBannerDetails(item, options));
                     }
                     banners = array;
                     continue;
@@ -797,7 +797,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     ipv4 = array;
                     continue;
@@ -811,7 +811,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedBoolean> array = new List<ObservedBoolean>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item));
+                        array.Add(ObservedBoolean.DeserializeObservedBoolean(item, options));
                     }
                     ipv6 = array;
                     continue;
@@ -822,7 +822,41 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostAsset(serializedAdditionalRawData, host.Value, domain.Value, Optional.ToList(ipAddresses), Optional.ToList(webComponents), Optional.ToList(headers), Optional.ToList(attributes), Optional.ToList(cookies), Optional.ToList(sslCerts), Optional.ToList(parentHosts), Optional.ToList(childHosts), hostCore.Value, Optional.ToList(services), Optional.ToList(cnames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(resourceUrls), Optional.ToList(scanMetadata), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(responseBodies), domainAsset.Value, Optional.ToList(nsRecord), Optional.ToList(mxRecord), Optional.ToList(webserver), Optional.ToList(location), Optional.ToList(nxdomain), Optional.ToList(sslServerConfig), Optional.ToList(isWildcard), Optional.ToList(banners), Optional.ToList(ipv4), Optional.ToList(ipv6));
+            return new HostAsset(
+                serializedAdditionalRawData,
+                host,
+                domain,
+                ipAddresses ?? new ChangeTrackingList<ObservedString>(),
+                webComponents ?? new ChangeTrackingList<WebComponent>(),
+                headers ?? new ChangeTrackingList<ObservedHeader>(),
+                attributes ?? new ChangeTrackingList<AttributeDetails>(),
+                cookies ?? new ChangeTrackingList<CookieDetails>(),
+                sslCerts ?? new ChangeTrackingList<SslCertAsset>(),
+                parentHosts ?? new ChangeTrackingList<ObservedString>(),
+                childHosts ?? new ChangeTrackingList<ObservedString>(),
+                hostCore,
+                services ?? new ChangeTrackingList<AssetService>(),
+                cnames ?? new ChangeTrackingList<ObservedString>(),
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                firstSeen,
+                lastSeen,
+                count,
+                resourceUrls ?? new ChangeTrackingList<ResourceUri>(),
+                scanMetadata ?? new ChangeTrackingList<ScanMetadata>(),
+                asns ?? new ChangeTrackingList<ObservedLong>(),
+                ipBlocks ?? new ChangeTrackingList<IpBlock>(),
+                responseBodies ?? new ChangeTrackingList<ObservedString>(),
+                domainAsset,
+                nsRecord ?? new ChangeTrackingList<ObservedBoolean>(),
+                mxRecord ?? new ChangeTrackingList<ObservedBoolean>(),
+                webserver ?? new ChangeTrackingList<ObservedBoolean>(),
+                location ?? new ChangeTrackingList<ObservedLocation>(),
+                nxdomain ?? new ChangeTrackingList<ObservedBoolean>(),
+                sslServerConfig ?? new ChangeTrackingList<SslServerConfig>(),
+                isWildcard ?? new ChangeTrackingList<ObservedBoolean>(),
+                banners ?? new ChangeTrackingList<BannerDetails>(),
+                ipv4 ?? new ChangeTrackingList<ObservedBoolean>(),
+                ipv6 ?? new ChangeTrackingList<ObservedBoolean>());
         }
 
         BinaryData IPersistableModel<HostAsset>.Write(ModelReaderWriterOptions options)

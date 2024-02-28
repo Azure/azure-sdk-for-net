@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteStringValue(Date.Value, "D");
             }
-            if (Optional.IsDefined(Total))
+            if (Total.HasValue)
             {
                 writer.WritePropertyName("total"u8);
                 writer.WriteNumberValue(Total.Value);
             }
-            if (Optional.IsCollectionDefined(AssetBreakdown))
+            if (!(AssetBreakdown is ChangeTrackingList<ReportBillableAssetBreakdown> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assetBreakdown"u8);
                 writer.WriteStartArray();
@@ -85,9 +85,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<long> total = default;
-            Optional<IReadOnlyList<ReportBillableAssetBreakdown>> assetBreakdown = default;
+            DateTimeOffset? date = default;
+            long? total = default;
+            IReadOnlyList<ReportBillableAssetBreakdown> assetBreakdown = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ReportBillableAssetBreakdown> array = new List<ReportBillableAssetBreakdown>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportBillableAssetBreakdown.DeserializeReportBillableAssetBreakdown(item));
+                        array.Add(ReportBillableAssetBreakdown.DeserializeReportBillableAssetBreakdown(item, options));
                     }
                     assetBreakdown = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportBillableAssetSnapshotResult(Optional.ToNullable(date), Optional.ToNullable(total), Optional.ToList(assetBreakdown), serializedAdditionalRawData);
+            return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown ?? new ChangeTrackingList<ReportBillableAssetBreakdown>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportBillableAssetSnapshotResult>.Write(ModelReaderWriterOptions options)

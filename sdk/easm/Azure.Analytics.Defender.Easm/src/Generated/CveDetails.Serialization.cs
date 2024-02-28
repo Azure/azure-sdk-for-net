@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CweId))
+            if (CweId != null)
             {
                 writer.WritePropertyName("cweId"u8);
                 writer.WriteStringValue(CweId);
             }
-            if (Optional.IsDefined(CvssScore))
+            if (CvssScore.HasValue)
             {
                 writer.WritePropertyName("cvssScore"u8);
                 writer.WriteNumberValue(CvssScore.Value);
             }
-            if (Optional.IsDefined(Cvss3Summary))
+            if (Cvss3Summary != null)
             {
                 writer.WritePropertyName("cvss3Summary"u8);
                 writer.WriteObjectValue(Cvss3Summary);
@@ -85,10 +85,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> cweId = default;
-            Optional<float> cvssScore = default;
-            Optional<Cvss3Summary> cvss3Summary = default;
+            string name = default;
+            string cweId = default;
+            float? cvssScore = default;
+            Cvss3Summary cvss3Summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    cvss3Summary = Cvss3Summary.DeserializeCvss3Summary(property.Value);
+                    cvss3Summary = Cvss3Summary.DeserializeCvss3Summary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CveDetails(name.Value, cweId.Value, Optional.ToNullable(cvssScore), cvss3Summary.Value, serializedAdditionalRawData);
+            return new CveDetails(name, cweId, cvssScore, cvss3Summary, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CveDetails>.Write(ModelReaderWriterOptions options)

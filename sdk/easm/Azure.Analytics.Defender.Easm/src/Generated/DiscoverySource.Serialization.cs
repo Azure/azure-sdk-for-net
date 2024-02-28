@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -75,8 +75,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<DiscoverySourceKind> kind = default;
-            Optional<string> name = default;
+            DiscoverySourceKind? kind = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoverySource(Optional.ToNullable(kind), name.Value, serializedAdditionalRawData);
+            return new DiscoverySource(kind, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoverySource>.Write(ModelReaderWriterOptions options)

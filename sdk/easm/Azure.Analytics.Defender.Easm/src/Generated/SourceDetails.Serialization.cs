@@ -27,27 +27,27 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceName))
+            if (SourceName != null)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -90,11 +90,11 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<string> reason = default;
+            string source = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceDetails(source.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), reason.Value, serializedAdditionalRawData);
+            return new SourceDetails(
+                source,
+                firstSeen,
+                lastSeen,
+                count,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceDetails>.Write(ModelReaderWriterOptions options)

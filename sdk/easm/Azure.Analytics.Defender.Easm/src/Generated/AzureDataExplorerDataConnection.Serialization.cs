@@ -31,7 +31,7 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -41,47 +41,47 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Content))
+            if (Content.HasValue)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
+            if (options.Format != "W" && CreatedDate.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(FrequencyOffset))
+            if (FrequencyOffset.HasValue)
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
+            if (options.Format != "W" && UpdatedDate.HasValue)
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UserUpdatedAt))
+            if (options.Format != "W" && UserUpdatedAt.HasValue)
             {
                 writer.WritePropertyName("userUpdatedAt"u8);
                 writer.WriteStringValue(UserUpdatedAt.Value, "O");
             }
-            if (Optional.IsDefined(Active))
+            if (Active.HasValue)
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InactiveMessage))
+            if (options.Format != "W" && InactiveMessage != null)
             {
                 writer.WritePropertyName("inactiveMessage"u8);
                 writer.WriteStringValue(InactiveMessage);
@@ -126,24 +126,24 @@ namespace Azure.Analytics.Defender.Easm
             }
             AzureDataExplorerDataConnectionProperties properties = default;
             string kind = default;
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> displayName = default;
-            Optional<DataConnectionContent> content = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DataConnectionFrequency> frequency = default;
-            Optional<int> frequencyOffset = default;
-            Optional<DateTimeOffset> updatedDate = default;
-            Optional<DateTimeOffset> userUpdatedAt = default;
-            Optional<bool> active = default;
-            Optional<string> inactiveMessage = default;
+            string displayName = default;
+            DataConnectionContent? content = default;
+            DateTimeOffset? createdDate = default;
+            DataConnectionFrequency? frequency = default;
+            int? frequencyOffset = default;
+            DateTimeOffset? updatedDate = default;
+            DateTimeOffset? userUpdatedAt = default;
+            bool? active = default;
+            string inactiveMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AzureDataExplorerDataConnectionProperties.DeserializeAzureDataExplorerDataConnectionProperties(property.Value);
+                    properties = AzureDataExplorerDataConnectionProperties.DeserializeAzureDataExplorerDataConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -240,7 +240,21 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDataExplorerDataConnection(kind, id.Value, name, displayName.Value, Optional.ToNullable(content), Optional.ToNullable(createdDate), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), Optional.ToNullable(updatedDate), Optional.ToNullable(userUpdatedAt), Optional.ToNullable(active), inactiveMessage.Value, serializedAdditionalRawData, properties);
+            return new AzureDataExplorerDataConnection(
+                kind,
+                id,
+                name,
+                displayName,
+                content,
+                createdDate,
+                frequency,
+                frequencyOffset,
+                updatedDate,
+                userUpdatedAt,
+                active,
+                inactiveMessage,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerDataConnection>.Write(ModelReaderWriterOptions options)

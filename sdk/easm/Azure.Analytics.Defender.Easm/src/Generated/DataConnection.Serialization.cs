@@ -29,7 +29,7 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -39,47 +39,47 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Content))
+            if (Content.HasValue)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
+            if (options.Format != "W" && CreatedDate.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(FrequencyOffset))
+            if (FrequencyOffset.HasValue)
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
+            if (options.Format != "W" && UpdatedDate.HasValue)
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UserUpdatedAt))
+            if (options.Format != "W" && UserUpdatedAt.HasValue)
             {
                 writer.WritePropertyName("userUpdatedAt"u8);
                 writer.WriteStringValue(UserUpdatedAt.Value, "O");
             }
-            if (Optional.IsDefined(Active))
+            if (Active.HasValue)
             {
                 writer.WritePropertyName("active"u8);
                 writer.WriteBooleanValue(Active.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InactiveMessage))
+            if (options.Format != "W" && InactiveMessage != null)
             {
                 writer.WritePropertyName("inactiveMessage"u8);
                 writer.WriteStringValue(InactiveMessage);
@@ -126,11 +126,11 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "logAnalytics": return LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(element);
-                    case "azureDataExplorer": return AzureDataExplorerDataConnection.DeserializeAzureDataExplorerDataConnection(element);
+                    case "logAnalytics": return LogAnalyticsDataConnection.DeserializeLogAnalyticsDataConnection(element, options);
+                    case "azureDataExplorer": return AzureDataExplorerDataConnection.DeserializeAzureDataExplorerDataConnection(element, options);
                 }
             }
-            return UnknownDataConnection.DeserializeUnknownDataConnection(element);
+            return UnknownDataConnection.DeserializeUnknownDataConnection(element, options);
         }
 
         BinaryData IPersistableModel<DataConnection>.Write(ModelReaderWriterOptions options)

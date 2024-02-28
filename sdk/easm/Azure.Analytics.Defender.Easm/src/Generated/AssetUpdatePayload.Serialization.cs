@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (ExternalId != null)
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingDictionary<string, bool> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Transfers))
+            if (Transfers.HasValue)
             {
                 writer.WritePropertyName("transfers"u8);
                 writer.WriteStringValue(Transfers.Value.ToString());
@@ -91,10 +91,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<AssetUpdateState> state = default;
-            Optional<string> externalId = default;
-            Optional<IDictionary<string, bool>> labels = default;
-            Optional<AssetUpdateTransfers> transfers = default;
+            AssetUpdateState? state = default;
+            string externalId = default;
+            IDictionary<string, bool> labels = default;
+            AssetUpdateTransfers? transfers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetUpdatePayload(Optional.ToNullable(state), externalId.Value, Optional.ToDictionary(labels), Optional.ToNullable(transfers), serializedAdditionalRawData);
+            return new AssetUpdatePayload(state, externalId, labels ?? new ChangeTrackingDictionary<string, bool>(), transfers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetUpdatePayload>.Write(ModelReaderWriterOptions options)

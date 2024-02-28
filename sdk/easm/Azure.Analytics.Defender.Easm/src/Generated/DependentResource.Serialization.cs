@@ -27,62 +27,62 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Md5))
+            if (Md5 != null)
             {
                 writer.WritePropertyName("md5"u8);
                 writer.WriteStringValue(Md5);
             }
-            if (Optional.IsDefined(ResponseBodySize))
+            if (ResponseBodySize.HasValue)
             {
                 writer.WritePropertyName("responseBodySize"u8);
                 writer.WriteNumberValue(ResponseBodySize.Value);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(FirstSeenCrawlGuid))
+            if (FirstSeenCrawlGuid != null)
             {
                 writer.WritePropertyName("firstSeenCrawlGuid"u8);
                 writer.WriteStringValue(FirstSeenCrawlGuid);
             }
-            if (Optional.IsDefined(FirstSeenPageGuid))
+            if (FirstSeenPageGuid != null)
             {
                 writer.WritePropertyName("firstSeenPageGuid"u8);
                 writer.WriteStringValue(FirstSeenPageGuid);
             }
-            if (Optional.IsDefined(FirstSeenResourceGuid))
+            if (FirstSeenResourceGuid != null)
             {
                 writer.WritePropertyName("firstSeenResourceGuid"u8);
                 writer.WriteStringValue(FirstSeenResourceGuid);
             }
-            if (Optional.IsDefined(LastSeenCrawlGuid))
+            if (LastSeenCrawlGuid != null)
             {
                 writer.WritePropertyName("lastSeenCrawlGuid"u8);
                 writer.WriteStringValue(LastSeenCrawlGuid);
             }
-            if (Optional.IsDefined(LastSeenPageGuid))
+            if (LastSeenPageGuid != null)
             {
                 writer.WritePropertyName("lastSeenPageGuid"u8);
                 writer.WriteStringValue(LastSeenPageGuid);
             }
-            if (Optional.IsDefined(LastSeenResourceGuid))
+            if (LastSeenResourceGuid != null)
             {
                 writer.WritePropertyName("lastSeenResourceGuid"u8);
                 writer.WriteStringValue(LastSeenResourceGuid);
             }
-            if (Optional.IsCollectionDefined(ResponseBodyMinhash))
+            if (!(ResponseBodyMinhash is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("responseBodyMinhash"u8);
                 writer.WriteStartArray();
@@ -92,37 +92,37 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ContentType))
+            if (ContentType != null)
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (Optional.IsDefined(Sha256))
+            if (Sha256 != null)
             {
                 writer.WritePropertyName("sha256"u8);
                 writer.WriteStringValue(Sha256);
             }
-            if (Optional.IsDefined(Sha384))
+            if (Sha384 != null)
             {
                 writer.WritePropertyName("sha384"u8);
                 writer.WriteStringValue(Sha384);
             }
-            if (Optional.IsDefined(Sha512))
+            if (Sha512 != null)
             {
                 writer.WritePropertyName("sha512"u8);
                 writer.WriteStringValue(Sha512);
             }
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsDefined(Cached))
+            if (Cached.HasValue)
             {
                 writer.WritePropertyName("cached"u8);
                 writer.WriteBooleanValue(Cached.Value);
             }
-            if (Optional.IsCollectionDefined(SriChecks))
+            if (!(SriChecks is ChangeTrackingList<SubResourceIntegrityCheck> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sriChecks"u8);
                 writer.WriteStartArray();
@@ -132,27 +132,27 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(LastObservedViolation))
+            if (LastObservedViolation.HasValue)
             {
                 writer.WritePropertyName("lastObservedViolation"u8);
                 writer.WriteStringValue(LastObservedViolation.Value, "O");
             }
-            if (Optional.IsDefined(LastObservedValidation))
+            if (LastObservedValidation.HasValue)
             {
                 writer.WritePropertyName("lastObservedValidation"u8);
                 writer.WriteStringValue(LastObservedValidation.Value, "O");
             }
-            if (Optional.IsDefined(LastObservedActualSriHash))
+            if (LastObservedActualSriHash != null)
             {
                 writer.WritePropertyName("lastObservedActualSriHash"u8);
                 writer.WriteStringValue(LastObservedActualSriHash);
             }
-            if (Optional.IsDefined(LastObservedExpectedSriHash))
+            if (LastObservedExpectedSriHash != null)
             {
                 writer.WritePropertyName("lastObservedExpectedSriHash"u8);
                 writer.WriteStringValue(LastObservedExpectedSriHash);
@@ -195,30 +195,30 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> md5 = default;
-            Optional<long> responseBodySize = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<string> firstSeenCrawlGuid = default;
-            Optional<string> firstSeenPageGuid = default;
-            Optional<string> firstSeenResourceGuid = default;
-            Optional<string> lastSeenCrawlGuid = default;
-            Optional<string> lastSeenPageGuid = default;
-            Optional<string> lastSeenResourceGuid = default;
-            Optional<IReadOnlyList<int>> responseBodyMinhash = default;
-            Optional<string> contentType = default;
-            Optional<string> sha256 = default;
-            Optional<string> sha384 = default;
-            Optional<string> sha512 = default;
-            Optional<Uri> url = default;
-            Optional<bool> cached = default;
-            Optional<IReadOnlyList<SubResourceIntegrityCheck>> sriChecks = default;
-            Optional<string> host = default;
-            Optional<DateTimeOffset> lastObservedViolation = default;
-            Optional<DateTimeOffset> lastObservedValidation = default;
-            Optional<string> lastObservedActualSriHash = default;
-            Optional<string> lastObservedExpectedSriHash = default;
+            string md5 = default;
+            long? responseBodySize = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            string firstSeenCrawlGuid = default;
+            string firstSeenPageGuid = default;
+            string firstSeenResourceGuid = default;
+            string lastSeenCrawlGuid = default;
+            string lastSeenPageGuid = default;
+            string lastSeenResourceGuid = default;
+            IReadOnlyList<int> responseBodyMinhash = default;
+            string contentType = default;
+            string sha256 = default;
+            string sha384 = default;
+            string sha512 = default;
+            Uri url = default;
+            bool? cached = default;
+            IReadOnlyList<SubResourceIntegrityCheck> sriChecks = default;
+            string host = default;
+            DateTimeOffset? lastObservedViolation = default;
+            DateTimeOffset? lastObservedValidation = default;
+            string lastObservedActualSriHash = default;
+            string lastObservedExpectedSriHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -355,7 +355,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SubResourceIntegrityCheck> array = new List<SubResourceIntegrityCheck>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubResourceIntegrityCheck.DeserializeSubResourceIntegrityCheck(item));
+                        array.Add(SubResourceIntegrityCheck.DeserializeSubResourceIntegrityCheck(item, options));
                     }
                     sriChecks = array;
                     continue;
@@ -399,7 +399,32 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DependentResource(md5.Value, Optional.ToNullable(responseBodySize), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), firstSeenCrawlGuid.Value, firstSeenPageGuid.Value, firstSeenResourceGuid.Value, lastSeenCrawlGuid.Value, lastSeenPageGuid.Value, lastSeenResourceGuid.Value, Optional.ToList(responseBodyMinhash), contentType.Value, sha256.Value, sha384.Value, sha512.Value, url.Value, Optional.ToNullable(cached), Optional.ToList(sriChecks), host.Value, Optional.ToNullable(lastObservedViolation), Optional.ToNullable(lastObservedValidation), lastObservedActualSriHash.Value, lastObservedExpectedSriHash.Value, serializedAdditionalRawData);
+            return new DependentResource(
+                md5,
+                responseBodySize,
+                firstSeen,
+                lastSeen,
+                count,
+                firstSeenCrawlGuid,
+                firstSeenPageGuid,
+                firstSeenResourceGuid,
+                lastSeenCrawlGuid,
+                lastSeenPageGuid,
+                lastSeenResourceGuid,
+                responseBodyMinhash ?? new ChangeTrackingList<int>(),
+                contentType,
+                sha256,
+                sha384,
+                sha512,
+                url,
+                cached,
+                sriChecks ?? new ChangeTrackingList<SubResourceIntegrityCheck>(),
+                host,
+                lastObservedViolation,
+                lastObservedValidation,
+                lastObservedActualSriHash,
+                lastObservedExpectedSriHash,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DependentResource>.Write(ModelReaderWriterOptions options)

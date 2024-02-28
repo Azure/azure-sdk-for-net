@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubmittedDate))
+            if (SubmittedDate.HasValue)
             {
                 writer.WritePropertyName("submittedDate"u8);
                 writer.WriteStringValue(SubmittedDate.Value, "O");
             }
-            if (Optional.IsDefined(StartedDate))
+            if (StartedDate.HasValue)
             {
                 writer.WritePropertyName("startedDate"u8);
                 writer.WriteStringValue(StartedDate.Value, "O");
             }
-            if (Optional.IsDefined(CompletedDate))
+            if (CompletedDate.HasValue)
             {
                 writer.WritePropertyName("completedDate"u8);
                 writer.WriteStringValue(CompletedDate.Value, "O");
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(TotalAssetsFoundCount))
+            if (TotalAssetsFoundCount.HasValue)
             {
                 writer.WritePropertyName("totalAssetsFoundCount"u8);
                 writer.WriteNumberValue(TotalAssetsFoundCount.Value);
             }
-            if (Optional.IsCollectionDefined(Seeds))
+            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Excludes))
+            if (!(Excludes is ChangeTrackingList<DiscoverySource> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (!(Names is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -125,15 +125,15 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<DateTimeOffset> submittedDate = default;
-            Optional<DateTimeOffset> startedDate = default;
-            Optional<DateTimeOffset> completedDate = default;
-            Optional<string> tier = default;
-            Optional<DiscoRunState> state = default;
-            Optional<long> totalAssetsFoundCount = default;
-            Optional<IReadOnlyList<DiscoverySource>> seeds = default;
-            Optional<IReadOnlyList<DiscoverySource>> excludes = default;
-            Optional<IReadOnlyList<string>> names = default;
+            DateTimeOffset? submittedDate = default;
+            DateTimeOffset? startedDate = default;
+            DateTimeOffset? completedDate = default;
+            string tier = default;
+            DiscoRunState? state = default;
+            long? totalAssetsFoundCount = default;
+            IReadOnlyList<DiscoverySource> seeds = default;
+            IReadOnlyList<DiscoverySource> excludes = default;
+            IReadOnlyList<string> names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DiscoverySource> array = new List<DiscoverySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item));
+                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DiscoverySource> array = new List<DiscoverySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item));
+                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     excludes = array;
                     continue;
@@ -236,7 +236,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveryRunResult(Optional.ToNullable(submittedDate), Optional.ToNullable(startedDate), Optional.ToNullable(completedDate), tier.Value, Optional.ToNullable(state), Optional.ToNullable(totalAssetsFoundCount), Optional.ToList(seeds), Optional.ToList(excludes), Optional.ToList(names), serializedAdditionalRawData);
+            return new DiscoveryRunResult(
+                submittedDate,
+                startedDate,
+                completedDate,
+                tier,
+                state,
+                totalAssetsFoundCount,
+                seeds ?? new ChangeTrackingList<DiscoverySource>(),
+                excludes ?? new ChangeTrackingList<DiscoverySource>(),
+                names ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoveryRunResult>.Write(ModelReaderWriterOptions options)

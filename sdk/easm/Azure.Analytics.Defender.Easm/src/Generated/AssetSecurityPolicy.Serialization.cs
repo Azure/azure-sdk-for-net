@@ -27,42 +27,42 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PolicyName))
+            if (PolicyName != null)
             {
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(IsAffected))
+            if (IsAffected.HasValue)
             {
                 writer.WritePropertyName("isAffected"u8);
                 writer.WriteBooleanValue(IsAffected.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -110,14 +110,14 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> policyName = default;
-            Optional<bool> isAffected = default;
-            Optional<string> description = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
+            string policyName = default;
+            bool? isAffected = default;
+            string description = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
+            IReadOnlyList<SourceDetails> sources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -197,7 +197,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetSecurityPolicy(policyName.Value, Optional.ToNullable(isAffected), description.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), Optional.ToList(sources), serializedAdditionalRawData);
+            return new AssetSecurityPolicy(
+                policyName,
+                isAffected,
+                description,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetSecurityPolicy>.Write(ModelReaderWriterOptions options)

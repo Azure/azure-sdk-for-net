@@ -27,42 +27,42 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ListName))
+            if (ListName != null)
             {
                 writer.WritePropertyName("listName"u8);
                 writer.WriteStringValue(ListName);
             }
-            if (Optional.IsDefined(ThreatType))
+            if (ThreatType != null)
             {
                 writer.WritePropertyName("threatType"u8);
                 writer.WriteStringValue(ThreatType);
             }
-            if (Optional.IsDefined(Trusted))
+            if (Trusted.HasValue)
             {
                 writer.WritePropertyName("trusted"u8);
                 writer.WriteBooleanValue(Trusted.Value);
             }
-            if (Optional.IsDefined(Cidr))
+            if (Cidr != null)
             {
                 writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(ListUpdatedAt))
+            if (ListUpdatedAt.HasValue)
             {
                 writer.WritePropertyName("listUpdatedAt"u8);
                 writer.WriteStringValue(ListUpdatedAt.Value, "O");
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -105,14 +105,14 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> listName = default;
-            Optional<string> threatType = default;
-            Optional<bool> trusted = default;
-            Optional<string> cidr = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<DateTimeOffset> listUpdatedAt = default;
-            Optional<bool> recent = default;
+            string listName = default;
+            string threatType = default;
+            bool? trusted = default;
+            string cidr = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            DateTimeOffset? listUpdatedAt = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReputationDetails(listName.Value, threatType.Value, Optional.ToNullable(trusted), cidr.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(listUpdatedAt), Optional.ToNullable(recent), serializedAdditionalRawData);
+            return new ReputationDetails(
+                listName,
+                threatType,
+                trusted,
+                cidr,
+                firstSeen,
+                lastSeen,
+                listUpdatedAt,
+                recent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReputationDetails>.Write(ModelReaderWriterOptions options)

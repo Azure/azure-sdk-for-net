@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IpBlock))
+            if (IpBlock != null)
             {
                 writer.WritePropertyName("ipBlock"u8);
                 writer.WriteStringValue(IpBlock);
             }
-            if (Optional.IsCollectionDefined(Asns))
+            if (!(Asns is ChangeTrackingList<ObservedLong> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("asns"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(BgpPrefixes))
+            if (!(BgpPrefixes is ChangeTrackingList<ObservedString> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("bgpPrefixes"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetNames))
+            if (!(NetNames is ChangeTrackingList<ObservedString> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("netNames"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantContacts))
+            if (!(RegistrantContacts is ChangeTrackingList<ObservedString> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("registrantContacts"u8);
                 writer.WriteStartArray();
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantOrgs))
+            if (!(RegistrantOrgs is ChangeTrackingList<ObservedString> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("registrantOrgs"u8);
                 writer.WriteStartArray();
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminContacts))
+            if (!(AdminContacts is ChangeTrackingList<ObservedString> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("adminContacts"u8);
                 writer.WriteStartArray();
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalContacts))
+            if (!(TechnicalContacts is ChangeTrackingList<ObservedString> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("technicalContacts"u8);
                 writer.WriteStartArray();
@@ -102,7 +102,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarCreatedAt))
+            if (!(RegistrarCreatedAt is ChangeTrackingList<ObservedLong> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("registrarCreatedAt"u8);
                 writer.WriteStartArray();
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarUpdatedAt))
+            if (!(RegistrarUpdatedAt is ChangeTrackingList<ObservedLong> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("registrarUpdatedAt"u8);
                 writer.WriteStartArray();
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(NetRanges))
+            if (!(NetRanges is ChangeTrackingList<ObservedString> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("netRanges"u8);
                 writer.WriteStartArray();
@@ -132,17 +132,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartIp))
+            if (StartIp != null)
             {
                 writer.WritePropertyName("startIp"u8);
                 writer.WriteStringValue(StartIp);
             }
-            if (Optional.IsDefined(EndIp))
+            if (EndIp != null)
             {
                 writer.WritePropertyName("endIp"u8);
                 writer.WriteStringValue(EndIp);
             }
-            if (Optional.IsCollectionDefined(Reputations))
+            if (!(Reputations is ChangeTrackingList<ReputationDetails> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("reputations"u8);
                 writer.WriteStartArray();
@@ -152,12 +152,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (DetailedFromWhoisAt.HasValue)
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
                 writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -167,22 +167,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsCollectionDefined(Location))
+            if (!(Location is ChangeTrackingList<ObservedLocation> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrarExpiresAt))
+            if (!(RegistrarExpiresAt is ChangeTrackingList<ObservedLong> collection12 && collection12.IsUndefined))
             {
                 writer.WritePropertyName("registrarExpiresAt"u8);
                 writer.WriteStartArray();
@@ -202,7 +202,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantNames))
+            if (!(RegistrantNames is ChangeTrackingList<ObservedString> collection13 && collection13.IsUndefined))
             {
                 writer.WritePropertyName("registrantNames"u8);
                 writer.WriteStartArray();
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminNames))
+            if (!(AdminNames is ChangeTrackingList<ObservedString> collection14 && collection14.IsUndefined))
             {
                 writer.WritePropertyName("adminNames"u8);
                 writer.WriteStartArray();
@@ -222,7 +222,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalNames))
+            if (!(TechnicalNames is ChangeTrackingList<ObservedString> collection15 && collection15.IsUndefined))
             {
                 writer.WritePropertyName("technicalNames"u8);
                 writer.WriteStartArray();
@@ -232,7 +232,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminOrgs))
+            if (!(AdminOrgs is ChangeTrackingList<ObservedString> collection16 && collection16.IsUndefined))
             {
                 writer.WritePropertyName("adminOrgs"u8);
                 writer.WriteStartArray();
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalOrgs))
+            if (!(TechnicalOrgs is ChangeTrackingList<ObservedString> collection17 && collection17.IsUndefined))
             {
                 writer.WritePropertyName("technicalOrgs"u8);
                 writer.WriteStartArray();
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RegistrantPhones))
+            if (!(RegistrantPhones is ChangeTrackingList<ObservedString> collection18 && collection18.IsUndefined))
             {
                 writer.WritePropertyName("registrantPhones"u8);
                 writer.WriteStartArray();
@@ -262,7 +262,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(AdminPhones))
+            if (!(AdminPhones is ChangeTrackingList<ObservedString> collection19 && collection19.IsUndefined))
             {
                 writer.WritePropertyName("adminPhones"u8);
                 writer.WriteStartArray();
@@ -272,7 +272,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TechnicalPhones))
+            if (!(TechnicalPhones is ChangeTrackingList<ObservedString> collection20 && collection20.IsUndefined))
             {
                 writer.WritePropertyName("technicalPhones"u8);
                 writer.WriteStartArray();
@@ -282,12 +282,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Ipv4))
+            if (Ipv4.HasValue)
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteBooleanValue(Ipv4.Value);
             }
-            if (Optional.IsDefined(Ipv6))
+            if (Ipv6.HasValue)
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteBooleanValue(Ipv6.Value);
@@ -330,37 +330,37 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> ipBlock = default;
-            Optional<IReadOnlyList<ObservedLong>> asns = default;
-            Optional<IReadOnlyList<ObservedString>> bgpPrefixes = default;
-            Optional<IReadOnlyList<ObservedString>> netNames = default;
-            Optional<IReadOnlyList<ObservedString>> registrantContacts = default;
-            Optional<IReadOnlyList<ObservedString>> registrantOrgs = default;
-            Optional<IReadOnlyList<ObservedString>> adminContacts = default;
-            Optional<IReadOnlyList<ObservedString>> technicalContacts = default;
-            Optional<IReadOnlyList<ObservedLong>> registrarCreatedAt = default;
-            Optional<IReadOnlyList<ObservedLong>> registrarUpdatedAt = default;
-            Optional<IReadOnlyList<ObservedString>> netRanges = default;
-            Optional<string> startIp = default;
-            Optional<string> endIp = default;
-            Optional<IReadOnlyList<ReputationDetails>> reputations = default;
-            Optional<DateTimeOffset> detailedFromWhoisAt = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<IReadOnlyList<ObservedLocation>> location = default;
-            Optional<IReadOnlyList<ObservedLong>> registrarExpiresAt = default;
-            Optional<IReadOnlyList<ObservedString>> registrantNames = default;
-            Optional<IReadOnlyList<ObservedString>> adminNames = default;
-            Optional<IReadOnlyList<ObservedString>> technicalNames = default;
-            Optional<IReadOnlyList<ObservedString>> adminOrgs = default;
-            Optional<IReadOnlyList<ObservedString>> technicalOrgs = default;
-            Optional<IReadOnlyList<ObservedString>> registrantPhones = default;
-            Optional<IReadOnlyList<ObservedString>> adminPhones = default;
-            Optional<IReadOnlyList<ObservedString>> technicalPhones = default;
-            Optional<bool> ipv4 = default;
-            Optional<bool> ipv6 = default;
+            string ipBlock = default;
+            IReadOnlyList<ObservedLong> asns = default;
+            IReadOnlyList<ObservedString> bgpPrefixes = default;
+            IReadOnlyList<ObservedString> netNames = default;
+            IReadOnlyList<ObservedString> registrantContacts = default;
+            IReadOnlyList<ObservedString> registrantOrgs = default;
+            IReadOnlyList<ObservedString> adminContacts = default;
+            IReadOnlyList<ObservedString> technicalContacts = default;
+            IReadOnlyList<ObservedLong> registrarCreatedAt = default;
+            IReadOnlyList<ObservedLong> registrarUpdatedAt = default;
+            IReadOnlyList<ObservedString> netRanges = default;
+            string startIp = default;
+            string endIp = default;
+            IReadOnlyList<ReputationDetails> reputations = default;
+            DateTimeOffset? detailedFromWhoisAt = default;
+            IReadOnlyList<SourceDetails> sources = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            IReadOnlyList<ObservedLocation> location = default;
+            IReadOnlyList<ObservedLong> registrarExpiresAt = default;
+            IReadOnlyList<ObservedString> registrantNames = default;
+            IReadOnlyList<ObservedString> adminNames = default;
+            IReadOnlyList<ObservedString> technicalNames = default;
+            IReadOnlyList<ObservedString> adminOrgs = default;
+            IReadOnlyList<ObservedString> technicalOrgs = default;
+            IReadOnlyList<ObservedString> registrantPhones = default;
+            IReadOnlyList<ObservedString> adminPhones = default;
+            IReadOnlyList<ObservedString> technicalPhones = default;
+            bool? ipv4 = default;
+            bool? ipv6 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -379,7 +379,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLong> array = new List<ObservedLong>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item));
+                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     asns = array;
                     continue;
@@ -393,7 +393,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     bgpPrefixes = array;
                     continue;
@@ -407,7 +407,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     netNames = array;
                     continue;
@@ -421,7 +421,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantContacts = array;
                     continue;
@@ -435,7 +435,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantOrgs = array;
                     continue;
@@ -449,7 +449,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminContacts = array;
                     continue;
@@ -463,7 +463,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalContacts = array;
                     continue;
@@ -477,7 +477,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLong> array = new List<ObservedLong>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item));
+                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarCreatedAt = array;
                     continue;
@@ -491,7 +491,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLong> array = new List<ObservedLong>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item));
+                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarUpdatedAt = array;
                     continue;
@@ -505,7 +505,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     netRanges = array;
                     continue;
@@ -529,7 +529,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ReputationDetails> array = new List<ReputationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReputationDetails.DeserializeReputationDetails(item));
+                        array.Add(ReputationDetails.DeserializeReputationDetails(item, options));
                     }
                     reputations = array;
                     continue;
@@ -552,7 +552,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -593,7 +593,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLocation> array = new List<ObservedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLocation.DeserializeObservedLocation(item));
+                        array.Add(ObservedLocation.DeserializeObservedLocation(item, options));
                     }
                     location = array;
                     continue;
@@ -607,7 +607,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedLong> array = new List<ObservedLong>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedLong.DeserializeObservedLong(item));
+                        array.Add(ObservedLong.DeserializeObservedLong(item, options));
                     }
                     registrarExpiresAt = array;
                     continue;
@@ -621,7 +621,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantNames = array;
                     continue;
@@ -635,7 +635,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminNames = array;
                     continue;
@@ -649,7 +649,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalNames = array;
                     continue;
@@ -663,7 +663,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminOrgs = array;
                     continue;
@@ -677,7 +677,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalOrgs = array;
                     continue;
@@ -691,7 +691,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     registrantPhones = array;
                     continue;
@@ -705,7 +705,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     adminPhones = array;
                     continue;
@@ -719,7 +719,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     technicalPhones = array;
                     continue;
@@ -748,7 +748,39 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IpBlockAsset(serializedAdditionalRawData, ipBlock.Value, Optional.ToList(asns), Optional.ToList(bgpPrefixes), Optional.ToList(netNames), Optional.ToList(registrantContacts), Optional.ToList(registrantOrgs), Optional.ToList(adminContacts), Optional.ToList(technicalContacts), Optional.ToList(registrarCreatedAt), Optional.ToList(registrarUpdatedAt), Optional.ToList(netRanges), startIp.Value, endIp.Value, Optional.ToList(reputations), Optional.ToNullable(detailedFromWhoisAt), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToList(location), Optional.ToList(registrarExpiresAt), Optional.ToList(registrantNames), Optional.ToList(adminNames), Optional.ToList(technicalNames), Optional.ToList(adminOrgs), Optional.ToList(technicalOrgs), Optional.ToList(registrantPhones), Optional.ToList(adminPhones), Optional.ToList(technicalPhones), Optional.ToNullable(ipv4), Optional.ToNullable(ipv6));
+            return new IpBlockAsset(
+                serializedAdditionalRawData,
+                ipBlock,
+                asns ?? new ChangeTrackingList<ObservedLong>(),
+                bgpPrefixes ?? new ChangeTrackingList<ObservedString>(),
+                netNames ?? new ChangeTrackingList<ObservedString>(),
+                registrantContacts ?? new ChangeTrackingList<ObservedString>(),
+                registrantOrgs ?? new ChangeTrackingList<ObservedString>(),
+                adminContacts ?? new ChangeTrackingList<ObservedString>(),
+                technicalContacts ?? new ChangeTrackingList<ObservedString>(),
+                registrarCreatedAt ?? new ChangeTrackingList<ObservedLong>(),
+                registrarUpdatedAt ?? new ChangeTrackingList<ObservedLong>(),
+                netRanges ?? new ChangeTrackingList<ObservedString>(),
+                startIp,
+                endIp,
+                reputations ?? new ChangeTrackingList<ReputationDetails>(),
+                detailedFromWhoisAt,
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                firstSeen,
+                lastSeen,
+                count,
+                location ?? new ChangeTrackingList<ObservedLocation>(),
+                registrarExpiresAt ?? new ChangeTrackingList<ObservedLong>(),
+                registrantNames ?? new ChangeTrackingList<ObservedString>(),
+                adminNames ?? new ChangeTrackingList<ObservedString>(),
+                technicalNames ?? new ChangeTrackingList<ObservedString>(),
+                adminOrgs ?? new ChangeTrackingList<ObservedString>(),
+                technicalOrgs ?? new ChangeTrackingList<ObservedString>(),
+                registrantPhones ?? new ChangeTrackingList<ObservedString>(),
+                adminPhones ?? new ChangeTrackingList<ObservedString>(),
+                technicalPhones ?? new ChangeTrackingList<ObservedString>(),
+                ipv4,
+                ipv6);
         }
 
         BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options)

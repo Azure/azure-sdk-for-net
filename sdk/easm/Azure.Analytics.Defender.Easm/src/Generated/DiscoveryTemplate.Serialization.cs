@@ -32,42 +32,42 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Industry))
+            if (Industry != null)
             {
                 writer.WritePropertyName("industry"u8);
                 writer.WriteStringValue(Industry);
             }
-            if (Optional.IsDefined(Region))
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(CountryCode))
+            if (CountryCode != null)
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (Optional.IsDefined(StateCode))
+            if (StateCode != null)
             {
                 writer.WritePropertyName("stateCode"u8);
                 writer.WriteStringValue(StateCode);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsCollectionDefined(Seeds))
+            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (!(Names is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -126,15 +126,15 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string id = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> industry = default;
-            Optional<string> region = default;
-            Optional<string> countryCode = default;
-            Optional<string> stateCode = default;
-            Optional<string> city = default;
-            Optional<IReadOnlyList<DiscoverySource>> seeds = default;
-            Optional<IReadOnlyList<string>> names = default;
+            string name = default;
+            string displayName = default;
+            string industry = default;
+            string region = default;
+            string countryCode = default;
+            string stateCode = default;
+            string city = default;
+            IReadOnlyList<DiscoverySource> seeds = default;
+            IReadOnlyList<string> names = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DiscoverySource> array = new List<DiscoverySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item));
+                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
@@ -213,7 +213,18 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveryTemplate(id, name.Value, displayName.Value, industry.Value, region.Value, countryCode.Value, stateCode.Value, city.Value, Optional.ToList(seeds), Optional.ToList(names), serializedAdditionalRawData);
+            return new DiscoveryTemplate(
+                id,
+                name,
+                displayName,
+                industry,
+                region,
+                countryCode,
+                stateCode,
+                city,
+                seeds ?? new ChangeTrackingList<DiscoverySource>(),
+                names ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoveryTemplate>.Write(ModelReaderWriterOptions options)

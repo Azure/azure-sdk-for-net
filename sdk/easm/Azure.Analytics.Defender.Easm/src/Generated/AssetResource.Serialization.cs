@@ -34,42 +34,42 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Uuid.HasValue)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid.Value);
             }
-            if (Optional.IsDefined(CreatedDate))
+            if (CreatedDate.HasValue)
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedDate.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedDate))
+            if (UpdatedDate.HasValue)
             {
                 writer.WritePropertyName("updatedDate"u8);
                 writer.WriteStringValue(UpdatedDate.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(ExternalId))
+            if (ExternalId != null)
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (Optional.IsCollectionDefined(Labels))
+            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -79,17 +79,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Wildcard))
+            if (Wildcard.HasValue)
             {
                 writer.WritePropertyName("wildcard"u8);
                 writer.WriteBooleanValue(Wildcard.Value);
             }
-            if (Optional.IsDefined(DiscoGroupName))
+            if (DiscoGroupName != null)
             {
                 writer.WritePropertyName("discoGroupName"u8);
                 writer.WriteStringValue(DiscoGroupName);
             }
-            if (Optional.IsCollectionDefined(AuditTrail))
+            if (!(AuditTrail is ChangeTrackingList<AuditTrailItem> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("auditTrail"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -146,17 +146,17 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "as": return AsAssetResource.DeserializeAsAssetResource(element);
-                    case "contact": return ContactAssetResource.DeserializeContactAssetResource(element);
-                    case "domain": return DomainAssetResource.DeserializeDomainAssetResource(element);
-                    case "host": return HostAssetResource.DeserializeHostAssetResource(element);
-                    case "ipAddress": return IpAddressAssetResource.DeserializeIpAddressAssetResource(element);
-                    case "ipBlock": return IpBlockAssetResource.DeserializeIpBlockAssetResource(element);
-                    case "page": return PageAssetResource.DeserializePageAssetResource(element);
-                    case "sslCert": return SslCertAssetResource.DeserializeSslCertAssetResource(element);
+                    case "as": return AsAssetResource.DeserializeAsAssetResource(element, options);
+                    case "contact": return ContactAssetResource.DeserializeContactAssetResource(element, options);
+                    case "domain": return DomainAssetResource.DeserializeDomainAssetResource(element, options);
+                    case "host": return HostAssetResource.DeserializeHostAssetResource(element, options);
+                    case "ipAddress": return IpAddressAssetResource.DeserializeIpAddressAssetResource(element, options);
+                    case "ipBlock": return IpBlockAssetResource.DeserializeIpBlockAssetResource(element, options);
+                    case "page": return PageAssetResource.DeserializePageAssetResource(element, options);
+                    case "sslCert": return SslCertAssetResource.DeserializeSslCertAssetResource(element, options);
                 }
             }
-            return UnknownAssetResource.DeserializeUnknownAssetResource(element);
+            return UnknownAssetResource.DeserializeUnknownAssetResource(element, options);
         }
 
         BinaryData IPersistableModel<AssetResource>.Write(ModelReaderWriterOptions options)

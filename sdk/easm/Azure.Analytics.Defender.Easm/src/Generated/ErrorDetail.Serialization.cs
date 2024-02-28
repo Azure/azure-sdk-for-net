@@ -31,12 +31,12 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStringValue(Code);
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingList<ErrorDetail> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Innererror))
+            if (Innererror != null)
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -91,9 +91,9 @@ namespace Azure.Analytics.Defender.Easm
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
-            Optional<InnerError> innererror = default;
+            string target = default;
+            IReadOnlyList<ErrorDetail> details = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorDetail(item));
+                        array.Add(DeserializeErrorDetail(item, options));
                     }
                     details = array;
                     continue;
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -142,7 +142,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDetail(code, message, target.Value, Optional.ToList(details), innererror.Value, serializedAdditionalRawData);
+            return new ErrorDetail(
+                code,
+                message,
+                target,
+                details ?? new ChangeTrackingList<ErrorDetail>(),
+                innererror,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ErrorDetail>.Write(ModelReaderWriterOptions options)

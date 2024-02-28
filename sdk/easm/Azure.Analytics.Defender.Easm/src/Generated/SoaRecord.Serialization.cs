@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameServer))
+            if (NameServer != null)
             {
                 writer.WritePropertyName("nameServer"u8);
                 writer.WriteStringValue(NameServer);
             }
-            if (Optional.IsDefined(Email))
+            if (Email != null)
             {
                 writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber.HasValue)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteNumberValue(SerialNumber.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -100,13 +100,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> nameServer = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<long> serialNumber = default;
-            Optional<bool> recent = default;
+            string nameServer = default;
+            string email = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            long? serialNumber = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,7 +172,15 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoaRecord(nameServer.Value, email.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(serialNumber), Optional.ToNullable(recent), serializedAdditionalRawData);
+            return new SoaRecord(
+                nameServer,
+                email,
+                firstSeen,
+                lastSeen,
+                count,
+                serialNumber,
+                recent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoaRecord>.Write(ModelReaderWriterOptions options)

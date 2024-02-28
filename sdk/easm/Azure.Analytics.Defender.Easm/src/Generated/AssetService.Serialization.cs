@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scheme))
+            if (Scheme != null)
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme);
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsCollectionDefined(WebComponents))
+            if (!(WebComponents is ChangeTrackingList<WebComponent> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("webComponents"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SslCerts))
+            if (!(SslCerts is ChangeTrackingList<SslCertAsset> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("sslCerts"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Exceptions))
+            if (!(Exceptions is ChangeTrackingList<ObservedString> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("exceptions"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -77,27 +77,27 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsCollectionDefined(PortStates))
+            if (!(PortStates is ChangeTrackingList<ObservedPortState> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("portStates"u8);
                 writer.WriteStartArray();
@@ -145,17 +145,17 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> scheme = default;
-            Optional<int> port = default;
-            Optional<IReadOnlyList<WebComponent>> webComponents = default;
-            Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<ObservedString>> exceptions = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
-            Optional<IReadOnlyList<ObservedPortState>> portStates = default;
+            string scheme = default;
+            int? port = default;
+            IReadOnlyList<WebComponent> webComponents = default;
+            IReadOnlyList<SslCertAsset> sslCerts = default;
+            IReadOnlyList<ObservedString> exceptions = default;
+            IReadOnlyList<SourceDetails> sources = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
+            IReadOnlyList<ObservedPortState> portStates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<WebComponent> array = new List<WebComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebComponent.DeserializeWebComponent(item));
+                        array.Add(WebComponent.DeserializeWebComponent(item, options));
                     }
                     webComponents = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SslCertAsset> array = new List<SslCertAsset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SslCertAsset.DeserializeSslCertAsset(item));
+                        array.Add(SslCertAsset.DeserializeSslCertAsset(item, options));
                     }
                     sslCerts = array;
                     continue;
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedString> array = new List<ObservedString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedString.DeserializeObservedString(item));
+                        array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
                     exceptions = array;
                     continue;
@@ -225,7 +225,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ObservedPortState> array = new List<ObservedPortState>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ObservedPortState.DeserializeObservedPortState(item));
+                        array.Add(ObservedPortState.DeserializeObservedPortState(item, options));
                     }
                     portStates = array;
                     continue;
@@ -286,7 +286,19 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssetService(scheme.Value, Optional.ToNullable(port), Optional.ToList(webComponents), Optional.ToList(sslCerts), Optional.ToList(exceptions), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), Optional.ToList(portStates), serializedAdditionalRawData);
+            return new AssetService(
+                scheme,
+                port,
+                webComponents ?? new ChangeTrackingList<WebComponent>(),
+                sslCerts ?? new ChangeTrackingList<SslCertAsset>(),
+                exceptions ?? new ChangeTrackingList<ObservedString>(),
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                portStates ?? new ChangeTrackingList<ObservedPortState>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssetService>.Write(ModelReaderWriterOptions options)

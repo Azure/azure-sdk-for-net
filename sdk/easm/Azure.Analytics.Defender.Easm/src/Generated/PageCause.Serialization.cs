@@ -27,37 +27,37 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cause))
+            if (Cause != null)
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Optional.IsDefined(CauseElementXPath))
+            if (CauseElementXPath != null)
             {
                 writer.WritePropertyName("causeElementXPath"u8);
                 writer.WriteStringValue(CauseElementXPath);
             }
-            if (Optional.IsDefined(Location))
+            if (Location != null)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsDefined(PossibleMatches))
+            if (PossibleMatches.HasValue)
             {
                 writer.WritePropertyName("possibleMatches"u8);
                 writer.WriteNumberValue(PossibleMatches.Value);
             }
-            if (Optional.IsDefined(LoopDetected))
+            if (LoopDetected.HasValue)
             {
                 writer.WritePropertyName("loopDetected"u8);
                 writer.WriteBooleanValue(LoopDetected.Value);
             }
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(DomChangeIndex))
+            if (DomChangeIndex.HasValue)
             {
                 writer.WritePropertyName("domChangeIndex"u8);
                 writer.WriteNumberValue(DomChangeIndex.Value);
@@ -100,13 +100,13 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> cause = default;
-            Optional<string> causeElementXPath = default;
-            Optional<string> location = default;
-            Optional<int> possibleMatches = default;
-            Optional<bool> loopDetected = default;
-            Optional<int> version = default;
-            Optional<int> domChangeIndex = default;
+            string cause = default;
+            string causeElementXPath = default;
+            string location = default;
+            int? possibleMatches = default;
+            bool? loopDetected = default;
+            int? version = default;
+            int? domChangeIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,15 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PageCause(cause.Value, causeElementXPath.Value, location.Value, Optional.ToNullable(possibleMatches), Optional.ToNullable(loopDetected), Optional.ToNullable(version), Optional.ToNullable(domChangeIndex), serializedAdditionalRawData);
+            return new PageCause(
+                cause,
+                causeElementXPath,
+                location,
+                possibleMatches,
+                loopDetected,
+                version,
+                domChangeIndex,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PageCause>.Write(ModelReaderWriterOptions options)

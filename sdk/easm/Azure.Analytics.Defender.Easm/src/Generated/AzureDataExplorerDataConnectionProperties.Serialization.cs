@@ -27,17 +27,17 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClusterName))
+            if (ClusterName != null)
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (Optional.IsDefined(Region))
+            if (Region != null)
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (Optional.IsDefined(DatabaseName))
+            if (DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -80,9 +80,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> clusterName = default;
-            Optional<string> region = default;
-            Optional<string> databaseName = default;
+            string clusterName = default;
+            string region = default;
+            string databaseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureDataExplorerDataConnectionProperties(serializedAdditionalRawData, clusterName.Value, region.Value, databaseName.Value);
+            return new AzureDataExplorerDataConnectionProperties(serializedAdditionalRawData, clusterName, region, databaseName);
         }
 
         BinaryData IPersistableModel<AzureDataExplorerDataConnectionProperties>.Write(ModelReaderWriterOptions options)

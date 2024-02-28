@@ -27,32 +27,32 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Metric))
+            if (Metric != null)
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (UpdatedAt.HasValue)
             {
                 writer.WritePropertyName("updatedAt"u8);
                 writer.WriteStringValue(UpdatedAt.Value, "O");
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Assets))
+            if (Assets != null)
             {
                 writer.WritePropertyName("assets"u8);
                 writer.WriteObjectValue(Assets);
@@ -95,12 +95,12 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> metric = default;
-            Optional<string> labelName = default;
-            Optional<DateTimeOffset> updatedAt = default;
-            Optional<string> description = default;
-            Optional<AssetPageResult> assets = default;
+            string displayName = default;
+            string metric = default;
+            string labelName = default;
+            DateTimeOffset? updatedAt = default;
+            string description = default;
+            AssetPageResult assets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    assets = AssetPageResult.DeserializeAssetPageResult(property.Value);
+                    assets = AssetPageResult.DeserializeAssetPageResult(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportAssetSnapshotResult(displayName.Value, metric.Value, labelName.Value, Optional.ToNullable(updatedAt), description.Value, assets.Value, serializedAdditionalRawData);
+            return new ReportAssetSnapshotResult(
+                displayName,
+                metric,
+                labelName,
+                updatedAt,
+                description,
+                assets,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportAssetSnapshotResult>.Write(ModelReaderWriterOptions options)

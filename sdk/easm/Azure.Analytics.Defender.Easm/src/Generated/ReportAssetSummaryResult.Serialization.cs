@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AssetSummaries))
+            if (!(AssetSummaries is ChangeTrackingList<AssetSummaryResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assetSummaries"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<IReadOnlyList<AssetSummaryResult>> assetSummaries = default;
+            IReadOnlyList<AssetSummaryResult> assetSummaries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<AssetSummaryResult> array = new List<AssetSummaryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetSummaryResult.DeserializeAssetSummaryResult(item));
+                        array.Add(AssetSummaryResult.DeserializeAssetSummaryResult(item, options));
                     }
                     assetSummaries = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportAssetSummaryResult(Optional.ToList(assetSummaries), serializedAdditionalRawData);
+            return new ReportAssetSummaryResult(assetSummaries ?? new ChangeTrackingList<AssetSummaryResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportAssetSummaryResult>.Write(ModelReaderWriterOptions options)

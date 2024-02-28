@@ -27,47 +27,47 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Violation))
+            if (Violation.HasValue)
             {
                 writer.WritePropertyName("violation"u8);
                 writer.WriteBooleanValue(Violation.Value);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(CausePageUrl))
+            if (CausePageUrl != null)
             {
                 writer.WritePropertyName("causePageUrl"u8);
                 writer.WriteStringValue(CausePageUrl);
             }
-            if (Optional.IsDefined(CrawlGuid))
+            if (CrawlGuid != null)
             {
                 writer.WritePropertyName("crawlGuid"u8);
                 writer.WriteStringValue(CrawlGuid);
             }
-            if (Optional.IsDefined(PageGuid))
+            if (PageGuid != null)
             {
                 writer.WritePropertyName("pageGuid"u8);
                 writer.WriteStringValue(PageGuid);
             }
-            if (Optional.IsDefined(ResourceGuid))
+            if (ResourceGuid != null)
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (Optional.IsDefined(ExpectedHash))
+            if (ExpectedHash != null)
             {
                 writer.WritePropertyName("expectedHash"u8);
                 writer.WriteStringValue(ExpectedHash);
@@ -110,15 +110,15 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<bool> violation = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<string> causePageUrl = default;
-            Optional<string> crawlGuid = default;
-            Optional<string> pageGuid = default;
-            Optional<string> resourceGuid = default;
-            Optional<string> expectedHash = default;
+            bool? violation = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            string causePageUrl = default;
+            string crawlGuid = default;
+            string pageGuid = default;
+            string resourceGuid = default;
+            string expectedHash = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubResourceIntegrityCheck(Optional.ToNullable(violation), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), causePageUrl.Value, crawlGuid.Value, pageGuid.Value, resourceGuid.Value, expectedHash.Value, serializedAdditionalRawData);
+            return new SubResourceIntegrityCheck(
+                violation,
+                firstSeen,
+                lastSeen,
+                count,
+                causePageUrl,
+                crawlGuid,
+                pageGuid,
+                resourceGuid,
+                expectedHash,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubResourceIntegrityCheck>.Write(ModelReaderWriterOptions options)

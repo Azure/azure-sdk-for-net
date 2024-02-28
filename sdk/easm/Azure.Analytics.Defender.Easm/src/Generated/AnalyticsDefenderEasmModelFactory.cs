@@ -35,7 +35,22 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new UnknownAssetResource(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null);
+            return new UnknownAssetResource(
+                kind,
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AuditTrailItem"/>. </summary>
@@ -47,7 +62,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.AuditTrailItem"/> instance for mocking. </returns>
         public static AuditTrailItem AuditTrailItem(string id = null, string name = null, string displayName = null, AuditTrailItemKind? kind = null, string reason = null)
         {
-            return new AuditTrailItem(id, name, displayName, kind, reason, serializedAdditionalRawData: null);
+            return new AuditTrailItem(
+                id,
+                name,
+                displayName,
+                kind,
+                reason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.TaskResource"/>. </summary>
@@ -64,7 +85,16 @@ namespace Azure.Analytics.Defender.Easm
         {
             metadata ??= new Dictionary<string, BinaryData>();
 
-            return new TaskResource(id, startedAt, completedAt, lastPolledAt, state, phase, reason, metadata, serializedAdditionalRawData: null);
+            return new TaskResource(
+                id,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DataConnection"/>. </summary>
@@ -83,7 +113,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.DataConnection"/> instance for mocking. </returns>
         public static DataConnection DataConnection(string kind = null, string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null)
         {
-            return new UnknownDataConnection(kind, id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData: null);
+            return new UnknownDataConnection(
+                kind,
+                id,
+                name,
+                displayName,
+                content,
+                createdDate,
+                frequency,
+                frequencyOffset,
+                updatedDate,
+                userUpdatedAt,
+                active,
+                inactiveMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ValidateResult"/>. </summary>
@@ -105,7 +148,13 @@ namespace Azure.Analytics.Defender.Easm
         {
             details ??= new List<ErrorDetail>();
 
-            return new ErrorDetail(code, message, target, details?.ToList(), innererror, serializedAdditionalRawData: null);
+            return new ErrorDetail(
+                code,
+                message,
+                target,
+                details?.ToList(),
+                innererror,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.InnerError"/>. </summary>
@@ -137,7 +186,20 @@ namespace Azure.Analytics.Defender.Easm
             names ??= new List<string>();
             excludes ??= new List<DiscoverySource>();
 
-            return new DiscoveryGroup(id, name, displayName, description, tier, frequencyMilliseconds, seeds?.ToList(), names?.ToList(), excludes?.ToList(), latestRun, createdDate, templateId, serializedAdditionalRawData: null);
+            return new DiscoveryGroup(
+                id,
+                name,
+                displayName,
+                description,
+                tier,
+                frequencyMilliseconds,
+                seeds?.ToList(),
+                names?.ToList(),
+                excludes?.ToList(),
+                latestRun,
+                createdDate,
+                templateId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DiscoveryRunResult"/>. </summary>
@@ -157,7 +219,17 @@ namespace Azure.Analytics.Defender.Easm
             excludes ??= new List<DiscoverySource>();
             names ??= new List<string>();
 
-            return new DiscoveryRunResult(submittedDate, startedDate, completedDate, tier, state, totalAssetsFoundCount, seeds?.ToList(), excludes?.ToList(), names?.ToList(), serializedAdditionalRawData: null);
+            return new DiscoveryRunResult(
+                submittedDate,
+                startedDate,
+                completedDate,
+                tier,
+                state,
+                totalAssetsFoundCount,
+                seeds?.ToList(),
+                excludes?.ToList(),
+                names?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DiscoveryTemplate"/>. </summary>
@@ -177,7 +249,18 @@ namespace Azure.Analytics.Defender.Easm
             seeds ??= new List<DiscoverySource>();
             names ??= new List<string>();
 
-            return new DiscoveryTemplate(id, name, displayName, industry, region, countryCode, stateCode, city, seeds?.ToList(), names?.ToList(), serializedAdditionalRawData: null);
+            return new DiscoveryTemplate(
+                id,
+                name,
+                displayName,
+                industry,
+                region,
+                countryCode,
+                stateCode,
+                city,
+                seeds?.ToList(),
+                names?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ReportBillableAssetSummaryResult"/>. </summary>
@@ -221,7 +304,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.ReportAssetSnapshotResult"/> instance for mocking. </returns>
         public static ReportAssetSnapshotResult ReportAssetSnapshotResult(string displayName = null, string metric = null, string labelName = null, DateTimeOffset? updatedAt = null, string description = null, AssetPageResult assets = null)
         {
-            return new ReportAssetSnapshotResult(displayName, metric, labelName, updatedAt, description, assets, serializedAdditionalRawData: null);
+            return new ReportAssetSnapshotResult(
+                displayName,
+                metric,
+                labelName,
+                updatedAt,
+                description,
+                assets,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AssetPageResult"/>. </summary>
@@ -263,7 +353,18 @@ namespace Azure.Analytics.Defender.Easm
         {
             children ??= new List<AssetSummaryResult>();
 
-            return new AssetSummaryResult(displayName, description, updatedAt, metricCategory, metric, filter, labelName, count, link, children?.ToList(), serializedAdditionalRawData: null);
+            return new AssetSummaryResult(
+                displayName,
+                description,
+                updatedAt,
+                metricCategory,
+                metric,
+                filter,
+                labelName,
+                count,
+                link,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SavedFilter"/>. </summary>
@@ -275,7 +376,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.SavedFilter"/> instance for mocking. </returns>
         public static SavedFilter SavedFilter(string id = null, string name = null, string displayName = null, string filter = null, string description = null)
         {
-            return new SavedFilter(id, name, displayName, filter, description, serializedAdditionalRawData: null);
+            return new SavedFilter(
+                id,
+                name,
+                displayName,
+                filter,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AlexaInfo"/>. </summary>
@@ -288,7 +395,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.AlexaInfo"/> instance for mocking. </returns>
         public static AlexaInfo AlexaInfo(long? alexaRank = null, string category = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null)
         {
-            return new AlexaInfo(alexaRank, category, firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
+            return new AlexaInfo(
+                alexaRank,
+                category,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AsAsset"/>. </summary>
@@ -341,7 +455,33 @@ namespace Azure.Analytics.Defender.Easm
             adminPhones ??= new List<ObservedString>();
             technicalPhones ??= new List<ObservedString>();
 
-            return new AsAsset(serializedAdditionalRawData: null, asn, asNames?.ToList(), orgNames?.ToList(), orgIds?.ToList(), countries?.ToList(), registries?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, registrarCreatedAt?.ToList(), registrarUpdatedAt?.ToList(), registrantContacts?.ToList(), adminContacts?.ToList(), technicalContacts?.ToList(), registrarNames?.ToList(), registrantNames?.ToList(), adminNames?.ToList(), technicalNames?.ToList(), adminOrgs?.ToList(), technicalOrgs?.ToList(), registrantPhones?.ToList(), adminPhones?.ToList(), technicalPhones?.ToList(), detailedFromWhoisAt);
+            return new AsAsset(
+                serializedAdditionalRawData: null,
+                asn,
+                asNames?.ToList(),
+                orgNames?.ToList(),
+                orgIds?.ToList(),
+                countries?.ToList(),
+                registries?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                registrarCreatedAt?.ToList(),
+                registrarUpdatedAt?.ToList(),
+                registrantContacts?.ToList(),
+                adminContacts?.ToList(),
+                technicalContacts?.ToList(),
+                registrarNames?.ToList(),
+                registrantNames?.ToList(),
+                adminNames?.ToList(),
+                technicalNames?.ToList(),
+                adminOrgs?.ToList(),
+                technicalOrgs?.ToList(),
+                registrantPhones?.ToList(),
+                adminPhones?.ToList(),
+                technicalPhones?.ToList(),
+                detailedFromWhoisAt);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedValue"/>. </summary>
@@ -367,7 +507,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new ObservedString(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, sources?.ToList());
+            return new ObservedString(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SourceDetails"/>. </summary>
@@ -379,7 +526,13 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.SourceDetails"/> instance for mocking. </returns>
         public static SourceDetails SourceDetails(string sourceName = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string reason = null)
         {
-            return new SourceDetails(sourceName, firstSeen, lastSeen, count, reason, serializedAdditionalRawData: null);
+            return new SourceDetails(
+                sourceName,
+                firstSeen,
+                lastSeen,
+                count,
+                reason,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedLong"/>. </summary>
@@ -394,7 +547,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new ObservedLong(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, sources?.ToList());
+            return new ObservedLong(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AssetSecurityPolicy"/>. </summary>
@@ -411,7 +571,16 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new AssetSecurityPolicy(policyName, isAffected, description, firstSeen, lastSeen, count, recent, sources?.ToList(), serializedAdditionalRawData: null);
+            return new AssetSecurityPolicy(
+                policyName,
+                isAffected,
+                description,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                sources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AttributeDetails"/>. </summary>
@@ -427,7 +596,15 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new AttributeDetails(attributeType, attributeValue, sources?.ToList(), firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
+            return new AttributeDetails(
+                attributeType,
+                attributeValue,
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.BannerDetails"/>. </summary>
@@ -446,7 +623,18 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new BannerDetails(port, bannerName, firstSeen, lastSeen, count, scanType, bannerMetadata, recent, sha256, sources?.ToList(), serializedAdditionalRawData: null);
+            return new BannerDetails(
+                port,
+                bannerName,
+                firstSeen,
+                lastSeen,
+                count,
+                scanType,
+                bannerMetadata,
+                recent,
+                sha256,
+                sources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.Cvss3Summary"/>. </summary>
@@ -470,7 +658,25 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.Cvss3Summary"/> instance for mocking. </returns>
         public static Cvss3Summary Cvss3Summary(string version = null, string vectorString = null, string attackVector = null, string attackComplexity = null, string privilegesRequired = null, string userInteraction = null, string scope = null, string confidentialityImpact = null, string integrityImpact = null, string availabilityImpact = null, float? baseScore = null, string baseSeverity = null, string exploitCodeMaturity = null, string remediationLevel = null, string reportConfidence = null, float? exploitabilityScore = null, float? impactScore = null)
         {
-            return new Cvss3Summary(version, vectorString, attackVector, attackComplexity, privilegesRequired, userInteraction, scope, confidentialityImpact, integrityImpact, availabilityImpact, baseScore, baseSeverity, exploitCodeMaturity, remediationLevel, reportConfidence, exploitabilityScore, impactScore, serializedAdditionalRawData: null);
+            return new Cvss3Summary(
+                version,
+                vectorString,
+                attackVector,
+                attackComplexity,
+                privilegesRequired,
+                userInteraction,
+                scope,
+                confidentialityImpact,
+                integrityImpact,
+                availabilityImpact,
+                baseScore,
+                baseSeverity,
+                exploitCodeMaturity,
+                remediationLevel,
+                reportConfidence,
+                exploitabilityScore,
+                impactScore,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ContactAsset"/>. </summary>
@@ -488,7 +694,15 @@ namespace Azure.Analytics.Defender.Easm
             organizations ??= new List<ObservedString>();
             sources ??= new List<SourceDetails>();
 
-            return new ContactAsset(serializedAdditionalRawData: null, email, names?.ToList(), organizations?.ToList(), sources?.ToList(), firstSeen, lastSeen, count);
+            return new ContactAsset(
+                serializedAdditionalRawData: null,
+                email,
+                names?.ToList(),
+                organizations?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.CookieDetails"/>. </summary>
@@ -502,7 +716,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.CookieDetails"/> instance for mocking. </returns>
         public static CookieDetails CookieDetails(string cookieName = null, string cookieDomain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, DateTimeOffset? cookieExpiryDate = null)
         {
-            return new CookieDetails(cookieName, cookieDomain, firstSeen, lastSeen, count, recent, cookieExpiryDate, serializedAdditionalRawData: null);
+            return new CookieDetails(
+                cookieName,
+                cookieDomain,
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                cookieExpiryDate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.CveDetails"/>. </summary>
@@ -547,7 +769,32 @@ namespace Azure.Analytics.Defender.Easm
             responseBodyMinhash ??= new List<int>();
             sriChecks ??= new List<SubResourceIntegrityCheck>();
 
-            return new DependentResource(md5, responseBodySize, firstSeen, lastSeen, count, firstSeenCrawlGuid, firstSeenPageGuid, firstSeenResourceGuid, lastSeenCrawlGuid, lastSeenPageGuid, lastSeenResourceGuid, responseBodyMinhash?.ToList(), contentType, sha256, sha384, sha512, url, cached, sriChecks?.ToList(), host, lastObservedViolation, lastObservedValidation, lastObservedActualSriHash, lastObservedExpectedSriHash, serializedAdditionalRawData: null);
+            return new DependentResource(
+                md5,
+                responseBodySize,
+                firstSeen,
+                lastSeen,
+                count,
+                firstSeenCrawlGuid,
+                firstSeenPageGuid,
+                firstSeenResourceGuid,
+                lastSeenCrawlGuid,
+                lastSeenPageGuid,
+                lastSeenResourceGuid,
+                responseBodyMinhash?.ToList(),
+                contentType,
+                sha256,
+                sha384,
+                sha512,
+                url,
+                cached,
+                sriChecks?.ToList(),
+                host,
+                lastObservedViolation,
+                lastObservedValidation,
+                lastObservedActualSriHash,
+                lastObservedExpectedSriHash,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SubResourceIntegrityCheck"/>. </summary>
@@ -563,7 +810,17 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.SubResourceIntegrityCheck"/> instance for mocking. </returns>
         public static SubResourceIntegrityCheck SubResourceIntegrityCheck(bool? violation = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, string causePageUrl = null, string crawlGuid = null, string pageGuid = null, string resourceGuid = null, string expectedHash = null)
         {
-            return new SubResourceIntegrityCheck(violation, firstSeen, lastSeen, count, causePageUrl, crawlGuid, pageGuid, resourceGuid, expectedHash, serializedAdditionalRawData: null);
+            return new SubResourceIntegrityCheck(
+                violation,
+                firstSeen,
+                lastSeen,
+                count,
+                causePageUrl,
+                crawlGuid,
+                pageGuid,
+                resourceGuid,
+                expectedHash,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DomainAsset"/>. </summary>
@@ -627,7 +884,39 @@ namespace Azure.Analytics.Defender.Easm
             adminPhones ??= new List<ObservedString>();
             technicalPhones ??= new List<ObservedString>();
 
-            return new DomainAsset(domain, whoisId, registrarIanaIds?.ToList(), registrantContacts?.ToList(), registrantOrgs?.ToList(), adminContacts?.ToList(), technicalContacts?.ToList(), alexaInfos?.ToList(), nameServers?.ToList(), mailServers?.ToList(), whoisServers?.ToList(), domainStatuses?.ToList(), registrarCreatedAt?.ToList(), registrarUpdatedAt?.ToList(), registrarExpiresAt?.ToList(), soaRecords?.ToList(), detailedFromWhoisAt, registrarNames?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, parkedDomain?.ToList(), registrantNames?.ToList(), adminNames?.ToList(), technicalNames?.ToList(), adminOrgs?.ToList(), technicalOrgs?.ToList(), registrantPhones?.ToList(), adminPhones?.ToList(), technicalPhones?.ToList(), serializedAdditionalRawData: null);
+            return new DomainAsset(
+                domain,
+                whoisId,
+                registrarIanaIds?.ToList(),
+                registrantContacts?.ToList(),
+                registrantOrgs?.ToList(),
+                adminContacts?.ToList(),
+                technicalContacts?.ToList(),
+                alexaInfos?.ToList(),
+                nameServers?.ToList(),
+                mailServers?.ToList(),
+                whoisServers?.ToList(),
+                domainStatuses?.ToList(),
+                registrarCreatedAt?.ToList(),
+                registrarUpdatedAt?.ToList(),
+                registrarExpiresAt?.ToList(),
+                soaRecords?.ToList(),
+                detailedFromWhoisAt,
+                registrarNames?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                parkedDomain?.ToList(),
+                registrantNames?.ToList(),
+                adminNames?.ToList(),
+                technicalNames?.ToList(),
+                adminOrgs?.ToList(),
+                technicalOrgs?.ToList(),
+                registrantPhones?.ToList(),
+                adminPhones?.ToList(),
+                technicalPhones?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedInteger"/>. </summary>
@@ -642,7 +931,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new ObservedInteger(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, sources?.ToList());
+            return new ObservedInteger(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SoaRecord"/>. </summary>
@@ -656,7 +952,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.SoaRecord"/> instance for mocking. </returns>
         public static SoaRecord SoaRecord(string nameServer = null, string email = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, long? serialNumber = null, bool? recent = null)
         {
-            return new SoaRecord(nameServer, email, firstSeen, lastSeen, count, serialNumber, recent, serializedAdditionalRawData: null);
+            return new SoaRecord(
+                nameServer,
+                email,
+                firstSeen,
+                lastSeen,
+                count,
+                serialNumber,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedBoolean"/>. </summary>
@@ -671,7 +975,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new ObservedBoolean(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, sources?.ToList());
+            return new ObservedBoolean(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.GuidPair"/>. </summary>
@@ -749,7 +1060,41 @@ namespace Azure.Analytics.Defender.Easm
             ipv4 ??= new List<ObservedBoolean>();
             ipv6 ??= new List<ObservedBoolean>();
 
-            return new HostAsset(serializedAdditionalRawData: null, host, domain, ipAddresses?.ToList(), webComponents?.ToList(), headers?.ToList(), attributes?.ToList(), cookies?.ToList(), sslCerts?.ToList(), parentHosts?.ToList(), childHosts?.ToList(), hostCore, services?.ToList(), cnames?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, resourceUrls?.ToList(), scanMetadata?.ToList(), asns?.ToList(), ipBlocks?.ToList(), responseBodies?.ToList(), domainAsset, nsRecord?.ToList(), mxRecord?.ToList(), webserver?.ToList(), location?.ToList(), nxdomain?.ToList(), sslServerConfig?.ToList(), isWildcard?.ToList(), banners?.ToList(), ipv4?.ToList(), ipv6?.ToList());
+            return new HostAsset(
+                serializedAdditionalRawData: null,
+                host,
+                domain,
+                ipAddresses?.ToList(),
+                webComponents?.ToList(),
+                headers?.ToList(),
+                attributes?.ToList(),
+                cookies?.ToList(),
+                sslCerts?.ToList(),
+                parentHosts?.ToList(),
+                childHosts?.ToList(),
+                hostCore,
+                services?.ToList(),
+                cnames?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                resourceUrls?.ToList(),
+                scanMetadata?.ToList(),
+                asns?.ToList(),
+                ipBlocks?.ToList(),
+                responseBodies?.ToList(),
+                domainAsset,
+                nsRecord?.ToList(),
+                mxRecord?.ToList(),
+                webserver?.ToList(),
+                location?.ToList(),
+                nxdomain?.ToList(),
+                sslServerConfig?.ToList(),
+                isWildcard?.ToList(),
+                banners?.ToList(),
+                ipv4?.ToList(),
+                ipv6?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.WebComponent"/>. </summary>
@@ -774,7 +1119,21 @@ namespace Azure.Analytics.Defender.Easm
             ports ??= new List<PortDetails>();
             sources ??= new List<SourceDetails>();
 
-            return new WebComponent(name, type, version, ruleId?.ToList(), firstSeen, lastSeen, count, cve?.ToList(), endOfLife, recent, ports?.ToList(), sources?.ToList(), service, serializedAdditionalRawData: null);
+            return new WebComponent(
+                name,
+                type,
+                version,
+                ruleId?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                cve?.ToList(),
+                endOfLife,
+                recent,
+                ports?.ToList(),
+                sources?.ToList(),
+                service,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.PortDetails"/>. </summary>
@@ -798,7 +1157,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.ObservedHeader"/> instance for mocking. </returns>
         public static ObservedHeader ObservedHeader(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, string headerName = null, string headerValue = null)
         {
-            return new ObservedHeader(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, headerName, headerValue);
+            return new ObservedHeader(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                headerName,
+                headerValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SslCertAsset"/>. </summary>
@@ -856,7 +1222,41 @@ namespace Azure.Analytics.Defender.Easm
             issuerOrganizations ??= new List<string>();
             issuerOrganizationalUnits ??= new List<string>();
 
-            return new SslCertAsset(serializedAdditionalRawData: null, sha1, subjectCommonNames?.ToList(), organizations?.ToList(), organizationalUnits?.ToList(), issuerCommonNames?.ToList(), sigAlgName, invalidAfter, serialNumber, subjectAlternativeNames?.ToList(), issuerAlternativeNames?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, invalidBefore, keySize, keyAlgorithm, subjectLocality?.ToList(), subjectState?.ToList(), subjectCountry?.ToList(), issuerLocality?.ToList(), issuerState?.ToList(), issuerCountry?.ToList(), subjectOrganizations?.ToList(), subjectOrganizationalUnits?.ToList(), issuerOrganizations?.ToList(), issuerOrganizationalUnits?.ToList(), version, certificateAuthority, selfSigned, sigAlgOid, recent, validationType);
+            return new SslCertAsset(
+                serializedAdditionalRawData: null,
+                sha1,
+                subjectCommonNames?.ToList(),
+                organizations?.ToList(),
+                organizationalUnits?.ToList(),
+                issuerCommonNames?.ToList(),
+                sigAlgName,
+                invalidAfter,
+                serialNumber,
+                subjectAlternativeNames?.ToList(),
+                issuerAlternativeNames?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                invalidBefore,
+                keySize,
+                keyAlgorithm,
+                subjectLocality?.ToList(),
+                subjectState?.ToList(),
+                subjectCountry?.ToList(),
+                issuerLocality?.ToList(),
+                issuerState?.ToList(),
+                issuerCountry?.ToList(),
+                subjectOrganizations?.ToList(),
+                subjectOrganizationalUnits?.ToList(),
+                issuerOrganizations?.ToList(),
+                issuerOrganizationalUnits?.ToList(),
+                version,
+                certificateAuthority,
+                selfSigned,
+                sigAlgOid,
+                recent,
+                validationType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.HostCore"/>. </summary>
@@ -901,7 +1301,46 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.HostCore"/> instance for mocking. </returns>
         public static HostCore HostCore(string host = null, string domain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, DateTimeOffset? blacklistCauseFirstSeen = null, DateTimeOffset? blacklistCauseLastSeen = null, long? blacklistCauseCount = null, DateTimeOffset? blacklistResourceFirstSeen = null, DateTimeOffset? blacklistResourceLastSeen = null, long? blacklistResourceCount = null, DateTimeOffset? blacklistSequenceFirstSeen = null, DateTimeOffset? blacklistSequenceLastSeen = null, long? blacklistSequenceCount = null, long? phishCauseCount = null, long? malwareCauseCount = null, long? spamCauseCount = null, long? scamCauseCount = null, long? phishResourceCount = null, long? malwareResourceCount = null, long? spamResourceCount = null, long? scamResourceCount = null, long? phishSequenceCount = null, long? malwareSequenceCount = null, long? spamSequenceCount = null, long? scamSequenceCount = null, int? alexaRank = null, int? hostReputationScore = null, int? hostPhishReputationScore = null, int? hostMalwareReputationScore = null, int? hostSpamReputationScore = null, int? hostScamReputationScore = null, int? domainReputationScore = null, int? domainPhishReputationScore = null, int? domainMalwareReputationScore = null, int? domainSpamReputationScore = null, int? domainScamReputationScore = null, string uuid = null)
         {
-            return new HostCore(host, domain, firstSeen, lastSeen, count, blacklistCauseFirstSeen, blacklistCauseLastSeen, blacklistCauseCount, blacklistResourceFirstSeen, blacklistResourceLastSeen, blacklistResourceCount, blacklistSequenceFirstSeen, blacklistSequenceLastSeen, blacklistSequenceCount, phishCauseCount, malwareCauseCount, spamCauseCount, scamCauseCount, phishResourceCount, malwareResourceCount, spamResourceCount, scamResourceCount, phishSequenceCount, malwareSequenceCount, spamSequenceCount, scamSequenceCount, alexaRank, hostReputationScore, hostPhishReputationScore, hostMalwareReputationScore, hostSpamReputationScore, hostScamReputationScore, domainReputationScore, domainPhishReputationScore, domainMalwareReputationScore, domainSpamReputationScore, domainScamReputationScore, uuid, serializedAdditionalRawData: null);
+            return new HostCore(
+                host,
+                domain,
+                firstSeen,
+                lastSeen,
+                count,
+                blacklistCauseFirstSeen,
+                blacklistCauseLastSeen,
+                blacklistCauseCount,
+                blacklistResourceFirstSeen,
+                blacklistResourceLastSeen,
+                blacklistResourceCount,
+                blacklistSequenceFirstSeen,
+                blacklistSequenceLastSeen,
+                blacklistSequenceCount,
+                phishCauseCount,
+                malwareCauseCount,
+                spamCauseCount,
+                scamCauseCount,
+                phishResourceCount,
+                malwareResourceCount,
+                spamResourceCount,
+                scamResourceCount,
+                phishSequenceCount,
+                malwareSequenceCount,
+                spamSequenceCount,
+                scamSequenceCount,
+                alexaRank,
+                hostReputationScore,
+                hostPhishReputationScore,
+                hostMalwareReputationScore,
+                hostSpamReputationScore,
+                hostScamReputationScore,
+                domainReputationScore,
+                domainPhishReputationScore,
+                domainMalwareReputationScore,
+                domainSpamReputationScore,
+                domainScamReputationScore,
+                uuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AssetService"/>. </summary>
@@ -925,7 +1364,19 @@ namespace Azure.Analytics.Defender.Easm
             sources ??= new List<SourceDetails>();
             portStates ??= new List<ObservedPortState>();
 
-            return new AssetService(scheme, port, webComponents?.ToList(), sslCerts?.ToList(), exceptions?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, recent, portStates?.ToList(), serializedAdditionalRawData: null);
+            return new AssetService(
+                scheme,
+                port,
+                webComponents?.ToList(),
+                sslCerts?.ToList(),
+                exceptions?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                portStates?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedPortState"/>. </summary>
@@ -938,7 +1389,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.ObservedPortState"/> instance for mocking. </returns>
         public static ObservedPortState ObservedPortState(DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, ObservedPortStateValue? value = null, int? port = null)
         {
-            return new ObservedPortState(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, port);
+            return new ObservedPortState(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                port);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ResourceUri"/>. </summary>
@@ -953,7 +1411,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             resources ??= new List<DependentResource>();
 
-            return new ResourceUri(url, resources?.ToList(), firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
+            return new ResourceUri(
+                url,
+                resources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ScanMetadata"/>. </summary>
@@ -979,7 +1444,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new IpBlock(ipBlockName, sources?.ToList(), firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null);
+            return new IpBlock(
+                ipBlockName,
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedLocation"/>. </summary>
@@ -994,7 +1466,14 @@ namespace Azure.Analytics.Defender.Easm
         {
             sources ??= new List<SourceDetails>();
 
-            return new ObservedLocation(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, value, sources?.ToList());
+            return new ObservedLocation(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                value,
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedLocationDetails"/>. </summary>
@@ -1012,7 +1491,19 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.ObservedLocationDetails"/> instance for mocking. </returns>
         public static ObservedLocationDetails ObservedLocationDetails(string countryCode = null, string countryName = null, string region = null, string regionName = null, string city = null, int? areaCode = null, string postalCode = null, float? latitude = null, float? longitude = null, int? dmaCode = null, int? metroCodeId = null)
         {
-            return new ObservedLocationDetails(countryCode, countryName, region, regionName, city, areaCode, postalCode, latitude, longitude, dmaCode, metroCodeId, serializedAdditionalRawData: null);
+            return new ObservedLocationDetails(
+                countryCode,
+                countryName,
+                region,
+                regionName,
+                city,
+                areaCode,
+                postalCode,
+                latitude,
+                longitude,
+                dmaCode,
+                metroCodeId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SslServerConfig"/>. </summary>
@@ -1029,7 +1520,14 @@ namespace Azure.Analytics.Defender.Easm
             cipherSuites ??= new List<string>();
             sources ??= new List<SourceDetails>();
 
-            return new SslServerConfig(tlsVersions?.ToList(), cipherSuites?.ToList(), firstSeen, lastSeen, count, sources?.ToList(), serializedAdditionalRawData: null);
+            return new SslServerConfig(
+                tlsVersions?.ToList(),
+                cipherSuites?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                sources?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.IpAddressAsset"/>. </summary>
@@ -1081,7 +1579,33 @@ namespace Azure.Analytics.Defender.Easm
             nxdomain ??= new List<ObservedBoolean>();
             sslServerConfig ??= new List<SslServerConfig>();
 
-            return new IpAddressAsset(serializedAdditionalRawData: null, ipAddress, asns?.ToList(), reputations?.ToList(), webComponents?.ToList(), netRanges?.ToList(), headers?.ToList(), attributes?.ToList(), cookies?.ToList(), sslCerts?.ToList(), services?.ToList(), ipBlocks?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, banners?.ToList(), scanMetadata?.ToList(), nsRecord?.ToList(), mxRecord?.ToList(), location?.ToList(), hosts?.ToList(), nxdomain?.ToList(), sslServerConfig?.ToList(), ipv4, ipv6);
+            return new IpAddressAsset(
+                serializedAdditionalRawData: null,
+                ipAddress,
+                asns?.ToList(),
+                reputations?.ToList(),
+                webComponents?.ToList(),
+                netRanges?.ToList(),
+                headers?.ToList(),
+                attributes?.ToList(),
+                cookies?.ToList(),
+                sslCerts?.ToList(),
+                services?.ToList(),
+                ipBlocks?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                banners?.ToList(),
+                scanMetadata?.ToList(),
+                nsRecord?.ToList(),
+                mxRecord?.ToList(),
+                location?.ToList(),
+                hosts?.ToList(),
+                nxdomain?.ToList(),
+                sslServerConfig?.ToList(),
+                ipv4,
+                ipv6);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ReputationDetails"/>. </summary>
@@ -1096,7 +1620,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.ReputationDetails"/> instance for mocking. </returns>
         public static ReputationDetails ReputationDetails(string listName = null, string threatType = null, bool? trusted = null, string cidr = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, DateTimeOffset? listUpdatedAt = null, bool? recent = null)
         {
-            return new ReputationDetails(listName, threatType, trusted, cidr, firstSeen, lastSeen, listUpdatedAt, recent, serializedAdditionalRawData: null);
+            return new ReputationDetails(
+                listName,
+                threatType,
+                trusted,
+                cidr,
+                firstSeen,
+                lastSeen,
+                listUpdatedAt,
+                recent,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.IpBlockAsset"/>. </summary>
@@ -1157,7 +1690,39 @@ namespace Azure.Analytics.Defender.Easm
             adminPhones ??= new List<ObservedString>();
             technicalPhones ??= new List<ObservedString>();
 
-            return new IpBlockAsset(serializedAdditionalRawData: null, ipBlock, asns?.ToList(), bgpPrefixes?.ToList(), netNames?.ToList(), registrantContacts?.ToList(), registrantOrgs?.ToList(), adminContacts?.ToList(), technicalContacts?.ToList(), registrarCreatedAt?.ToList(), registrarUpdatedAt?.ToList(), netRanges?.ToList(), startIp, endIp, reputations?.ToList(), detailedFromWhoisAt, sources?.ToList(), firstSeen, lastSeen, count, location?.ToList(), registrarExpiresAt?.ToList(), registrantNames?.ToList(), adminNames?.ToList(), technicalNames?.ToList(), adminOrgs?.ToList(), technicalOrgs?.ToList(), registrantPhones?.ToList(), adminPhones?.ToList(), technicalPhones?.ToList(), ipv4, ipv6);
+            return new IpBlockAsset(
+                serializedAdditionalRawData: null,
+                ipBlock,
+                asns?.ToList(),
+                bgpPrefixes?.ToList(),
+                netNames?.ToList(),
+                registrantContacts?.ToList(),
+                registrantOrgs?.ToList(),
+                adminContacts?.ToList(),
+                technicalContacts?.ToList(),
+                registrarCreatedAt?.ToList(),
+                registrarUpdatedAt?.ToList(),
+                netRanges?.ToList(),
+                startIp,
+                endIp,
+                reputations?.ToList(),
+                detailedFromWhoisAt,
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                location?.ToList(),
+                registrarExpiresAt?.ToList(),
+                registrantNames?.ToList(),
+                adminNames?.ToList(),
+                technicalNames?.ToList(),
+                adminOrgs?.ToList(),
+                technicalOrgs?.ToList(),
+                registrantPhones?.ToList(),
+                adminPhones?.ToList(),
+                technicalPhones?.ToList(),
+                ipv4,
+                ipv6);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ObservedIntegers"/>. </summary>
@@ -1173,7 +1738,14 @@ namespace Azure.Analytics.Defender.Easm
             values ??= new List<int>();
             sources ??= new List<SourceDetails>();
 
-            return new ObservedIntegers(firstSeen, lastSeen, count, recent, serializedAdditionalRawData: null, values?.ToList(), sources?.ToList());
+            return new ObservedIntegers(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData: null,
+                values?.ToList(),
+                sources?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.PageAsset"/>. </summary>
@@ -1288,7 +1860,69 @@ namespace Azure.Analytics.Defender.Easm
             ipv4 ??= new List<ObservedBoolean>();
             ipv6 ??= new List<ObservedBoolean>();
 
-            return new PageAsset(serializedAdditionalRawData: null, url, httpMethod, service, ipAddresses?.ToList(), successful?.ToList(), httpResponseCodes?.ToList(), httpResponseMessages?.ToList(), responseTimes?.ToList(), frames?.ToList(), windows?.ToList(), nonHtmlFrames?.ToList(), undirectedContent?.ToList(), contentTypes?.ToList(), contentLengths?.ToList(), windowNames?.ToList(), charsets?.ToList(), titles?.ToList(), languages?.ToList(), responseHeaders?.ToList(), cookies?.ToList(), webComponents?.ToList(), attributes?.ToList(), assetSecurityPolicies?.ToList(), responseBodyMinhashSignatures?.ToList(), fullDomMinhashSignatures?.ToList(), responseBodyHashSignatures?.ToList(), errors?.ToList(), sslCerts?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, cause, referrer, redirectUrls?.ToList(), redirectType, finalUrls?.ToList(), finalResponseCodes?.ToList(), parkedPage?.ToList(), resourceUrls?.ToList(), guids?.ToList(), finalIpAddresses?.ToList(), asns?.ToList(), ipBlocks?.ToList(), finalAsns?.ToList(), finalIpBlocks?.ToList(), responseBodies?.ToList(), domainAsset, rootUrl, isRootUrl, location?.ToList(), services?.ToList(), siteStatus, cnames?.ToList(), cdns?.ToList(), host, domain, sslServerConfig?.ToList(), gdprAssetSecurityPolicies?.ToList(), ipv4?.ToList(), ipv6?.ToList());
+            return new PageAsset(
+                serializedAdditionalRawData: null,
+                url,
+                httpMethod,
+                service,
+                ipAddresses?.ToList(),
+                successful?.ToList(),
+                httpResponseCodes?.ToList(),
+                httpResponseMessages?.ToList(),
+                responseTimes?.ToList(),
+                frames?.ToList(),
+                windows?.ToList(),
+                nonHtmlFrames?.ToList(),
+                undirectedContent?.ToList(),
+                contentTypes?.ToList(),
+                contentLengths?.ToList(),
+                windowNames?.ToList(),
+                charsets?.ToList(),
+                titles?.ToList(),
+                languages?.ToList(),
+                responseHeaders?.ToList(),
+                cookies?.ToList(),
+                webComponents?.ToList(),
+                attributes?.ToList(),
+                assetSecurityPolicies?.ToList(),
+                responseBodyMinhashSignatures?.ToList(),
+                fullDomMinhashSignatures?.ToList(),
+                responseBodyHashSignatures?.ToList(),
+                errors?.ToList(),
+                sslCerts?.ToList(),
+                sources?.ToList(),
+                firstSeen,
+                lastSeen,
+                count,
+                cause,
+                referrer,
+                redirectUrls?.ToList(),
+                redirectType,
+                finalUrls?.ToList(),
+                finalResponseCodes?.ToList(),
+                parkedPage?.ToList(),
+                resourceUrls?.ToList(),
+                guids?.ToList(),
+                finalIpAddresses?.ToList(),
+                asns?.ToList(),
+                ipBlocks?.ToList(),
+                finalAsns?.ToList(),
+                finalIpBlocks?.ToList(),
+                responseBodies?.ToList(),
+                domainAsset,
+                rootUrl,
+                isRootUrl,
+                location?.ToList(),
+                services?.ToList(),
+                siteStatus,
+                cnames?.ToList(),
+                cdns?.ToList(),
+                host,
+                domain,
+                sslServerConfig?.ToList(),
+                gdprAssetSecurityPolicies?.ToList(),
+                ipv4?.ToList(),
+                ipv6?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.PageCause"/>. </summary>
@@ -1302,7 +1936,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.PageCause"/> instance for mocking. </returns>
         public static PageCause PageCause(string cause = null, string causeElementXPath = null, string location = null, int? possibleMatches = null, bool? loopDetected = null, int? version = null, int? domChangeIndex = null)
         {
-            return new PageCause(cause, causeElementXPath, location, possibleMatches, loopDetected, version, domChangeIndex, serializedAdditionalRawData: null);
+            return new PageCause(
+                cause,
+                causeElementXPath,
+                location,
+                possibleMatches,
+                loopDetected,
+                version,
+                domChangeIndex,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnectionPayload"/>. </summary>
@@ -1314,7 +1956,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.LogAnalyticsDataConnectionPayload"/> instance for mocking. </returns>
         public static LogAnalyticsDataConnectionPayload LogAnalyticsDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, LogAnalyticsDataConnectionProperties properties = null)
         {
-            return new LogAnalyticsDataConnectionPayload("logAnalytics", name, content, frequency, frequencyOffset, serializedAdditionalRawData: null, properties);
+            return new LogAnalyticsDataConnectionPayload(
+                "logAnalytics",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnectionPayload"/>. </summary>
@@ -1326,7 +1975,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnectionPayload"/> instance for mocking. </returns>
         public static AzureDataExplorerDataConnectionPayload AzureDataExplorerDataConnectionPayload(string name = null, DataConnectionContent? content = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, AzureDataExplorerDataConnectionProperties properties = null)
         {
-            return new AzureDataExplorerDataConnectionPayload("azureDataExplorer", name, content, frequency, frequencyOffset, serializedAdditionalRawData: null, properties);
+            return new AzureDataExplorerDataConnectionPayload(
+                "azureDataExplorer",
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AsAssetResource"/>. </summary>
@@ -1350,7 +2006,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new AsAssetResource("as", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new AsAssetResource(
+                "as",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.ContactAssetResource"/>. </summary>
@@ -1374,7 +2046,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new ContactAssetResource("contact", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new ContactAssetResource(
+                "contact",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.DomainAssetResource"/>. </summary>
@@ -1398,7 +2086,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new DomainAssetResource("domain", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new DomainAssetResource(
+                "domain",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.HostAssetResource"/>. </summary>
@@ -1422,7 +2126,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new HostAssetResource("host", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new HostAssetResource(
+                "host",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.IpAddressAssetResource"/>. </summary>
@@ -1446,7 +2166,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new IpAddressAssetResource("ipAddress", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new IpAddressAssetResource(
+                "ipAddress",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.IpBlockAssetResource"/>. </summary>
@@ -1470,7 +2206,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new IpBlockAssetResource("ipBlock", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new IpBlockAssetResource(
+                "ipBlock",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.PageAssetResource"/>. </summary>
@@ -1494,7 +2246,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new PageAssetResource("page", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new PageAssetResource(
+                "page",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.SslCertAssetResource"/>. </summary>
@@ -1518,7 +2286,23 @@ namespace Azure.Analytics.Defender.Easm
             labels ??= new List<string>();
             auditTrail ??= new List<AuditTrailItem>();
 
-            return new SslCertAssetResource("sslCert", id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels?.ToList(), wildcard, discoGroupName, auditTrail?.ToList(), reason, serializedAdditionalRawData: null, asset);
+            return new SslCertAssetResource(
+                "sslCert",
+                id,
+                name,
+                displayName,
+                uuid,
+                createdDate,
+                updatedDate,
+                state,
+                externalId,
+                labels?.ToList(),
+                wildcard,
+                discoGroupName,
+                auditTrail?.ToList(),
+                reason,
+                serializedAdditionalRawData: null,
+                asset);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.LogAnalyticsDataConnection"/>. </summary>
@@ -1537,7 +2321,21 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.LogAnalyticsDataConnection"/> instance for mocking. </returns>
         public static LogAnalyticsDataConnection LogAnalyticsDataConnection(string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null, LogAnalyticsDataConnectionProperties properties = null)
         {
-            return new LogAnalyticsDataConnection("logAnalytics", id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData: null, properties);
+            return new LogAnalyticsDataConnection(
+                "logAnalytics",
+                id,
+                name,
+                displayName,
+                content,
+                createdDate,
+                frequency,
+                frequencyOffset,
+                updatedDate,
+                userUpdatedAt,
+                active,
+                inactiveMessage,
+                serializedAdditionalRawData: null,
+                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Easm.AzureDataExplorerDataConnection"/>. </summary>
@@ -1556,7 +2354,21 @@ namespace Azure.Analytics.Defender.Easm
         /// <returns> A new <see cref="Easm.AzureDataExplorerDataConnection"/> instance for mocking. </returns>
         public static AzureDataExplorerDataConnection AzureDataExplorerDataConnection(string id = null, string name = null, string displayName = null, DataConnectionContent? content = null, DateTimeOffset? createdDate = null, DataConnectionFrequency? frequency = null, int? frequencyOffset = null, DateTimeOffset? updatedDate = null, DateTimeOffset? userUpdatedAt = null, bool? active = null, string inactiveMessage = null, AzureDataExplorerDataConnectionProperties properties = null)
         {
-            return new AzureDataExplorerDataConnection("azureDataExplorer", id, name, displayName, content, createdDate, frequency, frequencyOffset, updatedDate, userUpdatedAt, active, inactiveMessage, serializedAdditionalRawData: null, properties);
+            return new AzureDataExplorerDataConnection(
+                "azureDataExplorer",
+                id,
+                name,
+                displayName,
+                content,
+                createdDate,
+                frequency,
+                frequencyOffset,
+                updatedDate,
+                userUpdatedAt,
+                active,
+                inactiveMessage,
+                serializedAdditionalRawData: null,
+                properties);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(MetricCategories))
+            if (!(MetricCategories is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metricCategories"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Metrics))
+            if (!(Metrics is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Filters))
+            if (!(Filters is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
@@ -57,17 +57,17 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GroupBy))
+            if (GroupBy != null)
             {
                 writer.WritePropertyName("groupBy"u8);
                 writer.WriteStringValue(GroupBy);
             }
-            if (Optional.IsDefined(SegmentBy))
+            if (SegmentBy != null)
             {
                 writer.WritePropertyName("segmentBy"u8);
                 writer.WriteStringValue(SegmentBy);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
@@ -110,12 +110,12 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<IList<string>> metricCategories = default;
-            Optional<IList<string>> metrics = default;
-            Optional<IList<string>> filters = default;
-            Optional<string> groupBy = default;
-            Optional<string> segmentBy = default;
-            Optional<string> labelName = default;
+            IList<string> metricCategories = default;
+            IList<string> metrics = default;
+            IList<string> filters = default;
+            string groupBy = default;
+            string segmentBy = default;
+            string labelName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportAssetSummaryPayload(Optional.ToList(metricCategories), Optional.ToList(metrics), Optional.ToList(filters), groupBy.Value, segmentBy.Value, labelName.Value, serializedAdditionalRawData);
+            return new ReportAssetSummaryPayload(
+                metricCategories ?? new ChangeTrackingList<string>(),
+                metrics ?? new ChangeTrackingList<string>(),
+                filters ?? new ChangeTrackingList<string>(),
+                groupBy,
+                segmentBy,
+                labelName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportAssetSummaryPayload>.Write(ModelReaderWriterOptions options)

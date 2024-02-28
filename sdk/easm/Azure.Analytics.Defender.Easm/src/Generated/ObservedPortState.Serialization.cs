@@ -27,32 +27,32 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value.HasValue)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value.Value.ToString());
             }
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -95,12 +95,12 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<ObservedPortStateValue> value = default;
-            Optional<int> port = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
+            ObservedPortStateValue? value = default;
+            int? port = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ObservedPortState(Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), serializedAdditionalRawData, Optional.ToNullable(value), Optional.ToNullable(port));
+            return new ObservedPortState(
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData,
+                value,
+                port);
         }
 
         BinaryData IPersistableModel<ObservedPortState>.Write(ModelReaderWriterOptions options)

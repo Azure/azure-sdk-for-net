@@ -29,22 +29,22 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Content))
+            if (Content.HasValue)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(FrequencyOffset))
+            if (FrequencyOffset.HasValue)
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnectionPayload(document.RootElement, options);
+            return DeserializeDataConnectionPayload(document.RootElement, options);
         }
 
         internal static UnknownDataConnectionPayload DeserializeUnknownDataConnectionPayload(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,10 +88,10 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string kind = "Unknown";
-            Optional<string> name = default;
-            Optional<DataConnectionContent> content = default;
-            Optional<DataConnectionFrequency> frequency = default;
-            Optional<int> frequencyOffset = default;
+            string name = default;
+            DataConnectionContent? content = default;
+            DataConnectionFrequency? frequency = default;
+            int? frequencyOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownDataConnectionPayload(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData);
+            return new UnknownDataConnectionPayload(
+                kind,
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionPayload>.Write(ModelReaderWriterOptions options)
@@ -164,7 +170,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataConnectionPayload(document.RootElement, options);
+                        return DeserializeDataConnectionPayload(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataConnectionPayload)} does not support '{options.Format}' format.");

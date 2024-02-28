@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public LogAnalyticsDataConnectionPayload(LogAnalyticsDataConnectionProperties properties)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            if (properties == null)
+            {
+                throw new ArgumentNullException(nameof(properties));
+            }
 
             Kind = "logAnalytics";
             Properties = properties;

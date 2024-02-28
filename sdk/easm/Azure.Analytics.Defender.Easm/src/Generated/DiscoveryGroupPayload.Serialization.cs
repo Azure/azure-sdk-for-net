@@ -27,27 +27,27 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Tier))
+            if (Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (Optional.IsDefined(FrequencyMilliseconds))
+            if (FrequencyMilliseconds.HasValue)
             {
                 writer.WritePropertyName("frequencyMilliseconds"u8);
                 writer.WriteNumberValue(FrequencyMilliseconds.Value);
             }
-            if (Optional.IsCollectionDefined(Seeds))
+            if (!(Seeds is ChangeTrackingList<DiscoverySource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("seeds"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Names))
+            if (!(Names is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Excludes))
+            if (!(Excludes is ChangeTrackingList<DiscoverySource> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("excludes"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TemplateId))
+            if (TemplateId != null)
             {
                 writer.WritePropertyName("templateId"u8);
                 writer.WriteStringValue(TemplateId);
@@ -120,14 +120,14 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> tier = default;
-            Optional<long> frequencyMilliseconds = default;
-            Optional<IList<DiscoverySource>> seeds = default;
-            Optional<IList<string>> names = default;
-            Optional<IList<DiscoverySource>> excludes = default;
-            Optional<string> templateId = default;
+            string name = default;
+            string description = default;
+            string tier = default;
+            long? frequencyMilliseconds = default;
+            IList<DiscoverySource> seeds = default;
+            IList<string> names = default;
+            IList<DiscoverySource> excludes = default;
+            string templateId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,7 +165,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DiscoverySource> array = new List<DiscoverySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item));
+                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     seeds = array;
                     continue;
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DiscoverySource> array = new List<DiscoverySource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiscoverySource.DeserializeDiscoverySource(item));
+                        array.Add(DiscoverySource.DeserializeDiscoverySource(item, options));
                     }
                     excludes = array;
                     continue;
@@ -209,7 +209,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiscoveryGroupPayload(name.Value, description.Value, tier.Value, Optional.ToNullable(frequencyMilliseconds), Optional.ToList(seeds), Optional.ToList(names), Optional.ToList(excludes), templateId.Value, serializedAdditionalRawData);
+            return new DiscoveryGroupPayload(
+                name,
+                description,
+                tier,
+                frequencyMilliseconds,
+                seeds ?? new ChangeTrackingList<DiscoverySource>(),
+                names ?? new ChangeTrackingList<string>(),
+                excludes ?? new ChangeTrackingList<DiscoverySource>(),
+                templateId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiscoveryGroupPayload>.Write(ModelReaderWriterOptions options)

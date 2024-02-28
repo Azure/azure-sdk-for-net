@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PageGuid))
+            if (PageGuid != null)
             {
                 writer.WritePropertyName("pageGuid"u8);
                 writer.WriteStringValue(PageGuid);
             }
-            if (Optional.IsDefined(CrawlStateGuid))
+            if (CrawlStateGuid != null)
             {
                 writer.WritePropertyName("crawlStateGuid"u8);
                 writer.WriteStringValue(CrawlStateGuid);
             }
-            if (Optional.IsDefined(LoadDate))
+            if (LoadDate.HasValue)
             {
                 writer.WritePropertyName("loadDate"u8);
                 writer.WriteStringValue(LoadDate.Value, "O");
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -85,10 +85,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> pageGuid = default;
-            Optional<string> crawlStateGuid = default;
-            Optional<DateTimeOffset> loadDate = default;
-            Optional<bool> recent = default;
+            string pageGuid = default;
+            string crawlStateGuid = default;
+            DateTimeOffset? loadDate = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GuidPair(pageGuid.Value, crawlStateGuid.Value, Optional.ToNullable(loadDate), Optional.ToNullable(recent), serializedAdditionalRawData);
+            return new GuidPair(pageGuid, crawlStateGuid, loadDate, recent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GuidPair>.Write(ModelReaderWriterOptions options)

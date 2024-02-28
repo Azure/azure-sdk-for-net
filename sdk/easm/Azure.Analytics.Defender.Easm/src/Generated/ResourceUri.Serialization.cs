@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Resources))
+            if (!(Resources is ChangeTrackingList<DependentResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
@@ -42,22 +42,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
@@ -100,12 +100,12 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<IReadOnlyList<DependentResource>> resources = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<bool> recent = default;
+            Uri url = default;
+            IReadOnlyList<DependentResource> resources = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            bool? recent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<DependentResource> array = new List<DependentResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DependentResource.DeserializeDependentResource(item));
+                        array.Add(DependentResource.DeserializeDependentResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -175,7 +175,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceUri(url.Value, Optional.ToList(resources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), serializedAdditionalRawData);
+            return new ResourceUri(
+                url,
+                resources ?? new ChangeTrackingList<DependentResource>(),
+                firstSeen,
+                lastSeen,
+                count,
+                recent,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceUri>.Write(ModelReaderWriterOptions options)

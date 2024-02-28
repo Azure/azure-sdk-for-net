@@ -27,87 +27,87 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
+            if (Version != null)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(VectorString))
+            if (VectorString != null)
             {
                 writer.WritePropertyName("vectorString"u8);
                 writer.WriteStringValue(VectorString);
             }
-            if (Optional.IsDefined(AttackVector))
+            if (AttackVector != null)
             {
                 writer.WritePropertyName("attackVector"u8);
                 writer.WriteStringValue(AttackVector);
             }
-            if (Optional.IsDefined(AttackComplexity))
+            if (AttackComplexity != null)
             {
                 writer.WritePropertyName("attackComplexity"u8);
                 writer.WriteStringValue(AttackComplexity);
             }
-            if (Optional.IsDefined(PrivilegesRequired))
+            if (PrivilegesRequired != null)
             {
                 writer.WritePropertyName("privilegesRequired"u8);
                 writer.WriteStringValue(PrivilegesRequired);
             }
-            if (Optional.IsDefined(UserInteraction))
+            if (UserInteraction != null)
             {
                 writer.WritePropertyName("userInteraction"u8);
                 writer.WriteStringValue(UserInteraction);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope != null)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ConfidentialityImpact))
+            if (ConfidentialityImpact != null)
             {
                 writer.WritePropertyName("confidentialityImpact"u8);
                 writer.WriteStringValue(ConfidentialityImpact);
             }
-            if (Optional.IsDefined(IntegrityImpact))
+            if (IntegrityImpact != null)
             {
                 writer.WritePropertyName("integrityImpact"u8);
                 writer.WriteStringValue(IntegrityImpact);
             }
-            if (Optional.IsDefined(AvailabilityImpact))
+            if (AvailabilityImpact != null)
             {
                 writer.WritePropertyName("availabilityImpact"u8);
                 writer.WriteStringValue(AvailabilityImpact);
             }
-            if (Optional.IsDefined(BaseScore))
+            if (BaseScore.HasValue)
             {
                 writer.WritePropertyName("baseScore"u8);
                 writer.WriteNumberValue(BaseScore.Value);
             }
-            if (Optional.IsDefined(BaseSeverity))
+            if (BaseSeverity != null)
             {
                 writer.WritePropertyName("baseSeverity"u8);
                 writer.WriteStringValue(BaseSeverity);
             }
-            if (Optional.IsDefined(ExploitCodeMaturity))
+            if (ExploitCodeMaturity != null)
             {
                 writer.WritePropertyName("exploitCodeMaturity"u8);
                 writer.WriteStringValue(ExploitCodeMaturity);
             }
-            if (Optional.IsDefined(RemediationLevel))
+            if (RemediationLevel != null)
             {
                 writer.WritePropertyName("remediationLevel"u8);
                 writer.WriteStringValue(RemediationLevel);
             }
-            if (Optional.IsDefined(ReportConfidence))
+            if (ReportConfidence != null)
             {
                 writer.WritePropertyName("reportConfidence"u8);
                 writer.WriteStringValue(ReportConfidence);
             }
-            if (Optional.IsDefined(ExploitabilityScore))
+            if (ExploitabilityScore.HasValue)
             {
                 writer.WritePropertyName("exploitabilityScore"u8);
                 writer.WriteNumberValue(ExploitabilityScore.Value);
             }
-            if (Optional.IsDefined(ImpactScore))
+            if (ImpactScore.HasValue)
             {
                 writer.WritePropertyName("impactScore"u8);
                 writer.WriteNumberValue(ImpactScore.Value);
@@ -150,23 +150,23 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> version = default;
-            Optional<string> vectorString = default;
-            Optional<string> attackVector = default;
-            Optional<string> attackComplexity = default;
-            Optional<string> privilegesRequired = default;
-            Optional<string> userInteraction = default;
-            Optional<string> scope = default;
-            Optional<string> confidentialityImpact = default;
-            Optional<string> integrityImpact = default;
-            Optional<string> availabilityImpact = default;
-            Optional<float> baseScore = default;
-            Optional<string> baseSeverity = default;
-            Optional<string> exploitCodeMaturity = default;
-            Optional<string> remediationLevel = default;
-            Optional<string> reportConfidence = default;
-            Optional<float> exploitabilityScore = default;
-            Optional<float> impactScore = default;
+            string version = default;
+            string vectorString = default;
+            string attackVector = default;
+            string attackComplexity = default;
+            string privilegesRequired = default;
+            string userInteraction = default;
+            string scope = default;
+            string confidentialityImpact = default;
+            string integrityImpact = default;
+            string availabilityImpact = default;
+            float? baseScore = default;
+            string baseSeverity = default;
+            string exploitCodeMaturity = default;
+            string remediationLevel = default;
+            string reportConfidence = default;
+            float? exploitabilityScore = default;
+            float? impactScore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,7 +274,25 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Cvss3Summary(version.Value, vectorString.Value, attackVector.Value, attackComplexity.Value, privilegesRequired.Value, userInteraction.Value, scope.Value, confidentialityImpact.Value, integrityImpact.Value, availabilityImpact.Value, Optional.ToNullable(baseScore), baseSeverity.Value, exploitCodeMaturity.Value, remediationLevel.Value, reportConfidence.Value, Optional.ToNullable(exploitabilityScore), Optional.ToNullable(impactScore), serializedAdditionalRawData);
+            return new Cvss3Summary(
+                version,
+                vectorString,
+                attackVector,
+                attackComplexity,
+                privilegesRequired,
+                userInteraction,
+                scope,
+                confidentialityImpact,
+                integrityImpact,
+                availabilityImpact,
+                baseScore,
+                baseSeverity,
+                exploitCodeMaturity,
+                remediationLevel,
+                reportConfidence,
+                exploitabilityScore,
+                impactScore,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Cvss3Summary>.Write(ModelReaderWriterOptions options)

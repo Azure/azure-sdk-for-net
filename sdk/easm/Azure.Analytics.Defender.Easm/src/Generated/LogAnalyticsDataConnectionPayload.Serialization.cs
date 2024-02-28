@@ -31,22 +31,22 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteObjectValue(Properties);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Content))
+            if (Content.HasValue)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(FrequencyOffset))
+            if (FrequencyOffset.HasValue)
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
@@ -91,17 +91,17 @@ namespace Azure.Analytics.Defender.Easm
             }
             LogAnalyticsDataConnectionProperties properties = default;
             string kind = default;
-            Optional<string> name = default;
-            Optional<DataConnectionContent> content = default;
-            Optional<DataConnectionFrequency> frequency = default;
-            Optional<int> frequencyOffset = default;
+            string name = default;
+            DataConnectionContent? content = default;
+            DataConnectionFrequency? frequency = default;
+            int? frequencyOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(property.Value);
+                    properties = LogAnalyticsDataConnectionProperties.DeserializeLogAnalyticsDataConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -147,7 +147,14 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogAnalyticsDataConnectionPayload(kind, name.Value, Optional.ToNullable(content), Optional.ToNullable(frequency), Optional.ToNullable(frequencyOffset), serializedAdditionalRawData, properties);
+            return new LogAnalyticsDataConnectionPayload(
+                kind,
+                name,
+                content,
+                frequency,
+                frequencyOffset,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<LogAnalyticsDataConnectionPayload>.Write(ModelReaderWriterOptions options)

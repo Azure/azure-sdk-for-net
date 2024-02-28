@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Sha1))
+            if (Sha1 != null)
             {
                 writer.WritePropertyName("sha1"u8);
                 writer.WriteStringValue(Sha1);
             }
-            if (Optional.IsCollectionDefined(SubjectCommonNames))
+            if (!(SubjectCommonNames is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("subjectCommonNames"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Organizations))
+            if (!(Organizations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("organizations"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(OrganizationalUnits))
+            if (!(OrganizationalUnits is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("organizationalUnits"u8);
                 writer.WriteStartArray();
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerCommonNames))
+            if (!(IssuerCommonNames is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("issuerCommonNames"u8);
                 writer.WriteStartArray();
@@ -72,22 +72,22 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SigAlgName))
+            if (SigAlgName != null)
             {
                 writer.WritePropertyName("sigAlgName"u8);
                 writer.WriteStringValue(SigAlgName);
             }
-            if (Optional.IsDefined(InvalidAfter))
+            if (InvalidAfter.HasValue)
             {
                 writer.WritePropertyName("invalidAfter"u8);
                 writer.WriteStringValue(InvalidAfter.Value, "O");
             }
-            if (Optional.IsDefined(SerialNumber))
+            if (SerialNumber != null)
             {
                 writer.WritePropertyName("serialNumber"u8);
                 writer.WriteStringValue(SerialNumber);
             }
-            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
+            if (!(SubjectAlternativeNames is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerAlternativeNames))
+            if (!(IssuerAlternativeNames is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("issuerAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Sources))
+            if (!(Sources is ChangeTrackingList<SourceDetails> collection5 && collection5.IsUndefined))
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
@@ -117,37 +117,37 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(InvalidBefore))
+            if (InvalidBefore.HasValue)
             {
                 writer.WritePropertyName("invalidBefore"u8);
                 writer.WriteStringValue(InvalidBefore.Value, "O");
             }
-            if (Optional.IsDefined(KeySize))
+            if (KeySize.HasValue)
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Optional.IsDefined(KeyAlgorithm))
+            if (KeyAlgorithm != null)
             {
                 writer.WritePropertyName("keyAlgorithm"u8);
                 writer.WriteStringValue(KeyAlgorithm);
             }
-            if (Optional.IsCollectionDefined(SubjectLocality))
+            if (!(SubjectLocality is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
             {
                 writer.WritePropertyName("subjectLocality"u8);
                 writer.WriteStartArray();
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectState))
+            if (!(SubjectState is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
             {
                 writer.WritePropertyName("subjectState"u8);
                 writer.WriteStartArray();
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectCountry))
+            if (!(SubjectCountry is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
             {
                 writer.WritePropertyName("subjectCountry"u8);
                 writer.WriteStartArray();
@@ -177,7 +177,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerLocality))
+            if (!(IssuerLocality is ChangeTrackingList<string> collection9 && collection9.IsUndefined))
             {
                 writer.WritePropertyName("issuerLocality"u8);
                 writer.WriteStartArray();
@@ -187,7 +187,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerState))
+            if (!(IssuerState is ChangeTrackingList<string> collection10 && collection10.IsUndefined))
             {
                 writer.WritePropertyName("issuerState"u8);
                 writer.WriteStartArray();
@@ -197,7 +197,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerCountry))
+            if (!(IssuerCountry is ChangeTrackingList<string> collection11 && collection11.IsUndefined))
             {
                 writer.WritePropertyName("issuerCountry"u8);
                 writer.WriteStartArray();
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectOrganizations))
+            if (!(SubjectOrganizations is ChangeTrackingList<string> collection12 && collection12.IsUndefined))
             {
                 writer.WritePropertyName("subjectOrganizations"u8);
                 writer.WriteStartArray();
@@ -217,7 +217,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SubjectOrganizationalUnits))
+            if (!(SubjectOrganizationalUnits is ChangeTrackingList<string> collection13 && collection13.IsUndefined))
             {
                 writer.WritePropertyName("subjectOrganizationalUnits"u8);
                 writer.WriteStartArray();
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerOrganizations))
+            if (!(IssuerOrganizations is ChangeTrackingList<string> collection14 && collection14.IsUndefined))
             {
                 writer.WritePropertyName("issuerOrganizations"u8);
                 writer.WriteStartArray();
@@ -237,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IssuerOrganizationalUnits))
+            if (!(IssuerOrganizationalUnits is ChangeTrackingList<string> collection15 && collection15.IsUndefined))
             {
                 writer.WritePropertyName("issuerOrganizationalUnits"u8);
                 writer.WriteStartArray();
@@ -247,32 +247,32 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Version))
+            if (Version.HasValue)
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteNumberValue(Version.Value);
             }
-            if (Optional.IsDefined(CertificateAuthority))
+            if (CertificateAuthority.HasValue)
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteBooleanValue(CertificateAuthority.Value);
             }
-            if (Optional.IsDefined(SelfSigned))
+            if (SelfSigned.HasValue)
             {
                 writer.WritePropertyName("selfSigned"u8);
                 writer.WriteBooleanValue(SelfSigned.Value);
             }
-            if (Optional.IsDefined(SigAlgOid))
+            if (SigAlgOid != null)
             {
                 writer.WritePropertyName("sigAlgOid"u8);
                 writer.WriteStringValue(SigAlgOid);
             }
-            if (Optional.IsDefined(Recent))
+            if (Recent.HasValue)
             {
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsDefined(ValidationType))
+            if (ValidationType.HasValue)
             {
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
@@ -315,39 +315,39 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> sha1 = default;
-            Optional<IReadOnlyList<string>> subjectCommonNames = default;
-            Optional<IReadOnlyList<string>> organizations = default;
-            Optional<IReadOnlyList<string>> organizationalUnits = default;
-            Optional<IReadOnlyList<string>> issuerCommonNames = default;
-            Optional<string> sigAlgName = default;
-            Optional<DateTimeOffset> invalidAfter = default;
-            Optional<string> serialNumber = default;
-            Optional<IReadOnlyList<string>> subjectAlternativeNames = default;
-            Optional<IReadOnlyList<string>> issuerAlternativeNames = default;
-            Optional<IReadOnlyList<SourceDetails>> sources = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<DateTimeOffset> invalidBefore = default;
-            Optional<int> keySize = default;
-            Optional<string> keyAlgorithm = default;
-            Optional<IReadOnlyList<string>> subjectLocality = default;
-            Optional<IReadOnlyList<string>> subjectState = default;
-            Optional<IReadOnlyList<string>> subjectCountry = default;
-            Optional<IReadOnlyList<string>> issuerLocality = default;
-            Optional<IReadOnlyList<string>> issuerState = default;
-            Optional<IReadOnlyList<string>> issuerCountry = default;
-            Optional<IReadOnlyList<string>> subjectOrganizations = default;
-            Optional<IReadOnlyList<string>> subjectOrganizationalUnits = default;
-            Optional<IReadOnlyList<string>> issuerOrganizations = default;
-            Optional<IReadOnlyList<string>> issuerOrganizationalUnits = default;
-            Optional<int> version = default;
-            Optional<bool> certificateAuthority = default;
-            Optional<bool> selfSigned = default;
-            Optional<string> sigAlgOid = default;
-            Optional<bool> recent = default;
-            Optional<SslCertAssetValidationType> validationType = default;
+            string sha1 = default;
+            IReadOnlyList<string> subjectCommonNames = default;
+            IReadOnlyList<string> organizations = default;
+            IReadOnlyList<string> organizationalUnits = default;
+            IReadOnlyList<string> issuerCommonNames = default;
+            string sigAlgName = default;
+            DateTimeOffset? invalidAfter = default;
+            string serialNumber = default;
+            IReadOnlyList<string> subjectAlternativeNames = default;
+            IReadOnlyList<string> issuerAlternativeNames = default;
+            IReadOnlyList<SourceDetails> sources = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            DateTimeOffset? invalidBefore = default;
+            int? keySize = default;
+            string keyAlgorithm = default;
+            IReadOnlyList<string> subjectLocality = default;
+            IReadOnlyList<string> subjectState = default;
+            IReadOnlyList<string> subjectCountry = default;
+            IReadOnlyList<string> issuerLocality = default;
+            IReadOnlyList<string> issuerState = default;
+            IReadOnlyList<string> issuerCountry = default;
+            IReadOnlyList<string> subjectOrganizations = default;
+            IReadOnlyList<string> subjectOrganizationalUnits = default;
+            IReadOnlyList<string> issuerOrganizations = default;
+            IReadOnlyList<string> issuerOrganizationalUnits = default;
+            int? version = default;
+            bool? certificateAuthority = default;
+            bool? selfSigned = default;
+            string sigAlgOid = default;
+            bool? recent = default;
+            SslCertAssetValidationType? validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -469,7 +469,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceDetails.DeserializeSourceDetails(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item, options));
                     }
                     sources = array;
                     continue;
@@ -720,7 +720,41 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SslCertAsset(serializedAdditionalRawData, sha1.Value, Optional.ToList(subjectCommonNames), Optional.ToList(organizations), Optional.ToList(organizationalUnits), Optional.ToList(issuerCommonNames), sigAlgName.Value, Optional.ToNullable(invalidAfter), serialNumber.Value, Optional.ToList(subjectAlternativeNames), Optional.ToList(issuerAlternativeNames), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(invalidBefore), Optional.ToNullable(keySize), keyAlgorithm.Value, Optional.ToList(subjectLocality), Optional.ToList(subjectState), Optional.ToList(subjectCountry), Optional.ToList(issuerLocality), Optional.ToList(issuerState), Optional.ToList(issuerCountry), Optional.ToList(subjectOrganizations), Optional.ToList(subjectOrganizationalUnits), Optional.ToList(issuerOrganizations), Optional.ToList(issuerOrganizationalUnits), Optional.ToNullable(version), Optional.ToNullable(certificateAuthority), Optional.ToNullable(selfSigned), sigAlgOid.Value, Optional.ToNullable(recent), Optional.ToNullable(validationType));
+            return new SslCertAsset(
+                serializedAdditionalRawData,
+                sha1,
+                subjectCommonNames ?? new ChangeTrackingList<string>(),
+                organizations ?? new ChangeTrackingList<string>(),
+                organizationalUnits ?? new ChangeTrackingList<string>(),
+                issuerCommonNames ?? new ChangeTrackingList<string>(),
+                sigAlgName,
+                invalidAfter,
+                serialNumber,
+                subjectAlternativeNames ?? new ChangeTrackingList<string>(),
+                issuerAlternativeNames ?? new ChangeTrackingList<string>(),
+                sources ?? new ChangeTrackingList<SourceDetails>(),
+                firstSeen,
+                lastSeen,
+                count,
+                invalidBefore,
+                keySize,
+                keyAlgorithm,
+                subjectLocality ?? new ChangeTrackingList<string>(),
+                subjectState ?? new ChangeTrackingList<string>(),
+                subjectCountry ?? new ChangeTrackingList<string>(),
+                issuerLocality ?? new ChangeTrackingList<string>(),
+                issuerState ?? new ChangeTrackingList<string>(),
+                issuerCountry ?? new ChangeTrackingList<string>(),
+                subjectOrganizations ?? new ChangeTrackingList<string>(),
+                subjectOrganizationalUnits ?? new ChangeTrackingList<string>(),
+                issuerOrganizations ?? new ChangeTrackingList<string>(),
+                issuerOrganizationalUnits ?? new ChangeTrackingList<string>(),
+                version,
+                certificateAuthority,
+                selfSigned,
+                sigAlgOid,
+                recent,
+                validationType);
         }
 
         BinaryData IPersistableModel<SslCertAsset>.Write(ModelReaderWriterOptions options)

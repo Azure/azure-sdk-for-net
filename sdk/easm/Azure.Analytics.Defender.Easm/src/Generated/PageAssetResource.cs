@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
@@ -19,7 +18,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="asset"/> is null. </exception>
         internal PageAssetResource(PageAsset asset)
         {
-            Argument.AssertNotNull(asset, nameof(asset));
+            if (asset == null)
+            {
+                throw new ArgumentNullException(nameof(asset));
+            }
 
             Kind = "page";
             Asset = asset;

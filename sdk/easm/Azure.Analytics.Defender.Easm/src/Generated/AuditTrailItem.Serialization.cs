@@ -27,27 +27,27 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -90,11 +90,11 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<AuditTrailItemKind> kind = default;
-            Optional<string> reason = default;
+            string id = default;
+            string name = default;
+            string displayName = default;
+            AuditTrailItemKind? kind = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuditTrailItem(id.Value, name.Value, displayName.Value, Optional.ToNullable(kind), reason.Value, serializedAdditionalRawData);
+            return new AuditTrailItem(
+                id,
+                name,
+                displayName,
+                kind,
+                reason,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuditTrailItem>.Write(ModelReaderWriterOptions options)

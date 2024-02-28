@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -75,8 +75,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<ReportBillableAssetBreakdownKind> kind = default;
-            Optional<long> count = default;
+            ReportBillableAssetBreakdownKind? kind = default;
+            long? count = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportBillableAssetBreakdown(Optional.ToNullable(kind), Optional.ToNullable(count), serializedAdditionalRawData);
+            return new ReportBillableAssetBreakdown(kind, count, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportBillableAssetBreakdown>.Write(ModelReaderWriterOptions options)

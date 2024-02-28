@@ -6,6 +6,8 @@
     <PackageTags>Azure Easm</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <!--Suppress XML comments warnings-->
+    <NoWarn>$(NoWarn);MSB4025</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

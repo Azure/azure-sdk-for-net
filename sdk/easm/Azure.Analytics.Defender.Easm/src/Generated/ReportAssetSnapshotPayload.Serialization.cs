@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metric))
+            if (Metric != null)
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric);
             }
-            if (Optional.IsDefined(LabelName))
+            if (LabelName != null)
             {
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(Size))
+            if (Size.HasValue)
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(Page))
+            if (Page.HasValue)
             {
                 writer.WritePropertyName("page"u8);
                 writer.WriteNumberValue(Page.Value);
@@ -85,10 +85,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> metric = default;
-            Optional<string> labelName = default;
-            Optional<int> size = default;
-            Optional<int> page = default;
+            string metric = default;
+            string labelName = default;
+            int? size = default;
+            int? page = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportAssetSnapshotPayload(metric.Value, labelName.Value, Optional.ToNullable(size), Optional.ToNullable(page), serializedAdditionalRawData);
+            return new ReportAssetSnapshotPayload(metric, labelName, size, page, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportAssetSnapshotPayload>.Write(ModelReaderWriterOptions options)

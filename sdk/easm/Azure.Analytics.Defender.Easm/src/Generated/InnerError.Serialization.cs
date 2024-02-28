@@ -27,12 +27,12 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -82,8 +82,8 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<BinaryData> value = default;
+            string code = default;
+            BinaryData value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InnerError(code.Value, value.Value, serializedAdditionalRawData);
+            return new InnerError(code, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

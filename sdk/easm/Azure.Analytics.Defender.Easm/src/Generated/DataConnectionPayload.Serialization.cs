@@ -29,22 +29,22 @@ namespace Azure.Analytics.Defender.Easm
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Content))
+            if (Content.HasValue)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content.Value.ToString());
             }
-            if (Optional.IsDefined(Frequency))
+            if (Frequency.HasValue)
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Optional.IsDefined(FrequencyOffset))
+            if (FrequencyOffset.HasValue)
             {
                 writer.WritePropertyName("frequencyOffset"u8);
                 writer.WriteNumberValue(FrequencyOffset.Value);
@@ -91,11 +91,11 @@ namespace Azure.Analytics.Defender.Easm
             {
                 switch (discriminator.GetString())
                 {
-                    case "logAnalytics": return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element);
-                    case "azureDataExplorer": return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element);
+                    case "logAnalytics": return LogAnalyticsDataConnectionPayload.DeserializeLogAnalyticsDataConnectionPayload(element, options);
+                    case "azureDataExplorer": return AzureDataExplorerDataConnectionPayload.DeserializeAzureDataExplorerDataConnectionPayload(element, options);
                 }
             }
-            return UnknownDataConnectionPayload.DeserializeUnknownDataConnectionPayload(element);
+            return UnknownDataConnectionPayload.DeserializeUnknownDataConnectionPayload(element, options);
         }
 
         BinaryData IPersistableModel<DataConnectionPayload>.Write(ModelReaderWriterOptions options)

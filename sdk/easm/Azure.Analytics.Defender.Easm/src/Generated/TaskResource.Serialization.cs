@@ -32,37 +32,37 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(StartedAt))
+            if (StartedAt.HasValue)
             {
                 writer.WritePropertyName("startedAt"u8);
                 writer.WriteStringValue(StartedAt.Value, "O");
             }
-            if (Optional.IsDefined(CompletedAt))
+            if (CompletedAt.HasValue)
             {
                 writer.WritePropertyName("completedAt"u8);
                 writer.WriteStringValue(CompletedAt.Value, "O");
             }
-            if (Optional.IsDefined(LastPolledAt))
+            if (LastPolledAt.HasValue)
             {
                 writer.WritePropertyName("lastPolledAt"u8);
                 writer.WriteStringValue(LastPolledAt.Value, "O");
             }
-            if (Optional.IsDefined(State))
+            if (State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Optional.IsDefined(Phase))
+            if (Phase.HasValue)
             {
                 writer.WritePropertyName("phase"u8);
                 writer.WriteStringValue(Phase.Value.ToString());
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -124,13 +124,13 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string id = default;
-            Optional<DateTimeOffset> startedAt = default;
-            Optional<DateTimeOffset> completedAt = default;
-            Optional<DateTimeOffset> lastPolledAt = default;
-            Optional<TaskResourceState> state = default;
-            Optional<TaskResourcePhase> phase = default;
-            Optional<string> reason = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> metadata = default;
+            DateTimeOffset? startedAt = default;
+            DateTimeOffset? completedAt = default;
+            DateTimeOffset? lastPolledAt = default;
+            TaskResourceState? state = default;
+            TaskResourcePhase? phase = default;
+            string reason = default;
+            IReadOnlyDictionary<string, BinaryData> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,16 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TaskResource(id, Optional.ToNullable(startedAt), Optional.ToNullable(completedAt), Optional.ToNullable(lastPolledAt), Optional.ToNullable(state), Optional.ToNullable(phase), reason.Value, Optional.ToDictionary(metadata), serializedAdditionalRawData);
+            return new TaskResource(
+                id,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TaskResource>.Write(ModelReaderWriterOptions options)

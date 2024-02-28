@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Error))
+            if (Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<ErrorDetail> error = default;
+            ErrorDetail error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    error = ErrorDetail.DeserializeErrorDetail(property.Value);
+                    error = ErrorDetail.DeserializeErrorDetail(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -90,7 +90,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidateResult(error.Value, serializedAdditionalRawData);
+            return new ValidateResult(error, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidateResult>.Write(ModelReaderWriterOptions options)

@@ -27,7 +27,7 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AssetSummaries))
+            if (!(AssetSummaries is ChangeTrackingList<ReportBillableAssetSnapshotResult> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("assetSummaries"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReportBillableAssetSnapshotResult>> assetSummaries = default;
+            IReadOnlyList<ReportBillableAssetSnapshotResult> assetSummaries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Defender.Easm
                     List<ReportBillableAssetSnapshotResult> array = new List<ReportBillableAssetSnapshotResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportBillableAssetSnapshotResult.DeserializeReportBillableAssetSnapshotResult(item));
+                        array.Add(ReportBillableAssetSnapshotResult.DeserializeReportBillableAssetSnapshotResult(item, options));
                     }
                     assetSummaries = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReportBillableAssetSummaryResult(Optional.ToList(assetSummaries), serializedAdditionalRawData);
+            return new ReportBillableAssetSummaryResult(assetSummaries ?? new ChangeTrackingList<ReportBillableAssetSnapshotResult>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReportBillableAssetSummaryResult>.Write(ModelReaderWriterOptions options)

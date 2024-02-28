@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
 {
@@ -52,8 +51,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="description"/> is null. </exception>
         public SavedFilterPayload(string filter, string description)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-            Argument.AssertNotNull(description, nameof(description));
+            if (filter == null)
+            {
+                throw new ArgumentNullException(nameof(filter));
+            }
+            if (description == null)
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
 
             Filter = filter;
             Description = description;

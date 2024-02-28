@@ -27,22 +27,22 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Port))
+            if (Port.HasValue)
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (Optional.IsDefined(BannerMetadata))
+            if (BannerMetadata != null)
             {
                 writer.WritePropertyName("bannerMetadata"u8);
                 writer.WriteStringValue(BannerMetadata);
             }
-            if (Optional.IsDefined(StartScan))
+            if (StartScan.HasValue)
             {
                 writer.WritePropertyName("startScan"u8);
                 writer.WriteStringValue(StartScan.Value, "O");
             }
-            if (Optional.IsDefined(EndScan))
+            if (EndScan.HasValue)
             {
                 writer.WritePropertyName("endScan"u8);
                 writer.WriteStringValue(EndScan.Value, "O");
@@ -85,10 +85,10 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<string> bannerMetadata = default;
-            Optional<DateTimeOffset> startScan = default;
-            Optional<DateTimeOffset> endScan = default;
+            int? port = default;
+            string bannerMetadata = default;
+            DateTimeOffset? startScan = default;
+            DateTimeOffset? endScan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScanMetadata(Optional.ToNullable(port), bannerMetadata.Value, Optional.ToNullable(startScan), Optional.ToNullable(endScan), serializedAdditionalRawData);
+            return new ScanMetadata(port, bannerMetadata, startScan, endScan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScanMetadata>.Write(ModelReaderWriterOptions options)

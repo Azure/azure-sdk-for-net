@@ -27,192 +27,192 @@ namespace Azure.Analytics.Defender.Easm
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
             }
-            if (Optional.IsDefined(Domain))
+            if (Domain != null)
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Optional.IsDefined(FirstSeen))
+            if (FirstSeen.HasValue)
             {
                 writer.WritePropertyName("firstSeen"u8);
                 writer.WriteStringValue(FirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(LastSeen))
+            if (LastSeen.HasValue)
             {
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(Count))
+            if (Count.HasValue)
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (Optional.IsDefined(BlacklistCauseFirstSeen))
+            if (BlacklistCauseFirstSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistCauseFirstSeen"u8);
                 writer.WriteStringValue(BlacklistCauseFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistCauseLastSeen))
+            if (BlacklistCauseLastSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistCauseLastSeen"u8);
                 writer.WriteStringValue(BlacklistCauseLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistCauseCount))
+            if (BlacklistCauseCount.HasValue)
             {
                 writer.WritePropertyName("blacklistCauseCount"u8);
                 writer.WriteNumberValue(BlacklistCauseCount.Value);
             }
-            if (Optional.IsDefined(BlacklistResourceFirstSeen))
+            if (BlacklistResourceFirstSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistResourceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistResourceFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistResourceLastSeen))
+            if (BlacklistResourceLastSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistResourceLastSeen"u8);
                 writer.WriteStringValue(BlacklistResourceLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistResourceCount))
+            if (BlacklistResourceCount.HasValue)
             {
                 writer.WritePropertyName("blacklistResourceCount"u8);
                 writer.WriteNumberValue(BlacklistResourceCount.Value);
             }
-            if (Optional.IsDefined(BlacklistSequenceFirstSeen))
+            if (BlacklistSequenceFirstSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistSequenceFirstSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceFirstSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistSequenceLastSeen))
+            if (BlacklistSequenceLastSeen.HasValue)
             {
                 writer.WritePropertyName("blacklistSequenceLastSeen"u8);
                 writer.WriteStringValue(BlacklistSequenceLastSeen.Value, "O");
             }
-            if (Optional.IsDefined(BlacklistSequenceCount))
+            if (BlacklistSequenceCount.HasValue)
             {
                 writer.WritePropertyName("blacklistSequenceCount"u8);
                 writer.WriteNumberValue(BlacklistSequenceCount.Value);
             }
-            if (Optional.IsDefined(PhishCauseCount))
+            if (PhishCauseCount.HasValue)
             {
                 writer.WritePropertyName("phishCauseCount"u8);
                 writer.WriteNumberValue(PhishCauseCount.Value);
             }
-            if (Optional.IsDefined(MalwareCauseCount))
+            if (MalwareCauseCount.HasValue)
             {
                 writer.WritePropertyName("malwareCauseCount"u8);
                 writer.WriteNumberValue(MalwareCauseCount.Value);
             }
-            if (Optional.IsDefined(SpamCauseCount))
+            if (SpamCauseCount.HasValue)
             {
                 writer.WritePropertyName("spamCauseCount"u8);
                 writer.WriteNumberValue(SpamCauseCount.Value);
             }
-            if (Optional.IsDefined(ScamCauseCount))
+            if (ScamCauseCount.HasValue)
             {
                 writer.WritePropertyName("scamCauseCount"u8);
                 writer.WriteNumberValue(ScamCauseCount.Value);
             }
-            if (Optional.IsDefined(PhishResourceCount))
+            if (PhishResourceCount.HasValue)
             {
                 writer.WritePropertyName("phishResourceCount"u8);
                 writer.WriteNumberValue(PhishResourceCount.Value);
             }
-            if (Optional.IsDefined(MalwareResourceCount))
+            if (MalwareResourceCount.HasValue)
             {
                 writer.WritePropertyName("malwareResourceCount"u8);
                 writer.WriteNumberValue(MalwareResourceCount.Value);
             }
-            if (Optional.IsDefined(SpamResourceCount))
+            if (SpamResourceCount.HasValue)
             {
                 writer.WritePropertyName("spamResourceCount"u8);
                 writer.WriteNumberValue(SpamResourceCount.Value);
             }
-            if (Optional.IsDefined(ScamResourceCount))
+            if (ScamResourceCount.HasValue)
             {
                 writer.WritePropertyName("scamResourceCount"u8);
                 writer.WriteNumberValue(ScamResourceCount.Value);
             }
-            if (Optional.IsDefined(PhishSequenceCount))
+            if (PhishSequenceCount.HasValue)
             {
                 writer.WritePropertyName("phishSequenceCount"u8);
                 writer.WriteNumberValue(PhishSequenceCount.Value);
             }
-            if (Optional.IsDefined(MalwareSequenceCount))
+            if (MalwareSequenceCount.HasValue)
             {
                 writer.WritePropertyName("malwareSequenceCount"u8);
                 writer.WriteNumberValue(MalwareSequenceCount.Value);
             }
-            if (Optional.IsDefined(SpamSequenceCount))
+            if (SpamSequenceCount.HasValue)
             {
                 writer.WritePropertyName("spamSequenceCount"u8);
                 writer.WriteNumberValue(SpamSequenceCount.Value);
             }
-            if (Optional.IsDefined(ScamSequenceCount))
+            if (ScamSequenceCount.HasValue)
             {
                 writer.WritePropertyName("scamSequenceCount"u8);
                 writer.WriteNumberValue(ScamSequenceCount.Value);
             }
-            if (Optional.IsDefined(AlexaRank))
+            if (AlexaRank.HasValue)
             {
                 writer.WritePropertyName("alexaRank"u8);
                 writer.WriteNumberValue(AlexaRank.Value);
             }
-            if (Optional.IsDefined(HostReputationScore))
+            if (HostReputationScore.HasValue)
             {
                 writer.WritePropertyName("hostReputationScore"u8);
                 writer.WriteNumberValue(HostReputationScore.Value);
             }
-            if (Optional.IsDefined(HostPhishReputationScore))
+            if (HostPhishReputationScore.HasValue)
             {
                 writer.WritePropertyName("hostPhishReputationScore"u8);
                 writer.WriteNumberValue(HostPhishReputationScore.Value);
             }
-            if (Optional.IsDefined(HostMalwareReputationScore))
+            if (HostMalwareReputationScore.HasValue)
             {
                 writer.WritePropertyName("hostMalwareReputationScore"u8);
                 writer.WriteNumberValue(HostMalwareReputationScore.Value);
             }
-            if (Optional.IsDefined(HostSpamReputationScore))
+            if (HostSpamReputationScore.HasValue)
             {
                 writer.WritePropertyName("hostSpamReputationScore"u8);
                 writer.WriteNumberValue(HostSpamReputationScore.Value);
             }
-            if (Optional.IsDefined(HostScamReputationScore))
+            if (HostScamReputationScore.HasValue)
             {
                 writer.WritePropertyName("hostScamReputationScore"u8);
                 writer.WriteNumberValue(HostScamReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainReputationScore))
+            if (DomainReputationScore.HasValue)
             {
                 writer.WritePropertyName("domainReputationScore"u8);
                 writer.WriteNumberValue(DomainReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainPhishReputationScore))
+            if (DomainPhishReputationScore.HasValue)
             {
                 writer.WritePropertyName("domainPhishReputationScore"u8);
                 writer.WriteNumberValue(DomainPhishReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainMalwareReputationScore))
+            if (DomainMalwareReputationScore.HasValue)
             {
                 writer.WritePropertyName("domainMalwareReputationScore"u8);
                 writer.WriteNumberValue(DomainMalwareReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainSpamReputationScore))
+            if (DomainSpamReputationScore.HasValue)
             {
                 writer.WritePropertyName("domainSpamReputationScore"u8);
                 writer.WriteNumberValue(DomainSpamReputationScore.Value);
             }
-            if (Optional.IsDefined(DomainScamReputationScore))
+            if (DomainScamReputationScore.HasValue)
             {
                 writer.WritePropertyName("domainScamReputationScore"u8);
                 writer.WriteNumberValue(DomainScamReputationScore.Value);
             }
-            if (Optional.IsDefined(Uuid))
+            if (Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
@@ -255,44 +255,44 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<string> domain = default;
-            Optional<DateTimeOffset> firstSeen = default;
-            Optional<DateTimeOffset> lastSeen = default;
-            Optional<long> count = default;
-            Optional<DateTimeOffset> blacklistCauseFirstSeen = default;
-            Optional<DateTimeOffset> blacklistCauseLastSeen = default;
-            Optional<long> blacklistCauseCount = default;
-            Optional<DateTimeOffset> blacklistResourceFirstSeen = default;
-            Optional<DateTimeOffset> blacklistResourceLastSeen = default;
-            Optional<long> blacklistResourceCount = default;
-            Optional<DateTimeOffset> blacklistSequenceFirstSeen = default;
-            Optional<DateTimeOffset> blacklistSequenceLastSeen = default;
-            Optional<long> blacklistSequenceCount = default;
-            Optional<long> phishCauseCount = default;
-            Optional<long> malwareCauseCount = default;
-            Optional<long> spamCauseCount = default;
-            Optional<long> scamCauseCount = default;
-            Optional<long> phishResourceCount = default;
-            Optional<long> malwareResourceCount = default;
-            Optional<long> spamResourceCount = default;
-            Optional<long> scamResourceCount = default;
-            Optional<long> phishSequenceCount = default;
-            Optional<long> malwareSequenceCount = default;
-            Optional<long> spamSequenceCount = default;
-            Optional<long> scamSequenceCount = default;
-            Optional<int> alexaRank = default;
-            Optional<int> hostReputationScore = default;
-            Optional<int> hostPhishReputationScore = default;
-            Optional<int> hostMalwareReputationScore = default;
-            Optional<int> hostSpamReputationScore = default;
-            Optional<int> hostScamReputationScore = default;
-            Optional<int> domainReputationScore = default;
-            Optional<int> domainPhishReputationScore = default;
-            Optional<int> domainMalwareReputationScore = default;
-            Optional<int> domainSpamReputationScore = default;
-            Optional<int> domainScamReputationScore = default;
-            Optional<string> uuid = default;
+            string host = default;
+            string domain = default;
+            DateTimeOffset? firstSeen = default;
+            DateTimeOffset? lastSeen = default;
+            long? count = default;
+            DateTimeOffset? blacklistCauseFirstSeen = default;
+            DateTimeOffset? blacklistCauseLastSeen = default;
+            long? blacklistCauseCount = default;
+            DateTimeOffset? blacklistResourceFirstSeen = default;
+            DateTimeOffset? blacklistResourceLastSeen = default;
+            long? blacklistResourceCount = default;
+            DateTimeOffset? blacklistSequenceFirstSeen = default;
+            DateTimeOffset? blacklistSequenceLastSeen = default;
+            long? blacklistSequenceCount = default;
+            long? phishCauseCount = default;
+            long? malwareCauseCount = default;
+            long? spamCauseCount = default;
+            long? scamCauseCount = default;
+            long? phishResourceCount = default;
+            long? malwareResourceCount = default;
+            long? spamResourceCount = default;
+            long? scamResourceCount = default;
+            long? phishSequenceCount = default;
+            long? malwareSequenceCount = default;
+            long? spamSequenceCount = default;
+            long? scamSequenceCount = default;
+            int? alexaRank = default;
+            int? hostReputationScore = default;
+            int? hostPhishReputationScore = default;
+            int? hostMalwareReputationScore = default;
+            int? hostSpamReputationScore = default;
+            int? hostScamReputationScore = default;
+            int? domainReputationScore = default;
+            int? domainPhishReputationScore = default;
+            int? domainMalwareReputationScore = default;
+            int? domainSpamReputationScore = default;
+            int? domainScamReputationScore = default;
+            string uuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -633,7 +633,46 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HostCore(host.Value, domain.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(blacklistCauseFirstSeen), Optional.ToNullable(blacklistCauseLastSeen), Optional.ToNullable(blacklistCauseCount), Optional.ToNullable(blacklistResourceFirstSeen), Optional.ToNullable(blacklistResourceLastSeen), Optional.ToNullable(blacklistResourceCount), Optional.ToNullable(blacklistSequenceFirstSeen), Optional.ToNullable(blacklistSequenceLastSeen), Optional.ToNullable(blacklistSequenceCount), Optional.ToNullable(phishCauseCount), Optional.ToNullable(malwareCauseCount), Optional.ToNullable(spamCauseCount), Optional.ToNullable(scamCauseCount), Optional.ToNullable(phishResourceCount), Optional.ToNullable(malwareResourceCount), Optional.ToNullable(spamResourceCount), Optional.ToNullable(scamResourceCount), Optional.ToNullable(phishSequenceCount), Optional.ToNullable(malwareSequenceCount), Optional.ToNullable(spamSequenceCount), Optional.ToNullable(scamSequenceCount), Optional.ToNullable(alexaRank), Optional.ToNullable(hostReputationScore), Optional.ToNullable(hostPhishReputationScore), Optional.ToNullable(hostMalwareReputationScore), Optional.ToNullable(hostSpamReputationScore), Optional.ToNullable(hostScamReputationScore), Optional.ToNullable(domainReputationScore), Optional.ToNullable(domainPhishReputationScore), Optional.ToNullable(domainMalwareReputationScore), Optional.ToNullable(domainSpamReputationScore), Optional.ToNullable(domainScamReputationScore), uuid.Value, serializedAdditionalRawData);
+            return new HostCore(
+                host,
+                domain,
+                firstSeen,
+                lastSeen,
+                count,
+                blacklistCauseFirstSeen,
+                blacklistCauseLastSeen,
+                blacklistCauseCount,
+                blacklistResourceFirstSeen,
+                blacklistResourceLastSeen,
+                blacklistResourceCount,
+                blacklistSequenceFirstSeen,
+                blacklistSequenceLastSeen,
+                blacklistSequenceCount,
+                phishCauseCount,
+                malwareCauseCount,
+                spamCauseCount,
+                scamCauseCount,
+                phishResourceCount,
+                malwareResourceCount,
+                spamResourceCount,
+                scamResourceCount,
+                phishSequenceCount,
+                malwareSequenceCount,
+                spamSequenceCount,
+                scamSequenceCount,
+                alexaRank,
+                hostReputationScore,
+                hostPhishReputationScore,
+                hostMalwareReputationScore,
+                hostSpamReputationScore,
+                hostScamReputationScore,
+                domainReputationScore,
+                domainPhishReputationScore,
+                domainMalwareReputationScore,
+                domainSpamReputationScore,
+                domainScamReputationScore,
+                uuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HostCore>.Write(ModelReaderWriterOptions options)
