@@ -29,7 +29,7 @@ namespace Azure.Communication.PhoneNumbers
             /// <summary> Service version "2023-10-01-preview. </summary>
             V2023_10_01_Preview = 5,
             /// <summary> Service version "package-preview-2024-01". </summary>
-            V2024_01_Preview = 4,
+            V2024_01_Preview = 6,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
