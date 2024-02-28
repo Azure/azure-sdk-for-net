@@ -269,7 +269,7 @@ jobs:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
@@ -285,7 +285,7 @@ jobs:
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
 
     - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
-      - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+      - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
         parameters:
           GenerateJobName: generate_target_dependencies_test_matrix
           JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
