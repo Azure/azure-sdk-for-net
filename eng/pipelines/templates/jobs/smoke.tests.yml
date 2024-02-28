@@ -11,13 +11,36 @@ parameters:
   - name: TimeoutInMinutes
     type: number
     default: 60
+  - name: TestMatrix
+    type: object
+    default:
+      - name: Ubuntu_Net60
+        Pool: $(LINUXPOOL)
+        OSVmImage: $(LINUXVMIMAGE)
+        os: linux
+        TestTargetFramework: net6.0
+      - name: Windows_NetFramework
+        Pool: $(WINDOWSPOOL)
+        OSVmImage: $(WINDOWSVMIMAGE)
+        os: windows
+        TestTargetFramework: net462
+      - name: Windows_Net60
+        Pool: $(WINDOWSPOOL)
+        OSVmImage: $(WINDOWSVMIMAGE)
+        os: windows
+        TestTargetFramework: net6.0
+      - name: Windows_Net70
+        Pool: $(WINDOWSPOOL)
+        OSVmImage: $(WINDOWSVMIMAGE)
+        os: windows
+        TestTargetFramework: net7.0
 
 jobs:
   - ${{ if eq(parameters.Daily, false) }}:
     - job: smoke_test_eligibility
       pool:
-        name: "azsdk-pool-mms-ubuntu-2004-general-1espt"
-        vmImage: "MMSUbuntu20.04"
+        name: $(LINUXPOOL)
+        vmImage: $(LINUXVMIMAGE)
         os: linux
       displayName: Check Smoke Test Eligibility
       steps:
@@ -41,79 +64,58 @@ jobs:
           env:
             RunSmokeTests: $(RunSmokeTests)
 
-  - job: SmokeTest
-    displayName: Run Smoke Test
-    ${{ if eq(parameters.Daily, false) }}:
-      dependsOn: smoke_test_eligibility
-      condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
-    strategy:
-      matrix:
-        Ubuntu_Net60:
-          Pool: "azsdk-pool-mms-ubuntu-2004-general-1espt"
-          OSVmImage: "azsdk-pool-mms-ubuntu-2004-general-1es-pt"
-          os: linux
-          TestTargetFramework: net6.0
-        Windows_NetFramework:
-          Pool: "azsdk-pool-mms-win-2022-general-1espt"
-          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
-          os: windows
-          TestTargetFramework: net462
-        Windows_Net60:
-          Pool: "azsdk-pool-mms-win-2022-general-1espt"
-          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
-          os: windows
-          TestTargetFramework: net6.0
-        Windows_Net70:
-          Pool: "azsdk-pool-mms-win-2022-general-1espt"
-          OSVmImage: "azsdk-pool-mms-win-2022-general-1es-pt"
-          os: windows
-          TestTargetFramework: net7.0
-    pool:
-      name: $(Pool)
-      vmImage: $(OSVmImage)
-      os: ${{ parameters.OSName }}
-    timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
+  - ${{ each matrix in parameters.TestMatrix }}:
+    - job: SmokeTest
+      displayName: Run Smoke Test ${{ matrix.Name }}
+      ${{ if eq(parameters.Daily, false) }}:
+        dependsOn: smoke_test_eligibility
+        condition: and(succeeded(), eq(dependencies.smoke_test_eligibility.outputs['output_eligibility.RunSmokeTests'], true))
+      pool:
+        name: ${{ matrix.Pool }}
+        vmImage: ${{ matrix.OSVmImage }}
+        os: ${{ matrix.os }}
+      timeoutInMinutes: ${{ parameters.TimeoutInMinutes }}
 
-    steps:
-      - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
-        parameters:
-          AgentImage: $(OSVmImage)
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-        parameters:
-          EnableNuGetCache: false
+      steps:
+        - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
+          parameters:
+            AgentImage: ${{ matrix.os }}
+        - template: /eng/pipelines/templates/steps/install-dotnet.yml
+          parameters:
+            EnableNuGetCache: false
 
-      - ${{ if eq(parameters.Daily, true) }}:
-        - task: PowerShell@2
-          displayName: Use latest dev feed package versions
-          inputs:
-            targetType: filePath
-            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -PreferDevVersion
-            workingDirectory: common/SmokeTests/SmokeTest
-            pwsh: true
+        - ${{ if eq(parameters.Daily, true) }}:
+          - task: PowerShell@2
+            displayName: Use latest dev feed package versions
+            inputs:
+              targetType: filePath
+              filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+              arguments: -CI -PreferDevVersion
+              workingDirectory: common/SmokeTests/SmokeTest
+              pwsh: true
 
-      - ${{ if eq(parameters.Daily, false) }}:
-        - download: current
-          artifact: ${{ parameters.ArtifactName }}
-          timeoutInMinutes: 5
+        - ${{ if eq(parameters.Daily, false) }}:
+          - download: current
+            artifact: ${{ parameters.ArtifactName }}
+            timeoutInMinutes: 5
 
-      - ${{ if eq(parameters.Daily, false) }}:
-        - task: PowerShell@2
-          displayName: Use latest GA/Beta package versions
-          inputs:
-            targetType: filePath
-            filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
-            arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
-            workingDirectory: common/SmokeTests/SmokeTest
-            pwsh: true
+        - ${{ if eq(parameters.Daily, false) }}:
+          - task: PowerShell@2
+            displayName: Use latest GA/Beta package versions
+            inputs:
+              targetType: filePath
+              filePath: ./common/SmokeTests/SmokeTest/Update-Dependencies.ps1
+              arguments: -CI -PreferDevVersion -ArtifactsPath "$(Pipeline.Workspace)/${{ parameters.ArtifactName }}"
+              workingDirectory: common/SmokeTests/SmokeTest
+              pwsh: true
 
-      - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: Show SmokeTest.csproj
+        - pwsh: Get-Content ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+          displayName: Show SmokeTest.csproj
 
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+        - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
-      - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
-        displayName: dotnet restore
+        - pwsh: dotnet restore ./common/SmokeTests/SmokeTest/SmokeTest.csproj
+          displayName: dotnet restore
 
-      - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
-        displayName: "Run Smoke Tests"
+        - pwsh: dotnet run -p .\common\SmokeTests\SmokeTest\SmokeTest.csproj --framework $(TestTargetFramework)
+          displayName: "Run Smoke Tests"
