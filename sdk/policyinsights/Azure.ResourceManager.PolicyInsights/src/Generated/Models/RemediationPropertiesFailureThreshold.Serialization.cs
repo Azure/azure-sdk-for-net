@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 return null;
             }
-            Optional<float> percentage = default;
+            float? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RemediationPropertiesFailureThreshold(Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new RemediationPropertiesFailureThreshold(percentage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationPropertiesFailureThreshold>.Write(ModelReaderWriterOptions options)

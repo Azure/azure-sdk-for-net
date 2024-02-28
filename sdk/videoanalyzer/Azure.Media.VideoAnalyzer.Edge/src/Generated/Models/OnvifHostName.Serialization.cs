@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<bool> fromDhcp = default;
-            Optional<string> hostname = default;
+            bool? fromDhcp = default;
+            string hostname = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fromDhcp"u8))
@@ -53,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new OnvifHostName(Optional.ToNullable(fromDhcp), hostname.Value);
+            return new OnvifHostName(fromDhcp, hostname);
         }
     }
 }

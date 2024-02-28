@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search.Models
                 return null;
             }
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedPrivateLinkResourceListResult(value ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(), nextLink.Value, serializedAdditionalRawData);
+            return new SharedPrivateLinkResourceListResult(value ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

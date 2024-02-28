@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Uri> oAuthUrl = default;
-            Optional<Uri> toBotFromChannelOpenIdMetadataUrl = default;
-            Optional<string> toBotFromChannelTokenIssuer = default;
-            Optional<Uri> toBotFromEmulatorOpenIdMetadataUrl = default;
-            Optional<Uri> toChannelFromBotLoginUrl = default;
-            Optional<string> toChannelFromBotOAuthScope = default;
-            Optional<bool> validateAuthority = default;
-            Optional<string> botOpenIdMetadata = default;
+            Uri oAuthUrl = default;
+            Uri toBotFromChannelOpenIdMetadataUrl = default;
+            string toBotFromChannelTokenIssuer = default;
+            Uri toBotFromEmulatorOpenIdMetadataUrl = default;
+            Uri toChannelFromBotLoginUrl = default;
+            string toChannelFromBotOAuthScope = default;
+            bool? validateAuthority = default;
+            string botOpenIdMetadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BotServiceHostSettingsResult(
-                oAuthUrl.Value,
-                toBotFromChannelOpenIdMetadataUrl.Value,
-                toBotFromChannelTokenIssuer.Value,
-                toBotFromEmulatorOpenIdMetadataUrl.Value,
-                toChannelFromBotLoginUrl.Value,
-                toChannelFromBotOAuthScope.Value,
-                Optional.ToNullable(validateAuthority),
-                botOpenIdMetadata.Value,
+                oAuthUrl,
+                toBotFromChannelOpenIdMetadataUrl,
+                toBotFromChannelTokenIssuer,
+                toBotFromEmulatorOpenIdMetadataUrl,
+                toChannelFromBotLoginUrl,
+                toChannelFromBotOAuthScope,
+                validateAuthority,
+                botOpenIdMetadata,
                 serializedAdditionalRawData);
         }
 

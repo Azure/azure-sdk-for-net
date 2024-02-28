@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IReadOnlyList<EdgeOrderAddressData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressResourceList(value ?? new ChangeTrackingList<EdgeOrderAddressData>(), nextLink.Value, serializedAdditionalRawData);
+            return new AddressResourceList(value ?? new ChangeTrackingList<EdgeOrderAddressData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressResourceList>.Write(ModelReaderWriterOptions options)

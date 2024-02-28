@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IntegrationRuntime properties = default;
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new IntegrationRuntimeDebugResource(name.Value, properties);
+            return new IntegrationRuntimeDebugResource(name, properties);
         }
 
         internal partial class IntegrationRuntimeDebugResourceConverter : JsonConverter<IntegrationRuntimeDebugResource>

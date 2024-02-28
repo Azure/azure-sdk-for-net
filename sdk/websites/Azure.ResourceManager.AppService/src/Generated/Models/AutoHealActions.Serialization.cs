@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<AutoHealActionType> actionType = default;
-            Optional<AutoHealCustomAction> customAction = default;
-            Optional<string> minProcessExecutionTime = default;
+            AutoHealActionType? actionType = default;
+            AutoHealCustomAction customAction = default;
+            string minProcessExecutionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealActions(Optional.ToNullable(actionType), customAction.Value, minProcessExecutionTime.Value, serializedAdditionalRawData);
+            return new AutoHealActions(actionType, customAction, minProcessExecutionTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealActions>.Write(ModelReaderWriterOptions options)

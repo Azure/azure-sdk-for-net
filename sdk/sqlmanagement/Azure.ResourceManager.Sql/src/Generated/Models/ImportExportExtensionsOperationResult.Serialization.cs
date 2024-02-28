@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> requestId = default;
-            Optional<string> requestType = default;
-            Optional<string> lastModifiedTime = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> status = default;
-            Optional<string> errorMessage = default;
+            SystemData systemData = default;
+            Guid? requestId = default;
+            string requestType = default;
+            string lastModifiedTime = default;
+            string serverName = default;
+            string databaseName = default;
+            string status = default;
+            string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.Sql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(requestId),
-                requestType.Value,
-                lastModifiedTime.Value,
-                serverName.Value,
-                databaseName.Value,
-                status.Value,
-                errorMessage.Value,
+                systemData,
+                requestId,
+                requestType,
+                lastModifiedTime,
+                serverName,
+                databaseName,
+                status,
+                errorMessage,
                 serializedAdditionalRawData);
         }
 

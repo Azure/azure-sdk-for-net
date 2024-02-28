@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<MonitorLocalizableString> name = default;
-            Optional<string> value = default;
+            MonitorLocalizableString name = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorMetadataValue(name.Value, value.Value, serializedAdditionalRawData);
+            return new MonitorMetadataValue(name, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorMetadataValue>.Write(ModelReaderWriterOptions options)

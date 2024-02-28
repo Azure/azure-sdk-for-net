@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<string> excludedProjectNumbers = default;
-            Optional<string> serviceAccountEmailAddress = default;
-            Optional<string> workloadIdentityProviderId = default;
-            Optional<string> organizationName = default;
+            string serviceAccountEmailAddress = default;
+            string workloadIdentityProviderId = default;
+            string organizationName = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 organizationMembershipType,
                 serializedAdditionalRawData,
                 excludedProjectNumbers ?? new ChangeTrackingList<string>(),
-                serviceAccountEmailAddress.Value,
-                workloadIdentityProviderId.Value,
-                organizationName.Value);
+                serviceAccountEmailAddress,
+                workloadIdentityProviderId,
+                organizationName);
         }
 
         BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)

@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.MobileNetwork
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            MobileNetworkProvisioningState? provisioningState = default;
             MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
             IList<string> userPlaneAccessVirtualIPv4Addresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.MobileNetwork
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(provisioningState),
+                provisioningState,
                 userPlaneAccessInterface,
                 userPlaneAccessVirtualIPv4Addresses ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

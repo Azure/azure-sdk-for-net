@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> failureThreshold = default;
-            Optional<ContainerAppHttpRequestInfo> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> successThreshold = default;
-            Optional<ContainerAppTcpSocketRequestInfo> tcpSocket = default;
-            Optional<long> terminationGracePeriodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<ContainerAppProbeType> type = default;
+            int? failureThreshold = default;
+            ContainerAppHttpRequestInfo httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? successThreshold = default;
+            ContainerAppTcpSocketRequestInfo tcpSocket = default;
+            long? terminationGracePeriodSeconds = default;
+            int? timeoutSeconds = default;
+            ContainerAppProbeType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +210,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ContainerAppProbe(
-                Optional.ToNullable(failureThreshold),
-                httpGet.Value,
-                Optional.ToNullable(initialDelaySeconds),
-                Optional.ToNullable(periodSeconds),
-                Optional.ToNullable(successThreshold),
-                tcpSocket.Value,
-                Optional.ToNullable(terminationGracePeriodSeconds),
-                Optional.ToNullable(timeoutSeconds),
-                Optional.ToNullable(type),
+                failureThreshold,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                successThreshold,
+                tcpSocket,
+                terminationGracePeriodSeconds,
+                timeoutSeconds,
+                type,
                 serializedAdditionalRawData);
         }
 

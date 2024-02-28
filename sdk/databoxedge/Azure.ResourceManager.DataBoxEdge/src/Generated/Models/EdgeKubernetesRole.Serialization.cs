@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
-            Optional<EdgeKubernetesState> provisioningState = default;
-            Optional<HostPlatformType> hostPlatformType = default;
-            Optional<EdgeKubernetesClusterInfo> kubernetesClusterInfo = default;
-            Optional<EdgeKubernetesRoleResources> kubernetesRoleResources = default;
-            Optional<DataBoxEdgeRoleStatus> roleStatus = default;
+            SystemData systemData = default;
+            DataBoxEdgeOSPlatformType? hostPlatform = default;
+            EdgeKubernetesState? provisioningState = default;
+            HostPlatformType? hostPlatformType = default;
+            EdgeKubernetesClusterInfo kubernetesClusterInfo = default;
+            EdgeKubernetesRoleResources kubernetesRoleResources = default;
+            DataBoxEdgeRoleStatus? roleStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,15 +240,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
                 serializedAdditionalRawData,
-                Optional.ToNullable(hostPlatform),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(hostPlatformType),
-                kubernetesClusterInfo.Value,
-                kubernetesRoleResources.Value,
-                Optional.ToNullable(roleStatus));
+                hostPlatform,
+                provisioningState,
+                hostPlatformType,
+                kubernetesClusterInfo,
+                kubernetesRoleResources,
+                roleStatus);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesRole>.Write(ModelReaderWriterOptions options)

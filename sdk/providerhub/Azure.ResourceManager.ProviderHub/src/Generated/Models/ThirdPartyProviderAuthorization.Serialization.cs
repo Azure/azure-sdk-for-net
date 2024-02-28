@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<LightHouseAuthorization> authorizations = default;
-            Optional<string> managedByTenantId = default;
+            string managedByTenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThirdPartyProviderAuthorization(authorizations ?? new ChangeTrackingList<LightHouseAuthorization>(), managedByTenantId.Value, serializedAdditionalRawData);
+            return new ThirdPartyProviderAuthorization(authorizations ?? new ChangeTrackingList<LightHouseAuthorization>(), managedByTenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThirdPartyProviderAuthorization>.Write(ModelReaderWriterOptions options)

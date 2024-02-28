@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> capacity = default;
-            Optional<string> family = default;
-            Optional<string> name = default;
-            Optional<string> size = default;
-            Optional<MachineLearningSkuTier> tier = default;
+            int? capacity = default;
+            string family = default;
+            string name = default;
+            string size = default;
+            MachineLearningSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineLearningSkuPatch(
-                Optional.ToNullable(capacity),
-                family.Value,
-                name.Value,
-                size.Value,
-                Optional.ToNullable(tier),
+                capacity,
+                family,
+                name,
+                size,
+                tier,
                 serializedAdditionalRawData);
         }
 

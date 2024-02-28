@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SubResource> privateEndpoint = default;
-            Optional<HardwareSecurityModulesPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<HardwareSecurityModulesPrivateEndpointConnectionProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            SubResource privateEndpoint = default;
+            HardwareSecurityModulesPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            HardwareSecurityModulesPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IReadOnlyList<string> groupIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -230,11 +230,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(etag),
+                systemData,
+                etag,
                 privateEndpoint,
-                privateLinkServiceConnectionState.Value,
-                Optional.ToNullable(provisioningState),
+                privateLinkServiceConnectionState,
+                provisioningState,
                 groupIds ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

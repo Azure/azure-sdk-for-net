@@ -40,8 +40,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             string algorithm = default;
-            Optional<string> vectorizer = default;
-            Optional<string> compression = default;
+            string vectorizer = default;
+            string compression = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new VectorSearchProfile(name, algorithm, vectorizer.Value, compression.Value);
+            return new VectorSearchProfile(name, algorithm, vectorizer, compression);
         }
     }
 }

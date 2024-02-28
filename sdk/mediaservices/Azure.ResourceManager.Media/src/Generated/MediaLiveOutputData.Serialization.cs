@@ -154,18 +154,18 @@ namespace Azure.ResourceManager.Media
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> assetName = default;
-            Optional<TimeSpan> archiveWindowLength = default;
-            Optional<TimeSpan?> rewindWindowLength = default;
-            Optional<string> manifestName = default;
-            Optional<Hls> hls = default;
-            Optional<long> outputSnapTime = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> provisioningState = default;
-            Optional<LiveOutputResourceState> resourceState = default;
+            SystemData systemData = default;
+            string description = default;
+            string assetName = default;
+            TimeSpan? archiveWindowLength = default;
+            TimeSpan? rewindWindowLength = default;
+            string manifestName = default;
+            Hls hls = default;
+            long? outputSnapTime = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? lastModified = default;
+            string provisioningState = default;
+            LiveOutputResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -300,18 +300,18 @@ namespace Azure.ResourceManager.Media
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                assetName.Value,
-                Optional.ToNullable(archiveWindowLength),
-                Optional.ToNullable(rewindWindowLength),
-                manifestName.Value,
-                hls.Value,
-                Optional.ToNullable(outputSnapTime),
-                Optional.ToNullable(created),
-                Optional.ToNullable(lastModified),
-                provisioningState.Value,
-                Optional.ToNullable(resourceState),
+                systemData,
+                description,
+                assetName,
+                archiveWindowLength,
+                rewindWindowLength,
+                manifestName,
+                hls,
+                outputSnapTime,
+                created,
+                lastModified,
+                provisioningState,
+                resourceState,
                 serializedAdditionalRawData);
         }
 

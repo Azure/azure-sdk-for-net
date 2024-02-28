@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadSQLRecoveryPoint": return WorkloadSqlRecoveryPoint.DeserializeWorkloadSqlRecoveryPoint(element, options);
                 }
             }
-            Optional<DateTimeOffset> recoveryPointTimeInUTC = default;
-            Optional<RestorePointType> type = default;
+            DateTimeOffset? recoveryPointTimeInUTC = default;
+            RestorePointType? type = default;
             IList<RecoveryPointTierInformationV2> recoveryPointTierDetails = default;
             IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo = default;
-            Optional<RecoveryPointProperties> recoveryPointProperties = default;
+            RecoveryPointProperties recoveryPointProperties = default;
             string objectType = "AzureWorkloadRecoveryPoint";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new WorkloadRecoveryPoint(
                 objectType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(recoveryPointTimeInUTC),
-                Optional.ToNullable(type),
+                recoveryPointTimeInUTC,
+                type,
                 recoveryPointTierDetails ?? new ChangeTrackingList<RecoveryPointTierInformationV2>(),
                 recoveryPointMoveReadinessInfo ?? new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>(),
-                recoveryPointProperties.Value);
+                recoveryPointProperties);
         }
 
         BinaryData IPersistableModel<WorkloadRecoveryPoint>.Write(ModelReaderWriterOptions options)

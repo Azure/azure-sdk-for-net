@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -18,12 +17,12 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<string> answer = default;
-            Optional<double> confidenceScore = default;
-            Optional<string> id = default;
-            Optional<AnswerSpan> answerSpan = default;
-            Optional<int> offset = default;
-            Optional<int> length = default;
+            string answer = default;
+            double? confidenceScore = default;
+            string id = default;
+            AnswerSpan answerSpan = default;
+            int? offset = default;
+            int? length = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("answer"u8))
@@ -74,12 +73,12 @@ namespace Azure.AI.Language.QuestionAnswering
                 }
             }
             return new TextAnswer(
-                answer.Value,
-                Optional.ToNullable(confidenceScore),
-                id.Value,
-                answerSpan.Value,
-                Optional.ToNullable(offset),
-                Optional.ToNullable(length));
+                answer,
+                confidenceScore,
+                id,
+                answerSpan,
+                offset,
+                length);
         }
     }
 }

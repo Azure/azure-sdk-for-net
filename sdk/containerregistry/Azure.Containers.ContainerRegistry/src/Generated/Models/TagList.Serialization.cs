@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -22,7 +21,7 @@ namespace Azure.Containers.ContainerRegistry
             string registry = default;
             string imageName = default;
             IReadOnlyList<TagAttributesBase> tags = default;
-            Optional<string> link = default;
+            string link = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -51,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new TagList(registry, imageName, tags, link.Value);
+            return new TagList(registry, imageName, tags, link);
         }
     }
 }

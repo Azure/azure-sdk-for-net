@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<IPAddressAllocationMethod> allocationMethod = default;
+            IPAddressAllocationMethod? allocationMethod = default;
             IList<string> dnsServers = default;
             IList<string> gateway = default;
-            Optional<string> ipAddress = default;
-            Optional<string> subnetMask = default;
-            Optional<string> primaryWinsServer = default;
-            Optional<string> secondaryWinsServer = default;
+            string ipAddress = default;
+            string subnetMask = default;
+            string primaryWinsServer = default;
+            string secondaryWinsServer = default;
             IReadOnlyList<NicIPAddressSettings> ipAddressInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NicIPSettings(
-                Optional.ToNullable(allocationMethod),
+                allocationMethod,
                 dnsServers ?? new ChangeTrackingList<string>(),
                 gateway ?? new ChangeTrackingList<string>(),
-                ipAddress.Value,
-                subnetMask.Value,
-                primaryWinsServer.Value,
-                secondaryWinsServer.Value,
+                ipAddress,
+                subnetMask,
+                primaryWinsServer,
+                secondaryWinsServer,
                 ipAddressInfo ?? new ChangeTrackingList<NicIPAddressSettings>(),
                 serializedAdditionalRawData);
         }

@@ -125,15 +125,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<bool> isDefault = default;
-            Optional<int> priority = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            bool? isDefault = default;
+            int? priority = default;
             IList<VpnServerConfigurationPolicyGroupMember> policyMembers = default;
             IReadOnlyList<WritableSubResource> p2sConnectionConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -244,16 +244,16 @@ namespace Azure.ResourceManager.Network
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VpnServerConfigurationPolicyGroupData(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(isDefault),
-                Optional.ToNullable(priority),
+                etag,
+                isDefault,
+                priority,
                 policyMembers ?? new ChangeTrackingList<VpnServerConfigurationPolicyGroupMember>(),
                 p2sConnectionConfigurations ?? new ChangeTrackingList<WritableSubResource>(),
-                Optional.ToNullable(provisioningState));
+                provisioningState);
         }
 
         BinaryData IPersistableModel<VpnServerConfigurationPolicyGroupData>.Write(ModelReaderWriterOptions options)

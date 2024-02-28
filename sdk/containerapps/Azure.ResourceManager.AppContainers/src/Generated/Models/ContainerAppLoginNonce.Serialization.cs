@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> validateNonce = default;
-            Optional<string> nonceExpirationInterval = default;
+            bool? validateNonce = default;
+            string nonceExpirationInterval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppLoginNonce(Optional.ToNullable(validateNonce), nonceExpirationInterval.Value, serializedAdditionalRawData);
+            return new ContainerAppLoginNonce(validateNonce, nonceExpirationInterval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLoginNonce>.Write(ModelReaderWriterOptions options)

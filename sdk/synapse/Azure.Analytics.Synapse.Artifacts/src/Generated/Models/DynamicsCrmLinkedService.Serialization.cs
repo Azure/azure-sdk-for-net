@@ -129,22 +129,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object deploymentType = default;
-            Optional<object> hostName = default;
-            Optional<object> port = default;
-            Optional<object> serviceUri = default;
-            Optional<object> organizationName = default;
+            object hostName = default;
+            object port = default;
+            object serviceUri = default;
+            object organizationName = default;
             object authenticationType = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> servicePrincipalId = default;
-            Optional<object> servicePrincipalCredentialType = default;
-            Optional<SecretBase> servicePrincipalCredential = default;
-            Optional<object> encryptedCredential = default;
+            object username = default;
+            SecretBase password = default;
+            object servicePrincipalId = default;
+            object servicePrincipalCredentialType = default;
+            SecretBase servicePrincipalCredential = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -320,23 +320,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DynamicsCrmLinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 deploymentType,
-                hostName.Value,
-                port.Value,
-                serviceUri.Value,
-                organizationName.Value,
+                hostName,
+                port,
+                serviceUri,
+                organizationName,
                 authenticationType,
-                username.Value,
-                password.Value,
-                servicePrincipalId.Value,
-                servicePrincipalCredentialType.Value,
-                servicePrincipalCredential.Value,
-                encryptedCredential.Value);
+                username,
+                password,
+                servicePrincipalId,
+                servicePrincipalCredentialType,
+                servicePrincipalCredential,
+                encryptedCredential);
         }
 
         internal partial class DynamicsCrmLinkedServiceConverter : JsonConverter<DynamicsCrmLinkedService>

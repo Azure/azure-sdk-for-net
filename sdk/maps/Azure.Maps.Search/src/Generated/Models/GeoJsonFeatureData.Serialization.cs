@@ -42,9 +42,9 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            Optional<object> properties = default;
-            Optional<string> id = default;
-            Optional<string> featureType = default;
+            object properties = default;
+            string id = default;
+            string featureType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -72,7 +72,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonFeatureData(geometry, properties.Value, id.Value, featureType.Value);
+            return new GeoJsonFeatureData(geometry, properties, id, featureType);
         }
     }
 }

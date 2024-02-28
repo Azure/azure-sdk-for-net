@@ -67,8 +67,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
             IList<object> annotations = default;
             object parentTrigger = default;
             DateTimeOffset requestedStartTime = default;
@@ -155,8 +155,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new RerunTumblingWindowTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 parentTrigger,

@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<NetworkingRuleAction> action = default;
+            NetworkingRuleAction? action = default;
             IReadOnlyList<string> addressPrefixes = default;
-            Optional<string> portRanges = default;
-            Optional<string> protocol = default;
-            Optional<string> serviceTag = default;
+            string portRanges = default;
+            string protocol = default;
+            string serviceTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ServiceTagDestination(
-                Optional.ToNullable(action),
+                action,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                portRanges.Value,
-                protocol.Value,
-                serviceTag.Value,
+                portRanges,
+                protocol,
+                serviceTag,
                 serializedAdditionalRawData);
         }
 

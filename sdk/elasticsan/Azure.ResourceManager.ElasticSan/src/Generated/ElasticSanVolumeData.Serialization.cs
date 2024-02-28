@@ -119,13 +119,13 @@ namespace Azure.ResourceManager.ElasticSan
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> volumeId = default;
-            Optional<ElasticSanVolumeDataSourceInfo> creationData = default;
+            SystemData systemData = default;
+            Guid? volumeId = default;
+            ElasticSanVolumeDataSourceInfo creationData = default;
             long sizeGiB = default;
-            Optional<IscsiTargetInfo> storageTarget = default;
-            Optional<ManagedByInfo> managedBy = default;
-            Optional<ElasticSanProvisioningState> provisioningState = default;
+            IscsiTargetInfo storageTarget = default;
+            ManagedByInfo managedBy = default;
+            ElasticSanProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,13 +226,13 @@ namespace Azure.ResourceManager.ElasticSan
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(volumeId),
-                creationData.Value,
+                systemData,
+                volumeId,
+                creationData,
                 sizeGiB,
-                storageTarget.Value,
-                managedBy.Value,
-                Optional.ToNullable(provisioningState),
+                storageTarget,
+                managedBy,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

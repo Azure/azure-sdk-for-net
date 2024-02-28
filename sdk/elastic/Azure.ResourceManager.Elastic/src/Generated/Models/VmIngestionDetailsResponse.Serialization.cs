@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<string> cloudId = default;
-            Optional<string> ingestionKey = default;
+            string cloudId = default;
+            string ingestionKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmIngestionDetailsResponse(cloudId.Value, ingestionKey.Value, serializedAdditionalRawData);
+            return new VmIngestionDetailsResponse(cloudId, ingestionKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmIngestionDetailsResponse>.Write(ModelReaderWriterOptions options)

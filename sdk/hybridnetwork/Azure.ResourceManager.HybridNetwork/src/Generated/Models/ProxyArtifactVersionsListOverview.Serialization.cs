@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProxyArtifactOverviewPropertiesValue> properties = default;
+            ProxyArtifactOverviewPropertiesValue properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                properties.Value,
+                systemData,
+                properties,
                 serializedAdditionalRawData);
         }
 

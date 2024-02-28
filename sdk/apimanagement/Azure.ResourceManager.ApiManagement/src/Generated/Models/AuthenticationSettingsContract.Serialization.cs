@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<OAuth2AuthenticationSettingsContract> oAuth2 = default;
-            Optional<OpenIdAuthenticationSettingsContract> openid = default;
+            OAuth2AuthenticationSettingsContract oAuth2 = default;
+            OpenIdAuthenticationSettingsContract openid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AuthenticationSettingsContract(oAuth2.Value, openid.Value, serializedAdditionalRawData);
+            return new AuthenticationSettingsContract(oAuth2, openid, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)

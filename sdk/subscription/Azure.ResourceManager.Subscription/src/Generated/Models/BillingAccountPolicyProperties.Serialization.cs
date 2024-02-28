@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 return null;
             }
             IReadOnlyList<ServiceTenant> serviceTenants = default;
-            Optional<bool> allowTransfers = default;
+            bool? allowTransfers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), Optional.ToNullable(allowTransfers), serializedAdditionalRawData);
+            return new BillingAccountPolicyProperties(serviceTenants ?? new ChangeTrackingList<ServiceTenant>(), allowTransfers, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingAccountPolicyProperties>.Write(ModelReaderWriterOptions options)

@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IList<BinaryData> annotations = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownCredential(type, description.Value, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties);
+            return new UnknownCredential(type, description, annotations ?? new ChangeTrackingList<BinaryData>(), additionalProperties);
         }
 
         BinaryData IPersistableModel<DataFactoryCredential>.Write(ModelReaderWriterOptions options)

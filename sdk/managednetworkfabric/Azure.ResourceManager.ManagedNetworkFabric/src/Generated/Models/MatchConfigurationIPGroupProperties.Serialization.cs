@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
+            string name = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
             IList<string> ipPrefixes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MatchConfigurationIPGroupProperties(name.Value, Optional.ToNullable(ipAddressType), ipPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new MatchConfigurationIPGroupProperties(name, ipAddressType, ipPrefixes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MatchConfigurationIPGroupProperties>.Write(ModelReaderWriterOptions options)

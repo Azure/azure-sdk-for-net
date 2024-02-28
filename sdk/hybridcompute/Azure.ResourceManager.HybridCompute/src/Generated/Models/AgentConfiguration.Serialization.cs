@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<Uri> proxyUrl = default;
+            Uri proxyUrl = default;
             IReadOnlyList<string> incomingConnectionsPorts = default;
             IReadOnlyList<HybridComputeConfigurationExtension> extensionsAllowList = default;
             IReadOnlyList<HybridComputeConfigurationExtension> extensionsBlockList = default;
             IReadOnlyList<string> proxyBypass = default;
-            Optional<string> extensionsEnabled = default;
-            Optional<string> guestConfigurationEnabled = default;
-            Optional<AgentConfigurationMode> configMode = default;
+            string extensionsEnabled = default;
+            string guestConfigurationEnabled = default;
+            AgentConfigurationMode? configMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,14 +227,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AgentConfiguration(
-                proxyUrl.Value,
+                proxyUrl,
                 incomingConnectionsPorts ?? new ChangeTrackingList<string>(),
                 extensionsAllowList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
                 extensionsBlockList ?? new ChangeTrackingList<HybridComputeConfigurationExtension>(),
                 proxyBypass ?? new ChangeTrackingList<string>(),
-                extensionsEnabled.Value,
-                guestConfigurationEnabled.Value,
-                Optional.ToNullable(configMode),
+                extensionsEnabled,
+                guestConfigurationEnabled,
+                configMode,
                 serializedAdditionalRawData);
         }
 

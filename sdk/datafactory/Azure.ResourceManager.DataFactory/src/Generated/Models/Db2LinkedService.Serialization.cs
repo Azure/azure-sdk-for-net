@@ -156,19 +156,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
-            Optional<DataFactoryElement<string>> connectionString = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> database = default;
-            Optional<Db2AuthenticationType> authenticationType = default;
-            Optional<DataFactoryElement<string>> username = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> packageCollection = default;
-            Optional<DataFactoryElement<string>> certificateCommonName = default;
-            Optional<string> encryptedCredential = default;
+            DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> database = default;
+            Db2AuthenticationType? authenticationType = default;
+            DataFactoryElement<string> username = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> packageCollection = default;
+            DataFactoryElement<string> certificateCommonName = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -321,20 +321,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new Db2LinkedService(
                 type,
-                connectVia.Value,
-                description.Value,
+                connectVia,
+                description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
-                connectionString.Value,
-                server.Value,
-                database.Value,
-                Optional.ToNullable(authenticationType),
-                username.Value,
+                connectionString,
+                server,
+                database,
+                authenticationType,
+                username,
                 password,
-                packageCollection.Value,
-                certificateCommonName.Value,
-                encryptedCredential.Value);
+                packageCollection,
+                certificateCommonName,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<Db2LinkedService>.Write(ModelReaderWriterOptions options)

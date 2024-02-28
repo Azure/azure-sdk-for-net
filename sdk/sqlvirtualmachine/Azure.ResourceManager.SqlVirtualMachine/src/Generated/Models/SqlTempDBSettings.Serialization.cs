@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 return null;
             }
-            Optional<int> dataFileSize = default;
-            Optional<int> dataGrowth = default;
-            Optional<int> logFileSize = default;
-            Optional<int> logGrowth = default;
-            Optional<int> dataFileCount = default;
-            Optional<bool> persistFolder = default;
-            Optional<string> persistFolderPath = default;
+            int? dataFileSize = default;
+            int? dataGrowth = default;
+            int? logFileSize = default;
+            int? logGrowth = default;
+            int? dataFileCount = default;
+            bool? persistFolder = default;
+            string persistFolderPath = default;
             IList<int> luns = default;
-            Optional<string> defaultFilePath = default;
+            string defaultFilePath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,15 +212,15 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SqlTempDBSettings(
-                Optional.ToNullable(dataFileSize),
-                Optional.ToNullable(dataGrowth),
-                Optional.ToNullable(logFileSize),
-                Optional.ToNullable(logGrowth),
-                Optional.ToNullable(dataFileCount),
-                Optional.ToNullable(persistFolder),
-                persistFolderPath.Value,
+                dataFileSize,
+                dataGrowth,
+                logFileSize,
+                logGrowth,
+                dataFileCount,
+                persistFolder,
+                persistFolderPath,
                 luns ?? new ChangeTrackingList<int>(),
-                defaultFilePath.Value,
+                defaultFilePath,
                 serializedAdditionalRawData);
         }
 

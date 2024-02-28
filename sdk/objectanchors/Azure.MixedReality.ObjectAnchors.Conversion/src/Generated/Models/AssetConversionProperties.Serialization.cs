@@ -46,17 +46,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             {
                 return null;
             }
-            Optional<string> clientErrorDetails = default;
-            Optional<string> serverErrorDetails = default;
-            Optional<ConversionErrorCode> errorCode = default;
-            Optional<Guid> jobId = default;
-            Optional<string> outputModelUri = default;
-            Optional<AssetConversionStatus> jobStatus = default;
-            Optional<string> assetFileType = default;
-            Optional<string> inputAssetUri = default;
-            Optional<Guid> accountId = default;
-            Optional<AssetConversionConfiguration> ingestionConfiguration = default;
-            Optional<Vector3> scaledAssetDimensions = default;
+            string clientErrorDetails = default;
+            string serverErrorDetails = default;
+            ConversionErrorCode errorCode = default;
+            Guid? jobId = default;
+            string outputModelUri = default;
+            AssetConversionStatus? jobStatus = default;
+            string assetFileType = default;
+            string inputAssetUri = default;
+            Guid? accountId = default;
+            AssetConversionConfiguration ingestionConfiguration = default;
+            Vector3 scaledAssetDimensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientErrorDetails"u8))
@@ -141,17 +141,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                 }
             }
             return new AssetConversionProperties(
-                clientErrorDetails.Value,
-                serverErrorDetails.Value,
+                clientErrorDetails,
+                serverErrorDetails,
                 errorCode,
-                Optional.ToNullable(jobId),
-                outputModelUri.Value,
-                Optional.ToNullable(jobStatus),
-                assetFileType.Value,
-                inputAssetUri.Value,
-                Optional.ToNullable(accountId),
-                ingestionConfiguration.Value,
-                scaledAssetDimensions.Value);
+                jobId,
+                outputModelUri,
+                jobStatus,
+                assetFileType,
+                inputAssetUri,
+                accountId,
+                ingestionConfiguration,
+                scaledAssetDimensions);
         }
     }
 }

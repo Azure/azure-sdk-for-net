@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             RunNotebookSnapshot snapshot = default;
-            Optional<RunNotebookError> error = default;
+            RunNotebookError error = default;
             string runId = default;
             string runStatus = default;
-            Optional<string> lastCheckedOn = default;
-            Optional<string> sessionId = default;
-            Optional<string> sparkPool = default;
+            string lastCheckedOn = default;
+            string sessionId = default;
+            string sparkPool = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("snapshot"u8))
@@ -72,12 +71,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             return new RunNotebookSnapshotResult(
                 snapshot,
-                error.Value,
+                error,
                 runId,
                 runStatus,
-                lastCheckedOn.Value,
-                sessionId.Value,
-                sparkPool.Value);
+                lastCheckedOn,
+                sessionId,
+                sparkPool);
         }
 
         internal partial class RunNotebookSnapshotResultConverter : JsonConverter<RunNotebookSnapshotResult>

@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<string> sasToken = default;
+            Uri blobUri = default;
+            string sasToken = default;
             string instanceType = default;
             IReadOnlyDictionary<string, string> affectedObjectDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, blobUri.Value, sasToken.Value);
+            return new ExportJobDetails(instanceType, affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData, blobUri, sasToken);
         }
 
         BinaryData IPersistableModel<ExportJobDetails>.Write(ModelReaderWriterOptions options)

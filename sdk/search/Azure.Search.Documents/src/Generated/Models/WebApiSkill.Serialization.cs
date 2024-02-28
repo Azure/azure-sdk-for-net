@@ -144,16 +144,16 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string uri = default;
             IDictionary<string, string> httpHeaders = default;
-            Optional<string> httpMethod = default;
-            Optional<TimeSpan?> timeout = default;
-            Optional<int?> batchSize = default;
-            Optional<int?> degreeOfParallelism = default;
-            Optional<ResourceIdentifier> authResourceId = default;
-            Optional<SearchIndexerDataIdentity> authIdentity = default;
+            string httpMethod = default;
+            TimeSpan? timeout = default;
+            int? batchSize = default;
+            int? degreeOfParallelism = default;
+            ResourceIdentifier authResourceId = default;
+            SearchIndexerDataIdentity authIdentity = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -276,19 +276,19 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new WebApiSkill(
                 odataType,
-                name.Value,
-                description.Value,
-                context.Value,
+                name,
+                description,
+                context,
                 inputs,
                 outputs,
                 uri,
                 httpHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                httpMethod.Value,
-                Optional.ToNullable(timeout),
-                Optional.ToNullable(batchSize),
-                Optional.ToNullable(degreeOfParallelism),
-                authResourceId.Value,
-                authIdentity.Value);
+                httpMethod,
+                timeout,
+                batchSize,
+                degreeOfParallelism,
+                authResourceId,
+                authIdentity);
         }
     }
 }

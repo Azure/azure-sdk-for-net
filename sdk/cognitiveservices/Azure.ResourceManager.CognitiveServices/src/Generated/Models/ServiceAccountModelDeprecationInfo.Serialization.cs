@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> fineTune = default;
-            Optional<DateTimeOffset> inference = default;
+            DateTimeOffset? fineTune = default;
+            DateTimeOffset? inference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAccountModelDeprecationInfo(Optional.ToNullable(fineTune), Optional.ToNullable(inference), serializedAdditionalRawData);
+            return new ServiceAccountModelDeprecationInfo(fineTune, inference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAccountModelDeprecationInfo>.Write(ModelReaderWriterOptions options)

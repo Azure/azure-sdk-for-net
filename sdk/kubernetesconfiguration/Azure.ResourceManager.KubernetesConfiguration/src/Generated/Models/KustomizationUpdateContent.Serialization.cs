@@ -153,13 +153,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
             IList<string> dependsOn = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<long?> retryIntervalInSeconds = default;
-            Optional<bool?> prune = default;
-            Optional<bool?> force = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            long? retryIntervalInSeconds = default;
+            bool? prune = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -246,13 +246,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new KustomizationUpdateContent(
-                path.Value,
+                path,
                 dependsOn ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(timeoutInSeconds),
-                Optional.ToNullable(syncIntervalInSeconds),
-                Optional.ToNullable(retryIntervalInSeconds),
-                Optional.ToNullable(prune),
-                Optional.ToNullable(force),
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                retryIntervalInSeconds,
+                prune,
+                force,
                 serializedAdditionalRawData);
         }
 

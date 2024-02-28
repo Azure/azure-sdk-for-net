@@ -147,15 +147,15 @@ namespace Azure.ResourceManager.Authorization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> denyAssignmentName = default;
-            Optional<string> description = default;
+            SystemData systemData = default;
+            string denyAssignmentName = default;
+            string description = default;
             IReadOnlyList<DenyAssignmentPermission> permissions = default;
-            Optional<string> scope = default;
-            Optional<bool> doNotApplyToChildScopes = default;
+            string scope = default;
+            bool? doNotApplyToChildScopes = default;
             IReadOnlyList<RoleManagementPrincipal> principals = default;
             IReadOnlyList<RoleManagementPrincipal> excludePrincipals = default;
-            Optional<bool> isSystemProtected = default;
+            bool? isSystemProtected = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -281,15 +281,15 @@ namespace Azure.ResourceManager.Authorization
                 id,
                 name,
                 type,
-                systemData.Value,
-                denyAssignmentName.Value,
-                description.Value,
+                systemData,
+                denyAssignmentName,
+                description,
                 permissions ?? new ChangeTrackingList<DenyAssignmentPermission>(),
-                scope.Value,
-                Optional.ToNullable(doNotApplyToChildScopes),
+                scope,
+                doNotApplyToChildScopes,
                 principals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
                 excludePrincipals ?? new ChangeTrackingList<RoleManagementPrincipal>(),
-                Optional.ToNullable(isSystemProtected),
+                isSystemProtected,
                 serializedAdditionalRawData);
         }
 

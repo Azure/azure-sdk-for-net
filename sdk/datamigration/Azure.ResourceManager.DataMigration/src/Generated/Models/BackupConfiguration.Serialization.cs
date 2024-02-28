@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SourceLocation> sourceLocation = default;
-            Optional<TargetLocation> targetLocation = default;
+            SourceLocation sourceLocation = default;
+            TargetLocation targetLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupConfiguration(sourceLocation.Value, targetLocation.Value, serializedAdditionalRawData);
+            return new BackupConfiguration(sourceLocation, targetLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupConfiguration>.Write(ModelReaderWriterOptions options)

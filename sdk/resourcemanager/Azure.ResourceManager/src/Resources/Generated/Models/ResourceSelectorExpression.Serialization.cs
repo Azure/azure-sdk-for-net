@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ResourceSelectorKind> kind = default;
+            ResourceSelectorKind? kind = default;
             IList<string> @in = default;
             IList<string> notIn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSelectorExpression(Optional.ToNullable(kind), @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ResourceSelectorExpression(kind, @in ?? new ChangeTrackingList<string>(), notIn ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSelectorExpression>.Write(ModelReaderWriterOptions options)

@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.FluidRelay
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<Guid> frsContainerId = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastAccessTime = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            Guid? frsContainerId = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastAccessTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.FluidRelay
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(frsTenantId),
-                Optional.ToNullable(frsContainerId),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(lastAccessTime),
+                systemData,
+                frsTenantId,
+                frsContainerId,
+                provisioningState,
+                creationTime,
+                lastAccessTime,
                 serializedAdditionalRawData);
         }
 

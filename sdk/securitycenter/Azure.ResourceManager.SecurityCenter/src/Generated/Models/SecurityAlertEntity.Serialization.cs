@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SecurityAlertEntity(type.Value, additionalProperties);
+            return new SecurityAlertEntity(type, additionalProperties);
         }
 
         BinaryData IPersistableModel<SecurityAlertEntity>.Write(ModelReaderWriterOptions options)

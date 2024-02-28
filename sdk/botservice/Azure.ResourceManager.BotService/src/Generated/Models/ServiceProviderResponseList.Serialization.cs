@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<BotServiceProvider> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceProviderResponseList(nextLink.Value, value ?? new ChangeTrackingList<BotServiceProvider>(), serializedAdditionalRawData);
+            return new ServiceProviderResponseList(nextLink, value ?? new ChangeTrackingList<BotServiceProvider>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceProviderResponseList>.Write(ModelReaderWriterOptions options)

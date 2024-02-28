@@ -117,15 +117,15 @@ namespace Azure.ResourceManager.Maps
                 return null;
             }
             MapsSku sku = default;
-            Optional<MapsAccountKind> kind = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<MapsAccountProperties> properties = default;
+            MapsAccountKind? kind = default;
+            ManagedServiceIdentity identity = default;
+            MapsAccountProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,13 +215,13 @@ namespace Azure.ResourceManager.Maps
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
-                Optional.ToNullable(kind),
+                kind,
                 identity,
-                properties.Value,
+                properties,
                 serializedAdditionalRawData);
         }
 

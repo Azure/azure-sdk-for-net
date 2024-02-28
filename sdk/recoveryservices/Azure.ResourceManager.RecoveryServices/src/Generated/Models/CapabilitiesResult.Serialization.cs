@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            Optional<CapabilitiesResultProperties> properties = default;
+            CapabilitiesResultProperties properties = default;
             ResourceType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapabilitiesResult(type, serializedAdditionalRawData, properties.Value);
+            return new CapabilitiesResult(type, serializedAdditionalRawData, properties);
         }
 
         BinaryData IPersistableModel<CapabilitiesResult>.Write(ModelReaderWriterOptions options)

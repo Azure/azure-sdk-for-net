@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<ResourceSkuRestrictionsType> type = default;
+            ResourceSkuRestrictionsType? type = default;
             IReadOnlyList<string> values = default;
-            Optional<ResourceSkuRestrictionsReasonCode> reasonCode = default;
+            ResourceSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuRestrictions(Optional.ToNullable(type), values ?? new ChangeTrackingList<string>(), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
+            return new ResourceSkuRestrictions(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuRestrictions>.Write(ModelReaderWriterOptions options)

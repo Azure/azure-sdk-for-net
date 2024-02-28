@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<ResourceConnectorApplianceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceListResult(nextLink.Value, value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), serializedAdditionalRawData);
+            return new ApplianceListResult(nextLink, value ?? new ChangeTrackingList<ResourceConnectorApplianceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceListResult>.Write(ModelReaderWriterOptions options)

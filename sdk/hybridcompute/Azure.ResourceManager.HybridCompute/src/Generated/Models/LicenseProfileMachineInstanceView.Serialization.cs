@@ -125,16 +125,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<HybridComputeLicenseStatus> licenseStatus = default;
-            Optional<string> licenseChannel = default;
-            Optional<LicenseProfileMachineInstanceViewEsuProperties> esuProfile = default;
-            Optional<LicenseProfileSubscriptionStatus> subscriptionStatus = default;
-            Optional<LicenseProfileProductType> productType = default;
-            Optional<DateTimeOffset> billingStartDate = default;
-            Optional<DateTimeOffset> enrollmentDate = default;
-            Optional<DateTimeOffset> disenrollmentDate = default;
+            HybridComputeLicenseStatus? licenseStatus = default;
+            string licenseChannel = default;
+            LicenseProfileMachineInstanceViewEsuProperties esuProfile = default;
+            LicenseProfileSubscriptionStatus? subscriptionStatus = default;
+            LicenseProfileProductType? productType = default;
+            DateTimeOffset? billingStartDate = default;
+            DateTimeOffset? enrollmentDate = default;
+            DateTimeOffset? disenrollmentDate = default;
             IList<HybridComputeProductFeature> productFeatures = default;
-            Optional<bool> softwareAssuranceCustomer = default;
+            bool? softwareAssuranceCustomer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,16 +261,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new LicenseProfileMachineInstanceView(
-                Optional.ToNullable(licenseStatus),
-                licenseChannel.Value,
-                esuProfile.Value,
-                Optional.ToNullable(subscriptionStatus),
-                Optional.ToNullable(productType),
-                Optional.ToNullable(billingStartDate),
-                Optional.ToNullable(enrollmentDate),
-                Optional.ToNullable(disenrollmentDate),
+                licenseStatus,
+                licenseChannel,
+                esuProfile,
+                subscriptionStatus,
+                productType,
+                billingStartDate,
+                enrollmentDate,
+                disenrollmentDate,
                 productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>(),
-                Optional.ToNullable(softwareAssuranceCustomer),
+                softwareAssuranceCustomer,
                 serializedAdditionalRawData);
         }
 

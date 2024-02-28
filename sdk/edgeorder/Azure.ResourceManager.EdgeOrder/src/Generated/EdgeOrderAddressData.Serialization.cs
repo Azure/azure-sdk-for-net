@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EdgeOrderShippingAddress> shippingAddress = default;
+            SystemData systemData = default;
+            EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
-            Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            EdgeOrderAddressValidationStatus? addressValidationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.EdgeOrder
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                shippingAddress.Value,
+                shippingAddress,
                 contactDetails,
-                Optional.ToNullable(addressValidationStatus),
+                addressValidationStatus,
                 serializedAdditionalRawData);
         }
 

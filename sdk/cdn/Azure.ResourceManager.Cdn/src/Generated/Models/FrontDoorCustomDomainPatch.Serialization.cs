@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> profileName = default;
-            Optional<FrontDoorCustomDomainHttpsContent> tlsSettings = default;
-            Optional<WritableSubResource> azureDnsZone = default;
-            Optional<FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId> preValidatedCustomDomainResourceId = default;
+            string profileName = default;
+            FrontDoorCustomDomainHttpsContent tlsSettings = default;
+            WritableSubResource azureDnsZone = default;
+            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorCustomDomainPatch(profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, serializedAdditionalRawData);
+            return new FrontDoorCustomDomainPatch(profileName, tlsSettings, azureDnsZone, preValidatedCustomDomainResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainPatch>.Write(ModelReaderWriterOptions options)

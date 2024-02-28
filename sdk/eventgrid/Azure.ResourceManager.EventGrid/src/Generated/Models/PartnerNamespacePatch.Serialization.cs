@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
+            EventGridPublicNetworkAccess? publicNetworkAccess = default;
             IList<EventGridInboundIPRule> inboundIPRules = default;
-            Optional<TlsVersion> minimumTlsVersionAllowed = default;
-            Optional<bool> disableLocalAuth = default;
+            TlsVersion? minimumTlsVersionAllowed = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PartnerNamespacePatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(publicNetworkAccess),
+                publicNetworkAccess,
                 inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
-                Optional.ToNullable(minimumTlsVersionAllowed),
-                Optional.ToNullable(disableLocalAuth),
+                minimumTlsVersionAllowed,
+                disableLocalAuth,
                 serializedAdditionalRawData);
         }
 

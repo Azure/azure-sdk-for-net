@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<DomainRecordVerificationStatus> status = default;
-            Optional<string> errorCode = default;
+            DomainRecordVerificationStatus? status = default;
+            string errorCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DomainVerificationStatusRecord(Optional.ToNullable(status), errorCode.Value, serializedAdditionalRawData);
+            return new DomainVerificationStatusRecord(status, errorCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DomainVerificationStatusRecord>.Write(ModelReaderWriterOptions options)

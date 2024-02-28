@@ -19,12 +19,12 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> resourceId = default;
-            Optional<string> activeKeyName = default;
-            Optional<bool> autoRegenerateKey = default;
-            Optional<string> regenerationPeriod = default;
-            Optional<StorageAccountAttributes> attributes = default;
+            string id = default;
+            string resourceId = default;
+            string activeKeyName = default;
+            bool? autoRegenerateKey = default;
+            string regenerationPeriod = default;
+            StorageAccountAttributes attributes = default;
             IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -82,12 +82,12 @@ namespace Azure.Security.KeyVault.Storage.Models
                 }
             }
             return new StorageBundle(
-                id.Value,
-                resourceId.Value,
-                activeKeyName.Value,
-                Optional.ToNullable(autoRegenerateKey),
-                regenerationPeriod.Value,
-                attributes.Value,
+                id,
+                resourceId,
+                activeKeyName,
+                autoRegenerateKey,
+                regenerationPeriod,
+                attributes,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
     }

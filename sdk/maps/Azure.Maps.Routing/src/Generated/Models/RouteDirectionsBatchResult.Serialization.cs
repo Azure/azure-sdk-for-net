@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
                 return null;
             }
             IReadOnlyList<RouteDirectionsBatchItem> batchItems = default;
-            Optional<BatchResultSummary> summary = default;
+            BatchResultSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("batchItems"u8))
@@ -47,7 +47,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchResult(summary.Value, batchItems ?? new ChangeTrackingList<RouteDirectionsBatchItem>());
+            return new RouteDirectionsBatchResult(summary, batchItems ?? new ChangeTrackingList<RouteDirectionsBatchItem>());
         }
     }
 }

@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<ProductDescription> description = default;
+            string displayName = default;
+            ProductDescription description = default;
             IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
-            Optional<EdgeOrderProductCostInformation> costInformation = default;
-            Optional<ProductAvailabilityInformation> availabilityInformation = default;
-            Optional<HierarchyInformation> hierarchyInformation = default;
+            EdgeOrderProductCostInformation costInformation = default;
+            ProductAvailabilityInformation availabilityInformation = default;
+            HierarchyInformation hierarchyInformation = default;
             IReadOnlyList<FilterableProperty> filterableProperties = default;
             IReadOnlyList<ProductLine> productLines = default;
             IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
@@ -261,12 +261,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ProductFamily(
-                displayName.Value,
-                description.Value,
+                displayName,
+                description,
                 imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
-                costInformation.Value,
-                availabilityInformation.Value,
-                hierarchyInformation.Value,
+                costInformation,
+                availabilityInformation,
+                hierarchyInformation,
                 filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
                 productLines ?? new ChangeTrackingList<ProductLine>(),
                 resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),

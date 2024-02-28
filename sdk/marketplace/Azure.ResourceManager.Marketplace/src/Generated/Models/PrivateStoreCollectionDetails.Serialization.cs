@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 return null;
             }
-            Optional<string> collectionName = default;
-            Optional<Guid> collectionId = default;
+            string collectionName = default;
+            Guid? collectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateStoreCollectionDetails(collectionName.Value, Optional.ToNullable(collectionId), serializedAdditionalRawData);
+            return new PrivateStoreCollectionDetails(collectionName, collectionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateStoreCollectionDetails>.Write(ModelReaderWriterOptions options)

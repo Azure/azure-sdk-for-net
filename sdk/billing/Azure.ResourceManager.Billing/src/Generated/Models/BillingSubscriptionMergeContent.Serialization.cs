@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> targetBillingSubscriptionName = default;
-            Optional<int> quantity = default;
+            string targetBillingSubscriptionName = default;
+            int? quantity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionMergeContent(targetBillingSubscriptionName.Value, Optional.ToNullable(quantity), serializedAdditionalRawData);
+            return new BillingSubscriptionMergeContent(targetBillingSubscriptionName, quantity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionMergeContent>.Write(ModelReaderWriterOptions options)

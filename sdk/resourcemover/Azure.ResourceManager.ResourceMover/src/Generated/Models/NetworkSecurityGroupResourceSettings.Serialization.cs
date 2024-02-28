@@ -100,8 +100,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             IDictionary<string, string> tags = default;
             IList<NetworkSecurityGroupSecurityRule> securityRules = default;
             string resourceType = default;
-            Optional<string> targetResourceName = default;
-            Optional<string> targetResourceGroupName = default;
+            string targetResourceName = default;
+            string targetResourceGroupName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkSecurityGroupResourceSettings(
                 resourceType,
-                targetResourceName.Value,
-                targetResourceGroupName.Value,
+                targetResourceName,
+                targetResourceGroupName,
                 serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 securityRules ?? new ChangeTrackingList<NetworkSecurityGroupSecurityRule>());

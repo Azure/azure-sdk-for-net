@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> issuer = default;
-            Optional<string> subject = default;
+            SystemData systemData = default;
+            Uri issuer = default;
+            string subject = default;
             IList<string> audiences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 id,
                 name,
                 type,
-                systemData.Value,
-                issuer.Value,
-                subject.Value,
+                systemData,
+                issuer,
+                subject,
                 audiences ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

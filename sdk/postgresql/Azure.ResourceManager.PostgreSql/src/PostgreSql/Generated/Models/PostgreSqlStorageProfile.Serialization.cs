@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<PostgreSqlGeoRedundantBackup> geoRedundantBackup = default;
-            Optional<int> storageMB = default;
-            Optional<PostgreSqlStorageAutogrow> storageAutogrow = default;
+            int? backupRetentionDays = default;
+            PostgreSqlGeoRedundantBackup? geoRedundantBackup = default;
+            int? storageMB = default;
+            PostgreSqlStorageAutogrow? storageAutogrow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlStorageProfile(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(storageMB), Optional.ToNullable(storageAutogrow), serializedAdditionalRawData);
+            return new PostgreSqlStorageProfile(backupRetentionDays, geoRedundantBackup, storageMB, storageAutogrow, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlStorageProfile>.Write(ModelReaderWriterOptions options)

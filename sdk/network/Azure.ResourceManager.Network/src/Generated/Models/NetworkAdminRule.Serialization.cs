@@ -172,22 +172,22 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             AdminRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<SecurityConfigurationRuleProtocol> protocol = default;
+            SystemData systemData = default;
+            string description = default;
+            SecurityConfigurationRuleProtocol? protocol = default;
             IList<AddressPrefixItem> sources = default;
             IList<AddressPrefixItem> destinations = default;
             IList<string> sourcePortRanges = default;
             IList<string> destinationPortRanges = default;
-            Optional<SecurityConfigurationRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityConfigurationRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            SecurityConfigurationRuleAccess? access = default;
+            int? priority = default;
+            SecurityConfigurationRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -367,21 +367,21 @@ namespace Azure.ResourceManager.Network.Models
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 kind,
-                Optional.ToNullable(etag),
+                etag,
                 serializedAdditionalRawData,
-                description.Value,
-                Optional.ToNullable(protocol),
+                description,
+                protocol,
                 sources ?? new ChangeTrackingList<AddressPrefixItem>(),
                 destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
                 sourcePortRanges ?? new ChangeTrackingList<string>(),
                 destinationPortRanges ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(access),
-                Optional.ToNullable(priority),
-                Optional.ToNullable(direction),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(resourceGuid));
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
         }
 
         BinaryData IPersistableModel<NetworkAdminRule>.Write(ModelReaderWriterOptions options)

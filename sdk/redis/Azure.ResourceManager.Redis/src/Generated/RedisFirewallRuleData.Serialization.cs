@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Redis
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IPAddress startIP = default;
             IPAddress endIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Redis
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 startIP,
                 endIP,
                 serializedAdditionalRawData);

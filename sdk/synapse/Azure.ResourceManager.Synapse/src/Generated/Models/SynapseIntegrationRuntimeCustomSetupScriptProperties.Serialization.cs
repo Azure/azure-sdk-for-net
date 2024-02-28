@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<Uri> blobContainerUri = default;
-            Optional<SynapseSecureString> sasToken = default;
+            Uri blobContainerUri = default;
+            SynapseSecureString sasToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri.Value, sasToken.Value, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimeCustomSetupScriptProperties>.Write(ModelReaderWriterOptions options)

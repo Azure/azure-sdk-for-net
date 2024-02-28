@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<InstancePoolUsageName> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> unit = default;
-            Optional<int> currentValue = default;
-            Optional<int> limit = default;
-            Optional<int> requestedLimit = default;
+            ResourceIdentifier id = default;
+            InstancePoolUsageName name = default;
+            ResourceType? type = default;
+            string unit = default;
+            int? currentValue = default;
+            int? limit = default;
+            int? requestedLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.Sql.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new InstancePoolUsage(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
-                unit.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                Optional.ToNullable(requestedLimit),
+                id,
+                name,
+                type,
+                unit,
+                currentValue,
+                limit,
+                requestedLimit,
                 serializedAdditionalRawData);
         }
 

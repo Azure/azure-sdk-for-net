@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             string name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
             IList<string> locations = default;
             IList<ResourceTypeSkuLocationInfo> locationInfo = default;
             IList<string> requiredQuotaIds = default;
             IList<string> requiredFeatures = default;
-            Optional<ResourceTypeSkuCapacity> capacity = default;
+            ResourceTypeSkuCapacity capacity = default;
             IList<ResourceTypeSkuCost> costs = default;
             IList<ResourceSkuCapability> capabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -293,15 +293,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceTypeSkuSetting(
                 name,
-                tier.Value,
-                size.Value,
-                family.Value,
-                kind.Value,
+                tier,
+                size,
+                family,
+                kind,
                 locations ?? new ChangeTrackingList<string>(),
                 locationInfo ?? new ChangeTrackingList<ResourceTypeSkuLocationInfo>(),
                 requiredQuotaIds ?? new ChangeTrackingList<string>(),
                 requiredFeatures ?? new ChangeTrackingList<string>(),
-                capacity.Value,
+                capacity,
                 costs ?? new ChangeTrackingList<ResourceTypeSkuCost>(),
                 capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(),
                 serializedAdditionalRawData);

@@ -119,16 +119,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<string> privateIPAddress = default;
-            Optional<NetworkIPAllocationMethod> privateIPAllocationMethod = default;
-            Optional<SubnetData> subnet = default;
-            Optional<bool> primary = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<NetworkIPVersion> privateIPAddressVersion = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            string privateIPAddress = default;
+            NetworkIPAllocationMethod? privateIPAllocationMethod = default;
+            SubnetData subnet = default;
+            bool? primary = default;
+            NetworkProvisioningState? provisioningState = default;
+            NetworkIPVersion? privateIPAddressVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,17 +234,17 @@ namespace Azure.ResourceManager.Network.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new PrivateLinkServiceIPConfiguration(
-                id.Value,
-                name.Value,
-                Optional.ToNullable(type),
+                id,
+                name,
+                type,
                 serializedAdditionalRawData,
-                Optional.ToNullable(etag),
-                privateIPAddress.Value,
-                Optional.ToNullable(privateIPAllocationMethod),
-                subnet.Value,
-                Optional.ToNullable(primary),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(privateIPAddressVersion));
+                etag,
+                privateIPAddress,
+                privateIPAllocationMethod,
+                subnet,
+                primary,
+                provisioningState,
+                privateIPAddressVersion);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceIPConfiguration>.Write(ModelReaderWriterOptions options)

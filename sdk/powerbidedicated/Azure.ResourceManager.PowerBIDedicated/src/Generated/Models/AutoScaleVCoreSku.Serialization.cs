@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 return null;
             }
             string name = default;
-            Optional<VCoreSkuTier> tier = default;
-            Optional<int> capacity = default;
+            VCoreSkuTier? tier = default;
+            int? capacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoScaleVCoreSku(name, Optional.ToNullable(tier), Optional.ToNullable(capacity), serializedAdditionalRawData);
+            return new AutoScaleVCoreSku(name, tier, capacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoScaleVCoreSku>.Write(ModelReaderWriterOptions options)

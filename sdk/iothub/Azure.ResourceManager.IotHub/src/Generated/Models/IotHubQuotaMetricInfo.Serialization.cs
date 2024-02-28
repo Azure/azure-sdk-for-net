@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> currentValue = default;
-            Optional<long> maxValue = default;
+            string name = default;
+            long? currentValue = default;
+            long? maxValue = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubQuotaMetricInfo(name.Value, Optional.ToNullable(currentValue), Optional.ToNullable(maxValue), serializedAdditionalRawData);
+            return new IotHubQuotaMetricInfo(name, currentValue, maxValue, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubQuotaMetricInfo>.Write(ModelReaderWriterOptions options)

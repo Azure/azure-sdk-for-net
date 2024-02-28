@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.IotCentral.Models
             {
                 return null;
             }
-            Optional<string> filterName = default;
-            Optional<string> ipMask = default;
+            string filterName = default;
+            string ipMask = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotCentralNetworkRuleSetIPRule(filterName.Value, ipMask.Value, serializedAdditionalRawData);
+            return new IotCentralNetworkRuleSetIPRule(filterName, ipMask, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotCentralNetworkRuleSetIPRule>.Write(ModelReaderWriterOptions options)

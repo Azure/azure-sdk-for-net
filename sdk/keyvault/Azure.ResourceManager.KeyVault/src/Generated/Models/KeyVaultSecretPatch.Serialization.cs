@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<SecretPatchProperties> properties = default;
+            SecretPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KeyVaultSecretPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties.Value, serializedAdditionalRawData);
+            return new KeyVaultSecretPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KeyVaultSecretPatch>.Write(ModelReaderWriterOptions options)

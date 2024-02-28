@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<bool> encryptionEnabled = default;
-            Optional<Uri> kekUrl = default;
-            Optional<Uri> secretKeyUrl = default;
-            Optional<ResourceIdentifier> kekVaultId = default;
-            Optional<ResourceIdentifier> secretKeyVaultId = default;
+            bool? encryptionEnabled = default;
+            Uri kekUrl = default;
+            Uri secretKeyUrl = default;
+            ResourceIdentifier kekVaultId = default;
+            ResourceIdentifier secretKeyVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new VmEncryptionDetails(
-                Optional.ToNullable(encryptionEnabled),
-                kekUrl.Value,
-                secretKeyUrl.Value,
-                kekVaultId.Value,
-                secretKeyVaultId.Value,
+                encryptionEnabled,
+                kekUrl,
+                secretKeyUrl,
+                kekVaultId,
+                secretKeyVaultId,
                 serializedAdditionalRawData);
         }
 

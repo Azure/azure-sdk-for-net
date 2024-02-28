@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 return null;
             }
-            Optional<IdentityManagementType> type = default;
+            IdentityManagementType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IdentityManagement(Optional.ToNullable(type), serializedAdditionalRawData);
+            return new IdentityManagement(type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IdentityManagement>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> type = default;
+            string description = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecondaryConsentEnabled(description.Value, type.Value, serializedAdditionalRawData);
+            return new SecondaryConsentEnabled(description, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecondaryConsentEnabled>.Write(ModelReaderWriterOptions options)

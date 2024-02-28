@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
+            ManagedServiceIdentity identity = default;
+            DataFactoryPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new DataFactoryPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPatch>.Write(ModelReaderWriterOptions options)

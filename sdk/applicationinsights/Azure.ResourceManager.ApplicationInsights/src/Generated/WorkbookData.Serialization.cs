@@ -196,25 +196,25 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<WorkbookSharedTypeKind> kind = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            WorkbookSharedTypeKind? kind = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> serializedData = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> timeModified = default;
-            Optional<string> category = default;
-            Optional<string> userId = default;
-            Optional<string> sourceId = default;
-            Optional<Uri> storageUri = default;
-            Optional<string> description = default;
-            Optional<string> revision = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string serializedData = default;
+            string version = default;
+            DateTimeOffset? timeModified = default;
+            string category = default;
+            string userId = default;
+            string sourceId = default;
+            Uri storageUri = default;
+            string description = default;
+            string revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -385,22 +385,22 @@ namespace Azure.ResourceManager.ApplicationInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                displayName.Value,
-                serializedData.Value,
-                version.Value,
-                Optional.ToNullable(timeModified),
-                category.Value,
-                userId.Value,
-                sourceId.Value,
-                storageUri.Value,
-                description.Value,
-                revision.Value,
+                displayName,
+                serializedData,
+                version,
+                timeModified,
+                category,
+                userId,
+                sourceId,
+                storageUri,
+                description,
+                revision,
                 identity,
-                Optional.ToNullable(kind),
-                Optional.ToNullable(etag),
+                kind,
+                etag,
                 serializedAdditionalRawData);
         }
 

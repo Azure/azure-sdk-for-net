@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             Uri containerUrl = default;
-            Optional<string> prefix = default;
+            string prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerUrl"u8))
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new BlobContentSource(containerUrl, prefix.Value);
+            return new BlobContentSource(containerUrl, prefix);
         }
     }
 }

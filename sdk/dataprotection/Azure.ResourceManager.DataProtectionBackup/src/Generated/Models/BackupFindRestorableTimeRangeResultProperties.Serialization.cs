@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             IList<RestorableTimeRange> restorableTimeRanges = default;
-            Optional<string> objectType = default;
+            string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupFindRestorableTimeRangeResultProperties(restorableTimeRanges ?? new ChangeTrackingList<RestorableTimeRange>(), objectType.Value, serializedAdditionalRawData);
+            return new BackupFindRestorableTimeRangeResultProperties(restorableTimeRanges ?? new ChangeTrackingList<RestorableTimeRange>(), objectType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupFindRestorableTimeRangeResultProperties>.Write(ModelReaderWriterOptions options)

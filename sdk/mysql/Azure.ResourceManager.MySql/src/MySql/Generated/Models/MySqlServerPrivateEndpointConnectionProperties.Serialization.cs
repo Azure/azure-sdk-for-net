@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<MySqlServerPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<MySqlPrivateEndpointProvisioningState> provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            MySqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            MySqlPrivateEndpointProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MySql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MySqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new MySqlServerPrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)

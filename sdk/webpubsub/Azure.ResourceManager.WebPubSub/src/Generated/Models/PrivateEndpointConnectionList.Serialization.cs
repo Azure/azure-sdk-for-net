@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IReadOnlyList<WebPubSubPrivateEndpointConnectionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionList(value ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(), nextLink.Value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionList(value ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionList>.Write(ModelReaderWriterOptions options)

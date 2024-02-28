@@ -81,7 +81,7 @@ namespace Azure.AI.DocumentIntelligence
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuildDocumentClassifierContent(classifierId, description.Value, docTypes, serializedAdditionalRawData);
+            return new BuildDocumentClassifierContent(classifierId, description, docTypes, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentClassifierContent>.Write(ModelReaderWriterOptions options)

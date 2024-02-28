@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> connectorId = default;
+            string connectorId = default;
             IList<string> dataTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertRuleTemplateDataSource(connectorId.Value, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new AlertRuleTemplateDataSource(connectorId, dataTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleTemplateDataSource>.Write(ModelReaderWriterOptions options)

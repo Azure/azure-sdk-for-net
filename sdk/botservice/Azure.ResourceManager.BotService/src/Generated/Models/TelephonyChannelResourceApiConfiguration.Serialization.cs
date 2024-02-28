@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> providerName = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> defaultLocale = default;
+            string id = default;
+            string providerName = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            ResourceIdentifier cognitiveServiceResourceId = default;
+            string defaultLocale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,12 +201,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new TelephonyChannelResourceApiConfiguration(
-                id.Value,
-                providerName.Value,
-                cognitiveServiceSubscriptionKey.Value,
-                cognitiveServiceRegion.Value,
-                cognitiveServiceResourceId.Value,
-                defaultLocale.Value,
+                id,
+                providerName,
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                cognitiveServiceResourceId,
+                defaultLocale,
                 serializedAdditionalRawData);
         }
 

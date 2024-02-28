@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IList<string> zones = default;
-            Optional<HDInsightClusterCreateOrUpdateProperties> properties = default;
-            Optional<ManagedServiceIdentity> identity = default;
+            HDInsightClusterCreateOrUpdateProperties properties = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new HDInsightClusterCreateOrUpdateContent(
-                Optional.ToNullable(location),
+                location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 zones ?? new ChangeTrackingList<string>(),
-                properties.Value,
+                properties,
                 identity,
                 serializedAdditionalRawData);
         }

@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<int> storageSizeGB = default;
-            Optional<StorageAutoGrow> autoGrow = default;
-            Optional<PostgreSqlManagedDiskPerformanceTier> tier = default;
-            Optional<int> iops = default;
+            int? storageSizeGB = default;
+            StorageAutoGrow? autoGrow = default;
+            PostgreSqlManagedDiskPerformanceTier? tier = default;
+            int? iops = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorage(Optional.ToNullable(storageSizeGB), Optional.ToNullable(autoGrow), Optional.ToNullable(tier), Optional.ToNullable(iops), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerStorage(storageSizeGB, autoGrow, tier, iops, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerStorage>.Write(ModelReaderWriterOptions options)

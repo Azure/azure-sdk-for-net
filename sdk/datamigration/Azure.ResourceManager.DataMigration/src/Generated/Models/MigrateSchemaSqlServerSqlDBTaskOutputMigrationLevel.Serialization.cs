@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<string> id = default;
+            MigrationState? state = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -183,16 +183,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                Optional.ToNullable(state),
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                sourceServerVersion.Value,
-                sourceServerBrandVersion.Value,
-                targetServerVersion.Value,
-                targetServerBrandVersion.Value);
+                state,
+                startedOn,
+                endedOn,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)

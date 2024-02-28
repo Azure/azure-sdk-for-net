@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             RecommendedActionCurrentState currentValue = default;
-            Optional<RecommendedActionInitiatedBy> actionInitiatedBy = default;
-            Optional<DateTimeOffset> lastModified = default;
+            RecommendedActionInitiatedBy? actionInitiatedBy = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendedActionStateInfo(currentValue, Optional.ToNullable(actionInitiatedBy), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new RecommendedActionStateInfo(currentValue, actionInitiatedBy, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendedActionStateInfo>.Write(ModelReaderWriterOptions options)

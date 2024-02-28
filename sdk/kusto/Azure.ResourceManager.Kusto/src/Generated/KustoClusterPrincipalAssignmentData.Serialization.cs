@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.Kusto
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> principalId = default;
-            Optional<KustoClusterPrincipalRole> role = default;
-            Optional<Guid> tenantId = default;
-            Optional<KustoPrincipalAssignmentType> principalType = default;
-            Optional<string> tenantName = default;
-            Optional<string> principalName = default;
-            Optional<KustoProvisioningState> provisioningState = default;
-            Optional<Guid> aadObjectId = default;
+            SystemData systemData = default;
+            string principalId = default;
+            KustoClusterPrincipalRole? role = default;
+            Guid? tenantId = default;
+            KustoPrincipalAssignmentType? principalType = default;
+            string tenantName = default;
+            string principalName = default;
+            KustoProvisioningState? provisioningState = default;
+            Guid? aadObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.Kusto
                 id,
                 name,
                 type,
-                systemData.Value,
-                principalId.Value,
-                Optional.ToNullable(role),
-                Optional.ToNullable(tenantId),
-                Optional.ToNullable(principalType),
-                tenantName.Value,
-                principalName.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(aadObjectId),
+                systemData,
+                principalId,
+                role,
+                tenantId,
+                principalType,
+                tenantName,
+                principalName,
+                provisioningState,
+                aadObjectId,
                 serializedAdditionalRawData);
         }
 

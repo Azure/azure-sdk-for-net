@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> key = default;
-            Optional<string> label = default;
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<ETag> eTag = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<bool> locked = default;
+            SystemData systemData = default;
+            string key = default;
+            string label = default;
+            string value = default;
+            string contentType = default;
+            ETag? eTag = default;
+            DateTimeOffset? lastModified = default;
+            bool? locked = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.AppConfiguration
                 id,
                 name,
                 type,
-                systemData.Value,
-                key.Value,
-                label.Value,
-                value.Value,
-                contentType.Value,
-                Optional.ToNullable(eTag),
-                Optional.ToNullable(lastModified),
-                Optional.ToNullable(locked),
+                systemData,
+                key,
+                label,
+                value,
+                contentType,
+                eTag,
+                lastModified,
+                locked,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

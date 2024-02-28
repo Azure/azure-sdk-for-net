@@ -209,27 +209,27 @@ namespace Azure.ResourceManager.CustomerInsights
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> assignmentName = default;
+            SystemData systemData = default;
+            Guid? tenantId = default;
+            string assignmentName = default;
             IDictionary<string, string> displayName = default;
             IDictionary<string, string> description = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<RoleType> role = default;
+            ProvisioningState? provisioningState = default;
+            RoleType? role = default;
             IList<AssignmentPrincipal> principals = default;
-            Optional<ResourceSetDescription> profiles = default;
-            Optional<ResourceSetDescription> interactions = default;
-            Optional<ResourceSetDescription> links = default;
-            Optional<ResourceSetDescription> kpis = default;
-            Optional<ResourceSetDescription> sasPolicies = default;
-            Optional<ResourceSetDescription> connectors = default;
-            Optional<ResourceSetDescription> views = default;
-            Optional<ResourceSetDescription> relationshipLinks = default;
-            Optional<ResourceSetDescription> relationships = default;
-            Optional<ResourceSetDescription> widgetTypes = default;
-            Optional<ResourceSetDescription> roleAssignments = default;
-            Optional<ResourceSetDescription> conflationPolicies = default;
-            Optional<ResourceSetDescription> segments = default;
+            ResourceSetDescription profiles = default;
+            ResourceSetDescription interactions = default;
+            ResourceSetDescription links = default;
+            ResourceSetDescription kpis = default;
+            ResourceSetDescription sasPolicies = default;
+            ResourceSetDescription connectors = default;
+            ResourceSetDescription views = default;
+            ResourceSetDescription relationshipLinks = default;
+            ResourceSetDescription relationships = default;
+            ResourceSetDescription widgetTypes = default;
+            ResourceSetDescription roleAssignments = default;
+            ResourceSetDescription conflationPolicies = default;
+            ResourceSetDescription segments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -471,27 +471,27 @@ namespace Azure.ResourceManager.CustomerInsights
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(tenantId),
-                assignmentName.Value,
+                systemData,
+                tenantId,
+                assignmentName,
                 displayName ?? new ChangeTrackingDictionary<string, string>(),
                 description ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(role),
+                provisioningState,
+                role,
                 principals ?? new ChangeTrackingList<AssignmentPrincipal>(),
-                profiles.Value,
-                interactions.Value,
-                links.Value,
-                kpis.Value,
-                sasPolicies.Value,
-                connectors.Value,
-                views.Value,
-                relationshipLinks.Value,
-                relationships.Value,
-                widgetTypes.Value,
-                roleAssignments.Value,
-                conflationPolicies.Value,
-                segments.Value,
+                profiles,
+                interactions,
+                links,
+                kpis,
+                sasPolicies,
+                connectors,
+                views,
+                relationshipLinks,
+                relationships,
+                widgetTypes,
+                roleAssignments,
+                conflationPolicies,
+                segments,
                 serializedAdditionalRawData);
         }
 

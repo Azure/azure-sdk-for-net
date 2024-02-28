@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> accountName = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> oldestRestorableTime = default;
-            Optional<DateTimeOffset> deletionTime = default;
-            Optional<CosmosDBApiType> apiType = default;
+            SystemData systemData = default;
+            string accountName = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? oldestRestorableTime = default;
+            DateTimeOffset? deletionTime = default;
+            CosmosDBApiType? apiType = default;
             IReadOnlyList<RestorableLocationResourceInfo> restorableLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -254,13 +254,13 @@ namespace Azure.ResourceManager.CosmosDB
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(location),
-                accountName.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(oldestRestorableTime),
-                Optional.ToNullable(deletionTime),
-                Optional.ToNullable(apiType),
+                systemData,
+                location,
+                accountName,
+                creationTime,
+                oldestRestorableTime,
+                deletionTime,
+                apiType,
                 restorableLocations ?? new ChangeTrackingList<RestorableLocationResourceInfo>(),
                 serializedAdditionalRawData);
         }

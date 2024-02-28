@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> recoveryAzureV1ResourceGroupId = default;
-            Optional<ResourceIdentifier> recoveryAzureV2ResourceGroupId = default;
-            Optional<string> useManagedDisks = default;
+            ResourceIdentifier recoveryAzureV1ResourceGroupId = default;
+            ResourceIdentifier recoveryAzureV2ResourceGroupId = default;
+            string useManagedDisks = default;
             IDictionary<string, string> diskIdToDiskEncryptionMap = default;
-            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
-            Optional<string> targetAvailabilityZone = default;
+            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string targetAvailabilityZone = default;
             IDictionary<string, string> targetVmTags = default;
             IDictionary<string, string> targetManagedDiskTags = default;
             IDictionary<string, string> targetNicTags = default;
-            Optional<SiteRecoverySqlServerLicenseType> sqlServerLicenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
             IList<UpdateDiskContent> vmDisks = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -296,16 +296,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaAzureUpdateReplicationProtectedItemContent(
                 instanceType,
                 serializedAdditionalRawData,
-                recoveryAzureV1ResourceGroupId.Value,
-                recoveryAzureV2ResourceGroupId.Value,
-                useManagedDisks.Value,
+                recoveryAzureV1ResourceGroupId,
+                recoveryAzureV2ResourceGroupId,
+                useManagedDisks,
                 diskIdToDiskEncryptionMap ?? new ChangeTrackingDictionary<string, string>(),
-                targetProximityPlacementGroupId.Value,
-                targetAvailabilityZone.Value,
+                targetProximityPlacementGroupId,
+                targetAvailabilityZone,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
-                Optional.ToNullable(sqlServerLicenseType),
+                sqlServerLicenseType,
                 vmDisks ?? new ChangeTrackingList<UpdateDiskContent>());
         }
 

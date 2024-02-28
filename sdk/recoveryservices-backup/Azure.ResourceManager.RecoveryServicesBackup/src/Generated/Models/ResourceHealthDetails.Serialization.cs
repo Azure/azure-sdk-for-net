@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> code = default;
-            Optional<string> title = default;
-            Optional<string> message = default;
+            int? code = default;
+            string title = default;
+            string message = default;
             IReadOnlyList<string> recommendations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthDetails(Optional.ToNullable(code), title.Value, message.Value, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new ResourceHealthDetails(code, title, message, recommendations ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthDetails>.Write(ModelReaderWriterOptions options)

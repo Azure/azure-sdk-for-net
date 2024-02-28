@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> versionQueryName = default;
-            Optional<string> versionHeaderName = default;
-            Optional<string> displayName = default;
-            Optional<VersioningScheme> versioningScheme = default;
+            SystemData systemData = default;
+            string description = default;
+            string versionQueryName = default;
+            string versionHeaderName = default;
+            string displayName = default;
+            VersioningScheme? versioningScheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,12 +202,12 @@ namespace Azure.ResourceManager.ApiManagement
                 id,
                 name,
                 type,
-                systemData.Value,
-                description.Value,
-                versionQueryName.Value,
-                versionHeaderName.Value,
-                displayName.Value,
-                Optional.ToNullable(versioningScheme),
+                systemData,
+                description,
+                versionQueryName,
+                versionHeaderName,
+                displayName,
+                versioningScheme,
                 serializedAdditionalRawData);
         }
 

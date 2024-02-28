@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<ResourceStatus> resourceStatus = default;
-            Optional<string> reason = default;
-            Optional<string> statusChangeDate = default;
+            string resourceId = default;
+            ResourceStatus? resourceStatus = default;
+            string reason = default;
+            string statusChangeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssessmentResourceContent(resourceId.Value, Optional.ToNullable(resourceStatus), reason.Value, statusChangeDate.Value, serializedAdditionalRawData);
+            return new AssessmentResourceContent(resourceId, resourceStatus, reason, statusChangeDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssessmentResourceContent>.Write(ModelReaderWriterOptions options)

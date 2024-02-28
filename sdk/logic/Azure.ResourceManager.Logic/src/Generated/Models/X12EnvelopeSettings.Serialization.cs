@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Logic.Models
             int interchangeControlNumberUpperBound = default;
             bool rolloverInterchangeControlNumber = default;
             bool enableDefaultGroupHeaders = default;
-            Optional<string> functionalGroupId = default;
+            string functionalGroupId = default;
             int groupControlNumberLowerBound = default;
             int groupControlNumberUpperBound = default;
             bool rolloverGroupControlNumber = default;
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Logic.Models
             int transactionSetControlNumberLowerBound = default;
             int transactionSetControlNumberUpperBound = default;
             bool rolloverTransactionSetControlNumber = default;
-            Optional<string> transactionSetControlNumberPrefix = default;
-            Optional<string> transactionSetControlNumberSuffix = default;
+            string transactionSetControlNumberPrefix = default;
+            string transactionSetControlNumberSuffix = default;
             bool overwriteExistingTransactionSetControlNumber = default;
             X12DateFormat groupHeaderDateFormat = default;
             X12TimeFormat groupHeaderTimeFormat = default;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Logic.Models
                 interchangeControlNumberUpperBound,
                 rolloverInterchangeControlNumber,
                 enableDefaultGroupHeaders,
-                functionalGroupId.Value,
+                functionalGroupId,
                 groupControlNumberLowerBound,
                 groupControlNumberUpperBound,
                 rolloverGroupControlNumber,
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.Logic.Models
                 transactionSetControlNumberLowerBound,
                 transactionSetControlNumberUpperBound,
                 rolloverTransactionSetControlNumber,
-                transactionSetControlNumberPrefix.Value,
-                transactionSetControlNumberSuffix.Value,
+                transactionSetControlNumberPrefix,
+                transactionSetControlNumberSuffix,
                 overwriteExistingTransactionSetControlNumber,
                 groupHeaderDateFormat,
                 groupHeaderTimeFormat,

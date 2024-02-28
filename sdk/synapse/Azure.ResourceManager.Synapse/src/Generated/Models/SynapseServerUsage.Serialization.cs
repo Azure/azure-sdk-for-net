@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> resourceName = default;
-            Optional<string> displayName = default;
-            Optional<double> currentValue = default;
-            Optional<double> limit = default;
-            Optional<string> unit = default;
-            Optional<DateTimeOffset> nextResetTime = default;
+            string name = default;
+            string resourceName = default;
+            string displayName = default;
+            double? currentValue = default;
+            double? limit = default;
+            string unit = default;
+            DateTimeOffset? nextResetTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new SynapseServerUsage(
-                name.Value,
-                resourceName.Value,
-                displayName.Value,
-                Optional.ToNullable(currentValue),
-                Optional.ToNullable(limit),
-                unit.Value,
-                Optional.ToNullable(nextResetTime),
+                name,
+                resourceName,
+                displayName,
+                currentValue,
+                limit,
+                unit,
+                nextResetTime,
                 serializedAdditionalRawData);
         }
 

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<SecurityInsightsAlertRuleEntityMappingType> entityType = default;
+            SecurityInsightsAlertRuleEntityMappingType? entityType = default;
             IList<SecurityInsightsFieldMapping> fieldMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityInsightsAlertRuleEntityMapping(Optional.ToNullable(entityType), fieldMappings ?? new ChangeTrackingList<SecurityInsightsFieldMapping>(), serializedAdditionalRawData);
+            return new SecurityInsightsAlertRuleEntityMapping(entityType, fieldMappings ?? new ChangeTrackingList<SecurityInsightsFieldMapping>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityInsightsAlertRuleEntityMapping>.Write(ModelReaderWriterOptions options)

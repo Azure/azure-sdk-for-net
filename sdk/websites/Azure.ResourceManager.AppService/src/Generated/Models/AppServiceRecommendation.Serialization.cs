@@ -218,34 +218,34 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<Guid> recommendationId = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<ResourceScopeType> resourceScope = default;
-            Optional<string> ruleName = default;
-            Optional<string> displayName = default;
-            Optional<string> message = default;
-            Optional<NotificationLevel> level = default;
-            Optional<RecommendationChannel> channels = default;
+            SystemData systemData = default;
+            DateTimeOffset? creationTime = default;
+            Guid? recommendationId = default;
+            ResourceIdentifier resourceId = default;
+            ResourceScopeType? resourceScope = default;
+            string ruleName = default;
+            string displayName = default;
+            string message = default;
+            NotificationLevel? level = default;
+            RecommendationChannel? channels = default;
             IReadOnlyList<string> categoryTags = default;
-            Optional<string> actionName = default;
-            Optional<int> enabled = default;
+            string actionName = default;
+            int? enabled = default;
             IList<string> states = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<DateTimeOffset> nextNotificationTime = default;
-            Optional<DateTimeOffset> notificationExpirationTime = default;
-            Optional<DateTimeOffset> notifiedTime = default;
-            Optional<double> score = default;
-            Optional<bool> isDynamic = default;
-            Optional<string> extensionName = default;
-            Optional<string> bladeName = default;
-            Optional<string> forwardLink = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? nextNotificationTime = default;
+            DateTimeOffset? notificationExpirationTime = default;
+            DateTimeOffset? notifiedTime = default;
+            double? score = default;
+            bool? isDynamic = default;
+            string extensionName = default;
+            string bladeName = default;
+            string forwardLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -490,31 +490,31 @@ namespace Azure.ResourceManager.AppService.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(creationTime),
-                Optional.ToNullable(recommendationId),
-                resourceId.Value,
-                Optional.ToNullable(resourceScope),
-                ruleName.Value,
-                displayName.Value,
-                message.Value,
-                Optional.ToNullable(level),
-                Optional.ToNullable(channels),
+                systemData,
+                creationTime,
+                recommendationId,
+                resourceId,
+                resourceScope,
+                ruleName,
+                displayName,
+                message,
+                level,
+                channels,
                 categoryTags ?? new ChangeTrackingList<string>(),
-                actionName.Value,
-                Optional.ToNullable(enabled),
+                actionName,
+                enabled,
                 states ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(startTime),
-                Optional.ToNullable(endTime),
-                Optional.ToNullable(nextNotificationTime),
-                Optional.ToNullable(notificationExpirationTime),
-                Optional.ToNullable(notifiedTime),
-                Optional.ToNullable(score),
-                Optional.ToNullable(isDynamic),
-                extensionName.Value,
-                bladeName.Value,
-                forwardLink.Value,
-                kind.Value,
+                startTime,
+                endTime,
+                nextNotificationTime,
+                notificationExpirationTime,
+                notifiedTime,
+                score,
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
                 serializedAdditionalRawData);
         }
 

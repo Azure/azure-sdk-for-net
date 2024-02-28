@@ -115,13 +115,13 @@ namespace Azure.ResourceManager.OperationalInsights
                 return null;
             }
             BinaryData properties = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             OperationalInsightsDataSourceKind kind = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,9 +193,9 @@ namespace Azure.ResourceManager.OperationalInsights
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 properties,
-                Optional.ToNullable(etag),
+                etag,
                 kind,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);

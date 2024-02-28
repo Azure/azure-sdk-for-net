@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             AzureLocation targetRegion = default;
             DataMoveLevel dataMoveLevel = default;
             IList<ResourceIdentifier> sourceContainerArmIds = default;
-            Optional<bool> ignoreMoved = default;
+            bool? ignoreMoved = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 targetRegion,
                 dataMoveLevel,
                 sourceContainerArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                Optional.ToNullable(ignoreMoved),
+                ignoreMoved,
                 serializedAdditionalRawData);
         }
 

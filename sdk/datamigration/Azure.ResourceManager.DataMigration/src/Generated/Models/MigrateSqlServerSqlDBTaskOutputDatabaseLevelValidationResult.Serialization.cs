@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationId = default;
-            Optional<string> sourceDatabaseName = default;
-            Optional<string> targetDatabaseName = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<DataIntegrityValidationResult> dataIntegrityValidationResult = default;
-            Optional<SchemaComparisonValidationResult> schemaValidationResult = default;
-            Optional<QueryAnalysisValidationResult> queryAnalysisValidationResult = default;
-            Optional<ValidationStatus> status = default;
-            Optional<string> id = default;
+            string migrationId = default;
+            string sourceDatabaseName = default;
+            string targetDatabaseName = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            DataIntegrityValidationResult dataIntegrityValidationResult = default;
+            SchemaComparisonValidationResult schemaValidationResult = default;
+            QueryAnalysisValidationResult queryAnalysisValidationResult = default;
+            ValidationStatus? status = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -217,18 +217,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(
-                id.Value,
+                id,
                 resultType,
                 serializedAdditionalRawData,
-                migrationId.Value,
-                sourceDatabaseName.Value,
-                targetDatabaseName.Value,
-                Optional.ToNullable(startedOn),
-                Optional.ToNullable(endedOn),
-                dataIntegrityValidationResult.Value,
-                schemaValidationResult.Value,
-                queryAnalysisValidationResult.Value,
-                Optional.ToNullable(status));
+                migrationId,
+                sourceDatabaseName,
+                targetDatabaseName,
+                startedOn,
+                endedOn,
+                dataIntegrityValidationResult,
+                schemaValidationResult,
+                queryAnalysisValidationResult,
+                status);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult>.Write(ModelReaderWriterOptions options)

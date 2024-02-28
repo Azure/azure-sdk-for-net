@@ -144,15 +144,15 @@ namespace Azure.ResourceManager.Blueprint
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<BlueprintStatus> status = default;
-            Optional<BlueprintTargetScope> targetScope = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            BlueprintStatus status = default;
+            BlueprintTargetScope? targetScope = default;
             IDictionary<string, ParameterDefinition> parameters = default;
             IDictionary<string, ResourceGroupDefinition> resourceGroups = default;
-            Optional<string> blueprintName = default;
-            Optional<string> changeNotes = default;
+            string blueprintName = default;
+            string changeNotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Blueprint
                 id,
                 name,
                 type,
-                systemData.Value,
-                displayName.Value,
-                description.Value,
-                status.Value,
-                Optional.ToNullable(targetScope),
+                systemData,
+                displayName,
+                description,
+                status,
+                targetScope,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterDefinition>(),
                 resourceGroups ?? new ChangeTrackingDictionary<string, ResourceGroupDefinition>(),
-                blueprintName.Value,
-                changeNotes.Value,
+                blueprintName,
+                changeNotes,
                 serializedAdditionalRawData);
         }
 

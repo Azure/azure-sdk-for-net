@@ -196,30 +196,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             IList<DatasetReference> inputs = default;
             IList<DatasetReference> outputs = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<ActivityDependency> dependsOn = default;
             IList<UserProperty> userProperties = default;
             CopySource source = default;
             CopySink sink = default;
-            Optional<object> translator = default;
-            Optional<object> enableStaging = default;
-            Optional<StagingSettings> stagingSettings = default;
-            Optional<object> parallelCopies = default;
-            Optional<object> dataIntegrationUnits = default;
-            Optional<object> enableSkipIncompatibleRow = default;
-            Optional<RedirectIncompatibleRowSettings> redirectIncompatibleRowSettings = default;
-            Optional<LogStorageSettings> logStorageSettings = default;
-            Optional<LogSettings> logSettings = default;
+            object translator = default;
+            object enableStaging = default;
+            StagingSettings stagingSettings = default;
+            object parallelCopies = default;
+            object dataIntegrationUnits = default;
+            object enableSkipIncompatibleRow = default;
+            RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default;
+            LogStorageSettings logStorageSettings = default;
+            LogSettings logSettings = default;
             IList<object> preserveRules = default;
             IList<object> preserve = default;
-            Optional<object> validateDataConsistency = default;
-            Optional<SkipErrorFile> skipErrorFile = default;
+            object validateDataConsistency = default;
+            SkipErrorFile skipErrorFile = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -500,31 +500,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new CopyActivity(
                 name,
                 type,
-                description.Value,
-                Optional.ToNullable(state),
-                Optional.ToNullable(onInactiveMarkAs),
+                description,
+                state,
+                onInactiveMarkAs,
                 dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
                 userProperties ?? new ChangeTrackingList<UserProperty>(),
                 additionalProperties,
-                linkedServiceName.Value,
-                policy.Value,
+                linkedServiceName,
+                policy,
                 inputs ?? new ChangeTrackingList<DatasetReference>(),
                 outputs ?? new ChangeTrackingList<DatasetReference>(),
                 source,
                 sink,
-                translator.Value,
-                enableStaging.Value,
-                stagingSettings.Value,
-                parallelCopies.Value,
-                dataIntegrationUnits.Value,
-                enableSkipIncompatibleRow.Value,
-                redirectIncompatibleRowSettings.Value,
-                logStorageSettings.Value,
-                logSettings.Value,
+                translator,
+                enableStaging,
+                stagingSettings,
+                parallelCopies,
+                dataIntegrationUnits,
+                enableSkipIncompatibleRow,
+                redirectIncompatibleRowSettings,
+                logStorageSettings,
+                logSettings,
                 preserveRules ?? new ChangeTrackingList<object>(),
                 preserve ?? new ChangeTrackingList<object>(),
-                validateDataConsistency.Value,
-                skipErrorFile.Value);
+                validateDataConsistency,
+                skipErrorFile);
         }
 
         internal partial class CopyActivityConverter : JsonConverter<CopyActivity>

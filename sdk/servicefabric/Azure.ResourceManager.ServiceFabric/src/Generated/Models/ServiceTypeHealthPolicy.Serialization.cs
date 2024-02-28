@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<int> maxPercentUnhealthyServices = default;
+            int? maxPercentUnhealthyServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), serializedAdditionalRawData);
+            return new ServiceTypeHealthPolicy(maxPercentUnhealthyServices, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)

@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> code = default;
+            DateTimeOffset? time = default;
+            string code = default;
             IReadOnlyList<string> parameters = default;
-            Optional<string> message = default;
+            string message = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntimeError(Optional.ToNullable(time), code.Value, parameters ?? new ChangeTrackingList<string>(), message.Value, additionalProperties);
+            return new ManagedIntegrationRuntimeError(time, code, parameters ?? new ChangeTrackingList<string>(), message, additionalProperties);
         }
 
         BinaryData IPersistableModel<ManagedIntegrationRuntimeError>.Write(ModelReaderWriterOptions options)

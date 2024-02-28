@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> filterData = default;
+            string filterData = default;
             IList<string> linkConnectionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConnectionPacketCaptureStartContent(filterData.Value, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new VpnConnectionPacketCaptureStartContent(filterData, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConnectionPacketCaptureStartContent>.Write(ModelReaderWriterOptions options)

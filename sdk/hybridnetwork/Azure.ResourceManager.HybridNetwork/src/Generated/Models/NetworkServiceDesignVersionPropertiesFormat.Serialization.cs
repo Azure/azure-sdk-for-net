@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VersionState> versionState = default;
-            Optional<string> description = default;
+            ProvisioningState? provisioningState = default;
+            VersionState? versionState = default;
+            string description = default;
             IDictionary<string, WritableSubResource> configurationGroupSchemaReferences = default;
             IDictionary<string, NfviDetails> nfvisFromSite = default;
             IList<ResourceElementTemplate> resourceElementTemplates = default;
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new NetworkServiceDesignVersionPropertiesFormat(
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(versionState),
-                description.Value,
+                provisioningState,
+                versionState,
+                description,
                 configurationGroupSchemaReferences ?? new ChangeTrackingDictionary<string, WritableSubResource>(),
                 nfvisFromSite ?? new ChangeTrackingDictionary<string, NfviDetails>(),
                 resourceElementTemplates ?? new ChangeTrackingList<ResourceElementTemplate>(),

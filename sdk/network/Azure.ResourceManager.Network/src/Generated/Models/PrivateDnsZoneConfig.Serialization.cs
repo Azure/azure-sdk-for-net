@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> privateDnsZoneId = default;
+            string name = default;
+            string privateDnsZoneId = default;
             IReadOnlyList<RecordSet> recordSets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
+            return new PrivateDnsZoneConfig(name, privateDnsZoneId, recordSets ?? new ChangeTrackingList<RecordSet>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsZoneConfig>.Write(ModelReaderWriterOptions options)

@@ -141,11 +141,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
             IList<BinaryData> annotations = default;
-            Optional<string> subjectBeginsWith = default;
-            Optional<string> subjectEndsWith = default;
+            string subjectBeginsWith = default;
+            string subjectEndsWith = default;
             IList<BinaryData> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -255,13 +255,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new CustomEventsTrigger(
                 type,
-                description.Value,
-                Optional.ToNullable(runtimeState),
+                description,
+                runtimeState,
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
-                subjectBeginsWith.Value,
-                subjectEndsWith.Value,
+                subjectBeginsWith,
+                subjectEndsWith,
                 events,
                 scope);
         }

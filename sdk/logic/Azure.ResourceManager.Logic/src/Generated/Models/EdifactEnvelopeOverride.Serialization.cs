@@ -139,21 +139,21 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> messageId = default;
-            Optional<string> messageVersion = default;
-            Optional<string> messageRelease = default;
-            Optional<string> messageAssociationAssignedCode = default;
-            Optional<string> targetNamespace = default;
-            Optional<string> functionalGroupId = default;
-            Optional<string> senderApplicationQualifier = default;
-            Optional<string> senderApplicationId = default;
-            Optional<string> receiverApplicationQualifier = default;
-            Optional<string> receiverApplicationId = default;
-            Optional<string> controllingAgencyCode = default;
-            Optional<string> groupHeaderMessageVersion = default;
-            Optional<string> groupHeaderMessageRelease = default;
-            Optional<string> associationAssignedCode = default;
-            Optional<string> applicationPassword = default;
+            string messageId = default;
+            string messageVersion = default;
+            string messageRelease = default;
+            string messageAssociationAssignedCode = default;
+            string targetNamespace = default;
+            string functionalGroupId = default;
+            string senderApplicationQualifier = default;
+            string senderApplicationId = default;
+            string receiverApplicationQualifier = default;
+            string receiverApplicationId = default;
+            string controllingAgencyCode = default;
+            string groupHeaderMessageVersion = default;
+            string groupHeaderMessageRelease = default;
+            string associationAssignedCode = default;
+            string applicationPassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,21 +240,21 @@ namespace Azure.ResourceManager.Logic.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EdifactEnvelopeOverride(
-                messageId.Value,
-                messageVersion.Value,
-                messageRelease.Value,
-                messageAssociationAssignedCode.Value,
-                targetNamespace.Value,
-                functionalGroupId.Value,
-                senderApplicationQualifier.Value,
-                senderApplicationId.Value,
-                receiverApplicationQualifier.Value,
-                receiverApplicationId.Value,
-                controllingAgencyCode.Value,
-                groupHeaderMessageVersion.Value,
-                groupHeaderMessageRelease.Value,
-                associationAssignedCode.Value,
-                applicationPassword.Value,
+                messageId,
+                messageVersion,
+                messageRelease,
+                messageAssociationAssignedCode,
+                targetNamespace,
+                functionalGroupId,
+                senderApplicationQualifier,
+                senderApplicationId,
+                receiverApplicationQualifier,
+                receiverApplicationId,
+                controllingAgencyCode,
+                groupHeaderMessageVersion,
+                groupHeaderMessageRelease,
+                associationAssignedCode,
+                applicationPassword,
                 serializedAdditionalRawData);
         }
 

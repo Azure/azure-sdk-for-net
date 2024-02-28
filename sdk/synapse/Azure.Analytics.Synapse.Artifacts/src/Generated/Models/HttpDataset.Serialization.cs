@@ -117,19 +117,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<object> structure = default;
-            Optional<object> schema = default;
+            string description = default;
+            object structure = default;
+            object schema = default;
             LinkedServiceReference linkedServiceName = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<object> relativeUrl = default;
-            Optional<object> requestMethod = default;
-            Optional<object> requestBody = default;
-            Optional<object> additionalHeaders = default;
-            Optional<DatasetStorageFormat> format = default;
-            Optional<DatasetCompression> compression = default;
+            DatasetFolder folder = default;
+            object relativeUrl = default;
+            object requestMethod = default;
+            object requestBody = default;
+            object additionalHeaders = default;
+            DatasetStorageFormat format = default;
+            DatasetCompression compression = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -282,20 +282,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new HttpDataset(
                 type,
-                description.Value,
-                structure.Value,
-                schema.Value,
+                description,
+                structure,
+                schema,
                 linkedServiceName,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
-                folder.Value,
+                folder,
                 additionalProperties,
-                relativeUrl.Value,
-                requestMethod.Value,
-                requestBody.Value,
-                additionalHeaders.Value,
-                format.Value,
-                compression.Value);
+                relativeUrl,
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                format,
+                compression);
         }
 
         internal partial class HttpDatasetConverter : JsonConverter<HttpDataset>

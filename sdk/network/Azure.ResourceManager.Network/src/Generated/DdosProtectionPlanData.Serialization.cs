@@ -139,15 +139,15 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> resourceGuid = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            SystemData systemData = default;
+            Guid? resourceGuid = default;
+            NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IReadOnlyList<WritableSubResource> virtualNetworks = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.Network
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                Optional.ToNullable(etag),
-                Optional.ToNullable(resourceGuid),
-                Optional.ToNullable(provisioningState),
+                etag,
+                resourceGuid,
+                provisioningState,
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualNetworks ?? new ChangeTrackingList<WritableSubResource>(),
                 serializedAdditionalRawData);

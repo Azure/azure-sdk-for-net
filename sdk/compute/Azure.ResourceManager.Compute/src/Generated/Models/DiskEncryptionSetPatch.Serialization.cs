@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DiskEncryptionSetType> encryptionType = default;
-            Optional<KeyForDiskEncryptionSet> activeKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
-            Optional<string> federatedClientId = default;
+            ManagedServiceIdentity identity = default;
+            DiskEncryptionSetType? encryptionType = default;
+            KeyForDiskEncryptionSet activeKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
+            string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Compute.Models
             return new DiskEncryptionSetPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
-                Optional.ToNullable(encryptionType),
-                activeKey.Value,
-                Optional.ToNullable(rotationToLatestKeyVersionEnabled),
-                federatedClientId.Value,
+                encryptionType,
+                activeKey,
+                rotationToLatestKeyVersionEnabled,
+                federatedClientId,
                 serializedAdditionalRawData);
         }
 

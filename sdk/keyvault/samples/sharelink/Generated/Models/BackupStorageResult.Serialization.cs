@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<byte[]> value = default;
+            byte[] value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +32,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new BackupStorageResult(value.Value);
+            return new BackupStorageResult(value);
         }
     }
 }

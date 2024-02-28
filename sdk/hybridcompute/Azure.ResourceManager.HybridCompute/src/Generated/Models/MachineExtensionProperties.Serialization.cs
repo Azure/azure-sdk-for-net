@@ -150,16 +150,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            bool? autoUpgradeMinorVersion = default;
             IDictionary<string, BinaryData> settings = default;
             IDictionary<string, BinaryData> protectedSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<MachineExtensionInstanceView> instanceView = default;
+            string provisioningState = default;
+            MachineExtensionInstanceView instanceView = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,16 +265,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new MachineExtensionProperties(
-                forceUpdateTag.Value,
-                publisher.Value,
-                type.Value,
-                typeHandlerVersion.Value,
-                Optional.ToNullable(enableAutomaticUpgrade),
-                Optional.ToNullable(autoUpgradeMinorVersion),
+                forceUpdateTag,
+                publisher,
+                type,
+                typeHandlerVersion,
+                enableAutomaticUpgrade,
+                autoUpgradeMinorVersion,
                 settings ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 protectedSettings ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                provisioningState.Value,
-                instanceView.Value,
+                provisioningState,
+                instanceView,
                 serializedAdditionalRawData);
         }
 

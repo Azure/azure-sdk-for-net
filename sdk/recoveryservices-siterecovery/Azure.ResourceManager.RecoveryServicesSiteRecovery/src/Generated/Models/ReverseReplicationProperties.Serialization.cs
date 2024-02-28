@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> failoverDirection = default;
-            Optional<ReverseReplicationProviderSpecificContent> providerSpecificDetails = default;
+            string failoverDirection = default;
+            ReverseReplicationProviderSpecificContent providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseReplicationProperties(failoverDirection.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new ReverseReplicationProperties(failoverDirection, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseReplicationProperties>.Write(ModelReaderWriterOptions options)

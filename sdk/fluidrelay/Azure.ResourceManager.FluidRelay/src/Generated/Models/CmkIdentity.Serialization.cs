@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 return null;
             }
-            Optional<CmkIdentityType> identityType = default;
-            Optional<ResourceIdentifier> userAssignedIdentityResourceId = default;
+            CmkIdentityType? identityType = default;
+            ResourceIdentifier userAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CmkIdentity(Optional.ToNullable(identityType), userAssignedIdentityResourceId.Value, serializedAdditionalRawData);
+            return new CmkIdentity(identityType, userAssignedIdentityResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CmkIdentity>.Write(ModelReaderWriterOptions options)

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             IReadOnlyList<ConsumptionLotSummary> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Lots(value ?? new ChangeTrackingList<ConsumptionLotSummary>(), nextLink.Value, serializedAdditionalRawData);
+            return new Lots(value ?? new ChangeTrackingList<ConsumptionLotSummary>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Lots>.Write(ModelReaderWriterOptions options)

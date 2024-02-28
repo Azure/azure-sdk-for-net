@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DnsRefreshConfigurationPropertiesStatus> status = default;
+            SystemData systemData = default;
+            DnsRefreshConfigurationPropertiesStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.Sql.Models
                 id,
                 name,
                 type,
-                systemData.Value,
-                Optional.ToNullable(status),
+                systemData,
+                status,
                 serializedAdditionalRawData);
         }
 
