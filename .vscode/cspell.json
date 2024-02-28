@@ -1313,7 +1313,6 @@
     {
       "filename": "**/sdk/confluent/**/*.cs",
       "words": [
-        "Acces",
         "Byok"
       ]
     }
