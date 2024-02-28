@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyIdentifier))
+            if (KeyIdentifier != null)
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(VersionedKeyIdentifier))
+            if (options.Format != "W" && VersionedKeyIdentifier != null)
             {
                 writer.WritePropertyName("versionedKeyIdentifier"u8);
                 writer.WriteStringValue(VersionedKeyIdentifier);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsKeyRotationEnabled))
+            if (options.Format != "W" && IsKeyRotationEnabled.HasValue)
             {
                 writer.WritePropertyName("keyRotationEnabled"u8);
                 writer.WriteBooleanValue(IsKeyRotationEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
+            if (options.Format != "W" && LastKeyRotationTimestamp.HasValue)
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
                 writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> keyIdentifier = default;
-            Optional<string> versionedKeyIdentifier = default;
-            Optional<string> identity = default;
-            Optional<bool> keyRotationEnabled = default;
-            Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
+            string keyIdentifier = default;
+            string versionedKeyIdentifier = default;
+            string identity = default;
+            bool? keyRotationEnabled = default;
+            DateTimeOffset? lastKeyRotationTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryKeyVaultProperties(keyIdentifier.Value, versionedKeyIdentifier.Value, identity.Value, Optional.ToNullable(keyRotationEnabled), Optional.ToNullable(lastKeyRotationTimestamp), serializedAdditionalRawData);
+            return new ContainerRegistryKeyVaultProperties(
+                keyIdentifier,
+                versionedKeyIdentifier,
+                identity,
+                keyRotationEnabled,
+                lastKeyRotationTimestamp,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryKeyVaultProperties>.Write(ModelReaderWriterOptions options)

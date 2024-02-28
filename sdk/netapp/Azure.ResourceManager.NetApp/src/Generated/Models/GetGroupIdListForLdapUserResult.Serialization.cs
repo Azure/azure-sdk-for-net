@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(GroupIdsForLdapUser))
+            if (!(GroupIdsForLdapUser is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("groupIdsForLdapUser"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> groupIdsForLdapUser = default;
+            IReadOnlyList<string> groupIdsForLdapUser = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetGroupIdListForLdapUserResult(Optional.ToList(groupIdsForLdapUser), serializedAdditionalRawData);
+            return new GetGroupIdListForLdapUserResult(groupIdsForLdapUser ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetGroupIdListForLdapUserResult>.Write(ModelReaderWriterOptions options)

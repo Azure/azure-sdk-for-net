@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
+            if (AllowDeletionOfReplicatedLocations.HasValue)
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<bool> allowDeletionOfReplicatedLocations = default;
+            bool? allowDeletionOfReplicatedLocations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryArtifactSafetyProfileBase(Optional.ToNullable(allowDeletionOfReplicatedLocations), serializedAdditionalRawData);
+            return new GalleryArtifactSafetyProfileBase(allowDeletionOfReplicatedLocations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryArtifactSafetyProfileBase>.Write(ModelReaderWriterOptions options)

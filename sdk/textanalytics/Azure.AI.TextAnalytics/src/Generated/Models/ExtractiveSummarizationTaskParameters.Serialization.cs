@@ -16,27 +16,27 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SentenceCount))
+            if (SentenceCount.HasValue)
             {
                 writer.WritePropertyName("sentenceCount"u8);
                 writer.WriteNumberValue(SentenceCount.Value);
             }
-            if (Optional.IsDefined(SortBy))
+            if (SortBy.HasValue)
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy.Value.ToString());
             }
-            if (Optional.IsDefined(StringIndexType))
+            if (StringIndexType.HasValue)
             {
                 writer.WritePropertyName("stringIndexType"u8);
                 writer.WriteStringValue(StringIndexType.Value.ToString());
             }
-            if (Optional.IsDefined(ModelVersion))
+            if (ModelVersion != null)
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(LoggingOptOut))
+            if (LoggingOptOut.HasValue)
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -50,11 +50,11 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<int> sentenceCount = default;
-            Optional<ExtractiveSummarySentencesOrder> sortBy = default;
-            Optional<StringIndexType> stringIndexType = default;
-            Optional<string> modelVersion = default;
-            Optional<bool> loggingOptOut = default;
+            int? sentenceCount = default;
+            ExtractiveSummarySentencesOrder? sortBy = default;
+            StringIndexType? stringIndexType = default;
+            string modelVersion = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentenceCount"u8))
@@ -99,7 +99,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new ExtractiveSummarizationTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(sentenceCount), Optional.ToNullable(sortBy), Optional.ToNullable(stringIndexType));
+            return new ExtractiveSummarizationTaskParameters(loggingOptOut, modelVersion, sentenceCount, sortBy, stringIndexType);
         }
     }
 }

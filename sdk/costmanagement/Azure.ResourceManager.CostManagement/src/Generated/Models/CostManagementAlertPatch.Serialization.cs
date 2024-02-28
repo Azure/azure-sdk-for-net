@@ -28,57 +28,57 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Source))
+            if (Source.HasValue)
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (Optional.IsDefined(Details))
+            if (Details != null)
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteObjectValue(Details);
             }
-            if (Optional.IsDefined(CostEntityId))
+            if (CostEntityId != null)
             {
                 writer.WritePropertyName("costEntityId"u8);
                 writer.WriteStringValue(CostEntityId);
             }
-            if (Optional.IsDefined(Status))
+            if (Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(CloseOn))
+            if (CloseOn.HasValue)
             {
                 writer.WritePropertyName("closeTime"u8);
                 writer.WriteStringValue(CloseOn.Value, "O");
             }
-            if (Optional.IsDefined(ModifiedOn))
+            if (ModifiedOn.HasValue)
             {
                 writer.WritePropertyName("modificationTime"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(StatusModificationUserName))
+            if (StatusModificationUserName != null)
             {
                 writer.WritePropertyName("statusModificationUserName"u8);
                 writer.WriteStringValue(StatusModificationUserName);
             }
-            if (Optional.IsDefined(StatusModifiedOn))
+            if (StatusModifiedOn.HasValue)
             {
                 writer.WritePropertyName("statusModificationTime"u8);
                 writer.WriteStringValue(StatusModifiedOn.Value, "O");
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertPropertiesDefinition> definition = default;
-            Optional<string> description = default;
-            Optional<CostManagementAlertSource> source = default;
-            Optional<AlertPropertiesDetails> details = default;
-            Optional<string> costEntityId = default;
-            Optional<CostManagementAlertStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> closeTime = default;
-            Optional<DateTimeOffset> modificationTime = default;
-            Optional<string> statusModificationUserName = default;
-            Optional<DateTimeOffset> statusModificationTime = default;
+            AlertPropertiesDefinition definition = default;
+            string description = default;
+            CostManagementAlertSource? source = default;
+            AlertPropertiesDetails details = default;
+            string costEntityId = default;
+            CostManagementAlertStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? closeTime = default;
+            DateTimeOffset? modificationTime = default;
+            string statusModificationUserName = default;
+            DateTimeOffset? statusModificationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value);
+                            definition = AlertPropertiesDefinition.DeserializeAlertPropertiesDefinition(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value);
+                            details = AlertPropertiesDetails.DeserializeAlertPropertiesDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costEntityId"u8))
@@ -242,7 +242,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CostManagementAlertPatch(definition.Value, description.Value, Optional.ToNullable(source), details.Value, costEntityId.Value, Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToNullable(closeTime), Optional.ToNullable(modificationTime), statusModificationUserName.Value, Optional.ToNullable(statusModificationTime), serializedAdditionalRawData);
+            return new CostManagementAlertPatch(
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                creationTime,
+                closeTime,
+                modificationTime,
+                statusModificationUserName,
+                statusModificationTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CostManagementAlertPatch>.Write(ModelReaderWriterOptions options)

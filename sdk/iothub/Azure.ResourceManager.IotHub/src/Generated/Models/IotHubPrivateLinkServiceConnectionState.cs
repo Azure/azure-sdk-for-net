@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         public IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status, string description)
         {
-            Argument.AssertNotNull(description, nameof(description));
+            if (description == null)
+            {
+                throw new ArgumentNullException(nameof(description));
+            }
 
             Status = status;
             Description = description;

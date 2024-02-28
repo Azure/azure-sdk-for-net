@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            if (options.Format != "W" && MeterId != null)
             {
                 writer.WritePropertyName("meterID"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            if (options.Format != "W" && Quantity.HasValue)
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExtendedUnit))
+            if (options.Format != "W" && ExtendedUnit != null)
             {
                 writer.WritePropertyName("extendedUnit"u8);
                 writer.WriteStringValue(ExtendedUnit);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> meterId = default;
-            Optional<long> quantity = default;
-            Optional<string> extendedUnit = default;
+            string meterId = default;
+            long? quantity = default;
+            string extendedUnit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuCosts(meterId.Value, Optional.ToNullable(quantity), extendedUnit.Value, serializedAdditionalRawData);
+            return new ResourceSkuCosts(meterId, quantity, extendedUnit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuCosts>.Write(ModelReaderWriterOptions options)

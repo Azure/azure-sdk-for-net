@@ -71,8 +71,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateAsync(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.CreateOrUpdate");
             scope.Start();
@@ -108,8 +118,18 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='CreateOrUpdate(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdate(string sensorMappingId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
-            Argument.AssertNotNull(content, nameof(content));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.CreateOrUpdate");
             scope.Start();
@@ -144,7 +164,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMappingAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetSensorMappingAsync(string sensorMappingId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.GetSensorMapping");
             scope.Start();
@@ -179,7 +206,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='GetSensorMapping(string,RequestContext)']/*" />
         public virtual Response GetSensorMapping(string sensorMappingId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.GetSensorMapping");
             scope.Start();
@@ -214,7 +248,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.Delete");
             scope.Start();
@@ -249,7 +290,14 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/SensorMappings.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string sensorMappingId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(sensorMappingId, nameof(sensorMappingId));
+            if (sensorMappingId == null)
+            {
+                throw new ArgumentNullException(nameof(sensorMappingId));
+            }
+            if (sensorMappingId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sensorMappingId));
+            }
 
             using var scope = ClientDiagnostics.CreateScope("SensorMappings.Delete");
             scope.Start();
@@ -355,56 +403,56 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/sensor-mappings", false);
-            if (sensorIds != null && Optional.IsCollectionDefined(sensorIds))
+            if (sensorIds != null && !(sensorIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in sensorIds)
                 {
                     uri.AppendQuery("sensorIds", param, true);
                 }
             }
-            if (sensorPartnerIds != null && Optional.IsCollectionDefined(sensorPartnerIds))
+            if (sensorPartnerIds != null && !(sensorPartnerIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in sensorPartnerIds)
                 {
                     uri.AppendQuery("sensorPartnerIds", param, true);
                 }
             }
-            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
+            if (partyIds != null && !(partyIds is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in partyIds)
                 {
                     uri.AppendQuery("partyIds", param, true);
                 }
             }
-            if (boundaryIds != null && Optional.IsCollectionDefined(boundaryIds))
+            if (boundaryIds != null && !(boundaryIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in boundaryIds)
                 {
                     uri.AppendQuery("boundaryIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList6 && changeTrackingList6.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

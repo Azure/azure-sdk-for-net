@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationReplicationExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicationExtensionName, DataReplicationReplicationExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationReplicationExtensionResource> CreateOrUpdate(WaitUntil waitUntil, string replicationExtensionName, DataReplicationReplicationExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationReplicationExtensionResource>> GetAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual Response<DataReplicationReplicationExtensionResource> Get(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual Response<bool> Exists(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationReplicationExtensionResource>> GetIfExistsAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationReplicationExtensionResource> GetIfExists(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(replicationExtensionName, nameof(replicationExtensionName));
+            if (replicationExtensionName == null)
+            {
+                throw new ArgumentNullException(nameof(replicationExtensionName));
+            }
+            if (replicationExtensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(replicationExtensionName));
+            }
 
             using var scope = _dataReplicationReplicationExtensionReplicationExtensionClientDiagnostics.CreateScope("DataReplicationReplicationExtensionCollection.GetIfExists");
             scope.Start();

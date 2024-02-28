@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("ResourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ScopeId))
+            if (ScopeId != null)
             {
                 writer.WritePropertyName("ScopeId"u8);
                 writer.WriteStringValue(ScopeId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> resourceId = default;
-            Optional<string> scopeId = default;
+            string resourceId = default;
+            string scopeId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkScopedResourceContent(resourceId.Value, scopeId.Value, serializedAdditionalRawData);
+            return new PrivateLinkScopedResourceContent(resourceId, scopeId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkScopedResourceContent>.Write(ModelReaderWriterOptions options)

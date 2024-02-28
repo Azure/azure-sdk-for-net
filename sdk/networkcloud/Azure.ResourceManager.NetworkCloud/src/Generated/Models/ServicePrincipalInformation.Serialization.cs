@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             string applicationId = default;
-            Optional<string> password = default;
+            string password = default;
             string principalId = default;
             string tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId, serializedAdditionalRawData);
+            return new ServicePrincipalInformation(applicationId, password, principalId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicePrincipalInformation>.Write(ModelReaderWriterOptions options)

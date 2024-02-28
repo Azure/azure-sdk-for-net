@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerCertificate))
+            if (ServerCertificate != null)
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 return null;
             }
-            Optional<BinaryData> serverCertificate = default;
+            BinaryData serverCertificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TriggerRolloverContent(serverCertificate.Value, serializedAdditionalRawData);
+            return new TriggerRolloverContent(serverCertificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TriggerRolloverContent>.Write(ModelReaderWriterOptions options)

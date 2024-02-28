@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Columns != null)
                 {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columns");
                 }
             }
-            if (Optional.IsDefined(DataContext))
+            if (DataContext != null)
             {
                 if (DataContext != null)
                 {
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element);
-                    case "Static": return StaticInputData.DeserializeStaticInputData(element);
-                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element);
+                    case "Fixed": return FixedInputData.DeserializeFixedInputData(element, options);
+                    case "Static": return StaticInputData.DeserializeStaticInputData(element, options);
+                    case "Trailing": return TrailingInputData.DeserializeTrailingInputData(element, options);
                 }
             }
-            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element);
+            return UnknownMonitoringInputDataBase.DeserializeUnknownMonitoringInputDataBase(element, options);
         }
 
         BinaryData IPersistableModel<MonitoringInputDataBase>.Write(ModelReaderWriterOptions options)

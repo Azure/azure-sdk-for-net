@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSubdomainAvailable))
+            if (IsSubdomainAvailable.HasValue)
             {
                 writer.WritePropertyName("isSubdomainAvailable"u8);
                 writer.WriteBooleanValue(IsSubdomainAvailable.Value);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (Optional.IsDefined(SubdomainName))
+            if (SubdomainName != null)
             {
                 writer.WritePropertyName("subdomainName"u8);
                 writer.WriteStringValue(SubdomainName);
             }
-            if (Optional.IsDefined(DomainAvailabilityType))
+            if (DomainAvailabilityType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DomainAvailabilityType);
             }
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<bool> isSubdomainAvailable = default;
-            Optional<string> reason = default;
-            Optional<string> subdomainName = default;
-            Optional<string> type = default;
-            Optional<string> kind = default;
+            bool? isSubdomainAvailable = default;
+            string reason = default;
+            string subdomainName = default;
+            string type = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesDomainAvailabilityList(Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value, serializedAdditionalRawData);
+            return new CognitiveServicesDomainAvailabilityList(
+                isSubdomainAvailable,
+                reason,
+                subdomainName,
+                type,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesDomainAvailabilityList>.Write(ModelReaderWriterOptions options)

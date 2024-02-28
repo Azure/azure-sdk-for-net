@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExceptionAction(document.RootElement, options);
+            return DeserializeExceptionAction(document.RootElement, options);
         }
 
         internal static UnknownExceptionAction DeserializeUnknownExceptionAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             ExceptionActionKind kind = "Unknown";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownExceptionAction(id.Value, kind, serializedAdditionalRawData);
+            return new UnknownExceptionAction(id, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExceptionAction>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownExceptionAction(document.RootElement, options);
+                        return DeserializeExceptionAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ExceptionAction)} does not support '{options.Format}' format.");

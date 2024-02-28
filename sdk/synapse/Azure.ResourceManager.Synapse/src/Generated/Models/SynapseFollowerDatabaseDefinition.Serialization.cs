@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStringValue(KustoPoolResourceId);
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             ResourceIdentifier clusterResourceId = default;
             string attachedDatabaseConfigurationName = default;
-            Optional<string> databaseName = default;
+            string databaseName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName.Value, serializedAdditionalRawData);
+            return new SynapseFollowerDatabaseDefinition(clusterResourceId, attachedDatabaseConfigurationName, databaseName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseFollowerDatabaseDefinition>.Write(ModelReaderWriterOptions options)

@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Encoder))
+            if (Encoder.HasValue)
             {
                 writer.WritePropertyName("encoder"u8);
                 writer.WriteStringValue(Encoder.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ReplaceOriginalTokens))
+            if (ReplaceOriginalTokens.HasValue)
             {
                 writer.WritePropertyName("replace"u8);
                 writer.WriteBooleanValue(ReplaceOriginalTokens.Value);
@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<PhoneticEncoder> encoder = default;
-            Optional<bool> replace = default;
+            PhoneticEncoder? encoder = default;
+            bool? replace = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PhoneticTokenFilter(odataType, name, Optional.ToNullable(encoder), Optional.ToNullable(replace));
+            return new PhoneticTokenFilter(odataType, name, encoder, replace);
         }
     }
 }

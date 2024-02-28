@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Statistics.HasValue)
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -50,7 +50,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<AbstractiveSummaryInternal> summaries = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summaries"u8))
@@ -88,7 +88,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryDocumentResult(id, warnings, Optional.ToNullable(statistics), summaries);
+            return new AbstractiveSummaryDocumentResult(id, warnings, statistics, summaries);
         }
     }
 }

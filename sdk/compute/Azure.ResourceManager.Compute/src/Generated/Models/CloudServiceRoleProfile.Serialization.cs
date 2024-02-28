@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Roles))
+            if (!(Roles is ChangeTrackingList<CloudServiceRoleProfileProperties> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceRoleProfileProperties>> roles = default;
+            IList<CloudServiceRoleProfileProperties> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleProfileProperties> array = new List<CloudServiceRoleProfileProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item));
+                        array.Add(CloudServiceRoleProfileProperties.DeserializeCloudServiceRoleProfileProperties(item, options));
                     }
                     roles = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceRoleProfile(Optional.ToList(roles), serializedAdditionalRawData);
+            return new CloudServiceRoleProfile(roles ?? new ChangeTrackingList<CloudServiceRoleProfileProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceRoleProfile>.Write(ModelReaderWriterOptions options)

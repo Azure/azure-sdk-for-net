@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InferenceConfiguration))
+            if (InferenceConfiguration != null)
             {
                 if (InferenceConfiguration != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<OnlineInferenceConfiguration> inferenceConfiguration = default;
+            OnlineInferenceConfiguration inferenceConfiguration = default;
             InferencingServerType serverType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         inferenceConfiguration = null;
                         continue;
                     }
-                    inferenceConfiguration = OnlineInferenceConfiguration.DeserializeOnlineInferenceConfiguration(property.Value);
+                    inferenceConfiguration = OnlineInferenceConfiguration.DeserializeOnlineInferenceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverType"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TritonInferencingServer(serverType, serializedAdditionalRawData, inferenceConfiguration.Value);
+            return new TritonInferencingServer(serverType, serializedAdditionalRawData, inferenceConfiguration);
         }
 
         BinaryData IPersistableModel<TritonInferencingServer>.Write(ModelReaderWriterOptions options)

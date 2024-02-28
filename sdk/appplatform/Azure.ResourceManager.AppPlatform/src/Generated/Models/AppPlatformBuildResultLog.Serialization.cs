@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobUri))
+            if (BlobUri != null)
             {
                 writer.WritePropertyName("blobUrl"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
+            Uri blobUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultLog(blobUri.Value, serializedAdditionalRawData);
+            return new AppPlatformBuildResultLog(blobUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultLog>.Write(ModelReaderWriterOptions options)

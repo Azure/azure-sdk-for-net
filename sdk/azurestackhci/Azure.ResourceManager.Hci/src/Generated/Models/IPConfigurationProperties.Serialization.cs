@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Gateway))
+            if (options.Format != "W" && Gateway != null)
             {
                 writer.WritePropertyName("gateway"u8);
                 writer.WriteStringValue(Gateway);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrefixLength))
+            if (options.Format != "W" && PrefixLength != null)
             {
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteStringValue(PrefixLength);
             }
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> gateway = default;
-            Optional<string> prefixLength = default;
-            Optional<string> privateIPAddress = default;
-            Optional<WritableSubResource> subnet = default;
+            string gateway = default;
+            string prefixLength = default;
+            string privateIPAddress = default;
+            WritableSubResource subnet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPConfigurationProperties(gateway.Value, prefixLength.Value, privateIPAddress.Value, subnet, serializedAdditionalRawData);
+            return new IPConfigurationProperties(gateway, prefixLength, privateIPAddress, subnet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPConfigurationProperties>.Write(ModelReaderWriterOptions options)

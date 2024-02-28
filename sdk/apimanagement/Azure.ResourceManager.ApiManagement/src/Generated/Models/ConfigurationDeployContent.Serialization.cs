@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Branch))
+            if (Branch != null)
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(ForceDelete))
+            if (ForceDelete.HasValue)
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(ForceDelete.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> branch = default;
-            Optional<bool> force = default;
+            string branch = default;
+            bool? force = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationDeployContent(branch.Value, Optional.ToNullable(force), serializedAdditionalRawData);
+            return new ConfigurationDeployContent(branch, force, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationDeployContent>.Write(ModelReaderWriterOptions options)

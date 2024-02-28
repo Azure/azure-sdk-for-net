@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
         public DataReplicationFabricProperties(FabricModelCustomProperties customProperties)
         {
-            Argument.AssertNotNull(customProperties, nameof(customProperties));
+            if (customProperties == null)
+            {
+                throw new ArgumentNullException(nameof(customProperties));
+            }
 
             HealthErrors = new ChangeTrackingList<DataReplicationHealthErrorInfo>();
             CustomProperties = customProperties;

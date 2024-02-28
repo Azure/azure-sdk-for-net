@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -53,8 +52,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
         public RedshiftUnloadSettings(DataFactoryLinkedServiceReference s3LinkedServiceName, DataFactoryElement<string> bucketName)
         {
-            Argument.AssertNotNull(s3LinkedServiceName, nameof(s3LinkedServiceName));
-            Argument.AssertNotNull(bucketName, nameof(bucketName));
+            if (s3LinkedServiceName == null)
+            {
+                throw new ArgumentNullException(nameof(s3LinkedServiceName));
+            }
+            if (bucketName == null)
+            {
+                throw new ArgumentNullException(nameof(bucketName));
+            }
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;

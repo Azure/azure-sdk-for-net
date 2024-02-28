@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Atomic))
+            if (Atomic != null)
             {
                 writer.WritePropertyName("atomic"u8);
                 writer.WriteStringValue(Atomic);
             }
-            if (Optional.IsDefined(Wait))
+            if (Wait != null)
             {
                 writer.WritePropertyName("wait"u8);
                 writer.WriteStringValue(Wait);
             }
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> atomic = default;
-            Optional<string> wait = default;
-            Optional<string> timeout = default;
+            string atomic = default;
+            string wait = default;
+            string timeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmUpgradeConfig(atomic.Value, wait.Value, timeout.Value, serializedAdditionalRawData);
+            return new HelmUpgradeConfig(atomic, wait, timeout, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmUpgradeConfig>.Write(ModelReaderWriterOptions options)

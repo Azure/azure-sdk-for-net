@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndTime))
+            if (EndTime != null)
             {
                 if (EndTime != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endTime");
                 }
             }
-            if (Optional.IsDefined(StartTime))
+            if (StartTime != null)
             {
                 if (StartTime != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("startTime");
                 }
             }
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cron": return CronTrigger.DeserializeCronTrigger(element);
-                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element);
+                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
+                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                 }
             }
-            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);
+            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)

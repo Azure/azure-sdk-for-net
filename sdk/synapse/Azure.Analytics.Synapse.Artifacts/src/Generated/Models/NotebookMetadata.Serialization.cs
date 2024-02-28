@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kernelspec))
+            if (Kernelspec != null)
             {
                 writer.WritePropertyName("kernelspec"u8);
                 writer.WriteObjectValue(Kernelspec);
             }
-            if (Optional.IsDefined(LanguageInfo))
+            if (LanguageInfo != null)
             {
                 if (LanguageInfo != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<NotebookKernelSpec> kernelspec = default;
-            Optional<NotebookLanguageInfo> languageInfo = default;
+            NotebookKernelSpec kernelspec = default;
+            NotebookLanguageInfo languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -78,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookMetadata(kernelspec.Value, languageInfo.Value, additionalProperties);
+            return new NotebookMetadata(kernelspec, languageInfo, additionalProperties);
         }
 
         internal partial class NotebookMetadataConverter : JsonConverter<NotebookMetadata>

@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CompressionProperties))
+            if (CompressionProperties != null)
             {
                 writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
-            if (Optional.IsDefined(ValidationMode))
+            if (ValidationMode != null)
             {
                 writer.WritePropertyName("validationMode"u8);
                 JsonSerializer.Serialize(writer, ValidationMode);
             }
-            if (Optional.IsDefined(DetectDataType))
+            if (DetectDataType != null)
             {
                 writer.WritePropertyName("detectDataType"u8);
                 JsonSerializer.Serialize(writer, DetectDataType);
             }
-            if (Optional.IsDefined(Namespaces))
+            if (Namespaces != null)
             {
                 writer.WritePropertyName("namespaces"u8);
                 JsonSerializer.Serialize(writer, Namespaces);
             }
-            if (Optional.IsDefined(NamespacePrefixes))
+            if (NamespacePrefixes != null)
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
                 JsonSerializer.Serialize(writer, NamespacePrefixes);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<DataFactoryElement<string>> validationMode = default;
-            Optional<DataFactoryElement<bool>> detectDataType = default;
-            Optional<DataFactoryElement<bool>> namespaces = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> namespacePrefixes = default;
+            CompressionReadSettings compressionProperties = default;
+            DataFactoryElement<string> validationMode = default;
+            DataFactoryElement<bool> detectDataType = default;
+            DataFactoryElement<bool> namespaces = default;
+            DataFactoryElement<IDictionary<string, string>> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
+                    compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationMode"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new XmlReadSettings(type, additionalProperties, compressionProperties.Value, validationMode.Value, detectDataType.Value, namespaces.Value, namespacePrefixes.Value);
+            return new XmlReadSettings(
+                type,
+                additionalProperties,
+                compressionProperties,
+                validationMode,
+                detectDataType,
+                namespaces,
+                namespacePrefixes);
         }
 
         BinaryData IPersistableModel<XmlReadSettings>.Write(ModelReaderWriterOptions options)

@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsZoneResource"/> object. </returns>
         public static PrivateDnsZoneResource GetPrivateDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsZoneResource(id);
         }
@@ -67,7 +70,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="VirtualNetworkLinkResource"/> object. </returns>
         public static VirtualNetworkLinkResource GetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetVirtualNetworkLinkResource(id);
         }
@@ -86,7 +92,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsARecordResource"/> object. </returns>
         public static PrivateDnsARecordResource GetPrivateDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsARecordResource(id);
         }
@@ -105,7 +114,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsAaaaRecordResource"/> object. </returns>
         public static PrivateDnsAaaaRecordResource GetPrivateDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsAaaaRecordResource(id);
         }
@@ -124,7 +136,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsCnameRecordResource"/> object. </returns>
         public static PrivateDnsCnameRecordResource GetPrivateDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsCnameRecordResource(id);
         }
@@ -143,7 +158,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsMXRecordResource"/> object. </returns>
         public static PrivateDnsMXRecordResource GetPrivateDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsMXRecordResource(id);
         }
@@ -162,7 +180,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsPtrRecordResource"/> object. </returns>
         public static PrivateDnsPtrRecordResource GetPrivateDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsPtrRecordResource(id);
         }
@@ -181,7 +202,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsSoaRecordResource"/> object. </returns>
         public static PrivateDnsSoaRecordResource GetPrivateDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsSoaRecordResource(id);
         }
@@ -200,7 +224,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsSrvRecordResource"/> object. </returns>
         public static PrivateDnsSrvRecordResource GetPrivateDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsSrvRecordResource(id);
         }
@@ -219,7 +246,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> Returns a <see cref="PrivateDnsTxtRecordResource"/> object. </returns>
         public static PrivateDnsTxtRecordResource GetPrivateDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockablePrivateDnsArmClient(client).GetPrivateDnsTxtRecordResource(id);
         }
@@ -236,7 +266,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An object representing collection of PrivateDnsZoneResources and their operations over a PrivateDnsZoneResource. </returns>
         public static PrivateDnsZoneCollection GetPrivateDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePrivateDnsResourceGroupResource(resourceGroupResource).GetPrivateDnsZones();
         }
@@ -274,7 +307,10 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public static async Task<Response<PrivateDnsZoneResource>> GetPrivateDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockablePrivateDnsResourceGroupResource(resourceGroupResource).GetPrivateDnsZoneAsync(privateZoneName, cancellationToken).ConfigureAwait(false);
         }
@@ -312,7 +348,10 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public static Response<PrivateDnsZoneResource> GetPrivateDnsZone(this ResourceGroupResource resourceGroupResource, string privateZoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockablePrivateDnsResourceGroupResource(resourceGroupResource).GetPrivateDnsZone(privateZoneName, cancellationToken);
         }
@@ -349,7 +388,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> An async collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PrivateDnsZoneResource> GetPrivateDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetPrivateDnsZonesAsync(top, cancellationToken);
         }
@@ -386,7 +428,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <returns> A collection of <see cref="PrivateDnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PrivateDnsZoneResource> GetPrivateDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockablePrivateDnsSubscriptionResource(subscriptionResource).GetPrivateDnsZones(top, cancellationToken);
         }

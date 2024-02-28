@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual async Task<Response<RegulatoryComplianceStandardResource>> GetAsync(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.Get");
             scope.Start();
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual Response<RegulatoryComplianceStandardResource> Get(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.Get");
             scope.Start();
@@ -233,7 +247,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.Exists");
             scope.Start();
@@ -276,7 +297,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual Response<bool> Exists(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.Exists");
             scope.Start();
@@ -319,7 +347,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual async Task<NullableResponse<RegulatoryComplianceStandardResource>> GetIfExistsAsync(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetIfExists");
             scope.Start();
@@ -364,7 +399,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceStandardName"/> is null. </exception>
         public virtual NullableResponse<RegulatoryComplianceStandardResource> GetIfExists(string regulatoryComplianceStandardName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(regulatoryComplianceStandardName, nameof(regulatoryComplianceStandardName));
+            if (regulatoryComplianceStandardName == null)
+            {
+                throw new ArgumentNullException(nameof(regulatoryComplianceStandardName));
+            }
+            if (regulatoryComplianceStandardName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(regulatoryComplianceStandardName));
+            }
 
             using var scope = _regulatoryComplianceStandardClientDiagnostics.CreateScope("RegulatoryComplianceStandardCollection.GetIfExists");
             scope.Start();

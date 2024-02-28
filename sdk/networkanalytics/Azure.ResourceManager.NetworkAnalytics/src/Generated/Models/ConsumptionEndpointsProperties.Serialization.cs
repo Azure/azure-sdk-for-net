@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IngestionUri))
+            if (options.Format != "W" && IngestionUri != null)
             {
                 writer.WritePropertyName("ingestionUrl"u8);
                 writer.WriteStringValue(IngestionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(IngestionResourceId))
+            if (options.Format != "W" && IngestionResourceId != null)
             {
                 writer.WritePropertyName("ingestionResourceId"u8);
                 writer.WriteStringValue(IngestionResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessUri))
+            if (options.Format != "W" && FileAccessUri != null)
             {
                 writer.WritePropertyName("fileAccessUrl"u8);
                 writer.WriteStringValue(FileAccessUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileAccessResourceId))
+            if (options.Format != "W" && FileAccessResourceId != null)
             {
                 writer.WritePropertyName("fileAccessResourceId"u8);
                 writer.WriteStringValue(FileAccessResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryUri))
+            if (options.Format != "W" && QueryUri != null)
             {
                 writer.WritePropertyName("queryUrl"u8);
                 writer.WriteStringValue(QueryUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(QueryResourceId))
+            if (options.Format != "W" && QueryResourceId != null)
             {
                 writer.WritePropertyName("queryResourceId"u8);
                 writer.WriteStringValue(QueryResourceId);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 return null;
             }
-            Optional<Uri> ingestionUrl = default;
-            Optional<ResourceIdentifier> ingestionResourceId = default;
-            Optional<Uri> fileAccessUrl = default;
-            Optional<ResourceIdentifier> fileAccessResourceId = default;
-            Optional<Uri> queryUrl = default;
-            Optional<ResourceIdentifier> queryResourceId = default;
+            Uri ingestionUrl = default;
+            ResourceIdentifier ingestionResourceId = default;
+            Uri fileAccessUrl = default;
+            ResourceIdentifier fileAccessResourceId = default;
+            Uri queryUrl = default;
+            ResourceIdentifier queryResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionEndpointsProperties(ingestionUrl.Value, ingestionResourceId.Value, fileAccessUrl.Value, fileAccessResourceId.Value, queryUrl.Value, queryResourceId.Value, serializedAdditionalRawData);
+            return new ConsumptionEndpointsProperties(
+                ingestionUrl,
+                ingestionResourceId,
+                fileAccessUrl,
+                fileAccessResourceId,
+                queryUrl,
+                queryResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionEndpointsProperties>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStartObject();
             writer.WritePropertyName("from"u8);
             writer.WriteStringValue(From, "O");
-            if (Optional.IsDefined(To))
+            if (To.HasValue)
             {
                 writer.WritePropertyName("to"u8);
                 writer.WriteStringValue(To.Value, "O");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 return null;
             }
             DateTimeOffset @from = default;
-            Optional<DateTimeOffset> to = default;
+            DateTimeOffset? to = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExportRecurrencePeriod(@from, Optional.ToNullable(to), serializedAdditionalRawData);
+            return new ExportRecurrencePeriod(@from, to, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportRecurrencePeriod>.Write(ModelReaderWriterOptions options)

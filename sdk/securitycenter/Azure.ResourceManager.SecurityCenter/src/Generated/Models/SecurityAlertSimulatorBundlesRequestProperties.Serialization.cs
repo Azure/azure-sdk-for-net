@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Bundles))
+            if (!(Bundles is ChangeTrackingList<SecurityAlertSimulatorBundleType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("bundles"u8);
                 writer.WriteStartArray();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<SecurityAlertSimulatorBundleType>> bundles = default;
+            IList<SecurityAlertSimulatorBundleType> bundles = default;
             SecurityCenterKind kind = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SecurityAlertSimulatorBundlesRequestProperties(kind, additionalProperties, Optional.ToList(bundles));
+            return new SecurityAlertSimulatorBundlesRequestProperties(kind, additionalProperties, bundles ?? new ChangeTrackingList<SecurityAlertSimulatorBundleType>());
         }
 
         BinaryData IPersistableModel<SecurityAlertSimulatorBundlesRequestProperties>.Write(ModelReaderWriterOptions options)

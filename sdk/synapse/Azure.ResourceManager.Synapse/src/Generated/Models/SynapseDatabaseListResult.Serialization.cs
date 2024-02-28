@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<SynapseDatabaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SynapseDatabaseData>> value = default;
+            IReadOnlyList<SynapseDatabaseData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDatabaseData> array = new List<SynapseDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDatabaseData.DeserializeSynapseDatabaseData(item));
+                        array.Add(SynapseDatabaseData.DeserializeSynapseDatabaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDatabaseListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SynapseDatabaseListResult(value ?? new ChangeTrackingList<SynapseDatabaseData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDatabaseListResult>.Write(ModelReaderWriterOptions options)

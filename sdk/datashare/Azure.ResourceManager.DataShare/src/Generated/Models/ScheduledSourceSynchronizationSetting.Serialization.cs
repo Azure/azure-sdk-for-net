@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecurrenceInterval))
+            if (RecurrenceInterval.HasValue)
             {
                 writer.WritePropertyName("recurrenceInterval"u8);
                 writer.WriteStringValue(RecurrenceInterval.Value.ToString());
             }
-            if (Optional.IsDefined(SynchronizeOn))
+            if (SynchronizeOn.HasValue)
             {
                 writer.WritePropertyName("synchronizationTime"u8);
                 writer.WriteStringValue(SynchronizeOn.Value, "O");
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.DataShare.Models
                 return null;
             }
             SourceShareSynchronizationSettingKind kind = default;
-            Optional<DataShareSynchronizationRecurrenceInterval> recurrenceInterval = default;
-            Optional<DateTimeOffset> synchronizationTime = default;
+            DataShareSynchronizationRecurrenceInterval? recurrenceInterval = default;
+            DateTimeOffset? synchronizationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScheduledSourceSynchronizationSetting(kind, serializedAdditionalRawData, Optional.ToNullable(recurrenceInterval), Optional.ToNullable(synchronizationTime));
+            return new ScheduledSourceSynchronizationSetting(kind, serializedAdditionalRawData, recurrenceInterval, synchronizationTime);
         }
 
         BinaryData IPersistableModel<ScheduledSourceSynchronizationSetting>.Write(ModelReaderWriterOptions options)

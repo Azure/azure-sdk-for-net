@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(LoginServer))
+            if (options.Format != "W" && LoginServer != null)
             {
                 writer.WritePropertyName("loginServer"u8);
                 writer.WriteStringValue(LoginServer);
             }
-            if (options.Format != "W" && Optional.IsDefined(Password))
+            if (options.Format != "W" && Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsDefined(Password2))
+            if (options.Format != "W" && Password2 != null)
             {
                 writer.WritePropertyName("password2"u8);
                 writer.WriteStringValue(Password2);
             }
-            if (options.Format != "W" && Optional.IsDefined(Username))
+            if (options.Format != "W" && Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<string> loginServer = default;
-            Optional<string> password = default;
-            Optional<string> password2 = default;
-            Optional<string> username = default;
+            string loginServer = default;
+            string password = default;
+            string password2 = default;
+            string username = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(loginServer.Value, password.Value, password2.Value, username.Value, serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(loginServer, password, password2, username, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)

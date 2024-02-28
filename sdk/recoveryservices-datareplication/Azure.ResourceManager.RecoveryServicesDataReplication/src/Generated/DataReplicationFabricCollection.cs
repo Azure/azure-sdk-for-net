@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DataReplicationFabricResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string fabricName, DataReplicationFabricData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DataReplicationFabricResource> CreateOrUpdate(WaitUntil waitUntil, string fabricName, DataReplicationFabricData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationFabricResource>> GetAsync(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<DataReplicationFabricResource> Get(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.Get");
             scope.Start();
@@ -331,7 +365,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.Exists");
             scope.Start();
@@ -374,7 +415,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual Response<bool> Exists(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.Exists");
             scope.Start();
@@ -417,7 +465,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationFabricResource>> GetIfExistsAsync(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.GetIfExists");
             scope.Start();
@@ -462,7 +517,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="fabricName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationFabricResource> GetIfExists(string fabricName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
+            if (fabricName == null)
+            {
+                throw new ArgumentNullException(nameof(fabricName));
+            }
+            if (fabricName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(fabricName));
+            }
 
             using var scope = _dataReplicationFabricFabricClientDiagnostics.CreateScope("DataReplicationFabricCollection.GetIfExists");
             scope.Start();

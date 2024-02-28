@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             IReadOnlyList<AvailableCognitiveServicesSku> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<AvailableCognitiveServicesSku> array = new List<AvailableCognitiveServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item));
+                        array.Add(AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableCognitiveServicesSkuResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new AvailableCognitiveServicesSkuResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableCognitiveServicesSkuResult>.Write(ModelReaderWriterOptions options)

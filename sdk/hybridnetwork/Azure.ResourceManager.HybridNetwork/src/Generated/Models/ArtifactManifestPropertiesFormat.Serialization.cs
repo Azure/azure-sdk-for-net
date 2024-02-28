@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ArtifactManifestState))
+            if (options.Format != "W" && ArtifactManifestState.HasValue)
             {
                 writer.WritePropertyName("artifactManifestState"u8);
                 writer.WriteStringValue(ArtifactManifestState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Artifacts))
+            if (!(Artifacts is ChangeTrackingList<ManifestArtifactFormat> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("artifacts"u8);
                 writer.WriteStartArray();
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ArtifactManifestState> artifactManifestState = default;
-            Optional<IList<ManifestArtifactFormat>> artifacts = default;
+            ProvisioningState? provisioningState = default;
+            ArtifactManifestState? artifactManifestState = default;
+            IList<ManifestArtifactFormat> artifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ManifestArtifactFormat> array = new List<ManifestArtifactFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item));
+                        array.Add(ManifestArtifactFormat.DeserializeManifestArtifactFormat(item, options));
                     }
                     artifacts = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArtifactManifestPropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(artifactManifestState), Optional.ToList(artifacts), serializedAdditionalRawData);
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArtifactManifestPropertiesFormat>.Write(ModelReaderWriterOptions options)

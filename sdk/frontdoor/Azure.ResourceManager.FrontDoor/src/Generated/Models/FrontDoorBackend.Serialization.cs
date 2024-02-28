@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(PrivateLinkAlias))
+            if (PrivateLinkAlias != null)
             {
                 writer.WritePropertyName("privateLinkAlias"u8);
                 writer.WriteStringValue(PrivateLinkAlias);
             }
-            if (Optional.IsDefined(PrivateLinkResourceId))
+            if (PrivateLinkResourceId != null)
             {
                 if (PrivateLinkResourceId != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("privateLinkResourceId");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkLocation))
+            if (PrivateLinkLocation.HasValue)
             {
                 if (PrivateLinkLocation != null)
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("privateLinkLocation");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateEndpointStatus))
+            if (options.Format != "W" && PrivateEndpointStatus.HasValue)
             {
                 if (PrivateEndpointStatus != null)
                 {
@@ -72,37 +72,37 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("privateEndpointStatus");
                 }
             }
-            if (Optional.IsDefined(PrivateLinkApprovalMessage))
+            if (PrivateLinkApprovalMessage != null)
             {
                 writer.WritePropertyName("privateLinkApprovalMessage"u8);
                 writer.WriteStringValue(PrivateLinkApprovalMessage);
             }
-            if (Optional.IsDefined(HttpPort))
+            if (HttpPort.HasValue)
             {
                 writer.WritePropertyName("httpPort"u8);
                 writer.WriteNumberValue(HttpPort.Value);
             }
-            if (Optional.IsDefined(HttpsPort))
+            if (HttpsPort.HasValue)
             {
                 writer.WritePropertyName("httpsPort"u8);
                 writer.WriteNumberValue(HttpsPort.Value);
             }
-            if (Optional.IsDefined(EnabledState))
+            if (EnabledState.HasValue)
             {
                 writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            if (Optional.IsDefined(Priority))
+            if (Priority.HasValue)
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (Optional.IsDefined(Weight))
+            if (Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(BackendHostHeader))
+            if (BackendHostHeader != null)
             {
                 writer.WritePropertyName("backendHostHeader"u8);
                 writer.WriteStringValue(BackendHostHeader);
@@ -145,18 +145,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> address = default;
-            Optional<string> privateLinkAlias = default;
-            Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<AzureLocation?> privateLinkLocation = default;
-            Optional<BackendPrivateEndpointStatus?> privateEndpointStatus = default;
-            Optional<string> privateLinkApprovalMessage = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<BackendEnabledState> enabledState = default;
-            Optional<int> priority = default;
-            Optional<int> weight = default;
-            Optional<string> backendHostHeader = default;
+            string address = default;
+            string privateLinkAlias = default;
+            ResourceIdentifier privateLinkResourceId = default;
+            AzureLocation? privateLinkLocation = default;
+            BackendPrivateEndpointStatus? privateEndpointStatus = default;
+            string privateLinkApprovalMessage = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            BackendEnabledState? enabledState = default;
+            int? priority = default;
+            int? weight = default;
+            string backendHostHeader = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -262,7 +262,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackend(address.Value, privateLinkAlias.Value, privateLinkResourceId.Value, Optional.ToNullable(privateLinkLocation), Optional.ToNullable(privateEndpointStatus), privateLinkApprovalMessage.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enabledState), Optional.ToNullable(priority), Optional.ToNullable(weight), backendHostHeader.Value, serializedAdditionalRawData);
+            return new FrontDoorBackend(
+                address,
+                privateLinkAlias,
+                privateLinkResourceId,
+                privateLinkLocation,
+                privateEndpointStatus,
+                privateLinkApprovalMessage,
+                httpPort,
+                httpsPort,
+                enabledState,
+                priority,
+                weight,
+                backendHostHeader,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorBackend>.Write(ModelReaderWriterOptions options)

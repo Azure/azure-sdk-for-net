@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Optional.IsDefined(ApplicationLogs))
+            if (ApplicationLogs != null)
             {
                 writer.WritePropertyName("applicationLogs"u8);
                 writer.WriteObjectValue(ApplicationLogs);
             }
-            if (Optional.IsDefined(IsMetricsEnabled))
+            if (IsMetricsEnabled.HasValue)
             {
                 writer.WritePropertyName("metricsEnabled"u8);
                 writer.WriteBooleanValue(IsMetricsEnabled.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             bool enabled = default;
-            Optional<ClusterLogAnalyticsApplicationLogs> applicationLogs = default;
-            Optional<bool> metricsEnabled = default;
+            ClusterLogAnalyticsApplicationLogs applicationLogs = default;
+            bool? metricsEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value);
+                    applicationLogs = ClusterLogAnalyticsApplicationLogs.DeserializeClusterLogAnalyticsApplicationLogs(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metricsEnabled"u8))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterLogAnalyticsProfile(enabled, applicationLogs.Value, Optional.ToNullable(metricsEnabled), serializedAdditionalRawData);
+            return new ClusterLogAnalyticsProfile(enabled, applicationLogs, metricsEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterLogAnalyticsProfile>.Write(ModelReaderWriterOptions options)

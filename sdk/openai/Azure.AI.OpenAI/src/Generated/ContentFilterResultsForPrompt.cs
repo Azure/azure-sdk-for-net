@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -52,7 +51,10 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="contentFilterResults"/> is null. </exception>
         internal ContentFilterResultsForPrompt(int promptIndex, ContentFilterResultDetailsForPrompt contentFilterResults)
         {
-            Argument.AssertNotNull(contentFilterResults, nameof(contentFilterResults));
+            if (contentFilterResults == null)
+            {
+                throw new ArgumentNullException(nameof(contentFilterResults));
+            }
 
             PromptIndex = promptIndex;
             ContentFilterResults = contentFilterResults;

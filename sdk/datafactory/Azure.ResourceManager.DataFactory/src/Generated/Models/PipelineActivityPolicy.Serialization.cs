@@ -27,27 +27,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 JsonSerializer.Serialize(writer, Timeout);
             }
-            if (Optional.IsDefined(Retry))
+            if (Retry != null)
             {
                 writer.WritePropertyName("retry"u8);
                 JsonSerializer.Serialize(writer, Retry);
             }
-            if (Optional.IsDefined(RetryIntervalInSeconds))
+            if (RetryIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("retryIntervalInSeconds"u8);
                 writer.WriteNumberValue(RetryIntervalInSeconds.Value);
             }
-            if (Optional.IsDefined(IsSecureInputEnabled))
+            if (IsSecureInputEnabled.HasValue)
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(IsSecureInputEnabled.Value);
             }
-            if (Optional.IsDefined(IsSecureOutputEnabled))
+            if (IsSecureOutputEnabled.HasValue)
             {
                 writer.WritePropertyName("secureOutput"u8);
                 writer.WriteBooleanValue(IsSecureOutputEnabled.Value);
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> timeout = default;
-            Optional<DataFactoryElement<int>> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            DataFactoryElement<string> timeout = default;
+            DataFactoryElement<int> retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new PipelineActivityPolicy(
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineActivityPolicy>.Write(ModelReaderWriterOptions options)

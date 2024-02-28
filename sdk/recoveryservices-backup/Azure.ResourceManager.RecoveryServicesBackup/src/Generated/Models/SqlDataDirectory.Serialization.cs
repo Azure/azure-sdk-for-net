@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DirectoryType))
+            if (DirectoryType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DirectoryType.Value.ToString());
             }
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsDefined(LogicalName))
+            if (LogicalName != null)
             {
                 writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<SqlDataDirectoryType> type = default;
-            Optional<string> path = default;
-            Optional<string> logicalName = default;
+            SqlDataDirectoryType? type = default;
+            string path = default;
+            string logicalName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDataDirectory(Optional.ToNullable(type), path.Value, logicalName.Value, serializedAdditionalRawData);
+            return new SqlDataDirectory(type, path, logicalName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDataDirectory>.Write(ModelReaderWriterOptions options)

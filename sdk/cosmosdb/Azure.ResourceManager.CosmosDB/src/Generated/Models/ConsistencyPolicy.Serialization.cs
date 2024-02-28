@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("defaultConsistencyLevel"u8);
             writer.WriteStringValue(DefaultConsistencyLevel.ToSerialString());
-            if (Optional.IsDefined(MaxStalenessPrefix))
+            if (MaxStalenessPrefix.HasValue)
             {
                 writer.WritePropertyName("maxStalenessPrefix"u8);
                 writer.WriteNumberValue(MaxStalenessPrefix.Value);
             }
-            if (Optional.IsDefined(MaxIntervalInSeconds))
+            if (MaxIntervalInSeconds.HasValue)
             {
                 writer.WritePropertyName("maxIntervalInSeconds"u8);
                 writer.WriteNumberValue(MaxIntervalInSeconds.Value);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             DefaultConsistencyLevel defaultConsistencyLevel = default;
-            Optional<long> maxStalenessPrefix = default;
-            Optional<int> maxIntervalInSeconds = default;
+            long? maxStalenessPrefix = default;
+            int? maxIntervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsistencyPolicy(defaultConsistencyLevel, Optional.ToNullable(maxStalenessPrefix), Optional.ToNullable(maxIntervalInSeconds), serializedAdditionalRawData);
+            return new ConsistencyPolicy(defaultConsistencyLevel, maxStalenessPrefix, maxIntervalInSeconds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsistencyPolicy>.Write(ModelReaderWriterOptions options)

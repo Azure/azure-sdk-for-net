@@ -26,7 +26,13 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Quota.CurrentUsagesBaseData"/> instance for mocking. </returns>
         public static CurrentUsagesBaseData CurrentUsagesBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaUsagesProperties properties = null)
         {
-            return new CurrentUsagesBaseData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CurrentUsagesBaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaUsagesProperties"/>. </summary>
@@ -46,7 +52,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaUsagesProperties"/> instance for mocking. </returns>
         public static QuotaUsagesProperties QuotaUsagesProperties(QuotaUsagesObject usages = null, string unit = null, QuotaRequestResourceName name = null, string resourceTypeName = null, TimeSpan? quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
         {
-            return new QuotaUsagesProperties(usages, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties, serializedAdditionalRawData: null);
+            return new QuotaUsagesProperties(
+                usages,
+                unit,
+                name,
+                resourceTypeName,
+                quotaPeriod,
+                isQuotaApplicable,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaUsagesObject"/>. </summary>
@@ -85,7 +99,13 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Quota.CurrentQuotaLimitBaseData"/> instance for mocking. </returns>
         public static CurrentQuotaLimitBaseData CurrentQuotaLimitBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, QuotaProperties properties = null)
         {
-            return new CurrentQuotaLimitBaseData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
+            return new CurrentQuotaLimitBaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaProperties"/>. </summary>
@@ -109,7 +129,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaProperties"/> instance for mocking. </returns>
         public static QuotaProperties QuotaProperties(QuotaLimitJsonObject limit = null, string unit = null, QuotaRequestResourceName name = null, string resourceTypeName = null, TimeSpan? quotaPeriod = null, bool? isQuotaApplicable = null, BinaryData properties = null)
         {
-            return new QuotaProperties(limit, unit, name, resourceTypeName, quotaPeriod, isQuotaApplicable, properties, serializedAdditionalRawData: null);
+            return new QuotaProperties(
+                limit,
+                unit,
+                name,
+                resourceTypeName,
+                quotaPeriod,
+                isQuotaApplicable,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Quota.QuotaRequestDetailData"/>. </summary>
@@ -127,7 +155,17 @@ namespace Azure.ResourceManager.Quota.Models
         {
             value ??= new List<QuotaSubRequestDetail>();
 
-            return new QuotaRequestDetailData(id, name, resourceType, systemData, provisioningState, message, error, requestSubmitOn, value?.ToList(), serializedAdditionalRawData: null);
+            return new QuotaRequestDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                message,
+                error,
+                requestSubmitOn,
+                value?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaSubRequestDetail"/>. </summary>
@@ -145,7 +183,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <returns> A new <see cref="Models.QuotaSubRequestDetail"/> instance for mocking. </returns>
         public static QuotaSubRequestDetail QuotaSubRequestDetail(QuotaRequestResourceName name = null, string resourceTypeName = null, string unit = null, QuotaRequestState? provisioningState = null, string message = null, Guid? subRequestId = null, QuotaLimitJsonObject limit = null)
         {
-            return new QuotaSubRequestDetail(name, resourceTypeName, unit, provisioningState, message, subRequestId, limit, serializedAdditionalRawData: null);
+            return new QuotaSubRequestDetail(
+                name,
+                resourceTypeName,
+                unit,
+                provisioningState,
+                message,
+                subRequestId,
+                limit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaOperationResult"/>. </summary>

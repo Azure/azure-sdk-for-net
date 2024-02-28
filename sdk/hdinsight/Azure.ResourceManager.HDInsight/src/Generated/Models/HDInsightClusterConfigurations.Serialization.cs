@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Configurations))
+            if (!(Configurations is ChangeTrackingDictionary<string, IDictionary<string, string>> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("configurations"u8);
                 writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IReadOnlyDictionary<string, IDictionary<string, string>>> configurations = default;
+            IReadOnlyDictionary<string, IDictionary<string, string>> configurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterConfigurations(Optional.ToDictionary(configurations), serializedAdditionalRawData);
+            return new HDInsightClusterConfigurations(configurations ?? new ChangeTrackingDictionary<string, IDictionary<string, string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterConfigurations>.Write(ModelReaderWriterOptions options)

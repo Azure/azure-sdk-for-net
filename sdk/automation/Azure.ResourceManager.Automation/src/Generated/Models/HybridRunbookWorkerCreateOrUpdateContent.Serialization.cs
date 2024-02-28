@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmResourceId))
+            if (VmResourceId != null)
             {
                 writer.WritePropertyName("vmResourceId"u8);
                 writer.WriteStringValue(VmResourceId);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> vmResourceId = default;
+            string name = default;
+            ResourceIdentifier vmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridRunbookWorkerCreateOrUpdateContent(name.Value, vmResourceId.Value, serializedAdditionalRawData);
+            return new HybridRunbookWorkerCreateOrUpdateContent(name, vmResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridRunbookWorkerCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

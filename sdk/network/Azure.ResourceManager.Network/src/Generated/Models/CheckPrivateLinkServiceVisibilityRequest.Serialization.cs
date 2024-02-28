@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateLinkServiceAlias))
+            if (PrivateLinkServiceAlias != null)
             {
                 writer.WritePropertyName("privateLinkServiceAlias"u8);
                 writer.WriteStringValue(PrivateLinkServiceAlias);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> privateLinkServiceAlias = default;
+            string privateLinkServiceAlias = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckPrivateLinkServiceVisibilityRequest(privateLinkServiceAlias.Value, serializedAdditionalRawData);
+            return new CheckPrivateLinkServiceVisibilityRequest(privateLinkServiceAlias, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckPrivateLinkServiceVisibilityRequest>.Write(ModelReaderWriterOptions options)

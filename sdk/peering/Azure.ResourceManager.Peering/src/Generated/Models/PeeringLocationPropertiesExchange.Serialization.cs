@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PeeringFacilities))
+            if (!(PeeringFacilities is ChangeTrackingList<ExchangePeeringFacility> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("peeringFacilities"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 return null;
             }
-            Optional<IList<ExchangePeeringFacility>> peeringFacilities = default;
+            IList<ExchangePeeringFacility> peeringFacilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<ExchangePeeringFacility> array = new List<ExchangePeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item));
+                        array.Add(ExchangePeeringFacility.DeserializeExchangePeeringFacility(item, options));
                     }
                     peeringFacilities = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeeringLocationPropertiesExchange(Optional.ToList(peeringFacilities), serializedAdditionalRawData);
+            return new PeeringLocationPropertiesExchange(peeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeeringLocationPropertiesExchange>.Write(ModelReaderWriterOptions options)

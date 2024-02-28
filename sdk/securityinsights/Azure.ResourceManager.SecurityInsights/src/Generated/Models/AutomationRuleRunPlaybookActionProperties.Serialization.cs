@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             writer.WritePropertyName("logicAppResourceId"u8);
             writer.WriteStringValue(LogicAppResourceId);
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             ResourceIdentifier logicAppResourceId = default;
-            Optional<Guid> tenantId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, Optional.ToNullable(tenantId), serializedAdditionalRawData);
+            return new AutomationRuleRunPlaybookActionProperties(logicAppResourceId, tenantId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationRuleRunPlaybookActionProperties>.Write(ModelReaderWriterOptions options)

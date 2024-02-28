@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(BlobContainerName))
+            if (BlobContainerName != null)
             {
                 writer.WritePropertyName("blobContainerName"u8);
                 writer.WriteStringValue(BlobContainerName);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             DeadLetterEndPointType endpointType = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> blobContainerName = default;
+            ResourceIdentifier resourceId = default;
+            string blobContainerName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageBlobDeadLetterDestination(endpointType, serializedAdditionalRawData, resourceId.Value, blobContainerName.Value);
+            return new StorageBlobDeadLetterDestination(endpointType, serializedAdditionalRawData, resourceId, blobContainerName);
         }
 
         BinaryData IPersistableModel<StorageBlobDeadLetterDestination>.Write(ModelReaderWriterOptions options)

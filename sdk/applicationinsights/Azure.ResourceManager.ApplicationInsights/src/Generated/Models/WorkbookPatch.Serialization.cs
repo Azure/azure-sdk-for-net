@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind.HasValue)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(SerializedData))
+            if (SerializedData != null)
             {
                 writer.WritePropertyName("serializedData"u8);
                 writer.WriteStringValue(SerializedData);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (Optional.IsCollectionDefined(TagsPropertiesTags))
+            if (!(TagsPropertiesTags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsDefined(Revision))
+            if (Revision != null)
             {
                 if (Revision != null)
                 {
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<WorkbookUpdateSharedTypeKind> kind = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> displayName = default;
-            Optional<string> serializedData = default;
-            Optional<string> category = default;
-            Optional<IList<string>> tags0 = default;
-            Optional<string> description = default;
-            Optional<string> revision = default;
+            WorkbookUpdateSharedTypeKind? kind = default;
+            IDictionary<string, string> tags = default;
+            string displayName = default;
+            string serializedData = default;
+            string category = default;
+            IList<string> tags0 = default;
+            string description = default;
+            string revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookPatch(Optional.ToNullable(kind), Optional.ToDictionary(tags), displayName.Value, serializedData.Value, category.Value, Optional.ToList(tags0), description.Value, revision.Value, serializedAdditionalRawData);
+            return new WorkbookPatch(
+                kind,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                displayName,
+                serializedData,
+                category,
+                tags0 ?? new ChangeTrackingList<string>(),
+                description,
+                revision,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkbookPatch>.Write(ModelReaderWriterOptions options)

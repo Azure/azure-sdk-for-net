@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserAssignedIdentityId))
+            if (UserAssignedIdentityId != null)
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentityId);
             }
-            if (Optional.IsDefined(UseSystemAssignedIdentity))
+            if (UseSystemAssignedIdentity != null)
             {
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
 #if NET6_0_OR_GREATER
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> userAssignedIdentity = default;
-            Optional<BinaryData> useSystemAssignedIdentity = default;
+            ResourceIdentifier userAssignedIdentity = default;
+            BinaryData useSystemAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KekIdentityProperties(userAssignedIdentity.Value, useSystemAssignedIdentity.Value, serializedAdditionalRawData);
+            return new KekIdentityProperties(userAssignedIdentity, useSystemAssignedIdentity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KekIdentityProperties>.Write(ModelReaderWriterOptions options)

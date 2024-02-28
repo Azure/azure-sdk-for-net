@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterCatalogResource>> UpdateAsync(WaitUntil waitUntil, DevCenterCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<DevCenterCatalogResource> Update(WaitUntil waitUntil, DevCenterCatalogPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var scope = _devCenterCatalogCatalogsClientDiagnostics.CreateScope("DevCenterCatalogResource.Update");
             scope.Start();

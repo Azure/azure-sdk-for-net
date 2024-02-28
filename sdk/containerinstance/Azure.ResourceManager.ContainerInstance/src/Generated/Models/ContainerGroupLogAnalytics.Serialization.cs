@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStringValue(WorkspaceId);
             writer.WritePropertyName("workspaceKey"u8);
             writer.WriteStringValue(WorkspaceKey);
-            if (Optional.IsDefined(LogType))
+            if (LogType.HasValue)
             {
                 writer.WritePropertyName("logType"u8);
                 writer.WriteStringValue(LogType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Metadata))
+            if (!(Metadata is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(WorkspaceResourceId))
+            if (WorkspaceResourceId != null)
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             string workspaceId = default;
             string workspaceKey = default;
-            Optional<ContainerGroupLogAnalyticsLogType> logType = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<ResourceIdentifier> workspaceResourceId = default;
+            ContainerGroupLogAnalyticsLogType? logType = default;
+            IDictionary<string, string> metadata = default;
+            ResourceIdentifier workspaceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +146,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupLogAnalytics(workspaceId, workspaceKey, Optional.ToNullable(logType), Optional.ToDictionary(metadata), workspaceResourceId.Value, serializedAdditionalRawData);
+            return new ContainerGroupLogAnalytics(
+                workspaceId,
+                workspaceKey,
+                logType,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                workspaceResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupLogAnalytics>.Write(ModelReaderWriterOptions options)

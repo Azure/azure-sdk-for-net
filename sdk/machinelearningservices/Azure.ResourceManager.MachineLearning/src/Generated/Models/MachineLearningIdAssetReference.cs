@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         public MachineLearningIdAssetReference(ResourceIdentifier assetId)
         {
-            Argument.AssertNotNull(assetId, nameof(assetId));
+            if (assetId == null)
+            {
+                throw new ArgumentNullException(nameof(assetId));
+            }
 
             AssetId = assetId;
             ReferenceType = ReferenceType.Id;

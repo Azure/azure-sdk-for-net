@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Tone))
+            if (Tone.HasValue)
             {
                 writer.WritePropertyName("tone"u8);
                 writer.WriteStringValue(Tone.Value.ToString());
@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation
             }
             string label = default;
             IList<string> phrases = default;
-            Optional<DtmfTone> tone = default;
+            DtmfTone? tone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -69,7 +69,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognitionChoice(label, phrases, Optional.ToNullable(tone));
+            return new RecognitionChoice(label, phrases, tone);
         }
     }
 }

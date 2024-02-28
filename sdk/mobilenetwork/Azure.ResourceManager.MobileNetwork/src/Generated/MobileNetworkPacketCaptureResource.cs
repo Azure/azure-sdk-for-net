@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkPacketCaptureResource>> UpdateAsync(WaitUntil waitUntil, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkPacketCaptureResource> Update(WaitUntil waitUntil, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkPacketCapturePacketCapturesClientDiagnostics.CreateScope("MobileNetworkPacketCaptureResource.Update");
             scope.Start();

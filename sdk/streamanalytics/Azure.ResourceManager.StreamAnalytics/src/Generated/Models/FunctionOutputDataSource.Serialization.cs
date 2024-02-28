@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(FunctionAppName))
+            if (FunctionAppName != null)
             {
                 writer.WritePropertyName("functionAppName"u8);
                 writer.WriteStringValue(FunctionAppName);
             }
-            if (Optional.IsDefined(FunctionName))
+            if (FunctionName != null)
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Optional.IsDefined(ApiKey))
+            if (ApiKey != null)
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (Optional.IsDefined(MaxBatchSize))
+            if (MaxBatchSize.HasValue)
             {
                 writer.WritePropertyName("maxBatchSize"u8);
                 writer.WriteNumberValue(MaxBatchSize.Value);
             }
-            if (Optional.IsDefined(MaxBatchCount))
+            if (MaxBatchCount.HasValue)
             {
                 writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 return null;
             }
             string type = default;
-            Optional<string> functionAppName = default;
-            Optional<string> functionName = default;
-            Optional<string> apiKey = default;
-            Optional<int> maxBatchSize = default;
-            Optional<int> maxBatchCount = default;
+            string functionAppName = default;
+            string functionName = default;
+            string apiKey = default;
+            int? maxBatchSize = default;
+            int? maxBatchCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FunctionOutputDataSource(type, serializedAdditionalRawData, functionAppName.Value, functionName.Value, apiKey.Value, Optional.ToNullable(maxBatchSize), Optional.ToNullable(maxBatchCount));
+            return new FunctionOutputDataSource(
+                type,
+                serializedAdditionalRawData,
+                functionAppName,
+                functionName,
+                apiKey,
+                maxBatchSize,
+                maxBatchCount);
         }
 
         BinaryData IPersistableModel<FunctionOutputDataSource>.Write(ModelReaderWriterOptions options)

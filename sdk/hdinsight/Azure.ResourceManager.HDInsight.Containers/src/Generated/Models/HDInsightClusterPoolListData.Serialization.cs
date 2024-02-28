@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<HDInsightClusterPoolData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HDInsightClusterPoolData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<HDInsightClusterPoolData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HDInsightClusterPoolData> array = new List<HDInsightClusterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(item));
+                        array.Add(HDInsightClusterPoolData.DeserializeHDInsightClusterPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPoolListData(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new HDInsightClusterPoolListData(value ?? new ChangeTrackingList<HDInsightClusterPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterPoolListData>.Write(ModelReaderWriterOptions options)

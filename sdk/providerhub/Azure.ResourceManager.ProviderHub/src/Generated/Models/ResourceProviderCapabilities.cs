@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect)
         {
-            Argument.AssertNotNull(quotaId, nameof(quotaId));
+            if (quotaId == null)
+            {
+                throw new ArgumentNullException(nameof(quotaId));
+            }
 
             QuotaId = quotaId;
             Effect = effect;

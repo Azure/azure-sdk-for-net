@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         internal LogicErrorInfo(string code)
         {
-            Argument.AssertNotNull(code, nameof(code));
+            if (code == null)
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
 
             Code = code;
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointExpireOn))
+            if (RecoveryPointExpireOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointExpiryTimeInUTC = default;
+            DateTimeOffset? recoveryPointExpiryTimeInUTC = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileShareBackupContent(objectType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointExpiryTimeInUTC));
+            return new FileShareBackupContent(objectType, serializedAdditionalRawData, recoveryPointExpiryTimeInUTC);
         }
 
         BinaryData IPersistableModel<FileShareBackupContent>.Write(ModelReaderWriterOptions options)

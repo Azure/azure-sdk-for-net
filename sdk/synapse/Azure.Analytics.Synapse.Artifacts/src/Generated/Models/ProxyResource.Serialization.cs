@@ -27,9 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ProxyResource(id.Value, name.Value, type.Value);
+            return new ProxyResource(id, name, type);
         }
 
         internal partial class ProxyResourceConverter : JsonConverter<ProxyResource>

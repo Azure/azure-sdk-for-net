@@ -27,72 +27,72 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HouseNumber))
+            if (HouseNumber != null)
             {
                 writer.WritePropertyName("houseNumber"u8);
                 writer.WriteStringValue(HouseNumber);
             }
-            if (Optional.IsDefined(PoBox))
+            if (PoBox != null)
             {
                 writer.WritePropertyName("poBox"u8);
                 writer.WriteStringValue(PoBox);
             }
-            if (Optional.IsDefined(Road))
+            if (Road != null)
             {
                 writer.WritePropertyName("road"u8);
                 writer.WriteStringValue(Road);
             }
-            if (Optional.IsDefined(City))
+            if (City != null)
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(PostalCode))
+            if (PostalCode != null)
             {
                 writer.WritePropertyName("postalCode"u8);
                 writer.WriteStringValue(PostalCode);
             }
-            if (Optional.IsDefined(CountryRegion))
+            if (CountryRegion != null)
             {
                 writer.WritePropertyName("countryRegion"u8);
                 writer.WriteStringValue(CountryRegion);
             }
-            if (Optional.IsDefined(StreetAddress))
+            if (StreetAddress != null)
             {
                 writer.WritePropertyName("streetAddress"u8);
                 writer.WriteStringValue(StreetAddress);
             }
-            if (Optional.IsDefined(Unit))
+            if (Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(CityDistrict))
+            if (CityDistrict != null)
             {
                 writer.WritePropertyName("cityDistrict"u8);
                 writer.WriteStringValue(CityDistrict);
             }
-            if (Optional.IsDefined(StateDistrict))
+            if (StateDistrict != null)
             {
                 writer.WritePropertyName("stateDistrict"u8);
                 writer.WriteStringValue(StateDistrict);
             }
-            if (Optional.IsDefined(Suburb))
+            if (Suburb != null)
             {
                 writer.WritePropertyName("suburb"u8);
                 writer.WriteStringValue(Suburb);
             }
-            if (Optional.IsDefined(House))
+            if (House != null)
             {
                 writer.WritePropertyName("house"u8);
                 writer.WriteStringValue(House);
             }
-            if (Optional.IsDefined(Level))
+            if (Level != null)
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level);
@@ -135,20 +135,20 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> houseNumber = default;
-            Optional<string> poBox = default;
-            Optional<string> road = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> postalCode = default;
-            Optional<string> countryRegion = default;
-            Optional<string> streetAddress = default;
-            Optional<string> unit = default;
-            Optional<string> cityDistrict = default;
-            Optional<string> stateDistrict = default;
-            Optional<string> suburb = default;
-            Optional<string> house = default;
-            Optional<string> level = default;
+            string houseNumber = default;
+            string poBox = default;
+            string road = default;
+            string city = default;
+            string state = default;
+            string postalCode = default;
+            string countryRegion = default;
+            string streetAddress = default;
+            string unit = default;
+            string cityDistrict = default;
+            string stateDistrict = default;
+            string suburb = default;
+            string house = default;
+            string level = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +229,22 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddressValue(houseNumber.Value, poBox.Value, road.Value, city.Value, state.Value, postalCode.Value, countryRegion.Value, streetAddress.Value, unit.Value, cityDistrict.Value, stateDistrict.Value, suburb.Value, house.Value, level.Value, serializedAdditionalRawData);
+            return new AddressValue(
+                houseNumber,
+                poBox,
+                road,
+                city,
+                state,
+                postalCode,
+                countryRegion,
+                streetAddress,
+                unit,
+                cityDistrict,
+                stateDistrict,
+                suburb,
+                house,
+                level,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AddressValue>.Write(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentBranch> array = new List<ChaosExperimentBranch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentBranch.DeserializeChaosExperimentBranch(item));
+                        array.Add(ChaosExperimentBranch.DeserializeChaosExperimentBranch(item, options));
                     }
                     branches = array;
                     continue;

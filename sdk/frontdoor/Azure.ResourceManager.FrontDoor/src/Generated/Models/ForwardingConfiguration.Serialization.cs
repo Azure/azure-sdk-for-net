@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomForwardingPath))
+            if (CustomForwardingPath != null)
             {
                 writer.WritePropertyName("customForwardingPath"u8);
                 writer.WriteStringValue(CustomForwardingPath);
             }
-            if (Optional.IsDefined(ForwardingProtocol))
+            if (ForwardingProtocol.HasValue)
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (Optional.IsDefined(CacheConfiguration))
+            if (CacheConfiguration != null)
             {
                 if (CacheConfiguration != null)
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (Optional.IsDefined(BackendPool))
+            if (BackendPool != null)
             {
                 writer.WritePropertyName("backendPool"u8);
                 JsonSerializer.Serialize(writer, BackendPool);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<string> customForwardingPath = default;
-            Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
-            Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
-            Optional<WritableSubResource> backendPool = default;
+            string customForwardingPath = default;
+            FrontDoorForwardingProtocol? forwardingProtocol = default;
+            FrontDoorCacheConfiguration cacheConfiguration = default;
+            WritableSubResource backendPool = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         cacheConfiguration = null;
                         continue;
                     }
-                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);
+                    cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backendPool"u8))
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ForwardingConfiguration(odataType, serializedAdditionalRawData, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool);
+            return new ForwardingConfiguration(
+                odataType,
+                serializedAdditionalRawData,
+                customForwardingPath,
+                forwardingProtocol,
+                cacheConfiguration,
+                backendPool);
         }
 
         BinaryData IPersistableModel<ForwardingConfiguration>.Write(ModelReaderWriterOptions options)

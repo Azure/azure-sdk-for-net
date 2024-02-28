@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<SimNameAndProperties> array = new List<SimNameAndProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item));
+                        array.Add(SimNameAndProperties.DeserializeSimNameAndProperties(item, options));
                     }
                     sims = array;
                     continue;

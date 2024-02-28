@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NotAfter))
+            if (NotAfter.HasValue)
             {
                 writer.WritePropertyName("notAfter"u8);
                 writer.WriteStringValue(NotAfter.Value, "O");
             }
-            if (Optional.IsDefined(KeyType))
+            if (KeyType.HasValue)
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> notAfter = default;
-            Optional<LogicKeyType> keyType = default;
+            DateTimeOffset? notAfter = default;
+            LogicKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListOperationCallbackUrlParameterInfo(Optional.ToNullable(notAfter), Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new ListOperationCallbackUrlParameterInfo(notAfter, keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListOperationCallbackUrlParameterInfo>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exceptiontype))
+            if (Exceptiontype != null)
             {
                 writer.WritePropertyName("exceptiontype"u8);
                 writer.WriteStringValue(Exceptiontype);
             }
-            if (Optional.IsDefined(Errordetail))
+            if (Errordetail != null)
             {
                 writer.WritePropertyName("errordetail"u8);
                 writer.WriteStringValue(Errordetail);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> exceptiontype = default;
-            Optional<string> errordetail = default;
+            string exceptiontype = default;
+            string errordetail = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InnerError(exceptiontype.Value, errordetail.Value, serializedAdditionalRawData);
+            return new InnerError(exceptiontype, errordetail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

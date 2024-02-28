@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Format))
+            if (Format != null)
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format);
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+            if (PreferredDataArchiveAuthMethod != null)
             {
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
-            if (Optional.IsDefined(StorageSubscriptionId))
+            if (StorageSubscriptionId != null)
             {
                 writer.WritePropertyName("storage-subscription-id"u8);
                 writer.WriteStringValue(StorageSubscriptionId);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            Optional<string> format = default;
+            string format = default;
             IList<string> files = default;
-            Optional<string> preferredDataArchiveAuthMethod = default;
-            Optional<string> storageSubscriptionId = default;
+            string preferredDataArchiveAuthMethod = default;
+            string storageSubscriptionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportRdbContent(format.Value, files, preferredDataArchiveAuthMethod.Value, storageSubscriptionId.Value, serializedAdditionalRawData);
+            return new ImportRdbContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportRdbContent>.Write(ModelReaderWriterOptions options)

@@ -50,8 +50,14 @@ namespace Azure.Analytics.Purview.Workflows
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public WorkflowTasksClient(Uri endpoint, TokenCredential credential, PurviewWorkflowServiceClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
+            if (endpoint == null)
+            {
+                throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (credential == null)
+            {
+                throw new ArgumentNullException(nameof(credential));
+            }
             options ??= new PurviewWorkflowServiceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -137,7 +143,7 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("viewMode", viewMode, true);
             }
-            if (workflowIds != null && Optional.IsCollectionDefined(workflowIds))
+            if (workflowIds != null && !(workflowIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("workflowIds", workflowIds, ",", true);
             }
@@ -153,19 +159,19 @@ namespace Azure.Analytics.Purview.Workflows
             {
                 uri.AppendQuery("orderby", orderby, true);
             }
-            if (taskTypes != null && Optional.IsCollectionDefined(taskTypes))
+            if (taskTypes != null && !(taskTypes is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("taskTypes", taskTypes, ",", true);
             }
-            if (taskStatuses != null && Optional.IsCollectionDefined(taskStatuses))
+            if (taskStatuses != null && !(taskStatuses is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 uri.AppendQueryDelimited("taskStatuses", taskStatuses, ",", true);
             }
-            if (requestors != null && Optional.IsCollectionDefined(requestors))
+            if (requestors != null && !(requestors is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 uri.AppendQueryDelimited("requestors", requestors, ",", true);
             }
-            if (assignees != null && Optional.IsCollectionDefined(assignees))
+            if (assignees != null && !(assignees is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 uri.AppendQueryDelimited("assignees", assignees, ",", true);
             }

@@ -31,22 +31,22 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStringValue(System);
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(SemanticType))
+            if (SemanticType != null)
             {
                 writer.WritePropertyName("semanticType"u8);
                 writer.WriteStringValue(SemanticType);
             }
-            if (Optional.IsDefined(Category))
+            if (Category != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
@@ -91,10 +91,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             }
             string system = default;
             string code = default;
-            Optional<string> name = default;
-            Optional<string> value = default;
-            Optional<string> semanticType = default;
-            Optional<string> category = default;
+            string name = default;
+            string value = default;
+            string semanticType = default;
+            string category = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExtendedClinicalCodedElement(system, code, name.Value, value.Value, semanticType.Value, category.Value, serializedAdditionalRawData);
+            return new ExtendedClinicalCodedElement(
+                system,
+                code,
+                name,
+                value,
+                semanticType,
+                category,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExtendedClinicalCodedElement>.Write(ModelReaderWriterOptions options)

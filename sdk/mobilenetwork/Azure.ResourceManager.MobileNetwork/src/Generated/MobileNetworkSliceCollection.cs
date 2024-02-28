@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MobileNetworkSliceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sliceName, MobileNetworkSliceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MobileNetworkSliceResource> CreateOrUpdate(WaitUntil waitUntil, string sliceName, MobileNetworkSliceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual async Task<Response<MobileNetworkSliceResource>> GetAsync(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual Response<MobileNetworkSliceResource> Get(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual Response<bool> Exists(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual async Task<NullableResponse<MobileNetworkSliceResource>> GetIfExistsAsync(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sliceName"/> is null. </exception>
         public virtual NullableResponse<MobileNetworkSliceResource> GetIfExists(string sliceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
+            if (sliceName == null)
+            {
+                throw new ArgumentNullException(nameof(sliceName));
+            }
+            if (sliceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(sliceName));
+            }
 
             using var scope = _mobileNetworkSliceSlicesClientDiagnostics.CreateScope("MobileNetworkSliceCollection.GetIfExists");
             scope.Start();

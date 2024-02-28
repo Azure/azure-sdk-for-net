@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Mode))
+            if (Mode.HasValue)
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningInputDeliveryMode> mode = default;
+            MachineLearningInputDeliveryMode? mode = default;
             Uri uri = default;
-            Optional<string> description = default;
+            string description = default;
             JobInputType jobInputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningTableJobInput(description.Value, jobInputType, serializedAdditionalRawData, Optional.ToNullable(mode), uri);
+            return new MachineLearningTableJobInput(description, jobInputType, serializedAdditionalRawData, mode, uri);
         }
 
         BinaryData IPersistableModel<MachineLearningTableJobInput>.Write(ModelReaderWriterOptions options)

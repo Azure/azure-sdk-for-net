@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CapacitySku> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CapacitySku>> value = default;
+            IReadOnlyList<CapacitySku> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<CapacitySku> array = new List<CapacitySku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacitySku.DeserializeCapacitySku(item));
+                        array.Add(CapacitySku.DeserializeCapacitySku(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuEnumerationForNewResourceResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new SkuEnumerationForNewResourceResult(value ?? new ChangeTrackingList<CapacitySku>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuEnumerationForNewResourceResult>.Write(ModelReaderWriterOptions options)

@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SecureString": return SynapseSecureString.DeserializeSynapseSecureString(element);
+                    case "SecureString": return SynapseSecureString.DeserializeSynapseSecureString(element, options);
                 }
             }
-            return UnknownSecretBase.DeserializeUnknownSecretBase(element);
+            return UnknownSecretBase.DeserializeUnknownSecretBase(element, options);
         }
 
         BinaryData IPersistableModel<SynapseSecretBase>.Write(ModelReaderWriterOptions options)

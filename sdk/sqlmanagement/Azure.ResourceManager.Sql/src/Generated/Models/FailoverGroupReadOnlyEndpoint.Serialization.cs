@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FailoverPolicy))
+            if (FailoverPolicy.HasValue)
             {
                 writer.WritePropertyName("failoverPolicy"u8);
                 writer.WriteStringValue(FailoverPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(TargetServer))
+            if (TargetServer != null)
             {
                 writer.WritePropertyName("targetServer"u8);
                 writer.WriteStringValue(TargetServer);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<ReadOnlyEndpointFailoverPolicy> failoverPolicy = default;
-            Optional<ResourceIdentifier> targetServer = default;
+            ReadOnlyEndpointFailoverPolicy? failoverPolicy = default;
+            ResourceIdentifier targetServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FailoverGroupReadOnlyEndpoint(Optional.ToNullable(failoverPolicy), targetServer.Value, serializedAdditionalRawData);
+            return new FailoverGroupReadOnlyEndpoint(failoverPolicy, targetServer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FailoverGroupReadOnlyEndpoint>.Write(ModelReaderWriterOptions options)

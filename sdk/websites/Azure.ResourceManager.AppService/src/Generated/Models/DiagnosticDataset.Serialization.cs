@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Table))
+            if (Table != null)
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteObjectValue(Table);
             }
-            if (Optional.IsDefined(RenderingProperties))
+            if (RenderingProperties != null)
             {
                 writer.WritePropertyName("renderingProperties"u8);
                 writer.WriteObjectValue(RenderingProperties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<DataTableResponseObject> table = default;
-            Optional<DiagnosticDataRendering> renderingProperties = default;
+            DataTableResponseObject table = default;
+            DiagnosticDataRendering renderingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value);
+                    table = DataTableResponseObject.DeserializeDataTableResponseObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("renderingProperties"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value);
+                    renderingProperties = DiagnosticDataRendering.DeserializeDiagnosticDataRendering(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiagnosticDataset(table.Value, renderingProperties.Value, serializedAdditionalRawData);
+            return new DiagnosticDataset(table, renderingProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiagnosticDataset>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);
             writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
+            if (RestoreLocation.HasValue)
             {
                 writer.WritePropertyName("restoreLocation"u8);
                 writer.WriteStringValue(RestoreLocation.Value);
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element);
-                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element);
-                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element);
+                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element, options);
+                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element, options);
+                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element, options);
                 }
             }
-            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element);
+            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)

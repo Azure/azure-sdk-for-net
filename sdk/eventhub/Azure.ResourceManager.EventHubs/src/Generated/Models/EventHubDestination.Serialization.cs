@@ -26,39 +26,39 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccountResourceId))
+            if (StorageAccountResourceId != null)
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Optional.IsDefined(BlobContainer))
+            if (BlobContainer != null)
             {
                 writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
-            if (Optional.IsDefined(ArchiveNameFormat))
+            if (ArchiveNameFormat != null)
             {
                 writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
-            if (Optional.IsDefined(DataLakeSubscriptionId))
+            if (DataLakeSubscriptionId.HasValue)
             {
                 writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
-            if (Optional.IsDefined(DataLakeAccountName))
+            if (DataLakeAccountName != null)
             {
                 writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
-            if (Optional.IsDefined(DataLakeFolderPath))
+            if (DataLakeFolderPath != null)
             {
                 writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> blobContainer = default;
-            Optional<string> archiveNameFormat = default;
-            Optional<Guid> dataLakeSubscriptionId = default;
-            Optional<string> dataLakeAccountName = default;
-            Optional<string> dataLakeFolderPath = default;
+            string name = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string blobContainer = default;
+            string archiveNameFormat = default;
+            Guid? dataLakeSubscriptionId = default;
+            string dataLakeAccountName = default;
+            string dataLakeFolderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value, serializedAdditionalRawData);
+            return new EventHubDestination(
+                name,
+                storageAccountResourceId,
+                blobContainer,
+                archiveNameFormat,
+                dataLakeSubscriptionId,
+                dataLakeAccountName,
+                dataLakeFolderPath,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)

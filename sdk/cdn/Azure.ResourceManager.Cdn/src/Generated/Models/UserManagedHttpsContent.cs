@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
         public UserManagedHttpsContent(SecureDeliveryProtocolType protocolType, KeyVaultCertificateSource certificateSourceParameters) : base(protocolType)
         {
-            Argument.AssertNotNull(certificateSourceParameters, nameof(certificateSourceParameters));
+            if (certificateSourceParameters == null)
+            {
+                throw new ArgumentNullException(nameof(certificateSourceParameters));
+            }
 
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = CertificateSource.AzureKeyVault;

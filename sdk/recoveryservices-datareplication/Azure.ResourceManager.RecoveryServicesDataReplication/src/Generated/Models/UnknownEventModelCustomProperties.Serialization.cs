@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEventModelCustomProperties(document.RootElement, options);
+            return DeserializeEventModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownEventModelCustomProperties DeserializeUnknownEventModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEventModelCustomProperties(document.RootElement, options);
+                        return DeserializeEventModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(EventModelCustomProperties)} does not support '{options.Format}' format.");

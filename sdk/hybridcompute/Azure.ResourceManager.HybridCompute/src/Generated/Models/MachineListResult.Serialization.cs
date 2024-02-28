@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 return null;
             }
             IReadOnlyList<HybridComputeMachineData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeMachineData> array = new List<HybridComputeMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item));
+                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new MachineListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineListResult>.Write(ModelReaderWriterOptions options)

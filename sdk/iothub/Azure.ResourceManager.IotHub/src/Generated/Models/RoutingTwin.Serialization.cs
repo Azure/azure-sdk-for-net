@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
 #if NET6_0_OR_GREATER
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 return null;
             }
-            Optional<BinaryData> tags = default;
-            Optional<RoutingTwinProperties> properties = default;
+            BinaryData tags = default;
+            RoutingTwinProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    properties = RoutingTwinProperties.DeserializeRoutingTwinProperties(property.Value);
+                    properties = RoutingTwinProperties.DeserializeRoutingTwinProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoutingTwin(tags.Value, properties.Value, serializedAdditionalRawData);
+            return new RoutingTwin(tags, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RoutingTwin>.Write(ModelReaderWriterOptions options)

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             writer.WriteNumberValue(EndpointId);
             writer.WritePropertyName("queryCount"u8);
             writer.WriteNumberValue(QueryCount);
-            if (Optional.IsDefined(Latency))
+            if (Latency.HasValue)
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(Latency.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             }
             int endpointId = default;
             int queryCount = default;
-            Optional<double> latency = default;
+            double? latency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, Optional.ToNullable(latency), serializedAdditionalRawData);
+            return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, latency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficManagerHeatMapQueryExperience>.Write(ModelReaderWriterOptions options)

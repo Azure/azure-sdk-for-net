@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AadTenant))
+            if (AadTenant != null)
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (Optional.IsDefined(AadAudience))
+            if (AadAudience != null)
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (Optional.IsDefined(AadIssuer))
+            if (AadIssuer != null)
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> aadTenant = default;
-            Optional<string> aadAudience = default;
-            Optional<string> aadIssuer = default;
+            string aadTenant = default;
+            string aadAudience = default;
+            string aadIssuer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AadAuthenticationParameters(aadTenant.Value, aadAudience.Value, aadIssuer.Value, serializedAdditionalRawData);
+            return new AadAuthenticationParameters(aadTenant, aadAudience, aadIssuer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AadAuthenticationParameters>.Write(ModelReaderWriterOptions options)

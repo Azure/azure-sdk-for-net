@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Maps.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier != null)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Maps.Models
                 return null;
             }
             MapsSkuName name = default;
-            Optional<string> tier = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsSku(name, tier.Value, serializedAdditionalRawData);
+            return new MapsSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsSku>.Write(ModelReaderWriterOptions options)

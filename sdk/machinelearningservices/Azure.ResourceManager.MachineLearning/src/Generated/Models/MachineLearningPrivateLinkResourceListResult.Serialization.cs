@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<MachineLearningPrivateLinkResource> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningPrivateLinkResource>> value = default;
+            IReadOnlyList<MachineLearningPrivateLinkResource> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPrivateLinkResource> array = new List<MachineLearningPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(item));
+                        array.Add(MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new MachineLearningPrivateLinkResourceListResult(value ?? new ChangeTrackingList<MachineLearningPrivateLinkResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)

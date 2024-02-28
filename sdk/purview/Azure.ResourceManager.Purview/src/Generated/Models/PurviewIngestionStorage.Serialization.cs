@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoint))
+            if (options.Format != "W" && PrimaryEndpoint != null)
             {
                 writer.WritePropertyName("primaryEndpoint"u8);
                 writer.WriteStringValue(PrimaryEndpoint);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
+            if (PublicNetworkAccess.HasValue)
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> primaryEndpoint = default;
-            Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
+            string id = default;
+            string primaryEndpoint = default;
+            PurviewPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewIngestionStorage(id.Value, primaryEndpoint.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewIngestionStorage(id, primaryEndpoint, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewIngestionStorage>.Write(ModelReaderWriterOptions options)

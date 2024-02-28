@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extensions))
+            if (!(Extensions is ChangeTrackingList<CloudServiceExtension> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<CloudServiceExtension>> extensions = default;
+            IList<CloudServiceExtension> extensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceExtension> array = new List<CloudServiceExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item));
+                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceExtensionProfile(Optional.ToList(extensions), serializedAdditionalRawData);
+            return new CloudServiceExtensionProfile(extensions ?? new ChangeTrackingList<CloudServiceExtension>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceExtensionProfile>.Write(ModelReaderWriterOptions options)

@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DiskPoolIscsiTargetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DiskPoolIscsiTargetResource> CreateOrUpdate(WaitUntil waitUntil, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual async Task<Response<DiskPoolIscsiTargetResource>> GetAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual Response<DiskPoolIscsiTargetResource> Get(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.Get");
             scope.Start();
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.Exists");
             scope.Start();
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual Response<bool> Exists(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.Exists");
             scope.Start();
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual async Task<NullableResponse<DiskPoolIscsiTargetResource>> GetIfExistsAsync(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.GetIfExists");
             scope.Start();
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentNullException"> <paramref name="iscsiTargetName"/> is null. </exception>
         public virtual NullableResponse<DiskPoolIscsiTargetResource> GetIfExists(string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            if (iscsiTargetName == null)
+            {
+                throw new ArgumentNullException(nameof(iscsiTargetName));
+            }
+            if (iscsiTargetName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
+            }
 
             using var scope = _diskPoolIscsiTargetIscsiTargetsClientDiagnostics.CreateScope("DiskPoolIscsiTargetCollection.GetIfExists");
             scope.Start();

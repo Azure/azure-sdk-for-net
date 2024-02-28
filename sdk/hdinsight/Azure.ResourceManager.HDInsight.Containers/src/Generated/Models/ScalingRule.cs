@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -54,8 +53,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scalingMetric"/> or <paramref name="comparisonRule"/> is null. </exception>
         public ScalingRule(ScaleActionType actionType, int evaluationCount, string scalingMetric, HDInsightComparisonRule comparisonRule)
         {
-            Argument.AssertNotNull(scalingMetric, nameof(scalingMetric));
-            Argument.AssertNotNull(comparisonRule, nameof(comparisonRule));
+            if (scalingMetric == null)
+            {
+                throw new ArgumentNullException(nameof(scalingMetric));
+            }
+            if (comparisonRule == null)
+            {
+                throw new ArgumentNullException(nameof(comparisonRule));
+            }
 
             ActionType = actionType;
             EvaluationCount = evaluationCount;

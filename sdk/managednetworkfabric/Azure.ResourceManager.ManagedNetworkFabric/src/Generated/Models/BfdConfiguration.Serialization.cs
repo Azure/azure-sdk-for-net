@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(AdministrativeState))
+            if (options.Format != "W" && AdministrativeState.HasValue)
             {
                 writer.WritePropertyName("administrativeState"u8);
                 writer.WriteStringValue(AdministrativeState.Value.ToString());
             }
-            if (Optional.IsDefined(IntervalInMilliSeconds))
+            if (IntervalInMilliSeconds.HasValue)
             {
                 writer.WritePropertyName("intervalInMilliSeconds"u8);
                 writer.WriteNumberValue(IntervalInMilliSeconds.Value);
             }
-            if (Optional.IsDefined(Multiplier))
+            if (Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<BfdAdministrativeState> administrativeState = default;
-            Optional<int> intervalInMilliSeconds = default;
-            Optional<int> multiplier = default;
+            BfdAdministrativeState? administrativeState = default;
+            int? intervalInMilliSeconds = default;
+            int? multiplier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BfdConfiguration(Optional.ToNullable(administrativeState), Optional.ToNullable(intervalInMilliSeconds), Optional.ToNullable(multiplier), serializedAdditionalRawData);
+            return new BfdConfiguration(administrativeState, intervalInMilliSeconds, multiplier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BfdConfiguration>.Write(ModelReaderWriterOptions options)

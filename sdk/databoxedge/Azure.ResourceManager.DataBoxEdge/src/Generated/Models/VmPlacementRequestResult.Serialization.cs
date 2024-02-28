@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(VmSize))
+            if (!(VmSize is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStartArray();
@@ -36,17 +36,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsFeasible))
+            if (IsFeasible.HasValue)
             {
                 writer.WritePropertyName("isFeasible"u8);
                 writer.WriteBooleanValue(IsFeasible.Value);
             }
-            if (Optional.IsDefined(MessageCode))
+            if (MessageCode != null)
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteStringValue(MessageCode);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IList<string>> vmSize = default;
-            Optional<bool> isFeasible = default;
-            Optional<string> messageCode = default;
-            Optional<string> message = default;
+            IList<string> vmSize = default;
+            bool? isFeasible = default;
+            string messageCode = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementRequestResult(Optional.ToList(vmSize), Optional.ToNullable(isFeasible), messageCode.Value, message.Value, serializedAdditionalRawData);
+            return new VmPlacementRequestResult(vmSize ?? new ChangeTrackingList<string>(), isFeasible, messageCode, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmPlacementRequestResult>.Write(ModelReaderWriterOptions options)

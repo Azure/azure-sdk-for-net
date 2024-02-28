@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Fqdn))
+            if (Fqdn != null)
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (Optional.IsDefined(State))
+            if (State != null)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Optional.IsDefined(StateMessage))
+            if (StateMessage != null)
             {
                 writer.WritePropertyName("stateMessage"u8);
                 writer.WriteStringValue(StateMessage);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<string> state = default;
-            Optional<string> stateMessage = default;
+            string fqdn = default;
+            string state = default;
+            string stateMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudHsmProperties(fqdn.Value, state.Value, stateMessage.Value, serializedAdditionalRawData);
+            return new CloudHsmProperties(fqdn, state, stateMessage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudHsmProperties>.Write(ModelReaderWriterOptions options)

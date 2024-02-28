@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(ManifestHash);
             writer.WritePropertyName("bitLockerKey"u8);
             writer.WriteStringValue(BitLockerKey);
-            if (options.Format != "W" && Optional.IsDefined(BackupManifestCloudPath))
+            if (options.Format != "W" && BackupManifestCloudPath != null)
             {
                 writer.WritePropertyName("backupManifestCloudPath"u8);
                 writer.WriteStringValue(BackupManifestCloudPath);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string manifestFile = default;
             string manifestHash = default;
             string bitLockerKey = default;
-            Optional<string> backupManifestCloudPath = default;
+            string backupManifestCloudPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath.Value, serializedAdditionalRawData);
+            return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ImportDiskDetails>.Write(ModelReaderWriterOptions options)

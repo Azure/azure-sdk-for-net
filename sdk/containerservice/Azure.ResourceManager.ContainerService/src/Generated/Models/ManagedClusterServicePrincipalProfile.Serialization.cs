@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartObject();
             writer.WritePropertyName("clientId"u8);
             writer.WriteStringValue(ClientId);
-            if (Optional.IsDefined(Secret))
+            if (Secret != null)
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStringValue(Secret);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string clientId = default;
-            Optional<string> secret = default;
+            string secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterServicePrincipalProfile(clientId, secret.Value, serializedAdditionalRawData);
+            return new ManagedClusterServicePrincipalProfile(clientId, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterServicePrincipalProfile>.Write(ModelReaderWriterOptions options)

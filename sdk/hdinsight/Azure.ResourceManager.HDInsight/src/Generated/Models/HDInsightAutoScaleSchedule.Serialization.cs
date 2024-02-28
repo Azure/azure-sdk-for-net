@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Days))
+            if (!(Days is ChangeTrackingList<HDInsightDayOfWeek> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("days"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeAndCapacity))
+            if (TimeAndCapacity != null)
             {
                 writer.WritePropertyName("timeAndCapacity"u8);
                 writer.WriteObjectValue(TimeAndCapacity);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<IList<HDInsightDayOfWeek>> days = default;
-            Optional<HDInsightAutoScaleTimeAndCapacity> timeAndCapacity = default;
+            IList<HDInsightDayOfWeek> days = default;
+            HDInsightAutoScaleTimeAndCapacity timeAndCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value);
+                    timeAndCapacity = HDInsightAutoScaleTimeAndCapacity.DeserializeHDInsightAutoScaleTimeAndCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightAutoScaleSchedule(Optional.ToList(days), timeAndCapacity.Value, serializedAdditionalRawData);
+            return new HDInsightAutoScaleSchedule(days ?? new ChangeTrackingList<HDInsightDayOfWeek>(), timeAndCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightAutoScaleSchedule>.Write(ModelReaderWriterOptions options)

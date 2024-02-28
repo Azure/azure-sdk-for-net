@@ -58,8 +58,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public CosmosDBForPostgreSqlFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
-            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
-            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
+            if (startIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(startIPAddress));
+            }
+            if (endIPAddress == null)
+            {
+                throw new ArgumentNullException(nameof(endIPAddress));
+            }
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;

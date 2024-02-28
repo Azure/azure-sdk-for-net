@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SshPublicAccess))
+            if (SshPublicAccess.HasValue)
             {
                 writer.WritePropertyName("sshPublicAccess"u8);
                 writer.WriteStringValue(SshPublicAccess.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AdminUserName))
+            if (options.Format != "W" && AdminUserName != null)
             {
                 writer.WritePropertyName("adminUserName"u8);
                 writer.WriteStringValue(AdminUserName);
             }
-            if (options.Format != "W" && Optional.IsDefined(SshPort))
+            if (options.Format != "W" && SshPort.HasValue)
             {
                 writer.WritePropertyName("sshPort"u8);
                 writer.WriteNumberValue(SshPort.Value);
             }
-            if (Optional.IsDefined(AdminPublicKey))
+            if (AdminPublicKey != null)
             {
                 writer.WritePropertyName("adminPublicKey"u8);
                 writer.WriteStringValue(AdminPublicKey);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningSshPublicAccess> sshPublicAccess = default;
-            Optional<string> adminUserName = default;
-            Optional<int> sshPort = default;
-            Optional<string> adminPublicKey = default;
+            MachineLearningSshPublicAccess? sshPublicAccess = default;
+            string adminUserName = default;
+            int? sshPort = default;
+            string adminPublicKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningComputeInstanceSshSettings(Optional.ToNullable(sshPublicAccess), adminUserName.Value, Optional.ToNullable(sshPort), adminPublicKey.Value, serializedAdditionalRawData);
+            return new MachineLearningComputeInstanceSshSettings(sshPublicAccess, adminUserName, sshPort, adminPublicKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningComputeInstanceSshSettings>.Write(ModelReaderWriterOptions options)

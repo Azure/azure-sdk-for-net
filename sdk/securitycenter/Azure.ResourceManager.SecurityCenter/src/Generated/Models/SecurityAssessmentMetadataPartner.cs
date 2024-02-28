@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -52,8 +51,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="partnerName"/> or <paramref name="secret"/> is null. </exception>
         public SecurityAssessmentMetadataPartner(string partnerName, string secret)
         {
-            Argument.AssertNotNull(partnerName, nameof(partnerName));
-            Argument.AssertNotNull(secret, nameof(secret));
+            if (partnerName == null)
+            {
+                throw new ArgumentNullException(nameof(partnerName));
+            }
+            if (secret == null)
+            {
+                throw new ArgumentNullException(nameof(secret));
+            }
 
             PartnerName = partnerName;
             Secret = secret;

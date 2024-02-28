@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual async Task<Response<ProjectDevBoxDefinitionResource>> GetAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual Response<ProjectDevBoxDefinitionResource> Get(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.Get");
             scope.Start();
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.Exists");
             scope.Start();
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual Response<bool> Exists(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.Exists");
             scope.Start();
@@ -318,7 +346,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual async Task<NullableResponse<ProjectDevBoxDefinitionResource>> GetIfExistsAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.GetIfExists");
             scope.Start();
@@ -363,7 +398,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
         public virtual NullableResponse<ProjectDevBoxDefinitionResource> GetIfExists(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxDefinitionName, nameof(devBoxDefinitionName));
+            if (devBoxDefinitionName == null)
+            {
+                throw new ArgumentNullException(nameof(devBoxDefinitionName));
+            }
+            if (devBoxDefinitionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(devBoxDefinitionName));
+            }
 
             using var scope = _projectDevBoxDefinitionDevBoxDefinitionsClientDiagnostics.CreateScope("ProjectDevBoxDefinitionCollection.GetIfExists");
             scope.Start();

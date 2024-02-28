@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataConnectionName))
+            if (DataConnectionName != null)
             {
                 writer.WritePropertyName("dataConnectionName"u8);
                 writer.WriteStringValue(DataConnectionName);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            Optional<string> dataConnectionName = default;
-            Optional<KustoDataConnectionData> properties = default;
+            string dataConnectionName = default;
+            KustoDataConnectionData properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value);
+                    properties = KustoDataConnectionData.DeserializeKustoDataConnectionData(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataConnectionValidationContent(dataConnectionName.Value, properties.Value, serializedAdditionalRawData);
+            return new DataConnectionValidationContent(dataConnectionName, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataConnectionValidationContent>.Write(ModelReaderWriterOptions options)

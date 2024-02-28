@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(InfoMoverResources))
+            if (options.Format != "W" && !(InfoMoverResources is ChangeTrackingList<AffectedMoverResourceInfo> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AffectedMoverResourceInfo>> moveResources = default;
+            IReadOnlyList<AffectedMoverResourceInfo> moveResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<AffectedMoverResourceInfo> array = new List<AffectedMoverResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item));
+                        array.Add(AffectedMoverResourceInfo.DeserializeAffectedMoverResourceInfo(item, options));
                     }
                     moveResources = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MoveErrorInfo(Optional.ToList(moveResources), serializedAdditionalRawData);
+            return new MoveErrorInfo(moveResources ?? new ChangeTrackingList<AffectedMoverResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MoveErrorInfo>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(Allow))
+            if (!(Allow is ChangeTrackingList<WebPubSubRequestType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("allow"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Deny))
+            if (!(Deny is ChangeTrackingList<WebPubSubRequestType> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("deny"u8);
                 writer.WriteStartArray();
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             string name = default;
-            Optional<IList<WebPubSubRequestType>> allow = default;
-            Optional<IList<WebPubSubRequestType>> deny = default;
+            IList<WebPubSubRequestType> allow = default;
+            IList<WebPubSubRequestType> deny = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointAcl(Optional.ToList(allow), Optional.ToList(deny), serializedAdditionalRawData, name);
+            return new PrivateEndpointAcl(allow ?? new ChangeTrackingList<WebPubSubRequestType>(), deny ?? new ChangeTrackingList<WebPubSubRequestType>(), serializedAdditionalRawData, name);
         }
 
         BinaryData IPersistableModel<PrivateEndpointAcl>.Write(ModelReaderWriterOptions options)

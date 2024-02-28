@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
             writer.WriteStringValue(Name);
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (Optional.IsCollectionDefined(Values))
+            if (!(Values is ChangeTrackingList<MessageTemplateValue> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.Communication.Messages
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Bindings))
+            if (Bindings != null)
             {
                 writer.WritePropertyName("bindings"u8);
                 writer.WriteObjectValue(Bindings);
@@ -86,8 +86,8 @@ namespace Azure.Communication.Messages
             }
             string name = default;
             string language = default;
-            Optional<IList<MessageTemplateValue>> values = default;
-            Optional<MessageTemplateBindings> bindings = default;
+            IList<MessageTemplateValue> values = default;
+            MessageTemplateBindings bindings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.Communication.Messages
                     List<MessageTemplateValue> array = new List<MessageTemplateValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item));
+                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item, options));
                     }
                     values = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.Communication.Messages
                     {
                         continue;
                     }
-                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value);
+                    bindings = MessageTemplateBindings.DeserializeMessageTemplateBindings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -131,7 +131,7 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MessageTemplate(name, language, Optional.ToList(values), bindings.Value, serializedAdditionalRawData);
+            return new MessageTemplate(name, language, values ?? new ChangeTrackingList<MessageTemplateValue>(), bindings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageTemplate>.Write(ModelReaderWriterOptions options)

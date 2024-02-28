@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="containerName"/> is null. </exception>
         public IotHubStorageEndpointProperties(string connectionString, string containerName)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-            Argument.AssertNotNull(containerName, nameof(containerName));
+            if (connectionString == null)
+            {
+                throw new ArgumentNullException(nameof(connectionString));
+            }
+            if (containerName == null)
+            {
+                throw new ArgumentNullException(nameof(containerName));
+            }
 
             ConnectionString = connectionString;
             ContainerName = containerName;

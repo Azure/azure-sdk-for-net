@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static void ReadEstimatedWaitTimes(JsonProperty property, ref Optional<IDictionary<int, TimeSpan>> estimatedWaitTimes)
+        internal static void ReadEstimatedWaitTimes(JsonProperty property, ref IDictionary<int, TimeSpan> estimatedWaitTimes)
         {
             if (property.Value.ValueKind == JsonValueKind.Null)
             {

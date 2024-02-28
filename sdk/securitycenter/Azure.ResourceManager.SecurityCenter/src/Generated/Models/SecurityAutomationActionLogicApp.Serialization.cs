@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogicAppResourceId))
+            if (LogicAppResourceId != null)
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Optional.IsDefined(Uri))
+            if (Uri != null)
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> logicAppResourceId = default;
-            Optional<Uri> uri = default;
+            ResourceIdentifier logicAppResourceId = default;
+            Uri uri = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationActionLogicApp(actionType, serializedAdditionalRawData, logicAppResourceId.Value, uri.Value);
+            return new SecurityAutomationActionLogicApp(actionType, serializedAdditionalRawData, logicAppResourceId, uri);
         }
 
         BinaryData IPersistableModel<SecurityAutomationActionLogicApp>.Write(ModelReaderWriterOptions options)

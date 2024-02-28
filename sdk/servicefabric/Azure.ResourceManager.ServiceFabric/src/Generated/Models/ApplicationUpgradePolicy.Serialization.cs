@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
+            if (UpgradeReplicaSetCheckTimeout.HasValue)
             {
                 writer.WritePropertyName("upgradeReplicaSetCheckTimeout"u8);
                 writer.WriteStringValue(UpgradeReplicaSetCheckTimeout.Value, "c");
             }
-            if (Optional.IsDefined(ForceRestart))
+            if (ForceRestart.HasValue)
             {
                 writer.WritePropertyName("forceRestart"u8);
                 writer.WriteBooleanValue(ForceRestart.Value);
             }
-            if (Optional.IsDefined(RollingUpgradeMonitoringPolicy))
+            if (RollingUpgradeMonitoringPolicy != null)
             {
                 writer.WritePropertyName("rollingUpgradeMonitoringPolicy"u8);
                 writer.WriteObjectValue(RollingUpgradeMonitoringPolicy);
             }
-            if (Optional.IsDefined(ApplicationHealthPolicy))
+            if (ApplicationHealthPolicy != null)
             {
                 writer.WritePropertyName("applicationHealthPolicy"u8);
                 writer.WriteObjectValue(ApplicationHealthPolicy);
             }
-            if (Optional.IsDefined(UpgradeMode))
+            if (UpgradeMode.HasValue)
             {
                 writer.WritePropertyName("upgradeMode"u8);
                 writer.WriteStringValue(UpgradeMode.Value.ToString());
             }
-            if (Optional.IsDefined(RecreateApplication))
+            if (RecreateApplication.HasValue)
             {
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 return null;
             }
-            Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
-            Optional<bool> forceRestart = default;
-            Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
-            Optional<ArmApplicationHealthPolicy> applicationHealthPolicy = default;
-            Optional<ApplicationRollingUpgradeMode> upgradeMode = default;
-            Optional<bool> recreateApplication = default;
+            TimeSpan? upgradeReplicaSetCheckTimeout = default;
+            bool? forceRestart = default;
+            ArmRollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default;
+            ArmApplicationHealthPolicy applicationHealthPolicy = default;
+            ApplicationRollingUpgradeMode? upgradeMode = default;
+            bool? recreateApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value);
+                    rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationHealthPolicy"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value);
+                    applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeMode"u8))
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationUpgradePolicy(Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, applicationHealthPolicy.Value, Optional.ToNullable(upgradeMode), Optional.ToNullable(recreateApplication), serializedAdditionalRawData);
+            return new ApplicationUpgradePolicy(
+                upgradeReplicaSetCheckTimeout,
+                forceRestart,
+                rollingUpgradeMonitoringPolicy,
+                applicationHealthPolicy,
+                upgradeMode,
+                recreateApplication,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)

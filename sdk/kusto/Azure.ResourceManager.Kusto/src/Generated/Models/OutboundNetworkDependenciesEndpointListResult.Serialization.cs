@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            if (options.Format != "W" && NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             IReadOnlyList<OutboundNetworkDependenciesEndpoint> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<OutboundNetworkDependenciesEndpoint> array = new List<OutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item));
+                        array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OutboundNetworkDependenciesEndpointListResult(value, nextLink.Value, serializedAdditionalRawData);
+            return new OutboundNetworkDependenciesEndpointListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OutboundNetworkDependenciesEndpointListResult>.Write(ModelReaderWriterOptions options)

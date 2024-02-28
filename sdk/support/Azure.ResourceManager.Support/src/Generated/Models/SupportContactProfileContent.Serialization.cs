@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Support.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirstName))
+            if (FirstName != null)
             {
                 writer.WritePropertyName("firstName"u8);
                 writer.WriteStringValue(FirstName);
             }
-            if (Optional.IsDefined(LastName))
+            if (LastName != null)
             {
                 writer.WritePropertyName("lastName"u8);
                 writer.WriteStringValue(LastName);
             }
-            if (Optional.IsDefined(PreferredContactMethod))
+            if (PreferredContactMethod.HasValue)
             {
                 writer.WritePropertyName("preferredContactMethod"u8);
                 writer.WriteStringValue(PreferredContactMethod.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryEmailAddress))
+            if (PrimaryEmailAddress != null)
             {
                 writer.WritePropertyName("primaryEmailAddress"u8);
                 writer.WriteStringValue(PrimaryEmailAddress);
             }
-            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            if (!(AdditionalEmailAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("additionalEmailAddresses"u8);
                 writer.WriteStartArray();
@@ -56,22 +56,22 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PhoneNumber))
+            if (PhoneNumber != null)
             {
                 writer.WritePropertyName("phoneNumber"u8);
                 writer.WriteStringValue(PhoneNumber);
             }
-            if (Optional.IsDefined(PreferredTimeZone))
+            if (PreferredTimeZone != null)
             {
                 writer.WritePropertyName("preferredTimeZone"u8);
                 writer.WriteStringValue(PreferredTimeZone);
             }
-            if (Optional.IsDefined(Country))
+            if (Country != null)
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
-            if (Optional.IsDefined(PreferredSupportLanguage))
+            if (PreferredSupportLanguage != null)
             {
                 writer.WritePropertyName("preferredSupportLanguage"u8);
                 writer.WriteStringValue(PreferredSupportLanguage);
@@ -114,15 +114,15 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<PreferredContactMethod> preferredContactMethod = default;
-            Optional<string> primaryEmailAddress = default;
-            Optional<IList<string>> additionalEmailAddresses = default;
-            Optional<string> phoneNumber = default;
-            Optional<string> preferredTimeZone = default;
-            Optional<string> country = default;
-            Optional<string> preferredSupportLanguage = default;
+            string firstName = default;
+            string lastName = default;
+            PreferredContactMethod? preferredContactMethod = default;
+            string primaryEmailAddress = default;
+            IList<string> additionalEmailAddresses = default;
+            string phoneNumber = default;
+            string preferredTimeZone = default;
+            string country = default;
+            string preferredSupportLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -191,7 +191,17 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SupportContactProfileContent(firstName.Value, lastName.Value, Optional.ToNullable(preferredContactMethod), primaryEmailAddress.Value, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone.Value, country.Value, preferredSupportLanguage.Value, serializedAdditionalRawData);
+            return new SupportContactProfileContent(
+                firstName,
+                lastName,
+                preferredContactMethod,
+                primaryEmailAddress,
+                additionalEmailAddresses ?? new ChangeTrackingList<string>(),
+                phoneNumber,
+                preferredTimeZone,
+                country,
+                preferredSupportLanguage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SupportContactProfileContent>.Write(ModelReaderWriterOptions options)

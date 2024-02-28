@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
             writer.WriteObjectValue(OSDisk);
-            if (Optional.IsCollectionDefined(VolumeAttachments))
+            if (!(VolumeAttachments is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
                 writer.WriteStartArray();
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             NetworkCloudOSDisk osDisk = default;
-            Optional<IList<ResourceIdentifier>> volumeAttachments = default;
+            IList<ResourceIdentifier> volumeAttachments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value);
+                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkCloudStorageProfile(osDisk, Optional.ToList(volumeAttachments), serializedAdditionalRawData);
+            return new NetworkCloudStorageProfile(osDisk, volumeAttachments ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudStorageProfile>.Write(ModelReaderWriterOptions options)

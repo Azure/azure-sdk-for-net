@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Billing.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(NextBillingCycleBillingFrequency))
+            if (options.Format != "W" && NextBillingCycleBillingFrequency != null)
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(NextBillingCycleBillingFrequency);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> billingFrequency = default;
+            string billingFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NextBillingCycleDetails(billingFrequency.Value, serializedAdditionalRawData);
+            return new NextBillingCycleDetails(billingFrequency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NextBillingCycleDetails>.Write(ModelReaderWriterOptions options)

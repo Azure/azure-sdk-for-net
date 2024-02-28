@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             IList<ResourceTypeSkuSetting> skuSettings = default;
-            Optional<ProviderHubProvisioningState> provisioningState = default;
+            ProviderHubProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuSetting> array = new List<ResourceTypeSkuSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item));
+                        array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item, options));
                     }
                     skuSettings = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceTypeSkuProperties(skuSettings, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new ResourceTypeSkuProperties(skuSettings, provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceTypeSkuProperties>.Write(ModelReaderWriterOptions options)

@@ -53,7 +53,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="providerLocation"/> is null. </exception>
         public AzureReachabilityReportContent(AzureReachabilityReportLocation providerLocation, DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            Argument.AssertNotNull(providerLocation, nameof(providerLocation));
+            if (providerLocation == null)
+            {
+                throw new ArgumentNullException(nameof(providerLocation));
+            }
 
             ProviderLocation = providerLocation;
             Providers = new ChangeTrackingList<string>();

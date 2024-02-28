@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.Workloads.Models
             writer.WriteNumberValue(DBMemory);
             writer.WritePropertyName("databaseType"u8);
             writer.WriteStringValue(DatabaseType.ToString());
-            if (Optional.IsDefined(DBScaleMethod))
+            if (DBScaleMethod.HasValue)
             {
                 writer.WritePropertyName("dbScaleMethod"u8);
                 writer.WriteStringValue(DBScaleMethod.Value.ToString());
             }
-            if (Optional.IsDefined(HighAvailabilityType))
+            if (HighAvailabilityType.HasValue)
             {
                 writer.WritePropertyName("highAvailabilityType"u8);
                 writer.WriteStringValue(HighAvailabilityType.Value.ToString());
@@ -95,8 +95,8 @@ namespace Azure.ResourceManager.Workloads.Models
             long saps = default;
             long dbMemory = default;
             SapDatabaseType databaseType = default;
-            Optional<SapDatabaseScaleMethod> dbScaleMethod = default;
-            Optional<SapHighAvailabilityType> highAvailabilityType = default;
+            SapDatabaseScaleMethod? dbScaleMethod = default;
+            SapHighAvailabilityType? highAvailabilityType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,17 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SapSizingRecommendationContent(appLocation, environment, sapProduct, deploymentType, saps, dbMemory, databaseType, Optional.ToNullable(dbScaleMethod), Optional.ToNullable(highAvailabilityType), serializedAdditionalRawData);
+            return new SapSizingRecommendationContent(
+                appLocation,
+                environment,
+                sapProduct,
+                deploymentType,
+                saps,
+                dbMemory,
+                databaseType,
+                dbScaleMethod,
+                highAvailabilityType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapSizingRecommendationContent>.Write(ModelReaderWriterOptions options)

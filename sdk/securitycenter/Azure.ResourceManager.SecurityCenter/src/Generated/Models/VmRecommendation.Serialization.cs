@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConfigurationStatus))
+            if (ConfigurationStatus.HasValue)
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
             }
-            if (Optional.IsDefined(RecommendationAction))
+            if (RecommendationAction.HasValue)
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(EnforcementSupport))
+            if (EnforcementSupport.HasValue)
             {
                 writer.WritePropertyName("enforcementSupport"u8);
                 writer.WriteStringValue(EnforcementSupport.Value.ToString());
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityCenterConfigurationStatus> configurationStatus = default;
-            Optional<RecommendationAction> recommendationAction = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<SecurityCenterVmEnforcementSupportState> enforcementSupport = default;
+            SecurityCenterConfigurationStatus? configurationStatus = default;
+            RecommendationAction? recommendationAction = default;
+            ResourceIdentifier resourceId = default;
+            SecurityCenterVmEnforcementSupportState? enforcementSupport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmRecommendation(Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationAction), resourceId.Value, Optional.ToNullable(enforcementSupport), serializedAdditionalRawData);
+            return new VmRecommendation(configurationStatus, recommendationAction, resourceId, enforcementSupport, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmRecommendation>.Write(ModelReaderWriterOptions options)

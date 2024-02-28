@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(InstallOptions))
+            if (InstallOptions != null)
             {
                 writer.WritePropertyName("installOptions"u8);
                 writer.WriteObjectValue(InstallOptions);
             }
-            if (Optional.IsDefined(UpgradeOptions))
+            if (UpgradeOptions != null)
             {
                 writer.WritePropertyName("upgradeOptions"u8);
                 writer.WriteObjectValue(UpgradeOptions);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<HelmInstallConfig> installOptions = default;
-            Optional<HelmUpgradeConfig> upgradeOptions = default;
+            HelmInstallConfig installOptions = default;
+            HelmUpgradeConfig upgradeOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value);
+                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("upgradeOptions"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value);
+                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HelmMappingRuleProfileConfig(installOptions.Value, upgradeOptions.Value, serializedAdditionalRawData);
+            return new HelmMappingRuleProfileConfig(installOptions, upgradeOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HelmMappingRuleProfileConfig>.Write(ModelReaderWriterOptions options)

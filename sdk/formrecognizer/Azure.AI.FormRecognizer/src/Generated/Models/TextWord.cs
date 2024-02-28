@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,8 +20,14 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal TextWord(string text, IEnumerable<float> boundingBox)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+            if (boundingBox == null)
+            {
+                throw new ArgumentNullException(nameof(boundingBox));
+            }
 
             Text = text;
             BoundingBox = boundingBox.ToList();

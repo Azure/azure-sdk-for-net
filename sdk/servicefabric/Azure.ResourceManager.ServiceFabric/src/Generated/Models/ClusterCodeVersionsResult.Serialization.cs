@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CodeVersion))
+            if (CodeVersion != null)
             {
                 writer.WritePropertyName("codeVersion"u8);
                 writer.WriteStringValue(CodeVersion);
             }
-            if (Optional.IsDefined(SupportExpireOn))
+            if (SupportExpireOn.HasValue)
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Environment))
+            if (Environment.HasValue)
             {
                 writer.WritePropertyName("environment"u8);
                 writer.WriteStringValue(Environment.Value.ToString());
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> codeVersion = default;
-            Optional<DateTimeOffset> supportExpiryUtc = default;
-            Optional<ClusterEnvironment> environment = default;
+            SystemData systemData = default;
+            string codeVersion = default;
+            DateTimeOffset? supportExpiryUtc = default;
+            ClusterEnvironment? environment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterCodeVersionsResult(id, name, type, systemData.Value, codeVersion.Value, Optional.ToNullable(supportExpiryUtc), Optional.ToNullable(environment), serializedAdditionalRawData);
+            return new ClusterCodeVersionsResult(
+                id,
+                name,
+                type,
+                systemData,
+                codeVersion,
+                supportExpiryUtc,
+                environment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterCodeVersionsResult>.Write(ModelReaderWriterOptions options)

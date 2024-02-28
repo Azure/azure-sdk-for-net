@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -55,7 +54,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="schemaFields"/> is null. </exception>
         public BlobInventoryPolicyDefinition(BlobInventoryPolicyFormat format, BlobInventoryPolicySchedule schedule, BlobInventoryPolicyObjectType objectType, IEnumerable<string> schemaFields)
         {
-            Argument.AssertNotNull(schemaFields, nameof(schemaFields));
+            if (schemaFields == null)
+            {
+                throw new ArgumentNullException(nameof(schemaFields));
+            }
 
             Format = format;
             Schedule = schedule;

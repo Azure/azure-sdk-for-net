@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Transport))
+            if (Transport != null)
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> transport = default;
+            string transport = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogLogsAgent(transport.Value, serializedAdditionalRawData);
+            return new DatadogLogsAgent(transport, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogLogsAgent>.Write(ModelReaderWriterOptions options)

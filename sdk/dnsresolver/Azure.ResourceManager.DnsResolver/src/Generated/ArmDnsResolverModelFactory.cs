@@ -36,7 +36,19 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DnsResolverData(id, name, resourceType, systemData, tags, location, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, dnsResolverState, provisioningState, resourceGuid, serializedAdditionalRawData: null);
+            return new DnsResolverData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                dnsResolverState,
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverInboundEndpointData"/>. </summary>
@@ -56,7 +68,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new Dictionary<string, string>();
             ipConfigurations ??= new List<InboundEndpointIPConfiguration>();
 
-            return new DnsResolverInboundEndpointData(id, name, resourceType, systemData, tags, location, etag, ipConfigurations?.ToList(), provisioningState, resourceGuid, serializedAdditionalRawData: null);
+            return new DnsResolverInboundEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                ipConfigurations?.ToList(),
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsResolverOutboundEndpointData"/>. </summary>
@@ -75,7 +98,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DnsResolverOutboundEndpointData(id, name, resourceType, systemData, tags, location, etag, subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null, provisioningState, resourceGuid, serializedAdditionalRawData: null);
+            return new DnsResolverOutboundEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRulesetData"/>. </summary>
@@ -95,7 +129,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new Dictionary<string, string>();
             dnsResolverOutboundEndpoints ??= new List<WritableSubResource>();
 
-            return new DnsForwardingRulesetData(id, name, resourceType, systemData, tags, location, etag, dnsResolverOutboundEndpoints?.ToList(), provisioningState, resourceGuid, serializedAdditionalRawData: null);
+            return new DnsForwardingRulesetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                etag,
+                dnsResolverOutboundEndpoints?.ToList(),
+                provisioningState,
+                resourceGuid,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRuleData"/>. </summary>
@@ -115,7 +160,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             targetDnsServers ??= new List<TargetDnsServer>();
             metadata ??= new Dictionary<string, string>();
 
-            return new DnsForwardingRuleData(id, name, resourceType, systemData, etag, domainName, targetDnsServers?.ToList(), metadata, dnsForwardingRuleState, provisioningState, serializedAdditionalRawData: null);
+            return new DnsForwardingRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                domainName,
+                targetDnsServers?.ToList(),
+                metadata,
+                dnsForwardingRuleState,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/>. </summary>
@@ -132,7 +188,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             metadata ??= new Dictionary<string, string>();
 
-            return new DnsForwardingRulesetVirtualNetworkLinkData(id, name, resourceType, systemData, etag, virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null, metadata, provisioningState, serializedAdditionalRawData: null);
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                virtualNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(virtualNetworkId) : null,
+                metadata,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkDnsForwardingRuleset"/>. </summary>

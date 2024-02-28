@@ -27,17 +27,17 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AuthorizationServerUri))
+            if (AuthorizationServerUri != null)
             {
                 writer.WritePropertyName("authorizationServerUri"u8);
                 writer.WriteStringValue(AuthorizationServerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ClientCredential))
+            if (ClientCredential != null)
             {
                 writer.WritePropertyName("clientCredential"u8);
                 writer.WriteObjectValue(ClientCredential);
             }
-            if (Optional.IsDefined(WebhookUri))
+            if (WebhookUri != null)
             {
                 writer.WritePropertyName("webhookUri"u8);
                 writer.WriteStringValue(WebhookUri.AbsoluteUri);
@@ -82,9 +82,9 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<Uri> authorizationServerUri = default;
-            Optional<OAuth2WebhookClientCredential> clientCredential = default;
-            Optional<Uri> webhookUri = default;
+            Uri authorizationServerUri = default;
+            OAuth2WebhookClientCredential clientCredential = default;
+            Uri webhookUri = default;
             RouterRuleKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value);
+                    clientCredential = OAuth2WebhookClientCredential.DeserializeOAuth2WebhookClientCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("webhookUri"u8))
@@ -128,7 +128,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebhookRouterRule(kind, serializedAdditionalRawData, authorizationServerUri.Value, clientCredential.Value, webhookUri.Value);
+            return new WebhookRouterRule(kind, serializedAdditionalRawData, authorizationServerUri, clientCredential, webhookUri);
         }
 
         BinaryData IPersistableModel<WebhookRouterRule>.Write(ModelReaderWriterOptions options)

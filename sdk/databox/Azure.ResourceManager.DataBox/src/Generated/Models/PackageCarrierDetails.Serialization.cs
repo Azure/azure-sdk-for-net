@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CarrierAccountNumber))
+            if (CarrierAccountNumber != null)
             {
                 writer.WritePropertyName("carrierAccountNumber"u8);
                 writer.WriteStringValue(CarrierAccountNumber);
             }
-            if (Optional.IsDefined(CarrierName))
+            if (CarrierName != null)
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (Optional.IsDefined(TrackingId))
+            if (TrackingId != null)
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> carrierAccountNumber = default;
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            string carrierAccountNumber = default;
+            string carrierName = default;
+            string trackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageCarrierDetails(carrierAccountNumber.Value, carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+            return new PackageCarrierDetails(carrierAccountNumber, carrierName, trackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PackageCarrierDetails>.Write(ModelReaderWriterOptions options)

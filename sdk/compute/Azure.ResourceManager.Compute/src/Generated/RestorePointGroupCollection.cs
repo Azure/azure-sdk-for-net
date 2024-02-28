@@ -84,8 +84,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RestorePointGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string restorePointGroupName, RestorePointGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RestorePointGroupResource> CreateOrUpdate(WaitUntil waitUntil, string restorePointGroupName, RestorePointGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -181,7 +201,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual async Task<Response<RestorePointGroupResource>> GetAsync(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.Get");
             scope.Start();
@@ -227,7 +254,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual Response<RestorePointGroupResource> Get(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.Get");
             scope.Start();
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.Exists");
             scope.Start();
@@ -377,7 +418,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.Exists");
             scope.Start();
@@ -421,7 +469,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<RestorePointGroupResource>> GetIfExistsAsync(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointGroupName"/> is null. </exception>
         public virtual NullableResponse<RestorePointGroupResource> GetIfExists(string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            if (restorePointGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(restorePointGroupName));
+            }
+            if (restorePointGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
+            }
 
             using var scope = _restorePointGroupRestorePointCollectionsClientDiagnostics.CreateScope("RestorePointGroupCollection.GetIfExists");
             scope.Start();

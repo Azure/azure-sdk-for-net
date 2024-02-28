@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WsdlServiceName))
+            if (WsdlServiceName != null)
             {
                 writer.WritePropertyName("wsdlServiceName"u8);
                 writer.WriteStringValue(WsdlServiceName);
             }
-            if (Optional.IsDefined(WsdlEndpointName))
+            if (WsdlEndpointName != null)
             {
                 writer.WritePropertyName("wsdlEndpointName"u8);
                 writer.WriteStringValue(WsdlEndpointName);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> wsdlServiceName = default;
-            Optional<string> wsdlEndpointName = default;
+            string wsdlServiceName = default;
+            string wsdlEndpointName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiCreateOrUpdatePropertiesWsdlSelector(wsdlServiceName.Value, wsdlEndpointName.Value, serializedAdditionalRawData);
+            return new ApiCreateOrUpdatePropertiesWsdlSelector(wsdlServiceName, wsdlEndpointName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCreateOrUpdatePropertiesWsdlSelector>.Write(ModelReaderWriterOptions options)

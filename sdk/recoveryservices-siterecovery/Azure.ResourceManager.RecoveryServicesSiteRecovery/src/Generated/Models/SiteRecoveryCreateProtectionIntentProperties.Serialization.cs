@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryCreateProtectionIntentProviderDetail> providerSpecificDetails = default;
+            SiteRecoveryCreateProtectionIntentProviderDetail providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SiteRecoveryCreateProtectionIntentProviderDetail.DeserializeSiteRecoveryCreateProtectionIntentProviderDetail(property.Value);
+                    providerSpecificDetails = SiteRecoveryCreateProtectionIntentProviderDetail.DeserializeSiteRecoveryCreateProtectionIntentProviderDetail(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryCreateProtectionIntentProperties(providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryCreateProtectionIntentProperties(providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryCreateProtectionIntentProperties>.Write(ModelReaderWriterOptions options)

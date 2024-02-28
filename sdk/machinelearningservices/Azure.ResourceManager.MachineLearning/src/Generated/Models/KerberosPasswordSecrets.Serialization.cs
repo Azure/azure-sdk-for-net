@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KerberosPassword))
+            if (KerberosPassword != null)
             {
                 if (KerberosPassword != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> kerberosPassword = default;
+            string kerberosPassword = default;
             SecretsType secretsType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KerberosPasswordSecrets(secretsType, serializedAdditionalRawData, kerberosPassword.Value);
+            return new KerberosPasswordSecrets(secretsType, serializedAdditionalRawData, kerberosPassword);
         }
 
         BinaryData IPersistableModel<KerberosPasswordSecrets>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(WorkloadProfileCategory))
+            if (WorkloadProfileCategory != null)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(WorkloadProfileCategory);
             }
-            if (Optional.IsDefined(MeterType))
+            if (MeterType != null)
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<string> meterType = default;
-            Optional<string> displayName = default;
+            string category = default;
+            string meterType = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppBillingMeterProperties(category.Value, meterType.Value, displayName.Value, serializedAdditionalRawData);
+            return new ContainerAppBillingMeterProperties(category, meterType, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppBillingMeterProperties>.Write(ModelReaderWriterOptions options)

@@ -29,7 +29,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource.AbsoluteUri);
-            if (Optional.IsDefined(TopContributorCount))
+            if (TopContributorCount.HasValue)
             {
                 writer.WritePropertyName("topContributorCount"u8);
                 writer.WriteNumberValue(TopContributorCount.Value);
@@ -77,7 +77,7 @@ namespace Azure.AI.AnomalyDetector
                 return null;
             }
             Uri dataSource = default;
-            Optional<int> topContributorCount = default;
+            int? topContributorCount = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -114,7 +114,7 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MultivariateBatchDetectionOptions(dataSource, Optional.ToNullable(topContributorCount), startTime, endTime, serializedAdditionalRawData);
+            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MultivariateBatchDetectionOptions>.Write(ModelReaderWriterOptions options)

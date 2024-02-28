@@ -20,14 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             writer.WriteObjectValue(PackagePath);
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             writer.WriteObjectValue(PackageContent);
-            if (Optional.IsDefined(PackageLastModifiedDate))
+            if (PackageLastModifiedDate != null)
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object packagePath = default;
-            Optional<string> packageName = default;
+            string packageName = default;
             object packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            string packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value);
+            return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate);
         }
 
         internal partial class SsisChildPackageConverter : JsonConverter<SsisChildPackage>

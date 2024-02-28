@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "KeyInfo");
-            if (Optional.IsDefined(Start))
+            if (Start != null)
             {
                 writer.WriteStartElement("Start");
                 writer.WriteValue(Start);

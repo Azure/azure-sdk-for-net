@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
             JsonSerializer.Serialize(writer, PackagePath);
-            if (Optional.IsDefined(PackageName))
+            if (PackageName != null)
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
             JsonSerializer.Serialize(writer, PackageContent);
-            if (Optional.IsDefined(PackageLastModifiedDate))
+            if (PackageLastModifiedDate != null)
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
                 writer.WriteStringValue(PackageLastModifiedDate);
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> packagePath = default;
-            Optional<string> packageName = default;
+            string packageName = default;
             DataFactoryElement<string> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
+            string packageLastModifiedDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisChildPackage(packagePath, packageName.Value, packageContent, packageLastModifiedDate.Value, serializedAdditionalRawData);
+            return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisChildPackage>.Write(ModelReaderWriterOptions options)

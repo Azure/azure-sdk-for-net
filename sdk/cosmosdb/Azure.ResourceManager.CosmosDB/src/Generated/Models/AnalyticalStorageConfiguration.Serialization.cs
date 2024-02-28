@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SchemaType))
+            if (SchemaType.HasValue)
             {
                 writer.WritePropertyName("schemaType"u8);
                 writer.WriteStringValue(SchemaType.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<AnalyticalStorageSchemaType> schemaType = default;
+            AnalyticalStorageSchemaType? schemaType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalyticalStorageConfiguration(Optional.ToNullable(schemaType), serializedAdditionalRawData);
+            return new AnalyticalStorageConfiguration(schemaType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyticalStorageConfiguration>.Write(ModelReaderWriterOptions options)

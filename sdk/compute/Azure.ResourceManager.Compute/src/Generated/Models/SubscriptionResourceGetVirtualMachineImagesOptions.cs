@@ -21,9 +21,18 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/> or <paramref name="skus"/> is null. </exception>
         public SubscriptionResourceGetVirtualMachineImagesOptions(AzureLocation location, string publisherName, string offer, string skus)
         {
-            Argument.AssertNotNull(publisherName, nameof(publisherName));
-            Argument.AssertNotNull(offer, nameof(offer));
-            Argument.AssertNotNull(skus, nameof(skus));
+            if (publisherName == null)
+            {
+                throw new ArgumentNullException(nameof(publisherName));
+            }
+            if (offer == null)
+            {
+                throw new ArgumentNullException(nameof(offer));
+            }
+            if (skus == null)
+            {
+                throw new ArgumentNullException(nameof(skus));
+            }
 
             Location = location;
             PublisherName = publisherName;

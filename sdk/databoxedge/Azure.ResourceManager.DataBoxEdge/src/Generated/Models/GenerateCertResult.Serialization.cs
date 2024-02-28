@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublicKey))
+            if (PublicKey != null)
             {
                 writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
-            if (Optional.IsDefined(PrivateKey))
+            if (PrivateKey != null)
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTimeInUTC"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> publicKey = default;
-            Optional<string> privateKey = default;
-            Optional<DateTimeOffset> expiryTimeInUtc = default;
+            string publicKey = default;
+            string privateKey = default;
+            DateTimeOffset? expiryTimeInUtc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc), serializedAdditionalRawData);
+            return new GenerateCertResult(publicKey, privateKey, expiryTimeInUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GenerateCertResult>.Write(ModelReaderWriterOptions options)

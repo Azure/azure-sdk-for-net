@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element);
-                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element);
+                    case "AddActionGroups": return AlertProcessingRuleAddGroupsAction.DeserializeAlertProcessingRuleAddGroupsAction(element, options);
+                    case "RemoveAllActionGroups": return AlertProcessingRuleRemoveAllGroupsAction.DeserializeAlertProcessingRuleRemoveAllGroupsAction(element, options);
                 }
             }
-            return UnknownAction.DeserializeUnknownAction(element);
+            return UnknownAction.DeserializeUnknownAction(element, options);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleAction>.Write(ModelReaderWriterOptions options)

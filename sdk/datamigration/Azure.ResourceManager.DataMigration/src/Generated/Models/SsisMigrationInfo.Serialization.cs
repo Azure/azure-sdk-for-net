@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SsisStoreType))
+            if (SsisStoreType.HasValue)
             {
                 writer.WritePropertyName("ssisStoreType"u8);
                 writer.WriteStringValue(SsisStoreType.Value.ToString());
             }
-            if (Optional.IsDefined(ProjectOverwriteOption))
+            if (ProjectOverwriteOption.HasValue)
             {
                 writer.WritePropertyName("projectOverwriteOption"u8);
                 writer.WriteStringValue(ProjectOverwriteOption.Value.ToString());
             }
-            if (Optional.IsDefined(EnvironmentOverwriteOption))
+            if (EnvironmentOverwriteOption.HasValue)
             {
                 writer.WritePropertyName("environmentOverwriteOption"u8);
                 writer.WriteStringValue(EnvironmentOverwriteOption.Value.ToString());
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<SsisStoreType> ssisStoreType = default;
-            Optional<SsisMigrationOverwriteOption> projectOverwriteOption = default;
-            Optional<SsisMigrationOverwriteOption> environmentOverwriteOption = default;
+            SsisStoreType? ssisStoreType = default;
+            SsisMigrationOverwriteOption? projectOverwriteOption = default;
+            SsisMigrationOverwriteOption? environmentOverwriteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SsisMigrationInfo(Optional.ToNullable(ssisStoreType), Optional.ToNullable(projectOverwriteOption), Optional.ToNullable(environmentOverwriteOption), serializedAdditionalRawData);
+            return new SsisMigrationInfo(ssisStoreType, projectOverwriteOption, environmentOverwriteOption, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SsisMigrationInfo>.Write(ModelReaderWriterOptions options)

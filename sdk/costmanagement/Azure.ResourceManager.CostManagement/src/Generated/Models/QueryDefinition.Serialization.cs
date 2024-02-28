@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(ExportType.ToString());
             writer.WritePropertyName("timeframe"u8);
             writer.WriteStringValue(Timeframe.ToString());
-            if (Optional.IsDefined(TimePeriod))
+            if (TimePeriod != null)
             {
                 writer.WritePropertyName("timePeriod"u8);
                 writer.WriteObjectValue(TimePeriod);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
             ExportType type = default;
             TimeframeType timeframe = default;
-            Optional<QueryTimePeriod> timePeriod = default;
+            QueryTimePeriod timePeriod = default;
             QueryDataset dataset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value);
+                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = QueryDataset.DeserializeQueryDataset(property.Value);
+                    dataset = QueryDataset.DeserializeQueryDataset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryDefinition(type, timeframe, timePeriod.Value, dataset, serializedAdditionalRawData);
+            return new QueryDefinition(type, timeframe, timePeriod, dataset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryDefinition>.Write(ModelReaderWriterOptions options)

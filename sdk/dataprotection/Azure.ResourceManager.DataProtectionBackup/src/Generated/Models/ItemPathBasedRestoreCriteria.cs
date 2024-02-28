@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="itemPath"/> is null. </exception>
         public ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem)
         {
-            Argument.AssertNotNull(itemPath, nameof(itemPath));
+            if (itemPath == null)
+            {
+                throw new ArgumentNullException(nameof(itemPath));
+            }
 
             ItemPath = itemPath;
             IsPathRelativeToBackupItem = isPathRelativeToBackupItem;

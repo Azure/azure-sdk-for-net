@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Redis.Models
             writer.WriteStringValue(DayOfWeek.ToSerialString());
             writer.WritePropertyName("startHourUtc"u8);
             writer.WriteNumberValue(StartHourUtc);
-            if (Optional.IsDefined(MaintenanceWindow))
+            if (MaintenanceWindow.HasValue)
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
                 writer.WriteStringValue(MaintenanceWindow.Value, "P");
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Redis.Models
             }
             RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
-            Optional<TimeSpan> maintenanceWindow = default;
+            TimeSpan? maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, Optional.ToNullable(maintenanceWindow), serializedAdditionalRawData);
+            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, maintenanceWindow, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisPatchScheduleSetting>.Write(ModelReaderWriterOptions options)

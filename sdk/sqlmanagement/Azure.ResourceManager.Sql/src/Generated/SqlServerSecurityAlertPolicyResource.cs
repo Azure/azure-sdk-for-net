@@ -198,7 +198,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerSecurityAlertPolicyResource>> UpdateAsync(WaitUntil waitUntil, SqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("SqlServerSecurityAlertPolicyResource.Update");
             scope.Start();
@@ -244,7 +247,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerSecurityAlertPolicyResource> Update(WaitUntil waitUntil, SqlServerSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("SqlServerSecurityAlertPolicyResource.Update");
             scope.Start();

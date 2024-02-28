@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> vaultName = default;
-            Optional<string> objectType = default;
-            Optional<string> objectName = default;
-            Optional<string> version = default;
-            Optional<float> nbf = default;
-            Optional<float> exp = default;
+            string id = default;
+            string vaultName = default;
+            string objectType = default;
+            string objectName = default;
+            string version = default;
+            float? nbf = default;
+            float? exp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Id"u8))
@@ -74,7 +73,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new KeyVaultCertificateNewVersionCreatedEventData(id.Value, vaultName.Value, objectType.Value, objectName.Value, version.Value, Optional.ToNullable(nbf), Optional.ToNullable(exp));
+            return new KeyVaultCertificateNewVersionCreatedEventData(
+                id,
+                vaultName,
+                objectType,
+                objectName,
+                version,
+                nbf,
+                exp);
         }
 
         internal partial class KeyVaultCertificateNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultCertificateNewVersionCreatedEventData>

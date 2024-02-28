@@ -57,7 +57,13 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new SentenceAssessment(sentiment, confidenceScores, offset, length, text, isNegated);
+            return new SentenceAssessment(
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                text,
+                isNegated);
         }
     }
 }

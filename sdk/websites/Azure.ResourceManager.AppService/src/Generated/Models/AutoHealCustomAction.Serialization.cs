@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Exe))
+            if (Exe != null)
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> exe = default;
-            Optional<string> parameters = default;
+            string exe = default;
+            string parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutoHealCustomAction(exe.Value, parameters.Value, serializedAdditionalRawData);
+            return new AutoHealCustomAction(exe, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutoHealCustomAction>.Write(ModelReaderWriterOptions options)

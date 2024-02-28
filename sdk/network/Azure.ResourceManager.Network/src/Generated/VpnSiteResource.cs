@@ -351,7 +351,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
         public virtual async Task<Response<VpnSiteResource>> UpdateAsync(NetworkTagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
+            if (vpnSiteParameters == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteParameters));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.Update");
             scope.Start();
@@ -393,7 +396,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="vpnSiteParameters"/> is null. </exception>
         public virtual Response<VpnSiteResource> Update(NetworkTagsObject vpnSiteParameters, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(vpnSiteParameters, nameof(vpnSiteParameters));
+            if (vpnSiteParameters == null)
+            {
+                throw new ArgumentNullException(nameof(vpnSiteParameters));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.Update");
             scope.Start();
@@ -436,8 +442,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<VpnSiteResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.AddTag");
             scope.Start();
@@ -498,8 +510,14 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<VpnSiteResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.AddTag");
             scope.Start();
@@ -559,7 +577,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<VpnSiteResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.SetTags");
             scope.Start();
@@ -616,7 +637,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<VpnSiteResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.SetTags");
             scope.Start();
@@ -673,7 +697,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<VpnSiteResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.RemoveTag");
             scope.Start();
@@ -733,7 +760,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<VpnSiteResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _vpnSiteClientDiagnostics.CreateScope("VpnSiteResource.RemoveTag");
             scope.Start();

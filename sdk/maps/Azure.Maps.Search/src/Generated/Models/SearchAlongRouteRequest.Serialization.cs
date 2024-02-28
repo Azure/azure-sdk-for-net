@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Route))
+            if (Route != null)
             {
                 writer.WritePropertyName("route"u8);
                 writer.WriteObjectValue(Route);

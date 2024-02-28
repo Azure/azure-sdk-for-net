@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(ProvisioningStatus))
+            if (ProvisioningStatus.HasValue)
             {
                 writer.WritePropertyName("provisioningStatus"u8);
                 writer.WriteStringValue(ProvisioningStatus.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<DataCollectionRuleBcdrLocationSpecProvisioningStatus> provisioningStatus = default;
+            AzureLocation? location = default;
+            DataCollectionRuleBcdrLocationSpecProvisioningStatus? provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCollectionRuleBcdrLocationSpec(Optional.ToNullable(location), Optional.ToNullable(provisioningStatus), serializedAdditionalRawData);
+            return new DataCollectionRuleBcdrLocationSpec(location, provisioningStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCollectionRuleBcdrLocationSpec>.Write(ModelReaderWriterOptions options)

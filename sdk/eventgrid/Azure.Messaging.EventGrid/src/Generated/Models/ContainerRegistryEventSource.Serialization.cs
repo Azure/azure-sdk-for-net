@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -18,8 +17,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> addr = default;
-            Optional<string> instanceID = default;
+            string addr = default;
+            string instanceID = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("addr"u8))
@@ -33,7 +32,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryEventSource(addr.Value, instanceID.Value);
+            return new ContainerRegistryEventSource(addr, instanceID);
         }
     }
 }

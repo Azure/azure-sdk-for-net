@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Action))
+            if (Action != null)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Optional.IsDefined(ActionUri))
+            if (ActionUri != null)
             {
                 writer.WritePropertyName("actionUrl"u8);
                 writer.WriteStringValue(ActionUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ActionUriComment))
+            if (ActionUriComment != null)
             {
                 writer.WritePropertyName("_ActionUrl.Comment"u8);
                 writer.WriteStringValue(ActionUriComment);
             }
-            if (Optional.IsDefined(ActionUriText))
+            if (ActionUriText != null)
             {
                 writer.WritePropertyName("actionUrlText"u8);
                 writer.WriteStringValue(ActionUriText);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> action = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriComment = default;
-            Optional<string> actionUriText = default;
+            string action = default;
+            Uri actionUri = default;
+            string actionUriComment = default;
+            string actionUriText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthRecommendedAction(action.Value, actionUri.Value, actionUriComment.Value, actionUriText.Value, serializedAdditionalRawData);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthRecommendedAction>.Write(ModelReaderWriterOptions options)

@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            if (options.Format != "W" && SubscriptionId.HasValue)
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
+            if (options.Format != "W" && MaxAccountCount.HasValue)
             {
                 writer.WritePropertyName("maxAccountCount"u8);
                 writer.WriteNumberValue(MaxAccountCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(AccountCount))
+            if (options.Format != "W" && AccountCount.HasValue)
             {
                 writer.WritePropertyName("accountCount"u8);
                 writer.WriteNumberValue(AccountCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
+            if (options.Format != "W" && IsUnderMigrationState.HasValue)
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteBooleanValue(IsUnderMigrationState.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<Guid> subscriptionId = default;
-            Optional<DataLakeStoreSubscriptionState> state = default;
-            Optional<int> maxAccountCount = default;
-            Optional<int> accountCount = default;
-            Optional<bool> migrationState = default;
+            Guid? subscriptionId = default;
+            DataLakeStoreSubscriptionState? state = default;
+            int? maxAccountCount = default;
+            int? accountCount = default;
+            bool? migrationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreCapabilityInformation(Optional.ToNullable(subscriptionId), Optional.ToNullable(state), Optional.ToNullable(maxAccountCount), Optional.ToNullable(accountCount), Optional.ToNullable(migrationState), serializedAdditionalRawData);
+            return new DataLakeStoreCapabilityInformation(
+                subscriptionId,
+                state,
+                maxAccountCount,
+                accountCount,
+                migrationState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreCapabilityInformation>.Write(ModelReaderWriterOptions options)

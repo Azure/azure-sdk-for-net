@@ -27,29 +27,29 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W" && ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Data))
+            if (Data != null)
             {
                 writer.WritePropertyName("data"u8);
 #if NET6_0_OR_GREATER
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicCertData))
+            if (options.Format != "W" && PublicCertData != null)
             {
                 writer.WritePropertyName("publicCertData"u8);
 #if NET6_0_OR_GREATER
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(KeyVaultSecretId))
+            if (KeyVaultSecretId != null)
             {
                 writer.WritePropertyName("keyVaultSecretId"u8);
                 writer.WriteStringValue(KeyVaultSecretId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -127,15 +127,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<BinaryData> data = default;
-            Optional<string> password = default;
-            Optional<BinaryData> publicCertData = default;
-            Optional<string> keyVaultSecretId = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            BinaryData data = default;
+            string password = default;
+            BinaryData publicCertData = default;
+            string keyVaultSecretId = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslCertificate(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), data.Value, password.Value, publicCertData.Value, keyVaultSecretId.Value, Optional.ToNullable(provisioningState));
+            return new ApplicationGatewaySslCertificate(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                data,
+                password,
+                publicCertData,
+                keyVaultSecretId,
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslCertificate>.Write(ModelReaderWriterOptions options)

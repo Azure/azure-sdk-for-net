@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Statistics))
+            if (Statistics.HasValue)
             {
                 writer.WritePropertyName("statistics"u8);
                 writer.WriteObjectValue(Statistics);
@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<SentenceSentimentInternal> sentences = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sentiment"u8))
@@ -104,7 +104,13 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentResponseDocumentsItem(id, warnings, Optional.ToNullable(statistics), sentiment, confidenceScores, sentences);
+            return new SentimentResponseDocumentsItem(
+                id,
+                warnings,
+                statistics,
+                sentiment,
+                confidenceScores,
+                sentences);
         }
     }
 }

@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal NetworkCloudOperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
+            if (status == null)
+            {
+                throw new ArgumentNullException(nameof(status));
+            }
 
             Status = status;
             Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();

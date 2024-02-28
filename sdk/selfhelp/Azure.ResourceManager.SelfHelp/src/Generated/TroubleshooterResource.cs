@@ -196,7 +196,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<TroubleshooterResource>> UpdateAsync(WaitUntil waitUntil, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResource.Update");
             scope.Start();
@@ -242,7 +245,10 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<TroubleshooterResource> Update(WaitUntil waitUntil, TroubleshooterResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResource.Update");
             scope.Start();

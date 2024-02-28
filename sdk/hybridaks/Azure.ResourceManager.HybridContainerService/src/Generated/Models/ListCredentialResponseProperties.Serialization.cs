@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
+            if (options.Format != "W" && !(Kubeconfigs is ChangeTrackingList<HybridContainerServiceCredential> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("kubeconfigs"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<HybridContainerServiceCredential>> kubeconfigs = default;
+            IReadOnlyList<HybridContainerServiceCredential> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceCredential> array = new List<HybridContainerServiceCredential>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item));
+                        array.Add(HybridContainerServiceCredential.DeserializeHybridContainerServiceCredential(item, options));
                     }
                     kubeconfigs = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ListCredentialResponseProperties(Optional.ToList(kubeconfigs), serializedAdditionalRawData);
+            return new ListCredentialResponseProperties(kubeconfigs ?? new ChangeTrackingList<HybridContainerServiceCredential>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListCredentialResponseProperties>.Write(ModelReaderWriterOptions options)

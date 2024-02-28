@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            Optional<DataFactoryCredentialReference> credential = default;
+            DataFactoryCredentialReference credential = default;
             string authorizationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, serializedAdditionalRawData, resourceId, credential.Value);
+            return new LinkedIntegrationRuntimeRbacAuthorization(authorizationType, serializedAdditionalRawData, resourceId, credential);
         }
 
         BinaryData IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>.Write(ModelReaderWriterOptions options)

@@ -24,7 +24,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal AnalyzeJobState(DateTimeOffset createdDateTime, Guid jobId, DateTimeOffset lastUpdateDateTime, State status, TasksStateTasks tasks) : base(createdDateTime, jobId, lastUpdateDateTime, status)
         {
-            Argument.AssertNotNull(tasks, nameof(tasks));
+            if (tasks == null)
+            {
+                throw new ArgumentNullException(nameof(tasks));
+            }
 
             Tasks = tasks;
             Errors = new ChangeTrackingList<TextAnalyticsError>();

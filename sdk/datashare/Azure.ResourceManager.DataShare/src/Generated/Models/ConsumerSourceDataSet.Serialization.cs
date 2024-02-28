@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            if (options.Format != "W" && DataSetId.HasValue)
             {
                 writer.WritePropertyName("dataSetId"u8);
                 writer.WriteStringValue(DataSetId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetLocation))
+            if (options.Format != "W" && DataSetLocation.HasValue)
             {
                 writer.WritePropertyName("dataSetLocation"u8);
                 writer.WriteStringValue(DataSetLocation.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetName))
+            if (options.Format != "W" && DataSetName != null)
             {
                 writer.WritePropertyName("dataSetName"u8);
                 writer.WriteStringValue(DataSetName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetPath))
+            if (options.Format != "W" && DataSetPath != null)
             {
                 writer.WritePropertyName("dataSetPath"u8);
                 writer.WriteStringValue(DataSetPath);
             }
-            if (options.Format != "W" && Optional.IsDefined(DataSetType))
+            if (options.Format != "W" && DataSetType.HasValue)
             {
                 writer.WritePropertyName("dataSetType"u8);
                 writer.WriteStringValue(DataSetType.Value.ToString());
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<AzureLocation> dataSetLocation = default;
-            Optional<string> dataSetName = default;
-            Optional<string> dataSetPath = default;
-            Optional<ShareDataSetType> dataSetType = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            AzureLocation? dataSetLocation = default;
+            string dataSetName = default;
+            string dataSetPath = default;
+            ShareDataSetType? dataSetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType), serializedAdditionalRawData);
+            return new ConsumerSourceDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                dataSetId,
+                dataSetLocation,
+                dataSetName,
+                dataSetPath,
+                dataSetType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumerSourceDataSet>.Write(ModelReaderWriterOptions options)

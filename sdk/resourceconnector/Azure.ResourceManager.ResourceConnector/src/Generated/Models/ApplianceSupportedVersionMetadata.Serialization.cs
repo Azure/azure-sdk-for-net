@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(CatalogVersion))
+            if (options.Format != "W" && CatalogVersion != null)
             {
                 writer.WritePropertyName("catalogVersion"u8);
                 writer.WriteObjectValue(CatalogVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceSupportedVersionCatalogVersion> catalogVersion = default;
+            ApplianceSupportedVersionCatalogVersion catalogVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value);
+                    catalogVersion = ApplianceSupportedVersionCatalogVersion.DeserializeApplianceSupportedVersionCatalogVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersionMetadata(catalogVersion.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionMetadata(catalogVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersionMetadata>.Write(ModelReaderWriterOptions options)

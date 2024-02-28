@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinFreeCpu))
+            if (MinFreeCpu.HasValue)
             {
                 writer.WritePropertyName("minFreeCpu"u8);
                 writer.WriteNumberValue(MinFreeCpu.Value);
             }
-            if (Optional.IsDefined(MinFreeMemoryMb))
+            if (MinFreeMemoryMb.HasValue)
             {
                 writer.WritePropertyName("minFreeMemoryMb"u8);
                 writer.WriteNumberValue(MinFreeMemoryMb.Value);
             }
-            if (Optional.IsDefined(MaxParallelism))
+            if (MaxParallelism.HasValue)
             {
                 writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> minFreeCpu = default;
-            Optional<int> minFreeMemoryMb = default;
-            Optional<int> maxParallelism = default;
+            int? minFreeCpu = default;
+            int? minFreeMemoryMb = default;
+            int? maxParallelism = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBThrottlingSettings(Optional.ToNullable(minFreeCpu), Optional.ToNullable(minFreeMemoryMb), Optional.ToNullable(maxParallelism), serializedAdditionalRawData);
+            return new MongoDBThrottlingSettings(minFreeCpu, minFreeMemoryMb, maxParallelism, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MongoDBThrottlingSettings>.Write(ModelReaderWriterOptions options)

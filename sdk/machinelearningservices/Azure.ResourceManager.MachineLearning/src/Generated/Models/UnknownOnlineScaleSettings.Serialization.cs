@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnlineScaleSettings(document.RootElement, options);
+            return DeserializeMachineLearningOnlineScaleSettings(document.RootElement, options);
         }
 
         internal static UnknownOnlineScaleSettings DeserializeUnknownOnlineScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOnlineScaleSettings(document.RootElement, options);
+                        return DeserializeMachineLearningOnlineScaleSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningOnlineScaleSettings)} does not support '{options.Format}' format.");

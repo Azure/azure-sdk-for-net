@@ -281,7 +281,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerCommunicationLinkResource>> UpdateAsync(WaitUntil waitUntil, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkResource.Update");
             scope.Start();
@@ -327,7 +330,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerCommunicationLinkResource> Update(WaitUntil waitUntil, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkResource.Update");
             scope.Start();

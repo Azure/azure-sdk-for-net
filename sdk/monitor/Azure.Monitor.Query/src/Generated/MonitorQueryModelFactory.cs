@@ -53,7 +53,14 @@ namespace Azure.Monitor.Query.Models
         {
             metrics ??= new List<MetricResult>();
 
-            return new MetricsBatchResultValues(startTime, endTime, interval, @namespace, resourceRegion, resourceId, metrics?.ToList());
+            return new MetricsBatchResultValues(
+                startTime,
+                endTime,
+                interval,
+                @namespace,
+                resourceRegion,
+                resourceId,
+                metrics?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ScriptLogData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScriptLogData>> value = default;
+            IReadOnlyList<ScriptLogData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ScriptLogData> array = new List<ScriptLogData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptLogData.DeserializeScriptLogData(item));
+                        array.Add(ScriptLogData.DeserializeScriptLogData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScriptLogsList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ScriptLogsList(value ?? new ChangeTrackingList<ScriptLogData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScriptLogsList>.Write(ModelReaderWriterOptions options)

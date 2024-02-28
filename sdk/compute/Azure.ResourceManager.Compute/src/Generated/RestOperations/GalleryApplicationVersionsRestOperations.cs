@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-03";
+            _apiVersion = apiVersion ?? "2023-07-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -77,12 +77,50 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -109,12 +147,50 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -169,12 +245,50 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -199,12 +313,50 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, GalleryApplicationVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
+            if (patch == null)
+            {
+                throw new ArgumentNullException(nameof(patch));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -257,11 +409,46 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GalleryApplicationVersionData>> GetAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -293,11 +480,46 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GalleryApplicationVersionData> Get(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName, expand);
             _pipeline.Send(message, cancellationToken);
@@ -352,11 +574,46 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -382,11 +639,46 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/>, <paramref name="galleryApplicationName"/> or <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, string galleryApplicationVersionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
+            if (galleryApplicationVersionName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationVersionName));
+            }
+            if (galleryApplicationVersionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationVersionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName, galleryApplicationVersionName);
             _pipeline.Send(message, cancellationToken);
@@ -434,10 +726,38 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationAsync(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
 
             using var message = CreateListByGalleryApplicationRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -465,10 +785,38 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GalleryApplicationVersionList> ListByGalleryApplication(string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
 
             using var message = CreateListByGalleryApplicationRequest(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             _pipeline.Send(message, cancellationToken);
@@ -511,11 +859,42 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GalleryApplicationVersionList>> ListByGalleryApplicationNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
 
             using var message = CreateListByGalleryApplicationNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -544,11 +923,42 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="galleryName"/> or <paramref name="galleryApplicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GalleryApplicationVersionList> ListByGalleryApplicationNextPage(string nextLink, string subscriptionId, string resourceGroupName, string galleryName, string galleryApplicationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(galleryName, nameof(galleryName));
-            Argument.AssertNotNullOrEmpty(galleryApplicationName, nameof(galleryApplicationName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (galleryName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryName));
+            }
+            if (galleryName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryName));
+            }
+            if (galleryApplicationName == null)
+            {
+                throw new ArgumentNullException(nameof(galleryApplicationName));
+            }
+            if (galleryApplicationName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(galleryApplicationName));
+            }
 
             using var message = CreateListByGalleryApplicationNextPageRequest(nextLink, subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
             _pipeline.Send(message, cancellationToken);

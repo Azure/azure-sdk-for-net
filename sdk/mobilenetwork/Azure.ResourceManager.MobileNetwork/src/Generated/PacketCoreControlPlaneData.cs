@@ -63,10 +63,22 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="sites"/>, <paramref name="platform"/>, <paramref name="controlPlaneAccessInterface"/> or <paramref name="localDiagnosticsAccess"/> is null. </exception>
         public PacketCoreControlPlaneData(AzureLocation location, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) : base(location)
         {
-            Argument.AssertNotNull(sites, nameof(sites));
-            Argument.AssertNotNull(platform, nameof(platform));
-            Argument.AssertNotNull(controlPlaneAccessInterface, nameof(controlPlaneAccessInterface));
-            Argument.AssertNotNull(localDiagnosticsAccess, nameof(localDiagnosticsAccess));
+            if (sites == null)
+            {
+                throw new ArgumentNullException(nameof(sites));
+            }
+            if (platform == null)
+            {
+                throw new ArgumentNullException(nameof(platform));
+            }
+            if (controlPlaneAccessInterface == null)
+            {
+                throw new ArgumentNullException(nameof(controlPlaneAccessInterface));
+            }
+            if (localDiagnosticsAccess == null)
+            {
+                throw new ArgumentNullException(nameof(localDiagnosticsAccess));
+            }
 
             Sites = sites.ToList();
             Platform = platform;

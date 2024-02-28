@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteBooleanValue(IsCheckedIn);
             writer.WritePropertyName("statusMessage"u8);
             writer.WriteStringValue(StatusMessage);
-            if (Optional.IsDefined(PullRequest))
+            if (PullRequest != null)
             {
                 writer.WritePropertyName("pullRequest"u8);
                 writer.WriteStringValue(PullRequest);
             }
-            if (Optional.IsDefined(CommitId))
+            if (CommitId != null)
             {
                 writer.WritePropertyName("commitId"u8);
                 writer.WriteStringValue(CommitId);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             bool isCheckedIn = default;
             string statusMessage = default;
-            Optional<string> pullRequest = default;
-            Optional<string> commitId = default;
+            string pullRequest = default;
+            string commitId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest.Value, commitId.Value, serializedAdditionalRawData);
+            return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckinManifestInfo>.Write(ModelReaderWriterOptions options)

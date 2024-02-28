@@ -26,57 +26,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PipelineName))
+            if (options.Format != "W" && PipelineName != null)
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
+            if (options.Format != "W" && PipelineRunId.HasValue)
             {
                 writer.WritePropertyName("pipelineRunId"u8);
                 writer.WriteStringValue(PipelineRunId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivityName))
+            if (options.Format != "W" && ActivityName != null)
             {
                 writer.WritePropertyName("activityName"u8);
                 writer.WriteStringValue(ActivityName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivityType))
+            if (options.Format != "W" && ActivityType != null)
             {
                 writer.WritePropertyName("activityType"u8);
                 writer.WriteStringValue(ActivityType);
             }
-            if (options.Format != "W" && Optional.IsDefined(ActivityRunId))
+            if (options.Format != "W" && ActivityRunId.HasValue)
             {
                 writer.WritePropertyName("activityRunId"u8);
                 writer.WriteStringValue(ActivityRunId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LinkedServiceName))
+            if (options.Format != "W" && LinkedServiceName != null)
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 writer.WriteStringValue(LinkedServiceName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && StartOn.HasValue)
             {
                 writer.WritePropertyName("activityRunStart"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && EndOn.HasValue)
             {
                 writer.WritePropertyName("activityRunEnd"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DurationInMs))
+            if (options.Format != "W" && DurationInMs.HasValue)
             {
                 writer.WritePropertyName("durationInMs"u8);
                 writer.WriteNumberValue(DurationInMs.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Input))
+            if (options.Format != "W" && Input != null)
             {
                 writer.WritePropertyName("input"u8);
 #if NET6_0_OR_GREATER
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(Output))
+            if (options.Format != "W" && Output != null)
             {
                 writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
 #if NET6_0_OR_GREATER
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> pipelineName = default;
-            Optional<Guid> pipelineRunId = default;
-            Optional<string> activityName = default;
-            Optional<string> activityType = default;
-            Optional<Guid> activityRunId = default;
-            Optional<string> linkedServiceName = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> activityRunStart = default;
-            Optional<DateTimeOffset> activityRunEnd = default;
-            Optional<int> durationInMs = default;
-            Optional<BinaryData> input = default;
-            Optional<BinaryData> output = default;
-            Optional<BinaryData> error = default;
+            string pipelineName = default;
+            Guid? pipelineRunId = default;
+            string activityName = default;
+            string activityType = default;
+            Guid? activityRunId = default;
+            string linkedServiceName = default;
+            string status = default;
+            DateTimeOffset? activityRunStart = default;
+            DateTimeOffset? activityRunEnd = default;
+            int? durationInMs = default;
+            BinaryData input = default;
+            BinaryData output = default;
+            BinaryData error = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -264,7 +264,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PipelineActivityRunInformation(pipelineName.Value, Optional.ToNullable(pipelineRunId), activityName.Value, activityType.Value, Optional.ToNullable(activityRunId), linkedServiceName.Value, status.Value, Optional.ToNullable(activityRunStart), Optional.ToNullable(activityRunEnd), Optional.ToNullable(durationInMs), input.Value, output.Value, error.Value, additionalProperties);
+            return new PipelineActivityRunInformation(
+                pipelineName,
+                pipelineRunId,
+                activityName,
+                activityType,
+                activityRunId,
+                linkedServiceName,
+                status,
+                activityRunStart,
+                activityRunEnd,
+                durationInMs,
+                input,
+                output,
+                error,
+                additionalProperties);
         }
 
         BinaryData IPersistableModel<PipelineActivityRunInformation>.Write(ModelReaderWriterOptions options)

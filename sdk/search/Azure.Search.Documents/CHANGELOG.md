@@ -1,14 +1,10 @@
 # Release History
 
-## 11.6.0-beta.3 (Unreleased)
+## 11.6.0-beta.3 (2024-03-04)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added the `VectorSearch.Compressions` property, which can be utilized to configure options specific to the compression method used during indexing or querying.
+- Added the `SearchField.IsStored`, `VectorSearchField.IsStored`, and `VectorSearchFieldAttribute.IsStored` property. It represent an immutable value indicating whether the field will be persisted separately on disk to be returned in a search result. This property is applicable only for vector fields.
 
 ## 11.6.0-beta.2 (2024-02-05)
 

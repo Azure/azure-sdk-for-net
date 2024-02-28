@@ -55,9 +55,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataNetwork"/>, <paramref name="sessionAmbr"/> or <paramref name="allowedServices"/> is null. </exception>
         public DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, IEnumerable<WritableSubResource> allowedServices)
         {
-            Argument.AssertNotNull(dataNetwork, nameof(dataNetwork));
-            Argument.AssertNotNull(sessionAmbr, nameof(sessionAmbr));
-            Argument.AssertNotNull(allowedServices, nameof(allowedServices));
+            if (dataNetwork == null)
+            {
+                throw new ArgumentNullException(nameof(dataNetwork));
+            }
+            if (sessionAmbr == null)
+            {
+                throw new ArgumentNullException(nameof(sessionAmbr));
+            }
+            if (allowedServices == null)
+            {
+                throw new ArgumentNullException(nameof(allowedServices));
+            }
 
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;

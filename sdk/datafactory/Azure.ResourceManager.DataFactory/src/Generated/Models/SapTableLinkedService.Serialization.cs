@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(ConnectVia))
+            if (ConnectVia != null)
             {
                 writer.WritePropertyName("connectVia"u8);
                 writer.WriteObjectValue(ConnectVia);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Parameters))
+            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,82 +74,82 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Server))
+            if (Server != null)
             {
                 writer.WritePropertyName("server"u8);
                 JsonSerializer.Serialize(writer, Server);
             }
-            if (Optional.IsDefined(SystemNumber))
+            if (SystemNumber != null)
             {
                 writer.WritePropertyName("systemNumber"u8);
                 JsonSerializer.Serialize(writer, SystemNumber);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (Optional.IsDefined(Language))
+            if (Language != null)
             {
                 writer.WritePropertyName("language"u8);
                 JsonSerializer.Serialize(writer, Language);
             }
-            if (Optional.IsDefined(SystemId))
+            if (SystemId != null)
             {
                 writer.WritePropertyName("systemId"u8);
                 JsonSerializer.Serialize(writer, SystemId);
             }
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 JsonSerializer.Serialize(writer, UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
-            if (Optional.IsDefined(MessageServer))
+            if (MessageServer != null)
             {
                 writer.WritePropertyName("messageServer"u8);
                 JsonSerializer.Serialize(writer, MessageServer);
             }
-            if (Optional.IsDefined(MessageServerService))
+            if (MessageServerService != null)
             {
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(SncMode))
+            if (SncMode != null)
             {
                 writer.WritePropertyName("sncMode"u8);
                 JsonSerializer.Serialize(writer, SncMode);
             }
-            if (Optional.IsDefined(SncMyName))
+            if (SncMyName != null)
             {
                 writer.WritePropertyName("sncMyName"u8);
                 JsonSerializer.Serialize(writer, SncMyName);
             }
-            if (Optional.IsDefined(SncPartnerName))
+            if (SncPartnerName != null)
             {
                 writer.WritePropertyName("sncPartnerName"u8);
                 JsonSerializer.Serialize(writer, SncPartnerName);
             }
-            if (Optional.IsDefined(SncLibraryPath))
+            if (SncLibraryPath != null)
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
                 JsonSerializer.Serialize(writer, SncLibraryPath);
             }
-            if (Optional.IsDefined(SncQop))
+            if (SncQop != null)
             {
                 writer.WritePropertyName("sncQop"u8);
                 JsonSerializer.Serialize(writer, SncQop);
             }
-            if (Optional.IsDefined(LogonGroup))
+            if (LogonGroup != null)
             {
                 writer.WritePropertyName("logonGroup"u8);
                 JsonSerializer.Serialize(writer, LogonGroup);
             }
-            if (Optional.IsDefined(EncryptedCredential))
+            if (EncryptedCredential != null)
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -191,26 +191,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFactoryElement<string>> server = default;
-            Optional<DataFactoryElement<string>> systemNumber = default;
-            Optional<DataFactoryElement<string>> clientId = default;
-            Optional<DataFactoryElement<string>> language = default;
-            Optional<DataFactoryElement<string>> systemId = default;
-            Optional<DataFactoryElement<string>> userName = default;
-            Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<string>> messageServer = default;
-            Optional<DataFactoryElement<string>> messageServerService = default;
-            Optional<DataFactoryElement<string>> sncMode = default;
-            Optional<DataFactoryElement<string>> sncMyName = default;
-            Optional<DataFactoryElement<string>> sncPartnerName = default;
-            Optional<DataFactoryElement<string>> sncLibraryPath = default;
-            Optional<DataFactoryElement<string>> sncQop = default;
-            Optional<DataFactoryElement<string>> logonGroup = default;
-            Optional<string> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> systemNumber = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactoryElement<string> language = default;
+            DataFactoryElement<string> systemId = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> messageServer = default;
+            DataFactoryElement<string> messageServerService = default;
+            DataFactoryElement<string> sncMode = default;
+            DataFactoryElement<string> sncMyName = default;
+            DataFactoryElement<string> sncPartnerName = default;
+            DataFactoryElement<string> sncLibraryPath = default;
+            DataFactoryElement<string> sncQop = default;
+            DataFactoryElement<string> logonGroup = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -424,7 +424,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapTableLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                sncMode,
+                sncMyName,
+                sncPartnerName,
+                sncLibraryPath,
+                sncQop,
+                logonGroup,
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<SapTableLinkedService>.Write(ModelReaderWriterOptions options)

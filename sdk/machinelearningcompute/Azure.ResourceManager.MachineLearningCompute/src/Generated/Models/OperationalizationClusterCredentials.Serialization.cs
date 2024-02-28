@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageAccount))
+            if (StorageAccount != null)
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteObjectValue(StorageAccount);
             }
-            if (Optional.IsDefined(ContainerRegistry))
+            if (ContainerRegistry != null)
             {
                 writer.WritePropertyName("containerRegistry"u8);
                 writer.WriteObjectValue(ContainerRegistry);
             }
-            if (Optional.IsDefined(ContainerService))
+            if (ContainerService != null)
             {
                 writer.WritePropertyName("containerService"u8);
                 writer.WriteObjectValue(ContainerService);
             }
-            if (Optional.IsDefined(AppInsights))
+            if (AppInsights != null)
             {
                 writer.WritePropertyName("appInsights"u8);
                 writer.WriteObjectValue(AppInsights);
             }
-            if (Optional.IsDefined(ServiceAuthConfiguration))
+            if (ServiceAuthConfiguration != null)
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
                 writer.WriteObjectValue(ServiceAuthConfiguration);
             }
-            if (Optional.IsDefined(SslConfiguration))
+            if (SslConfiguration != null)
             {
                 writer.WritePropertyName("sslConfiguration"u8);
                 writer.WriteObjectValue(SslConfiguration);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<StorageAccountCredentials> storageAccount = default;
-            Optional<ContainerRegistryCredentials> containerRegistry = default;
-            Optional<ContainerServiceCredentials> containerService = default;
-            Optional<AppInsightsCredentials> appInsights = default;
-            Optional<ServiceAuthConfiguration> serviceAuthConfiguration = default;
-            Optional<SslConfiguration> sslConfiguration = default;
+            StorageAccountCredentials storageAccount = default;
+            ContainerRegistryCredentials containerRegistry = default;
+            ContainerServiceCredentials containerService = default;
+            AppInsightsCredentials appInsights = default;
+            ServiceAuthConfiguration serviceAuthConfiguration = default;
+            SslConfiguration sslConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    storageAccount = StorageAccountCredentials.DeserializeStorageAccountCredentials(property.Value);
+                    storageAccount = StorageAccountCredentials.DeserializeStorageAccountCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerRegistry"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    containerRegistry = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value);
+                    containerRegistry = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("containerService"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    containerService = ContainerServiceCredentials.DeserializeContainerServiceCredentials(property.Value);
+                    containerService = ContainerServiceCredentials.DeserializeContainerServiceCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("appInsights"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    appInsights = AppInsightsCredentials.DeserializeAppInsightsCredentials(property.Value);
+                    appInsights = AppInsightsCredentials.DeserializeAppInsightsCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceAuthConfiguration"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuthConfiguration = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
+                    serviceAuthConfiguration = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sslConfiguration"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    sslConfiguration = SslConfiguration.DeserializeSslConfiguration(property.Value);
+                    sslConfiguration = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationalizationClusterCredentials(storageAccount.Value, containerRegistry.Value, containerService.Value, appInsights.Value, serviceAuthConfiguration.Value, sslConfiguration.Value, serializedAdditionalRawData);
+            return new OperationalizationClusterCredentials(
+                storageAccount,
+                containerRegistry,
+                containerService,
+                appInsights,
+                serviceAuthConfiguration,
+                sslConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationalizationClusterCredentials>.Write(ModelReaderWriterOptions options)

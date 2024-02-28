@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<Response<DataReplicationEventResource>> GetAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
             scope.Start();
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual Response<DataReplicationEventResource> Get(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Get");
             scope.Start();
@@ -234,7 +248,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
             scope.Start();
@@ -277,7 +298,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual Response<bool> Exists(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.Exists");
             scope.Start();
@@ -320,7 +348,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual async Task<NullableResponse<DataReplicationEventResource>> GetIfExistsAsync(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
             scope.Start();
@@ -365,7 +400,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> is null. </exception>
         public virtual NullableResponse<DataReplicationEventResource> GetIfExists(string eventName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(eventName, nameof(eventName));
+            if (eventName == null)
+            {
+                throw new ArgumentNullException(nameof(eventName));
+            }
+            if (eventName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(eventName));
+            }
 
             using var scope = _dataReplicationEventEventClientDiagnostics.CreateScope("DataReplicationEventCollection.GetIfExists");
             scope.Start();

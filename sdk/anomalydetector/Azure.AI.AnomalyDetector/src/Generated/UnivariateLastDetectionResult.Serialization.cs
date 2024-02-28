@@ -43,7 +43,7 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteBooleanValue(IsNegativeAnomaly);
             writer.WritePropertyName("isPositiveAnomaly"u8);
             writer.WriteBooleanValue(IsPositiveAnomaly);
-            if (Optional.IsDefined(Severity))
+            if (Severity.HasValue)
             {
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value);
@@ -94,7 +94,7 @@ namespace Azure.AI.AnomalyDetector
             bool isAnomaly = default;
             bool isNegativeAnomaly = default;
             bool isPositiveAnomaly = default;
-            Optional<float> severity = default;
+            float? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -154,7 +154,17 @@ namespace Azure.AI.AnomalyDetector
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new UnivariateLastDetectionResult(
+                period,
+                suggestedWindow,
+                expectedValue,
+                upperMargin,
+                lowerMargin,
+                isAnomaly,
+                isNegativeAnomaly,
+                isPositiveAnomaly,
+                severity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnivariateLastDetectionResult>.Write(ModelReaderWriterOptions options)

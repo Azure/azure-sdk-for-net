@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string name = default;
             Uri uri = default;
             BinaryData roles = default;
-            Optional<string> parameters = default;
+            string parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryScriptAction(name, uri, roles, parameters.Value, serializedAdditionalRawData);
+            return new DataFactoryScriptAction(name, uri, roles, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryScriptAction>.Write(ModelReaderWriterOptions options)

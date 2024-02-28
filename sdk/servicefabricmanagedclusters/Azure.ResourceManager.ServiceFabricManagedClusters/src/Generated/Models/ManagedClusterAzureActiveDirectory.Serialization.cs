@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (TenantId.HasValue)
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(ClusterApplication))
+            if (ClusterApplication != null)
             {
                 writer.WritePropertyName("clusterApplication"u8);
                 writer.WriteStringValue(ClusterApplication);
             }
-            if (Optional.IsDefined(ClientApplication))
+            if (ClientApplication != null)
             {
                 writer.WritePropertyName("clientApplication"u8);
                 writer.WriteStringValue(ClientApplication);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> clusterApplication = default;
-            Optional<string> clientApplication = default;
+            Guid? tenantId = default;
+            string clusterApplication = default;
+            string clientApplication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAzureActiveDirectory(Optional.ToNullable(tenantId), clusterApplication.Value, clientApplication.Value, serializedAdditionalRawData);
+            return new ManagedClusterAzureActiveDirectory(tenantId, clusterApplication, clientApplication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAzureActiveDirectory>.Write(ModelReaderWriterOptions options)

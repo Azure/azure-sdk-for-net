@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Tier))
+            if (options.Format != "W" && Tier.HasValue)
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             HybridNetworkSkuName name = default;
-            Optional<HybridNetworkSkuTier> tier = default;
+            HybridNetworkSkuTier? tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HybridNetworkSku(name, Optional.ToNullable(tier), serializedAdditionalRawData);
+            return new HybridNetworkSku(name, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HybridNetworkSku>.Write(ModelReaderWriterOptions options)

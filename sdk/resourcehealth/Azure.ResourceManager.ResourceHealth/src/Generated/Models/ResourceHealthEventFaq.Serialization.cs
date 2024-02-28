@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Question))
+            if (Question != null)
             {
                 writer.WritePropertyName("question"u8);
                 writer.WriteStringValue(Question);
             }
-            if (Optional.IsDefined(Answer))
+            if (Answer != null)
             {
                 writer.WritePropertyName("answer"u8);
                 writer.WriteStringValue(Answer);
             }
-            if (Optional.IsDefined(LocaleCode))
+            if (LocaleCode != null)
             {
                 writer.WritePropertyName("localeCode"u8);
                 writer.WriteStringValue(LocaleCode);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> question = default;
-            Optional<string> answer = default;
-            Optional<string> localeCode = default;
+            string question = default;
+            string answer = default;
+            string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventFaq(question.Value, answer.Value, localeCode.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventFaq(question, answer, localeCode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventFaq>.Write(ModelReaderWriterOptions options)

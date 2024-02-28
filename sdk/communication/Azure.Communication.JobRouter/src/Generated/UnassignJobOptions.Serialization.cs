@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SuspendMatching))
+            if (SuspendMatching.HasValue)
             {
                 writer.WritePropertyName("suspendMatching"u8);
                 writer.WriteBooleanValue(SuspendMatching.Value);
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<bool> suspendMatching = default;
+            bool? suspendMatching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,7 +90,7 @@ namespace Azure.Communication.JobRouter
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnassignJobOptions(Optional.ToNullable(suspendMatching), serializedAdditionalRawData);
+            return new UnassignJobOptions(suspendMatching, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UnassignJobOptions>.Write(ModelReaderWriterOptions options)

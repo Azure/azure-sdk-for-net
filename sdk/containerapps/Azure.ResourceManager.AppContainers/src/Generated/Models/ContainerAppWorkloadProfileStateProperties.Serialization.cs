@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinimumCount))
+            if (MinimumCount.HasValue)
             {
                 writer.WritePropertyName("minimumCount"u8);
                 writer.WriteNumberValue(MinimumCount.Value);
             }
-            if (Optional.IsDefined(MaximumCount))
+            if (MaximumCount.HasValue)
             {
                 writer.WritePropertyName("maximumCount"u8);
                 writer.WriteNumberValue(MaximumCount.Value);
             }
-            if (Optional.IsDefined(CurrentCount))
+            if (CurrentCount.HasValue)
             {
                 writer.WritePropertyName("currentCount"u8);
                 writer.WriteNumberValue(CurrentCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> minimumCount = default;
-            Optional<int> maximumCount = default;
-            Optional<int> currentCount = default;
+            int? minimumCount = default;
+            int? maximumCount = default;
+            int? currentCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppWorkloadProfileStateProperties(Optional.ToNullable(minimumCount), Optional.ToNullable(maximumCount), Optional.ToNullable(currentCount), serializedAdditionalRawData);
+            return new ContainerAppWorkloadProfileStateProperties(minimumCount, maximumCount, currentCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppWorkloadProfileStateProperties>.Write(ModelReaderWriterOptions options)

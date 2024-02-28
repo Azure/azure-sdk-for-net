@@ -15,12 +15,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IgnoreHostname))
+            if (IgnoreHostname != null)
             {
                 writer.WritePropertyName("ignoreHostname"u8);
                 writer.WriteStringValue(IgnoreHostname);
             }
-            if (Optional.IsDefined(IgnoreSignature))
+            if (IgnoreSignature != null)
             {
                 writer.WritePropertyName("ignoreSignature"u8);
                 writer.WriteStringValue(IgnoreSignature);
@@ -34,8 +34,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> ignoreHostname = default;
-            Optional<string> ignoreSignature = default;
+            string ignoreHostname = default;
+            string ignoreSignature = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ignoreHostname"u8))
@@ -49,7 +49,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new TlsValidationOptions(ignoreHostname.Value, ignoreSignature.Value);
+            return new TlsValidationOptions(ignoreHostname, ignoreSignature);
         }
     }
 }

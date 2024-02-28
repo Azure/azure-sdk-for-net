@@ -34,72 +34,72 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(ServerFarmId))
+            if (ServerFarmId != null)
             {
                 writer.WritePropertyName("serverFarmId"u8);
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(SkuName))
+            if (SkuName != null)
             {
                 writer.WritePropertyName("skuName"u8);
                 writer.WriteStringValue(SkuName);
             }
-            if (Optional.IsDefined(NeedLinuxWorkers))
+            if (NeedLinuxWorkers.HasValue)
             {
                 writer.WritePropertyName("needLinuxWorkers"u8);
                 writer.WriteBooleanValue(NeedLinuxWorkers.Value);
             }
-            if (Optional.IsDefined(IsSpot))
+            if (IsSpot.HasValue)
             {
                 writer.WritePropertyName("isSpot"u8);
                 writer.WriteBooleanValue(IsSpot.Value);
             }
-            if (Optional.IsDefined(Capacity))
+            if (Capacity.HasValue)
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (Optional.IsDefined(HostingEnvironment))
+            if (HostingEnvironment != null)
             {
                 writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
-            if (Optional.IsDefined(IsXenon))
+            if (IsXenon.HasValue)
             {
                 writer.WritePropertyName("isXenon"u8);
                 writer.WriteBooleanValue(IsXenon.Value);
             }
-            if (Optional.IsDefined(ContainerRegistryBaseUri))
+            if (ContainerRegistryBaseUri != null)
             {
                 writer.WritePropertyName("containerRegistryBaseUrl"u8);
                 writer.WriteStringValue(ContainerRegistryBaseUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(ContainerRegistryUsername))
+            if (ContainerRegistryUsername != null)
             {
                 writer.WritePropertyName("containerRegistryUsername"u8);
                 writer.WriteStringValue(ContainerRegistryUsername);
             }
-            if (Optional.IsDefined(ContainerRegistryPassword))
+            if (ContainerRegistryPassword != null)
             {
                 writer.WritePropertyName("containerRegistryPassword"u8);
                 writer.WriteStringValue(ContainerRegistryPassword);
             }
-            if (Optional.IsDefined(ContainerImageRepository))
+            if (ContainerImageRepository != null)
             {
                 writer.WritePropertyName("containerImageRepository"u8);
                 writer.WriteStringValue(ContainerImageRepository);
             }
-            if (Optional.IsDefined(ContainerImageTag))
+            if (ContainerImageTag != null)
             {
                 writer.WritePropertyName("containerImageTag"u8);
                 writer.WriteStringValue(ContainerImageTag);
             }
-            if (Optional.IsDefined(ContainerImagePlatform))
+            if (ContainerImagePlatform != null)
             {
                 writer.WritePropertyName("containerImagePlatform"u8);
                 writer.WriteStringValue(ContainerImagePlatform);
             }
-            if (Optional.IsDefined(AppServiceEnvironment))
+            if (AppServiceEnvironment != null)
             {
                 writer.WritePropertyName("appServiceEnvironment"u8);
                 writer.WriteObjectValue(AppServiceEnvironment);
@@ -146,20 +146,20 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             ValidateResourceType type = default;
             AzureLocation location = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<string> skuName = default;
-            Optional<bool> needLinuxWorkers = default;
-            Optional<bool> isSpot = default;
-            Optional<int> capacity = default;
-            Optional<string> hostingEnvironment = default;
-            Optional<bool> isXenon = default;
-            Optional<Uri> containerRegistryBaseUrl = default;
-            Optional<string> containerRegistryUsername = default;
-            Optional<string> containerRegistryPassword = default;
-            Optional<string> containerImageRepository = default;
-            Optional<string> containerImageTag = default;
-            Optional<string> containerImagePlatform = default;
-            Optional<AppServiceEnvironmentProperties> appServiceEnvironment = default;
+            ResourceIdentifier serverFarmId = default;
+            string skuName = default;
+            bool? needLinuxWorkers = default;
+            bool? isSpot = default;
+            int? capacity = default;
+            string hostingEnvironment = default;
+            bool? isXenon = default;
+            Uri containerRegistryBaseUrl = default;
+            string containerRegistryUsername = default;
+            string containerRegistryPassword = default;
+            string containerImageRepository = default;
+            string containerImageTag = default;
+            string containerImagePlatform = default;
+            AppServiceEnvironmentProperties appServiceEnvironment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value);
+                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -295,7 +295,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppServiceValidateContent(name, type, location, serverFarmId.Value, skuName.Value, Optional.ToNullable(needLinuxWorkers), Optional.ToNullable(isSpot), Optional.ToNullable(capacity), hostingEnvironment.Value, Optional.ToNullable(isXenon), containerRegistryBaseUrl.Value, containerRegistryUsername.Value, containerRegistryPassword.Value, containerImageRepository.Value, containerImageTag.Value, containerImagePlatform.Value, appServiceEnvironment.Value, serializedAdditionalRawData);
+            return new AppServiceValidateContent(
+                name,
+                type,
+                location,
+                serverFarmId,
+                skuName,
+                needLinuxWorkers,
+                isSpot,
+                capacity,
+                hostingEnvironment,
+                isXenon,
+                containerRegistryBaseUrl,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppServiceValidateContent>.Write(ModelReaderWriterOptions options)

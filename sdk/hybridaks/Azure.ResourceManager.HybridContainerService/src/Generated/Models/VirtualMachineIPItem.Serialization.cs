@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndIP))
+            if (EndIP != null)
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (Optional.IsDefined(StartIP))
+            if (StartIP != null)
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 return null;
             }
-            Optional<string> endIP = default;
-            Optional<string> startIP = default;
+            string endIP = default;
+            string startIP = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineIPItem(endIP.Value, startIP.Value, serializedAdditionalRawData);
+            return new VirtualMachineIPItem(endIP, startIP, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineIPItem>.Write(ModelReaderWriterOptions options)

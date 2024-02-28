@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ContainerHostResourceId))
+            if (ContainerHostResourceId != null)
             {
                 writer.WritePropertyName("containerHostResourceId"u8);
                 writer.WriteStringValue(ContainerHostResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(MappedControllerResourceId))
+            if (options.Format != "W" && MappedControllerResourceId != null)
             {
                 writer.WritePropertyName("mappedControllerResourceId"u8);
                 writer.WriteStringValue(MappedControllerResourceId);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<string> containerHostResourceId = default;
-            Optional<string> mappedControllerResourceId = default;
+            string containerHostResourceId = default;
+            string mappedControllerResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerHostMapping(containerHostResourceId.Value, mappedControllerResourceId.Value, serializedAdditionalRawData);
+            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerHostMapping>.Write(ModelReaderWriterOptions options)

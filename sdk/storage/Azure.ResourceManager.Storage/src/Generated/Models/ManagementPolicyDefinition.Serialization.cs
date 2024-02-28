@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("actions"u8);
             writer.WriteObjectValue(Actions);
-            if (Optional.IsDefined(Filters))
+            if (Filters != null)
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ManagementPolicyAction actions = default;
-            Optional<ManagementPolicyFilter> filters = default;
+            ManagementPolicyFilter filters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
                 {
-                    actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value);
+                    actions = ManagementPolicyAction.DeserializeManagementPolicyAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("filters"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value);
+                    filters = ManagementPolicyFilter.DeserializeManagementPolicyFilter(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagementPolicyDefinition(actions, filters.Value, serializedAdditionalRawData);
+            return new ManagementPolicyDefinition(actions, filters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagementPolicyDefinition>.Write(ModelReaderWriterOptions options)

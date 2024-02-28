@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ActionConfiguration))
+            if (ActionConfiguration != null)
             {
                 writer.WritePropertyName("actionConfiguration"u8);
                 writer.WriteObjectValue(ActionConfiguration);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<AutomationRuleRunPlaybookActionProperties> actionConfiguration = default;
+            AutomationRuleRunPlaybookActionProperties actionConfiguration = default;
             int order = default;
             ActionType actionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value);
+                    actionConfiguration = AutomationRuleRunPlaybookActionProperties.DeserializeAutomationRuleRunPlaybookActionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("order"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationRuleRunPlaybookAction(order, actionType, serializedAdditionalRawData, actionConfiguration.Value);
+            return new AutomationRuleRunPlaybookAction(order, actionType, serializedAdditionalRawData, actionConfiguration);
         }
 
         BinaryData IPersistableModel<AutomationRuleRunPlaybookAction>.Write(ModelReaderWriterOptions options)

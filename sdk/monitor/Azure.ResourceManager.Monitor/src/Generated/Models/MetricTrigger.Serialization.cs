@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
-            if (Optional.IsDefined(MetricNamespace))
+            if (MetricNamespace != null)
             {
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri"u8);
             writer.WriteStringValue(MetricResourceId);
-            if (Optional.IsDefined(MetricResourceLocation))
+            if (MetricResourceLocation.HasValue)
             {
                 writer.WritePropertyName("metricResourceLocation"u8);
                 writer.WriteStringValue(MetricResourceLocation.Value);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(Operator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
-            if (Optional.IsCollectionDefined(Dimensions))
+            if (!(Dimensions is ChangeTrackingList<AutoscaleRuleMetricDimension> collection && collection.IsUndefined))
             {
                 if (Dimensions != null)
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteNull("dimensions");
                 }
             }
-            if (Optional.IsDefined(IsDividedPerInstance))
+            if (IsDividedPerInstance.HasValue)
             {
                 writer.WritePropertyName("dividePerInstance"u8);
                 writer.WriteBooleanValue(IsDividedPerInstance.Value);
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string metricName = default;
-            Optional<string> metricNamespace = default;
+            string metricNamespace = default;
             ResourceIdentifier metricResourceUri = default;
-            Optional<AzureLocation> metricResourceLocation = default;
+            AzureLocation? metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
             MetricTriggerTimeAggregationType timeAggregation = default;
             MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
-            Optional<IList<AutoscaleRuleMetricDimension>> dimensions = default;
-            Optional<bool> dividePerInstance = default;
+            IList<AutoscaleRuleMetricDimension> dimensions = default;
+            bool? dividePerInstance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item));
+                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -212,7 +212,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricTrigger(metricName, metricNamespace.Value, metricResourceUri, Optional.ToNullable(metricResourceLocation), timeGrain, statistic, timeWindow, timeAggregation, @operator, threshold, Optional.ToList(dimensions), Optional.ToNullable(dividePerInstance), serializedAdditionalRawData);
+            return new MetricTrigger(
+                metricName,
+                metricNamespace,
+                metricResourceUri,
+                metricResourceLocation,
+                timeGrain,
+                statistic,
+                timeWindow,
+                timeAggregation,
+                @operator,
+                threshold,
+                dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
+                dividePerInstance,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricTrigger>.Write(ModelReaderWriterOptions options)

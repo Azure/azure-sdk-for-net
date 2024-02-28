@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SystemTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string systemTopicName, SystemTopicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SystemTopicResource> CreateOrUpdate(WaitUntil waitUntil, string systemTopicName, SystemTopicData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
             scope.Start();
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual async Task<Response<SystemTopicResource>> GetAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Get");
             scope.Start();
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual Response<SystemTopicResource> Get(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Get");
             scope.Start();
@@ -333,7 +367,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
             scope.Start();
@@ -376,7 +417,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual Response<bool> Exists(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
             scope.Start();
@@ -419,7 +467,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual async Task<NullableResponse<SystemTopicResource>> GetIfExistsAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
             scope.Start();
@@ -464,7 +519,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
         public virtual NullableResponse<SystemTopicResource> GetIfExists(string systemTopicName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
+            if (systemTopicName == null)
+            {
+                throw new ArgumentNullException(nameof(systemTopicName));
+            }
+            if (systemTopicName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(systemTopicName));
+            }
 
             using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
             scope.Start();

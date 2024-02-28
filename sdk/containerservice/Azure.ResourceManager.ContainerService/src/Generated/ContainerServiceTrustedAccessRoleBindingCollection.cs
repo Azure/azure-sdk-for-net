@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ContainerServiceTrustedAccessRoleBindingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ContainerServiceTrustedAccessRoleBindingResource> CreateOrUpdate(WaitUntil waitUntil, string trustedAccessRoleBindingName, ContainerServiceTrustedAccessRoleBindingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual async Task<Response<ContainerServiceTrustedAccessRoleBindingResource>> GetAsync(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual Response<ContainerServiceTrustedAccessRoleBindingResource> Get(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual Response<bool> Exists(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual async Task<NullableResponse<ContainerServiceTrustedAccessRoleBindingResource>> GetIfExistsAsync(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="trustedAccessRoleBindingName"/> is null. </exception>
         public virtual NullableResponse<ContainerServiceTrustedAccessRoleBindingResource> GetIfExists(string trustedAccessRoleBindingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(trustedAccessRoleBindingName, nameof(trustedAccessRoleBindingName));
+            if (trustedAccessRoleBindingName == null)
+            {
+                throw new ArgumentNullException(nameof(trustedAccessRoleBindingName));
+            }
+            if (trustedAccessRoleBindingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(trustedAccessRoleBindingName));
+            }
 
             using var scope = _containerServiceTrustedAccessRoleBindingTrustedAccessRoleBindingsClientDiagnostics.CreateScope("ContainerServiceTrustedAccessRoleBindingCollection.GetIfExists");
             scope.Start();

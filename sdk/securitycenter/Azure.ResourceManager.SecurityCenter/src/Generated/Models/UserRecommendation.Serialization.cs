@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(RecommendationAction))
+            if (RecommendationAction.HasValue)
             {
                 writer.WritePropertyName("recommendationAction"u8);
                 writer.WriteStringValue(RecommendationAction.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<RecommendationAction> recommendationAction = default;
+            string username = default;
+            RecommendationAction? recommendationAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserRecommendation(username.Value, Optional.ToNullable(recommendationAction), serializedAdditionalRawData);
+            return new UserRecommendation(username, recommendationAction, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserRecommendation>.Write(ModelReaderWriterOptions options)

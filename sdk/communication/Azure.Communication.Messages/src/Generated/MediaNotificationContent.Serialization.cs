@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Content))
+            if (Content != null)
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
@@ -83,7 +83,7 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             Uri mediaUri = default;
             Guid channelRegistrationId = default;
             IList<string> to = default;
@@ -128,7 +128,13 @@ namespace Azure.Communication.Messages
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaNotificationContent(channelRegistrationId, to, kind, serializedAdditionalRawData, content.Value, mediaUri);
+            return new MediaNotificationContent(
+                channelRegistrationId,
+                to,
+                kind,
+                serializedAdditionalRawData,
+                content,
+                mediaUri);
         }
 
         BinaryData IPersistableModel<MediaNotificationContent>.Write(ModelReaderWriterOptions options)

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Reservations.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Quantities))
+            if (!(Quantities is ChangeTrackingList<int> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("quantities"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ReservationId))
+            if (ReservationId != null)
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IList<int>> quantities = default;
-            Optional<ResourceIdentifier> reservationId = default;
+            IList<int> quantities = default;
+            ResourceIdentifier reservationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SplitContent(Optional.ToList(quantities), reservationId.Value, serializedAdditionalRawData);
+            return new SplitContent(quantities ?? new ChangeTrackingList<int>(), reservationId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SplitContent>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyName))
+            if (options.Format != "W" && KeyName.HasValue)
             {
                 writer.WritePropertyName("KeyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Permissions))
+            if (options.Format != "W" && Permissions.HasValue)
             {
                 writer.WritePropertyName("Permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W" && Value != null)
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationKeyName> keyName = default;
-            Optional<AutomationKeyPermission> permissions = default;
-            Optional<string> value = default;
+            AutomationKeyName? keyName = default;
+            AutomationKeyPermission? permissions = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationKey(Optional.ToNullable(keyName), Optional.ToNullable(permissions), value.Value, serializedAdditionalRawData);
+            return new AutomationKey(keyName, permissions, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationKey>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Cname))
+            if (Cname != null)
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             {
                 return null;
             }
-            Optional<string> cname = default;
+            string cname = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsCnameRecordInfo(cname.Value, serializedAdditionalRawData);
+            return new PrivateDnsCnameRecordInfo(cname, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsCnameRecordInfo>.Write(ModelReaderWriterOptions options)

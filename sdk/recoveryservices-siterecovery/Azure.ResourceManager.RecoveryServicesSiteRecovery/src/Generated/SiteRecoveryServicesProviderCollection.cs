@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteRecoveryServicesProviderResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string providerName, SiteRecoveryServicesProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -116,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,8 +142,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<SiteRecoveryServicesProviderResource> CreateOrUpdate(WaitUntil waitUntil, string providerName, SiteRecoveryServicesProviderCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.CreateOrUpdate");
             scope.Start();
@@ -165,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +199,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<Response<SiteRecoveryServicesProviderResource>> GetAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.Get");
             scope.Start();
@@ -210,7 +237,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +251,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual Response<SiteRecoveryServicesProviderResource> Get(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.Get");
             scope.Start();
@@ -255,7 +289,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +319,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +349,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +363,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.Exists");
             scope.Start();
@@ -358,7 +399,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -372,7 +413,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual Response<bool> Exists(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.Exists");
             scope.Start();
@@ -401,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +463,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteRecoveryServicesProviderResource>> GetIfExistsAsync(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.GetIfExists");
             scope.Start();
@@ -446,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +515,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/> is null. </exception>
         public virtual NullableResponse<SiteRecoveryServicesProviderResource> GetIfExists(string providerName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            if (providerName == null)
+            {
+                throw new ArgumentNullException(nameof(providerName));
+            }
+            if (providerName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(providerName));
+            }
 
             using var scope = _siteRecoveryServicesProviderReplicationRecoveryServicesProvidersClientDiagnostics.CreateScope("SiteRecoveryServicesProviderCollection.GetIfExists");
             scope.Start();

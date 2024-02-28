@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Scope))
+            if (Scope.HasValue)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<ExpressionEvaluationScope> scope = default;
+            ExpressionEvaluationScope? scope = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionEvaluationOptions(Optional.ToNullable(scope), serializedAdditionalRawData);
+            return new ExpressionEvaluationOptions(scope, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressionEvaluationOptions>.Write(ModelReaderWriterOptions options)

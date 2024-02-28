@@ -35,7 +35,18 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             versions ??= new Dictionary<string, TemplateSpecVersionInfo>();
 
-            return new TemplateSpecData(id, name, resourceType, systemData, location, tags, description, displayName, metadata, versions, serializedAdditionalRawData: null);
+            return new TemplateSpecData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                tags,
+                description,
+                displayName,
+                metadata,
+                versions,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionInfo"/>. </summary>
@@ -59,7 +70,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TemplateSpecPatch(id, name, resourceType, systemData, tags, serializedAdditionalRawData: null);
+            return new TemplateSpecPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.TemplateSpecVersionData"/>. </summary>
@@ -80,7 +97,19 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             linkedTemplates ??= new List<LinkedTemplateArtifact>();
 
-            return new TemplateSpecVersionData(id, name, resourceType, systemData, location, tags, description, linkedTemplates?.ToList(), metadata, mainTemplate, uiFormDefinition, serializedAdditionalRawData: null);
+            return new TemplateSpecVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                tags,
+                description,
+                linkedTemplates?.ToList(),
+                metadata,
+                mainTemplate,
+                uiFormDefinition,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecVersionPatch"/>. </summary>
@@ -94,7 +123,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new TemplateSpecVersionPatch(id, name, resourceType, systemData, tags, serializedAdditionalRawData: null);
+            return new TemplateSpecVersionPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentScriptData"/>. </summary>
@@ -111,7 +146,16 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentScriptData(id, name, resourceType, systemData, identity, location, tags, kind, serializedAdditionalRawData: null);
+            return new ArmDeploymentScriptData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                location,
+                tags,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentScriptManagedIdentity"/>. </summary>
@@ -137,7 +181,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentScriptPatch(id, name, resourceType, systemData, tags, serializedAdditionalRawData: null);
+            return new ArmDeploymentScriptPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ScriptLogData"/>. </summary>
@@ -149,7 +199,13 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Resources.ScriptLogData"/> instance for mocking. </returns>
         public static ScriptLogData ScriptLogData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string log = null)
         {
-            return new ScriptLogData(id, name, resourceType, systemData, log, serializedAdditionalRawData: null);
+            return new ScriptLogData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                log,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentContent"/>. </summary>
@@ -176,7 +232,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentProperties"/> instance for mocking. </returns>
         public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null)
         {
-            return new ArmDeploymentProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ArmDeploymentProperties(
+                template,
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
+                errorDeployment,
+                expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>
@@ -192,7 +257,15 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmDeploymentData(id, name, resourceType, systemData, location, properties, tags, serializedAdditionalRawData: null);
+            return new ArmDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                properties,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentPropertiesExtended"/>. </summary>
@@ -221,7 +294,25 @@ namespace Azure.ResourceManager.Resources.Models
             outputResources ??= new List<SubResource>();
             validatedResources ??= new List<SubResource>();
 
-            return new ArmDeploymentPropertiesExtended(provisioningState, correlationId, timestamp, duration, outputs, providers?.ToList(), dependencies?.ToList(), templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null, errorDeployment, templateHash, outputResources?.ToList(), validatedResources?.ToList(), error, serializedAdditionalRawData: null);
+            return new ArmDeploymentPropertiesExtended(
+                provisioningState,
+                correlationId,
+                timestamp,
+                duration,
+                outputs,
+                providers?.ToList(),
+                dependencies?.ToList(),
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
+                errorDeployment,
+                templateHash,
+                outputResources?.ToList(),
+                validatedResources?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDependency"/>. </summary>
@@ -296,7 +387,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
         public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, WhatIfResultFormat? whatIfResultFormat = null)
         {
-            return new ArmDeploymentWhatIfProperties(template, templateLink, parameters, parametersLink, mode, debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null, errorDeployment, expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null, whatIfResultFormat != null ? new ArmDeploymentWhatIfSettings(whatIfResultFormat, serializedAdditionalRawData: null) : null);
+            return new ArmDeploymentWhatIfProperties(
+                template,
+                templateLink,
+                parameters,
+                parametersLink,
+                mode,
+                debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
+                errorDeployment,
+                expressionEvaluationScope != null ? new ExpressionEvaluationOptions(expressionEvaluationScope, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null,
+                whatIfResultFormat != null ? new ArmDeploymentWhatIfSettings(whatIfResultFormat, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WhatIfOperationResult"/>. </summary>
@@ -323,7 +424,14 @@ namespace Azure.ResourceManager.Resources.Models
         {
             delta ??= new List<WhatIfPropertyChange>();
 
-            return new WhatIfChange(resourceId, changeType, unsupportedReason, before, after, delta?.ToList(), serializedAdditionalRawData: null);
+            return new WhatIfChange(
+                resourceId,
+                changeType,
+                unsupportedReason,
+                before,
+                after,
+                delta?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WhatIfPropertyChange"/>. </summary>
@@ -337,7 +445,13 @@ namespace Azure.ResourceManager.Resources.Models
         {
             children ??= new List<WhatIfPropertyChange>();
 
-            return new WhatIfPropertyChange(path, propertyChangeType, before, after, children?.ToList(), serializedAdditionalRawData: null);
+            return new WhatIfPropertyChange(
+                path,
+                propertyChangeType,
+                before,
+                after,
+                children?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentOperation"/>. </summary>
@@ -364,7 +478,18 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ArmDeploymentOperationProperties"/> instance for mocking. </returns>
         public static ArmDeploymentOperationProperties ArmDeploymentOperationProperties(ProvisioningOperationKind? provisioningOperation = null, string provisioningState = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, string serviceRequestId = null, string statusCode = null, StatusMessage statusMessage = null, TargetResource targetResource = null, BinaryData requestContent = null, BinaryData responseContent = null)
         {
-            return new ArmDeploymentOperationProperties(provisioningOperation, provisioningState, timestamp, duration, serviceRequestId, statusCode, statusMessage, targetResource, requestContent != null ? new HttpMessage(requestContent, serializedAdditionalRawData: null) : null, responseContent != null ? new HttpMessage(responseContent, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new ArmDeploymentOperationProperties(
+                provisioningOperation,
+                provisioningState,
+                timestamp,
+                duration,
+                serviceRequestId,
+                statusCode,
+                statusMessage,
+                targetResource,
+                requestContent != null ? new HttpMessage(requestContent, serializedAdditionalRawData: null) : null,
+                responseContent != null ? new HttpMessage(responseContent, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StatusMessage"/>. </summary>
@@ -429,7 +554,34 @@ namespace Azure.ResourceManager.Resources.Models
             authorizations ??= new List<ArmApplicationAuthorization>();
             artifacts ??= new List<ArmApplicationArtifact>();
 
-            return new ArmApplicationData(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData: null, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, serializedAdditionalRawData: null) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
+            return new ArmApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                managedBy,
+                sku,
+                serializedAdditionalRawData: null,
+                plan,
+                kind,
+                identity,
+                managedResourceGroupId,
+                applicationDefinitionId,
+                parameters,
+                outputs,
+                provisioningState,
+                billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, serializedAdditionalRawData: null) : null,
+                jitAccessPolicy,
+                publisherTenantId,
+                authorizations?.ToList(),
+                managementMode,
+                customerSupport,
+                supportUris,
+                artifacts?.ToList(),
+                createdBy,
+                updatedBy);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPackageContact"/>. </summary>
@@ -507,7 +659,16 @@ namespace Azure.ResourceManager.Resources.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ArmApplicationResourceData(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData: null);
+            return new ArmApplicationResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                managedBy,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmApplicationPatch"/>. </summary>
@@ -544,7 +705,34 @@ namespace Azure.ResourceManager.Resources.Models
             authorizations ??= new List<ArmApplicationAuthorization>();
             artifacts ??= new List<ArmApplicationArtifact>();
 
-            return new ArmApplicationPatch(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData: null, plan, kind, identity, managedResourceGroupId, applicationDefinitionId, parameters, outputs, provisioningState, billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, serializedAdditionalRawData: null) : null, jitAccessPolicy, publisherTenantId, authorizations?.ToList(), managementMode, customerSupport, supportUris, artifacts?.ToList(), createdBy, updatedBy);
+            return new ArmApplicationPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                managedBy,
+                sku,
+                serializedAdditionalRawData: null,
+                plan,
+                kind,
+                identity,
+                managedResourceGroupId,
+                applicationDefinitionId,
+                parameters,
+                outputs,
+                provisioningState,
+                billingDetailsResourceUsageId != null ? new ArmApplicationBillingDetails(billingDetailsResourceUsageId, serializedAdditionalRawData: null) : null,
+                jitAccessPolicy,
+                publisherTenantId,
+                authorizations?.ToList(),
+                managementMode,
+                customerSupport,
+                supportUris,
+                artifacts?.ToList(),
+                createdBy,
+                updatedBy);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmApplicationDefinitionData"/>. </summary>
@@ -579,7 +767,30 @@ namespace Azure.ResourceManager.Resources.Models
             notificationEndpoints ??= new List<ArmApplicationNotificationEndpoint>();
             policies ??= new List<ArmApplicationPolicy>();
 
-            return new ArmApplicationDefinitionData(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData: null, lockLevel, displayName, isEnabled, authorizations?.ToList(), artifacts?.ToList(), description, packageFileUri, mainTemplate, createUiDefinition, notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList(), serializedAdditionalRawData: null) : null, lockingPolicy, deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value, serializedAdditionalRawData: null) : null, managementMode != null ? new ArmApplicationManagementPolicy(managementMode, serializedAdditionalRawData: null) : null, policies?.ToList());
+            return new ArmApplicationDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                managedBy,
+                sku,
+                serializedAdditionalRawData: null,
+                lockLevel,
+                displayName,
+                isEnabled,
+                authorizations?.ToList(),
+                artifacts?.ToList(),
+                description,
+                packageFileUri,
+                mainTemplate,
+                createUiDefinition,
+                notificationEndpoints != null ? new ArmApplicationNotificationPolicy(notificationEndpoints?.ToList(), serializedAdditionalRawData: null) : null,
+                lockingPolicy,
+                deploymentMode.HasValue ? new ArmApplicationDeploymentPolicy(deploymentMode.Value, serializedAdditionalRawData: null) : null,
+                managementMode != null ? new ArmApplicationManagementPolicy(managementMode, serializedAdditionalRawData: null) : null,
+                policies?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.JitRequestData"/>. </summary>
@@ -603,7 +814,22 @@ namespace Azure.ResourceManager.Resources.Models
             tags ??= new Dictionary<string, string>();
             jitAuthorizationPolicies ??= new List<JitAuthorizationPolicies>();
 
-            return new JitRequestData(id, name, resourceType, systemData, tags, location, applicationResourceId, publisherTenantId, jitAuthorizationPolicies?.ToList(), jitSchedulingPolicy, provisioningState, jitRequestState, createdBy, updatedBy, serializedAdditionalRawData: null);
+            return new JitRequestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                applicationResourceId,
+                publisherTenantId,
+                jitAuthorizationPolicies?.ToList(),
+                jitSchedulingPolicy,
+                provisioningState,
+                jitRequestState,
+                createdBy,
+                updatedBy,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzurePowerShellScript"/>. </summary>
@@ -636,7 +862,31 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzurePowerShellScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzurePowerShell, serializedAdditionalRawData: null, containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azPowerShellVersion);
+            return new AzurePowerShellScript(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                location,
+                tags,
+                ScriptType.AzurePowerShell,
+                serializedAdditionalRawData: null,
+                containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null,
+                storageAccountSettings,
+                cleanupPreference,
+                provisioningState,
+                status,
+                outputs,
+                primaryScriptUri,
+                supportingScriptUris?.ToList(),
+                scriptContent,
+                arguments,
+                environmentVariables?.ToList(),
+                forceUpdateTag,
+                retentionInterval,
+                timeout,
+                azPowerShellVersion);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScriptStatus"/>. </summary>
@@ -649,7 +899,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <returns> A new <see cref="Models.ScriptStatus"/> instance for mocking. </returns>
         public static ScriptStatus ScriptStatus(string containerInstanceId = null, string storageAccountId = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? expireOn = null, ResponseError error = null)
         {
-            return new ScriptStatus(containerInstanceId, storageAccountId, startOn, endOn, expireOn, error, serializedAdditionalRawData: null);
+            return new ScriptStatus(
+                containerInstanceId,
+                storageAccountId,
+                startOn,
+                endOn,
+                expireOn,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureCliScript"/>. </summary>
@@ -682,7 +939,31 @@ namespace Azure.ResourceManager.Resources.Models
             supportingScriptUris ??= new List<Uri>();
             environmentVariables ??= new List<ScriptEnvironmentVariable>();
 
-            return new AzureCliScript(id, name, resourceType, systemData, identity, location, tags, ScriptType.AzureCLI, serializedAdditionalRawData: null, containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null, storageAccountSettings, cleanupPreference, provisioningState, status, outputs, primaryScriptUri, supportingScriptUris?.ToList(), scriptContent, arguments, environmentVariables?.ToList(), forceUpdateTag, retentionInterval, timeout, azCliVersion);
+            return new AzureCliScript(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                location,
+                tags,
+                ScriptType.AzureCLI,
+                serializedAdditionalRawData: null,
+                containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null,
+                storageAccountSettings,
+                cleanupPreference,
+                provisioningState,
+                status,
+                outputs,
+                primaryScriptUri,
+                supportingScriptUris?.ToList(),
+                scriptContent,
+                arguments,
+                environmentVariables?.ToList(),
+                forceUpdateTag,
+                retentionInterval,
+                timeout,
+                azCliVersion);
         }
     }
 }

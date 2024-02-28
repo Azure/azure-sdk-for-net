@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W" && State.HasValue)
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<RedisEnterpriseDatabaseLinkState> state = default;
+            ResourceIdentifier id = default;
+            RedisEnterpriseDatabaseLinkState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RedisEnterpriseLinkedDatabase(id.Value, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new RedisEnterpriseLinkedDatabase(id, state, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RedisEnterpriseLinkedDatabase>.Write(ModelReaderWriterOptions options)

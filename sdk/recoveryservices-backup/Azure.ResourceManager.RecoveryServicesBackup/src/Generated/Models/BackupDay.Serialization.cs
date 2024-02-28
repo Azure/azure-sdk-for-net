@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Date))
+            if (Date.HasValue)
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteNumberValue(Date.Value);
             }
-            if (Optional.IsDefined(IsLast))
+            if (IsLast.HasValue)
             {
                 writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<int> date = default;
-            Optional<bool> isLast = default;
+            int? date = default;
+            bool? isLast = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupDay(Optional.ToNullable(date), Optional.ToNullable(isLast), serializedAdditionalRawData);
+            return new BackupDay(date, isLast, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupDay>.Write(ModelReaderWriterOptions options)

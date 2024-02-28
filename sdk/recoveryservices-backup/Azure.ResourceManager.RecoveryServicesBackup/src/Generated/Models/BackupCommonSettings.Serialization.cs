@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeZone))
+            if (TimeZone != null)
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(IsSqlCompression))
+            if (IsSqlCompression.HasValue)
             {
                 writer.WritePropertyName("issqlcompression"u8);
                 writer.WriteBooleanValue(IsSqlCompression.Value);
             }
-            if (Optional.IsDefined(IsCompression))
+            if (IsCompression.HasValue)
             {
                 writer.WritePropertyName("isCompression"u8);
                 writer.WriteBooleanValue(IsCompression.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 return null;
             }
-            Optional<string> timeZone = default;
-            Optional<bool> isSqlCompression = default;
-            Optional<bool> isCompression = default;
+            string timeZone = default;
+            bool? isSqlCompression = default;
+            bool? isCompression = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupCommonSettings(timeZone.Value, Optional.ToNullable(isSqlCompression), Optional.ToNullable(isCompression), serializedAdditionalRawData);
+            return new BackupCommonSettings(timeZone, isSqlCompression, isCompression, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupCommonSettings>.Write(ModelReaderWriterOptions options)

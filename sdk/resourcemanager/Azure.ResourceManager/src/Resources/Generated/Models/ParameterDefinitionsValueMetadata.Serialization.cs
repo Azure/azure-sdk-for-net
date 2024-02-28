@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(StrongType))
+            if (StrongType != null)
             {
                 writer.WritePropertyName("strongType"u8);
                 writer.WriteStringValue(StrongType);
             }
-            if (Optional.IsDefined(AssignPermissions))
+            if (AssignPermissions.HasValue)
             {
                 writer.WritePropertyName("assignPermissions"u8);
                 writer.WriteBooleanValue(AssignPermissions.Value);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
-            Optional<bool> assignPermissions = default;
+            string displayName = default;
+            string description = default;
+            string strongType = default;
+            bool? assignPermissions = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParameterDefinitionsValueMetadata(displayName.Value, description.Value, strongType.Value, Optional.ToNullable(assignPermissions), additionalProperties);
+            return new ParameterDefinitionsValueMetadata(displayName, description, strongType, assignPermissions, additionalProperties);
         }
 
         BinaryData IPersistableModel<ParameterDefinitionsValueMetadata>.Write(ModelReaderWriterOptions options)

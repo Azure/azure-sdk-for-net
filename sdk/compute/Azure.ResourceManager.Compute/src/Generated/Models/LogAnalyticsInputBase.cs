@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -53,7 +52,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="blobContainerSasUri"/> is null. </exception>
         public LogAnalyticsInputBase(Uri blobContainerSasUri, DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            Argument.AssertNotNull(blobContainerSasUri, nameof(blobContainerSasUri));
+            if (blobContainerSasUri == null)
+            {
+                throw new ArgumentNullException(nameof(blobContainerSasUri));
+            }
 
             BlobContainerSasUri = blobContainerSasUri;
             FromTime = fromTime;

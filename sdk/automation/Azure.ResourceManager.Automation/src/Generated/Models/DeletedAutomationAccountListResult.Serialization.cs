@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<DeletedAutomationAccount> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeletedAutomationAccount>> value = default;
+            IReadOnlyList<DeletedAutomationAccount> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DeletedAutomationAccount> array = new List<DeletedAutomationAccount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedAutomationAccount.DeserializeDeletedAutomationAccount(item));
+                        array.Add(DeletedAutomationAccount.DeserializeDeletedAutomationAccount(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAutomationAccountListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new DeletedAutomationAccountListResult(value ?? new ChangeTrackingList<DeletedAutomationAccount>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAutomationAccountListResult>.Write(ModelReaderWriterOptions options)
