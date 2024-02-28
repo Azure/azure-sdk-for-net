@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IList<string> fileList = default;
-            Optional<string> restoreFilePath = default;
+            string restoreFilePath = default;
             ResourceIdentifier destinationVolumeId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList, restoreFilePath.Value, destinationVolumeId, serializedAdditionalRawData);
+            return new NetAppVolumeBackupBackupRestoreFilesContent(fileList, restoreFilePath, destinationVolumeId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumeBackupBackupRestoreFilesContent>.Write(ModelReaderWriterOptions options)
