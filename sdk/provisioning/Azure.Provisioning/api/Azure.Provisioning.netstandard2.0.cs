@@ -20,7 +20,6 @@ namespace Azure.Provisioning
         public void AddParameter(Azure.Provisioning.Parameter parameter) { }
         public void AddResource(Azure.Provisioning.Resource resource) { }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.IConstruct> GetConstructs(bool recursive = true) { throw null; }
-        public System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetExistingResources(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Output> GetOutputs(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Parameter> GetParameters(bool recursive = true) { throw null; }
         public System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetResources(bool recursive = true) { throw null; }
@@ -47,7 +46,6 @@ namespace Azure.Provisioning
         void AddParameter(Azure.Provisioning.Parameter parameter);
         void AddResource(Azure.Provisioning.Resource resource);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.IConstruct> GetConstructs(bool recursive = true);
-        System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetExistingResources(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Output> GetOutputs(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Parameter> GetParameters(bool recursive = true);
         System.Collections.Generic.IEnumerable<Azure.Provisioning.Resource> GetResources(bool recursive = true);

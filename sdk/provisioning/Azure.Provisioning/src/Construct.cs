@@ -116,13 +116,12 @@ namespace Azure.Provisioning
             return result;
         }
 
-        /// <inheritdoc/>
-        public IEnumerable<Resource> GetExistingResources(bool recursive = true)
+        internal IEnumerable<Resource> GetExistingResources(bool recursive = true)
         {
             IEnumerable<Resource> result = _existingResources;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetExistingResources(true)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => ((Construct)c).GetExistingResources(true)));
             }
             return result;
         }
