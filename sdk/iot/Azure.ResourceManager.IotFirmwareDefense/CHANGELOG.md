@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-02-14)
+## 1.0.0 (2024-02-28)
 
 This release is the first stable release of the IoT Firmware Defense Management client library.
 
