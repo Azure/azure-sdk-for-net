@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(JobName))
+            if (options.Format != "W" && JobName != null)
             {
                 writer.WritePropertyName("jobName"u8);
                 writer.WriteStringValue(JobName);
@@ -35,32 +35,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteObjectValue(Source);
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination);
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProcessedCount))
+            if (options.Format != "W" && ProcessedCount.HasValue)
             {
                 writer.WritePropertyName("processedCount"u8);
                 writer.WriteNumberValue(ProcessedCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalCount))
+            if (options.Format != "W" && TotalCount.HasValue)
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedUtcOn))
+            if (options.Format != "W" && LastUpdatedUtcOn.HasValue)
             {
                 writer.WritePropertyName("lastUpdatedUtcTime"u8);
                 writer.WriteStringValue(LastUpdatedUtcOn.Value, "O");
             }
-            if (Optional.IsDefined(WorkerCount))
+            if (WorkerCount.HasValue)
             {
                 writer.WritePropertyName("workerCount"u8);
                 writer.WriteNumberValue(WorkerCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
+            if (options.Format != "W" && Error != null)
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error);
@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> jobName = default;
+            string jobName = default;
             DataTransferDataSourceSink source = default;
             DataTransferDataSourceSink destination = default;
-            Optional<string> status = default;
-            Optional<long> processedCount = default;
-            Optional<long> totalCount = default;
-            Optional<DateTimeOffset> lastUpdatedUtcTime = default;
-            Optional<int> workerCount = default;
-            Optional<ErrorResponse> error = default;
+            string status = default;
+            long? processedCount = default;
+            long? totalCount = default;
+            DateTimeOffset? lastUpdatedUtcTime = default;
+            int? workerCount = default;
+            ErrorResponse error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 if (property.NameEquals("source"u8))
                 {
-                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    source = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value);
+                    destination = DataTransferDataSourceSink.DeserializeDataTransferDataSourceSink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(property.Value);
+                    error = ErrorResponse.DeserializeErrorResponse(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -187,7 +187,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
+            return new DataTransferJobProperties(
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcTime,
+                workerCount,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataTransferJobProperties>.Write(ModelReaderWriterOptions options)

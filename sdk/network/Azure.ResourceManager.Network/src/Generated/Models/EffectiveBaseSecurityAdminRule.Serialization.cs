@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (ResourceId != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Optional.IsDefined(ConfigurationDescription))
+            if (ConfigurationDescription != null)
             {
                 writer.WritePropertyName("configurationDescription"u8);
                 writer.WriteStringValue(ConfigurationDescription);
             }
-            if (Optional.IsDefined(RuleCollectionDescription))
+            if (RuleCollectionDescription != null)
             {
                 writer.WritePropertyName("ruleCollectionDescription"u8);
                 writer.WriteStringValue(RuleCollectionDescription);
             }
-            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            if (!(RuleCollectionAppliesToGroups is ChangeTrackingList<NetworkManagerSecurityGroupItem> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(RuleGroups))
+            if (!(RuleGroups is ChangeTrackingList<NetworkConfigurationGroup> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element);
-                    case "Default": return EffectiveDefaultSecurityAdminRule.DeserializeEffectiveDefaultSecurityAdminRule(element);
+                    case "Custom": return EffectiveSecurityAdminRule.DeserializeEffectiveSecurityAdminRule(element, options);
+                    case "Default": return EffectiveDefaultSecurityAdminRule.DeserializeEffectiveDefaultSecurityAdminRule(element, options);
                 }
             }
-            return UnknownEffectiveBaseSecurityAdminRule.DeserializeUnknownEffectiveBaseSecurityAdminRule(element);
+            return UnknownEffectiveBaseSecurityAdminRule.DeserializeUnknownEffectiveBaseSecurityAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)

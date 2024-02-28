@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Amount))
+            if (options.Format != "W" && Amount.HasValue)
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit != null)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<decimal> amount = default;
-            Optional<string> unit = default;
+            decimal? amount = default;
+            string unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BudgetForecastSpend(Optional.ToNullable(amount), unit.Value, serializedAdditionalRawData);
+            return new BudgetForecastSpend(amount, unit, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BudgetForecastSpend>.Write(ModelReaderWriterOptions options)

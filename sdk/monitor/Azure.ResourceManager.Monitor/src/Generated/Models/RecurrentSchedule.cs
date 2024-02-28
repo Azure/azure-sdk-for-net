@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -55,10 +54,22 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/>, <paramref name="days"/>, <paramref name="hours"/> or <paramref name="minutes"/> is null. </exception>
         public RecurrentSchedule(string timeZone, IEnumerable<MonitorDayOfWeek> days, IEnumerable<int> hours, IEnumerable<int> minutes)
         {
-            Argument.AssertNotNull(timeZone, nameof(timeZone));
-            Argument.AssertNotNull(days, nameof(days));
-            Argument.AssertNotNull(hours, nameof(hours));
-            Argument.AssertNotNull(minutes, nameof(minutes));
+            if (timeZone == null)
+            {
+                throw new ArgumentNullException(nameof(timeZone));
+            }
+            if (days == null)
+            {
+                throw new ArgumentNullException(nameof(days));
+            }
+            if (hours == null)
+            {
+                throw new ArgumentNullException(nameof(hours));
+            }
+            if (minutes == null)
+            {
+                throw new ArgumentNullException(nameof(minutes));
+            }
 
             TimeZone = timeZone;
             Days = days.ToList();

@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet);
-            if (Optional.IsDefined(PrivateIPAddress))
+            if (PrivateIPAddress != null)
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            if (PrivateIPAllocationMethod.HasValue)
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 return null;
             }
             WritableSubResource subnet = default;
-            Optional<IPAddress> privateIPAddress = default;
-            Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
+            IPAddress privateIPAddress = default;
+            InboundEndpointIPAllocationMethod? privateIPAllocationMethod = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundEndpointIPConfiguration(subnet, privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), serializedAdditionalRawData);
+            return new InboundEndpointIPConfiguration(subnet, privateIPAddress, privateIPAllocationMethod, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundEndpointIPConfiguration>.Write(ModelReaderWriterOptions options)

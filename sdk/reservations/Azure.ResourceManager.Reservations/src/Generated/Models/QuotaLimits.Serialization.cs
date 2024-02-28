@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ReservationQuotaData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationQuotaData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ReservationQuotaData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationQuotaData> array = new List<ReservationQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationQuotaData.DeserializeReservationQuotaData(item));
+                        array.Add(ReservationQuotaData.DeserializeReservationQuotaData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaLimits(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new QuotaLimits(value ?? new ChangeTrackingList<ReservationQuotaData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaLimits>.Write(ModelReaderWriterOptions options)

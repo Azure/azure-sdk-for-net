@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SignalR.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyType))
+            if (KeyType.HasValue)
             {
                 writer.WritePropertyName("keyType"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 return null;
             }
-            Optional<SignalRKeyType> keyType = default;
+            SignalRKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SignalRRegenerateKeyContent(Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new SignalRRegenerateKeyContent(keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SignalRRegenerateKeyContent>.Write(ModelReaderWriterOptions options)

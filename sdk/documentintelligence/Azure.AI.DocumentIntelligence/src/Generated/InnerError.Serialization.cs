@@ -27,17 +27,17 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Code))
+            if (Code != null)
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Optional.IsDefined(InnerErrorObject))
+            if (InnerErrorObject != null)
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(InnerErrorObject);
@@ -80,9 +80,9 @@ namespace Azure.AI.DocumentIntelligence
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<InnerError> innererror = default;
+            string code = default;
+            string message = default;
+            InnerError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    innererror = DeserializeInnerError(property.Value);
+                    innererror = DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InnerError(code.Value, message.Value, innererror.Value, serializedAdditionalRawData);
+            return new InnerError(code, message, innererror, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options)

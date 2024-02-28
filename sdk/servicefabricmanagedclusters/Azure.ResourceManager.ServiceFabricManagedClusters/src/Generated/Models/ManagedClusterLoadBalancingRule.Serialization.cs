@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteNumberValue(BackendPort);
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
-            if (Optional.IsDefined(ProbePort))
+            if (ProbePort.HasValue)
             {
                 writer.WritePropertyName("probePort"u8);
                 writer.WriteNumberValue(ProbePort.Value);
             }
             writer.WritePropertyName("probeProtocol"u8);
             writer.WriteStringValue(ProbeProtocol.ToString());
-            if (Optional.IsDefined(ProbeRequestPath))
+            if (ProbeRequestPath != null)
             {
                 writer.WritePropertyName("probeRequestPath"u8);
                 writer.WriteStringValue(ProbeRequestPath);
             }
-            if (Optional.IsDefined(LoadDistribution))
+            if (LoadDistribution != null)
             {
                 writer.WritePropertyName("loadDistribution"u8);
                 writer.WriteStringValue(LoadDistribution);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int frontendPort = default;
             int backendPort = default;
             ManagedClusterLoadBalancingRuleTransportProtocol protocol = default;
-            Optional<int> probePort = default;
+            int? probePort = default;
             ManagedClusterLoadBalanceProbeProtocol probeProtocol = default;
-            Optional<string> probeRequestPath = default;
-            Optional<string> loadDistribution = default;
+            string probeRequestPath = default;
+            string loadDistribution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterLoadBalancingRule(frontendPort, backendPort, protocol, Optional.ToNullable(probePort), probeProtocol, probeRequestPath.Value, loadDistribution.Value, serializedAdditionalRawData);
+            return new ManagedClusterLoadBalancingRule(
+                frontendPort,
+                backendPort,
+                protocol,
+                probePort,
+                probeProtocol,
+                probeRequestPath,
+                loadDistribution,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterLoadBalancingRule>.Write(ModelReaderWriterOptions options)

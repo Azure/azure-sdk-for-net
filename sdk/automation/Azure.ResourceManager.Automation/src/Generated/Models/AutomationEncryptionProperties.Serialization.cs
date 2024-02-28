@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Automation.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeyVaultProperties))
+            if (KeyVaultProperties != null)
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
                 writer.WriteObjectValue(KeyVaultProperties);
             }
-            if (Optional.IsDefined(KeySource))
+            if (KeySource.HasValue)
             {
                 writer.WritePropertyName("keySource"u8);
                 writer.WriteStringValue(KeySource.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionKeySourceType> keySource = default;
-            Optional<EncryptionPropertiesIdentity> identity = default;
+            AutomationKeyVaultProperties keyVaultProperties = default;
+            EncryptionKeySourceType? keySource = default;
+            EncryptionPropertiesIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value);
+                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), identity.Value, serializedAdditionalRawData);
+            return new AutomationEncryptionProperties(keyVaultProperties, keySource, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationEncryptionProperties>.Write(ModelReaderWriterOptions options)

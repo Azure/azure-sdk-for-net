@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Reservations.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BillingCurrencyTotalPaidAmount))
+            if (BillingCurrencyTotalPaidAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyTotalPaidAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyTotalPaidAmount);
             }
-            if (Optional.IsDefined(BillingCurrencyProratedAmount))
+            if (BillingCurrencyProratedAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyProratedAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyProratedAmount);
             }
-            if (Optional.IsDefined(BillingCurrencyRemainingCommitmentAmount))
+            if (BillingCurrencyRemainingCommitmentAmount != null)
             {
                 writer.WritePropertyName("billingCurrencyRemainingCommitmentAmount"u8);
                 writer.WriteObjectValue(BillingCurrencyRemainingCommitmentAmount);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 return null;
             }
-            Optional<PurchasePrice> billingCurrencyTotalPaidAmount = default;
-            Optional<PurchasePrice> billingCurrencyProratedAmount = default;
-            Optional<PurchasePrice> billingCurrencyRemainingCommitmentAmount = default;
+            PurchasePrice billingCurrencyTotalPaidAmount = default;
+            PurchasePrice billingCurrencyProratedAmount = default;
+            PurchasePrice billingCurrencyRemainingCommitmentAmount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotalPaidAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyProratedAmount"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyProratedAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyRemainingCommitmentAmount"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyRemainingCommitmentAmount = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingInformation(billingCurrencyTotalPaidAmount.Value, billingCurrencyProratedAmount.Value, billingCurrencyRemainingCommitmentAmount.Value, serializedAdditionalRawData);
+            return new BillingInformation(billingCurrencyTotalPaidAmount, billingCurrencyProratedAmount, billingCurrencyRemainingCommitmentAmount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingInformation>.Write(ModelReaderWriterOptions options)

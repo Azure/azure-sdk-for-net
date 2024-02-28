@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(TriggerName);
-            if (Optional.IsDefined(Body))
+            if (Body != null)
             {
                 writer.WritePropertyName("body"u8);
                 writer.WriteStringValue(Body);
             }
-            if (Optional.IsDefined(TriggerType))
+            if (TriggerType.HasValue)
             {
                 writer.WritePropertyName("triggerType"u8);
                 writer.WriteStringValue(TriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(TriggerOperation))
+            if (TriggerOperation.HasValue)
             {
                 writer.WritePropertyName("triggerOperation"u8);
                 writer.WriteStringValue(TriggerOperation.Value.ToString());
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string id = default;
-            Optional<string> body = default;
-            Optional<CosmosDBSqlTriggerType> triggerType = default;
-            Optional<CosmosDBSqlTriggerOperation> triggerOperation = default;
+            string body = default;
+            CosmosDBSqlTriggerType? triggerType = default;
+            CosmosDBSqlTriggerOperation? triggerOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBSqlTriggerResourceInfo(id, body.Value, Optional.ToNullable(triggerType), Optional.ToNullable(triggerOperation), serializedAdditionalRawData);
+            return new CosmosDBSqlTriggerResourceInfo(id, body, triggerType, triggerOperation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBSqlTriggerResourceInfo>.Write(ModelReaderWriterOptions options)

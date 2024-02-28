@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="radiusServerAddress"/> is null. </exception>
         public RadiusServer(string radiusServerAddress)
         {
-            Argument.AssertNotNull(radiusServerAddress, nameof(radiusServerAddress));
+            if (radiusServerAddress == null)
+            {
+                throw new ArgumentNullException(nameof(radiusServerAddress));
+            }
 
             RadiusServerAddress = radiusServerAddress;
         }

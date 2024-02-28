@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<EndpointBaseUpdateProperties> properties = default;
+            EndpointBaseUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value);
+                    properties = EndpointBaseUpdateProperties.DeserializeEndpointBaseUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageMoverEndpointPatch(properties.Value, serializedAdditionalRawData);
+            return new StorageMoverEndpointPatch(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverEndpointPatch>.Write(ModelReaderWriterOptions options)

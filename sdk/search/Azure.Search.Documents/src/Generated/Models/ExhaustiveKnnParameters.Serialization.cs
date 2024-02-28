@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Metric))
+            if (Metric.HasValue)
             {
                 if (Metric != null)
                 {
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<VectorSearchAlgorithmMetric?> metric = default;
+            VectorSearchAlgorithmMetric? metric = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metric"u8))
@@ -50,7 +50,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnParameters(Optional.ToNullable(metric));
+            return new ExhaustiveKnnParameters(metric);
         }
     }
 }

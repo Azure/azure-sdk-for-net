@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SoftwareAssuranceStatus))
+            if (SoftwareAssuranceStatus.HasValue)
             {
                 writer.WritePropertyName("softwareAssuranceStatus"u8);
                 writer.WriteStringValue(SoftwareAssuranceStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SoftwareAssuranceIntent))
+            if (SoftwareAssuranceIntent.HasValue)
             {
                 writer.WritePropertyName("softwareAssuranceIntent"u8);
                 writer.WriteStringValue(SoftwareAssuranceIntent.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdated))
+            if (options.Format != "W" && LastUpdated.HasValue)
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<SoftwareAssuranceStatus> softwareAssuranceStatus = default;
-            Optional<SoftwareAssuranceIntent> softwareAssuranceIntent = default;
-            Optional<DateTimeOffset> lastUpdated = default;
+            SoftwareAssuranceStatus? softwareAssuranceStatus = default;
+            SoftwareAssuranceIntent? softwareAssuranceIntent = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SoftwareAssuranceProperties(Optional.ToNullable(softwareAssuranceStatus), Optional.ToNullable(softwareAssuranceIntent), Optional.ToNullable(lastUpdated), serializedAdditionalRawData);
+            return new SoftwareAssuranceProperties(softwareAssuranceStatus, softwareAssuranceIntent, lastUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SoftwareAssuranceProperties>.Write(ModelReaderWriterOptions options)

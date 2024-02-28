@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Hostname))
+            if (options.Format != "W" && Hostname != null)
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && Optional.IsDefined(IPAddress))
+            if (options.Format != "W" && IPAddress != null)
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Optional.IsDefined(Port))
+            if (options.Format != "W" && Port.HasValue)
             {
                 if (Port != null)
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("port");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Health))
+            if (options.Format != "W" && Health.HasValue)
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 return null;
             }
-            Optional<string> hostname = default;
-            Optional<string> ipAddress = default;
-            Optional<long?> port = default;
-            Optional<SapHealthState> health = default;
+            string hostname = default;
+            string ipAddress = default;
+            long? port = default;
+            SapHealthState? health = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnqueueServerProperties(hostname.Value, ipAddress.Value, Optional.ToNullable(port), Optional.ToNullable(health), serializedAdditionalRawData);
+            return new EnqueueServerProperties(hostname, ipAddress, port, health, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnqueueServerProperties>.Write(ModelReaderWriterOptions options)

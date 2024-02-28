@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -19,13 +18,13 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> statusDetails = default;
-            Optional<KeyVaultServiceError> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<string> jobId = default;
-            Optional<string> azureStorageBlobContainerUri = default;
+            string status = default;
+            string statusDetails = default;
+            KeyVaultServiceError error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string jobId = default;
+            string azureStorageBlobContainerUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -78,7 +77,14 @@ namespace Azure.Security.KeyVault.Administration.Models
                     continue;
                 }
             }
-            return new FullBackupDetailsInternal(status.Value, statusDetails.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), jobId.Value, azureStorageBlobContainerUri.Value);
+            return new FullBackupDetailsInternal(
+                status,
+                statusDetails,
+                error,
+                startTime,
+                endTime,
+                jobId,
+                azureStorageBlobContainerUri);
         }
     }
 }

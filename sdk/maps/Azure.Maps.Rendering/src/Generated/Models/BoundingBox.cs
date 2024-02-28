@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Maps.Rendering
 {
@@ -21,8 +20,14 @@ namespace Azure.Maps.Rendering
         /// <exception cref="ArgumentNullException"> <paramref name="southWest"/> or <paramref name="northEast"/> is null. </exception>
         public BoundingBox(IEnumerable<double> southWest, IEnumerable<double> northEast)
         {
-            Argument.AssertNotNull(southWest, nameof(southWest));
-            Argument.AssertNotNull(northEast, nameof(northEast));
+            if (southWest == null)
+            {
+                throw new ArgumentNullException(nameof(southWest));
+            }
+            if (northEast == null)
+            {
+                throw new ArgumentNullException(nameof(northEast));
+            }
 
             SouthWest = southWest.ToList();
             NorthEast = northEast.ToList();

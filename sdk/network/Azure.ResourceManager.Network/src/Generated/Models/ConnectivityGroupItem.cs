@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
         public ConnectivityGroupItem(string networkGroupId, GroupConnectivity groupConnectivity)
         {
-            Argument.AssertNotNull(networkGroupId, nameof(networkGroupId));
+            if (networkGroupId == null)
+            {
+                throw new ArgumentNullException(nameof(networkGroupId));
+            }
 
             NetworkGroupId = networkGroupId;
             GroupConnectivity = groupConnectivity;

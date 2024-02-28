@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountSasToken"/> is null. </exception>
         internal AccountSasToken(string storageAccountSasToken)
         {
-            Argument.AssertNotNull(storageAccountSasToken, nameof(storageAccountSasToken));
+            if (storageAccountSasToken == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountSasToken));
+            }
 
             StorageAccountSasToken = storageAccountSasToken;
         }

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(VaultCriticalOperation))
+            if (options.Format != "W" && VaultCriticalOperation != null)
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (options.Format != "W" && Optional.IsDefined(RequestResourceType))
+            if (options.Format != "W" && RequestResourceType.HasValue)
             {
                 writer.WritePropertyName("requestResourceType"u8);
                 writer.WriteStringValue(RequestResourceType.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> vaultCriticalOperation = default;
-            Optional<ResourceType> requestResourceType = default;
+            string vaultCriticalOperation = default;
+            ResourceType? requestResourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardOperationDetails(vaultCriticalOperation.Value, Optional.ToNullable(requestResourceType), serializedAdditionalRawData);
+            return new ResourceGuardOperationDetails(vaultCriticalOperation, requestResourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardOperationDetails>.Write(ModelReaderWriterOptions options)

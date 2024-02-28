@@ -277,7 +277,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
+            if (privateLinkScopeId == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkScopeId));
+            }
+            if (privateLinkScopeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkScopeId));
+            }
 
             using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope");
             scope.Start();
@@ -321,7 +328,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
+            if (privateLinkScopeId == null)
+            {
+                throw new ArgumentNullException(nameof(privateLinkScopeId));
+            }
+            if (privateLinkScopeId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkScopeId));
+            }
 
             using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope");
             scope.Start();

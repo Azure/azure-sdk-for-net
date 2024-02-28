@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LeasedByLabVmId))
+            if (LeasedByLabVmId != null)
             {
                 writer.WritePropertyName("leasedByLabVmId"u8);
                 writer.WriteStringValue(LeasedByLabVmId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> leasedByLabVmId = default;
+            ResourceIdentifier leasedByLabVmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDiskAttachContent(leasedByLabVmId.Value, serializedAdditionalRawData);
+            return new DevTestLabDiskAttachContent(leasedByLabVmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDiskAttachContent>.Write(ModelReaderWriterOptions options)

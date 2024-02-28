@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SessionId))
+            if (SessionId.HasValue)
             {
                 writer.WritePropertyName("sessionId"u8);
                 writer.WriteStringValue(SessionId.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> sessionId = default;
+            Guid? sessionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeleteDataFlowDebugSessionContent(Optional.ToNullable(sessionId), serializedAdditionalRawData);
+            return new DeleteDataFlowDebugSessionContent(sessionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeleteDataFlowDebugSessionContent>.Write(ModelReaderWriterOptions options)

@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CommitmentPlanId))
+            if (CommitmentPlanId != null)
             {
                 writer.WritePropertyName("commitmentPlanId"u8);
                 writer.WriteStringValue(CommitmentPlanId);
             }
-            if (Optional.IsDefined(CommitmentPlanLocation))
+            if (CommitmentPlanLocation != null)
             {
                 writer.WritePropertyName("commitmentPlanLocation"u8);
                 writer.WriteStringValue(CommitmentPlanLocation);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> commitmentPlanId = default;
-            Optional<string> commitmentPlanLocation = default;
+            ResourceIdentifier commitmentPlanId = default;
+            string commitmentPlanLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommitmentPlanAssociation(commitmentPlanId.Value, commitmentPlanLocation.Value, serializedAdditionalRawData);
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommitmentPlanAssociation>.Write(ModelReaderWriterOptions options)

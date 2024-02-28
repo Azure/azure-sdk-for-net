@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             DocumentBarcodeKind kind = default;
             string value = default;
-            Optional<IReadOnlyList<float>> polygon = default;
+            IReadOnlyList<float> polygon = default;
             DocumentSpan span = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentBarcode(kind, value, Optional.ToList(polygon), span, confidence);
+            return new DocumentBarcode(kind, value, polygon ?? new ChangeTrackingList<float>(), span, confidence);
         }
     }
 }

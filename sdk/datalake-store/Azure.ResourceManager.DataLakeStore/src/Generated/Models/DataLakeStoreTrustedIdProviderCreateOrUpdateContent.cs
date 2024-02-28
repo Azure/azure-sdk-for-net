@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <exception cref="ArgumentNullException"> <paramref name="idProvider"/> is null. </exception>
         public DataLakeStoreTrustedIdProviderCreateOrUpdateContent(Uri idProvider)
         {
-            Argument.AssertNotNull(idProvider, nameof(idProvider));
+            if (idProvider == null)
+            {
+                throw new ArgumentNullException(nameof(idProvider));
+            }
 
             IdProvider = idProvider;
         }

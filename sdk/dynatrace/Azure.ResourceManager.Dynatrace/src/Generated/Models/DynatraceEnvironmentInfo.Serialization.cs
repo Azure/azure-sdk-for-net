@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Dynatrace.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnvironmentId))
+            if (EnvironmentId != null)
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (Optional.IsDefined(IngestionKey))
+            if (IngestionKey != null)
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (Optional.IsDefined(LogsIngestionEndpoint))
+            if (LogsIngestionEndpoint != null)
             {
                 writer.WritePropertyName("logsIngestionEndpoint"u8);
                 writer.WriteStringValue(LogsIngestionEndpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(LandingUri))
+            if (LandingUri != null)
             {
                 writer.WritePropertyName("landingURL"u8);
                 writer.WriteStringValue(LandingUri.AbsoluteUri);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 return null;
             }
-            Optional<string> environmentId = default;
-            Optional<string> ingestionKey = default;
-            Optional<Uri> logsIngestionEndpoint = default;
-            Optional<Uri> landingUri = default;
+            string environmentId = default;
+            string ingestionKey = default;
+            Uri logsIngestionEndpoint = default;
+            Uri landingUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DynatraceEnvironmentInfo(environmentId.Value, ingestionKey.Value, logsIngestionEndpoint.Value, landingUri.Value, serializedAdditionalRawData);
+            return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DynatraceEnvironmentInfo>.Write(ModelReaderWriterOptions options)

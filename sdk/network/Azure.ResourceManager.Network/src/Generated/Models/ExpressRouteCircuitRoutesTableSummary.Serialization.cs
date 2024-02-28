@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Neighbor))
+            if (Neighbor != null)
             {
                 writer.WritePropertyName("neighbor"u8);
                 writer.WriteStringValue(Neighbor);
             }
-            if (Optional.IsDefined(V))
+            if (V.HasValue)
             {
                 writer.WritePropertyName("v"u8);
                 writer.WriteNumberValue(V.Value);
             }
-            if (Optional.IsDefined(As))
+            if (As.HasValue)
             {
                 writer.WritePropertyName("as"u8);
                 writer.WriteNumberValue(As.Value);
             }
-            if (Optional.IsDefined(UpDown))
+            if (UpDown != null)
             {
                 writer.WritePropertyName("upDown"u8);
                 writer.WriteStringValue(UpDown);
             }
-            if (Optional.IsDefined(StatePfxRcd))
+            if (StatePfxRcd != null)
             {
                 writer.WritePropertyName("statePfxRcd"u8);
                 writer.WriteStringValue(StatePfxRcd);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> neighbor = default;
-            Optional<int> v = default;
-            Optional<int> @as = default;
-            Optional<string> upDown = default;
-            Optional<string> statePfxRcd = default;
+            string neighbor = default;
+            int? v = default;
+            int? @as = default;
+            string upDown = default;
+            string statePfxRcd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Optional.ToNullable(v), Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitRoutesTableSummary(
+                neighbor,
+                v,
+                @as,
+                upDown,
+                statePfxRcd,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTableSummary>.Write(ModelReaderWriterOptions options)

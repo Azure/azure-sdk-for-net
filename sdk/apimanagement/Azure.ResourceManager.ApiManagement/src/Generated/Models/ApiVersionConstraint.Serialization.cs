@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinApiVersion))
+            if (MinApiVersion != null)
             {
                 writer.WritePropertyName("minApiVersion"u8);
                 writer.WriteStringValue(MinApiVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> minApiVersion = default;
+            string minApiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiVersionConstraint(minApiVersion.Value, serializedAdditionalRawData);
+            return new ApiVersionConstraint(minApiVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiVersionConstraint>.Write(ModelReaderWriterOptions options)

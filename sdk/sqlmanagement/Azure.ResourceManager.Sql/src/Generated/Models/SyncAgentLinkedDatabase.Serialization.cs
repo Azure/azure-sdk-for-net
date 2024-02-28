@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DatabaseType))
+            if (options.Format != "W" && DatabaseType.HasValue)
             {
                 writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
+            if (options.Format != "W" && DatabaseId.HasValue)
             {
                 writer.WritePropertyName("databaseId"u8);
                 writer.WriteStringValue(DatabaseId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Description))
+            if (options.Format != "W" && Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (options.Format != "W" && ServerName != null)
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && DatabaseName != null)
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(UserName))
+            if (options.Format != "W" && UserName != null)
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<SyncMemberDbType> databaseType = default;
-            Optional<Guid> databaseId = default;
-            Optional<string> description = default;
-            Optional<string> serverName = default;
-            Optional<string> databaseName = default;
-            Optional<string> userName = default;
+            SystemData systemData = default;
+            SyncMemberDbType? databaseType = default;
+            Guid? databaseId = default;
+            string description = default;
+            string serverName = default;
+            string databaseName = default;
+            string userName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,18 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentLinkedDatabase(id, name, type, systemData.Value, Optional.ToNullable(databaseType), Optional.ToNullable(databaseId), description.Value, serverName.Value, databaseName.Value, userName.Value, serializedAdditionalRawData);
+            return new SyncAgentLinkedDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                databaseType,
+                databaseId,
+                description,
+                serverName,
+                databaseName,
+                userName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentLinkedDatabase>.Write(ModelReaderWriterOptions options)

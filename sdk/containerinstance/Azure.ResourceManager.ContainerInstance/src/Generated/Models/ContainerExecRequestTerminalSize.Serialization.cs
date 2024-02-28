@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Rows))
+            if (Rows.HasValue)
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
-            if (Optional.IsDefined(Cols))
+            if (Cols.HasValue)
             {
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<int> rows = default;
-            Optional<int> cols = default;
+            int? rows = default;
+            int? cols = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerExecRequestTerminalSize(Optional.ToNullable(rows), Optional.ToNullable(cols), serializedAdditionalRawData);
+            return new ContainerExecRequestTerminalSize(rows, cols, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerExecRequestTerminalSize>.Write(ModelReaderWriterOptions options)

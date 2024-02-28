@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ScopeName))
+            if (ScopeName != null)
             {
                 writer.WritePropertyName("scopeName"u8);
                 writer.WriteStringValue(ScopeName);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<string> scopeName = default;
+            string scopeName = default;
             int itemIndex = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LogicWorkflowRepetitionIndex(scopeName.Value, itemIndex, serializedAdditionalRawData);
+            return new LogicWorkflowRepetitionIndex(scopeName, itemIndex, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LogicWorkflowRepetitionIndex>.Write(ModelReaderWriterOptions options)

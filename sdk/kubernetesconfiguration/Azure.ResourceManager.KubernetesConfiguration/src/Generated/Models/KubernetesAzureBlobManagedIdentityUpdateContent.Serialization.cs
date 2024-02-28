@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 if (ClientId != null)
                 {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 return null;
             }
-            Optional<string> clientId = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesAzureBlobManagedIdentityUpdateContent(clientId.Value, serializedAdditionalRawData);
+            return new KubernetesAzureBlobManagedIdentityUpdateContent(clientId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KubernetesAzureBlobManagedIdentityUpdateContent>.Write(ModelReaderWriterOptions options)

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterNotificationTarget> array = new List<ClusterNotificationTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterNotificationTarget.DeserializeClusterNotificationTarget(item));
+                        array.Add(ClusterNotificationTarget.DeserializeClusterNotificationTarget(item, options));
                     }
                     notificationTargets = array;
                     continue;

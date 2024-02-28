@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(WebhookResourceId);
             writer.WritePropertyName("isGlobalRunbook"u8);
             writer.WriteBooleanValue(IsGlobalRunbook);
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ServiceUri))
+            if (ServiceUri != null)
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(UseCommonAlertSchema))
+            if (UseCommonAlertSchema.HasValue)
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);
                 writer.WriteBooleanValue(UseCommonAlertSchema.Value);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Monitor.Models
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
             bool isGlobalRunbook = default;
-            Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
+            string name = default;
+            Uri serviceUri = default;
+            bool? useCommonAlertSchema = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,15 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorAutomationRunbookReceiver(automationAccountId, runbookName, webhookResourceId, isGlobalRunbook, name.Value, serviceUri.Value, Optional.ToNullable(useCommonAlertSchema), serializedAdditionalRawData);
+            return new MonitorAutomationRunbookReceiver(
+                automationAccountId,
+                runbookName,
+                webhookResourceId,
+                isGlobalRunbook,
+                name,
+                serviceUri,
+                useCommonAlertSchema,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorAutomationRunbookReceiver>.Write(ModelReaderWriterOptions options)

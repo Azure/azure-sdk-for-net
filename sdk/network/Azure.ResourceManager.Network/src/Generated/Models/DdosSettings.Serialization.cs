@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProtectionMode))
+            if (ProtectionMode.HasValue)
             {
                 writer.WritePropertyName("protectionMode"u8);
                 writer.WriteStringValue(ProtectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(DdosProtectionPlan))
+            if (DdosProtectionPlan != null)
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
                 JsonSerializer.Serialize(writer, DdosProtectionPlan);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<DdosSettingsProtectionMode> protectionMode = default;
-            Optional<WritableSubResource> ddosProtectionPlan = default;
+            DdosSettingsProtectionMode? protectionMode = default;
+            WritableSubResource ddosProtectionPlan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DdosSettings(Optional.ToNullable(protectionMode), ddosProtectionPlan, serializedAdditionalRawData);
+            return new DdosSettings(protectionMode, ddosProtectionPlan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DdosSettings>.Write(ModelReaderWriterOptions options)

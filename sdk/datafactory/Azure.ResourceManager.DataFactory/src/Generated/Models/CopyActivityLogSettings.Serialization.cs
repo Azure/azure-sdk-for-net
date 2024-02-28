@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LogLevel))
+            if (LogLevel != null)
             {
                 writer.WritePropertyName("logLevel"u8);
                 JsonSerializer.Serialize(writer, LogLevel);
             }
-            if (Optional.IsDefined(EnableReliableLogging))
+            if (EnableReliableLogging != null)
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
                 JsonSerializer.Serialize(writer, EnableReliableLogging);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> logLevel = default;
-            Optional<DataFactoryElement<bool>> enableReliableLogging = default;
+            DataFactoryElement<string> logLevel = default;
+            DataFactoryElement<bool> enableReliableLogging = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CopyActivityLogSettings(logLevel.Value, enableReliableLogging.Value, serializedAdditionalRawData);
+            return new CopyActivityLogSettings(logLevel, enableReliableLogging, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CopyActivityLogSettings>.Write(ModelReaderWriterOptions options)

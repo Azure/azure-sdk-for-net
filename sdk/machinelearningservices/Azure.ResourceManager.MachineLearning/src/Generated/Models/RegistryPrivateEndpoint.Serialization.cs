@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubnetArmId))
+            if (SubnetArmId != null)
             {
                 if (SubnetArmId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("subnetArmId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> subnetArmId = default;
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier subnetArmId = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegistryPrivateEndpoint(id.Value, serializedAdditionalRawData, subnetArmId.Value);
+            return new RegistryPrivateEndpoint(id, serializedAdditionalRawData, subnetArmId);
         }
 
         BinaryData IPersistableModel<RegistryPrivateEndpoint>.Write(ModelReaderWriterOptions options)

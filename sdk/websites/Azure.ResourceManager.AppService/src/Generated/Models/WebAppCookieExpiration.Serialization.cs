@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Convention))
+            if (Convention.HasValue)
             {
                 writer.WritePropertyName("convention"u8);
                 writer.WriteStringValue(Convention.Value.ToSerialString());
             }
-            if (Optional.IsDefined(TimeToExpiration))
+            if (TimeToExpiration != null)
             {
                 writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<CookieExpirationConvention> convention = default;
-            Optional<string> timeToExpiration = default;
+            CookieExpirationConvention? convention = default;
+            string timeToExpiration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value, serializedAdditionalRawData);
+            return new WebAppCookieExpiration(convention, timeToExpiration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebAppCookieExpiration>.Write(ModelReaderWriterOptions options)

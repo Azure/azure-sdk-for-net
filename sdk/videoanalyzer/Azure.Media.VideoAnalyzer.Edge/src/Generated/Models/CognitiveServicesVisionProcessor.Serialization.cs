@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteObjectValue(Endpoint);
-            if (Optional.IsDefined(Image))
+            if (Image != null)
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteObjectValue(Image);
             }
-            if (Optional.IsDefined(SamplingOptions))
+            if (SamplingOptions != null)
             {
                 writer.WritePropertyName("samplingOptions"u8);
                 writer.WriteObjectValue(SamplingOptions);
@@ -51,8 +51,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             EndpointBase endpoint = default;
-            Optional<ImageProperties> image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            ImageProperties image = default;
+            SamplingOptions samplingOptions = default;
             SpatialAnalysisOperationBase operation = default;
             string type = default;
             string name = default;
@@ -108,7 +108,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            return new CognitiveServicesVisionProcessor(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions,
+                operation);
         }
     }
 }

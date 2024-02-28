@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointName))
+            if (EndpointName != null)
             {
                 writer.WritePropertyName("endpointName"u8);
                 writer.WriteStringValue(EndpointName);
             }
-            if (Optional.IsDefined(PrivatePort))
+            if (PrivatePort.HasValue)
             {
                 writer.WritePropertyName("privatePort"u8);
                 writer.WriteNumberValue(PrivatePort.Value);
             }
-            if (Optional.IsDefined(PublicPort))
+            if (PublicPort.HasValue)
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (Optional.IsDefined(Protocol))
+            if (Protocol != null)
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<string> endpointName = default;
-            Optional<int> privatePort = default;
-            Optional<int> publicPort = default;
-            Optional<string> protocol = default;
+            string endpointName = default;
+            int? privatePort = default;
+            int? publicPort = default;
+            string protocol = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryVmEndpoint(endpointName.Value, Optional.ToNullable(privatePort), Optional.ToNullable(publicPort), protocol.Value, serializedAdditionalRawData);
+            return new SiteRecoveryVmEndpoint(endpointName, privatePort, publicPort, protocol, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryVmEndpoint>.Write(ModelReaderWriterOptions options)

@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Optional.IsDefined(ApplicationSecret))
+            if (ApplicationSecret != null)
             {
                 writer.WritePropertyName("applicationSecret"u8);
                 writer.WriteStringValue(ApplicationSecret);
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string applicationId = default;
-            Optional<string> applicationSecret = default;
+            string applicationSecret = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -46,7 +46,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret.Value);
+            return new AzureActiveDirectoryApplicationCredentials(applicationId, applicationSecret);
         }
     }
 }

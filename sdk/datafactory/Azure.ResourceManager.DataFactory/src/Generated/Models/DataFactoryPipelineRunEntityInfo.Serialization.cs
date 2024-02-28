@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(InvokedByType))
+            if (options.Format != "W" && InvokedByType != null)
             {
                 writer.WritePropertyName("invokedByType"u8);
                 writer.WriteStringValue(InvokedByType);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineName))
+            if (options.Format != "W" && PipelineName != null)
             {
                 writer.WritePropertyName("pipelineName"u8);
                 writer.WriteStringValue(PipelineName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PipelineRunId))
+            if (options.Format != "W" && PipelineRunId.HasValue)
             {
                 writer.WritePropertyName("pipelineRunId"u8);
                 writer.WriteStringValue(PipelineRunId.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> invokedByType = default;
-            Optional<string> pipelineName = default;
-            Optional<Guid> pipelineRunId = default;
+            string name = default;
+            string id = default;
+            string invokedByType = default;
+            string pipelineName = default;
+            Guid? pipelineRunId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunEntityInfo(name.Value, id.Value, invokedByType.Value, pipelineName.Value, Optional.ToNullable(pipelineRunId), serializedAdditionalRawData);
+            return new DataFactoryPipelineRunEntityInfo(
+                name,
+                id,
+                invokedByType,
+                pipelineName,
+                pipelineRunId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunEntityInfo>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorAccount))
+            if (AdministratorAccount != null)
             {
                 writer.WritePropertyName("administratorAccount"u8);
                 writer.WriteObjectValue(AdministratorAccount);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<MachineLearningVmSshCredentials> administratorAccount = default;
+            MachineLearningVmSshCredentials administratorAccount = default;
             ComputeType computeType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value);
+                    administratorAccount = MachineLearningVmSshCredentials.DeserializeMachineLearningVmSshCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("computeType"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData, administratorAccount.Value);
+            return new MachineLearningVirtualMachineSecrets(computeType, serializedAdditionalRawData, administratorAccount);
         }
 
         BinaryData IPersistableModel<MachineLearningVirtualMachineSecrets>.Write(ModelReaderWriterOptions options)

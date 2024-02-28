@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TargetWorkerNodeCount))
+            if (TargetWorkerNodeCount.HasValue)
             {
                 writer.WritePropertyName("targetWorkerNodeCount"u8);
                 writer.WriteNumberValue(TargetWorkerNodeCount.Value);
@@ -106,13 +106,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> targetWorkerNodeCount = default;
+            SystemData systemData = default;
+            int? targetWorkerNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,7 +187,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterResizeContent(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(targetWorkerNodeCount), serializedAdditionalRawData);
+            return new ClusterResizeContent(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                targetWorkerNodeCount,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterResizeContent>.Write(ModelReaderWriterOptions options)

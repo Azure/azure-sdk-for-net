@@ -21,9 +21,9 @@ namespace Azure.AI.Language.QuestionAnswering
             }
             InnerErrorCode code = default;
             string message = default;
-            Optional<IReadOnlyDictionary<string, string>> details = default;
-            Optional<string> target = default;
-            Optional<InnerErrorModel> innererror = default;
+            IReadOnlyDictionary<string, string> details = default;
+            string target = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +65,7 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
         }
     }
 }

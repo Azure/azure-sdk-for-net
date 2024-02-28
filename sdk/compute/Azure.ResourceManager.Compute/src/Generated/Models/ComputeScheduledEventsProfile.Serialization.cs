@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TerminateNotificationProfile))
+            if (TerminateNotificationProfile != null)
             {
                 writer.WritePropertyName("terminateNotificationProfile"u8);
                 writer.WriteObjectValue(TerminateNotificationProfile);
             }
-            if (Optional.IsDefined(OSImageNotificationProfile))
+            if (OSImageNotificationProfile != null)
             {
                 writer.WritePropertyName("osImageNotificationProfile"u8);
                 writer.WriteObjectValue(OSImageNotificationProfile);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<TerminateNotificationProfile> terminateNotificationProfile = default;
-            Optional<OSImageNotificationProfile> osImageNotificationProfile = default;
+            TerminateNotificationProfile terminateNotificationProfile = default;
+            OSImageNotificationProfile osImageNotificationProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value);
+                    terminateNotificationProfile = TerminateNotificationProfile.DeserializeTerminateNotificationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osImageNotificationProfile"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value);
+                    osImageNotificationProfile = OSImageNotificationProfile.DeserializeOSImageNotificationProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeScheduledEventsProfile(terminateNotificationProfile.Value, osImageNotificationProfile.Value, serializedAdditionalRawData);
+            return new ComputeScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeScheduledEventsProfile>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Host))
+            if (Host != null)
             {
                 writer.WritePropertyName("host"u8);
                 writer.WriteStringValue(Host);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
+            string host = default;
             int port = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTcpSocketRequestInfo(host.Value, port, serializedAdditionalRawData);
+            return new ContainerAppTcpSocketRequestInfo(host, port, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTcpSocketRequestInfo>.Write(ModelReaderWriterOptions options)

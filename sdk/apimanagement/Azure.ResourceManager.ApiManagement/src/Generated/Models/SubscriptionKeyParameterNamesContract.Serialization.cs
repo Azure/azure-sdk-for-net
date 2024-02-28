@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Header))
+            if (Header != null)
             {
                 writer.WritePropertyName("header"u8);
                 writer.WriteStringValue(Header);
             }
-            if (Optional.IsDefined(Query))
+            if (Query != null)
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> header = default;
-            Optional<string> query = default;
+            string header = default;
+            string query = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionKeyParameterNamesContract(header.Value, query.Value, serializedAdditionalRawData);
+            return new SubscriptionKeyParameterNamesContract(header, query, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubscriptionKeyParameterNamesContract>.Write(ModelReaderWriterOptions options)

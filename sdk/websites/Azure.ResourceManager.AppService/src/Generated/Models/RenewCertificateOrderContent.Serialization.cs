@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Kind))
+            if (Kind != null)
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -47,24 +47,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(KeySize))
+            if (KeySize.HasValue)
             {
                 writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
-            if (Optional.IsDefined(Csr))
+            if (Csr != null)
             {
                 writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
-            if (Optional.IsDefined(IsPrivateKeyExternal))
+            if (IsPrivateKeyExternal.HasValue)
             {
                 writer.WritePropertyName("isPrivateKeyExternal"u8);
                 writer.WriteBooleanValue(IsPrivateKeyExternal.Value);
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<int> keySize = default;
-            Optional<string> csr = default;
-            Optional<bool> isPrivateKeyExternal = default;
+            SystemData systemData = default;
+            int? keySize = default;
+            string csr = default;
+            bool? isPrivateKeyExternal = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RenewCertificateOrderContent(id, name, type, systemData.Value, Optional.ToNullable(keySize), csr.Value, Optional.ToNullable(isPrivateKeyExternal), kind.Value, serializedAdditionalRawData);
+            return new RenewCertificateOrderContent(
+                id,
+                name,
+                type,
+                systemData,
+                keySize,
+                csr,
+                isPrivateKeyExternal,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RenewCertificateOrderContent>.Write(ModelReaderWriterOptions options)

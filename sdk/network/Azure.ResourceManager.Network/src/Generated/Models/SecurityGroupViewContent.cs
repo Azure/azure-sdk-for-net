@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetResourceId"/> is null. </exception>
         public SecurityGroupViewContent(ResourceIdentifier targetResourceId)
         {
-            Argument.AssertNotNull(targetResourceId, nameof(targetResourceId));
+            if (targetResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetResourceId));
+            }
 
             TargetResourceId = targetResourceId;
         }

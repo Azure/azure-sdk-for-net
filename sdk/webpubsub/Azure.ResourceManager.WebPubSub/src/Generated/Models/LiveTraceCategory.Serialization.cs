@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Enabled != null)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> enabled = default;
+            string name = default;
+            string enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LiveTraceCategory(name.Value, enabled.Value, serializedAdditionalRawData);
+            return new LiveTraceCategory(name, enabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LiveTraceCategory>.Write(ModelReaderWriterOptions options)

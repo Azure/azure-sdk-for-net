@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="tagsParameter"/> is null. </exception>
         public TagScoringParameters(string tagsParameter)
         {
-            Argument.AssertNotNull(tagsParameter, nameof(tagsParameter));
+            if (tagsParameter == null)
+            {
+                throw new ArgumentNullException(nameof(tagsParameter));
+            }
 
             TagsParameter = tagsParameter;
         }

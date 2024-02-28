@@ -61,11 +61,26 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="availabilityZone"/>, <paramref name="rackLocation"/>, <paramref name="rackSerialNumber"/> or <paramref name="rackSkuId"/> is null. </exception>
         public NetworkCloudRackData(AzureLocation location, ExtendedLocation extendedLocation, string availabilityZone, string rackLocation, string rackSerialNumber, ResourceIdentifier rackSkuId) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
-            Argument.AssertNotNull(availabilityZone, nameof(availabilityZone));
-            Argument.AssertNotNull(rackLocation, nameof(rackLocation));
-            Argument.AssertNotNull(rackSerialNumber, nameof(rackSerialNumber));
-            Argument.AssertNotNull(rackSkuId, nameof(rackSkuId));
+            if (extendedLocation == null)
+            {
+                throw new ArgumentNullException(nameof(extendedLocation));
+            }
+            if (availabilityZone == null)
+            {
+                throw new ArgumentNullException(nameof(availabilityZone));
+            }
+            if (rackLocation == null)
+            {
+                throw new ArgumentNullException(nameof(rackLocation));
+            }
+            if (rackSerialNumber == null)
+            {
+                throw new ArgumentNullException(nameof(rackSerialNumber));
+            }
+            if (rackSkuId == null)
+            {
+                throw new ArgumentNullException(nameof(rackSkuId));
+            }
 
             ExtendedLocation = extendedLocation;
             AvailabilityZone = availabilityZone;

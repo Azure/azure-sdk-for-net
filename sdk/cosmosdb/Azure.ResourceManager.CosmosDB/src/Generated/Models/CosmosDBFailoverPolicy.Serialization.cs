@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(LocationName))
+            if (LocationName.HasValue)
             {
                 writer.WritePropertyName("locationName"u8);
                 writer.WriteStringValue(LocationName.Value);
             }
-            if (Optional.IsDefined(FailoverPriority))
+            if (FailoverPriority.HasValue)
             {
                 writer.WritePropertyName("failoverPriority"u8);
                 writer.WriteNumberValue(FailoverPriority.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<AzureLocation> locationName = default;
-            Optional<int> failoverPriority = default;
+            string id = default;
+            AzureLocation? locationName = default;
+            int? failoverPriority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBFailoverPolicy(id.Value, Optional.ToNullable(locationName), Optional.ToNullable(failoverPriority), serializedAdditionalRawData);
+            return new CosmosDBFailoverPolicy(id, locationName, failoverPriority, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBFailoverPolicy>.Write(ModelReaderWriterOptions options)

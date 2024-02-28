@@ -279,7 +279,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CostManagementViewsResource>> UpdateAsync(WaitUntil waitUntil, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();
@@ -325,7 +328,10 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CostManagementViewsResource> Update(WaitUntil waitUntil, CostManagementViewData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _costManagementViewsViewsClientDiagnostics.CreateScope("CostManagementViewsResource.Update");
             scope.Start();

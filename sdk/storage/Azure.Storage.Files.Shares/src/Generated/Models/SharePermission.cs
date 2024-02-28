@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -18,7 +17,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public SharePermission(string permission)
         {
-            Argument.AssertNotNull(permission, nameof(permission));
+            if (permission == null)
+            {
+                throw new ArgumentNullException(nameof(permission));
+            }
 
             Permission = permission;
         }

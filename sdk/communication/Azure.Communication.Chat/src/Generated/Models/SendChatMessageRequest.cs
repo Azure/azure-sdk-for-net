@@ -19,7 +19,10 @@ namespace Azure.Communication.Chat
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SendChatMessageRequest(string content)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             Content = content;
             Metadata = new ChangeTrackingDictionary<string, string>();

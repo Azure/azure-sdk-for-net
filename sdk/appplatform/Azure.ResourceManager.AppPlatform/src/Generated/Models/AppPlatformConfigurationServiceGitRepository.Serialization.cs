@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             writer.WriteStringValue(Uri.AbsoluteUri);
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            if (Optional.IsCollectionDefined(SearchPaths))
+            if (!(SearchPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("searchPaths"u8);
                 writer.WriteStartArray();
@@ -49,32 +49,32 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(HostKey))
+            if (HostKey != null)
             {
                 writer.WritePropertyName("hostKey"u8);
                 writer.WriteStringValue(HostKey);
             }
-            if (Optional.IsDefined(HostKeyAlgorithm))
+            if (HostKeyAlgorithm != null)
             {
                 writer.WritePropertyName("hostKeyAlgorithm"u8);
                 writer.WriteStringValue(HostKeyAlgorithm);
             }
-            if (Optional.IsDefined(PrivateKey))
+            if (PrivateKey != null)
             {
                 writer.WritePropertyName("privateKey"u8);
                 writer.WriteStringValue(PrivateKey);
             }
-            if (Optional.IsDefined(IsHostKeyCheckingStrict))
+            if (IsHostKeyCheckingStrict.HasValue)
             {
                 writer.WritePropertyName("strictHostKeyChecking"u8);
                 writer.WriteBooleanValue(IsHostKeyCheckingStrict.Value);
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
             IList<string> patterns = default;
             Uri uri = default;
             string label = default;
-            Optional<IList<string>> searchPaths = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> hostKey = default;
-            Optional<string> hostKeyAlgorithm = default;
-            Optional<string> privateKey = default;
-            Optional<bool> strictHostKeyChecking = default;
+            IList<string> searchPaths = default;
+            string username = default;
+            string password = default;
+            string hostKey = default;
+            string hostKeyAlgorithm = default;
+            string privateKey = default;
+            bool? strictHostKeyChecking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigurationServiceGitRepository(name, patterns, uri, label, Optional.ToList(searchPaths), username.Value, password.Value, hostKey.Value, hostKeyAlgorithm.Value, privateKey.Value, Optional.ToNullable(strictHostKeyChecking), serializedAdditionalRawData);
+            return new AppPlatformConfigurationServiceGitRepository(
+                name,
+                patterns,
+                uri,
+                label,
+                searchPaths ?? new ChangeTrackingList<string>(),
+                username,
+                password,
+                hostKey,
+                hostKeyAlgorithm,
+                privateKey,
+                strictHostKeyChecking,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigurationServiceGitRepository>.Write(ModelReaderWriterOptions options)

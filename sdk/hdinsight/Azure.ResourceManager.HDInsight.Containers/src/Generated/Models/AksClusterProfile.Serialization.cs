@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AksClusterResourceId))
+            if (AksClusterResourceId != null)
             {
                 writer.WritePropertyName("aksClusterResourceId"u8);
                 writer.WriteStringValue(AksClusterResourceId);
             }
-            if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
+            if (AksClusterAgentPoolIdentityProfile != null)
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
                 writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile);
             }
-            if (options.Format != "W" && Optional.IsDefined(AksVersion))
+            if (options.Format != "W" && AksVersion != null)
             {
                 writer.WritePropertyName("aksVersion"u8);
                 writer.WriteStringValue(AksVersion);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> aksClusterResourceId = default;
-            Optional<HDInsightIdentityProfile> aksClusterAgentPoolIdentityProfile = default;
-            Optional<string> aksVersion = default;
+            ResourceIdentifier aksClusterResourceId = default;
+            HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile = default;
+            string aksVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
+                    aksClusterAgentPoolIdentityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("aksVersion"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AksClusterProfile(aksClusterResourceId.Value, aksClusterAgentPoolIdentityProfile.Value, aksVersion.Value, serializedAdditionalRawData);
+            return new AksClusterProfile(aksClusterResourceId, aksClusterAgentPoolIdentityProfile, aksVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AksClusterProfile>.Write(ModelReaderWriterOptions options)

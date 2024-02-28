@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType.ToString());
-            if (Optional.IsDefined(Threshold))
+            if (Threshold != null)
             {
                 if (Threshold != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPredictionDriftMetricThresholdBase(document.RootElement, options);
+            return DeserializePredictionDriftMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownPredictionDriftMetricThresholdBase DeserializeUnknownPredictionDriftMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MonitoringFeatureDataType dataType = "Unknown";
-            Optional<MonitoringThreshold> threshold = default;
+            MonitoringThreshold threshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPredictionDriftMetricThresholdBase(dataType, threshold.Value, serializedAdditionalRawData);
+            return new UnknownPredictionDriftMetricThresholdBase(dataType, threshold, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDriftMetricThresholdBase>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPredictionDriftMetricThresholdBase(document.RootElement, options);
+                        return DeserializePredictionDriftMetricThresholdBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PredictionDriftMetricThresholdBase)} does not support '{options.Format}' format.");

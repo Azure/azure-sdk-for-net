@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -20,7 +19,10 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="conversions"/> is null. </exception>
         internal ConversionList(IEnumerable<AssetConversion> conversions)
         {
-            Argument.AssertNotNull(conversions, nameof(conversions));
+            if (conversions == null)
+            {
+                throw new ArgumentNullException(nameof(conversions));
+            }
 
             Conversions = conversions.ToList();
         }

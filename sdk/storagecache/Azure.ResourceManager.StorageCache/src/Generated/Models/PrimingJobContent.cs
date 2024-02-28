@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <exception cref="ArgumentNullException"> <paramref name="primingJobId"/> is null. </exception>
         public PrimingJobContent(string primingJobId)
         {
-            Argument.AssertNotNull(primingJobId, nameof(primingJobId));
+            if (primingJobId == null)
+            {
+                throw new ArgumentNullException(nameof(primingJobId));
+            }
 
             PrimingJobId = primingJobId;
         }

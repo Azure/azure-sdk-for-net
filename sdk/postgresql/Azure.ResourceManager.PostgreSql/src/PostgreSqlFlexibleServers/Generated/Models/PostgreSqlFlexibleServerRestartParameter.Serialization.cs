@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RestartWithFailover))
+            if (RestartWithFailover.HasValue)
             {
                 writer.WritePropertyName("restartWithFailover"u8);
                 writer.WriteBooleanValue(RestartWithFailover.Value);
             }
-            if (Optional.IsDefined(FailoverMode))
+            if (FailoverMode.HasValue)
             {
                 writer.WritePropertyName("failoverMode"u8);
                 writer.WriteStringValue(FailoverMode.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<bool> restartWithFailover = default;
-            Optional<PostgreSqlFlexibleServerFailoverMode> failoverMode = default;
+            bool? restartWithFailover = default;
+            PostgreSqlFlexibleServerFailoverMode? failoverMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerRestartParameter(Optional.ToNullable(restartWithFailover), Optional.ToNullable(failoverMode), serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerRestartParameter(restartWithFailover, failoverMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerRestartParameter>.Write(ModelReaderWriterOptions options)

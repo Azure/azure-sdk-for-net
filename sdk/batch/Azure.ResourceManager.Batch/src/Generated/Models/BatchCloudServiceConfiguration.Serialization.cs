@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartObject();
             writer.WritePropertyName("osFamily"u8);
             writer.WriteStringValue(OSFamily);
-            if (Optional.IsDefined(OSVersion))
+            if (OSVersion != null)
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             string osFamily = default;
-            Optional<string> osVersion = default;
+            string osVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCloudServiceConfiguration(osFamily, osVersion.Value, serializedAdditionalRawData);
+            return new BatchCloudServiceConfiguration(osFamily, osVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCloudServiceConfiguration>.Write(ModelReaderWriterOptions options)

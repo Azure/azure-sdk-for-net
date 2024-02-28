@@ -51,7 +51,10 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public AssistantCreationOptions(string model)
         {
-            Argument.AssertNotNull(model, nameof(model));
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
 
             Model = model;
             Tools = new ChangeTrackingList<ToolDefinition>();

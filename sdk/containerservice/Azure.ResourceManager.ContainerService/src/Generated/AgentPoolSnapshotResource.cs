@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
         public virtual async Task<Response<AgentPoolSnapshotResource>> UpdateAsync(ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
+            if (containerServiceTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(containerServiceTagsObject));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
@@ -324,7 +327,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="containerServiceTagsObject"/> is null. </exception>
         public virtual Response<AgentPoolSnapshotResource> Update(ContainerServiceTagsObject containerServiceTagsObject, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerServiceTagsObject, nameof(containerServiceTagsObject));
+            if (containerServiceTagsObject == null)
+            {
+                throw new ArgumentNullException(nameof(containerServiceTagsObject));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.Update");
             scope.Start();
@@ -367,8 +373,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<AgentPoolSnapshotResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.AddTag");
             scope.Start();
@@ -429,8 +441,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<AgentPoolSnapshotResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(value, nameof(value));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.AddTag");
             scope.Start();
@@ -490,7 +508,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AgentPoolSnapshotResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.SetTags");
             scope.Start();
@@ -547,7 +568,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AgentPoolSnapshotResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tags, nameof(tags));
+            if (tags == null)
+            {
+                throw new ArgumentNullException(nameof(tags));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.SetTags");
             scope.Start();
@@ -604,7 +628,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<AgentPoolSnapshotResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.RemoveTag");
             scope.Start();
@@ -664,7 +691,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<AgentPoolSnapshotResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            if (key == null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
 
             using var scope = _agentPoolSnapshotSnapshotsClientDiagnostics.CreateScope("AgentPoolSnapshotResource.RemoveTag");
             scope.Start();

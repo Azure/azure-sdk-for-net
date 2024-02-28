@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -55,11 +54,26 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publisherId"/>, <paramref name="id"/>, <paramref name="planId"/>, <paramref name="planName"/> or <paramref name="termUnit"/> is null. </exception>
         public ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit)
         {
-            Argument.AssertNotNull(publisherId, nameof(publisherId));
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(planId, nameof(planId));
-            Argument.AssertNotNull(planName, nameof(planName));
-            Argument.AssertNotNull(termUnit, nameof(termUnit));
+            if (publisherId == null)
+            {
+                throw new ArgumentNullException(nameof(publisherId));
+            }
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (planId == null)
+            {
+                throw new ArgumentNullException(nameof(planId));
+            }
+            if (planName == null)
+            {
+                throw new ArgumentNullException(nameof(planName));
+            }
+            if (termUnit == null)
+            {
+                throw new ArgumentNullException(nameof(termUnit));
+            }
 
             PublisherId = publisherId;
             Id = id;

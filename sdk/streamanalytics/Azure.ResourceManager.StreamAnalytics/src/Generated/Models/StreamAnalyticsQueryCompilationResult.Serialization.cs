@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            if (options.Format != "W" && !(Errors is ChangeTrackingList<StreamAnalyticsQueryCompilationError> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            if (options.Format != "W" && !(Warnings is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Inputs))
+            if (options.Format != "W" && !(Inputs is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("inputs"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Outputs))
+            if (options.Format != "W" && !(Outputs is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("outputs"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Functions))
+            if (options.Format != "W" && !(Functions is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("functions"u8);
                 writer.WriteStartArray();
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamAnalyticsQueryCompilationError>> errors = default;
-            Optional<IReadOnlyList<string>> warnings = default;
-            Optional<IReadOnlyList<string>> inputs = default;
-            Optional<IReadOnlyList<string>> outputs = default;
-            Optional<IReadOnlyList<string>> functions = default;
+            IReadOnlyList<StreamAnalyticsQueryCompilationError> errors = default;
+            IReadOnlyList<string> warnings = default;
+            IReadOnlyList<string> inputs = default;
+            IReadOnlyList<string> outputs = default;
+            IReadOnlyList<string> functions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryCompilationError> array = new List<StreamAnalyticsQueryCompilationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item));
+                        array.Add(StreamAnalyticsQueryCompilationError.DeserializeStreamAnalyticsQueryCompilationError(item, options));
                     }
                     errors = array;
                     continue;
@@ -199,7 +199,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions), serializedAdditionalRawData);
+            return new StreamAnalyticsQueryCompilationResult(
+                errors ?? new ChangeTrackingList<StreamAnalyticsQueryCompilationError>(),
+                warnings ?? new ChangeTrackingList<string>(),
+                inputs ?? new ChangeTrackingList<string>(),
+                outputs ?? new ChangeTrackingList<string>(),
+                functions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationResult>.Write(ModelReaderWriterOptions options)

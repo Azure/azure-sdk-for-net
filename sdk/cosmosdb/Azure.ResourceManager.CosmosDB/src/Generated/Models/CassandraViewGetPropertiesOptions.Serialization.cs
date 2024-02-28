@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Throughput))
+            if (Throughput.HasValue)
             {
                 writer.WritePropertyName("throughput"u8);
                 writer.WriteNumberValue(Throughput.Value);
             }
-            if (Optional.IsDefined(AutoscaleSettings))
+            if (AutoscaleSettings != null)
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettings> autoscaleSettings = default;
+            int? throughput = default;
+            AutoscaleSettings autoscaleSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
+                    autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraViewGetPropertiesOptions(Optional.ToNullable(throughput), autoscaleSettings.Value, serializedAdditionalRawData);
+            return new CassandraViewGetPropertiesOptions(throughput, autoscaleSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraViewGetPropertiesOptions>.Write(ModelReaderWriterOptions options)

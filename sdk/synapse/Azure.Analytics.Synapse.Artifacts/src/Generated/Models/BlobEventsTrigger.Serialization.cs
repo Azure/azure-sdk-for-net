@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Pipelines))
+            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
@@ -31,12 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -53,17 +53,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobPathBeginsWith))
+            if (BlobPathBeginsWith != null)
             {
                 writer.WritePropertyName("blobPathBeginsWith"u8);
                 writer.WriteStringValue(BlobPathBeginsWith);
             }
-            if (Optional.IsDefined(BlobPathEndsWith))
+            if (BlobPathEndsWith != null)
             {
                 writer.WritePropertyName("blobPathEndsWith"u8);
                 writer.WriteStringValue(BlobPathEndsWith);
             }
-            if (Optional.IsDefined(IgnoreEmptyBlobs))
+            if (IgnoreEmptyBlobs.HasValue)
             {
                 writer.WritePropertyName("ignoreEmptyBlobs"u8);
                 writer.WriteBooleanValue(IgnoreEmptyBlobs.Value);
@@ -92,14 +92,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
+            string blobPathBeginsWith = default;
+            string blobPathEndsWith = default;
+            bool? ignoreEmptyBlobs = default;
             IList<BlobEventType> events = default;
             string scope = default;
             IDictionary<string, object> additionalProperties = default;
@@ -209,7 +209,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BlobEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), blobPathBeginsWith.Value, blobPathEndsWith.Value, Optional.ToNullable(ignoreEmptyBlobs), events, scope);
+            return new BlobEventsTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
+                events,
+                scope);
         }
 
         internal partial class BlobEventsTriggerConverter : JsonConverter<BlobEventsTrigger>

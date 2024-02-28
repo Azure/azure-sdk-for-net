@@ -52,7 +52,10 @@ namespace Azure.ResourceManager.VoiceServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="operatorAddresses"/> is null. </exception>
         public VoiceServicesPrimaryRegionProperties(IEnumerable<string> operatorAddresses)
         {
-            Argument.AssertNotNull(operatorAddresses, nameof(operatorAddresses));
+            if (operatorAddresses == null)
+            {
+                throw new ArgumentNullException(nameof(operatorAddresses));
+            }
 
             OperatorAddresses = operatorAddresses.ToList();
             EsrpAddresses = new ChangeTrackingList<string>();

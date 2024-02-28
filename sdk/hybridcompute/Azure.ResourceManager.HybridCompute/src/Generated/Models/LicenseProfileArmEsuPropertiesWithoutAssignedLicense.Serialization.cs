@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerType))
+            if (options.Format != "W" && ServerType.HasValue)
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EsuEligibility))
+            if (options.Format != "W" && EsuEligibility.HasValue)
             {
                 writer.WritePropertyName("esuEligibility"u8);
                 writer.WriteStringValue(EsuEligibility.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EsuKeyState))
+            if (options.Format != "W" && EsuKeyState.HasValue)
             {
                 writer.WritePropertyName("esuKeyState"u8);
                 writer.WriteStringValue(EsuKeyState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
+            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
+            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            Optional<EsuServerType> serverType = default;
-            Optional<EsuEligibility> esuEligibility = default;
-            Optional<EsuKeyState> esuKeyState = default;
-            Optional<Guid> assignedLicenseImmutableId = default;
-            Optional<IReadOnlyList<EsuKey>> esuKeys = default;
+            EsuServerType? serverType = default;
+            EsuEligibility? esuEligibility = default;
+            EsuKeyState? esuKeyState = default;
+            Guid? assignedLicenseImmutableId = default;
+            IReadOnlyList<EsuKey> esuKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<EsuKey> array = new List<EsuKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EsuKey.DeserializeEsuKey(item));
+                        array.Add(EsuKey.DeserializeEsuKey(item, options));
                     }
                     esuKeys = array;
                     continue;
@@ -159,7 +159,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(Optional.ToNullable(assignedLicenseImmutableId), Optional.ToList(esuKeys), serializedAdditionalRawData, Optional.ToNullable(serverType), Optional.ToNullable(esuEligibility), Optional.ToNullable(esuKeyState));
+            return new LicenseProfileArmEsuPropertiesWithoutAssignedLicense(
+                assignedLicenseImmutableId,
+                esuKeys ?? new ChangeTrackingList<EsuKey>(),
+                serializedAdditionalRawData,
+                serverType,
+                esuEligibility,
+                esuKeyState);
         }
 
         BinaryData IPersistableModel<LicenseProfileArmEsuPropertiesWithoutAssignedLicense>.Write(ModelReaderWriterOptions options)

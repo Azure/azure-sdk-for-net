@@ -19,8 +19,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<IReadOnlyList<AcsCallParticipantInternal>> values = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AcsCallParticipantInternal> values = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new GetParticipantsResponseInternal(Optional.ToList(values), nextLink.Value);
+            return new GetParticipantsResponseInternal(values ?? new ChangeTrackingList<AcsCallParticipantInternal>(), nextLink);
         }
     }
 }

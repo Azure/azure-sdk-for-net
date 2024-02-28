@@ -42,56 +42,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            if (options.Format != "W" && DisplayName != null)
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(HealthyResourceCount))
+            if (options.Format != "W" && HealthyResourceCount.HasValue)
             {
                 writer.WritePropertyName("healthyResourceCount"u8);
                 writer.WriteNumberValue(HealthyResourceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(UnhealthyResourceCount))
+            if (options.Format != "W" && UnhealthyResourceCount.HasValue)
             {
                 writer.WritePropertyName("unhealthyResourceCount"u8);
                 writer.WriteNumberValue(UnhealthyResourceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(NotApplicableResourceCount))
+            if (options.Format != "W" && NotApplicableResourceCount.HasValue)
             {
                 writer.WritePropertyName("notApplicableResourceCount"u8);
                 writer.WriteNumberValue(NotApplicableResourceCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Weight))
+            if (options.Format != "W" && Weight.HasValue)
             {
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (Optional.IsDefined(Definition))
+            if (Definition != null)
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteObjectValue(Definition);
             }
             writer.WritePropertyName("score"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Max))
+            if (options.Format != "W" && Max.HasValue)
             {
                 writer.WritePropertyName("max"u8);
                 writer.WriteNumberValue(Max.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Current))
+            if (options.Format != "W" && Current.HasValue)
             {
                 writer.WritePropertyName("current"u8);
                 writer.WriteNumberValue(Current.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Percentage))
+            if (options.Format != "W" && Percentage.HasValue)
             {
                 writer.WritePropertyName("percentage"u8);
                 writer.WriteNumberValue(Percentage.Value);
@@ -139,16 +139,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<int> healthyResourceCount = default;
-            Optional<int> unhealthyResourceCount = default;
-            Optional<int> notApplicableResourceCount = default;
-            Optional<long> weight = default;
-            Optional<SecureScoreControlDefinitionItem> definition = default;
-            Optional<int> max = default;
-            Optional<double> current = default;
-            Optional<double> percentage = default;
+            SystemData systemData = default;
+            string displayName = default;
+            int? healthyResourceCount = default;
+            int? unhealthyResourceCount = default;
+            int? notApplicableResourceCount = default;
+            long? weight = default;
+            SecureScoreControlDefinitionItem definition = default;
+            int? max = default;
+            double? current = default;
+            double? percentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value);
+                            definition = SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("score"u8))
@@ -284,7 +284,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDetails(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(healthyResourceCount), Optional.ToNullable(unhealthyResourceCount), Optional.ToNullable(notApplicableResourceCount), Optional.ToNullable(weight), definition.Value, Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
+            return new SecureScoreControlDetails(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                healthyResourceCount,
+                unhealthyResourceCount,
+                notApplicableResourceCount,
+                weight,
+                definition,
+                max,
+                current,
+                percentage,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDetails>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ArticleContent))
+            if (ArticleContent != null)
             {
                 writer.WritePropertyName("articleContent"u8);
                 writer.WriteStringValue(ArticleContent);
             }
-            if (Optional.IsDefined(ArticleId))
+            if (ArticleId != null)
             {
                 writer.WritePropertyName("articleId"u8);
                 writer.WriteStringValue(ArticleId);
             }
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            Optional<string> articleContent = default;
-            Optional<string> articleId = default;
-            Optional<BinaryData> parameters = default;
+            string articleContent = default;
+            string articleId = default;
+            BinaryData parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceHealthEventArticle(articleContent.Value, articleId.Value, parameters.Value, serializedAdditionalRawData);
+            return new ResourceHealthEventArticle(articleContent, articleId, parameters, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceHealthEventArticle>.Write(ModelReaderWriterOptions options)

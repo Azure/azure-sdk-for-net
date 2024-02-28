@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Maps.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            Optional<string> provisioningState = default;
+            string provisioningState = default;
             int storageUnits = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Maps.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MapsCreatorProperties(provisioningState.Value, storageUnits, serializedAdditionalRawData);
+            return new MapsCreatorProperties(provisioningState, storageUnits, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MapsCreatorProperties>.Write(ModelReaderWriterOptions options)

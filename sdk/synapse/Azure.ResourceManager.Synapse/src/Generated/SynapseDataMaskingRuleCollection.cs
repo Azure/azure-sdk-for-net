@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDataMaskingRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataMaskingRuleName, SynapseDataMaskingRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDataMaskingRuleResource> CreateOrUpdate(WaitUntil waitUntil, string dataMaskingRuleName, SynapseDataMaskingRuleData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual async Task<Response<SynapseDataMaskingRuleResource>> GetAsync(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual Response<SynapseDataMaskingRuleResource> Get(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseDataMaskingRuleResource>> GetIfExistsAsync(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
         public virtual NullableResponse<SynapseDataMaskingRuleResource> GetIfExists(string dataMaskingRuleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+            if (dataMaskingRuleName == null)
+            {
+                throw new ArgumentNullException(nameof(dataMaskingRuleName));
+            }
+            if (dataMaskingRuleName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(dataMaskingRuleName));
+            }
 
             using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetIfExists");
             scope.Start();

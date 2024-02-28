@@ -16,27 +16,27 @@ namespace Azure.Communication.ShortCodes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Url))
+            if (Url != null)
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url.AbsoluteUri);
             }
-            if (Optional.IsDefined(Address))
+            if (Address != null)
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
-            if (Optional.IsDefined(ContactInformation))
+            if (ContactInformation != null)
             {
                 writer.WritePropertyName("contactInformation"u8);
                 writer.WriteObjectValue(ContactInformation);
             }
-            if (Optional.IsDefined(CustomerCareInformation))
+            if (CustomerCareInformation != null)
             {
                 writer.WritePropertyName("customerCareInformation"u8);
                 writer.WriteObjectValue(CustomerCareInformation);
@@ -50,11 +50,11 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<string> address = default;
-            Optional<ContactInformation> contactInformation = default;
-            Optional<CustomerCareInformation> customerCareInformation = default;
+            string name = default;
+            Uri url = default;
+            string address = default;
+            ContactInformation contactInformation = default;
+            CustomerCareInformation customerCareInformation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -95,7 +95,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new CompanyInformation(name.Value, url.Value, address.Value, contactInformation.Value, customerCareInformation.Value);
+            return new CompanyInformation(name, url, address, contactInformation, customerCareInformation);
         }
     }
 }

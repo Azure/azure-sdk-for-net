@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(B2B))
+            if (B2B != null)
             {
                 writer.WritePropertyName("b2b"u8);
                 writer.WriteObjectValue(B2B);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<B2BPartnerContent> b2b = default;
+            B2BPartnerContent b2b = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value);
+                    b2b = B2BPartnerContent.DeserializeB2BPartnerContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountPartnerContent(b2b.Value, serializedAdditionalRawData);
+            return new IntegrationAccountPartnerContent(b2b, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountPartnerContent>.Write(ModelReaderWriterOptions options)

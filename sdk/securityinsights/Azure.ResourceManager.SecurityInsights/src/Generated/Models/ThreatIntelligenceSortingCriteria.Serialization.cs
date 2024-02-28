@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ItemKey))
+            if (ItemKey != null)
             {
                 writer.WritePropertyName("itemKey"u8);
                 writer.WriteStringValue(ItemKey);
             }
-            if (Optional.IsDefined(SortOrder))
+            if (SortOrder.HasValue)
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Optional<string> itemKey = default;
-            Optional<ThreatIntelligenceSortingOrder> sortOrder = default;
+            string itemKey = default;
+            ThreatIntelligenceSortingOrder? sortOrder = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThreatIntelligenceSortingCriteria(itemKey.Value, Optional.ToNullable(sortOrder), serializedAdditionalRawData);
+            return new ThreatIntelligenceSortingCriteria(itemKey, sortOrder, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ThreatIntelligenceSortingCriteria>.Write(ModelReaderWriterOptions options)

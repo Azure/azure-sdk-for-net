@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Product))
+            if (Product != null)
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (Optional.IsDefined(PromotionCode))
+            if (PromotionCode != null)
             {
                 writer.WritePropertyName("promotionCode"u8);
                 writer.WriteStringValue(PromotionCode);
             }
-            if (Optional.IsDefined(Publisher))
+            if (Publisher != null)
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> product = default;
-            Optional<string> promotionCode = default;
-            Optional<string> publisher = default;
+            string name = default;
+            string product = default;
+            string promotionCode = default;
+            string publisher = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmImagePlan(name.Value, product.Value, promotionCode.Value, publisher.Value, serializedAdditionalRawData);
+            return new VmImagePlan(name, product, promotionCode, publisher, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmImagePlan>.Write(ModelReaderWriterOptions options)

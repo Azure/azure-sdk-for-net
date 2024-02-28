@@ -15,12 +15,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(StorageConnectionString))
+            if (StorageConnectionString != null)
             {
                 writer.WritePropertyName("storageConnectionString"u8);
                 writer.WriteStringValue(StorageConnectionString);
             }
-            if (Optional.IsDefined(EnableReprocessing))
+            if (EnableReprocessing.HasValue)
             {
                 if (EnableReprocessing != null)
                 {
@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("enableReprocessing");
                 }
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -53,9 +53,9 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> storageConnectionString = default;
-            Optional<bool?> enableReprocessing = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
+            string storageConnectionString = default;
+            bool? enableReprocessing = default;
+            SearchIndexerDataIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))
@@ -84,7 +84,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerCache(storageConnectionString.Value, Optional.ToNullable(enableReprocessing), identity.Value);
+            return new SearchIndexerCache(storageConnectionString, enableReprocessing, identity);
         }
     }
 }

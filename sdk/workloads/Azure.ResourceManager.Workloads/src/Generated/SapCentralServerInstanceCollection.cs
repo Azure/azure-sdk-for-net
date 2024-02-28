@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapCentralServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapCentralServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual async Task<Response<SapCentralServerInstanceResource>> GetAsync(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual Response<SapCentralServerInstanceResource> Get(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SapCentralServerInstanceResource>> GetIfExistsAsync(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
         public virtual NullableResponse<SapCentralServerInstanceResource> GetIfExists(string centralInstanceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            if (centralInstanceName == null)
+            {
+                throw new ArgumentNullException(nameof(centralInstanceName));
+            }
+            if (centralInstanceName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(centralInstanceName));
+            }
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.GetIfExists");
             scope.Start();

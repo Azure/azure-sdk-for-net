@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(VirtualNetworkResourceId);
-            if (Optional.IsDefined(Action))
+            if (Action.HasValue)
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             ResourceIdentifier id = default;
-            Optional<ElasticSanVirtualNetworkRuleAction> action = default;
+            ElasticSanVirtualNetworkRuleAction? action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVirtualNetworkRule(id, Optional.ToNullable(action), serializedAdditionalRawData);
+            return new ElasticSanVirtualNetworkRule(id, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVirtualNetworkRule>.Write(ModelReaderWriterOptions options)

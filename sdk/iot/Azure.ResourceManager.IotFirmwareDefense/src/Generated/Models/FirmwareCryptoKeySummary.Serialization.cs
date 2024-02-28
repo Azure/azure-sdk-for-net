@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(TotalKeys))
+            if (TotalKeys.HasValue)
             {
                 writer.WritePropertyName("totalKeys"u8);
                 writer.WriteNumberValue(TotalKeys.Value);
             }
-            if (Optional.IsDefined(PublicKeys))
+            if (PublicKeys.HasValue)
             {
                 writer.WritePropertyName("publicKeys"u8);
                 writer.WriteNumberValue(PublicKeys.Value);
             }
-            if (Optional.IsDefined(PrivateKeys))
+            if (PrivateKeys.HasValue)
             {
                 writer.WritePropertyName("privateKeys"u8);
                 writer.WriteNumberValue(PrivateKeys.Value);
             }
-            if (Optional.IsDefined(PairedKeys))
+            if (PairedKeys.HasValue)
             {
                 writer.WritePropertyName("pairedKeys"u8);
                 writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Optional.IsDefined(ShortKeySize))
+            if (ShortKeySize.HasValue)
             {
                 writer.WritePropertyName("shortKeySize"u8);
                 writer.WriteNumberValue(ShortKeySize.Value);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            Optional<long> totalKeys = default;
-            Optional<long> publicKeys = default;
-            Optional<long> privateKeys = default;
-            Optional<long> pairedKeys = default;
-            Optional<long> shortKeySize = default;
+            long? totalKeys = default;
+            long? publicKeys = default;
+            long? privateKeys = default;
+            long? pairedKeys = default;
+            long? shortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirmwareCryptoKeySummary(Optional.ToNullable(totalKeys), Optional.ToNullable(publicKeys), Optional.ToNullable(privateKeys), Optional.ToNullable(pairedKeys), Optional.ToNullable(shortKeySize), serializedAdditionalRawData);
+            return new FirmwareCryptoKeySummary(
+                totalKeys,
+                publicKeys,
+                privateKeys,
+                pairedKeys,
+                shortKeySize,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareCryptoKeySummary>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.EnergyServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(NameAvailable))
+            if (NameAvailable.HasValue)
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(NameAvailable.Value);
             }
-            if (Optional.IsDefined(Reason))
+            if (Reason.HasValue)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Optional.IsDefined(Message))
+            if (Message != null)
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.EnergyServices.Models
             {
                 return null;
             }
-            Optional<bool> nameAvailable = default;
-            Optional<EnergyServiceNameUnavailableReason> reason = default;
-            Optional<string> message = default;
+            bool? nameAvailable = default;
+            EnergyServiceNameUnavailableReason? reason = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EnergyServiceNameAvailabilityResult(Optional.ToNullable(nameAvailable), Optional.ToNullable(reason), message.Value, serializedAdditionalRawData);
+            return new EnergyServiceNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EnergyServiceNameAvailabilityResult>.Write(ModelReaderWriterOptions options)

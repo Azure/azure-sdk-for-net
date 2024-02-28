@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> operationContext = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))
@@ -27,7 +26,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new MuteParticipantResult(operationContext.Value);
+            return new MuteParticipantResult(operationContext);
         }
     }
 }

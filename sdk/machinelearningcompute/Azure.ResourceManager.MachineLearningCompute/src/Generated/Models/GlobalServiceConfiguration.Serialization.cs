@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ETag))
+            if (ETag.HasValue)
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(Ssl))
+            if (Ssl != null)
             {
                 writer.WritePropertyName("ssl"u8);
                 writer.WriteObjectValue(Ssl);
             }
-            if (Optional.IsDefined(ServiceAuth))
+            if (ServiceAuth != null)
             {
                 writer.WritePropertyName("serviceAuth"u8);
                 writer.WriteObjectValue(ServiceAuth);
             }
-            if (Optional.IsDefined(AutoScale))
+            if (AutoScale != null)
             {
                 writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<SslConfiguration> ssl = default;
-            Optional<ServiceAuthConfiguration> serviceAuth = default;
-            Optional<AutoScaleConfiguration> autoScale = default;
+            ETag? etag = default;
+            SslConfiguration ssl = default;
+            ServiceAuthConfiguration serviceAuth = default;
+            AutoScaleConfiguration autoScale = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value);
+                    ssl = SslConfiguration.DeserializeSslConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceAuth"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value);
+                    serviceAuth = ServiceAuthConfiguration.DeserializeServiceAuthConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     {
                         continue;
                     }
-                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value);
+                    autoScale = AutoScaleConfiguration.DeserializeAutoScaleConfiguration(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new GlobalServiceConfiguration(Optional.ToNullable(etag), ssl.Value, serviceAuth.Value, autoScale.Value, additionalProperties);
+            return new GlobalServiceConfiguration(etag, ssl, serviceAuth, autoScale, additionalProperties);
         }
 
         BinaryData IPersistableModel<GlobalServiceConfiguration>.Write(ModelReaderWriterOptions options)

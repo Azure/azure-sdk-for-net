@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(AmlWorkspaceLocation))
+            if (options.Format != "W" && AmlWorkspaceLocation != null)
             {
                 writer.WritePropertyName("amlWorkspaceLocation"u8);
                 writer.WriteStringValue(AmlWorkspaceLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceQuotaType))
+            if (options.Format != "W" && ResourceQuotaType != null)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceQuotaType);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteObjectValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Limit))
+            if (options.Format != "W" && Limit.HasValue)
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Unit))
+            if (options.Format != "W" && Unit.HasValue)
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningResourceName> name = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningResourceName name = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value);
+                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit), serializedAdditionalRawData);
+            return new MachineLearningResourceQuota(
+                id,
+                amlWorkspaceLocation,
+                type,
+                name,
+                limit,
+                unit,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningResourceQuota>.Write(ModelReaderWriterOptions options)

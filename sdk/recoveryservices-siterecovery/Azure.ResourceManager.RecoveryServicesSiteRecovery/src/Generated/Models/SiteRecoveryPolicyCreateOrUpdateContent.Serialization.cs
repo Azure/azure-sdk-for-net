@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<SiteRecoveryCreatePolicyProperties> properties = default;
+            SiteRecoveryCreatePolicyProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = SiteRecoveryCreatePolicyProperties.DeserializeSiteRecoveryCreatePolicyProperties(property.Value);
+                    properties = SiteRecoveryCreatePolicyProperties.DeserializeSiteRecoveryCreatePolicyProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryPolicyCreateOrUpdateContent(properties.Value, serializedAdditionalRawData);
+            return new SiteRecoveryPolicyCreateOrUpdateContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryPolicyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

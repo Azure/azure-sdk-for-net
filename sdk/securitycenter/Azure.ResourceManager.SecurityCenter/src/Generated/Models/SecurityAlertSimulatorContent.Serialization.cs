@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertSimulatorRequestProperties> properties = default;
+            SecurityAlertSimulatorRequestProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = SecurityAlertSimulatorRequestProperties.DeserializeSecurityAlertSimulatorRequestProperties(property.Value);
+                    properties = SecurityAlertSimulatorRequestProperties.DeserializeSecurityAlertSimulatorRequestProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAlertSimulatorContent(properties.Value, serializedAdditionalRawData);
+            return new SecurityAlertSimulatorContent(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAlertSimulatorContent>.Write(ModelReaderWriterOptions options)

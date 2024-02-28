@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
-            if (Optional.IsDefined(IntellectualProperty))
+            if (IntellectualProperty != null)
             {
                 if (IntellectualProperty != null)
                 {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("intellectualProperty");
                 }
             }
-            if (Optional.IsDefined(Stage))
+            if (Stage != null)
             {
                 if (Stage != null)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stage");
                 }
             }
-            if (Optional.IsDefined(AutoDeleteSetting))
+            if (AutoDeleteSetting != null)
             {
                 if (AutoDeleteSetting != null)
                 {
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Optional.IsDefined(IsAnonymous))
+            if (IsAnonymous.HasValue)
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Optional.IsDefined(IsArchived))
+            if (IsArchived.HasValue)
             {
                 writer.WritePropertyName("isArchived"u8);
                 writer.WriteBooleanValue(IsArchived.Value);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 if (Description != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Optional.IsCollectionDefined(Properties))
+            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 if (Properties != null)
                 {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
             {
                 if (Tags != null)
                 {
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element);
-                    case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element);
-                    case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element);
+                    case "mltable": return MachineLearningTable.DeserializeMachineLearningTable(element, options);
+                    case "uri_file": return MachineLearningUriFileDataVersion.DeserializeMachineLearningUriFileDataVersion(element, options);
+                    case "uri_folder": return MachineLearningUriFolderDataVersion.DeserializeMachineLearningUriFolderDataVersion(element, options);
                 }
             }
-            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element);
+            return UnknownDataVersionBase.DeserializeUnknownDataVersionBase(element, options);
         }
 
         BinaryData IPersistableModel<MachineLearningDataVersionProperties>.Write(ModelReaderWriterOptions options)

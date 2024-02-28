@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResilientVmCreationPolicy))
+            if (ResilientVmCreationPolicy != null)
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
                 writer.WriteObjectValue(ResilientVmCreationPolicy);
             }
-            if (Optional.IsDefined(ResilientVmDeletionPolicy))
+            if (ResilientVmDeletionPolicy != null)
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
                 writer.WriteObjectValue(ResilientVmDeletionPolicy);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResilientVmCreationPolicy> resilientVmCreationPolicy = default;
-            Optional<ResilientVmDeletionPolicy> resilientVmDeletionPolicy = default;
+            ResilientVmCreationPolicy resilientVmCreationPolicy = default;
+            ResilientVmDeletionPolicy resilientVmDeletionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVmCreationPolicy = ResilientVmCreationPolicy.DeserializeResilientVmCreationPolicy(property.Value);
+                    resilientVmCreationPolicy = ResilientVmCreationPolicy.DeserializeResilientVmCreationPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resilientVMDeletionPolicy"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    resilientVmDeletionPolicy = ResilientVmDeletionPolicy.DeserializeResilientVmDeletionPolicy(property.Value);
+                    resilientVmDeletionPolicy = ResilientVmDeletionPolicy.DeserializeResilientVmDeletionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResiliencyPolicy(resilientVmCreationPolicy.Value, resilientVmDeletionPolicy.Value, serializedAdditionalRawData);
+            return new ResiliencyPolicy(resilientVmCreationPolicy, resilientVmDeletionPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResiliencyPolicy>.Write(ModelReaderWriterOptions options)

@@ -52,8 +52,14 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
         public WafPolicyManagedRuleSet(string ruleSetType, string ruleSetVersion)
         {
-            Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
-            Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
+            if (ruleSetType == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetType));
+            }
+            if (ruleSetVersion == null)
+            {
+                throw new ArgumentNullException(nameof(ruleSetVersion));
+            }
 
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;

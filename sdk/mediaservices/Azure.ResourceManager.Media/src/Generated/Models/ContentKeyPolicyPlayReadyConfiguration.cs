@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -20,7 +19,10 @@ namespace Azure.ResourceManager.Media.Models
         /// <exception cref="ArgumentNullException"> <paramref name="licenses"/> is null. </exception>
         public ContentKeyPolicyPlayReadyConfiguration(IEnumerable<ContentKeyPolicyPlayReadyLicense> licenses)
         {
-            Argument.AssertNotNull(licenses, nameof(licenses));
+            if (licenses == null)
+            {
+                throw new ArgumentNullException(nameof(licenses));
+            }
 
             Licenses = licenses.ToList();
             OdataType = "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration";

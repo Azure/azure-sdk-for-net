@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(VnetId))
+            if (VnetId.HasValue)
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (Optional.IsDefined(Subnet))
+            if (Subnet != null)
             {
                 writer.WritePropertyName("subnet"u8);
                 writer.WriteStringValue(Subnet);
             }
-            if (Optional.IsCollectionDefined(PublicIPs))
+            if (!(PublicIPs is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("publicIPs"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SubnetId))
+            if (SubnetId != null)
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<Guid> vnetId = default;
-            Optional<string> subnet = default;
-            Optional<IList<string>> publicIPs = default;
-            Optional<ResourceIdentifier> subnetId = default;
+            Guid? vnetId = default;
+            string subnet = default;
+            IList<string> publicIPs = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IntegrationRuntimeVnetProperties(Optional.ToNullable(vnetId), subnet.Value, Optional.ToList(publicIPs), subnetId.Value, additionalProperties);
+            return new IntegrationRuntimeVnetProperties(vnetId, subnet, publicIPs ?? new ChangeTrackingList<string>(), subnetId, additionalProperties);
         }
 
         BinaryData IPersistableModel<IntegrationRuntimeVnetProperties>.Write(ModelReaderWriterOptions options)

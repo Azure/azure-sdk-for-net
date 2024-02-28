@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(JobTask))
+            if (JobTask != null)
             {
                 writer.WritePropertyName("jobTask"u8);
                 writer.WriteObjectValue(JobTask);
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element);
-                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element);
+                    case "FabricReplicationGroupTaskDetails": return FabricReplicationGroupTaskDetails.DeserializeFabricReplicationGroupTaskDetails(element, options);
+                    case "VirtualMachineTaskDetails": return SiteRecoveryVmTaskDetails.DeserializeSiteRecoveryVmTaskDetails(element, options);
                 }
             }
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = "JobTaskDetails";
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryJobTaskDetails(instanceType, serializedAdditionalRawData, jobTask.Value);
+            return new SiteRecoveryJobTaskDetails(instanceType, serializedAdditionalRawData, jobTask);
         }
 
         BinaryData IPersistableModel<SiteRecoveryJobTaskDetails>.Write(ModelReaderWriterOptions options)

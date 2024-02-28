@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStartObject();
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
-            if (Optional.IsDefined(Timeout))
+            if (Timeout != null)
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 return null;
             }
             string path = default;
-            Optional<string> timeout = default;
+            string timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecoveryPlanScriptActionDetails(instanceType, serializedAdditionalRawData, path, timeout.Value, fabricLocation);
+            return new RecoveryPlanScriptActionDetails(instanceType, serializedAdditionalRawData, path, timeout, fabricLocation);
         }
 
         BinaryData IPersistableModel<RecoveryPlanScriptActionDetails>.Write(ModelReaderWriterOptions options)

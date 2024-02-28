@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> operationId = default;
-            Optional<string> cmdletId = default;
-            Optional<IReadOnlyList<string>> output = default;
+            string operationId = default;
+            string cmdletId = default;
+            IReadOnlyList<string> output = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AvsScriptExecutionCancelledEventData(operationId.Value, cmdletId.Value, Optional.ToList(output));
+            return new AvsScriptExecutionCancelledEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>());
         }
 
         internal partial class AvsScriptExecutionCancelledEventDataConverter : JsonConverter<AvsScriptExecutionCancelledEventData>

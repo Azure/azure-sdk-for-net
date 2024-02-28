@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -52,7 +51,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="failoverPolicies"/> is null. </exception>
         public CosmosDBFailoverPolicies(IEnumerable<CosmosDBFailoverPolicy> failoverPolicies)
         {
-            Argument.AssertNotNull(failoverPolicies, nameof(failoverPolicies));
+            if (failoverPolicies == null)
+            {
+                throw new ArgumentNullException(nameof(failoverPolicies));
+            }
 
             FailoverPolicies = failoverPolicies.ToList();
         }

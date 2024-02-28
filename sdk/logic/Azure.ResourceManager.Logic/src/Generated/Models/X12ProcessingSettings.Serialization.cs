@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new X12ProcessingSettings(maskSecurityInfo, convertImpliedDecimal, preserveInterchange, suspendInterchangeOnError, createEmptyXmlTagsForTrailingSeparators, useDotAsDecimalSeparator, serializedAdditionalRawData);
+            return new X12ProcessingSettings(
+                maskSecurityInfo,
+                convertImpliedDecimal,
+                preserveInterchange,
+                suspendInterchangeOnError,
+                createEmptyXmlTagsForTrailingSeparators,
+                useDotAsDecimalSeparator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<X12ProcessingSettings>.Write(ModelReaderWriterOptions options)

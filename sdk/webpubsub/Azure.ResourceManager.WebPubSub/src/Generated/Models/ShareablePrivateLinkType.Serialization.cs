@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Properties))
+            if (Properties != null)
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ShareablePrivateLinkProperties> properties = default;
+            string name = default;
+            ShareablePrivateLinkProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value);
+                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ShareablePrivateLinkType(name.Value, properties.Value, serializedAdditionalRawData);
+            return new ShareablePrivateLinkType(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ShareablePrivateLinkType>.Write(ModelReaderWriterOptions options)

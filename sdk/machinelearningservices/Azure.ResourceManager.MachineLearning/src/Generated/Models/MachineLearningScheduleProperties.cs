@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -28,8 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="trigger"/> is null. </exception>
         public MachineLearningScheduleProperties(MachineLearningScheduleAction action, MachineLearningTriggerBase trigger)
         {
-            Argument.AssertNotNull(action, nameof(action));
-            Argument.AssertNotNull(trigger, nameof(trigger));
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            if (trigger == null)
+            {
+                throw new ArgumentNullException(nameof(trigger));
+            }
 
             Action = action;
             Trigger = trigger;

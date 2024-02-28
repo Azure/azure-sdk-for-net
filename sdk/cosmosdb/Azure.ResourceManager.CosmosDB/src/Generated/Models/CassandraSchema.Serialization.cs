@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Columns))
+            if (!(Columns is ChangeTrackingList<CassandraColumn> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(PartitionKeys))
+            if (!(PartitionKeys is ChangeTrackingList<CassandraPartitionKey> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("partitionKeys"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ClusterKeys))
+            if (!(ClusterKeys is ChangeTrackingList<CassandraClusterKey> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("clusterKeys"u8);
                 writer.WriteStartArray();
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IList<CassandraColumn>> columns = default;
-            Optional<IList<CassandraPartitionKey>> partitionKeys = default;
-            Optional<IList<CassandraClusterKey>> clusterKeys = default;
+            IList<CassandraColumn> columns = default;
+            IList<CassandraPartitionKey> partitionKeys = default;
+            IList<CassandraClusterKey> clusterKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraColumn> array = new List<CassandraColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraColumn.DeserializeCassandraColumn(item));
+                        array.Add(CassandraColumn.DeserializeCassandraColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraPartitionKey> array = new List<CassandraPartitionKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item));
+                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item, options));
                     }
                     partitionKeys = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterKey> array = new List<CassandraClusterKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
+                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item, options));
                     }
                     clusterKeys = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CassandraSchema(Optional.ToList(columns), Optional.ToList(partitionKeys), Optional.ToList(clusterKeys), serializedAdditionalRawData);
+            return new CassandraSchema(columns ?? new ChangeTrackingList<CassandraColumn>(), partitionKeys ?? new ChangeTrackingList<CassandraPartitionKey>(), clusterKeys ?? new ChangeTrackingList<CassandraClusterKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CassandraSchema>.Write(ModelReaderWriterOptions options)

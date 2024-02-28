@@ -23,12 +23,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(Pipeline);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Annotations))
+            if (!(Annotations is ChangeTrackingList<object> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -51,24 +51,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            if (Optional.IsDefined(EndTime))
+            if (EndTime.HasValue)
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime.Value, "O");
             }
-            if (Optional.IsDefined(Delay))
+            if (Delay != null)
             {
                 writer.WritePropertyName("delay"u8);
                 writer.WriteObjectValue(Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
-            if (Optional.IsDefined(RetryPolicy))
+            if (RetryPolicy != null)
             {
                 writer.WritePropertyName("retryPolicy"u8);
                 writer.WriteObjectValue(RetryPolicy);
             }
-            if (Optional.IsCollectionDefined(DependsOn))
+            if (!(DependsOn is ChangeTrackingList<DependencyReference> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
@@ -95,17 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<object> delay = default;
+            DateTimeOffset? endTime = default;
+            object delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            RetryPolicy retryPolicy = default;
+            IList<DependencyReference> dependsOn = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
 
         internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>

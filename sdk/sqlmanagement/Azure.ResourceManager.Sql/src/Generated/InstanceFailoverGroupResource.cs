@@ -282,7 +282,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<InstanceFailoverGroupResource>> UpdateAsync(WaitUntil waitUntil, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupResource.Update");
             scope.Start();
@@ -328,7 +331,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<InstanceFailoverGroupResource> Update(WaitUntil waitUntil, InstanceFailoverGroupData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _instanceFailoverGroupClientDiagnostics.CreateScope("InstanceFailoverGroupResource.Update");
             scope.Start();

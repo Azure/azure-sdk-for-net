@@ -104,9 +104,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// communication mode for the pool.</param>
         /// <param name="currentNodeCommunicationMode">The current state of the
         /// pool communication mode.</param>
+        /// <param name="upgradePolicy">The upgrade policy for the
+        /// Pool.</param>
         /// <param name="resourceTags">The user-specified tags associated with
         /// the pool.</param>
-        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), NodeCommunicationMode? currentNodeCommunicationMode = default(NodeCommunicationMode?), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
+        public CloudPool(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), PoolState? state = default(PoolState?), System.DateTime? stateTransitionTime = default(System.DateTime?), AllocationState? allocationState = default(AllocationState?), System.DateTime? allocationStateTransitionTime = default(System.DateTime?), string vmSize = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), IList<ResizeError> resizeErrors = default(IList<ResizeError>), int? currentDedicatedNodes = default(int?), int? currentLowPriorityNodes = default(int?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), AutoScaleRun autoScaleRun = default(AutoScaleRun), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), PoolStatistics stats = default(PoolStatistics), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), BatchPoolIdentity identity = default(BatchPoolIdentity), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), NodeCommunicationMode? currentNodeCommunicationMode = default(NodeCommunicationMode?), UpgradePolicy upgradePolicy = default(UpgradePolicy), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
         {
             Id = id;
             DisplayName = displayName;
@@ -146,6 +148,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Identity = identity;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
             CurrentNodeCommunicationMode = currentNodeCommunicationMode;
+            UpgradePolicy = upgradePolicy;
             ResourceTags = resourceTags;
             CustomInit();
         }
@@ -543,6 +546,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "currentNodeCommunicationMode")]
         public NodeCommunicationMode? CurrentNodeCommunicationMode { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the upgrade policy for the Pool.
+        /// </summary>
+        /// <remarks>
+        /// Describes an upgrade policy - automatic, manual, or rolling.
+        /// </remarks>
+        [JsonProperty(PropertyName = "upgradePolicy")]
+        public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the user-specified tags associated with the pool.

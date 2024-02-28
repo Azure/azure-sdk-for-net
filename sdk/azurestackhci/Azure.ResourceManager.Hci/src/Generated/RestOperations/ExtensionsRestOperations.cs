@@ -70,10 +70,38 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArcExtensionListResult>> ListByArcSettingAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
 
             using var message = CreateListByArcSettingRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -101,10 +129,38 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArcExtensionListResult> ListByArcSetting(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
 
             using var message = CreateListByArcSettingRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName);
             _pipeline.Send(message, cancellationToken);
@@ -157,11 +213,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArcExtensionData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -192,11 +283,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArcExtensionData> Get(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName);
             _pipeline.Send(message, cancellationToken);
@@ -256,12 +382,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -287,12 +451,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -346,12 +548,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -377,12 +617,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ArcExtensionData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, data);
             _pipeline.Send(message, cancellationToken);
@@ -431,11 +709,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -461,11 +774,46 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName);
             _pipeline.Send(message, cancellationToken);
@@ -521,12 +869,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionUpgradeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -551,12 +937,50 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/>, <paramref name="arcSettingName"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Upgrade(string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, string extensionName, ExtensionUpgradeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
-            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
-            Argument.AssertNotNull(content, nameof(content));
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
+            if (extensionName == null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(extensionName));
+            }
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
 
             using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, clusterName, arcSettingName, extensionName, content);
             _pipeline.Send(message, cancellationToken);
@@ -594,11 +1018,42 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArcExtensionListResult>> ListByArcSettingNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
 
             using var message = CreateListByArcSettingNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, arcSettingName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -627,11 +1082,42 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="arcSettingName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArcExtensionListResult> ListByArcSettingNextPage(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string arcSettingName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNullOrEmpty(arcSettingName, nameof(arcSettingName));
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (subscriptionId == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionId));
+            }
+            if (subscriptionId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupName));
+            }
+            if (resourceGroupName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException(nameof(clusterName));
+            }
+            if (clusterName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
+            }
+            if (arcSettingName == null)
+            {
+                throw new ArgumentNullException(nameof(arcSettingName));
+            }
+            if (arcSettingName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(arcSettingName));
+            }
 
             using var message = CreateListByArcSettingNextPageRequest(nextLink, subscriptionId, resourceGroupName, clusterName, arcSettingName);
             _pipeline.Send(message, cancellationToken);

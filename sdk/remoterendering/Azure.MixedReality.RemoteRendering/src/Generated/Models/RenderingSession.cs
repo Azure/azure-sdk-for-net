@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -20,7 +19,10 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         internal RenderingSession(string sessionId, RenderingServerSize size, RenderingSessionStatus status)
         {
-            Argument.AssertNotNull(sessionId, nameof(sessionId));
+            if (sessionId == null)
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
 
             SessionId = sessionId;
             Size = size;

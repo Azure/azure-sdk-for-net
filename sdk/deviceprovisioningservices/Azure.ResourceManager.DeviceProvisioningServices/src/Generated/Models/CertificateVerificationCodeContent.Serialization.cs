@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
+            string certificate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateVerificationCodeContent(certificate.Value, serializedAdditionalRawData);
+            return new CertificateVerificationCodeContent(certificate, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateVerificationCodeContent>.Write(ModelReaderWriterOptions options)

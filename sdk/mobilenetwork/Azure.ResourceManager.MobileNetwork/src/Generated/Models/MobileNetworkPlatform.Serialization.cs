@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformType))
+            if (PlatformType.HasValue)
             {
                 writer.WritePropertyName("platformType"u8);
                 writer.WriteStringValue(PlatformType.Value.ToString());
             }
-            if (Optional.IsDefined(VersionState))
+            if (VersionState.HasValue)
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
+            if (MinimumPlatformSoftwareVersion != null)
             {
                 writer.WritePropertyName("minimumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MinimumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
+            if (MaximumPlatformSoftwareVersion != null)
             {
                 writer.WritePropertyName("maximumPlatformSoftwareVersion"u8);
                 writer.WriteStringValue(MaximumPlatformSoftwareVersion);
             }
-            if (Optional.IsDefined(RecommendedVersion))
+            if (RecommendedVersion.HasValue)
             {
                 writer.WritePropertyName("recommendedVersion"u8);
                 writer.WriteStringValue(RecommendedVersion.Value.ToString());
             }
-            if (Optional.IsDefined(ObsoleteVersion))
+            if (ObsoleteVersion.HasValue)
             {
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<MobileNetworkPlatformType> platformType = default;
-            Optional<MobileNetworkVersionState> versionState = default;
-            Optional<string> minimumPlatformSoftwareVersion = default;
-            Optional<string> maximumPlatformSoftwareVersion = default;
-            Optional<MobileNetworkRecommendedVersion> recommendedVersion = default;
-            Optional<MobileNetworkObsoleteVersion> obsoleteVersion = default;
+            MobileNetworkPlatformType? platformType = default;
+            MobileNetworkVersionState? versionState = default;
+            string minimumPlatformSoftwareVersion = default;
+            string maximumPlatformSoftwareVersion = default;
+            MobileNetworkRecommendedVersion? recommendedVersion = default;
+            MobileNetworkObsoleteVersion? obsoleteVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkPlatform(Optional.ToNullable(platformType), Optional.ToNullable(versionState), minimumPlatformSoftwareVersion.Value, maximumPlatformSoftwareVersion.Value, Optional.ToNullable(recommendedVersion), Optional.ToNullable(obsoleteVersion), serializedAdditionalRawData);
+            return new MobileNetworkPlatform(
+                platformType,
+                versionState,
+                minimumPlatformSoftwareVersion,
+                maximumPlatformSoftwareVersion,
+                recommendedVersion,
+                obsoleteVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatform>.Write(ModelReaderWriterOptions options)

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            if (EnableAcceleratedNetworking.HasValue)
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
-            if (Optional.IsDefined(DscpConfiguration))
+            if (DscpConfiguration != null)
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string name = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
+            bool? enableAcceleratedNetworking = default;
+            WritableSubResource dscpConfiguration = default;
             IList<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPConfiguration> array = new List<ServiceFabricManagedClusterIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item));
+                        array.Add(ServiceFabricManagedClusterIPConfiguration.DeserializeServiceFabricManagedClusterIPConfiguration(item, options));
                     }
                     ipConfigurations = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AdditionalNetworkInterfaceConfiguration(name, Optional.ToNullable(enableAcceleratedNetworking), dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
+            return new AdditionalNetworkInterfaceConfiguration(name, enableAcceleratedNetworking, dscpConfiguration, ipConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AdditionalNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)

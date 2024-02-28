@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W" && Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageInKB))
+            if (options.Format != "W" && StorageInKB.HasValue)
             {
                 writer.WritePropertyName("storageInKB"u8);
                 writer.WriteNumberValue(StorageInKB.Value);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<double> storageInKB = default;
+            string id = default;
+            double? storageInKB = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PhysicalPartitionStorageInfo(id.Value, Optional.ToNullable(storageInKB), serializedAdditionalRawData);
+            return new PhysicalPartitionStorageInfo(id, storageInKB, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PhysicalPartitionStorageInfo>.Write(ModelReaderWriterOptions options)

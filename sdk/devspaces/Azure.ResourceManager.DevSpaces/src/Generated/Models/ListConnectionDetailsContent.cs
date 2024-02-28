@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DevSpaces.Models
 {
@@ -51,7 +50,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetContainerHostResourceId"/> is null. </exception>
         public ListConnectionDetailsContent(string targetContainerHostResourceId)
         {
-            Argument.AssertNotNull(targetContainerHostResourceId, nameof(targetContainerHostResourceId));
+            if (targetContainerHostResourceId == null)
+            {
+                throw new ArgumentNullException(nameof(targetContainerHostResourceId));
+            }
 
             TargetContainerHostResourceId = targetContainerHostResourceId;
         }

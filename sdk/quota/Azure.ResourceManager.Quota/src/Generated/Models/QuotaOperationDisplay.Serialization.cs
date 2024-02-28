@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Provider))
+            if (Provider != null)
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Optional.IsDefined(Resource))
+            if (Resource != null)
             {
                 writer.WritePropertyName("resource"u8);
                 writer.WriteStringValue(Resource);
             }
-            if (Optional.IsDefined(Operation))
+            if (Operation != null)
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<string> provider = default;
-            Optional<string> resource = default;
-            Optional<string> operation = default;
-            Optional<string> description = default;
+            string provider = default;
+            string resource = default;
+            string operation = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaOperationDisplay(provider.Value, resource.Value, operation.Value, description.Value, serializedAdditionalRawData);
+            return new QuotaOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QuotaOperationDisplay>.Write(ModelReaderWriterOptions options)

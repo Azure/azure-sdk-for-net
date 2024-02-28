@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownClusterJobProperties(document.RootElement, options);
+            return DeserializeClusterJobProperties(document.RootElement, options);
         }
 
         internal static UnknownClusterJobProperties DeserializeUnknownClusterJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownClusterJobProperties(document.RootElement, options);
+                        return DeserializeClusterJobProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ClusterJobProperties)} does not support '{options.Format}' format.");

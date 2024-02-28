@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
+            if (DataSource != null)
             {
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleCondition(document.RootElement, options);
+            return DeserializeAlertRuleCondition(document.RootElement, options);
         }
 
         internal static UnknownRuleCondition DeserializeUnknownRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string odataType = "Unknown";
-            Optional<RuleDataSource> dataSource = default;
+            RuleDataSource dataSource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
+                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData);
+            return new UnknownRuleCondition(odataType, dataSource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertRuleCondition>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRuleCondition(document.RootElement, options);
+                        return DeserializeAlertRuleCondition(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AlertRuleCondition)} does not support '{options.Format}' format.");

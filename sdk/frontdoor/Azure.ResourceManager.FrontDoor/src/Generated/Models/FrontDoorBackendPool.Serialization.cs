@@ -27,24 +27,24 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
+            if (Id != null)
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            if (options.Format != "W" && ResourceType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Backends))
+            if (!(Backends is ChangeTrackingList<FrontDoorBackend> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("backends"u8);
                 writer.WriteStartArray();
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LoadBalancingSettings))
+            if (LoadBalancingSettings != null)
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
                 JsonSerializer.Serialize(writer, LoadBalancingSettings);
             }
-            if (Optional.IsDefined(HealthProbeSettings))
+            if (HealthProbeSettings != null)
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
                 JsonSerializer.Serialize(writer, HealthProbeSettings);
             }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            if (options.Format != "W" && ResourceState.HasValue)
             {
                 writer.WritePropertyName("resourceState"u8);
                 writer.WriteStringValue(ResourceState.Value.ToString());
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<IList<FrontDoorBackend>> backends = default;
-            Optional<WritableSubResource> loadBalancingSettings = default;
-            Optional<WritableSubResource> healthProbeSettings = default;
-            Optional<FrontDoorResourceState> resourceState = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IList<FrontDoorBackend> backends = default;
+            WritableSubResource loadBalancingSettings = default;
+            WritableSubResource healthProbeSettings = default;
+            FrontDoorResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<FrontDoorBackend> array = new List<FrontDoorBackend>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item));
+                                array.Add(FrontDoorBackend.DeserializeFrontDoorBackend(item, options));
                             }
                             backends = array;
                             continue;
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                backends ?? new ChangeTrackingList<FrontDoorBackend>(),
+                loadBalancingSettings,
+                healthProbeSettings,
+                resourceState);
         }
 
         BinaryData IPersistableModel<FrontDoorBackendPool>.Write(ModelReaderWriterOptions options)

@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element);
-                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element);
-                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element);
-                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element);
+                    case "AzureFirstPartyManagedCertificate": return AzureFirstPartyManagedCertificateProperties.DeserializeAzureFirstPartyManagedCertificateProperties(element, options);
+                    case "CustomerCertificate": return CustomerCertificateProperties.DeserializeCustomerCertificateProperties(element, options);
+                    case "ManagedCertificate": return ManagedCertificateProperties.DeserializeManagedCertificateProperties(element, options);
+                    case "UrlSigningKey": return UriSigningKeyProperties.DeserializeUriSigningKeyProperties(element, options);
                 }
             }
-            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element);
+            return UnknownSecretProperties.DeserializeUnknownSecretProperties(element, options);
         }
 
         BinaryData IPersistableModel<FrontDoorSecretProperties>.Write(ModelReaderWriterOptions options)

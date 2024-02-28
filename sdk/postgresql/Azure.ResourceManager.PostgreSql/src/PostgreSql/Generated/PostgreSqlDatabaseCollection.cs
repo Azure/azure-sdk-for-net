@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PostgreSqlDatabaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string databaseName, PostgreSqlDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PostgreSqlDatabaseResource> CreateOrUpdate(WaitUntil waitUntil, string databaseName, PostgreSqlDatabaseData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<PostgreSqlDatabaseResource>> GetAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<PostgreSqlDatabaseResource> Get(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.Get");
             scope.Start();
@@ -326,7 +360,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.Exists");
             scope.Start();
@@ -369,7 +410,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual Response<bool> Exists(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.Exists");
             scope.Start();
@@ -412,7 +460,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual async Task<NullableResponse<PostgreSqlDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetIfExists");
             scope.Start();
@@ -457,7 +512,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public virtual NullableResponse<PostgreSqlDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            if (databaseName == null)
+            {
+                throw new ArgumentNullException(nameof(databaseName));
+            }
+            if (databaseName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
+            }
 
             using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetIfExists");
             scope.Start();

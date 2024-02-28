@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaximumMemoryMB))
+            if (MaximumMemoryMB.HasValue)
             {
                 writer.WritePropertyName("maximumMemoryMB"u8);
                 writer.WriteNumberValue(MaximumMemoryMB.Value);
             }
-            if (Optional.IsDefined(MinimumMemoryMB))
+            if (MinimumMemoryMB.HasValue)
             {
                 writer.WritePropertyName("minimumMemoryMB"u8);
                 writer.WriteNumberValue(MinimumMemoryMB.Value);
             }
-            if (Optional.IsDefined(TargetMemoryBuffer))
+            if (TargetMemoryBuffer.HasValue)
             {
                 writer.WritePropertyName("targetMemoryBuffer"u8);
                 writer.WriteNumberValue(TargetMemoryBuffer.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<long> maximumMemoryMB = default;
-            Optional<long> minimumMemoryMB = default;
-            Optional<int> targetMemoryBuffer = default;
+            long? maximumMemoryMB = default;
+            long? minimumMemoryMB = default;
+            int? targetMemoryBuffer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(Optional.ToNullable(maximumMemoryMB), Optional.ToNullable(minimumMemoryMB), Optional.ToNullable(targetMemoryBuffer), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig(maximumMemoryMB, minimumMemoryMB, targetMemoryBuffer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig>.Write(ModelReaderWriterOptions options)

@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(DefaultStorageSizeMb))
+            if (options.Format != "W" && DefaultStorageSizeMb.HasValue)
             {
                 writer.WritePropertyName("defaultStorageSizeMb"u8);
                 writer.WriteNumberValue(DefaultStorageSizeMb.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            if (options.Format != "W" && !(SupportedStorageCapabilities is ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("supportedStorageMb"u8);
                 writer.WriteStartArray();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            if (options.Format != "W" && CapabilityStatus.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Reason))
+            if (options.Format != "W" && Reason != null)
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> defaultStorageSizeMb = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageCapability>> supportedStorageMb = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            long? defaultStorageSizeMb = default;
+            IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> supportedStorageMb = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     List<PostgreSqlFlexibleServerStorageCapability> array = new List<PostgreSqlFlexibleServerStorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerStorageCapability.DeserializePostgreSqlFlexibleServerStorageCapability(item));
+                        array.Add(PostgreSqlFlexibleServerStorageCapability.DeserializePostgreSqlFlexibleServerStorageCapability(item, options));
                     }
                     supportedStorageMb = array;
                     continue;
@@ -151,7 +151,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlFlexibleServerStorageEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, name.Value, Optional.ToNullable(defaultStorageSizeMb), Optional.ToList(supportedStorageMb));
+            return new PostgreSqlFlexibleServerStorageEditionCapability(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                name,
+                defaultStorageSizeMb,
+                supportedStorageMb ?? new ChangeTrackingList<PostgreSqlFlexibleServerStorageCapability>());
         }
 
         BinaryData IPersistableModel<PostgreSqlFlexibleServerStorageEditionCapability>.Write(ModelReaderWriterOptions options)

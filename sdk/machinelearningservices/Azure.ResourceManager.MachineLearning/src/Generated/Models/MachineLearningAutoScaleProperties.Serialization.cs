@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(MinNodeCount))
+            if (MinNodeCount.HasValue)
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(MaxNodeCount))
+            if (MaxNodeCount.HasValue)
             {
                 writer.WritePropertyName("maxNodeCount"u8);
                 writer.WriteNumberValue(MaxNodeCount.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<int> minNodeCount = default;
-            Optional<bool> enabled = default;
-            Optional<int> maxNodeCount = default;
+            int? minNodeCount = default;
+            bool? enabled = default;
+            int? maxNodeCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningAutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount), serializedAdditionalRawData);
+            return new MachineLearningAutoScaleProperties(minNodeCount, enabled, maxNodeCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningAutoScaleProperties>.Write(ModelReaderWriterOptions options)

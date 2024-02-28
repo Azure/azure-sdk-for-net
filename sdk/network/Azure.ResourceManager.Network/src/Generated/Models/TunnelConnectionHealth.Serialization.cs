@@ -26,27 +26,27 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Tunnel))
+            if (options.Format != "W" && Tunnel != null)
             {
                 writer.WritePropertyName("tunnel"u8);
                 writer.WriteStringValue(Tunnel);
             }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            if (options.Format != "W" && ConnectionStatus.HasValue)
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            if (options.Format != "W" && IngressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            if (options.Format != "W" && EgressBytesTransferred.HasValue)
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
+            if (options.Format != "W" && LastConnectionEstablishedOn != null)
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
                 writer.WriteStringValue(LastConnectionEstablishedOn);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> tunnel = default;
-            Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
-            Optional<long> ingressBytesTransferred = default;
-            Optional<long> egressBytesTransferred = default;
-            Optional<string> lastConnectionEstablishedUtcTime = default;
+            string tunnel = default;
+            VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
+            long? ingressBytesTransferred = default;
+            long? egressBytesTransferred = default;
+            string lastConnectionEstablishedUtcTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
+            return new TunnelConnectionHealth(
+                tunnel,
+                connectionStatus,
+                ingressBytesTransferred,
+                egressBytesTransferred,
+                lastConnectionEstablishedUtcTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)

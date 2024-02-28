@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Pat))
+            if (Pat != null)
             {
                 writer.WritePropertyName("pat"u8);
                 writer.WriteStringValue(Pat);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> pat = default;
+            string pat = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkspaceConnectionPersonalAccessToken(pat.Value, serializedAdditionalRawData);
+            return new WorkspaceConnectionPersonalAccessToken(pat, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WorkspaceConnectionPersonalAccessToken>.Write(ModelReaderWriterOptions options)

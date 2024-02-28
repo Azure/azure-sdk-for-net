@@ -49,7 +49,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolResource"/> object. </returns>
         public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStoragePoolArmClient(client).GetDiskPoolResource(id);
         }
@@ -68,7 +71,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource"/> object. </returns>
         public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableStoragePoolArmClient(client).GetDiskPoolIscsiTargetResource(id);
         }
@@ -85,7 +91,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPools();
         }
@@ -123,7 +132,10 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPoolAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
         }
@@ -161,7 +173,10 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPool(diskPoolName, cancellationToken);
         }
@@ -197,7 +212,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
         }
@@ -233,7 +251,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPools(cancellationToken);
         }
@@ -266,7 +287,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
         }
@@ -299,7 +323,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolZoneInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
         }
@@ -332,7 +359,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
         }
@@ -365,7 +395,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="StoragePoolSkuInfo"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkus(location, cancellationToken);
         }

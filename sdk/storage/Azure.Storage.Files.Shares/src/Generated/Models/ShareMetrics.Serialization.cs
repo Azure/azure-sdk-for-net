@@ -22,13 +22,13 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartElement("Enabled");
             writer.WriteValue(Enabled);
             writer.WriteEndElement();
-            if (Optional.IsDefined(IncludeApis))
+            if (IncludeApis.HasValue)
             {
                 writer.WriteStartElement("IncludeAPIs");
                 writer.WriteValue(IncludeApis.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(RetentionPolicy))
+            if (RetentionPolicy != null)
             {
                 writer.WriteObjectValue(RetentionPolicy, "RetentionPolicy");
             }

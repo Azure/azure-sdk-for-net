@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> thumbprint = default;
+            string name = default;
+            string thumbprint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnServerConfigVpnClientRevokedCertificate(name.Value, thumbprint.Value, serializedAdditionalRawData);
+            return new VpnServerConfigVpnClientRevokedCertificate(name, thumbprint, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnServerConfigVpnClientRevokedCertificate>.Write(ModelReaderWriterOptions options)

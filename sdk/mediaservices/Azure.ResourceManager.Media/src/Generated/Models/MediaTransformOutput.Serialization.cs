@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OnError))
+            if (OnError.HasValue)
             {
                 writer.WritePropertyName("onError"u8);
                 writer.WriteStringValue(OnError.Value.ToString());
             }
-            if (Optional.IsDefined(RelativePriority))
+            if (RelativePriority.HasValue)
             {
                 writer.WritePropertyName("relativePriority"u8);
                 writer.WriteStringValue(RelativePriority.Value.ToString());
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaTransformOnErrorType> onError = default;
-            Optional<MediaJobPriority> relativePriority = default;
+            MediaTransformOnErrorType? onError = default;
+            MediaJobPriority? relativePriority = default;
             MediaTransformPreset preset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("preset"u8))
                 {
-                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    preset = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaTransformOutput(Optional.ToNullable(onError), Optional.ToNullable(relativePriority), preset, serializedAdditionalRawData);
+            return new MediaTransformOutput(onError, relativePriority, preset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaTransformOutput>.Write(ModelReaderWriterOptions options)

@@ -122,7 +122,7 @@ namespace Azure.AI.Translation.Text
                     List<BackTranslation> array = new List<BackTranslation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackTranslation.DeserializeBackTranslation(item));
+                        array.Add(BackTranslation.DeserializeBackTranslation(item, options));
                     }
                     backTranslations = array;
                     continue;
@@ -133,7 +133,14 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations, serializedAdditionalRawData);
+            return new DictionaryTranslation(
+                normalizedTarget,
+                displayTarget,
+                posTag,
+                confidence,
+                prefixWord,
+                backTranslations,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DictionaryTranslation>.Write(ModelReaderWriterOptions options)

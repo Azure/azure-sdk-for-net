@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(MappingType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Value))
+            if (Value != null)
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(IsSecret))
+            if (IsSecret.HasValue)
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             DeliveryAttributeMappingType type = default;
-            Optional<string> value = default;
-            Optional<bool> isSecret = default;
+            string value = default;
+            bool? isSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StaticDeliveryAttributeMapping(name.Value, type, serializedAdditionalRawData, value.Value, Optional.ToNullable(isSecret));
+            return new StaticDeliveryAttributeMapping(name, type, serializedAdditionalRawData, value, isSecret);
         }
 
         BinaryData IPersistableModel<StaticDeliveryAttributeMapping>.Write(ModelReaderWriterOptions options)

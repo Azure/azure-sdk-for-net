@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(OrchestratorSpecificConnectionDetails))
+            if (OrchestratorSpecificConnectionDetails != null)
             {
                 writer.WritePropertyName("orchestratorSpecificConnectionDetails"u8);
                 writer.WriteObjectValue(OrchestratorSpecificConnectionDetails);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<OrchestratorSpecificConnectionDetails> orchestratorSpecificConnectionDetails = default;
+            OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     {
                         continue;
                     }
-                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value);
+                    orchestratorSpecificConnectionDetails = OrchestratorSpecificConnectionDetails.DeserializeOrchestratorSpecificConnectionDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails.Value, serializedAdditionalRawData);
+            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ControllerConnectionDetails>.Write(ModelReaderWriterOptions options)

@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartObject();
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
-            if (Optional.IsDefined(Category))
+            if (Category.HasValue)
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (ExpiryOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpiryOn.Value, "O");
             }
-            if (Optional.IsDefined(Metadata))
+            if (Metadata != null)
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<BinaryData> metadata = default;
-            Optional<string> target = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningNoneAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, serializedAdditionalRawData);
+            return new MachineLearningNoneAuthTypeWorkspaceConnection(
+                authType,
+                category,
+                expiryTime,
+                metadata,
+                target,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningNoneAuthTypeWorkspaceConnection>.Write(ModelReaderWriterOptions options)

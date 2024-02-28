@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Parameters))
+            if (Parameters != null)
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteObjectValue(Parameters);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            Optional<ChaosTargetSimpleFilterParameters> parameters = default;
+            ChaosTargetSimpleFilterParameters parameters = default;
             FilterType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    parameters = ChaosTargetSimpleFilterParameters.DeserializeChaosTargetSimpleFilterParameters(property.Value);
+                    parameters = ChaosTargetSimpleFilterParameters.DeserializeChaosTargetSimpleFilterParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ChaosTargetSimpleFilter(type, serializedAdditionalRawData, parameters.Value);
+            return new ChaosTargetSimpleFilter(type, serializedAdditionalRawData, parameters);
         }
 
         BinaryData IPersistableModel<ChaosTargetSimpleFilter>.Write(ModelReaderWriterOptions options)

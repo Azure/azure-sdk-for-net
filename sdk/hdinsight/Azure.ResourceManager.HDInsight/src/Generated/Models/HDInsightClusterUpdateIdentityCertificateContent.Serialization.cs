@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(ApplicationId))
+            if (ApplicationId != null)
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (Optional.IsDefined(CertificatePassword))
+            if (CertificatePassword != null)
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> certificate = default;
-            Optional<string> certificatePassword = default;
+            string applicationId = default;
+            string certificate = default;
+            string certificatePassword = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterUpdateIdentityCertificateContent(applicationId.Value, certificate.Value, certificatePassword.Value, serializedAdditionalRawData);
+            return new HDInsightClusterUpdateIdentityCertificateContent(applicationId, certificate, certificatePassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterUpdateIdentityCertificateContent>.Write(ModelReaderWriterOptions options)

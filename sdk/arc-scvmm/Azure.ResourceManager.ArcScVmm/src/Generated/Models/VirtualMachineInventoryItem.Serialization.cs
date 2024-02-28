@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && OSType.HasValue)
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && OSName != null)
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && Optional.IsDefined(PowerState))
+            if (options.Format != "W" && PowerState != null)
             {
                 writer.WritePropertyName("powerState"u8);
                 writer.WriteStringValue(PowerState);
             }
-            if (Optional.IsCollectionDefined(IPAddresses))
+            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -51,29 +51,29 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Cloud))
+            if (Cloud != null)
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteObjectValue(Cloud);
             }
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
+            if (options.Format != "W" && ManagedResourceId != null)
             {
                 writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            if (options.Format != "W" && Uuid != null)
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
+            if (options.Format != "W" && InventoryItemName != null)
             {
                 writer.WritePropertyName("inventoryItemName"u8);
                 writer.WriteStringValue(InventoryItemName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<OSType> osType = default;
-            Optional<string> osName = default;
-            Optional<string> powerState = default;
-            Optional<IList<string>> ipAddresses = default;
-            Optional<InventoryItemDetails> cloud = default;
+            OSType? osType = default;
+            string osName = default;
+            string powerState = default;
+            IList<string> ipAddresses = default;
+            InventoryItemDetails cloud = default;
             InventoryType inventoryType = default;
-            Optional<string> managedResourceId = default;
-            Optional<string> uuid = default;
-            Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            string managedResourceId = default;
+            string uuid = default;
+            string inventoryItemName = default;
+            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value);
+                    cloud = InventoryItemDetails.DeserializeInventoryItemDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inventoryType"u8))
@@ -203,7 +203,18 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInventoryItem(inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value, serializedAdditionalRawData, Optional.ToNullable(osType), osName.Value, powerState.Value, Optional.ToList(ipAddresses), cloud.Value);
+            return new VirtualMachineInventoryItem(
+                inventoryType,
+                managedResourceId,
+                uuid,
+                inventoryItemName,
+                provisioningState,
+                serializedAdditionalRawData,
+                osType,
+                osName,
+                powerState,
+                ipAddresses ?? new ChangeTrackingList<string>(),
+                cloud);
         }
 
         BinaryData IPersistableModel<VirtualMachineInventoryItem>.Write(ModelReaderWriterOptions options)

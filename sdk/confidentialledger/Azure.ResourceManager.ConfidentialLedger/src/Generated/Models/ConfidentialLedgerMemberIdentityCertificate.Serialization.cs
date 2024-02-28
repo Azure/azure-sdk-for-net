@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Certificate))
+            if (Certificate != null)
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (Optional.IsDefined(Encryptionkey))
+            if (Encryptionkey != null)
             {
                 writer.WritePropertyName("encryptionkey"u8);
                 writer.WriteStringValue(Encryptionkey);
             }
-            if (Optional.IsDefined(Tags))
+            if (Tags != null)
             {
                 writer.WritePropertyName("tags"u8);
 #if NET6_0_OR_GREATER
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Optional<string> certificate = default;
-            Optional<string> encryptionkey = default;
-            Optional<BinaryData> tags = default;
+            string certificate = default;
+            string encryptionkey = default;
+            BinaryData tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfidentialLedgerMemberIdentityCertificate(certificate.Value, encryptionkey.Value, tags.Value, serializedAdditionalRawData);
+            return new ConfidentialLedgerMemberIdentityCertificate(certificate, encryptionkey, tags, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>.Write(ModelReaderWriterOptions options)

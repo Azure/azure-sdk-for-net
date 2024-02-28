@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(FactoryResourceId))
+            if (FactoryResourceId != null)
             {
                 writer.WritePropertyName("factoryResourceId"u8);
                 writer.WriteStringValue(FactoryResourceId);
             }
-            if (Optional.IsDefined(RepoConfiguration))
+            if (RepoConfiguration != null)
             {
                 writer.WritePropertyName("repoConfiguration"u8);
                 writer.WriteObjectValue(RepoConfiguration);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> factoryResourceId = default;
-            Optional<FactoryRepoConfiguration> repoConfiguration = default;
+            ResourceIdentifier factoryResourceId = default;
+            FactoryRepoConfiguration repoConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value);
+                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryRepoContent(factoryResourceId.Value, repoConfiguration.Value, serializedAdditionalRawData);
+            return new FactoryRepoContent(factoryResourceId, repoConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FactoryRepoContent>.Write(ModelReaderWriterOptions options)

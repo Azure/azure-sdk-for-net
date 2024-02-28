@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Data))
+            if (options.Format != "W" && Data != null)
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteObjectValue(Data);
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W" && Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Namespace))
+            if (options.Format != "W" && Namespace != null)
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             {
                 return null;
             }
-            Optional<ApplianceSupportedVersionCatalogVersionProperties> data = default;
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
+            ApplianceSupportedVersionCatalogVersionProperties data = default;
+            string name = default;
+            string @namespace = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     {
                         continue;
                     }
-                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value);
+                    data = ApplianceSupportedVersionCatalogVersionProperties.DeserializeApplianceSupportedVersionCatalogVersionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplianceSupportedVersionCatalogVersion(data.Value, name.Value, @namespace.Value, serializedAdditionalRawData);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplianceSupportedVersionCatalogVersion>.Write(ModelReaderWriterOptions options)

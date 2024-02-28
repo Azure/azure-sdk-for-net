@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Communication.Messages.Models.Channels;
-using Azure.Core;
 
 namespace Azure.Communication.Messages
 {
@@ -57,7 +56,10 @@ namespace Azure.Communication.Messages
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         protected MessageTemplateItem(string language, MessageTemplateStatus status)
         {
-            Argument.AssertNotNull(language, nameof(language));
+            if (language == null)
+            {
+                throw new ArgumentNullException(nameof(language));
+            }
 
             Language = language;
             Status = status;

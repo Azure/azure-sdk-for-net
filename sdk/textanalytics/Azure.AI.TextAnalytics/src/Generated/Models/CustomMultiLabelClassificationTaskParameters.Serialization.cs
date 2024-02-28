@@ -19,7 +19,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(ProjectName);
             writer.WritePropertyName("deploymentName"u8);
             writer.WriteStringValue(DeploymentName);
-            if (Optional.IsDefined(LoggingOptOut))
+            if (LoggingOptOut.HasValue)
             {
                 writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             string projectName = default;
             string deploymentName = default;
-            Optional<bool> loggingOptOut = default;
+            bool? loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("projectName"u8))
@@ -58,7 +58,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiLabelClassificationTaskParameters(Optional.ToNullable(loggingOptOut), projectName, deploymentName);
+            return new CustomMultiLabelClassificationTaskParameters(loggingOptOut, projectName, deploymentName);
         }
     }
 }

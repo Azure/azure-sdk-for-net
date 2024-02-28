@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(UserName))
+            if (UserName != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(RegistryServer))
+            if (RegistryServer != null)
             {
                 writer.WritePropertyName("registryServer"u8);
                 writer.WriteStringValue(RegistryServer);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identityReference"u8);
                 writer.WriteObjectValue(Identity);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<string> registryServer = default;
-            Optional<ComputeNodeIdentityReference> identityReference = default;
+            string username = default;
+            string password = default;
+            string registryServer = default;
+            ComputeNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmContainerRegistry(username.Value, password.Value, registryServer.Value, identityReference.Value, serializedAdditionalRawData);
+            return new BatchVmContainerRegistry(username, password, registryServer, identityReference, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmContainerRegistry>.Write(ModelReaderWriterOptions options)

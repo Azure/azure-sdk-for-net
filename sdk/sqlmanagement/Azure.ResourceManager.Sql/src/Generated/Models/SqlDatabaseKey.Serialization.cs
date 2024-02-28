@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(KeyType))
+            if (options.Format != "W" && KeyType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            if (options.Format != "W" && Thumbprint != null)
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Subregion))
+            if (options.Format != "W" && Subregion != null)
             {
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<SqlDatabaseKeyType> type = default;
-            Optional<string> thumbprint = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> subregion = default;
+            SqlDatabaseKeyType? type = default;
+            string thumbprint = default;
+            DateTimeOffset? creationDate = default;
+            string subregion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseKey(Optional.ToNullable(type), thumbprint.Value, Optional.ToNullable(creationDate), subregion.Value, serializedAdditionalRawData);
+            return new SqlDatabaseKey(type, thumbprint, creationDate, subregion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseKey>.Write(ModelReaderWriterOptions options)

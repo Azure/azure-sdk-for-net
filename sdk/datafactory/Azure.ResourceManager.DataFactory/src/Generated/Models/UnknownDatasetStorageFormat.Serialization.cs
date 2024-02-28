@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
-            if (Optional.IsDefined(Serializer))
+            if (Serializer != null)
             {
                 writer.WritePropertyName("serializer"u8);
                 JsonSerializer.Serialize(writer, Serializer);
             }
-            if (Optional.IsDefined(Deserializer))
+            if (Deserializer != null)
             {
                 writer.WritePropertyName("deserializer"u8);
                 JsonSerializer.Serialize(writer, Deserializer);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+            return DeserializeDatasetStorageFormat(document.RootElement, options);
         }
 
         internal static UnknownDatasetStorageFormat DeserializeUnknownDatasetStorageFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = "Unknown";
-            Optional<DataFactoryElement<string>> serializer = default;
-            Optional<DataFactoryElement<string>> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownDatasetStorageFormat(type, serializer.Value, deserializer.Value, additionalProperties);
+            return new UnknownDatasetStorageFormat(type, serializer, deserializer, additionalProperties);
         }
 
         BinaryData IPersistableModel<DatasetStorageFormat>.Write(ModelReaderWriterOptions options)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatasetStorageFormat(document.RootElement, options);
+                        return DeserializeDatasetStorageFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DatasetStorageFormat)} does not support '{options.Format}' format.");

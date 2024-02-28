@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentStatus))
+            if (DeploymentStatus != null)
             {
                 writer.WritePropertyName("deploymentStatus"u8);
                 writer.WriteStringValue(DeploymentStatus);
             }
-            if (Optional.IsDefined(ArtifactsApplied))
+            if (ArtifactsApplied.HasValue)
             {
                 writer.WritePropertyName("artifactsApplied"u8);
                 writer.WriteNumberValue(ArtifactsApplied.Value);
             }
-            if (Optional.IsDefined(TotalArtifacts))
+            if (TotalArtifacts.HasValue)
             {
                 writer.WritePropertyName("totalArtifacts"u8);
                 writer.WriteNumberValue(TotalArtifacts.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> deploymentStatus = default;
-            Optional<int> artifactsApplied = default;
-            Optional<int> totalArtifacts = default;
+            string deploymentStatus = default;
+            int? artifactsApplied = default;
+            int? totalArtifacts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabArtifactDeploymentStatus(deploymentStatus.Value, Optional.ToNullable(artifactsApplied), Optional.ToNullable(totalArtifacts), serializedAdditionalRawData);
+            return new DevTestLabArtifactDeploymentStatus(deploymentStatus, artifactsApplied, totalArtifacts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabArtifactDeploymentStatus>.Write(ModelReaderWriterOptions options)

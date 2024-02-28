@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Logic.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AS2))
+            if (AS2 != null)
             {
                 writer.WritePropertyName("aS2"u8);
                 writer.WriteObjectValue(AS2);
             }
-            if (Optional.IsDefined(X12))
+            if (X12 != null)
             {
                 writer.WritePropertyName("x12"u8);
                 writer.WriteObjectValue(X12);
             }
-            if (Optional.IsDefined(Edifact))
+            if (Edifact != null)
             {
                 writer.WritePropertyName("edifact"u8);
                 writer.WriteObjectValue(Edifact);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 return null;
             }
-            Optional<AS2AgreementContent> aS2 = default;
-            Optional<X12AgreementContent> x12 = default;
-            Optional<EdifactAgreementContent> edifact = default;
+            AS2AgreementContent aS2 = default;
+            X12AgreementContent x12 = default;
+            EdifactAgreementContent edifact = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value);
+                    aS2 = AS2AgreementContent.DeserializeAS2AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("x12"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value);
+                    x12 = X12AgreementContent.DeserializeX12AgreementContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("edifact"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value);
+                    edifact = EdifactAgreementContent.DeserializeEdifactAgreementContent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IntegrationAccountAgreementContent(aS2.Value, x12.Value, edifact.Value, serializedAdditionalRawData);
+            return new IntegrationAccountAgreementContent(aS2, x12, edifact, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IntegrationAccountAgreementContent>.Write(ModelReaderWriterOptions options)

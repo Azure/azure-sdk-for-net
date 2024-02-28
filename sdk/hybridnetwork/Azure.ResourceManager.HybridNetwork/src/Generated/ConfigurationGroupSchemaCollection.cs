@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ConfigurationGroupSchemaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationGroupSchemaName, ConfigurationGroupSchemaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ConfigurationGroupSchemaResource> CreateOrUpdate(WaitUntil waitUntil, string configurationGroupSchemaName, ConfigurationGroupSchemaData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> GetAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual Response<ConfigurationGroupSchemaResource> Get(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual async Task<NullableResponse<ConfigurationGroupSchemaResource>> GetIfExistsAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
         public virtual NullableResponse<ConfigurationGroupSchemaResource> GetIfExists(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(configurationGroupSchemaName, nameof(configurationGroupSchemaName));
+            if (configurationGroupSchemaName == null)
+            {
+                throw new ArgumentNullException(nameof(configurationGroupSchemaName));
+            }
+            if (configurationGroupSchemaName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationGroupSchemaName));
+            }
 
             using var scope = _configurationGroupSchemaClientDiagnostics.CreateScope("ConfigurationGroupSchemaCollection.GetIfExists");
             scope.Start();

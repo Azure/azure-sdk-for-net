@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartObject();
             writer.WritePropertyName("inviteeEmail"u8);
             writer.WriteStringValue(InviteeEmail);
-            if (Optional.IsDefined(TableLevelSharingProperties))
+            if (TableLevelSharingProperties != null)
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
                 writer.WriteObjectValue(TableLevelSharingProperties);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 return null;
             }
             string inviteeEmail = default;
-            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
+            KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value);
+                    tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties.Value, serializedAdditionalRawData);
+            return new DatabaseInviteFollowerContent(inviteeEmail, tableLevelSharingProperties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatabaseInviteFollowerContent>.Write(ModelReaderWriterOptions options)

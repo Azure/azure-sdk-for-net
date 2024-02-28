@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Path))
+            if (Path != null)
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Optional.IsCollectionDefined(Types))
+            if (!(Types is ChangeTrackingList<CosmosDBSpatialType> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("types"u8);
                 writer.WriteStartArray();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<IList<CosmosDBSpatialType>> types = default;
+            string path = default;
+            IList<CosmosDBSpatialType> types = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SpatialSpec(path.Value, Optional.ToList(types), serializedAdditionalRawData);
+            return new SpatialSpec(path, types ?? new ChangeTrackingList<CosmosDBSpatialType>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SpatialSpec>.Write(ModelReaderWriterOptions options)

@@ -27,22 +27,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(PanETag))
+            if (PanETag.HasValue)
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (Optional.IsDefined(PanLocation))
+            if (PanLocation.HasValue)
             {
                 writer.WritePropertyName("panLocation"u8);
                 writer.WriteStringValue(PanLocation.Value);
             }
-            if (Optional.IsDefined(Scope))
+            if (Scope.HasValue)
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
+            if (!(AssociatedSubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -52,22 +52,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Description))
+            if (Description != null)
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(DefaultMode))
+            if (DefaultMode.HasValue)
             {
                 writer.WritePropertyName("defaultMode"u8);
                 writer.WriteStringValue(DefaultMode.Value.ToString());
             }
-            if (Optional.IsDefined(MinAppIdVersion))
+            if (MinAppIdVersion != null)
             {
                 writer.WritePropertyName("minAppIdVersion"u8);
                 writer.WriteStringValue(MinAppIdVersion);
             }
-            if (Optional.IsDefined(SecurityServices))
+            if (SecurityServices != null)
             {
                 writer.WritePropertyName("securityServices"u8);
                 writer.WriteObjectValue(SecurityServices);
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            Optional<ETag> panETag = default;
-            Optional<AzureLocation> panLocation = default;
-            Optional<RulestackScopeType> scope = default;
-            Optional<IList<string>> associatedSubscriptions = default;
-            Optional<string> description = default;
-            Optional<RuleCreationDefaultMode> defaultMode = default;
-            Optional<string> minAppIdVersion = default;
-            Optional<RulestackSecurityServices> securityServices = default;
+            ETag? panETag = default;
+            AzureLocation? panLocation = default;
+            RulestackScopeType? scope = default;
+            IList<string> associatedSubscriptions = default;
+            string description = default;
+            RuleCreationDefaultMode? defaultMode = default;
+            string minAppIdVersion = default;
+            RulestackSecurityServices securityServices = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     {
                         continue;
                     }
-                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value);
+                    securityServices = RulestackSecurityServices.DeserializeRulestackSecurityServices(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LocalRulestackUpdateProperties(Optional.ToNullable(panETag), Optional.ToNullable(panLocation), Optional.ToNullable(scope), Optional.ToList(associatedSubscriptions), description.Value, Optional.ToNullable(defaultMode), minAppIdVersion.Value, securityServices.Value, serializedAdditionalRawData);
+            return new LocalRulestackUpdateProperties(
+                panETag,
+                panLocation,
+                scope,
+                associatedSubscriptions ?? new ChangeTrackingList<string>(),
+                description,
+                defaultMode,
+                minAppIdVersion,
+                securityServices,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LocalRulestackUpdateProperties>.Write(ModelReaderWriterOptions options)

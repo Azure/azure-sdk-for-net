@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequestUri))
+            if (RequestUri != null)
             {
                 writer.WritePropertyName("RequestUrl"u8);
                 writer.WriteStringValue(RequestUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Headers))
+            if (!(Headers is ChangeTrackingList<HeaderField> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("Headers"u8);
                 writer.WriteStartArray();
@@ -41,22 +41,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(HttpVerb))
+            if (HttpVerb != null)
             {
                 writer.WritePropertyName("HttpVerb"u8);
                 writer.WriteStringValue(HttpVerb);
             }
-            if (Optional.IsDefined(RequestBody))
+            if (RequestBody != null)
             {
                 writer.WritePropertyName("RequestBody"u8);
                 writer.WriteStringValue(RequestBody);
             }
-            if (Optional.IsDefined(ParseDependentRequests))
+            if (ParseDependentRequests.HasValue)
             {
                 writer.WritePropertyName("ParseDependentRequests"u8);
                 writer.WriteBooleanValue(ParseDependentRequests.Value);
             }
-            if (Optional.IsDefined(FollowRedirects))
+            if (FollowRedirects.HasValue)
             {
                 writer.WritePropertyName("FollowRedirects"u8);
                 writer.WriteBooleanValue(FollowRedirects.Value);
@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<Uri> requestUrl = default;
-            Optional<IList<HeaderField>> headers = default;
-            Optional<string> httpVerb = default;
-            Optional<string> requestBody = default;
-            Optional<bool> parseDependentRequests = default;
-            Optional<bool> followRedirects = default;
+            Uri requestUrl = default;
+            IList<HeaderField> headers = default;
+            string httpVerb = default;
+            string requestBody = default;
+            bool? parseDependentRequests = default;
+            bool? followRedirects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<HeaderField> array = new List<HeaderField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HeaderField.DeserializeHeaderField(item));
+                        array.Add(HeaderField.DeserializeHeaderField(item, options));
                     }
                     headers = array;
                     continue;
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebTestPropertiesRequest(requestUrl.Value, Optional.ToList(headers), httpVerb.Value, requestBody.Value, Optional.ToNullable(parseDependentRequests), Optional.ToNullable(followRedirects), serializedAdditionalRawData);
+            return new WebTestPropertiesRequest(
+                requestUrl,
+                headers ?? new ChangeTrackingList<HeaderField>(),
+                httpVerb,
+                requestBody,
+                parseDependentRequests,
+                followRedirects,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebTestPropertiesRequest>.Write(ModelReaderWriterOptions options)

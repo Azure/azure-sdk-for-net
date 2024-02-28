@@ -26,22 +26,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(IPv4Address))
+            if (IPv4Address != null)
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
             }
-            if (Optional.IsDefined(IPv4Subnet))
+            if (IPv4Subnet != null)
             {
                 writer.WritePropertyName("ipv4Subnet"u8);
                 writer.WriteStringValue(IPv4Subnet);
             }
-            if (Optional.IsDefined(IPv4Gateway))
+            if (IPv4Gateway != null)
             {
                 writer.WritePropertyName("ipv4Gateway"u8);
                 writer.WriteStringValue(IPv4Gateway);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> ipv4Address = default;
-            Optional<string> ipv4Subnet = default;
-            Optional<string> ipv4Gateway = default;
+            string name = default;
+            string ipv4Address = default;
+            string ipv4Subnet = default;
+            string ipv4Gateway = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value, serializedAdditionalRawData);
+            return new MobileNetworkInterfaceProperties(name, ipv4Address, ipv4Subnet, ipv4Gateway, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MobileNetworkInterfaceProperties>.Write(ModelReaderWriterOptions options)

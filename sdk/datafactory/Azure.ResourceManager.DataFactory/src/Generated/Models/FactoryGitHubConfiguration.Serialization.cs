@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostName))
+            if (HostName != null)
             {
                 writer.WritePropertyName("hostName"u8);
                 writer.WriteStringValue(HostName);
             }
-            if (Optional.IsDefined(ClientId))
+            if (ClientId != null)
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (Optional.IsDefined(ClientSecret))
+            if (ClientSecret != null)
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteObjectValue(ClientSecret);
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (Optional.IsDefined(LastCommitId))
+            if (LastCommitId != null)
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (Optional.IsDefined(DisablePublish))
+            if (DisablePublish.HasValue)
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -99,16 +99,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<string> clientId = default;
-            Optional<FactoryGitHubClientSecret> clientSecret = default;
+            string hostName = default;
+            string clientId = default;
+            FactoryGitHubClientSecret clientSecret = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
-            Optional<string> lastCommitId = default;
-            Optional<bool> disablePublish = default;
+            string lastCommitId = default;
+            bool? disablePublish = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    clientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value);
+                    clientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -177,7 +177,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), serializedAdditionalRawData, hostName.Value, clientId.Value, clientSecret.Value);
+            return new FactoryGitHubConfiguration(
+                type,
+                accountName,
+                repositoryName,
+                collaborationBranch,
+                rootFolder,
+                lastCommitId,
+                disablePublish,
+                serializedAdditionalRawData,
+                hostName,
+                clientId,
+                clientSecret);
         }
 
         BinaryData IPersistableModel<FactoryGitHubConfiguration>.Write(ModelReaderWriterOptions options)

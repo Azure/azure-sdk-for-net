@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EnableSchemaValidation))
+            if (EnableSchemaValidation.HasValue)
             {
                 writer.WritePropertyName("enableSchemaValidation"u8);
                 writer.WriteBooleanValue(EnableSchemaValidation.Value);
             }
-            if (Optional.IsDefined(EnableDataIntegrityValidation))
+            if (EnableDataIntegrityValidation.HasValue)
             {
                 writer.WritePropertyName("enableDataIntegrityValidation"u8);
                 writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
             }
-            if (Optional.IsDefined(EnableQueryAnalysisValidation))
+            if (EnableQueryAnalysisValidation.HasValue)
             {
                 writer.WritePropertyName("enableQueryAnalysisValidation"u8);
                 writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<bool> enableSchemaValidation = default;
-            Optional<bool> enableDataIntegrityValidation = default;
-            Optional<bool> enableQueryAnalysisValidation = default;
+            bool? enableSchemaValidation = default;
+            bool? enableDataIntegrityValidation = default;
+            bool? enableQueryAnalysisValidation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrationValidationOptions(Optional.ToNullable(enableSchemaValidation), Optional.ToNullable(enableDataIntegrityValidation), Optional.ToNullable(enableQueryAnalysisValidation), serializedAdditionalRawData);
+            return new MigrationValidationOptions(enableSchemaValidation, enableDataIntegrityValidation, enableQueryAnalysisValidation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigrationValidationOptions>.Write(ModelReaderWriterOptions options)

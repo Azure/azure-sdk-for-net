@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("kind");
             }
-            if (options.Format != "W" && Optional.IsDefined(Location))
+            if (options.Format != "W" && Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element);
-                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element);
-                    case "CEF": return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element);
+                    case "AAD": return AadExternalSecuritySolution.DeserializeAadExternalSecuritySolution(element, options);
+                    case "ATA": return AtaExternalSecuritySolution.DeserializeAtaExternalSecuritySolution(element, options);
+                    case "CEF": return CefExternalSecuritySolution.DeserializeCefExternalSecuritySolution(element, options);
                 }
             }
-            return UnknownExternalSecuritySolution.DeserializeUnknownExternalSecuritySolution(element);
+            return UnknownExternalSecuritySolution.DeserializeUnknownExternalSecuritySolution(element, options);
         }
 
         BinaryData IPersistableModel<ExternalSecuritySolution>.Write(ModelReaderWriterOptions options)

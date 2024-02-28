@@ -32,7 +32,17 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
         public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = null, DenseCaptionsResult denseCaptions = null, ImageMetadata metadata = null, string modelVersion = null, ObjectsResult objects = null, PeopleResult people = null, ReadResult read = null, SmartCropsResult smartCrops = null, TagsResult tags = null)
         {
-            return new ImageAnalysisResult(caption, denseCaptions, metadata, modelVersion, objects, people, read, smartCrops, tags, serializedAdditionalRawData: null);
+            return new ImageAnalysisResult(
+                caption,
+                denseCaptions,
+                metadata,
+                modelVersion,
+                objects,
+                people,
+                read,
+                smartCrops,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CaptionResult"/>. </summary>

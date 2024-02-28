@@ -42,29 +42,29 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            if (options.Format != "W" && SystemData != null)
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(OperationMode))
+            if (OperationMode.HasValue)
             {
                 writer.WritePropertyName("operationMode"u8);
                 writer.WriteStringValue(OperationMode.Value.ToString());
             }
-            if (Optional.IsDefined(StorageKeyType))
+            if (StorageKeyType.HasValue)
             {
                 writer.WritePropertyName("storageKeyType"u8);
                 writer.WriteStringValue(StorageKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(StorageKey))
+            if (StorageKey != null)
             {
                 writer.WritePropertyName("storageKey"u8);
                 writer.WriteStringValue(StorageKey);
             }
-            if (Optional.IsDefined(StorageUri))
+            if (StorageUri != null)
             {
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DatabaseExtensionOperationMode> operationMode = default;
-            Optional<StorageKeyType> storageKeyType = default;
-            Optional<string> storageKey = default;
-            Optional<Uri> storageUri = default;
+            SystemData systemData = default;
+            DatabaseExtensionOperationMode? operationMode = default;
+            StorageKeyType? storageKeyType = default;
+            string storageKey = default;
+            Uri storageUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -194,7 +194,16 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDatabaseExtension(id, name, type, systemData.Value, Optional.ToNullable(operationMode), Optional.ToNullable(storageKeyType), storageKey.Value, storageUri.Value, serializedAdditionalRawData);
+            return new SqlDatabaseExtension(
+                id,
+                name,
+                type,
+                systemData,
+                operationMode,
+                storageKeyType,
+                storageKey,
+                storageUri,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SqlDatabaseExtension>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<AvailableCluster> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableCluster>> value = default;
+            IReadOnlyList<AvailableCluster> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<AvailableCluster> array = new List<AvailableCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCluster.DeserializeAvailableCluster(item));
+                        array.Add(AvailableCluster.DeserializeAvailableCluster(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableClustersList(Optional.ToList(value), serializedAdditionalRawData);
+            return new AvailableClustersList(value ?? new ChangeTrackingList<AvailableCluster>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableClustersList>.Write(ModelReaderWriterOptions options)

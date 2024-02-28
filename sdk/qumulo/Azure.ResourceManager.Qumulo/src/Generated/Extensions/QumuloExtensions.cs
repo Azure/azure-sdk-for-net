@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> Returns a <see cref="QumuloFileSystemResource"/> object. </returns>
         public static QumuloFileSystemResource GetQumuloFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
 
             return GetMockableQumuloArmClient(client).GetQumuloFileSystemResource(id);
         }
@@ -65,7 +68,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
         public static QumuloFileSystemResourceCollection GetQumuloFileSystemResources(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableQumuloResourceGroupResource(resourceGroupResource).GetQumuloFileSystemResources();
         }
@@ -103,7 +109,10 @@ namespace Azure.ResourceManager.Qumulo
         [ForwardsClientCalls]
         public static async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return await GetMockableQumuloResourceGroupResource(resourceGroupResource).GetQumuloFileSystemResourceAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
         }
@@ -141,7 +150,10 @@ namespace Azure.ResourceManager.Qumulo
         [ForwardsClientCalls]
         public static Response<QumuloFileSystemResource> GetQumuloFileSystemResource(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            if (resourceGroupResource == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGroupResource));
+            }
 
             return GetMockableQumuloResourceGroupResource(resourceGroupResource).GetQumuloFileSystemResource(fileSystemName, cancellationToken);
         }
@@ -177,7 +189,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> An async collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableQumuloSubscriptionResource(subscriptionResource).GetQumuloFileSystemResourcesAsync(cancellationToken);
         }
@@ -213,7 +228,10 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> A collection of <see cref="QumuloFileSystemResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QumuloFileSystemResource> GetQumuloFileSystemResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            if (subscriptionResource == null)
+            {
+                throw new ArgumentNullException(nameof(subscriptionResource));
+            }
 
             return GetMockableQumuloSubscriptionResource(subscriptionResource).GetQumuloFileSystemResources(cancellationToken);
         }

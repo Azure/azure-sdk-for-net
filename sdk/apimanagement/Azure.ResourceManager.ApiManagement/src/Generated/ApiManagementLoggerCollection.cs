@@ -83,8 +83,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementLoggerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
@@ -133,8 +143,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementLoggerResource> CreateOrUpdate(WaitUntil waitUntil, string loggerId, ApiManagementLoggerData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
-            Argument.AssertNotNull(data, nameof(data));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.CreateOrUpdate");
             scope.Start();
@@ -180,7 +200,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementLoggerResource>> GetAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
@@ -225,7 +252,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual Response<ApiManagementLoggerResource> Get(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Get");
             scope.Start();
@@ -336,7 +370,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
@@ -379,7 +420,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual Response<bool> Exists(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.Exists");
             scope.Start();
@@ -422,7 +470,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementLoggerResource>> GetIfExistsAsync(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();
@@ -467,7 +522,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="loggerId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementLoggerResource> GetIfExists(string loggerId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(loggerId, nameof(loggerId));
+            if (loggerId == null)
+            {
+                throw new ArgumentNullException(nameof(loggerId));
+            }
+            if (loggerId.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(loggerId));
+            }
 
             using var scope = _apiManagementLoggerLoggerClientDiagnostics.CreateScope("ApiManagementLoggerCollection.GetIfExists");
             scope.Start();

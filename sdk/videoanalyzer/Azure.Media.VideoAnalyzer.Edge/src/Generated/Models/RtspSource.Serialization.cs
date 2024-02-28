@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Transport))
+            if (Transport.HasValue)
             {
                 writer.WritePropertyName("transport"u8);
                 writer.WriteStringValue(Transport.Value.ToString());
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<RtspTransport> transport = default;
+            RtspTransport? transport = default;
             EndpointBase endpoint = default;
             string type = default;
             string name = default;
@@ -66,7 +66,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RtspSource(type, name, Optional.ToNullable(transport), endpoint);
+            return new RtspSource(type, name, transport, endpoint);
         }
     }
 }

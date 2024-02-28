@@ -26,32 +26,32 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
+            if (CreatedBy != null)
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (Optional.IsDefined(CreatedByType))
+            if (CreatedByType.HasValue)
             {
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedOn))
+            if (CreatedOn.HasValue)
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedBy))
+            if (LastModifiedBy != null)
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (Optional.IsDefined(LastModifiedByType))
+            if (LastModifiedByType.HasValue)
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedOn))
+            if (LastModifiedOn.HasValue)
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<IdentityType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<IdentityType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            string createdBy = default;
+            IdentityType? createdByType = default;
+            DateTimeOffset? createdAt = default;
+            string lastModifiedBy = default;
+            IdentityType? lastModifiedByType = default;
+            DateTimeOffset? lastModifiedAt = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +156,14 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt), serializedAdditionalRawData);
+            return new SystemData(
+                createdBy,
+                createdByType,
+                createdAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                lastModifiedAt,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)

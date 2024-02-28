@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllowSqlRedirect))
+            if (AllowSqlRedirect.HasValue)
             {
                 writer.WritePropertyName("allowSqlRedirect"u8);
                 writer.WriteBooleanValue(AllowSqlRedirect.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> allowSqlRedirect = default;
+            bool? allowSqlRedirect = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicySQL(Optional.ToNullable(allowSqlRedirect), serializedAdditionalRawData);
+            return new FirewallPolicySQL(allowSqlRedirect, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicySQL>.Write(ModelReaderWriterOptions options)

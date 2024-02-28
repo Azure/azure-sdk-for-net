@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
+            if (Username != null)
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Optional.IsDefined(Password))
+            if (Password != null)
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> password = default;
+            string username = default;
+            string password = default;
             string name = default;
             ScriptExecutionParameterType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username.Value, password.Value);
+            return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username, password);
         }
 
         BinaryData IPersistableModel<PSCredentialExecutionParameterDetails>.Write(ModelReaderWriterOptions options)

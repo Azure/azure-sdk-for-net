@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Directory))
+            if (Directory != null)
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            Optional<string> directory = default;
+            string directory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FileSystemTokenStore(directory.Value, serializedAdditionalRawData);
+            return new FileSystemTokenStore(directory, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FileSystemTokenStore>.Write(ModelReaderWriterOptions options)

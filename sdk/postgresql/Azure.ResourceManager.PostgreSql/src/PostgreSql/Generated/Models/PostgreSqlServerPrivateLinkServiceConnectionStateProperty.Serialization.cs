@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            if (options.Format != "W" && Optional.IsDefined(ActionsRequired))
+            if (options.Format != "W" && ActionsRequired.HasValue)
             {
                 writer.WritePropertyName("actionsRequired"u8);
                 writer.WriteStringValue(ActionsRequired.Value.ToString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
             PostgreSqlPrivateLinkServiceConnectionStateStatus status = default;
             string description = default;
-            Optional<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction> actionsRequired = default;
+            PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, Optional.ToNullable(actionsRequired), serializedAdditionalRawData);
+            return new PostgreSqlServerPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PostgreSqlServerPrivateLinkServiceConnectionStateProperty>.Write(ModelReaderWriterOptions options)

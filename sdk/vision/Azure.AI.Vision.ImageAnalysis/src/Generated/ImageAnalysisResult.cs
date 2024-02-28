@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
@@ -52,8 +51,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="modelVersion"/> is null. </exception>
         internal ImageAnalysisResult(ImageMetadata metadata, string modelVersion)
         {
-            Argument.AssertNotNull(metadata, nameof(metadata));
-            Argument.AssertNotNull(modelVersion, nameof(modelVersion));
+            if (metadata == null)
+            {
+                throw new ArgumentNullException(nameof(metadata));
+            }
+            if (modelVersion == null)
+            {
+                throw new ArgumentNullException(nameof(modelVersion));
+            }
 
             Metadata = metadata;
             ModelVersion = modelVersion;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(ContinuationToken))
+            if (ContinuationToken != null)
             {
                 writer.WritePropertyName("continuationToken"u8);
                 writer.WriteStringValue(ContinuationToken);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             IReadOnlyList<DataFactoryPipelineRunInfo> value = default;
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPipelineRunInfo> array = new List<DataFactoryPipelineRunInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item));
+                        array.Add(DataFactoryPipelineRunInfo.DeserializeDataFactoryPipelineRunInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryPipelineRunsQueryResult(value, continuationToken.Value, serializedAdditionalRawData);
+            return new DataFactoryPipelineRunsQueryResult(value, continuationToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryPipelineRunsQueryResult>.Write(ModelReaderWriterOptions options)

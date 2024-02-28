@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             writer.WriteStartObject();
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+            return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
         }
 
         internal static UnknownTimeSeriesDatabaseConnectionProperties DeserializeUnknownTimeSeriesDatabaseConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 return null;
             }
             ConnectionType connectionType = "Unknown";
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            TimeSeriesDatabaseConnectionState? provisioningState = default;
+            DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, serializedAdditionalRawData);
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeSeriesDatabaseConnectionProperties>.Write(ModelReaderWriterOptions options)
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
+                        return DeserializeTimeSeriesDatabaseConnectionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(TimeSeriesDatabaseConnectionProperties)} does not support '{options.Format}' format.");

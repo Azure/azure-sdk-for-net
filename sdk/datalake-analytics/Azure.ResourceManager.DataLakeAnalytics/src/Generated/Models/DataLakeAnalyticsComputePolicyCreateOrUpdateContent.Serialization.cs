@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(ObjectId);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType.ToString());
-            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
+            if (MaxDegreeOfParallelismPerJob.HasValue)
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (Optional.IsDefined(MinPriorityPerJob))
+            if (MinPriorityPerJob.HasValue)
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             }
             Guid objectId = default;
             AadObjectIdentifierType objectType = default;
-            Optional<int> maxDegreeOfParallelismPerJob = default;
-            Optional<int> minPriorityPerJob = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeAnalyticsComputePolicyCreateOrUpdateContent(objectId, objectType, Optional.ToNullable(maxDegreeOfParallelismPerJob), Optional.ToNullable(minPriorityPerJob), serializedAdditionalRawData);
+            return new DataLakeAnalyticsComputePolicyCreateOrUpdateContent(objectId, objectType, maxDegreeOfParallelismPerJob, minPriorityPerJob, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeAnalyticsComputePolicyCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)

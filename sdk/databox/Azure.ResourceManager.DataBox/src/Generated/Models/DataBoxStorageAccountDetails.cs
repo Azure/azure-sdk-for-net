@@ -19,7 +19,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> is null. </exception>
         public DataBoxStorageAccountDetails(ResourceIdentifier storageAccountId)
         {
-            Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
+            if (storageAccountId == null)
+            {
+                throw new ArgumentNullException(nameof(storageAccountId));
+            }
 
             StorageAccountId = storageAccountId;
             DataAccountType = DataAccountType.StorageAccount;

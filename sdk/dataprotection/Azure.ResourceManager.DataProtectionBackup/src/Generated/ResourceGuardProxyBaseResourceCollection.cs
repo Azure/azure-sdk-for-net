@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceGuardProxyBaseResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceGuardProxyName, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ResourceGuardProxyBaseResource> CreateOrUpdate(WaitUntil waitUntil, string resourceGuardProxyName, ResourceGuardProxyBaseResourceData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual async Task<Response<ResourceGuardProxyBaseResource>> GetAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
             scope.Start();
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual Response<ResourceGuardProxyBaseResource> Get(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Get");
             scope.Start();
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
             scope.Start();
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual Response<bool> Exists(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.Exists");
             scope.Start();
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual async Task<NullableResponse<ResourceGuardProxyBaseResource>> GetIfExistsAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
             scope.Start();
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
         public virtual NullableResponse<ResourceGuardProxyBaseResource> GetIfExists(string resourceGuardProxyName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGuardProxyName, nameof(resourceGuardProxyName));
+            if (resourceGuardProxyName == null)
+            {
+                throw new ArgumentNullException(nameof(resourceGuardProxyName));
+            }
+            if (resourceGuardProxyName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGuardProxyName));
+            }
 
             using var scope = _resourceGuardProxyBaseResourceDppResourceGuardProxyClientDiagnostics.CreateScope("ResourceGuardProxyBaseResourceCollection.GetIfExists");
             scope.Start();

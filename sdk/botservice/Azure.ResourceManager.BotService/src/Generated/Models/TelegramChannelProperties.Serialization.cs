@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AccessToken))
+            if (AccessToken != null)
             {
                 writer.WritePropertyName("accessToken"u8);
                 writer.WriteStringValue(AccessToken);
             }
-            if (Optional.IsDefined(IsValidated))
+            if (IsValidated.HasValue)
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<bool> isValidated = default;
+            string accessToken = default;
+            bool? isValidated = default;
             bool isEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TelegramChannelProperties(accessToken.Value, Optional.ToNullable(isValidated), isEnabled, serializedAdditionalRawData);
+            return new TelegramChannelProperties(accessToken, isValidated, isEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TelegramChannelProperties>.Write(ModelReaderWriterOptions options)

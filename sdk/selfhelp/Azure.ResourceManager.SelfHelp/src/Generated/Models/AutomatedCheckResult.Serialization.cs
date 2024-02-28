@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Result))
+            if (Result != null)
             {
                 writer.WritePropertyName("result"u8);
                 writer.WriteStringValue(Result);
             }
-            if (Optional.IsDefined(ResultType))
+            if (ResultType.HasValue)
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResultType.Value.ToString());
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 return null;
             }
-            Optional<string> result = default;
-            Optional<AutomatedCheckResultType> type = default;
+            string result = default;
+            AutomatedCheckResultType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomatedCheckResult(result.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new AutomatedCheckResult(result, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomatedCheckResult>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && !(Value is ChangeTrackingList<RestorableTableResourceData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RestorableTableResourceData>> value = default;
+            IReadOnlyList<RestorableTableResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableTableResourceData> array = new List<RestorableTableResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTableResourceData.DeserializeRestorableTableResourceData(item));
+                        array.Add(RestorableTableResourceData.DeserializeRestorableTableResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RestorableTableResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new RestorableTableResourcesListResult(value ?? new ChangeTrackingList<RestorableTableResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RestorableTableResourcesListResult>.Write(ModelReaderWriterOptions options)

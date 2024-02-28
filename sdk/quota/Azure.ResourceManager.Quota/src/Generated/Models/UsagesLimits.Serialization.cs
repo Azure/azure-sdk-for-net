@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<CurrentUsagesBaseData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CurrentUsagesBaseData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CurrentUsagesBaseData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Quota.Models
                     List<CurrentUsagesBaseData> array = new List<CurrentUsagesBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item));
+                        array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsagesLimits(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new UsagesLimits(value ?? new ChangeTrackingList<CurrentUsagesBaseData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UsagesLimits>.Write(ModelReaderWriterOptions options)

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             IReadOnlyList<EventDataInfo> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<EventDataInfo> array = new List<EventDataInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventDataInfo.DeserializeEventDataInfo(item));
+                        array.Add(EventDataInfo.DeserializeEventDataInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventDataCollection(value, nextLink.Value, serializedAdditionalRawData);
+            return new EventDataCollection(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventDataCollection>.Write(ModelReaderWriterOptions options)

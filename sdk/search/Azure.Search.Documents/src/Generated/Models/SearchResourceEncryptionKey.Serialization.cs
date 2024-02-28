@@ -21,12 +21,12 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStringValue(KeyVersion);
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
-            if (Optional.IsDefined(AccessCredentialsInternal))
+            if (AccessCredentialsInternal != null)
             {
                 writer.WritePropertyName("accessCredentials"u8);
                 writer.WriteObjectValue(AccessCredentialsInternal);
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 if (Identity != null)
                 {
@@ -50,8 +50,8 @@ namespace Azure.Search.Documents.Indexes.Models
             string keyVaultKeyName = default;
             string keyVaultKeyVersion = default;
             string keyVaultUri = default;
-            Optional<AzureActiveDirectoryApplicationCredentials> accessCredentials = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
+            AzureActiveDirectoryApplicationCredentials accessCredentials = default;
+            SearchIndexerDataIdentity identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultKeyName"u8))
@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials.Value, identity.Value);
+            return new SearchResourceEncryptionKey(keyVaultKeyName, keyVaultKeyVersion, keyVaultUri, accessCredentials, identity);
         }
     }
 }

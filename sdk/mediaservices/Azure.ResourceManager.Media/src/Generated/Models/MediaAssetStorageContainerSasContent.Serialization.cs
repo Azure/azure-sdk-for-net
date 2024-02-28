@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permissions))
+            if (Permissions.HasValue)
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (ExpireOn.HasValue)
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 return null;
             }
-            Optional<MediaAssetContainerPermission> permissions = default;
-            Optional<DateTimeOffset> expiryTime = default;
+            MediaAssetContainerPermission? permissions = default;
+            DateTimeOffset? expiryTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MediaAssetStorageContainerSasContent(Optional.ToNullable(permissions), Optional.ToNullable(expiryTime), serializedAdditionalRawData);
+            return new MediaAssetStorageContainerSasContent(permissions, expiryTime, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MediaAssetStorageContainerSasContent>.Write(ModelReaderWriterOptions options)

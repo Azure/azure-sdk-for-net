@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,8 +82,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CapacityPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, CapacityPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -115,7 +125,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,8 +141,18 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CapacityPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, CapacityPoolData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNull(data, nameof(data));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -164,7 +184,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +198,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<CapacityPoolResource>> GetAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.Get");
             scope.Start();
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +250,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<CapacityPoolResource> Get(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.Get");
             scope.Start();
@@ -254,7 +288,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +318,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +348,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,7 +362,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.Exists");
             scope.Start();
@@ -357,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,7 +412,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual Response<bool> Exists(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.Exists");
             scope.Start();
@@ -400,7 +448,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,7 +462,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual async Task<NullableResponse<CapacityPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetIfExists");
             scope.Start();
@@ -445,7 +500,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +514,14 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
         public virtual NullableResponse<CapacityPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            if (poolName == null)
+            {
+                throw new ArgumentNullException(nameof(poolName));
+            }
+            if (poolName.Length == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty string.", nameof(poolName));
+            }
 
             using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetIfExists");
             scope.Start();

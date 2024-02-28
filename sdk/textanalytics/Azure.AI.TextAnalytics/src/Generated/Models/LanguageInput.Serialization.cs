@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 writer.WriteNull("text");
             }
-            if (Optional.IsDefined(CountryHint))
+            if (CountryHint != null)
             {
                 writer.WritePropertyName("countryHint"u8);
                 writer.WriteStringValue(CountryHint);

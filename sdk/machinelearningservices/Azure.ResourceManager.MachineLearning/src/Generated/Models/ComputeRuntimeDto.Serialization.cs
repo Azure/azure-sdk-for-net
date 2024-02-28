@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SparkRuntimeVersion))
+            if (SparkRuntimeVersion != null)
             {
                 writer.WritePropertyName("sparkRuntimeVersion"u8);
                 writer.WriteStringValue(SparkRuntimeVersion);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> sparkRuntimeVersion = default;
+            string sparkRuntimeVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeRuntimeDto(sparkRuntimeVersion.Value, serializedAdditionalRawData);
+            return new ComputeRuntimeDto(sparkRuntimeVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeRuntimeDto>.Write(ModelReaderWriterOptions options)

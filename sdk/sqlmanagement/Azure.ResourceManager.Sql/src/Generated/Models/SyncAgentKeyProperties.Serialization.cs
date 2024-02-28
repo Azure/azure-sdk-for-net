@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(SyncAgentKey))
+            if (options.Format != "W" && SyncAgentKey != null)
             {
                 writer.WritePropertyName("syncAgentKey"u8);
                 writer.WriteStringValue(SyncAgentKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            Optional<string> syncAgentKey = default;
+            string syncAgentKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SyncAgentKeyProperties(syncAgentKey.Value, serializedAdditionalRawData);
+            return new SyncAgentKeyProperties(syncAgentKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SyncAgentKeyProperties>.Write(ModelReaderWriterOptions options)

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsSecureInputEnabled))
+            if (IsSecureInputEnabled.HasValue)
             {
                 writer.WritePropertyName("secureInput"u8);
                 writer.WriteBooleanValue(IsSecureInputEnabled.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<bool> secureInput = default;
+            bool? secureInput = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecutePipelineActivityPolicy(Optional.ToNullable(secureInput), additionalProperties);
+            return new ExecutePipelineActivityPolicy(secureInput, additionalProperties);
         }
 
         BinaryData IPersistableModel<ExecutePipelineActivityPolicy>.Write(ModelReaderWriterOptions options)

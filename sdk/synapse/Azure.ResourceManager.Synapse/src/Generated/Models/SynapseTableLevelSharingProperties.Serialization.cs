@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(TablesToInclude))
+            if (!(TablesToInclude is ChangeTrackingList<string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tablesToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(TablesToExclude))
+            if (!(TablesToExclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
             {
                 writer.WritePropertyName("tablesToExclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToInclude))
+            if (!(ExternalTablesToInclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
             {
                 writer.WritePropertyName("externalTablesToInclude"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ExternalTablesToExclude))
+            if (!(ExternalTablesToExclude is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
             {
                 writer.WritePropertyName("externalTablesToExclude"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToInclude))
+            if (!(MaterializedViewsToInclude is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
             {
                 writer.WritePropertyName("materializedViewsToInclude"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(MaterializedViewsToExclude))
+            if (!(MaterializedViewsToExclude is ChangeTrackingList<string> collection4 && collection4.IsUndefined))
             {
                 writer.WritePropertyName("materializedViewsToExclude"u8);
                 writer.WriteStartArray();
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IList<string>> tablesToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
+            IList<string> tablesToInclude = default;
+            IList<string> tablesToExclude = default;
+            IList<string> externalTablesToInclude = default;
+            IList<string> externalTablesToExclude = default;
+            IList<string> materializedViewsToInclude = default;
+            IList<string> materializedViewsToExclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseTableLevelSharingProperties(Optional.ToList(tablesToInclude), Optional.ToList(tablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(externalTablesToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(materializedViewsToExclude), serializedAdditionalRawData);
+            return new SynapseTableLevelSharingProperties(
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseTableLevelSharingProperties>.Write(ModelReaderWriterOptions options)

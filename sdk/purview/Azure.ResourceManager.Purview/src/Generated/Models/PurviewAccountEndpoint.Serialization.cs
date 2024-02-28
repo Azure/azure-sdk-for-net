@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Catalog))
+            if (options.Format != "W" && Catalog != null)
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Optional.IsDefined(Scan))
+            if (options.Format != "W" && Scan != null)
             {
                 writer.WritePropertyName("scan"u8);
                 writer.WriteStringValue(Scan);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<string> catalog = default;
-            Optional<string> scan = default;
+            string catalog = default;
+            string scan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountEndpoint(catalog.Value, scan.Value, serializedAdditionalRawData);
+            return new PurviewAccountEndpoint(catalog, scan, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)

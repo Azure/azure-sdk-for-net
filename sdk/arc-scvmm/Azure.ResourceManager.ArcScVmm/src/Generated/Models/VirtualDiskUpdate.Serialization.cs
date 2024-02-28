@@ -26,42 +26,42 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Name != null)
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(DiskId))
+            if (DiskId != null)
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (DiskSizeGB.HasValue)
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (Optional.IsDefined(Bus))
+            if (Bus.HasValue)
             {
                 writer.WritePropertyName("bus"u8);
                 writer.WriteNumberValue(Bus.Value);
             }
-            if (Optional.IsDefined(Lun))
+            if (Lun.HasValue)
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteNumberValue(Lun.Value);
             }
-            if (Optional.IsDefined(BusType))
+            if (BusType != null)
             {
                 writer.WritePropertyName("busType"u8);
                 writer.WriteStringValue(BusType);
             }
-            if (Optional.IsDefined(VhdType))
+            if (VhdType != null)
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (Optional.IsDefined(StorageQoSPolicy))
+            if (StorageQoSPolicy != null)
             {
                 writer.WritePropertyName("storageQoSPolicy"u8);
                 writer.WriteObjectValue(StorageQoSPolicy);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> diskId = default;
-            Optional<int> diskSizeGB = default;
-            Optional<int> bus = default;
-            Optional<int> lun = default;
-            Optional<string> busType = default;
-            Optional<string> vhdType = default;
-            Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
+            string name = default;
+            string diskId = default;
+            int? diskSizeGB = default;
+            int? bus = default;
+            int? lun = default;
+            string busType = default;
+            string vhdType = default;
+            StorageQoSPolicyDetails storageQoSPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value);
+                    storageQoSPolicy = StorageQoSPolicyDetails.DeserializeStorageQoSPolicyDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualDiskUpdate(name.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, storageQoSPolicy.Value, serializedAdditionalRawData);
+            return new VirtualDiskUpdate(
+                name,
+                diskId,
+                diskSizeGB,
+                bus,
+                lun,
+                busType,
+                vhdType,
+                storageQoSPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualDiskUpdate>.Write(ModelReaderWriterOptions options)

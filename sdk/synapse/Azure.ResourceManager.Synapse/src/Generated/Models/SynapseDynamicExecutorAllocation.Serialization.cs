@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (IsEnabled.HasValue)
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(MinExecutors))
+            if (MinExecutors.HasValue)
             {
                 writer.WritePropertyName("minExecutors"u8);
                 writer.WriteNumberValue(MinExecutors.Value);
             }
-            if (Optional.IsDefined(MaxExecutors))
+            if (MaxExecutors.HasValue)
             {
                 writer.WritePropertyName("maxExecutors"u8);
                 writer.WriteNumberValue(MaxExecutors.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<int> minExecutors = default;
-            Optional<int> maxExecutors = default;
+            bool? enabled = default;
+            int? minExecutors = default;
+            int? maxExecutors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseDynamicExecutorAllocation(Optional.ToNullable(enabled), Optional.ToNullable(minExecutors), Optional.ToNullable(maxExecutors), serializedAdditionalRawData);
+            return new SynapseDynamicExecutorAllocation(enabled, minExecutors, maxExecutors, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseDynamicExecutorAllocation>.Write(ModelReaderWriterOptions options)

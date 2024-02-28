@@ -52,7 +52,10 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TrialMatcherInference(TrialMatcherInferenceType type, string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             Type = type;
             Value = value;

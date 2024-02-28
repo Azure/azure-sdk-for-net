@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(BlobUri))
+            if (BlobUri != null)
             {
                 if (BlobUri != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blobUri");
                 }
             }
-            if (Optional.IsDefined(Credential))
+            if (Credential != null)
             {
                 if (Credential != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("credential");
                 }
             }
-            if (Optional.IsDefined(StorageAccountArmId))
+            if (StorageAccountArmId != null)
             {
                 if (StorageAccountArmId != null)
                 {
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<Uri> blobUri = default;
-            Optional<PendingUploadCredentialDto> credential = default;
-            Optional<ResourceIdentifier> storageAccountArmId = default;
+            Uri blobUri = default;
+            PendingUploadCredentialDto credential = default;
+            ResourceIdentifier storageAccountArmId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         credential = null;
                         continue;
                     }
-                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value);
+                    credential = PendingUploadCredentialDto.DeserializePendingUploadCredentialDto(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountArmId"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobReferenceForConsumptionDto(blobUri.Value, credential.Value, storageAccountArmId.Value, serializedAdditionalRawData);
+            return new BlobReferenceForConsumptionDto(blobUri, credential, storageAccountArmId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlobReferenceForConsumptionDto>.Write(ModelReaderWriterOptions options)

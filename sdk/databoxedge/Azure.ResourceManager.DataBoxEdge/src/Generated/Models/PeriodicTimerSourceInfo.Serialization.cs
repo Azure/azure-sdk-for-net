@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule);
-            if (Optional.IsDefined(Topic))
+            if (Topic != null)
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
             DateTimeOffset startTime = default;
             string schedule = default;
-            Optional<string> topic = default;
+            string topic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PeriodicTimerSourceInfo(startTime, schedule, topic.Value, serializedAdditionalRawData);
+            return new PeriodicTimerSourceInfo(startTime, schedule, topic, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PeriodicTimerSourceInfo>.Write(ModelReaderWriterOptions options)

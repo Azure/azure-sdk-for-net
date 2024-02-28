@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
             writer.WriteObjectValue(AccountDetails);
-            if (Optional.IsDefined(LogCollectionLevel))
+            if (LogCollectionLevel.HasValue)
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 return null;
             }
             DataAccountDetails accountDetails = default;
-            Optional<LogCollectionLevel> logCollectionLevel = default;
+            LogCollectionLevel? logCollectionLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountDetails"u8))
                 {
-                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value);
+                    accountDetails = DataAccountDetails.DeserializeDataAccountDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logCollectionLevel"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataImportDetails(accountDetails, Optional.ToNullable(logCollectionLevel), serializedAdditionalRawData);
+            return new DataImportDetails(accountDetails, logCollectionLevel, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataImportDetails>.Write(ModelReaderWriterOptions options)

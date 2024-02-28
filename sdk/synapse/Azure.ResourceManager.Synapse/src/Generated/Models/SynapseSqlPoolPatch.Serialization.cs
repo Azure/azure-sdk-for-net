@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,69 +37,69 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
+            if (Location.HasValue)
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (Optional.IsDefined(Sku))
+            if (Sku != null)
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxSizeBytes))
+            if (MaxSizeBytes.HasValue)
             {
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
-            if (Optional.IsDefined(Collation))
+            if (Collation != null)
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(SourceDatabaseId))
+            if (SourceDatabaseId != null)
             {
                 writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RecoverableDatabaseId))
+            if (RecoverableDatabaseId != null)
             {
                 writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (ProvisioningState != null)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status != null)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(RestorePointInTime))
+            if (RestorePointInTime.HasValue)
             {
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(CreateMode))
+            if (CreateMode.HasValue)
             {
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && CreatedOn.HasValue)
             {
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(StorageAccountType))
+            if (StorageAccountType.HasValue)
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType.Value.ToString());
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (SourceDatabaseDeletionOn.HasValue)
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
                 writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
@@ -143,20 +143,20 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<AzureLocation> location = default;
-            Optional<SynapseSku> sku = default;
-            Optional<long> maxSizeBytes = default;
-            Optional<string> collation = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> provisioningState = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> restorePointInTime = default;
-            Optional<SqlPoolCreateMode> createMode = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<SqlPoolStorageAccountType> storageAccountType = default;
-            Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation? location = default;
+            SynapseSku sku = default;
+            long? maxSizeBytes = default;
+            string collation = default;
+            string sourceDatabaseId = default;
+            string recoverableDatabaseId = default;
+            string provisioningState = default;
+            string status = default;
+            DateTimeOffset? restorePointInTime = default;
+            SqlPoolCreateMode? createMode = default;
+            DateTimeOffset? creationDate = default;
+            SqlPoolStorageAccountType? storageAccountType = default;
+            DateTimeOffset? sourceDatabaseDeletionDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sku = SynapseSku.DeserializeSynapseSku(property.Value);
+                    sku = SynapseSku.DeserializeSynapseSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -290,7 +290,22 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseSqlPoolPatch(Optional.ToDictionary(tags), Optional.ToNullable(location), sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate), serializedAdditionalRawData);
+            return new SynapseSqlPoolPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku,
+                maxSizeBytes,
+                collation,
+                sourceDatabaseId,
+                recoverableDatabaseId,
+                provisioningState,
+                status,
+                restorePointInTime,
+                createMode,
+                creationDate,
+                storageAccountType,
+                sourceDatabaseDeletionDate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseSqlPoolPatch>.Write(ModelReaderWriterOptions options)

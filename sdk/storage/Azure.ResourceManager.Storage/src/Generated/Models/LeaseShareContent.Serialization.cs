@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
-            if (Optional.IsDefined(LeaseId))
+            if (LeaseId != null)
             {
                 writer.WritePropertyName("leaseId"u8);
                 writer.WriteStringValue(LeaseId);
             }
-            if (Optional.IsDefined(BreakPeriod))
+            if (BreakPeriod.HasValue)
             {
                 writer.WritePropertyName("breakPeriod"u8);
                 writer.WriteNumberValue(BreakPeriod.Value);
             }
-            if (Optional.IsDefined(LeaseDuration))
+            if (LeaseDuration.HasValue)
             {
                 writer.WritePropertyName("leaseDuration"u8);
                 writer.WriteNumberValue(LeaseDuration.Value);
             }
-            if (Optional.IsDefined(ProposedLeaseId))
+            if (ProposedLeaseId != null)
             {
                 writer.WritePropertyName("proposedLeaseId"u8);
                 writer.WriteStringValue(ProposedLeaseId);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             LeaseShareAction action = default;
-            Optional<string> leaseId = default;
-            Optional<int> breakPeriod = default;
-            Optional<int> leaseDuration = default;
-            Optional<string> proposedLeaseId = default;
+            string leaseId = default;
+            int? breakPeriod = default;
+            int? leaseDuration = default;
+            string proposedLeaseId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LeaseShareContent(action, leaseId.Value, Optional.ToNullable(breakPeriod), Optional.ToNullable(leaseDuration), proposedLeaseId.Value, serializedAdditionalRawData);
+            return new LeaseShareContent(
+                action,
+                leaseId,
+                breakPeriod,
+                leaseDuration,
+                proposedLeaseId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LeaseShareContent>.Write(ModelReaderWriterOptions options)

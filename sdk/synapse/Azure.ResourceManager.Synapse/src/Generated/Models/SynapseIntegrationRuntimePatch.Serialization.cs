@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpdate))
+            if (AutoUpdate.HasValue)
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateDelayOffset))
+            if (UpdateDelayOffset != null)
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<SynapseIntegrationRuntimeAutoUpdate> autoUpdate = default;
-            Optional<string> updateDelayOffset = default;
+            SynapseIntegrationRuntimeAutoUpdate? autoUpdate = default;
+            string updateDelayOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIntegrationRuntimePatch(Optional.ToNullable(autoUpdate), updateDelayOffset.Value, serializedAdditionalRawData);
+            return new SynapseIntegrationRuntimePatch(autoUpdate, updateDelayOffset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIntegrationRuntimePatch>.Write(ModelReaderWriterOptions options)

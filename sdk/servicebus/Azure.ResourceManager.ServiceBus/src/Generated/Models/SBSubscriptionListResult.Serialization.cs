@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Value))
+            if (!(Value is ChangeTrackingList<ServiceBusSubscriptionData> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (NextLink != null)
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ServiceBusSubscriptionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ServiceBusSubscriptionData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusSubscriptionData> array = new List<ServiceBusSubscriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(item));
+                        array.Add(ServiceBusSubscriptionData.DeserializeServiceBusSubscriptionData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SBSubscriptionListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SBSubscriptionListResult(value ?? new ChangeTrackingList<ServiceBusSubscriptionData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SBSubscriptionListResult>.Write(ModelReaderWriterOptions options)

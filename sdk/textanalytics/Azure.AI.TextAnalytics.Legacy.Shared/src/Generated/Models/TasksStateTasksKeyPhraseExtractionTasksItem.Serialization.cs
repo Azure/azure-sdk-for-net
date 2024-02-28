@@ -20,9 +20,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<KeyPhraseResult> results = default;
+            KeyPhraseResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +51,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasksKeyPhraseExtractionTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksKeyPhraseExtractionTasksItem(lastUpdateDateTime, taskName, status, results);
         }
     }
 }

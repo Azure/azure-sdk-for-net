@@ -57,7 +57,10 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public RedisEnterpriseClusterData(AzureLocation location, RedisEnterpriseSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
+            if (sku == null)
+            {
+                throw new ArgumentNullException(nameof(sku));
+            }
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();

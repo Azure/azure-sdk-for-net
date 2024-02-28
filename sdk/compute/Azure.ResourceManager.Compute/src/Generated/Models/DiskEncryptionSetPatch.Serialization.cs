@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
+            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,29 +38,29 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
+            if (Identity != null)
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(EncryptionType))
+            if (EncryptionType.HasValue)
             {
                 writer.WritePropertyName("encryptionType"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToString());
             }
-            if (Optional.IsDefined(ActiveKey))
+            if (ActiveKey != null)
             {
                 writer.WritePropertyName("activeKey"u8);
                 writer.WriteObjectValue(ActiveKey);
             }
-            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            if (RotationToLatestKeyVersionEnabled.HasValue)
             {
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
-            if (Optional.IsDefined(FederatedClientId))
+            if (FederatedClientId != null)
             {
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DiskEncryptionSetType> encryptionType = default;
-            Optional<KeyForDiskEncryptionSet> activeKey = default;
-            Optional<bool> rotationToLatestKeyVersionEnabled = default;
-            Optional<string> federatedClientId = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            DiskEncryptionSetType? encryptionType = default;
+            KeyForDiskEncryptionSet activeKey = default;
+            bool? rotationToLatestKeyVersionEnabled = default;
+            string federatedClientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value);
+                            activeKey = KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rotationToLatestKeyVersionEnabled"u8))
@@ -187,7 +187,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionSetPatch(Optional.ToDictionary(tags), identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), federatedClientId.Value, serializedAdditionalRawData);
+            return new DiskEncryptionSetPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                encryptionType,
+                activeKey,
+                rotationToLatestKeyVersionEnabled,
+                federatedClientId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionSetPatch>.Write(ModelReaderWriterOptions options)

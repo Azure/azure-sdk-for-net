@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(RecoveryPointOn))
+            if (RecoveryPointOn.HasValue)
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (Optional.IsDefined(RecoveryPointType))
+            if (RecoveryPointType != null)
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType);
             }
-            if (Optional.IsDefined(ProviderSpecificDetails))
+            if (ProviderSpecificDetails != null)
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
                 writer.WriteObjectValue(ProviderSpecificDetails);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> recoveryPointTime = default;
-            Optional<string> recoveryPointType = default;
-            Optional<ProviderSpecificRecoveryPointDetails> providerSpecificDetails = default;
+            DateTimeOffset? recoveryPointTime = default;
+            string recoveryPointType = default;
+            ProviderSpecificRecoveryPointDetails providerSpecificDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ProviderSpecificRecoveryPointDetails.DeserializeProviderSpecificRecoveryPointDetails(property.Value);
+                    providerSpecificDetails = ProviderSpecificRecoveryPointDetails.DeserializeProviderSpecificRecoveryPointDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SiteRecoveryPointProperties(Optional.ToNullable(recoveryPointTime), recoveryPointType.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
+            return new SiteRecoveryPointProperties(recoveryPointTime, recoveryPointType, providerSpecificDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SiteRecoveryPointProperties>.Write(ModelReaderWriterOptions options)

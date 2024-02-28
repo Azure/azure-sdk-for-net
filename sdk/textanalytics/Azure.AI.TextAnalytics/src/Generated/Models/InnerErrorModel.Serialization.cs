@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (Optional.IsCollectionDefined(Details))
+            if (!(Details is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
@@ -31,12 +31,12 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Target))
+            if (Target != null)
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Innererror))
+            if (Innererror != null)
             {
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror);
@@ -52,9 +52,9 @@ namespace Azure.AI.TextAnalytics.Models
             }
             InnerErrorCode code = default;
             string message = default;
-            Optional<IDictionary<string, string>> details = default;
-            Optional<string> target = default;
-            Optional<InnerErrorModel> innererror = default;
+            IDictionary<string, string> details = default;
+            string target = default;
+            InnerErrorModel innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -96,7 +96,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new InnerErrorModel(code, message, Optional.ToDictionary(details), target.Value, innererror.Value);
+            return new InnerErrorModel(code, message, details ?? new ChangeTrackingDictionary<string, string>(), target, innererror);
         }
     }
 }

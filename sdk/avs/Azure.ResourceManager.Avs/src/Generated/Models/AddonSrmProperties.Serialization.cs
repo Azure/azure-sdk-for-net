@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LicenseKey))
+            if (LicenseKey != null)
             {
                 writer.WritePropertyName("licenseKey"u8);
                 writer.WriteStringValue(LicenseKey);
             }
             writer.WritePropertyName("addonType"u8);
             writer.WriteStringValue(AddonType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> licenseKey = default;
+            string licenseKey = default;
             AddonType addonType = default;
-            Optional<AddonProvisioningState> provisioningState = default;
+            AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AddonSrmProperties(addonType, Optional.ToNullable(provisioningState), serializedAdditionalRawData, licenseKey.Value);
+            return new AddonSrmProperties(addonType, provisioningState, serializedAdditionalRawData, licenseKey);
         }
 
         BinaryData IPersistableModel<AddonSrmProperties>.Write(ModelReaderWriterOptions options)

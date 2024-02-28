@@ -26,19 +26,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(MeterGuid))
+            if (options.Format != "W" && MeterGuid.HasValue)
             {
                 writer.WritePropertyName("meterGuid"u8);
                 writer.WriteStringValue(MeterGuid.Value);
             }
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(Multiplier))
+            if (options.Format != "W" && Multiplier.HasValue)
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ChargingType))
+            if (options.Format != "W" && ChargingType.HasValue)
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<Guid> meterGuid = default;
+            Guid? meterGuid = default;
             BillingType billingType = default;
-            Optional<double> multiplier = default;
-            Optional<EdgeOrderProductChargingType> chargingType = default;
+            double? multiplier = default;
+            EdgeOrderProductChargingType? chargingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Pav2MeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType), serializedAdditionalRawData, Optional.ToNullable(meterGuid));
+            return new Pav2MeterDetails(billingType, multiplier, chargingType, serializedAdditionalRawData, meterGuid);
         }
 
         BinaryData IPersistableModel<Pav2MeterDetails>.Write(ModelReaderWriterOptions options)

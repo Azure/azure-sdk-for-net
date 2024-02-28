@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -30,7 +29,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         public ServicePlacementRequireDomainDistributionPolicy(string domainName)
         {
-            Argument.AssertNotNull(domainName, nameof(domainName));
+            if (domainName == null)
+            {
+                throw new ArgumentNullException(nameof(domainName));
+            }
 
             DomainName = domainName;
             ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;

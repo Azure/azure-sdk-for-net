@@ -20,12 +20,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (PrivateEndpoint != null)
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint);
             }
-            if (Optional.IsDefined(ConnectionState))
+            if (ConnectionState != null)
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
                 writer.WriteObjectValue(ConnectionState);
@@ -40,12 +40,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<PrivateEndpoint> privateEndpoint = default;
-            Optional<PrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            PrivateEndpoint privateEndpoint = default;
+            PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            string provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -99,7 +99,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PrivateEndpointConnection(id.Value, name.Value, type.Value, privateEndpoint.Value, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new PrivateEndpointConnection(
+                id,
+                name,
+                type,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                provisioningState);
         }
 
         internal partial class PrivateEndpointConnectionConverter : JsonConverter<PrivateEndpointConnection>

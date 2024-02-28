@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.LabServices.Models
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdditionalUsageQuota))
+            if (AdditionalUsageQuota.HasValue)
             {
                 writer.WritePropertyName("additionalUsageQuota"u8);
                 writer.WriteStringValue(AdditionalUsageQuota.Value, "P");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 return null;
             }
-            Optional<TimeSpan> additionalUsageQuota = default;
+            TimeSpan? additionalUsageQuota = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LabUserPatch(Optional.ToNullable(additionalUsageQuota), serializedAdditionalRawData);
+            return new LabUserPatch(additionalUsageQuota, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LabUserPatch>.Write(ModelReaderWriterOptions options)

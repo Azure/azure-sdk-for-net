@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Grafana.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PluginId))
+            if (options.Format != "W" && PluginId != null)
             {
                 writer.WritePropertyName("pluginId"u8);
                 writer.WriteStringValue(PluginId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 return null;
             }
-            Optional<string> pluginId = default;
+            string pluginId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GrafanaPlugin(pluginId.Value, serializedAdditionalRawData);
+            return new GrafanaPlugin(pluginId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GrafanaPlugin>.Write(ModelReaderWriterOptions options)

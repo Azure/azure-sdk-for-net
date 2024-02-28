@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="secretSource"/> is null. </exception>
         public CustomerCertificateProperties(WritableSubResource secretSource)
         {
-            Argument.AssertNotNull(secretSource, nameof(secretSource));
+            if (secretSource == null)
+            {
+                throw new ArgumentNullException(nameof(secretSource));
+            }
 
             SecretSource = secretSource;
             SubjectAlternativeNames = new ChangeTrackingList<string>();

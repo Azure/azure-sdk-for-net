@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecureBootEnabled))
+            if (SecureBootEnabled.HasValue)
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
                 writer.WriteBooleanValue(SecureBootEnabled.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<bool> secureBootEnabled = default;
+            bool? secureBootEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(Optional.ToNullable(secureBootEnabled), serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesSecurityProfileUefiSettings(secureBootEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesSecurityProfileUefiSettings>.Write(ModelReaderWriterOptions options)

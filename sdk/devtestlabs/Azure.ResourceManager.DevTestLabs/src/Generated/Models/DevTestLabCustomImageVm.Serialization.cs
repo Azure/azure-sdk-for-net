@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SourceVmId))
+            if (SourceVmId != null)
             {
                 writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
-            if (Optional.IsDefined(WindowsOSInfo))
+            if (WindowsOSInfo != null)
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
                 writer.WriteObjectValue(WindowsOSInfo);
             }
-            if (Optional.IsDefined(LinuxOSInfo))
+            if (LinuxOSInfo != null)
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
                 writer.WriteObjectValue(LinuxOSInfo);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> sourceVmId = default;
-            Optional<WindowsOSInfo> windowsOSInfo = default;
-            Optional<LinuxOSInfo> linuxOSInfo = default;
+            string sourceVmId = default;
+            WindowsOSInfo windowsOSInfo = default;
+            LinuxOSInfo linuxOSInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value);
+                    windowsOSInfo = WindowsOSInfo.DeserializeWindowsOSInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxOsInfo"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value);
+                    linuxOSInfo = LinuxOSInfo.DeserializeLinuxOSInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCustomImageVm(sourceVmId.Value, windowsOSInfo.Value, linuxOSInfo.Value, serializedAdditionalRawData);
+            return new DevTestLabCustomImageVm(sourceVmId, windowsOSInfo, linuxOSInfo, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCustomImageVm>.Write(ModelReaderWriterOptions options)

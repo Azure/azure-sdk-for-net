@@ -7,8 +7,7 @@
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-    <!-- TODO: Remove warning suppression prior to GA release -->
-    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
     <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
   </PropertyGroup>

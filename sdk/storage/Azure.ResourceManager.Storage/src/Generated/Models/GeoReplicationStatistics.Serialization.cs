@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.Storage.Models
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Status))
+            if (options.Format != "W" && Status.HasValue)
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            if (options.Format != "W" && LastSyncOn.HasValue)
             {
                 writer.WritePropertyName("lastSyncTime"u8);
                 writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CanFailover))
+            if (options.Format != "W" && CanFailover.HasValue)
             {
                 writer.WritePropertyName("canFailover"u8);
                 writer.WriteBooleanValue(CanFailover.Value);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Optional<GeoReplicationStatus> status = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
-            Optional<bool> canFailover = default;
+            GeoReplicationStatus? status = default;
+            DateTimeOffset? lastSyncTime = default;
+            bool? canFailover = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GeoReplicationStatistics(Optional.ToNullable(status), Optional.ToNullable(lastSyncTime), Optional.ToNullable(canFailover), serializedAdditionalRawData);
+            return new GeoReplicationStatistics(status, lastSyncTime, canFailover, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GeoReplicationStatistics>.Write(ModelReaderWriterOptions options)

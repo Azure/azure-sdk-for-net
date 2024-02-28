@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SymmetricKey))
+            if (SymmetricKey != null)
             {
                 writer.WritePropertyName("symmetricKey"u8);
                 writer.WriteObjectValue(SymmetricKey);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeSymmetricKey> symmetricKey = default;
+            DataBoxEdgeSymmetricKey symmetricKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value);
+                    symmetricKey = DataBoxEdgeSymmetricKey.DeserializeDataBoxEdgeSymmetricKey(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Authentication(symmetricKey.Value, serializedAdditionalRawData);
+            return new Authentication(symmetricKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<Authentication>.Write(ModelReaderWriterOptions options)

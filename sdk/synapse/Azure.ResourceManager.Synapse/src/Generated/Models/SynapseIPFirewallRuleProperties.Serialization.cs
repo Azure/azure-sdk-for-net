@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndIPAddress))
+            if (EndIPAddress != null)
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && ProvisioningState.HasValue)
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(StartIPAddress))
+            if (StartIPAddress != null)
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 return null;
             }
-            Optional<IPAddress> endIPAddress = default;
-            Optional<SynapseProvisioningState> provisioningState = default;
-            Optional<IPAddress> startIPAddress = default;
+            IPAddress endIPAddress = default;
+            SynapseProvisioningState? provisioningState = default;
+            IPAddress startIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SynapseIPFirewallRuleProperties(endIPAddress.Value, Optional.ToNullable(provisioningState), startIPAddress.Value, serializedAdditionalRawData);
+            return new SynapseIPFirewallRuleProperties(endIPAddress, provisioningState, startIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SynapseIPFirewallRuleProperties>.Write(ModelReaderWriterOptions options)

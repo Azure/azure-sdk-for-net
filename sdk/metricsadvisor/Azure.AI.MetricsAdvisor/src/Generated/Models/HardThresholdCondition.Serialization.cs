@@ -15,12 +15,12 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(LowerBound))
+            if (LowerBound.HasValue)
             {
                 writer.WritePropertyName("lowerBound"u8);
                 writer.WriteNumberValue(LowerBound.Value);
             }
-            if (Optional.IsDefined(UpperBound))
+            if (UpperBound.HasValue)
             {
                 writer.WritePropertyName("upperBound"u8);
                 writer.WriteNumberValue(UpperBound.Value);
@@ -38,8 +38,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<double> lowerBound = default;
-            Optional<double> upperBound = default;
+            double? lowerBound = default;
+            double? upperBound = default;
             AnomalyDetectorDirection anomalyDetectorDirection = default;
             SuppressCondition suppressCondition = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new HardThresholdCondition(Optional.ToNullable(lowerBound), Optional.ToNullable(upperBound), anomalyDetectorDirection, suppressCondition);
+            return new HardThresholdCondition(lowerBound, upperBound, anomalyDetectorDirection, suppressCondition);
         }
     }
 }

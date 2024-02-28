@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutoUpdate))
+            if (AutoUpdate.HasValue)
             {
                 writer.WritePropertyName("autoUpdate"u8);
                 writer.WriteStringValue(AutoUpdate.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateDelayOffset))
+            if (UpdateDelayOffset.HasValue)
             {
                 writer.WritePropertyName("updateDelayOffset"u8);
                 writer.WriteStringValue(UpdateDelayOffset.Value, "P");
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
-            Optional<TimeSpan> updateDelayOffset = default;
+            IntegrationRuntimeAutoUpdateState? autoUpdate = default;
+            TimeSpan? updateDelayOffset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataFactoryIntegrationRuntimePatch(Optional.ToNullable(autoUpdate), Optional.ToNullable(updateDelayOffset), serializedAdditionalRawData);
+            return new DataFactoryIntegrationRuntimePatch(autoUpdate, updateDelayOffset, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataFactoryIntegrationRuntimePatch>.Write(ModelReaderWriterOptions options)

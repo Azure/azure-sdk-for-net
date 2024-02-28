@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="diskId"/> is null. </exception>
         public A2AProtectionIntentManagedDiskDetails(string diskId)
         {
-            Argument.AssertNotNull(diskId, nameof(diskId));
+            if (diskId == null)
+            {
+                throw new ArgumentNullException(nameof(diskId));
+            }
 
             DiskId = diskId;
         }

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Batch.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Targets))
+            if (!(Targets is ChangeTrackingList<BatchDiskEncryptionTarget> collection && collection.IsUndefined))
             {
                 writer.WritePropertyName("targets"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<IList<BatchDiskEncryptionTarget>> targets = default;
+            IList<BatchDiskEncryptionTarget> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskEncryptionConfiguration(Optional.ToList(targets), serializedAdditionalRawData);
+            return new DiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

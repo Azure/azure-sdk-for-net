@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SystemCreatedStorageAccount))
+            if (SystemCreatedStorageAccount != null)
             {
                 if (SystemCreatedStorageAccount != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("systemCreatedStorageAccount");
                 }
             }
-            if (Optional.IsDefined(UserCreatedStorageAccount))
+            if (UserCreatedStorageAccount != null)
             {
                 if (UserCreatedStorageAccount != null)
                 {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<SystemCreatedStorageAccount> systemCreatedStorageAccount = default;
-            Optional<UserCreatedStorageAccount> userCreatedStorageAccount = default;
+            SystemCreatedStorageAccount systemCreatedStorageAccount = default;
+            UserCreatedStorageAccount userCreatedStorageAccount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedStorageAccount = null;
                         continue;
                     }
-                    systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value);
+                    systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userCreatedStorageAccount"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedStorageAccount = null;
                         continue;
                     }
-                    userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value);
+                    userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StorageAccountDetails(systemCreatedStorageAccount.Value, userCreatedStorageAccount.Value, serializedAdditionalRawData);
+            return new StorageAccountDetails(systemCreatedStorageAccount, userCreatedStorageAccount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageAccountDetails>.Write(ModelReaderWriterOptions options)

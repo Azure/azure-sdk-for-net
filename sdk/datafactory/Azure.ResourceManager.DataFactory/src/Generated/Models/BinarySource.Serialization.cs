@@ -27,34 +27,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(StoreSettings))
+            if (StoreSettings != null)
             {
                 writer.WritePropertyName("storeSettings"u8);
                 writer.WriteObjectValue(StoreSettings);
             }
-            if (Optional.IsDefined(FormatSettings))
+            if (FormatSettings != null)
             {
                 writer.WritePropertyName("formatSettings"u8);
                 writer.WriteObjectValue(FormatSettings);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
-            if (Optional.IsDefined(SourceRetryCount))
+            if (SourceRetryCount != null)
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
                 JsonSerializer.Serialize(writer, SourceRetryCount);
             }
-            if (Optional.IsDefined(SourceRetryWait))
+            if (SourceRetryWait != null)
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
                 JsonSerializer.Serialize(writer, SourceRetryWait);
             }
-            if (Optional.IsDefined(MaxConcurrentConnections))
+            if (MaxConcurrentConnections != null)
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
                 JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
-            if (Optional.IsDefined(DisableMetricsCollection))
+            if (DisableMetricsCollection != null)
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
                 JsonSerializer.Serialize(writer, DisableMetricsCollection);
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            Optional<StoreReadSettings> storeSettings = default;
-            Optional<BinaryReadSettings> formatSettings = default;
+            StoreReadSettings storeSettings = default;
+            BinaryReadSettings formatSettings = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("formatSettings"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    formatSettings = BinaryReadSettings.DeserializeBinaryReadSettings(property.Value);
+                    formatSettings = BinaryReadSettings.DeserializeBinaryReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new BinarySource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value);
+            return new BinarySource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                storeSettings,
+                formatSettings);
         }
 
         BinaryData IPersistableModel<BinarySource>.Write(ModelReaderWriterOptions options)
