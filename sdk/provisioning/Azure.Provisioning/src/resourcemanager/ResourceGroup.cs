@@ -48,7 +48,6 @@ namespace Azure.Provisioning.ResourceManager
         /// <inheritdoc/>
         protected override string GetAzureName(IConstruct scope, string resourceName)
         {
-            // we can't use IsAnonymous here because this is called from the Resource constructor (before IsAnonymous is set)
             return resourceName == AnonymousResourceGroupName ? resourceName : base.GetAzureName(scope, resourceName);
         }
     }
