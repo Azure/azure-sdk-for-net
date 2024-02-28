@@ -24,8 +24,8 @@ extends:
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       sdl:
         sourceAnalysisPool:
-          name: azsdk-pool-mms-win-2022-1es-pt
-          image: azsdk-pool-mms-win-2022-1espt
+          name: $(WINDOWSPOOL)
+          image: $(WINDOWSVMIMAGE)
           os: windows
         eslint:
           enabled: false
@@ -50,8 +50,8 @@ extends:
           - deployment: SignPackage
             environment: esrp
             pool:
-              name: azsdk-pool-mms-win-2022-general-1espt
-              vmImage: azsdk-pool-mms-win-2022-general-1es-pt
+              name: $(WINDOWSPOOL)
+              vmImage: $(WINDOWSVMIMAGE)
               os: windows
 
             strategy:
@@ -90,8 +90,8 @@ extends:
                     environment: ${{parameters.Environment}}
 
                     pool:
-                      name: azsdk-pool-mms-win-2022-general-1espt
-                      vmImage: azsdk-pool-mms-win-2022-general-1es-pt
+                      name: $(WINDOWSPOOL)
+                      vmImage: $(WINDOWSVMIMAGE)
                       os: windows
 
                     strategy:
@@ -143,8 +143,8 @@ extends:
                     dependsOn: TagRepository
 
                     pool:
-                      name: azsdk-pool-mms-ubuntu-2004-general-1espt
-                      vmImage: azsdk-pool-mms-ubuntu-2004-general-1es-pt
+                      name: $(LINUXPOOL)
+                      vmImage: $(LINUXVMIMAGE)
                       os: linux
 
                     strategy:
@@ -174,8 +174,8 @@ extends:
                       dependsOn: PublishPackage
 
                       pool:
-                        name: azsdk-pool-mms-win-2022-general
-                        vmImage: windows-2022
+                        name: $(WINDOWSPOOL)
+                        vmImage: $(WINDOWSVMIMAGE)
                         os: windows
 
                       strategy:
@@ -202,8 +202,8 @@ extends:
                       dependsOn: PublishPackage
 
                       pool:
-                        name: azsdk-pool-mms-ubuntu-2004-general
-                        vmImage: MMSUbuntu20.04
+                        name: $(LINUXPOOL)
+                        vmImage: $(LINUXVMIMAGE)
                         os: linux
 
                       strategy:
@@ -236,8 +236,8 @@ extends:
                       dependsOn: PublishPackage
 
                       pool:
-                        name: azsdk-pool-mms-win-2022-general
-                        vmImage: windows-2022
+                        name: $(WINDOWSPOOL)
+                        vmImage: $(WINDOWSVMIMAGE)
                         os: windows
 
                       strategy:
@@ -263,8 +263,8 @@ extends:
                       dependsOn: PublishPackage
 
                       pool:
-                        name: azsdk-pool-mms-win-2022-general
-                        vmImage: windows-2022
+                        name: $(WINDOWSPOOL)
+                        vmImage: $(WINDOWSVMIMAGE)
                         os: windows
 
                       strategy:
@@ -301,8 +301,8 @@ extends:
             condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
             displayName: Publish package to daily feed
             pool:
-              name: azsdk-pool-mms-win-2022-general
-              vmImage: windows-2022
+              name: $(WINDOWSPOOL)
+              vmImage: $(WINDOWSVMIMAGE)
               os: windows
             steps:
               - checkout: none
@@ -331,8 +331,8 @@ extends:
             dependsOn: PublishPackages
             condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
             pool:
-              name: azsdk-pool-mms-ubuntu-2004-general
-              vmImage: MMSUbuntu20.04
+              name: $(LINUXPOOL)
+              vmImage: $(LINUXVMIMAGE)
               os: linux
             steps:
               - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml

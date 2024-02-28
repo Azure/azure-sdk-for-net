@@ -51,8 +51,8 @@ parameters:
 jobs:
   - job: Build
     pool:
-      name: azsdk-pool-mms-win-2022-general-1espt
-      vmImage: azsdk-pool-mms-win-2022-general-1es-pt
+      name: $(WINDOWSPOOL)
+      vmImage: $(WINDOWSVMIMAGE)
       os: windows
 
     variables:
@@ -168,8 +168,8 @@ jobs:
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     pool:
-      name: azsdk-pool-mms-ubuntu-2004-general-1espt
-      vmImage: azsdk-pool-mms-ubuntu-2004-general-1es-pt
+      name: $(LINUXPOOL)
+      vmImage: $(LINUXVMIMAGE)
       os: linux
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
@@ -236,8 +236,8 @@ jobs:
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
       pool:
-        name: azsdk-pool-mms-win-2022-general-1espt
-        vmImage: azsdk-pool-mms-win-2022-general-1es-pt
+        name: $(WINDOWSPOOL)
+        vmImage: $(WINDOWSVMIMAGE)
         os: windows
       steps:
         - task: UsePythonVersion@0

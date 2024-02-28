@@ -84,8 +84,8 @@ extends:
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       sdl:
         sourceAnalysisPool:
-          name: azsdk-pool-mms-win-2022-1es-pt
-          image: azsdk-pool-mms-win-2022-1espt
+          name: $(WINDOWSPOOL)
+          image: $(WINDOWSVMIMAGE)
           os: windows
         eslint:
           enabled: false
