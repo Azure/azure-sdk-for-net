@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             IReadOnlyList<NetAppBackupData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BackupsList(value ?? new ChangeTrackingList<NetAppBackupData>(), nextLink.Value, serializedAdditionalRawData);
+            return new BackupsList(value ?? new ChangeTrackingList<NetAppBackupData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BackupsList>.Write(ModelReaderWriterOptions options)

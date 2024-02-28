@@ -530,9 +530,9 @@ namespace Azure.ResourceManager.NetApp
             string volumeSpecName = default;
             bool? encrypted = default;
             IList<NetAppVolumePlacementRule> placementRules = default;
-            EnableNetAppSubvolume enableSubvolumes = default;
+            EnableNetAppSubvolume? enableSubvolumes = default;
             string provisionedAvailabilityZone = default;
-            bool isLargeVolume = default;
+            bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
             long? inheritedSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

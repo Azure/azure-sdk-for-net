@@ -144,18 +144,18 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> backupId = default;
-            Optional<DateTimeOffset> creationDate = default;
-            Optional<string> provisioningState = default;
-            Optional<long> size = default;
-            Optional<string> label = default;
-            Optional<NetAppBackupType> backupType = default;
-            Optional<string> failureReason = default;
+            SystemData systemData = default;
+            string backupId = default;
+            DateTimeOffset? creationDate = default;
+            string provisioningState = default;
+            long? size = default;
+            string label = default;
+            NetAppBackupType? backupType = default;
+            string failureReason = default;
             ResourceIdentifier volumeResourceId = default;
-            Optional<bool> useExistingSnapshot = default;
-            Optional<string> snapshotName = default;
-            Optional<string> backupPolicyResourceId = default;
+            bool? useExistingSnapshot = default;
+            string snapshotName = default;
+            string backupPolicyResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,18 +277,18 @@ namespace Azure.ResourceManager.NetApp
                 id,
                 name,
                 type,
-                systemData.Value,
-                backupId.Value,
-                Optional.ToNullable(creationDate),
-                provisioningState.Value,
-                Optional.ToNullable(size),
-                label.Value,
-                Optional.ToNullable(backupType),
-                failureReason.Value,
+                systemData,
+                backupId,
+                creationDate,
+                provisioningState,
+                size,
+                label,
+                backupType,
+                failureReason,
                 volumeResourceId,
-                Optional.ToNullable(useExistingSnapshot),
-                snapshotName.Value,
-                backupPolicyResourceId.Value,
+                useExistingSnapshot,
+                snapshotName,
+                backupPolicyResourceId,
                 serializedAdditionalRawData);
         }
 
