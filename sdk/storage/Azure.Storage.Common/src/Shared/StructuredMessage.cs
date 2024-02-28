@@ -17,7 +17,7 @@ internal static class StructuredMessage
     public enum Flags
     {
         None = 0,
-        Crc = 1,
+        StorageCrc64 = 1,
     }
 
     public static class V1_0

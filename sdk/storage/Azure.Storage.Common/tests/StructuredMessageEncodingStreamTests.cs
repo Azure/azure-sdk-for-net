@@ -85,7 +85,7 @@ namespace Azure.Storage.Tests
             [Values(true, false)] bool useCrc)
         {
             int segmentContentLength = seglen ?? int.MaxValue;
-            Flags flags = useCrc ? Flags.Crc : Flags.None;
+            Flags flags = useCrc ? Flags.StorageCrc64 : Flags.None;
 
             byte[] originalData = new byte[dataLength];
             new Random().NextBytes(originalData);
@@ -119,7 +119,7 @@ namespace Azure.Storage.Tests
             new Random().NextBytes(data);
 
             MemoryStream dataStream = new(data);
-            StructuredMessageEncodingStream encodingStream = new(dataStream, segmentLength, Flags.Crc);
+            StructuredMessageEncodingStream encodingStream = new(dataStream, segmentLength, Flags.StorageCrc64);
 
             // no support for seeking past existing read, need to consume whole stream before seeking
             await CopyStream(encodingStream, Stream.Null);
@@ -145,7 +145,7 @@ namespace Azure.Storage.Tests
             byte[] data = new byte[dataLength];
             new Random().NextBytes(data);
 
-            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.Crc);
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.StorageCrc64);
             byte[] encodedData1;
             using (MemoryStream dest = new())
             {
@@ -172,7 +172,7 @@ namespace Azure.Storage.Tests
             new Random().NextBytes(data);
 
             // must have read stream to fastforward. so read whole stream upfront & save result to check later
-            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.Crc);
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.StorageCrc64);
             byte[] encodedData;
             using (MemoryStream dest = new())
             {
@@ -213,14 +213,14 @@ namespace Azure.Storage.Tests
             byte[] data = new byte[dataLength];
             new Random().NextBytes(data);
 
-            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.Crc);
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.StorageCrc64);
 
             Assert.That(() => encodingStream.Position = 123, Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
         private static void AssertExpectedStreamHeader(ReadOnlySpan<byte> actual, int originalDataLength, Flags flags, int expectedSegments)
         {
-            int expectedFooterLen = flags.HasFlag(Flags.Crc) ? Crc64Length : 0;
+            int expectedFooterLen = flags.HasFlag(Flags.StorageCrc64) ? Crc64Length : 0;
 
             Assert.That(actual.Length, Is.EqualTo(V1_0.StreamHeaderLength));
             Assert.That(actual[0], Is.EqualTo(1));
