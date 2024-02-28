@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.EdgeOrder
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<ResourceIdentifier> orderItemIds = default;
-            Optional<EdgeOrderStageDetails> currentStage = default;
+            EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.EdgeOrder
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 orderItemIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                currentStage.Value,
+                currentStage,
                 orderStageHistory ?? new ChangeTrackingList<EdgeOrderStageDetails>(),
                 serializedAdditionalRawData);
         }

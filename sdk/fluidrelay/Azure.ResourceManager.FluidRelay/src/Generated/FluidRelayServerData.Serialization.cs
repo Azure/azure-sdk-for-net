@@ -132,18 +132,18 @@ namespace Azure.ResourceManager.FluidRelay
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> frsTenantId = default;
-            Optional<FluidRelayEndpoints> fluidRelayEndpoints = default;
-            Optional<FluidRelayProvisioningState> provisioningState = default;
-            Optional<Models.EncryptionProperties> encryption = default;
-            Optional<FluidRelayStorageSku> storagesku = default;
+            SystemData systemData = default;
+            Guid? frsTenantId = default;
+            FluidRelayEndpoints fluidRelayEndpoints = default;
+            FluidRelayProvisioningState? provisioningState = default;
+            Models.EncryptionProperties encryption = default;
+            FluidRelayStorageSku? storagesku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -267,15 +267,15 @@ namespace Azure.ResourceManager.FluidRelay
                 id,
                 name,
                 type,
-                systemData.Value,
+                systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 identity,
-                Optional.ToNullable(frsTenantId),
-                fluidRelayEndpoints.Value,
-                Optional.ToNullable(provisioningState),
-                encryption.Value,
-                Optional.ToNullable(storagesku),
+                frsTenantId,
+                fluidRelayEndpoints,
+                provisioningState,
+                encryption,
+                storagesku,
                 serializedAdditionalRawData);
         }
 

@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ResourceIdentifier> storageAccountResourceId = default;
-            Optional<string> blobContainer = default;
-            Optional<string> archiveNameFormat = default;
-            Optional<Guid> dataLakeSubscriptionId = default;
-            Optional<string> dataLakeAccountName = default;
-            Optional<string> dataLakeFolderPath = default;
+            string name = default;
+            ResourceIdentifier storageAccountResourceId = default;
+            string blobContainer = default;
+            string archiveNameFormat = default;
+            Guid? dataLakeSubscriptionId = default;
+            string dataLakeAccountName = default;
+            string dataLakeFolderPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
             return new EventHubDestination(
-                name.Value,
-                storageAccountResourceId.Value,
-                blobContainer.Value,
-                archiveNameFormat.Value,
-                Optional.ToNullable(dataLakeSubscriptionId),
-                dataLakeAccountName.Value,
-                dataLakeFolderPath.Value,
+                name,
+                storageAccountResourceId,
+                blobContainer,
+                archiveNameFormat,
+                dataLakeSubscriptionId,
+                dataLakeAccountName,
+                dataLakeFolderPath,
                 serializedAdditionalRawData);
         }
 

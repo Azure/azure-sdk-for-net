@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.DevCenter
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DevCenterGitCatalog> gitHub = default;
-            Optional<DevCenterGitCatalog> adoGit = default;
-            Optional<DevCenterProvisioningState> provisioningState = default;
-            Optional<DevCenterCatalogSyncState> syncState = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
+            SystemData systemData = default;
+            DevCenterGitCatalog gitHub = default;
+            DevCenterGitCatalog adoGit = default;
+            DevCenterProvisioningState? provisioningState = default;
+            DevCenterCatalogSyncState? syncState = default;
+            DateTimeOffset? lastSyncTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.DevCenter
                 id,
                 name,
                 type,
-                systemData.Value,
-                gitHub.Value,
-                adoGit.Value,
-                Optional.ToNullable(provisioningState),
-                Optional.ToNullable(syncState),
-                Optional.ToNullable(lastSyncTime),
+                systemData,
+                gitHub,
+                adoGit,
+                provisioningState,
+                syncState,
+                lastSyncTime,
                 serializedAdditionalRawData);
         }
 

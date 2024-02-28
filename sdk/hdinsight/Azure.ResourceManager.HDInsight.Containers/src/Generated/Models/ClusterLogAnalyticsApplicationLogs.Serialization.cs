@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            Optional<bool> stdOutEnabled = default;
-            Optional<bool> stdErrorEnabled = default;
+            bool? stdOutEnabled = default;
+            bool? stdErrorEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterLogAnalyticsApplicationLogs(Optional.ToNullable(stdOutEnabled), Optional.ToNullable(stdErrorEnabled), serializedAdditionalRawData);
+            return new ClusterLogAnalyticsApplicationLogs(stdOutEnabled, stdErrorEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterLogAnalyticsApplicationLogs>.Write(ModelReaderWriterOptions options)

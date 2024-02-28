@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string dbUserName = default;
             string dbPasswordSecretName = default;
             string keyVaultId = default;
-            Optional<string> thriftUrl = default;
+            string thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 dbUserName,
                 dbPasswordSecretName,
                 keyVaultId,
-                thriftUrl.Value,
+                thriftUrl,
                 serializedAdditionalRawData);
         }
 

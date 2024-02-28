@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<ParagraphRole> role = default;
+            ParagraphRole? role = default;
             string content = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -64,7 +64,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentParagraph(Optional.ToNullable(role), content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans);
+            return new DocumentParagraph(role, content, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans);
         }
     }
 }

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            Optional<ElasticSanVolumeCreateOption> createSource = default;
-            Optional<ResourceIdentifier> sourceId = default;
+            ElasticSanVolumeCreateOption? createSource = default;
+            ResourceIdentifier sourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceId.Value, serializedAdditionalRawData);
+            return new ElasticSanVolumeDataSourceInfo(createSource, sourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanVolumeDataSourceInfo>.Write(ModelReaderWriterOptions options)

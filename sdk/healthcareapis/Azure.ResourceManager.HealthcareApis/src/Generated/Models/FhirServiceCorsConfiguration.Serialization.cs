@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             IList<string> origins = default;
             IList<string> headers = default;
             IList<string> methods = default;
-            Optional<int> maxAge = default;
-            Optional<bool> allowCredentials = default;
+            int? maxAge = default;
+            bool? allowCredentials = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,8 +183,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 origins ?? new ChangeTrackingList<string>(),
                 headers ?? new ChangeTrackingList<string>(),
                 methods ?? new ChangeTrackingList<string>(),
-                Optional.ToNullable(maxAge),
-                Optional.ToNullable(allowCredentials),
+                maxAge,
+                allowCredentials,
                 serializedAdditionalRawData);
         }
 

@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> date = default;
-            Optional<double> cost = default;
-            Optional<DevTestLabCostType> costType = default;
+            DateTimeOffset? date = default;
+            double? cost = default;
+            DevTestLabCostType? costType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabCostDetails(Optional.ToNullable(date), Optional.ToNullable(cost), Optional.ToNullable(costType), serializedAdditionalRawData);
+            return new DevTestLabCostDetails(date, cost, costType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabCostDetails>.Write(ModelReaderWriterOptions options)

@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            Optional<ElasticCloudUser> elasticCloudUser = default;
-            Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
+            ElasticCloudUser elasticCloudUser = default;
+            ElasticCloudDeployment elasticCloudDeployment = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ElasticProperties(elasticCloudUser.Value, elasticCloudDeployment.Value, serializedAdditionalRawData);
+            return new ElasticProperties(elasticCloudUser, elasticCloudDeployment, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticProperties>.Write(ModelReaderWriterOptions options)

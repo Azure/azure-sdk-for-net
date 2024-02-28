@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             IReadOnlyList<ManagedRuleSetDefinition> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedRuleSetDefinitionList(value ?? new ChangeTrackingList<ManagedRuleSetDefinition>(), nextLink.Value, serializedAdditionalRawData);
+            return new ManagedRuleSetDefinitionList(value ?? new ChangeTrackingList<ManagedRuleSetDefinition>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedRuleSetDefinitionList>.Write(ModelReaderWriterOptions options)
