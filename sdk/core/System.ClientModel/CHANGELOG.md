@@ -7,7 +7,7 @@
 - Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
 - Added `CreateAsync` factory method to `ClientResultException` to allow creating exceptions in an async context.
 - Added an implicit cast from `string` to `ApiKeyCredential`.
-- Added an implicit cast from `T` to `ClientResult<T>`.
+- Added an implicit cast from `ClientResult<T>` to `T`.
 
 ### Breaking Changes
 
