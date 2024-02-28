@@ -3,12 +3,9 @@
 ## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add `metadata` property to `ChatParticipant` and `ChatThreadProperties`.
+- Add apis to add `ChatParticipant` metadata and `ChatThreadProperties` metadata.
+- Add api to update `ChatThreadProperties` including metadata.
 
 ## 1.2.0 (2023-12-04)
 

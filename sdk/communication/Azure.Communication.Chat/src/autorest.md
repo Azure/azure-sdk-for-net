@@ -17,3 +17,9 @@ require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/731138d0505c02fcee05d7b5a1417fd10ef5efc3/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
+directive:
+  # Temporarily remove retention policy changes
+  - where-model: ChatMessageContent
+    remove-property: attachments
+  - remove-model: AttachmentType
+  - remove-model: ChatAttachment
