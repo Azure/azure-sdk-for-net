@@ -106,7 +106,7 @@ namespace Azure.Core
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
 
-        internal static HttpMessage AssertHttpMessage(PipelineMessage message)
+        internal static HttpMessage GetHttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -172,12 +172,7 @@ namespace Azure.Core
         /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            if (!HasResponse)
-            {
-                return null;
-            }
-
-            switch (Response.ContentStream)
+            switch (Response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
@@ -196,7 +191,8 @@ namespace Azure.Core
         /// null and the caller will be responsible for disposing the returned
         /// value, which may hold a live network stream.
         /// </summary>
-        public new Response? ExtractResponse() => (Response?)base.ExtractResponse();
+        public new Response? ExtractResponse()
+            => (Response?)base.ExtractResponse();
 
         private class ResponseShouldNotBeUsedStream : Stream
         {

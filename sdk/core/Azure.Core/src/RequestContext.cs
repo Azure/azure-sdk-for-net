@@ -32,24 +32,20 @@ namespace Azure
         }
 
         private static ErrorOptions FromResponseErrorOptions(ClientErrorBehaviors options)
-        {
-            return options switch
+            => options switch
             {
                 ClientErrorBehaviors.Default => ErrorOptions.Default,
                 ClientErrorBehaviors.NoThrow => ErrorOptions.NoThrow,
                 _ => throw new NotSupportedException(),
             };
-        }
 
         private static ClientErrorBehaviors ToResponseErrorOptions(ErrorOptions options)
-        {
-            return options switch
+            => options switch
             {
                 ErrorOptions.Default => ClientErrorBehaviors.Default,
                 ErrorOptions.NoThrow => ClientErrorBehaviors.NoThrow,
                 _ => throw new NotSupportedException(),
             };
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RequestContext"/> class.
