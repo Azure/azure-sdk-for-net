@@ -182,7 +182,7 @@ namespace Azure.Core.Tests
                 return null;
             });
 
-            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendRequestAsync(mockTransport, message =>
+            var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await SendRequestAsync(mockTransport, (HttpMessage message) =>
             {
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false));
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests
             };
 
             MockTransport mockTransport = new MockTransport(mockResponse);
-            Response response = await SendRequestAsync(mockTransport, message =>
+            Response response = await SendRequestAsync(mockTransport, (HttpMessage message) =>
             {
                 message.NetworkTimeout = TimeSpan.FromMilliseconds(30);
             }, new ResponseBodyPolicy(TimeSpan.MaxValue), bufferResponse: false);
