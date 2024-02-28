@@ -102,12 +102,12 @@ parameters:
           # in the context of a parameter definition.
           contents: 'sdk/$(ServiceDirectory)/**/SessionRecords/**/*.json'
           targetFolder: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-      - task: PublishBuildArtifacts@1
-        condition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
-        displayName: "Publish Test Recordings"
-        inputs:
-          pathToPublish: '$(Build.ArtifactStagingDirectory)/SessionRecords'
-          artifactName: SessionRecords
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          CustomCondition: and(succeededOrFailed(), eq(variables.TestMode, 'Record'))
+          DisplayName: "Publish Test Recordings"
+          ArtifactPath: '$(Build.ArtifactStagingDirectory)/SessionRecords'
+          ArtifactName: 'packages'
 
 extends:
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:

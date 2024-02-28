@@ -52,7 +52,7 @@ steps:
       pwsh: true
     displayName: Split testing packages into different files
 
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: $(Build.ArtifactStagingDirectory)
-      artifactName: DependencyTestProjectReferences
+  - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+    parameters:
+      ArtifactPath: $(Build.ArtifactStagingDirectory)
+      ArtifactName: DependencyTestProjectReferences
