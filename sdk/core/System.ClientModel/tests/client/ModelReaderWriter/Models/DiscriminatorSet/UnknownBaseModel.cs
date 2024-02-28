@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = "Unknown";
         }
 
-        internal UnknownBaseModel(string kind, string name, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string? kind, string? name, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
@@ -47,7 +47,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions options = default) => DeserializeBaseModel(element, options);
+        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions? options = default) => DeserializeBaseModel(element, options);
 
         BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
