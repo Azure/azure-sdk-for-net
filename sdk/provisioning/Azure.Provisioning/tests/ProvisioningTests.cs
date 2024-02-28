@@ -174,7 +174,7 @@ namespace Azure.Provisioning.Tests
         [Test]
         public async Task WebSiteUsingL3ResourceGroupScope()
         {
-            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, useAnonymousResourceGroup: true);
+            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UsePromptMode = true });
             infra.AddWebSiteWithSqlBackEnd();
 
             infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");

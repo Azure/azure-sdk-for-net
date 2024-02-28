@@ -36,6 +36,19 @@ namespace Azure.Provisioning
         public Tenant Root { get; }
         /// <inheritdoc/>
         public ConstructScope ConstructScope { get; }
+        /// <inheritdoc/>
+        public Configuration? Configuration
+        {
+            get
+            {
+                return Scope == null ? _configuration : Scope.Configuration;
+            }
+            internal set
+            {
+                _configuration = value;
+            }
+        }
+        private Configuration? _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Construct"/> class.

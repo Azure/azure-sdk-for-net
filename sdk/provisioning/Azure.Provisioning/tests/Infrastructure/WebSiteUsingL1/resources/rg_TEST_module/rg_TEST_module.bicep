@@ -75,7 +75,7 @@ resource keyVault_6DI6zrlsS 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-TEST'
   location: 'westus'
   properties: {
-    tenantId: '00000000-0000-0000-0000-000000000000'
+    tenantId: tenant()
     sku: {
       name: 'standard'
       family: 'A'

@@ -25,7 +25,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
     'key': 'value'
   }
   properties: {
-    tenantId: '00000000-0000-0000-0000-000000000000'
+    tenantId: tenant()
     sku: {
       name: 'standard'
       family: 'A'
